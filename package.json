@@ -1,0 +1,35 @@
+{
+  "name": "@innofake/web-components",
+  "version": "0.0.1",
+  "description": "Web Components",
+  "scripts": {
+    "clean": "npx rimraf dist docs",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm run clean && npm run docs && tsc",
+    "docs": "echo \"docs\""
+  },
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    "./*": "./dist/*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/innofake/web-components.git"
+  },
+  "keywords": [],
+  "author": "innofake",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/innofake/web-components/issues"
+  },
+  "homepage": "https://github.com/innofake/web-components#readme",
+  "devDependencies": {
+    "rimraf": "^3.0.2",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {    
+    "lit": "^2.2.7"
+  }
+}
