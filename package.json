@@ -6,7 +6,7 @@
     "clean": "npx rimraf dist docs",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm run clean && npm run docs && tsc",
-    "docs": "echo \"docs\""
+    "docs": "npx web-component-analyzer ./src/**/*.{js,ts} --outFiles {dir}/README.md"
   },
   "files": [
     "dist"
@@ -26,8 +26,10 @@
   },
   "homepage": "https://github.com/innofake/web-components#readme",
   "devDependencies": {
+    "@webcomponents/webcomponentsjs": "^2.6.0",
     "rimraf": "^3.0.2",
-    "typescript": "^4.7.4"
+    "typescript": "^4.7.4",
+    "web-component-analyzer": "^1.1.6"
   },
   "dependencies": {    
     "lit": "^2.2.7"
