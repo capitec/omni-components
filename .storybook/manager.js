@@ -5,7 +5,7 @@ addons.setConfig({
 	enableShortcuts: false,
 	theme: create({
 		base: 'dark',
-		brandTitle: '<small style="font-weight: normal">Omni</small> <br> Web Components',
+		brandTitle: '<small style="font-weight: normal">Omni</small> <br> Components',
 		brandUrl: 'https://www.npmjs.com/org/innofake'
 	})
 });

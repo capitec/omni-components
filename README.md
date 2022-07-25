@@ -1,5 +1,5 @@
-# web-components
-Web Components
+# omni-components
+Omni Components
 
 ## Components
 

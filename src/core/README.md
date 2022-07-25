@@ -3,7 +3,7 @@
 Core Web Components
 
 ```js 
-import '@innofake/web-components/core'; 
+import '@innofake/omni-components/core'; 
 ```
 
 

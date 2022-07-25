@@ -1,11 +1,11 @@
 {
-  "name": "@innofake/web-components",
+  "name": "@innofake/omni-components",
   "version": "0.0.1",
-  "description": "Web Components",
+  "description": "Omni Components",
   "scripts": {
     "clean": "npx rimraf dist docs",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run clean && npm run docs && tsc",
+    "build": "npm run clean && tsc && npm run docs",
     "docs": "npx rimraf docs && npm run docs:custom-elements && npm run docs:readme && npm run docs:storybook",
     "docs:custom-elements": "npx cem analyze --litelement --globs src/**",
     "docs:storybook": "npx build-storybook --output-dir=docs",
@@ -20,15 +20,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/innofake/web-components.git"
+    "url": "git+https://github.com/innofake/omni-components.git"
   },
   "keywords": [],
   "author": "innofake",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/innofake/web-components/issues"
+    "url": "https://github.com/innofake/omni-components/issues"
   },
-  "homepage": "https://github.com/innofake/web-components#readme",
+  "homepage": "https://github.com/innofake/omni-components#readme",
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.6.3",
     "@etchteam/storybook-addon-css-variables-theme": "^1.2.1",

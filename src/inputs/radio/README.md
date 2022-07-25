@@ -3,7 +3,7 @@
 A control that allows a user to select a single value from a small group of values.
 
 ```js 
-import '@innofake/web-components/inputs/radio'; 
+import '@innofake/omni-components/inputs/radio'; 
 ```
 
 ## Example

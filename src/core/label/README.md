@@ -3,7 +3,7 @@
 A simple label component that renders a styled text string.
 
 ```js 
-import '@innofake/web-components/core/label'; 
+import '@innofake/omni-components/core/label'; 
 ```
 
 ## Example
