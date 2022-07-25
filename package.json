@@ -38,6 +38,8 @@
     "@storybook/addon-interactions": "^6.5.9",
     "@storybook/addon-links": "^6.5.9",
     "@storybook/addon-storysource": "^6.5.9",
+    "@storybook/jest": "^0.0.10",
+    "@storybook/testing-library": "^0.0.13",
     "@storybook/theming": "^6.5.9",
     "@storybook/web-components": "^6.5.9",
     "@webcomponents/webcomponentsjs": "^2.6.0",

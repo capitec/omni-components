@@ -31,6 +31,7 @@ module.exports = {
 	],
 	features: {
 		postcss: false,
+    interactionsDebugger: true,
 	},
 	staticDirs: [
 		{ from: '../custom-elements.json', to: 'custom-elements.json' }
