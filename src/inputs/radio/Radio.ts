@@ -223,6 +223,13 @@ export class Radio extends LitElement {
 					--innofake-omni-radio-height: 24px;
 
 					--innofake-omni-radio-padding: 2px;
+					
+					-webkit-touch-callout: none;
+					-webkit-user-select: none;
+					-khtml-user-select: none;
+					-moz-user-select: none;
+					-ms-user-select: none;
+					user-select: none;
 				}
 			`,
 			css`
