@@ -20,3 +20,6 @@ typings/
 # Output directories
 dist
 docs
+
+# Built docs
+custom-elements.json

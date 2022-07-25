@@ -1,0 +1,22 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Storybook Debug",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "npm run storybook",
+            "internalConsoleOptions": "openOnFirstSessionStart",
+            "serverReadyAction": {
+            "pattern": "Local:.+(https?://[^:]+:[0-9]+)",
+            "uriFormat": "%s",
+            "action": "debugWithChrome"
+            },            
+			"sourceMaps": true,
+			"trace": true
+        }
+    ]
+}

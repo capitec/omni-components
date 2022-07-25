@@ -6,7 +6,11 @@
     "clean": "npx rimraf dist docs",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm run clean && npm run docs && tsc",
-    "docs": "npx web-component-analyzer ./src/**/*.{js,ts} --outFiles {dir}/README.md"
+    "docs": "npx rimraf docs && npm run docs:custom-elements && npm run docs:readme && npm run docs:storybook",
+    "docs:custom-elements": "npx cem analyze --litelement --globs src/**",
+    "docs:storybook": "npx build-storybook --output-dir=docs",
+    "docs:readme": "npx web-component-analyzer ./src/**/*.{js,ts} --outFiles {dir}/README.md",
+    "storybook": "tsc && npm run docs:custom-elements && concurrently -k -r \"tsc --build --watch --preserveWatchOutput\" \"npx start-storybook --no-manager-cache --port=6006\""
   },
   "files": [
     "dist"
@@ -26,12 +30,24 @@
   },
   "homepage": "https://github.com/innofake/web-components#readme",
   "devDependencies": {
+    "@custom-elements-manifest/analyzer": "^0.6.3",
+    "@etchteam/storybook-addon-css-variables-theme": "^1.2.1",
+    "@storybook/addon-a11y": "^6.5.9",
+    "@storybook/addon-actions": "^6.5.9",
+    "@storybook/addon-essentials": "^6.5.9",
+    "@storybook/addon-interactions": "^6.5.9",
+    "@storybook/addon-links": "^6.5.9",
+    "@storybook/addon-storysource": "^6.5.9",
+    "@storybook/theming": "^6.5.9",
+    "@storybook/web-components": "^6.5.9",
     "@webcomponents/webcomponentsjs": "^2.6.0",
+    "concurrently": "^7.2.2",
     "rimraf": "^3.0.2",
     "typescript": "^4.7.4",
     "web-component-analyzer": "^1.1.6"
   },
-  "dependencies": {    
+  "dependencies": {
     "lit": "^2.2.7"
-  }
+  },
+  "customElements": "custom-elements.json"
 }
