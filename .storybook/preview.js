@@ -42,4 +42,5 @@ export const parameters = {
 			order: ['Welcome', 'UI Components', [ [ 'Docs', '*' ] ]],
 		}
 	},
+	viewMode: 'docs',
 }
