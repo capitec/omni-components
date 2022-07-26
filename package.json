@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm run compile && npm run docs",
     "compile": "npm run clean && tsc",
-    "postinstall": "tsc",
+    "postinstall": "(node -e \"if (! require('fs').existsSync('./dist')) {process.exit(1)} \" || (echo \"Dist does not exist. Attempting Typescript compile\" && tsc))",
     "docs": "npx rimraf docs && npm run docs:custom-elements && npm run docs:readme && npm run docs:storybook",
     "docs:custom-elements": "npx cem analyze --litelement --globs src/**",
     "docs:storybook": "npx build-storybook --output-dir=docs",
@@ -42,6 +42,9 @@
     "url": "https://github.com/innofake/omni-components/issues"
   },
   "homepage": "https://github.com/innofake/omni-components#readme",
+  "optionalDependencies": {
+    "typescript": "^4.7.4"
+  },
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.6.3",
     "@etchteam/storybook-addon-css-variables-theme": "^1.2.1",
