@@ -5,7 +5,9 @@
   "scripts": {
     "clean": "npx rimraf dist docs",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run clean && tsc && npm run docs",
+    "build": "npm run compile && npm run docs",
+    "compile": "npm run clean && tsc",
+    "postinstall": "tsc",
     "docs": "npx rimraf docs && npm run docs:custom-elements && npm run docs:readme && npm run docs:storybook",
     "docs:custom-elements": "npx cem analyze --litelement --globs src/**",
     "docs:storybook": "npx build-storybook --output-dir=docs",
@@ -13,7 +15,18 @@
     "storybook": "npm run clean && tsc && npm run docs:custom-elements && concurrently -k -r \"tsc --build --watch --preserveWatchOutput\" \"npx start-storybook --no-manager-cache --port=6006\""
   },
   "files": [
-    "dist"
+    "dist",
+    "!dist/**/*.stories.*",
+    "!dist/**/*.tests.*",
+    "!dist/**/*.test.*",
+
+    "src/**/README.md",
+    "src/**/*.ts",
+    "src/**/*.js",
+
+    "!src/**/*.stories.*",
+    "!src/**/*.tests.*",
+    "!src/**/*.test.*"
   ],
   "exports": {
     "./*": "./dist/*"

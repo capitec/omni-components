@@ -1,20 +1,18 @@
 import { html, TemplateResult } from 'lit';
-import { Story, Meta, WebComponentsFramework } from '@storybook/web-components';
-import { expect, jest } from '@storybook/jest';
-import { within, userEvent } from '@storybook/testing-library';
+import { Story, Meta } from '@storybook/web-components';
 
-import './Switch.js';
+import './Radio.js';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'UI Components/Inputs/Switch',
-  component: "omni-switch",
+  title: 'UI Components/Radio',
+  component: "omni-radio",
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
   },
 	parameters: {
 		actions: {
-			handles: ['value-changed','value-change']
+			handles: ['value-change']
 		},
 	}
 } as Meta;
@@ -26,13 +24,11 @@ interface ArgTypes {
 	error: string;
 	checked: boolean;
 	disabled: boolean;
-  "value-change": any;
 }
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: Story<ArgTypes> = (args: ArgTypes) => html`
-    <omni-switch 
-    data-testid="test-switch"
+    <omni-radio 
     label="${args.label}" 
     data="${args.data}" 
     hint="${args.hint}" 
@@ -41,7 +37,7 @@ const Template: Story<ArgTypes> = (args: ArgTypes) => html`
     ?disabled="${args.disabled}"
     @value-change="${(e: any) => console.log(e)}"
     >
-    </omni-switch>
+    </omni-radio>
 `;
 
 export const Default = Template.bind({});
@@ -57,22 +53,6 @@ Default.args = {
   checked:false,
   disabled:false
 };
-Default.play = async (context) => {
-  
-  const canvas = within(context.canvasElement);
-
-  const Switch = canvas.getByTestId(`test-switch`);
-  console.log(Switch);
-  const valueChange = jest.fn();
-  Switch.addEventListener('value-change',()=> valueChange());
-
-  const content = Switch.shadowRoot.getElementById(`content`);
-  console.log(content);
-
-  await userEvent.click(content);
-  await userEvent.click(content);
-  await expect(valueChange).toBeCalledTimes(2);
-}
 
 export const Label = Template.bind({});
 Label.args = {
