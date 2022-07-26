@@ -7,7 +7,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm run compile && npm run docs",
     "compile": "npm run clean && tsc",
-    "postinstall": "(node -e \"if (! require('fs').existsSync('./dist')) {process.exit(1)} \" || (echo \"Dist does not exist. Attempting Typescript compile\" && tsc))",
     "docs": "npx rimraf docs && npm run docs:custom-elements && npm run docs:readme && npm run docs:generate && npm run docs:storybook",
     "docs:generate": "npm run docs:elements && readme generate",
     "docs:custom-elements": "npx cem analyze --litelement --globs src/**",
