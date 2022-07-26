@@ -4,13 +4,15 @@
   "description": "Omni Components",
   "scripts": {
     "clean": "npx rimraf dist docs",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm run clean && tsc && npm run docs",
     "docs": "npx rimraf docs && npm run docs:custom-elements && npm run docs:readme && npm run docs:storybook",
     "docs:custom-elements": "npx cem analyze --litelement --globs src/**",
     "docs:storybook": "npx build-storybook --output-dir=docs",
     "docs:readme": "npx web-component-analyzer ./src/**/*.{js,ts} --outFiles {dir}/README.md",
-    "storybook": "npm run clean && tsc && npm run docs:custom-elements && concurrently -k -r \"tsc --build --watch --preserveWatchOutput\" \"npx start-storybook --no-manager-cache --port=6006\""
+    "storybook": "npm run clean && tsc && npm run docs:custom-elements && concurrently -k -r \"tsc --build --watch --preserveWatchOutput\" \"npx start-storybook --no-manager-cache --port=6006\"",
+    "test:storybook": "concurrently -k -r \"npm run storybook\" \"npx wait-on tcp:6006 && test-storybook --verbose\"",
+    "test:jest": "jest",
+    "test": "npm run test:storybook & npm run test:jest"
   },
   "files": [
     "dist"
@@ -39,13 +41,19 @@
     "@storybook/addon-links": "^6.5.9",
     "@storybook/addon-storysource": "^6.5.9",
     "@storybook/jest": "^0.0.10",
+    "@storybook/test-runner": "^0.5.0",
     "@storybook/testing-library": "^0.0.13",
     "@storybook/theming": "^6.5.9",
     "@storybook/web-components": "^6.5.9",
+    "@types/jest": "^27.0.0",
     "@webcomponents/webcomponentsjs": "^2.6.0",
     "concurrently": "^7.2.2",
+    "jest": "^27.0.0",
+    "jest-playwright-preset": "^1.5.1",
     "rimraf": "^3.0.2",
+    "ts-jest": "^27.0.0",
     "typescript": "^4.7.4",
+    "wait-on": "^6.0.1",
     "web-component-analyzer": "^1.1.6"
   },
   "dependencies": {
