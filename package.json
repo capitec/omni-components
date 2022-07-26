@@ -44,14 +44,6 @@
     "url": "https://github.com/innofake/omni-components/issues"
   },
   "homepage": "https://github.com/innofake/omni-components#readme",
-  "peerDependencies": {
-    "typescript": "^4.7.4"
-  },
-  "peerDependenciesMeta": {
-    "typescript": {
-      "optional": true
-    }
-  },
   "devDependencies": {
     "@appnest/readme": "^1.2.7",
     "@custom-elements-manifest/analyzer": "^0.6.3",
