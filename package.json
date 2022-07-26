@@ -1,17 +1,19 @@
 {
   "name": "@innofake/omni-components",
   "version": "0.0.1",
-  "description": "Omni Components",
+  "description": "Omni Components come with minimal dependencies to reduce the bloat in your project. All web components base off Lit (https://lit.dev) and are each available as fully standalone imports or at a group level import.",
   "scripts": {
     "clean": "npx rimraf dist docs",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm run compile && npm run docs",
     "compile": "npm run clean && tsc",
     "postinstall": "(node -e \"if (! require('fs').existsSync('./dist')) {process.exit(1)} \" || (echo \"Dist does not exist. Attempting Typescript compile\" && tsc))",
-    "docs": "npx rimraf docs && npm run docs:custom-elements && npm run docs:readme && npm run docs:storybook",
+    "docs": "npx rimraf docs && npm run docs:custom-elements && npm run docs:readme && npm run docs:generate && npm run docs:storybook",
+    "docs:generate": "npm run docs:elements && readme generate",
     "docs:custom-elements": "npx cem analyze --litelement --globs src/**",
     "docs:storybook": "npx build-storybook --output-dir=docs",
     "docs:readme": "npx web-component-analyzer ./src/**/*.{js,ts} --outFiles {dir}/README.md",
+    "docs:elements": "npx web-component-analyzer ./src/**/*.{js,ts} --outFile LIST.md --features ",
     "storybook": "npm run clean && tsc && npm run docs:custom-elements && concurrently -k -r \"tsc --build --watch --preserveWatchOutput\" \"npx start-storybook --no-manager-cache --port=6006\""
   },
   "files": [
@@ -51,6 +53,7 @@
     }
   },
   "devDependencies": {
+    "@appnest/readme": "^1.2.7",
     "@custom-elements-manifest/analyzer": "^0.6.3",
     "@etchteam/storybook-addon-css-variables-theme": "^1.2.1",
     "@storybook/addon-a11y": "^6.5.9",
