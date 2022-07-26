@@ -1,5 +1,6 @@
 import { setCustomElementsManifest } from '@storybook/web-components';
 import customElements from '../custom-elements.json';
+import pretty from 'pretty';
 
 import basicTheme from '!!style-loader?injectType=lazyStyleTag!css-loader!../themes/default-theme.css'
 
@@ -43,4 +44,11 @@ export const parameters = {
 		}
 	},
 	viewMode: 'docs',
+	docs: {
+		source: {
+			state: 'open',
+			format: false
+		},
+		transformSource: input => pretty(input)
+	}
 }
