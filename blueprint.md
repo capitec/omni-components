@@ -12,5 +12,6 @@
 &nbsp;
 
 {{ load:LIST.md }}
-
+# Contributing and Usage
+{{ template:contributors }}
 {{ template:license }}

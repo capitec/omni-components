@@ -66,7 +66,19 @@
     "web-component-analyzer": "^1.1.6"
   },
   "dependencies": {
+		"prismjs": "1.23.0",
     "lit": "^2.2.7"
   },
-  "customElements": "custom-elements.json"
+  "customElements": "custom-elements.json",
+  "contributors": [
+    {
+      "name": "BOTLANNER",
+      "email": "16349308+BOTLANNER@users.noreply.github.com",
+      "url": "https://github.com/BOTLANNER",
+      "img": "https://avatars.githubusercontent.com/u/16349308?v=4",
+      "info": [
+        "Initial Commit"
+      ]
+    }
+  ]
 }

@@ -1,7 +1,7 @@
 <!-- ⚠️ This README has been generated from the file(s) "blueprint.md" ⚠️-->
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#welcome-to-omni-components-)
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#welcome-to-omni-components-)
 
-# ➤ Welcome to Omni Components 
+# ➜ Welcome to Omni Components 
 <h1 align="center">@innofake/omni-components</h1>
 <p align="center">
   <img src="https://avatars.githubusercontent.com/u/107934107" alt="Logo" width="150" height="auto" />
@@ -27,24 +27,26 @@
 
 &nbsp;
 
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#table-of-contents)
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#table-of-contents)
 
-## ➤ Table of Contents
+## ⭑ Table of Contents
 
-* [➤ Welcome to Omni Components ](#-welcome-to-omni-components-)
-* [➤ omni-label](#-omni-label)
-	* [➤ Example](#-example)
-* [➤ omni-radio](#-omni-radio)
-	* [➤ Example](#-example-1)
-* [➤ omni-switch](#-omni-switch)
-	* [➤ Example](#-example-2)
-	* [➤ License](#-license)
+* [➜ Welcome to Omni Components ](#-welcome-to-omni-components-)
+* [➜ omni-label](#-omni-label)
+	* [⭑ Example](#-example)
+* [➜ omni-radio](#-omni-radio)
+	* [⭑ Example](#-example-1)
+* [➜ omni-switch](#-omni-switch)
+	* [⭑ Example](#-example-2)
+* [➜ Contributing and Usage](#-contributing-and-usage)
+	* [⭑ Contributors](#-contributors)
+	* [⭑ License](#-license)
 &nbsp;
 
 
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#omni-label)
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#omni-label)
 
-# ➤ omni-label
+# ➜ omni-label
 
 A simple label component that renders a styled text string.
 
@@ -53,9 +55,9 @@ import '@innofake/omni-components/label';
 ```
 
 
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#example)
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#example)
 
-## ➤ Example
+## ⭑ Example
 
 ```html
 <omni-label  label="Hello World"  type="strong"></omni-label>
@@ -63,9 +65,9 @@ import '@innofake/omni-components/label';
 
 
 
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#omni-radio)
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#omni-radio)
 
-# ➤ omni-radio
+# ➜ omni-radio
 
 A control that allows a user to select a single value from a small group of values.
 
@@ -74,9 +76,9 @@ import '@innofake/omni-components/radio';
 ```
 
 
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#example)
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#example)
 
-## ➤ Example
+## ⭑ Example
 
 ```html
 <omni-radio  label="My Toggle Value"  data="{'id': 12345, 'name': 'Test'}"  hint="Required"  error="Field level error message"  checked  disabled></omni-radio>
@@ -84,9 +86,9 @@ import '@innofake/omni-components/radio';
 
 
 
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#omni-switch)
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#omni-switch)
 
-# ➤ omni-switch
+# ➜ omni-switch
 
 A control that allows a user to switch a value on or off.
 
@@ -95,18 +97,33 @@ import '@innofake/omni-components/switch';
 ```
 
 
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#example)
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#example)
 
-## ➤ Example
+## ⭑ Example
 
 ```html
 <omni-switch  label="My Switch Value"  data="{'id': 12345, 'name': 'Test'}"  hint="Required"  error="Field level error message"  checked></omni-switch>
 ```
 
 
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#contributing-and-usage)
 
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#license)
+# ➜ Contributing and Usage
 
-## ➤ License
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#contributors)
+
+## ⭑ Contributors
+	
+
+| [<img alt="BOTLANNER" src="https://avatars.githubusercontent.com/u/16349308?v=4" width="100">](https://github.com/BOTLANNER) |
+|:--------------------------------------------------:|
+| [BOTLANNER](https://github.com/BOTLANNER)        |
+| [16349308+BOTLANNER@users.noreply.github.com](mailto:16349308+BOTLANNER@users.noreply.github.com) |
+| Initial Commit                                   |
+
+
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#license)
+
+## ⭑ License
 	
 Licensed under [ISC](https://opensource.org/licenses/ISC).

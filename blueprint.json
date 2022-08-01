@@ -13,5 +13,10 @@
             "img": "https://img.shields.io/badge/Repository-private-lightgrey.svg",
             "url": ""
         }
-    ]
+    ],
+    "line": "aqua",
+    "headingPrefix": {
+      "1": "➜ ",
+      "2": "⭑ "
+    }
 }
