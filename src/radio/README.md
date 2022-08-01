@@ -40,35 +40,35 @@ import '@innofake/omni-components/radio';
 
 ## CSS Custom Properties
 
-| Property                                         | Description                |
-|--------------------------------------------------|----------------------------|
-| `--innofake-omni-input-error-label-font-color`   | Error Font Color.          |
-| `--innofake-omni-input-error-label-font-family`  | Error Font Family.         |
-| `--innofake-omni-input-error-label-font-size`    | Error Font Size.           |
-| `--innofake-omni-input-error-label-font-weight`  | Error Font Weight.         |
-| `--innofake-omni-input-hint-label-font-color`    | Hint Font Color.           |
-| `--innofake-omni-input-hint-label-font-family`   | Hint Font Family.          |
-| `--innofake-omni-input-hint-label-font-size`     | Hint Font Size.            |
-| `--innofake-omni-input-hint-label-font-weight`   | Hint Font Weight.          |
-| `--innofake-omni-label-font-color`               | Label Font Color.          |
-| `--innofake-omni-label-font-family`              | Label Font Family.         |
-| `--innofake-omni-label-font-size`                | Label Font Size.           |
-| `--innofake-omni-radio-background-color`         | Background Color.          |
-| `--innofake-omni-radio-border-color`             | Border Color.              |
-| `--innofake-omni-radio-border-radius`            | Border Radius.             |
-| `--innofake-omni-radio-border-style`             | Border Style.              |
-| `--innofake-omni-radio-border-width`             | Border Width.              |
-| `--innofake-omni-radio-checked-background-color` | Checked Background color.  |
-| `--innofake-omni-radio-disabled-background-color` | Disabled Background Color. |
-| `--innofake-omni-radio-disabled-border-color`    | Disabled Border Color.     |
-| `--innofake-omni-radio-height`                   | Height.                    |
-| `--innofake-omni-radio-hover-background-color`   | Hover Background Color.    |
-| `--innofake-omni-radio-hover-box-shadow`         | Hover Box Shadow.          |
-| `--innofake-omni-radio-indicator-border-color`   | Indicator Border Color.    |
-| `--innofake-omni-radio-indicator-border-width`   | Indicator Border Width.    |
-| `--innofake-omni-radio-indicator-color`          | Indicator Color.           |
-| `--innofake-omni-radio-label-font-weight`        | Label Font Weight.         |
-| `--innofake-omni-radio-label-line-height`        | Label Line Height.         |
-| `--innofake-omni-radio-label-spacing`            | Label Spacing.             |
-| `--innofake-omni-radio-padding`                  | Padding.                   |
-| `--innofake-omni-radio-width`                    | Width.                     |
+| Property                                 | Description                |
+|------------------------------------------|----------------------------|
+| `--omni-input-error-label-font-color`    | Error Font Color.          |
+| `--omni-input-error-label-font-family`   | Error Font Family.         |
+| `--omni-input-error-label-font-size`     | Error Font Size.           |
+| `--omni-input-error-label-font-weight`   | Error Font Weight.         |
+| `--omni-input-hint-label-font-color`     | Hint Font Color.           |
+| `--omni-input-hint-label-font-family`    | Hint Font Family.          |
+| `--omni-input-hint-label-font-size`      | Hint Font Size.            |
+| `--omni-input-hint-label-font-weight`    | Hint Font Weight.          |
+| `--omni-label-font-color`                | Label Font Color.          |
+| `--omni-label-font-family`               | Label Font Family.         |
+| `--omni-label-font-size`                 | Label Font Size.           |
+| `--omni-radio-background-color`          | Background Color.          |
+| `--omni-radio-border-color`              | Border Color.              |
+| `--omni-radio-border-radius`             | Border Radius.             |
+| `--omni-radio-border-style`              | Border Style.              |
+| `--omni-radio-border-width`              | Border Width.              |
+| `--omni-radio-checked-background-color`  | Checked Background color.  |
+| `--omni-radio-disabled-background-color` | Disabled Background Color. |
+| `--omni-radio-disabled-border-color`     | Disabled Border Color.     |
+| `--omni-radio-height`                    | Height.                    |
+| `--omni-radio-hover-background-color`    | Hover Background Color.    |
+| `--omni-radio-hover-box-shadow`          | Hover Box Shadow.          |
+| `--omni-radio-indicator-border-color`    | Indicator Border Color.    |
+| `--omni-radio-indicator-border-width`    | Indicator Border Width.    |
+| `--omni-radio-indicator-color`           | Indicator Color.           |
+| `--omni-radio-label-font-weight`         | Label Font Weight.         |
+| `--omni-radio-label-line-height`         | Label Line Height.         |
+| `--omni-radio-label-spacing`             | Label Spacing.             |
+| `--omni-radio-padding`                   | Padding.                   |
+| `--omni-radio-width`                     | Width.                     |

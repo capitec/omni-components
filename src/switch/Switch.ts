@@ -1,5 +1,6 @@
 import { html, css, LitElement, CSSResultGroup, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import ComponentStyles from '../styles/ComponentStyles';
 
 /**
  * A control that allows a user to switch a value on or off.
@@ -36,39 +37,39 @@ import { customElement, property } from 'lit/decorators.js';
  * @fires {CustomEvent<{ old: Boolean; new: Boolean; }>} value-change - Dispatched when the switch checked state is changed.
  * @fires {CustomEvent<{ old: Boolean; new: Boolean; }>} value-changed - Dispatched when the switch checked state is changed.
  * 
- * @cssprop --innofake-omni-switch-label-font-color - Label font color.
- * @cssprop --innofake-omni-switch-label-font-family - Label font family.
- * @cssprop --innofake-omni-switch-label-font-size - Label font size.
- * @cssprop --innofake-omni-switch-label-font-weight - Label font weight.
- * @cssprop --innofake-omni-switch-label-spacing - Label left margin spacing.
+ * @cssprop --omni-switch-label-font-color - Label font color.
+ * @cssprop --omni-switch-label-font-family - Label font family.
+ * @cssprop --omni-switch-label-font-size - Label font size.
+ * @cssprop --omni-switch-label-font-weight - Label font weight.
+ * @cssprop --omni-switch-label-spacing - Label left margin spacing.
  * 
- * @cssprop --innofake-omni-switch-input-hint-label-font-color - Hint text font color.
- * @cssprop --innofake-omni-switch-input-hint-label-font-family - Hint text font family.
- * @cssprop --innofake-omni-switch-input-hint-label-font-size - Hint text font size.
- * @cssprop --innofake-omni-switch-input-hint-label-font-weight - Hint text font weight.
+ * @cssprop --omni-switch-input-hint-label-font-color - Hint text font color.
+ * @cssprop --omni-switch-input-hint-label-font-family - Hint text font family.
+ * @cssprop --omni-switch-input-hint-label-font-size - Hint text font size.
+ * @cssprop --omni-switch-input-hint-label-font-weight - Hint text font weight.
  * 
- * @cssprop --innofake-omni-switch-input-error-label-font-color - Error text font color.
- * @cssprop --innofake-omni-switch-input-error-label-font-family - Error text font family.
- * @cssprop --innofake-omni-switch-input-error-label-font-size - Error text font size.
- * @cssprop --innofake-omni-switch-input-error-label-font-weight - Error text font weight.
+ * @cssprop --omni-switch-input-error-label-font-color - Error text font color.
+ * @cssprop --omni-switch-input-error-label-font-family - Error text font family.
+ * @cssprop --omni-switch-input-error-label-font-size - Error text font size.
+ * @cssprop --omni-switch-input-error-label-font-weight - Error text font weight.
  * 
- * @cssprop --innofake-omni-switch-track-width - Track width.
- * @cssprop --innofake-omni-switch-track-height - Track height. 
- * @cssprop --innofake-omni-switch-track-background-color - Track background color.
- * @cssprop --innofake-omni-switch-checked-track-background-color - Track checked background color.
- * @cssprop --innofake-omni-switch-disabled-track-background-color - Track disabled background color.
- * @cssprop --innofake-omni-switch-track-border-radius - Track border radius.
- * @cssprop --innofake-omni-switch-track-inset - Track inset margins.
+ * @cssprop --omni-switch-track-width - Track width.
+ * @cssprop --omni-switch-track-height - Track height. 
+ * @cssprop --omni-switch-track-background-color - Track background color.
+ * @cssprop --omni-switch-checked-track-background-color - Track checked background color.
+ * @cssprop --omni-switch-disabled-track-background-color - Track disabled background color.
+ * @cssprop --omni-switch-track-border-radius - Track border radius.
+ * @cssprop --omni-switch-track-inset - Track inset margins.
  * 
- * @cssprop --innofake-omni-switch-knob-height - Knob height.
- * @cssprop --innofake-omni-switch-knob-width - Knob width.
- * @cssprop --innofake-omni-switch-knob-background-color - Knob background color.
- * @cssprop --innofake-omni-switch-checked-knob-background-color - Knob checked background color.
- * @cssprop --innofake-omni-switch-disabled-knob-background-color - Knob disabled background color.
- * @cssprop --innofake-omni-switch-knob-box-shadow - Knob box shadow.
- * @cssprop --innofake-omni-switch-knob-hover-box-shadow - Knob hover box shadow.
- * @cssprop --innofake-omni-switch-checked-hover-knob-box-shadow - Knob checked hover box shadow.
- * @cssprop --innofake-omni-switch-disabled-knob-box-shadow - Knob disabled hover box shadow.
+ * @cssprop --omni-switch-knob-height - Knob height.
+ * @cssprop --omni-switch-knob-width - Knob width.
+ * @cssprop --omni-switch-knob-background-color - Knob background color.
+ * @cssprop --omni-switch-checked-knob-background-color - Knob checked background color.
+ * @cssprop --omni-switch-disabled-knob-background-color - Knob disabled background color.
+ * @cssprop --omni-switch-knob-box-shadow - Knob box shadow.
+ * @cssprop --omni-switch-knob-hover-box-shadow - Knob hover box shadow.
+ * @cssprop --omni-switch-checked-hover-knob-box-shadow - Knob checked hover box shadow.
+ * @cssprop --omni-switch-disabled-knob-box-shadow - Knob disabled hover box shadow.
  * 
  */
 @customElement('omni-switch')
@@ -205,8 +206,9 @@ export class Switch extends LitElement {
 	static override get styles() {
 
 		return [
-			//super.styles,
+			ComponentStyles,
 			css`
+
 				/* CONTAINER STYLES */
 				.container {
 					display: flex;
@@ -222,25 +224,25 @@ export class Switch extends LitElement {
 				/* LABEL STYLES */
 				
 				.container > .label {
-					color: var(--innofake-omni-switch-label-font-color, #4E6066);
-					font-family: var(--innofake-omni-switch-label-font-family, Arial, Helvetica, sans-serif);
-					font-size: var(--innofake-omni-switch-label-font-size, 14px);
-					font-weight: var(--innofake-omni-switch-label-font-weight, 300);
-					margin-left: var(--innofake-omni-switch-label-spacing, 8px);
+					color: var(--omni-switch-label-font-color, var(--omni-font-color));
+					font-family: var(--omni-switch-label-font-family, var(--omni-font-family));
+					font-size: var(--omni-switch-label-font-size, 14px);
+					font-weight: var(--omni-switch-label-font-weight, 300);
+					margin-left: var(--omni-switch-label-spacing, 8px);
 					cursor: default;
 				}
 				.container > .label > .hint {
-					color: var(--innofake-omni-switch-input-hint-label-font-color, lightgrey);
-					font-family: var(--innofake-omni-switch-input-hint-label-font-family, Arial, Helvetica, sans-serif);
-					font-size: var(--innofake-omni-switch-input-hint-label-font-size, 12px);
-					font-weight: var(--innofake-omni-switch-input-hint-label-font-weight, 300);
+					color: var(--omni-switch-input-hint-label-font-color, var(--omni-hint-font-color));
+					font-family: var(--omni-switch-input-hint-label-font-family, var(--omni-font-family));
+					font-size: var(--omni-switch-input-hint-label-font-size, 12px);
+					font-weight: var(--omni-switch-input-hint-label-font-weight, 300);
 					padding-top: 4px;
 				}
 				.container > .label > .error {
-					color: var(--innofake-omni-switch-input-error-label-font-color, red);
-					font-family: var(--innofake-omni-switch-input-error-label-font-family, Arial, Helvetica, sans-serif);
-					font-size: var(--innofake-omni-switch-input-error-label-font-size, 12px);
-					font-weight: var(--innofake-omni-switch-input-error-label-font-weight, 300);
+					color: var(--omni-switch-input-error-label-font-color, var(--omni-error-font-color));
+					font-family: var(--omni-switch-input-error-label-font-family, var(--omni-font-family));
+					font-size: var(--omni-switch-input-error-label-font-size, 12px);
+					font-weight: var(--omni-switch-input-error-label-font-weight, 300);
 					padding-top: 4px;
 				}
 				/* SWITCH BUTTON STYLES */
@@ -252,29 +254,29 @@ export class Switch extends LitElement {
 				}
 				
 				.container > #content > .track {
-					width: var(--innofake-omni-switch-track-width, 23px);
-					height: var(--innofake-omni-switch-track-height, 12px);
+					width: var(--omni-switch-track-width, 23px);
+					height: var(--omni-switch-track-height, 12px);
 					grid-row: 1;
 					grid-column: 1;
 					
-					background-color: var(--innofake-omni-switch-track-background-color, #7C7C7C);
-					border-radius: var(--innofake-omni-switch-track-border-radius, 16px);
-					margin-left: var(--innofake-omni-switch-track-inset, 8px);
-					margin-right: var(--innofake-omni-switch-track-inset, 8px);
+					background-color: var(--omni-switch-track-background-color, var(--omni-track-background-color));
+					border-radius: var(--omni-switch-track-border-radius, 16px);
+					margin-left: var(--omni-switch-track-inset, 8px);
+					margin-right: var(--omni-switch-track-inset, 8px);
 					outline: 0;
 				}
 				.container > #content > .knob {
-					height: var(--innofake-omni-switch-knob-height, 14px);
+					height: var(--omni-switch-knob-height, 14px);
 					grid-row: 1;
 					grid-column: 1;
 					position: relative;
 				}
 				.container > #content > .knob > div {
-					width: var(--innofake-omni-switch-knob-width, 14px);
+					width: var(--omni-switch-knob-width, 14px);
 					height: 100%;
-					background-color: var(--innofake-omni-switch-knob-background-color, #FFFFFF);
+					background-color: var(--omni-switch-knob-background-color, var(--omni-light-background-color));
 					border-radius: 50%;
-					box-shadow: var(--innofake-omni-switch-knob-box-shadow, 0 2px 4px 0 rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.15));
+					box-shadow: var(--omni-switch-knob-box-shadow, 0 2px 4px 0 rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.15));
 					
 					position: absolute;
 					left: 0px;
@@ -284,23 +286,23 @@ export class Switch extends LitElement {
 				}
 				
 				.container > #content:hover > .knob > div {
-					box-shadow: var(--innofake-omni-switch-knob-hover-box-shadow, 0 0 3px 3px rgba(0, 157, 224, 0.10));
+					box-shadow: var(--omni-switch-knob-hover-box-shadow, 0 0 3px 3px rgba(0, 157, 224, 0.10));
 				}
 				
 				/* CHECKED STATE STYLES */
 				.container.checked > #content > .track {
-					background-color: var(--innofake-omni-switch-checked-track-background-color, #7fecc2);
+					background-color: var(--omni-switch-checked-track-background-color, var(--omni-track-filled-background-color));
 				}
 				
 				.container.checked > #content > .knob > div {
-					background-color: var(--innofake-omni-switch-checked-knob-background-color, #00e09d);
-					left: calc(100% - var(--innofake-omni-switch-knob-width, 14px));
+					background-color: var(--omni-switch-checked-knob-background-color, var(--omni-filled-background-color));
+					left: calc(100% - var(--omni-switch-knob-width, 14px));
 					box-shadow: none;
 				}
 				.container.checked > #content:hover > .knob > div {
-					background-color: var(--innofake-omni-switch-checked-knob-background-color, #00e095);
-					left: calc(100% - var(--innofake-omni-switch-knob-width, 14px));
-					box-shadow: var(--innofake-omni-switch-checked-hover-knob-box-shadow, 0 0 3px 3px rgba(0, 157, 224, 0.10));
+					background-color: var(--omni-switch-checked-knob-background-color, var(--omni-filled-background-color));
+					left: calc(100% - var(--omni-switch-knob-width, 14px));
+					box-shadow: var(--omni-switch-checked-hover-knob-box-shadow, 0 0 3px 3px rgba(0, 157, 224, 0.10));
 				}
 				/* DISABLED STATE STYLES */
 				.container.disabled > #content {
@@ -308,12 +310,12 @@ export class Switch extends LitElement {
 				}
 				.container.disabled > #content > .track,
 				.container.disabled > #content:hover > .track {
-					background-color: var(--innofake-omni-switch-disabled-track-background-color, #DEDEDE);
+					background-color: var(--omni-switch-disabled-track-background-color, var(--omni-disabled-background-color));
 				}
 				.container.disabled > #content:hover > .knob > div,
 				.container.disabled > #content > .knob > div {
-					background-color: var(--innofake-omni-switch-disabled-knob-background-color, #DEDEDE);
-					box-shadow: var(--innofake-omni-switch-disabled-knob-box-shadow, 0 2px 4px 0 rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.15));
+					background-color: var(--omni-switch-disabled-knob-background-color, var(--omni-disabled-background-color));
+					box-shadow: var(--omni-switch-disabled-knob-box-shadow, 0 2px 4px 0 rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.15));
 				}
 			`
 		];
