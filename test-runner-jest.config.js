@@ -6,11 +6,7 @@ module.exports = {
   /** Add your own overrides below
    * @see https://jestjs.io/docs/configuration
    */
-  /*
     reporters: [
-      'jest-standard-reporter',
       'jest-github-actions-reporter'
-    ],
-    testLocationInResults: true
-    */
+    ]
 }
