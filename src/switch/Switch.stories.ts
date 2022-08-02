@@ -34,7 +34,7 @@ const Template: Story<ArgTypes> = (args: ArgTypes) => html`
     <omni-switch 
     data-testid="test-switch"
     label="${args.label}" 
-    data="${args.data}" 
+    .data="${args.data}" 
     hint="${args.hint}" 
     error="${args.error}"
     ?checked="${args.checked}"

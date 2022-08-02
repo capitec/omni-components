@@ -32,16 +32,39 @@
 ## ⭑ Table of Contents
 
 * [➜ Welcome to Omni Components ](#-welcome-to-omni-components-)
-* [➜ omni-label](#-omni-label)
+* [➜ omni-code](#-omni-code)
 	* [⭑ Example](#-example)
-* [➜ omni-radio](#-omni-radio)
+* [➜ omni-label](#-omni-label)
 	* [⭑ Example](#-example-1)
-* [➜ omni-switch](#-omni-switch)
+* [➜ omni-radio](#-omni-radio)
 	* [⭑ Example](#-example-2)
+* [➜ omni-switch](#-omni-switch)
+	* [⭑ Example](#-example-3)
 * [➜ Contributing and Usage](#-contributing-and-usage)
 	* [⭑ Contributors](#-contributors)
 	* [⭑ License](#-license)
 &nbsp;
+
+
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#omni-code)
+
+# ➜ omni-code
+
+A control to syntax highlight and display source code.
+
+```js 
+import '@innofake/omni-components/code'; 
+```
+
+
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#example)
+
+## ⭑ Example
+
+```html
+<omni-code language="html"> <div>   <h1>Hello World</h1> </div></omni-menu>
+```
+
 
 
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#omni-label)

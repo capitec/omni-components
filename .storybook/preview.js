@@ -49,6 +49,16 @@ export const parameters = {
 			state: 'open',
 			format: false
 		},
-		transformSource: input => pretty(input)
+		transformSource: (input, story) => {
+						 // Remove test ids from displayed source
+			input = input.replace(new RegExp("data-testid=(\"([^\"]|\"\")*\")"), "")
+						 // Update any object references to curly braces for easier reading
+						 .replace("[object Object]", "{}");
+						 // Remove any properties with empty string assignments at the end of the html tag
+			// 			 .replace(new RegExp("(([\\r\\n]+| )([^ \\r\\n])*)=(\"([^\"]|\"\"){0}\")>"), " >")
+						 // Remove any properties with empty string assignments within the tag
+			// 			 .replace(new RegExp("(([\\r\\n]+| )([^ \\r\\n])*)=(\"([^\"]|\"\"){0}\")"), " ");
+			return pretty(input)
+		}
 	}
 }
