@@ -7,7 +7,7 @@ import './Switch.js';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'UI Components/Inputs/Switch',
+  title: 'UI Components/Switch',
   component: "omni-switch",
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
@@ -34,7 +34,7 @@ const Template: Story<ArgTypes> = (args: ArgTypes) => html`
     <omni-switch 
     data-testid="test-switch"
     label="${args.label}" 
-    data="${args.data}" 
+    .data="${args.data}" 
     hint="${args.hint}" 
     error="${args.error}"
     ?checked="${args.checked}"
