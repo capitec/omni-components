@@ -15,3 +15,5 @@ jobs:
       - run: npx playwright install-deps webkit
       - name: Test Storybook 
         run: npm run test:storybook
+        env:
+          CI: true

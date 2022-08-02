@@ -8,5 +8,6 @@ module.exports = {
    */
     'reporters': [
       'jest-standard-reporter',
+      "jest-github-actions-reporter"
     ]
 }
