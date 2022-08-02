@@ -1,0 +1,17 @@
+name: test-github-test
+on: [push]
+jobs:
+  run-storybook-tests:
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          registry-url: 'https://registry.npmjs.org'
+          always-auth: true
+      - run: npm ci
+      - run: npx playwright install-deps webkit
+      - name: Test Storybook 
+        run: npm run test:storybook
