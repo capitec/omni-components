@@ -11,7 +11,7 @@ jobs:
           node-version: 16.x
           registry-url: 'https://registry.npmjs.org'
           always-auth: true
-      - run: npm ci
+      - run: npm i
       - run: npx playwright install-deps webkit
       - name: Test Storybook 
         run: npm run test:storybook
