@@ -5,5 +5,6 @@ module.exports = {
       '^.+\\.ts?$': 'ts-jest',
     },
     transformIgnorePatterns: ['<rootDir>/node_modules/'],
-    testPathIgnorePatterns: ['<rootDir>/dist/']
+    testPathIgnorePatterns: ['<rootDir>/dist/'],
+    reporters: ['jest-standard-reporter']
   };

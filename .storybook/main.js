@@ -12,6 +12,7 @@ module.exports = {
 		'@storybook/addon-a11y',
 		'@storybook/addon-interactions',
 		'@storybook/addon-links',
+		'@storybook/addon-coverage',
 		{
 			name: '@storybook/addon-storysource',
 			options: {
@@ -27,7 +28,7 @@ module.exports = {
 					injectStoryParameters: false,
 				},
 			},
-		},
+		}
 	],
 	features: {
 		postcss: false,
