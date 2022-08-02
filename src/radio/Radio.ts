@@ -1,11 +1,12 @@
 import { html, css, LitElement, CSSResultGroup, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import ComponentStyles from '../styles/ComponentStyles';
 
 /**
  * A control that allows a user to select a single value from a small group of values.
  *
  * ```js 
- * import '@innofake/omni-components/inputs/radio'; 
+ * import '@innofake/omni-components/radio'; 
  * ```
  * 
  * @example
@@ -36,45 +37,45 @@ import { customElement, property } from 'lit/decorators.js';
  * 
  * @fires {CustomEvent<{ old: Boolean; new: Boolean; }>} value-change - Dispatched when the control value is changed to either on or off.
  * 
- * @cssprop --innofake-omni-radio-width - Width.
- * @cssprop --innofake-omni-radio-height - Height.
- * @cssprop --innofake-omni-radio-padding - Padding.
+ * @cssprop --omni-radio-width - Width.
+ * @cssprop --omni-radio-height - Height.
+ * @cssprop --omni-radio-padding - Padding.
  * 
- * @cssprop --innofake-omni-label-font-color - Label Font Color.
- * @cssprop --innofake-omni-label-font-family - Label Font Family.
- * @cssprop --innofake-omni-label-font-size - Label Font Size.
- * @cssprop --innofake-omni-radio-label-font-weight - Label Font Weight.
- * @cssprop --innofake-omni-radio-label-line-height - Label Line Height.
- * @cssprop --innofake-omni-radio-label-spacing - Label Spacing.
+ * @cssprop --omni-label-font-color - Label Font Color.
+ * @cssprop --omni-label-font-family - Label Font Family.
+ * @cssprop --omni-label-font-size - Label Font Size.
+ * @cssprop --omni-radio-label-font-weight - Label Font Weight.
+ * @cssprop --omni-radio-label-line-height - Label Line Height.
+ * @cssprop --omni-radio-label-spacing - Label Spacing.
  * 
- * @cssprop --innofake-omni-input-hint-label-font-color - Hint Font Color.
- * @cssprop --innofake-omni-input-hint-label-font-family - Hint Font Family.
- * @cssprop --innofake-omni-input-hint-label-font-size - Hint Font Size.
- * @cssprop --innofake-omni-input-hint-label-font-weight - Hint Font Weight.
+ * @cssprop --omni-input-hint-label-font-color - Hint Font Color.
+ * @cssprop --omni-input-hint-label-font-family - Hint Font Family.
+ * @cssprop --omni-input-hint-label-font-size - Hint Font Size.
+ * @cssprop --omni-input-hint-label-font-weight - Hint Font Weight.
  * 
- * @cssprop --innofake-omni-input-error-label-font-color - Error Font Color.
- * @cssprop --innofake-omni-input-error-label-font-family - Error Font Family.
- * @cssprop --innofake-omni-input-error-label-font-size - Error Font Size.
- * @cssprop --innofake-omni-input-error-label-font-weight - Error Font Weight.
+ * @cssprop --omni-input-error-label-font-color - Error Font Color.
+ * @cssprop --omni-input-error-label-font-family - Error Font Family.
+ * @cssprop --omni-input-error-label-font-size - Error Font Size.
+ * @cssprop --omni-input-error-label-font-weight - Error Font Weight.
  * 
- * @cssprop --innofake-omni-radio-background-color - Background Color.
- * @cssprop --innofake-omni-radio-border-width - Border Width.
- * @cssprop --innofake-omni-radio-border-style - Border Style.
- * @cssprop --innofake-omni-radio-border-color - Border Color.
- * @cssprop --innofake-omni-radio-border-radius - Border Radius.
+ * @cssprop --omni-radio-background-color - Background Color.
+ * @cssprop --omni-radio-border-width - Border Width.
+ * @cssprop --omni-radio-border-style - Border Style.
+ * @cssprop --omni-radio-border-color - Border Color.
+ * @cssprop --omni-radio-border-radius - Border Radius.
  * 
- * @cssprop --innofake-omni-radio-indicator-border-width - Indicator Border Width.
- * @cssprop --innofake-omni-radio-indicator-border-color - Indicator Border Color.
- * @cssprop --innofake-omni-radio-border-radius - Indicator Border Radius.
- * @cssprop --innofake-omni-radio-indicator-color - Indicator Color.
+ * @cssprop --omni-radio-indicator-border-width - Indicator Border Width.
+ * @cssprop --omni-radio-indicator-border-color - Indicator Border Color.
+ * @cssprop --omni-radio-border-radius - Indicator Border Radius.
+ * @cssprop --omni-radio-indicator-color - Indicator Color.
  * 
- * @cssprop --innofake-omni-radio-checked-background-color - Checked Background color.
+ * @cssprop --omni-radio-checked-background-color - Checked Background color.
  * 
- * @cssprop --innofake-omni-radio-hover-box-shadow - Hover Box Shadow.
- * @cssprop --innofake-omni-radio-hover-background-color - Hover Background Color.
+ * @cssprop --omni-radio-hover-box-shadow - Hover Box Shadow.
+ * @cssprop --omni-radio-hover-background-color - Hover Background Color.
  * 
- * @cssprop --innofake-omni-radio-disabled-border-color - Disabled Border Color.
- * @cssprop --innofake-omni-radio-disabled-background-color - Disabled Background Color.
+ * @cssprop --omni-radio-disabled-border-color - Disabled Border Color.
+ * @cssprop --omni-radio-disabled-background-color - Disabled Background Color.
  * 
  */
 @customElement('omni-radio')
@@ -207,7 +208,7 @@ export class Radio extends LitElement {
 	static override get styles() {
 
 		return [
-			//super.styles,,
+			ComponentStyles,
 			css`
 
 				/* CONTAINER STYLES */
@@ -219,10 +220,10 @@ export class Radio extends LitElement {
 
 			css`
 				:host {
-					--innofake-omni-radio-width: 24px;
-					--innofake-omni-radio-height: 24px;
+					--omni-radio-width: 24px;
+					--omni-radio-height: 24px;
 
-					--innofake-omni-radio-padding: 2px;
+					--omni-radio-padding: 2px;
 					
 					-webkit-touch-callout: none;
 					-webkit-user-select: none;
@@ -236,31 +237,31 @@ export class Radio extends LitElement {
 				/* LABEL STYLES */
 				
 				.container > .label {
-					color: var(--innofake-omni-label-font-color);
-					font-family: var(--innofake-omni-label-font-family, Arial, Helvetica, sans-serif);
-					font-size: var(--innofake-omni-label-font-size, 14px);
-					font-weight: var(--innofake-omni-radio-label-font-weight, 500);
-					line-height: var(--innofake-omni-radio-label-line-height, 20px);
+					color: var(--omni-label-font-color, var(--omni-font-color));
+					font-family: var(--omni-label-font-family, var(--omni-font-family));
+					font-size: var(--omni-label-font-size, 14px);
+					font-weight: var(--omni-radio-label-font-weight, 500);
+					line-height: var(--omni-radio-label-line-height, 20px);
 
-					margin-left: var(--innofake-omni-radio-label-spacing, 8px);
+					margin-left: var(--omni-radio-label-spacing, 8px);
 
 					cursor: default;
 				}
 
 				.container > .label > .hint {
-					color: var(--innofake-omni-input-hint-label-font-color, lightgrey);
-					font-family: var(--innofake-omni-input-hint-label-font-family, Arial, Helvetica, sans-serif);
-					font-size: var(--innofake-omni-input-hint-label-font-size, 12px);
-					font-weight: var(--innofake-omni-input-hint-label-font-weight, 300);
+					color: var(--omni-input-hint-label-font-color, var(--omni-hint-font-color));
+					font-family: var(--omni-input-hint-label-font-family, var(--omni-font-family));
+					font-size: var(--omni-input-hint-label-font-size, 12px);
+					font-weight: var(--omni-input-hint-label-font-weight, 300);
 
 					padding-top: 4px;
 				}
 
 				.container > .label > .error {
-					color: var(--innofake-omni-input-error-label-font-color, red);
-					font-family: var(--innofake-omni-input-error-label-font-family, Arial, Helvetica, sans-serif);
-					font-size: var(--innofake-omni-input-error-label-font-size, 12px);
-					font-weight: var(--innofake-omni-input-error-label-font-weight, 300);
+					color: var(--omni-input-error-label-font-color, var(--omni-error-font-color));
+					font-family: var(--omni-input-error-label-font-family, var(--omni-font-family));
+					font-size: var(--omni-input-error-label-font-size, 12px);
+					font-weight: var(--omni-input-error-label-font-weight, 300);
 
 					padding-top: 4px;
 				}
@@ -276,61 +277,61 @@ export class Radio extends LitElement {
 					align-self: flex-start;
 					justify-content: center;
 
-					min-width: var(--innofake-omni-radio-width, 24px);
-					min-height: var(--innofake-omni-radio-height, 24px);
-					max-width: var(--innofake-omni-radio-width, 24px);
-					max-height: var(--innofake-omni-radio-height, 24px);
+					min-width: var(--omni-radio-width, 24px);
+					min-height: var(--omni-radio-height, 24px);
+					max-width: var(--omni-radio-width, 24px);
+					max-height: var(--omni-radio-height, 24px);
 
-					margin: var(--innofake-omni-radio-padding, 2px);
+					margin: var(--omni-radio-padding, 2px);
 
-					background-color: var(--innofake-omni-radio-background-color, #FFFFFF);
+					background-color: var(--omni-radio-background-color, var(--omni-light-background-color));
 
-					border-width: var(--innofake-omni-radio-border-width, 2px);
-					border-style: var(--innofake-omni-radio-border-style, solid);
-					border-color: var(--innofake-omni-radio-border-color, #009DE0);
-					border-radius: var(--innofake-omni-radio-border-radius, 50%);
+					border-width: var(--omni-radio-border-width, 2px);
+					border-style: var(--omni-radio-border-style, solid);
+					border-color: var(--omni-radio-border-color, var(--omni-filled-background-color));
+					border-radius: var(--omni-radio-border-radius, 50%);
 					
 					outline: 0;
 				}
 				
 				.container.checked > #content > .indicator {
-					width: calc(var(--innofake-omni-radio-width) - var(--innofake-omni-radio-padding)*2);
-					height: calc(var(--innofake-omni-radio-height) - var(--innofake-omni-radio-padding)*2);
+					width: calc(var(--omni-radio-width) - var(--omni-radio-padding)*2);
+					height: calc(var(--omni-radio-height) - var(--omni-radio-padding)*2);
 
-					border-width: var(--innofake-omni-radio-indicator-border-width, 2px);
+					border-width: var(--omni-radio-indicator-border-width, 2px);
 					border-style: solid;
-					border-color: var(--innofake-omni-radio-indicator-border-color, #FFFFFF);
-					border-radius: var(--innofake-omni-radio-border-radius, 50%);
+					border-color: var(--omni-radio-indicator-border-color, var(--omni-light-background-color));
+					border-radius: var(--omni-radio-border-radius, 50%);
 
-					color: var(--innofake-omni-radio-indicator-color, #FFFFFF);
+					color: var(--omni-radio-indicator-color, var(--omni-light-background-color));
 				}
 				
 				/* CHECKED STATE STYLES */
 
 				.container.checked > #content {
-					background-color: var(--innofake-omni-radio-checked-background-color, #009DE0);
+					background-color: var(--omni-radio-checked-background-color, var(--omni-filled-background-color));
 				}
 				
 				/* HOVER STATE STYLES */
 
 				.container > #content:hover {
-					box-shadow: var(--innofake-omni-radio-hover-box-shadow, 0 0 4px 4px #E6F7FF);
-					background-color: var(--innofake-omni-radio-hover-background-color, #E6F7FF);
+					box-shadow: var(--omni-radio-hover-box-shadow, 0 0 4px 4px var(--omni-light-box-shadow-color));
+					background-color: var(--omni-radio-hover-background-color, var(--omni-light-box-shadow-color));
 				}
 
 				.container.checked:hover > #content {
-					background-color: var(--innofake-omni-radio-checked-background-color, #009DE0);
+					background-color: var(--omni-radio-checked-background-color, var(--omni-filled-background-color));
 				}
 				/* DISABLED STATE STYLES */
 
 				.container.disabled > #content {
 					cursor: default;
-					border-color: var(--innofake-omni-radio-disabled-border-color, #DEDEDE);
-					background-color: var(--innofake-omni-radio-disabled-background-color, #FFFFFF);
+					border-color: var(--omni-radio-disabled-border-color, var(--omni-disabled-border-color));
+					background-color: var(--omni-radio-disabled-background-color, var(--omni-disabled-background-color));
 				}
 				
 				.container.disabled.checked > #content {
-					background-color: var(--innofake-omni-radio-disabled-background-color, #DEDEDE);
+					background-color: var(--omni-radio-disabled-background-color, var(--omni-disabled-background-color));
 				}
 				
 				.container.disabled:hover > #content {

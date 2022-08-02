@@ -1,11 +1,12 @@
 import { html, css, LitElement, CSSResultGroup, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import ComponentStyles from '../styles/ComponentStyles';
 
 /**
  * A simple label component that renders a styled text string.
  *
  * ```js 
- * import '@innofake/omni-components/core/label'; 
+ * import '@innofake/omni-components/label'; 
  * ```
  * 
  * @example
@@ -29,24 +30,24 @@ import { customElement, property } from 'lit/decorators.js';
  *  - `strong` Largest font and weight.
  * 
  * 
- * @cssprop --innofake-omni-label-font-color - Label font color.
- * @cssprop --innofake-omni-label-font-family - Label font family.
- * @cssprop --innofake-omni-label-font-size - Label font size.
- * @cssprop --innofake-omni-label-font-weight - Label font weight.
+ * @cssprop --omni-label-font-color - Label font color.
+ * @cssprop --omni-label-font-family - Label font family.
+ * @cssprop --omni-label-font-size - Label font size.
+ * @cssprop --omni-label-font-weight - Label font weight.
  * 
- * @cssprop --innofake-omni-label-cursor - Label cursor.
+ * @cssprop --omni-label-cursor - Label cursor.
  * 
- * @cssprop --innofake-omni-label-title-font-size - Title label font size.
- * @cssprop --innofake-omni-label-title-font-weight - Title label font weight.
+ * @cssprop --omni-label-title-font-size - Title label font size.
+ * @cssprop --omni-label-title-font-weight - Title label font weight.
  * 
- * @cssprop --innofake-omni-label-subtitle-font-size - Subtitle label font size.
- * @cssprop --innofake-omni-label-subtitle-font-weight - Subtitle label font weight.
+ * @cssprop --omni-label-subtitle-font-size - Subtitle label font size.
+ * @cssprop --omni-label-subtitle-font-weight - Subtitle label font weight.
  * 
- * @cssprop --innofake-omni-label-strong-font-size - Strong label font size.
- * @cssprop --innofake-omni-label-strong-font-weight - Strong label font weight.
+ * @cssprop --omni-label-strong-font-size - Strong label font size.
+ * @cssprop --omni-label-strong-font-weight - Strong label font weight.
  * 
- * @cssprop --innofake-omni-label-default-font-size - Default label font size.
- * @cssprop --innofake-omni-label-default-font-weight - Default label font weight.
+ * @cssprop --omni-label-default-font-size - Default label font size.
+ * @cssprop --omni-label-default-font-weight - Default label font weight.
  * 
  * 
  */
@@ -103,31 +104,31 @@ export class Label extends LitElement {
 	static override get styles() {
 
 		return [
-			//super.styles,
+			ComponentStyles,
 			css`
 				:host {
-					color: var(--innofake-omni-label-font-color, black);
-					font-family: var(--innofake-omni-label-font-family, Arial, Helvetica, sans-serif);
-					font-size: var(--innofake-omni-label-font-size, 12px);
-					font-weight: var(--innofake-omni-label-font-weight, normal);
+					color: var(--omni-label-font-color, var(--omni-font-color));
+					font-family: var(--omni-label-font-family, var(--omni-font-family));
+					font-size: var(--omni-label-font-size, 12px);
+					font-weight: var(--omni-label-font-weight, normal);
 					white-space: pre-wrap;
-					cursor: var(--innofake-omni-label-cursor, default);
+					cursor: var(--omni-label-cursor, default);
 				}
 				:host([type="title"]) {
-					font-size: var(--innofake-omni-label-title-font-size, 20px);
-					font-weight: var(--innofake-omni-label-title-font-weight, bold);
+					font-size: var(--omni-label-title-font-size, 20px);
+					font-weight: var(--omni-label-title-font-weight, bold);
 				}
 				:host([type="subtitle"]) {
-					font-size: var(--innofake-omni-label-subtitle-font-size, 16px);
-					font-weight: var(--innofake-omni-label-subtitle-font-weight, bold);
+					font-size: var(--omni-label-subtitle-font-size, 16px);
+					font-weight: var(--omni-label-subtitle-font-weight, bold);
 				}
 				:host([type="strong"]) {
-					font-size: var(--innofake-omni-label-strong-font-size, 12px);
-					font-weight: var(--innofake-omni-label-strong-font-weight, bold);
+					font-size: var(--omni-label-strong-font-size, 12px);
+					font-weight: var(--omni-label-strong-font-weight, bold);
 				}				
 				:host([type="default"]) {
-					font-size: var(--innofake-omni-label-default-font-size, 12px);
-					font-weight: var(--innofake-omni-label-default-font-weight, normal);
+					font-size: var(--omni-label-default-font-size, 12px);
+					font-weight: var(--omni-label-default-font-weight, normal);
 				}
 			`
 		];

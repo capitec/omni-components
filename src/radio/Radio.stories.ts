@@ -5,7 +5,7 @@ import './Radio.js';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'UI Components/Inputs/Radio',
+  title: 'UI Components/Radio',
   component: "omni-radio",
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
@@ -30,7 +30,7 @@ interface ArgTypes {
 const Template: Story<ArgTypes> = (args: ArgTypes) => html`
     <omni-radio 
     label="${args.label}" 
-    data="${args.data}" 
+    .data="${args.data}" 
     hint="${args.hint}" 
     error="${args.error}"
     ?checked="${args.checked}"

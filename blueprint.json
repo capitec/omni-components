@@ -1,0 +1,22 @@
+{
+    "logo": {
+      "src": "https://avatars.githubusercontent.com/u/107934107",
+      "width": "150"
+    },
+	"ids": {
+		"github": "innofake/omni-components",
+		"npm": "@innofake/omni-components"
+	},
+    "badges": [
+        {
+            "alt": "Repository: Private",
+            "img": "https://img.shields.io/badge/Repository-private-lightgrey.svg",
+            "url": ""
+        }
+    ],
+    "line": "aqua",
+    "headingPrefix": {
+      "1": "➜ ",
+      "2": "⭑ "
+    }
+}

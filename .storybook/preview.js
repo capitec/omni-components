@@ -1,5 +1,6 @@
 import { setCustomElementsManifest } from '@storybook/web-components';
 import customElements from '../custom-elements.json';
+import pretty from 'pretty';
 
 import basicTheme from '!!style-loader?injectType=lazyStyleTag!css-loader!../themes/default-theme.css'
 
@@ -43,4 +44,21 @@ export const parameters = {
 		}
 	},
 	viewMode: 'docs',
+	docs: {
+		source: {
+			state: 'open',
+			format: false
+		},
+		transformSource: (input, story) => {
+						 // Remove test ids from displayed source
+			input = input.replace(new RegExp("data-testid=(\"([^\"]|\"\")*\")"), "")
+						 // Update any object references to curly braces for easier reading
+						 .replace("[object Object]", "{}");
+						 // Remove any properties with empty string assignments at the end of the html tag
+			// 			 .replace(new RegExp("(([\\r\\n]+| )([^ \\r\\n])*)=(\"([^\"]|\"\"){0}\")>"), " >")
+						 // Remove any properties with empty string assignments within the tag
+			// 			 .replace(new RegExp("(([\\r\\n]+| )([^ \\r\\n])*)=(\"([^\"]|\"\"){0}\")"), " ");
+			return pretty(input)
+		}
+	}
 }
