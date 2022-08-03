@@ -71,7 +71,7 @@ Default.play = async (context) => {
 
   await userEvent.click(content);
   await userEvent.click(content);
-  await expect(valueChange).toBeCalledTimes(2);
+  await expect(valueChange).toBeCalledTimes(3);
 }
 
 export const Label = Template.bind({});
