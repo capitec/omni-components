@@ -2,7 +2,7 @@ name: pull-request-tests
 on:
   pull_request:
     branches:
-      - main
+      - play-function-testing
 jobs:
   pr-run-storybook-tests:
     timeout-minutes: 5 
@@ -14,9 +14,9 @@ jobs:
           node-version: 16.x
           registry-url: 'https://registry.npmjs.org'
           always-auth: true
-      - run: echo "Running npm CI command"
-      - run: echo "Running npx playwright install-deps webkit command" 
+      - run: npm ci
+      - run: npx playwright install-deps webkit 
       - name: Test Storybook 
-        run: echo "Running npm run test:storybook"
+        run: npm run test:storybook
         env:
           CI: true
