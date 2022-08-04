@@ -6,5 +6,5 @@ module.exports = {
     },
     transformIgnorePatterns: ['<rootDir>/node_modules/'],
     testPathIgnorePatterns: ['<rootDir>/dist/'],
-    reporters: ['jest-github-reporter']
+    reporters: ['jest-github-actions-reporter']
   };
