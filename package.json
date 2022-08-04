@@ -15,7 +15,7 @@
     "docs:elements": "npx web-component-analyzer ./src/**/*.{js,ts} --outFile LIST.md --features ",
     "storybook": "npm run clean && tsc && npm run docs:custom-elements && concurrently -k -r \"tsc --build --watch --preserveWatchOutput\" \"npx start-storybook --no-manager-cache --port=6006\"",
     "test:storybook": "concurrently -k -r -s first \"npm run storybook\" \"npx wait-on tcp:6006 && test-storybook --verbose --coverage\"",
-    "test:jest": "jest",
+    "test:jest": "jest --testLocationInResults file.js",
     "test": "npm run test:storybook & npm run test:jest"
   },
   "files": [
