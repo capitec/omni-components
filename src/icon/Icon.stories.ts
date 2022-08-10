@@ -11,16 +11,27 @@ export default {
   component: "omni-icon",
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: { 
-    fill: { control: { type: 'color', presetColors: ['red', 'green']} },
     size: { control: 'select', options: ["default", "extra-small", "small", "medium", "large"] }
   },
 	parameters: {
+    cssprops: {
+      "omni-icon-fill": {
+        value: "currentColor",
+        control: "color",
+        description: "Change the fill color of the icon",
+        category: "CSS Variables",
+      },
+      "omni-icon-background-color": {
+        control: "color",
+        description: "Change the background color of the icon",
+        category: "CSS Variables",
+      }
+    }
 	}
 } as Meta;
 
 interface ArgTypes {
 	size: string;
-	fill: string;
   icon: string;
   svg: TemplateResult;
 }
@@ -30,7 +41,6 @@ const Template: Story<ArgTypes> = (args: ArgTypes) => html`
     <omni-icon 
     data-testid="test-icon"
     size="${args.size}" 
-    fill="${args.fill}"
     icon="${args.icon}"
     >
         ${args.svg}
@@ -55,7 +65,6 @@ const MaterialTemplate: Story<ArgTypes> = (args: ArgTypes) => html`
     <omni-icon 
     data-testid="test-icon"
     size="${args.size}" 
-    fill="${args.fill}"
     icon="${args.icon}"
     >
     </omni-icon>
@@ -73,7 +82,6 @@ Default.args = {
                   <path d="m8.229 14.062-3.521-3.541L5.75 9.479l2.479 2.459 6.021-6L15.292 7Z"/>
               </g>
             </svg>`,
-  fill: 'currentColor',
   icon: undefined
 };
 
@@ -99,7 +107,6 @@ IconPath.parameters = {
 IconPath.args = {
   size: 'default',
   icon: '/assets/colors.svg',
-  fill: 'currentColor',
   svg: undefined
 };
 
@@ -111,7 +118,6 @@ URL.parameters = {
 URL.args = {
   size: 'default',
   icon: 'https://img.shields.io/badge/Repository-private-lightgrey.svg',
-  fill: 'currentColor',
   svg: undefined
 };
 
@@ -119,6 +125,5 @@ export const Material = MaterialTemplate.bind({});
 Material.args = {
   size: 'default',
   icon: '@material/receipt_long',
-  fill: 'currentColor',
   svg: undefined
 };

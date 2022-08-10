@@ -15,6 +15,12 @@ import { css } from 'lit';
  */
 export default css`
     * {
+
+        box-sizing: border-box;
+    }
+
+    :host {
+        
         --omni-font-color: var(--omni-theme-font-color,black);
         --omni-colored-font-color: var(--omni-theme-colored-font-color,#4E6066);
         --omni-font-family: var(--omni-theme-font-family,Arial, Helvetica, sans-serif);
@@ -29,10 +35,6 @@ export default css`
         --omni-light-box-shadow-color: var(--omni-theme-light-box-shadow-color, #E6F7FF);
         --omni-light-background-color: var(--omni-theme-light-background-color,#FFFFFF);
 
-        box-sizing: border-box;
-    }
-
-    :host {
         display: flex;
         flex-direction: column;
 
