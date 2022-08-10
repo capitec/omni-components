@@ -339,7 +339,7 @@ export class Check extends LitElement {
 				<div
 					id="content"
 					@keydown="${this._keyDown}">
-					<div class="indicator">${this.indeterminate ? indeterminate_icon() : this.checked ? check_icon() : ``}</div>
+					<div class="indicator">${this.indeterminate ? html`<slot name="indeterminate_icon">${indeterminate_icon()}</slot>` : this.checked ? html`<slot name="check_icon">${check_icon()}</slot>` : ``}</div>
 				</div>
 
 				<label class="label">
