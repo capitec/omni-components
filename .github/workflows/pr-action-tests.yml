@@ -16,7 +16,7 @@ jobs:
           always-auth: true
       - run: npm ci
       - run: npx playwright install-deps webkit 
-      - name: Test Storybook 
-        run: npm run test:storybook
+      - name: Test Jest 
+        run: npm run test:jest
         env:
           CI: true
