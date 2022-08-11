@@ -2,6 +2,7 @@ import { html, TemplateResult } from 'lit';
 import { Story, Meta, WebComponentsFramework } from '@storybook/web-components';
 import { expect, jest } from '@storybook/jest';
 import { within, userEvent } from '@storybook/testing-library';
+import { loadCssPropertiesRemote } from '../utils/StoryUtils';
 
 import './Icon.js';
 
@@ -14,20 +15,8 @@ export default {
     size: { control: 'select', options: ["default", "extra-small", "small", "medium", "large"] }
   },
 	parameters: {
-    cssprops: {
-      "omni-icon-fill": {
-        value: "currentColor",
-        control: "color",
-        description: "Change the fill color of the icon",
-        category: "CSS Variables",
-      },
-      "omni-icon-background-color": {
-        control: "color",
-        description: "Change the background color of the icon",
-        category: "CSS Variables",
-      }
-    }
-	}
+    cssprops: loadCssPropertiesRemote("omni-icon")
+  }
 } as Meta;
 
 interface ArgTypes {
@@ -38,6 +27,8 @@ interface ArgTypes {
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: Story<ArgTypes> = (args: ArgTypes) => html`
+    <!-- Icons loaded by content path instead of font-based or slotted content will not be able to be styled directly -->
+
     <omni-icon 
     data-testid="test-icon"
     size="${args.size}" 
@@ -101,7 +92,7 @@ SVG.args = {
 
 export const IconPath = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-IconPath.storyName = "Icon Path"
+IconPath.storyName = "Local Source"
 IconPath.parameters = {
 };
 IconPath.args = {
@@ -112,12 +103,12 @@ IconPath.args = {
 
 export const URL = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-URL.storyName = "Src Url"
+URL.storyName = "Remote Source"
 URL.parameters = {
 };
 URL.args = {
   size: 'default',
-  icon: 'https://img.shields.io/badge/Repository-private-lightgrey.svg',
+  icon: 'https://img.shields.io/badge/Source-remote-lightgrey.svg',
   svg: undefined
 };
 

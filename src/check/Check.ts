@@ -41,6 +41,40 @@ import { indeterminate_icon } from '../icons/Indeterminate.icon.js';
  * @fires {CustomEvent<{ old: Boolean; new: Boolean; }>} value-change - Dispatched when the control value is changed to either on or off.
  * 
  * @cssprop --omni-check-label-font-color - Label font color.
+ * @cssprop --omni-check-label-font-family - Label font family.
+ * @cssprop --omni-check-label-font-size - Label font size.
+ * @cssprop --omni-check-label-font-weight - Label font weight.
+ * @cssprop --omni-check-label-spacing - Label spacing.
+ * 
+ * @cssprop --omni-check-input-hint-label-font-color - Hint font color.
+ * @cssprop --omni-check-input-hint-label-font-family - Hint font family.
+ * @cssprop --omni-check-input-hint-label-font-size - Hint font size.
+ * @cssprop --omni-check-input-hint-label-font-weight - Hint font weight.
+ * 
+ * @cssprop --omni-check-input-error-label-font-color - Error font color.
+ * @cssprop --omni-check-input-error-label-font-family - Error font family.
+ * @cssprop --omni-check-input-error-label-font-size - Error font size.
+ * @cssprop --omni-check-input-error-label-font-weight - Error font weight.
+ * 
+ * @cssprop --omni-check-width - Width.
+ * @cssprop --omni-check-height - Height.
+ * @cssprop --omni-check-background-color - Background color.
+ * 
+ * @cssprop --omni-check-border-width - Border width.
+ * @cssprop --omni-check-border-color - Border color.
+ * @cssprop --omni-check-border-radius - Border radius.
+ * 
+ * @cssprop --omni-check-indicator-border-width - Indicator Border width.
+ * @cssprop --omni-check-indicator-border-color - Indicator Border color.
+ * @cssprop --omni-check-indicator-color - Indicator color.
+ * 
+ * @cssprop --omni-check-checked-background-color - Checked Background color.
+ * @cssprop --omni-check-indeterminate-background-color - Indeterminate Background color.
+ * @cssprop --omni-check-disabled-background-color - Disabled Background color.
+ * @cssprop --omni-check-disabled-border-color - Disabled border color.
+ * 
+ * @cssprop --omni-check-hover-box-shadow - Hover box shadow.
+ * @cssprop --omni-check-hover-background-color - Hover background color.
  * 
  */
 @customElement('omni-check')

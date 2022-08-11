@@ -1,5 +1,6 @@
 import { html, TemplateResult } from 'lit';
 import { Story, Meta } from '@storybook/web-components';
+import { loadCssPropertiesRemote } from '../utils/StoryUtils';
 
 
 import './Label.js';
@@ -11,6 +12,9 @@ export default {
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
      type: { control: { type: "select", options: ["default", "title", "subtitle", "strong"] } }
+  },
+  parameters: {
+    cssprops: loadCssPropertiesRemote('omni-label')
   }
 } as Meta;
 

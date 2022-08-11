@@ -1,5 +1,6 @@
 import { html, TemplateResult } from 'lit';
 import { Story, Meta } from '@storybook/web-components';
+import { loadCssPropertiesRemote } from '../utils/StoryUtils';
 
 import './Radio.js';
 
@@ -14,6 +15,7 @@ export default {
 		actions: {
 			handles: ['value-change']
 		},
+    cssprops: loadCssPropertiesRemote('omni-radio')
 	}
 } as Meta;
 
