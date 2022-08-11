@@ -9,7 +9,14 @@ import '@innofake/omni-components/check';
 ## Example
 
 ```html
-<omni-check  label="My Toggle Value"  .data="{'id': 12345, 'name': 'Test'}"  hint="Required"  error="Field level error message"  checked  disabled></omni-check>
+<omni-check
+  label="My Toggle Value"
+  .data="{'id': 12345, 'name': 'Test'}"
+  hint="Required"
+  error="Field level error message"
+  checked
+  disabled>
+</omni-check>
 ```
 
 ## Properties
@@ -22,7 +29,7 @@ import '@innofake/omni-components/check';
 | `error`         | `error`         |           | `String`      |         | An error message to guide users to correct a mistake. |
 | `hint`          | `hint`          |           | `String`      |         | A hint message to assist the user.               |
 | `indeterminate` | `indeterminate` |           | `Boolean`     | false   | Indicator if the component is in and indeterminate state. |
-| `label`         | `label`         |           | `String`      |         | The check label text.                            |
+| `label`         | `label`         |           | `String`      |         | The label text.                                  |
 | `override`      |                 |           |               |         | The element style template.                      |
 | `styles`        |                 | readonly  | `CSSResult[]` |         |                                                  |
 

@@ -9,7 +9,10 @@ import '@innofake/omni-components/label';
 ## Example
 
 ```html
-<omni-label  label="Hello World"  type="strong"></omni-label>
+<omni-label
+  label="Hello World"
+  type="strong">
+</omni-label>
 ```
 
 ## Properties
@@ -19,7 +22,7 @@ import '@innofake/omni-components/label';
 | `label`    | `label`   |           | `String`                                         |           | The label string to display.                     |
 | `override` |           |           |                                                  |           | The element style template.                      |
 | `styles`   |           | readonly  | `CSSResult[]`                                    |           |                                                  |
-| `type`     | `type`    |           | `"default"\|"title"\|"subtitle"\|"strong"\|String` | "default" | The type of label to display:- `default` Normal font weight.- `title` Larger font and weight.- `subtitle` Larger font and weight.- `strong` Largest font and weight. |
+| `type`     | `type`    |           | `"default"\|"title"\|"subtitle"\|"strong"\|String` | "default" | The type of label to display:<br />- `default` Normal font weight.<br />- `title` Larger font and weight.<br />- `subtitle` Larger font and weight.<br />- `strong` Largest font and weight. |
 
 ## CSS Custom Properties
 
