@@ -28,7 +28,7 @@ import { indeterminate_icon } from '../icons/Indeterminate.icon.js';
  * 
  * Registry of all properties defined by the component.
  * 
- * @property {String} [label] - The check label text.
+ * @property {String} [label] - The label text.
  * @property {Object} [data] - Data associated with the component.
  * 
  * @property {String} [hint] - A hint message to assist the user.
