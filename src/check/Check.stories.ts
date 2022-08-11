@@ -2,6 +2,7 @@ import { html, TemplateResult } from 'lit';
 import { Story, Meta, WebComponentsFramework } from '@storybook/web-components';
 import { expect, jest } from '@storybook/jest';
 import { within, userEvent } from '@storybook/testing-library';
+import { loadCssPropertiesRemote } from '../utils/StoryUtils';
 
 import './Check.js';
 
@@ -16,6 +17,7 @@ export default {
 		actions: {
 			handles: ['value-change']
 		},
+    cssprops: loadCssPropertiesRemote('omni-check')
 	}
 } as Meta;
 
