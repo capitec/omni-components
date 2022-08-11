@@ -38,6 +38,9 @@ import { indeterminate_icon } from '../icons/Indeterminate.icon.js';
  * @property {Boolean} [disabled=false] - Indicator if the component is disabled.
  * @property {Boolean} [indeterminate=false] - Indicator if the component is in and indeterminate state.
  * 
+ * @slot indeterminate_icon - Replaces the icon for the indeterminate state
+ * @slot check_icon - Replaces the icon for the checked state
+ * 
  * @fires {CustomEvent<{ old: Boolean; new: Boolean; }>} value-change - Dispatched when the control value is changed to either on or off.
  * 
  * @cssprop --omni-check-label-font-color - Label font color.
