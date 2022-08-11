@@ -2,7 +2,7 @@ name: Update Documentation
 
 on: 
   push:
-    branches: [ main,develop,contrib-test ]
+    branches: [ main,develop ]
 
 permissions:
   contents: write    
