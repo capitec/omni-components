@@ -46,6 +46,13 @@ import '@innofake/omni-components/check';
 | `value-change`  | `CustomEvent<{ old: Boolean; new: Boolean; }>` | Dispatched when the control value is changed to either on or off. |
 | `value-changed` | `CustomEvent<{ old: Boolean; new: Boolean; }>` |                                                  |
 
+## Slots
+
+| Name                 | Description                                   |
+|----------------------|-----------------------------------------------|
+| `check_icon`         | Replaces the icon for the checked state       |
+| `indeterminate_icon` | Replaces the icon for the indeterminate state |
+
 ## CSS Custom Properties
 
 | Property                                      | Description                     |
