@@ -9,10 +9,10 @@
      */
 	name: string;
     /**
-     * {"memory"|"sessionStorage"} [persistence="memory"] Where to persist store data to:
+     * {"memory"|"sessionStorage|"localStorage"} [persistence="memory"] Where to persist store data to:
      * - "memory" - All state is stored in memory for the current session, i.e. it cannot survive page reloads.
-     * - "sessionStorage" - All state is stored in domain storage for the current session only, i.e it can survive page reloads
-     * as long as the tab remains open.
+     * - "sessionStorage" - All state is stored in domain storage for the current session only, i.e it can survive page reloads as long as the tab remains open.
+     * - "localStorage" - All state is stored in local storage , i.e it can survive page reloads and browser reopen
      */
 	persistence: string = "memory";
     /**

@@ -22,6 +22,19 @@ manifest.modules.forEach(module => {
         if (!groupedManifests[dir]) {
             groupedManifests[dir] = []
         }
+
+        if (module.declarations) {
+            module.declarations.forEach(dec => {
+                if (dec.members ) {
+                    dec.members.forEach(member => {
+                        if (member.description) {
+                            member.description = member.description.replaceAll(`\r\n`,`
+                            `);
+                        }
+                    });
+                }
+            })
+        }
         groupedManifests[dir].push(module)
     }
 });
