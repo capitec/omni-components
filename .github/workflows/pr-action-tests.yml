@@ -2,7 +2,7 @@ name: pull-request-tests
 on:
   pull_request:
     branches:
-      - play-function-testing
+      - # Add specific branches here
 jobs:
   pr-run-storybook-tests:
     timeout-minutes: 5 
