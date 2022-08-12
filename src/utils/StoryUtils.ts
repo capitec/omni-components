@@ -55,9 +55,31 @@ function loadCssPropertiesRemote(element: string, cssDeclarations: any = undefin
     
     cssDeclarations = loadCssProperties(element, customElements, cssDeclarations);
 
-    console.log(element, cssDeclarations);
+    // console.log(element, cssDeclarations);
     return cssDeclarations;
 }
 
+function loadCustomElementsRemote(): any {
+    let error = undefined;
+    let output = "";
+    const request = new XMLHttpRequest();
+    request.open('GET', 'custom-elements.json', false);  // `false` makes the request synchronous
+    request.onload = () => {
+        output = request.responseText;
+    };
+    request.onerror = () => {
+        error = `${request.status} - ${request.statusText}`;
+    };
+    request.send(null);
+    
+    if (error) {
+        throw new Error(error);
+    }
 
-export { loadCssPropertiesRemote, loadCssProperties, DefaultCssProperties }
+    let customElements = JSON.parse(output);
+
+    return customElements;
+}
+
+
+export { loadCustomElementsRemote, loadCssPropertiesRemote, loadCssProperties, DefaultCssProperties }

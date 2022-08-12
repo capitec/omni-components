@@ -12,9 +12,11 @@
     "docs:generate": "npm run docs:elements && readme generate",
     "docs:custom-elements": "npx cem analyze --litelement --globs src/**",
     "docs:storybook": "npx build-storybook --output-dir=docs",
-    "docs:readme": "npx web-component-analyzer ./src/**/*.{js,ts} --outFiles {dir}/README.md",
+    "docs:readme": "npm run docs:readme:ui && npm run docs:readme:non-ui",
+    "docs:readme:ui": "npx web-component-analyzer ./src/**/*.{js,ts} --outFiles {dir}/README.md",
+    "docs:readme:non-ui": "node stories/markdown-gen.js",
     "docs:elements": "npx web-component-analyzer ./src/**/*.{js,ts} --outFile LIST.md --features ",
-    "storybook": "npm run clean && tsc && npm run docs:custom-elements && concurrently -k -r \"tsc --build --watch --preserveWatchOutput\" \"npx start-storybook --no-manager-cache --port=6006\""
+    "storybook": "npm run clean && tsc && npm run docs:custom-elements && npm run docs:readme:non-ui && concurrently -k -r \"tsc --build --watch --preserveWatchOutput\" \"npx start-storybook --no-manager-cache --port=6006\""
   },
   "files": [
     "dist",
@@ -45,6 +47,7 @@
   "devDependencies": {
     "@appnest/readme": "^1.2.7",
     "@custom-elements-manifest/analyzer": "^0.6.3",
+    "@custom-elements-manifest/to-markdown": "^0.1.0",
     "@etchteam/storybook-addon-css-variables-theme": "^1.2.1",
     "@ljcl/storybook-addon-cssprops": "^2.3.5",
     "@storybook/addon-a11y": "^6.5.9",

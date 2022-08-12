@@ -1,10 +1,7 @@
 
 
 /**
- * Retrieves the value from the object in a nested fashion. 
- * Specify a path as e.g. "food.fruit.apple".
- * 
- * Click [here](https://hackernoon.com/accessing-nested-objects-in-javascript-f02f1bd6387f) for more info.
+ * Retrieves the value from the object in a nested fashion. Specify a path as e.g. "food.fruit.apple". Click [here](https://hackernoon.com/accessing-nested-objects-in-javascript-f02f1bd6387f) for more info.
  *
  * @export function    
  * @param {Object} obj Object to retrieve value from.
