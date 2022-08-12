@@ -35,7 +35,8 @@ module.exports = {
     interactionsDebugger: true,
 	},
 	staticDirs: [
-		{ from: '../custom-elements.json', to: 'custom-elements.json' }
+		{ from: '../custom-elements.json', to: 'custom-elements.json' },
+		{ from: '../stories/assets', to: '/assets' }
 	],
 	webpackFinal: async (config, { configType }) => {
 

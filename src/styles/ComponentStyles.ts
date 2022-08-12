@@ -16,6 +16,7 @@ import { css } from 'lit';
 export default css`
     * {
         --omni-font-color: var(--omni-theme-font-color,black);
+        --omni-colored-font-color: var(--omni-theme-colored-font-color,#4E6066);
         --omni-font-family: var(--omni-theme-font-family,Arial, Helvetica, sans-serif);
 
         --omni-hint-font-color: var(--omni-theme-hint-font-color,lightgrey);
@@ -39,10 +40,48 @@ export default css`
 
         padding: 0px;
         margin: 0px;
-        user-select: var(--omni-theme-text-select);
+        
+        -webkit-touch-callout: var(--omni-theme-text-select, none);
+        -webkit-user-select: var(--omni-theme-text-select, none);
+        -khtml-user-select: var(--omni-theme-text-select, none);
+        -moz-user-select: var(--omni-theme-text-select, none);
+        -ms-user-select: var(--omni-theme-text-select, none);
+        user-select: var(--omni-theme-text-select, none);
     }
 
     :host([hidden]) {
         display: none;
+    }
+    
+    /* MATERIAL ICON STYLES */
+
+    .material-icon {
+        font-family: 'Material Icons';
+        font-weight: normal;
+        font-style: normal;
+        display: inline-block;
+        line-height: 1;
+        text-transform: none;
+        letter-spacing: normal;
+        word-wrap: normal;
+        white-space: nowrap;
+        direction: ltr;
+        padding: 0px;
+        margin: 0px;
+
+        align-self: center;
+        justify-self: center;
+
+        /* Support for all WebKit browsers. */
+        -webkit-font-smoothing: antialiased;
+        
+        /* Support for Safari and Chrome. */
+        text-rendering: optimizeLegibility;
+
+        /* Support for Firefox. */
+        -moz-osx-font-smoothing: grayscale;
+
+        /* Support for IE. */
+        font-feature-settings: 'liga';
     }
 `;
