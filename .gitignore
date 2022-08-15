@@ -24,3 +24,6 @@ docs
 # Built docs
 custom-elements.json
 LIST.md
+
+# General
+.DS_Store
