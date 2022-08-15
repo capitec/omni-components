@@ -1,8 +1,7 @@
 name: pull-request-tests
 on:
   pull_request:
-    branches:
-      - # Add specific branches here
+    branches: [ main,develop ]
 jobs:
   pr-run-storybook-tests:
     timeout-minutes: 5 
@@ -17,6 +16,6 @@ jobs:
       - run: npm ci
       - run: npx playwright install-deps webkit 
       - name: Test Storybook 
-        run: npm run test:storybook
+        run: npm run test
         env:
           CI: true
