@@ -20,7 +20,12 @@ typings/
 # Output directories
 dist
 docs
+coverage
+.nyc_output
 
 # Built docs
 custom-elements.json
 LIST.md
+
+# General
+.DS_Store
