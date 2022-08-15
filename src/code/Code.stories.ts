@@ -45,22 +45,6 @@ Default.args = {
   content:'Hello' ,
   language:'html' ,
 };
-Default.play = async (context) => {
-  
-  const canvas = within(context.canvasElement);
-
-  const Code = canvas.getByTestId(`test-code`);
-  console.log(Code);
-  const valueChange = jest.fn();
-  Code.addEventListener('value-change',()=> valueChange());
-
-  const content = Code.shadowRoot.getElementById(`content`);
-  console.log(content);
-
-  await userEvent.click(content);
-  await userEvent.click(content);
-  await expect(valueChange).toBeCalledTimes(2);
-}
 
 // export const Header = Template.bind({});
 // Header.args = {
