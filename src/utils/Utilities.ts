@@ -67,7 +67,7 @@ export function hasValue(value: Number | String | Object) {
  * @param {Array} arr Array to group.
  * @param {String|Function} target Grouping target:
  *  - ```String``` as property to group on, e.g. "userId"
- *  - ```Function```as [Array.prototype.reduce()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce#Syntax) callback function.
+ *  - ```Function``` as [Array.prototype.reduce()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce#Syntax) callback function.
  * @returns {Object} Contains a property as key for each group.
  */
 export function groupBy(arr: Array<any>, target: String | Function) {

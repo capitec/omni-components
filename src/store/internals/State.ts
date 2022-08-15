@@ -1,7 +1,7 @@
 import LocalStoragePersister from './LocalStoragePersister.js';
 import { MemoryPersister } from './MemoryPersister.js';
 import SessionStoragePersister from './SessionStoragePersister.js';
-import { deepCopy } from '../../utils/Utilities.js';
+import { deepCopy } from '../../utils';
 import { getName } from './Common.js';
 import { StoreStateSettings } from '../StoreStateSettings.js';
 import { StatePersister } from './StatePersister.js';
