@@ -2,8 +2,12 @@ import { html, TemplateResult } from 'lit';
 import { Story, Meta, WebComponentsFramework } from '@storybook/web-components';
 import { expect, jest } from '@storybook/jest';
 import { within, userEvent } from '@storybook/testing-library';
+import { loadCssPropertiesRemote } from '../utils/StoryUtils';
 
 import './Switch.js';
+
+let cssProps = loadCssPropertiesRemote("omni-switch");
+
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -13,9 +17,10 @@ export default {
   argTypes: {
   },
 	parameters: {
+    cssprops: cssProps,
 		actions: {
 			handles: ['value-changed','value-change']
-		},
+		}
 	}
 } as Meta;
 

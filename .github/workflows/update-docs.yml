@@ -1,0 +1,57 @@
+name: Update Documentation
+
+on: 
+  push:
+    branches: [ main,develop ]
+
+permissions:
+  contents: write    
+
+jobs:
+  update-docs:
+    concurrency:
+      group: ${{ github.ref }}
+      cancel-in-progress: true
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+      - name: Dump env 💩
+        run: env | sort
+      - name: Dump GitHub context 💩
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+      - name: Use Node.js 16.x ✔
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          registry-url: 'https://registry.npmjs.org'
+          always-auth: true
+      - name: Install Package Dependencies 🔗
+        run: |
+          npm ci
+      - name: Build Project 🔧📝
+        run: |
+          npm run build
+      - name: Auto Commit Changes 👩‍💻
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Updated docs
+          branch: ${{ github.event.release.target_commitish }}
+      - name: Contribute List ➕
+        uses: akhilmhdh/contributors-readme-action@v2.3.6
+        with:
+            image_size: 100
+            use_username: true
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

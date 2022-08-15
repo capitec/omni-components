@@ -15,9 +15,7 @@ import ComponentStyles from '../styles/ComponentStyles';
  * ```html
  * <omni-icon
  *   size="default|extra-small|small|medium|large">
- * 	  <svg version="1.1" id="diagram" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="375px" height="150px">
- * 	    <path d="M45,11.5H33.333c0.735-1.159,1.167-2.528,1.167-4C34.5,3.364,31.136,0,27,0s-7.5,3.364-7.5,7.5c0,1.472,0.432,2.841,1.167,4H9l-9,32h54L45,11.5z M22.5,7.5C22.5,5.019,24.519,3,27,3s4.5,2.019,4.5,4.5c0,1.752-1.017,3.257-2.481,4h-4.037 C23.517,10.757,22.5,9.252,22.5,7.5z" id="control"/>
- *    </svg>
+ * 	   <svg version="1.1" id="diagram" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="375px" height="150px"><path d="M45,11.5H33.333c0.735-1.159,1.167-2.528,1.167-4C34.5,3.364,31.136,0,27,0s-7.5,3.364-7.5,7.5c0,1.472,0.432,2.841,1.167,4H9l-9,32h54L45,11.5z M22.5,7.5C22.5,5.019,24.519,3,27,3s4.5,2.019,4.5,4.5c0,1.752-1.017,3.257-2.481,4h-4.037 C23.517,10.757,22.5,9.252,22.5,7.5z" id="control"/></svg>
  * </omni-icon>
  * ```
  * 
@@ -39,11 +37,16 @@ import ComponentStyles from '../styles/ComponentStyles';
  *  - `medium` Icon size is 32px.
  *  - `large` Icon size is 48px.
  * @property {String} icon - The name of the icon to display. Takes preference over the slotted icon
- * @property {String} fill - The fill color for the icon path
  * 
  * @slot default - The icon to be displayed
  * 
- * @cssprop --omni-icon-label-font-color - Label font color.
+ * @cssprop --omni-icon-fill - Icon fill color.
+ * @cssprop --omni-icon-background-color - Icon background color.
+ * @cssprop --omni-icon-size-large - Icon large size.
+ * @cssprop --omni-icon-size-medium - Icon medium size.
+ * @cssprop --omni-icon-size-small - Icon small size.
+ * @cssprop --omni-icon-size-extra-small - Icon extra small size.
+ * @cssprop --omni-icon-size-default - Icon default size.
  * 
  */
 @customElement('omni-icon')
@@ -51,7 +54,6 @@ export class Icon extends LitElement {
 
 	@property({ type: String, reflect: true }) size?: string = "default";
 	@property({ type: String, reflect: true }) icon?: String;
-	@property({ type: String, reflect: true }) fill?: String;
 
 	// --------------
 	// INITIALISATION
@@ -105,6 +107,9 @@ export class Icon extends LitElement {
 				:host {
 					width: fit-content;
 					justify-content: center;
+					color: var(--omni-icon-fill, currentColor);
+					fill: var(--omni-icon-fill, currentColor);
+					background-color: var(--omni-icon-background-color);
 				}
 				/* MATERIAL ICON STYLES */
 
@@ -139,49 +144,49 @@ export class Icon extends LitElement {
 				}
 
 				.material-icon.large {
-					font-size: var(--theme-icon-size-large,48px);
+					font-size: var(--omni-icon-size-large,48px);
 				}
 
 				.material-icon.medium {
-					font-size: var(--theme-icon-size-medium,32px);
+					font-size: var(--omni-icon-size-medium,32px);
 				}
 
 				.material-icon.small {
-					font-size: var(--theme-icon-size-small,16px);
+					font-size: var(--omni-icon-size-small,16px);
 				}
 
 				.material-icon.extra-small {
-					font-size: var(--theme-icon-size-extra-small,8.25px);
+					font-size: var(--omni-icon-size-extra-small,8.25px);
 				}
 
 				.material-icon.default {
-					font-size: var(--theme-icon-size-default,24px);
+					font-size: var(--omni-icon-size-default,24px);
 				}
 
 				/* SVG ICON STYLES */
 
 				.svg-icon.large {
-					height: var(--theme-icon-size-large,48px);
+					height: var(--omni-icon-size-large,48px);
 					/*width: 48px;*/
 				}
 
 				.svg-icon.medium {
-					height: var(--theme-icon-size-medium,32px);
+					height: var(--omni-icon-size-medium,32px);
 					/*width: 32px;*/
 				}
 
 				.svg-icon.small {
-					height: var(--theme-icon-size-small,16px);
+					height: var(--omni-icon-size-small,16px);
 					/*width: 16px;*/
 				}
 
 				.svg-icon.extra-small {
-					height: var(--theme-icon-size-extra-small,8.25px);
+					height: var(--omni-icon-size-extra-small,8.25px);
 					/*width: 16px;*/
 				}
 
 				.svg-icon.default {
-					height: var(--theme-icon-size-default,24px);
+					height: var(--omni-icon-size-default,24px);
 					/*width: 24px;*/
 				}
 			`
@@ -199,7 +204,7 @@ export class Icon extends LitElement {
 
 			if (this.icon.startsWith(`@material/`)) {
 				return html`
-					<div class="material-icon ${this.size}" style="color: ${ifDefined(this.fill)}; fill: currentColor;">${this.icon.replace(`@material/`, ``)}</div>
+					<div class="material-icon ${this.size}" >${this.icon.replace(`@material/`, ``)}</div>
 				`;
 			} 
 			return html`
@@ -207,6 +212,6 @@ export class Icon extends LitElement {
 			`;
 		}
 
-		return html`<div class="svg-icon ${this.size}" style="fill: ${ifDefined(this.fill)};"><slot></slot></div>`;
+		return html`<div class="svg-icon ${this.size}" ><slot></slot></div>`;
 	}
 }

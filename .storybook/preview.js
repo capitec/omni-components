@@ -5,6 +5,7 @@ import pretty from 'pretty';
 import basicTheme from '!!style-loader?injectType=lazyStyleTag!css-loader!../themes/default-theme.css'
 
 import cssVariablesTheme from '@etchteam/storybook-addon-css-variables-theme';
+import CustomDocsPage from '../stories/DocsPage.mdx';
 
 // Auto generate properties in the docs view from the custom elements manifest.
 setCustomElementsManifest(customElements);
@@ -59,6 +60,7 @@ export const parameters = {
 						 // Remove any properties with empty string assignments within the tag
 			// 			 .replace(new RegExp("(([\\r\\n]+| )([^ \\r\\n])*)=(\"([^\"]|\"\"){0}\")"), " ");
 			return pretty(input)
-		}
+		},
+		page: CustomDocsPage
 	}
 }

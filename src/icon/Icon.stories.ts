@@ -2,6 +2,7 @@ import { html, TemplateResult } from 'lit';
 import { Story, Meta, WebComponentsFramework } from '@storybook/web-components';
 import { expect, jest } from '@storybook/jest';
 import { within, userEvent } from '@storybook/testing-library';
+import { loadCssPropertiesRemote } from '../utils/StoryUtils';
 
 import './Icon.js';
 
@@ -11,26 +12,26 @@ export default {
   component: "omni-icon",
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: { 
-    fill: { control: { type: 'color', presetColors: ['red', 'green']} },
     size: { control: 'select', options: ["default", "extra-small", "small", "medium", "large"] }
   },
 	parameters: {
-	}
+    cssprops: loadCssPropertiesRemote("omni-icon")
+  }
 } as Meta;
 
 interface ArgTypes {
 	size: string;
-	fill: string;
   icon: string;
   svg: TemplateResult;
 }
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: Story<ArgTypes> = (args: ArgTypes) => html`
+    <!-- Icons loaded by content path instead of font-based or slotted content will not be able to be styled directly -->
+
     <omni-icon 
     data-testid="test-icon"
     size="${args.size}" 
-    fill="${args.fill}"
     icon="${args.icon}"
     >
         ${args.svg}
@@ -55,7 +56,6 @@ const MaterialTemplate: Story<ArgTypes> = (args: ArgTypes) => html`
     <omni-icon 
     data-testid="test-icon"
     size="${args.size}" 
-    fill="${args.fill}"
     icon="${args.icon}"
     >
     </omni-icon>
@@ -73,7 +73,6 @@ Default.args = {
                   <path d="m8.229 14.062-3.521-3.541L5.75 9.479l2.479 2.459 6.021-6L15.292 7Z"/>
               </g>
             </svg>`,
-  fill: 'currentColor',
   icon: undefined
 };
 
@@ -93,25 +92,23 @@ SVG.args = {
 
 export const IconPath = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-IconPath.storyName = "Icon Path"
+IconPath.storyName = "Local Source"
 IconPath.parameters = {
 };
 IconPath.args = {
   size: 'default',
   icon: '/assets/colors.svg',
-  fill: 'currentColor',
   svg: undefined
 };
 
 export const URL = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-URL.storyName = "Src Url"
+URL.storyName = "Remote Source"
 URL.parameters = {
 };
 URL.args = {
   size: 'default',
-  icon: 'https://img.shields.io/badge/Repository-private-lightgrey.svg',
-  fill: 'currentColor',
+  icon: 'https://img.shields.io/badge/Source-remote-lightgrey.svg',
   svg: undefined
 };
 
@@ -119,6 +116,5 @@ export const Material = MaterialTemplate.bind({});
 Material.args = {
   size: 'default',
   icon: '@material/receipt_long',
-  fill: 'currentColor',
   svg: undefined
 };

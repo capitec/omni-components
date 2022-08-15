@@ -12,6 +12,9 @@
 &nbsp;
 
 {{ load:LIST.md }}
+
+&nbsp;
 # Contributing and Usage
-{{ template:contributors }}
+<!-- readme: contributors -start -->
+<!-- readme: contributors -end -->
 {{ template:license }}

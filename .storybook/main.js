@@ -28,7 +28,8 @@ module.exports = {
 					injectStoryParameters: false,
 				},
 			},
-		}
+		},
+		"@ljcl/storybook-addon-cssprops"
 	],
 	features: {
 		postcss: false,
