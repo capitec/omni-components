@@ -3,6 +3,16 @@ const jsdocParse = require('jsdoc-parse');
 const fs = require(`fs`);
 const path = require(`path`);
 
+if (!fs.existsSync('custom-elements.json')) {
+    console.warn(`No 'custom-elements.json' available. Skipping README generation for Non-UI Components`);
+    return;
+}
+
+if (!fs.existsSync('dist')) {
+    console.warn(`No 'dist' available. Skipping README generation for Non-UI Components`);
+    return;
+}
+
 const manifestRaw = fs.readFileSync('custom-elements.json', 'utf-8');
 const manifest = JSON.parse(manifestRaw);
 const codeSnippet = '```'
@@ -50,7 +60,6 @@ function generateMarkdown(sections) {
 }
 
 function generateMarkdownSection(file, docs) {
-    console.log(JSON.stringify( docs));
 
     let section = '\r\n';
 
