@@ -18,7 +18,7 @@
     "storybook": "npm run clean && tsc && npm run docs:custom-elements && npm run docs:readme:non-ui && concurrently -k -r \"tsc --build --watch --preserveWatchOutput\" \"npx start-storybook --no-manager-cache --port=6006\"",
     "test:storybook": "concurrently -k -r -s first \"npm run storybook\" \"npx wait-on tcp:6006 && test-storybook --verbose --coverage\"",
     "test:jest": "jest --passWithNoTests --coverage",
-    "test": "npm run test:storybook & npm run test:jest"
+    "test": "npm run test:storybook && npm run test:jest"
   },
   "files": [
     "dist",
