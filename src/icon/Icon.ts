@@ -53,7 +53,7 @@ import ComponentStyles from '../styles/ComponentStyles';
 export class Icon extends LitElement {
 
 	@property({ type: String, reflect: true }) size?: string = "default";
-	@property({ type: String, reflect: true }) icon?: String;
+	@property({ type: String, reflect: true }) icon?: string;
 
 	// --------------
 	// INITIALISATION
