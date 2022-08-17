@@ -136,7 +136,7 @@ export class Switch extends LitElement {
 	// ---------------
 
 	/**
-	 * Switchs the current checked state of the component.
+	 * Switch the current checked state of the component.
 	 * 
 	 * @ignore
 	 * @returns {void}
