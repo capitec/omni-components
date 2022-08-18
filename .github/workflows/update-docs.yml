@@ -52,14 +52,14 @@ jobs:
       - name: Auto Commit Changes 👩‍💻
         uses: stefanzweifel/git-auto-commit-action@v4
         # Only on branch pushes, not on tagged releases
-        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        if: ${{ startsWith(github.ref, 'refs/heads/') }}
         with:
           commit_message: Updated docs
           branch: ${{ env.GITHUB_REF_NAME }}
       - name: Contribute List ➕
         uses: akhilmhdh/contributors-readme-action@v2.3.6
         # Only on branch pushes, not on tagged releases
-        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        if: ${{ startsWith(github.ref, 'refs/heads/') }}
         with:
             image_size: 100
             use_username: true
