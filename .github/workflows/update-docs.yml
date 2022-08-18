@@ -85,7 +85,7 @@ jobs:
       - name: Update DOCS_VERSION_PATH ⬆
         # Tagged release branch only
         if: ${{ startsWith(github.ref, 'refs/tags/') }}
-        run: echo DOCS_VERSION_PATH=/versions/$(echo $GITHUB_REF | cut -d / -f 3 | cut -d v -f 2- | cut -d . -f 1,2) >> $GITHUB_ENV
+        run: echo DOCS_VERSION_PATH=/versions/${{ github.event.release.tag_name }} >> $GITHUB_ENV
 
       - name: Publish Version Docs 🚀
         uses: JamesIves/github-pages-deploy-action@v4.3.4
@@ -105,8 +105,8 @@ jobs:
 
       - name: Publish Latest Docs 🚀
         uses: JamesIves/github-pages-deploy-action@v4.3.4
-        # Main branch only
-        if: github.ref == 'refs/heads/main'
+        # Main or release branch only
+        if: github.ref == 'refs/heads/main' || ${{ startsWith(github.ref, 'refs/tags/') }}
         with:
           token: ${{ secrets.ACCESS_TOKEN }}
           repository-name: innofake/open-source-docs
