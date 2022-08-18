@@ -3,10 +3,16 @@ name: Update Documentation
 on: 
   push:
     branches: [ main,develop ]
+  release:
+    types:
+      - published
 
 permissions:
   contents: write    
 
+env:
+  DOCS_BASE_PATH: docs/Omni-Components
+  DOCS_VERSION_PATH: /
 jobs:
   update-docs:
     concurrency:
@@ -45,13 +51,71 @@ jobs:
           npm run build
       - name: Auto Commit Changes 👩‍💻
         uses: stefanzweifel/git-auto-commit-action@v4
+        # Only on branch pushes, not on tagged releases
+        if: ${{ startsWith(github.ref, 'refs/heads/') }}
         with:
           commit_message: Updated docs
-          branch: ${{ github.event.release.target_commitish }}
+          branch: ${{ env.GITHUB_REF_NAME }}
       - name: Contribute List ➕
         uses: akhilmhdh/contributors-readme-action@v2.3.6
+        # Only on branch pushes, not on tagged releases
+        if: ${{ startsWith(github.ref, 'refs/heads/') }}
         with:
             image_size: 100
             use_username: true
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish Beta Docs 🚀
+        uses: JamesIves/github-pages-deploy-action@v4.3.4
+        # Develop branch only
+        if: github.ref == 'refs/heads/develop'
+        with:
+          token: ${{ secrets.ACCESS_TOKEN }}
+          repository-name: innofake/open-source-docs
+          branch: main
+          folder: docs # The folder to grab the built docs files from
+          target-folder: ${{ env.DOCS_BASE_PATH }}/versions/beta # The folder to commit the build docs files into
+          clean: true # Clean out any previous files in the target folder
+          clean-exclude: |
+            versions
+          git-config-name: Deploy Bot
+          git-config-email: info@innofake.io
+          
+      - name: Update DOCS_VERSION_PATH ⬆
+        # Tagged release branch only
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        run: echo DOCS_VERSION_PATH=/versions/${{ github.event.release.tag_name }} >> $GITHUB_ENV
+
+      - name: Publish Version Docs 🚀
+        uses: JamesIves/github-pages-deploy-action@v4.3.4
+        # Tagged release branch only
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        with:
+          token: ${{ secrets.ACCESS_TOKEN }}
+          repository-name: innofake/open-source-docs
+          branch: main
+          folder: docs # The folder to grab the built docs files from
+          target-folder: ${{ env.DOCS_BASE_PATH }}${{ env.DOCS_VERSION_PATH }} # The folder to commit the build docs files into
+          clean: true
+          clean-exclude: |
+            versions
+          git-config-name: Deploy Bot
+          git-config-email: info@innofake.io
+
+      - name: Publish Latest Docs 🚀
+        uses: JamesIves/github-pages-deploy-action@v4.3.4
+        # Main or release branch only
+        if: github.ref == 'refs/heads/main' || ${{ startsWith(github.ref, 'refs/tags/') }}
+        with:
+          token: ${{ secrets.ACCESS_TOKEN }}
+          repository-name: innofake/open-source-docs
+          branch: main
+          folder: docs # The folder to grab the built docs files from
+          target-folder: ${{ env.DOCS_BASE_PATH }} # The folder to commit the build docs files into
+          clean: true
+           # Dont clean the versions directory when deploying to latest docs path
+          clean-exclude: |
+            versions
+          git-config-name: Deploy Bot
+          git-config-email: info@innofake.io
