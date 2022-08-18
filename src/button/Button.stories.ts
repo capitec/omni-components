@@ -7,7 +7,7 @@ import './Button.js';
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
     title: 'UI Components/Button',
-    component: "omni-button",
+    component: 'omni-button ',
     // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
     argTypes: {
     },
@@ -35,7 +35,7 @@ const Template: Story<ArgTypes> = (args: ArgTypes) => html`
 
 export const Default = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-Default.storyName = "Default";
+Default.storyName = 'Default';
 Default.parameters = {
 };
 Default.args = {
@@ -43,7 +43,7 @@ Default.args = {
 };
 
 export const Secondary = Template.bind({});
-Secondary.storyName = "Secondary";
+Secondary.storyName = 'Secondary';
 Secondary.args = {
     label: 'Secondary',
     type: 'Secondary'

@@ -21,7 +21,7 @@ import ComponentStyles from '../styles/ComponentStyles';
 export class Button extends LitElement {
 
     @property({ type: String, reflect: true }) label?: string;
-    @property({ type: String, reflect: true }) type?: "primary" | "secondary" | "clear" | "white" | "icon" | String = "secondary";
+    @property({ type: String, reflect: true }) type?: 'primary' | 'secondary' | 'clear' | 'white' | 'icon' | string = 'secondary';
     @property({ type: Boolean, reflect: true }) disabled?: boolean;
 
 	// --------------
@@ -115,7 +115,7 @@ export class Button extends LitElement {
 					box-shadow: none;
 				}
 			`
-		]
+		];
 	}
 
 	protected override render(): TemplateResult {
