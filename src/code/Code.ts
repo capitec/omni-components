@@ -1,8 +1,7 @@
-import { html, css, LitElement, CSSResultGroup, TemplateResult } from 'lit';
+import { html, css, LitElement, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html';
 import ComponentStyles from '../styles/ComponentStyles';
-// @ts-ignore
 import Prism from 'prismjs';
 
 /**
@@ -47,9 +46,9 @@ import Prism from 'prismjs';
 export class Code extends LitElement {
 
 	@property({ type: String, reflect: true }) header?: string;
-	@property({ type: String, reflect: true }) language: string = "html";
+	@property({ type: String, reflect: true }) language = 'html';
 
-    private _content: string = '';
+    private _content = '';
 	@property({ type: String, reflect: true })
     get content(): string {
 		return this._content;
@@ -105,7 +104,7 @@ export class Code extends LitElement {
 	// PRIVATE METHODS
 	// ----------
 
-	_parseContent(source: String) : void {
+	_parseContent(source: string) : void {
 
 		if (source.length > 0) {
 
@@ -186,7 +185,7 @@ export class Code extends LitElement {
 					border-radius: 0.3em 0.3em 0.3em 0.3em;
 				}
 
-				pre[with-header="true"] {
+				pre[data-with-header="true"] {
 					border-radius: 0 0 0.3em 0.3em;
 					margin: 0 0 .5em 0;
 				}
@@ -384,6 +383,6 @@ export class Code extends LitElement {
 
 	_renderPre(withTitle: boolean) : TemplateResult {
 
-		return html`<pre with-header="${withTitle}" class="language-${this.language}" style="white-space: pre-wrap;"><code>${unsafeHTML(this._content)}</code></pre>`;
+		return html`<pre data-with-header="${withTitle}" class="language-${this.language}" style="white-space: pre-wrap;"><code>${unsafeHTML(this._content)}</code></pre>`;
 	}
 }

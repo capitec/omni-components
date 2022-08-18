@@ -1,4 +1,4 @@
-import { html, css, LitElement, CSSResultGroup, TemplateResult } from 'lit';
+import { html, css, LitElement, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import ComponentStyles from '../styles/ComponentStyles';
 
@@ -55,7 +55,7 @@ import ComponentStyles from '../styles/ComponentStyles';
 export class Label extends LitElement {
 
 	@property({ type: String, reflect: true }) label?: string;
-	@property({ type: String, reflect: true }) type?: String;
+	@property({ type: String, reflect: true }) type?: string;
 
 	// --------------
 	// INITIALISATION

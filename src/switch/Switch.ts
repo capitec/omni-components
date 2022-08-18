@@ -76,11 +76,11 @@ import ComponentStyles from '../styles/ComponentStyles';
 export class Switch extends LitElement {
 
 	@property({ type: String, reflect: true }) label?: string;
-	@property({ type: Object, reflect: true }) data?: Object;
-	@property({ type: String, reflect: true }) hint?: String;
-	@property({ type: String, reflect: true }) error?: String;
-	@property({ type: Boolean, reflect: true }) checked: Boolean = false;  
-	@property({ type: Boolean, reflect: true }) disabled: Boolean = false;  
+	@property({ type: Object, reflect: true }) data?: object;
+	@property({ type: String, reflect: true }) hint?: string;
+	@property({ type: String, reflect: true }) error?: string;
+	@property({ type: Boolean, reflect: true }) checked = false;  
+	@property({ type: Boolean, reflect: true }) disabled = false;  
 
 	// --------------
 	// INITIALISATION
