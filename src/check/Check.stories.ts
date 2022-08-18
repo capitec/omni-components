@@ -1,7 +1,5 @@
 import { html, TemplateResult } from 'lit';
-import { Story, Meta, WebComponentsFramework } from '@storybook/web-components';
-import { expect, jest } from '@storybook/jest';
-import { within, userEvent } from '@storybook/testing-library';
+import { Story, Meta } from '@storybook/web-components';
 import { loadCssPropertiesRemote } from '../utils/StoryUtils';
 
 import './Check.js';
@@ -9,7 +7,7 @@ import './Check.js';
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'UI Components/Check',
-  component: "omni-check",
+  component: 'omni-check',
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
   },
@@ -23,13 +21,13 @@ export default {
 
 interface ArgTypes {
 	label: string;
-	data: Object;
+	data: object;
 	hint: string;
 	error: string;
 	checked: boolean;
 	disabled: boolean;
 	indeterminate: boolean;
-  "value-change": any;
+  'value-change': any;
   check_icon: TemplateResult;
   indeterminate_icon: TemplateResult;
 }
@@ -52,7 +50,7 @@ const Template: Story<ArgTypes> = (args: ArgTypes) => html`
 
 export const Default = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-Default.storyName = "Default"
+Default.storyName = 'Default';
 Default.parameters = {
 };
 Default.args = {

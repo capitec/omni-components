@@ -4,6 +4,7 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+        
         {
             "name": "Storybook Debug",
             "type": "node-terminal",
@@ -11,12 +12,18 @@
             "command": "npm run storybook",
             "internalConsoleOptions": "openOnFirstSessionStart",
             "serverReadyAction": {
-            "pattern": "Local:.+(https?://[^:]+:[0-9]+)",
-            "uriFormat": "%s",
-            "action": "debugWithChrome"
-            },            
-			"sourceMaps": true,
-			"trace": true
+                "pattern": "Local:.+(https?://[^:]+:[0-9]+)",
+                "uriFormat": "%s",
+                "action": "debugWithChrome",
+                "webRoot": "${workspaceFolder}/"
+            },
+            "sourceMaps": true,
+            "trace": true,
+            "sourceMapPathOverrides": {
+                "webpack:///./*": "${workspaceFolder}/src/*",
+                "webpack:///**/*": "${workspaceFolder}/src/*",
+                "webpack:///src/*": "${workspaceFolder}/src/*"
+            }
         }
     ]
 }
