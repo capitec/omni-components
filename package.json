@@ -5,7 +5,6 @@
   "scripts": {
     "clean": "npx rimraf dist docs",
     "lint": "eslint . --ext .ts",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm run compile && npm run docs",
     "compile": "npm run clean && tsc",
     "prepare": "(node -e \"if (! require('fs').existsSync('./dist')) {process.exit(1)} \" || (echo \"Dist does not exist. Attempting Typescript compile\" && tsc && echo \" Made in prepare \" > ./dist/_prepare_gen_ ))",
