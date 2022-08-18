@@ -51,6 +51,8 @@ jobs:
           npm run build
       - name: Auto Commit Changes 👩‍💻
         uses: stefanzweifel/git-auto-commit-action@v4
+        # Only on branch pushes, not on tagged releases
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
         with:
           commit_message: Updated docs
           branch: ${{ env.GITHUB_REF_NAME }}
