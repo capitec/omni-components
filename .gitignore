@@ -26,6 +26,7 @@ coverage
 # Built docs
 custom-elements.json
 LIST.md
+theme-variables.json
 
 # General
 .DS_Store

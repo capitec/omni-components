@@ -1,9 +1,7 @@
 
-import { DefaultCssProperties } from '../styles/ComponentStyles';
-
 function loadCssProperties(element: string, customElements: any, cssDeclarations: any = undefined): any {
     if (!cssDeclarations) {
-        cssDeclarations = { ...DefaultCssProperties };
+        cssDeclarations = {};
     }
 
     const elementModule = customElements.modules.find((module: { exports: any[]; }) => module.exports.find((e: { name: string; }) => e.name === element));
@@ -30,9 +28,32 @@ function loadCssProperties(element: string, customElements: any, cssDeclarations
     return cssDeclarations;
 }
 
+function loadThemeVariablesRemote() {
+    let error = undefined;
+    let output = "";
+    const request = new XMLHttpRequest();
+    request.open('GET', 'theme-variables.json', false);  // `false` makes the request synchronous
+    request.onload = () => {
+        output = request.responseText;
+    };
+    request.onerror = () => {
+        error = request.status;
+    };
+    request.send(null);
+    
+    if (error) {
+        console.warn(error);
+        return {};
+    }
+
+    let themeVariables = JSON.parse(output);
+    return themeVariables;
+}
+
 function loadCssPropertiesRemote(element: string, cssDeclarations: any = undefined): any {
     if (!cssDeclarations) {
-        cssDeclarations = { ...DefaultCssProperties };
+        const defaultVariables = loadThemeVariablesRemote();
+        cssDeclarations = { ...defaultVariables };
     }
 
     let error = undefined;
@@ -82,4 +103,4 @@ function loadCustomElementsRemote(): any {
 }
 
 
-export { loadCustomElementsRemote, loadCssPropertiesRemote, loadCssProperties, DefaultCssProperties }
+export { loadCustomElementsRemote, loadCssPropertiesRemote, loadCssProperties, loadThemeVariablesRemote }

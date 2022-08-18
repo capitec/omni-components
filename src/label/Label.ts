@@ -140,6 +140,6 @@ export class Label extends LitElement {
 	 * @returns {TemplateResult} The updated DOM template.
 	 */
 	override render(): TemplateResult {
-		return html`${this.label}`;
+		return html`<slot >${this.label}</slot>`;
 	}
 }

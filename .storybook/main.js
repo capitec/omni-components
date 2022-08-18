@@ -29,7 +29,7 @@ module.exports = {
 				},
 			},
 		},
-		"@ljcl/storybook-addon-cssprops"
+		"@innofake/storybook-addon-cssprops"
 	],
 	features: {
 		postcss: false,
@@ -37,6 +37,7 @@ module.exports = {
 	},
 	staticDirs: [
 		{ from: '../custom-elements.json', to: 'custom-elements.json' },
+		{ from: '../theme-variables.json', to: 'theme-variables.json' },
 		{ from: '../stories/assets', to: '/assets' }
 	],
 	webpackFinal: async (config, { configType }) => {
