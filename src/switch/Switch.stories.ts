@@ -75,7 +75,7 @@ Default.play = async (context) => {
   console.log(content);
 
   await userEvent.click(content);
-  await userEvent.click(content);
+  await userEvent.type(content,'[Enter]');
   await expect(valueChange).toBeCalledTimes(2);
 }
 
