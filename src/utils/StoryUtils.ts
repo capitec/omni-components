@@ -10,16 +10,16 @@ function loadCssProperties(element: string, customElements: any, cssDeclarations
         if (declaration.cssProperties && declaration.cssProperties.length > 0) {
             for (const cssKey in declaration.cssProperties) {
                 const cssProperty = declaration.cssProperties[cssKey];
-                if (!cssDeclarations[cssProperty.name.replace("--", "")]) {
-                    cssDeclarations[cssProperty.name.replace("--", "")] = {
-                        control: cssProperty.name.includes("color") || cssProperty.name.includes("colour") || cssProperty.name.includes("fill") ? "color" : "text",
+                if (!cssDeclarations[cssProperty.name.replace('--', '')]) {
+                    cssDeclarations[cssProperty.name.replace('--', '')] = {
+                        control: cssProperty.name.includes('color') || cssProperty.name.includes('colour') || cssProperty.name.includes('fill') ? 'color' : 'text',
                         description: cssProperty.description,
-                        category: "CSS Variables",
-                        subcategory: "Component Variables",
-                        value: ""
-                    }
+                        category: 'CSS Variables',
+                        subcategory: 'Component Variables',
+                        value: ''
+                    };
                 } else {
-                    cssDeclarations[cssProperty.name.replace("--", "")].subcategory = "Component Variables";
+                    cssDeclarations[cssProperty.name.replace('--', '')].subcategory = 'Component Variables';
                 }
             }
         }
@@ -30,7 +30,7 @@ function loadCssProperties(element: string, customElements: any, cssDeclarations
 
 function loadThemeVariablesRemote() {
     let error = undefined;
-    let output = "";
+    let output = '';
     const request = new XMLHttpRequest();
     request.open('GET', 'theme-variables.json', false);  // `false` makes the request synchronous
     request.onload = () => {
@@ -46,7 +46,7 @@ function loadThemeVariablesRemote() {
         return {};
     }
 
-    let themeVariables = JSON.parse(output);
+    const themeVariables = JSON.parse(output);
     return themeVariables;
 }
 
@@ -57,7 +57,7 @@ function loadCssPropertiesRemote(element: string, cssDeclarations: any = undefin
     }
 
     let error = undefined;
-    let output = "";
+    let output = '';
     const request = new XMLHttpRequest();
     request.open('GET', 'custom-elements.json', false);  // `false` makes the request synchronous
     request.onload = () => {
@@ -72,7 +72,7 @@ function loadCssPropertiesRemote(element: string, cssDeclarations: any = undefin
         return cssDeclarations;
     }
 
-    let customElements = JSON.parse(output);
+    const customElements = JSON.parse(output);
     
     cssDeclarations = loadCssProperties(element, customElements, cssDeclarations);
 
@@ -82,7 +82,7 @@ function loadCssPropertiesRemote(element: string, cssDeclarations: any = undefin
 
 function loadCustomElementsRemote(): any {
     let error = undefined;
-    let output = "";
+    let output = '';
     const request = new XMLHttpRequest();
     request.open('GET', 'custom-elements.json', false);  // `false` makes the request synchronous
     request.onload = () => {
@@ -97,12 +97,12 @@ function loadCustomElementsRemote(): any {
         throw new Error(error);
     }
 
-    let customElements = JSON.parse(output);
+    const customElements = JSON.parse(output);
 
     return customElements;
 }
 
-function markdownCode(code: string, lang: string = "") 
+function markdownCode(code: string, lang: string = '') 
 {
   const md = `
 
@@ -112,14 +112,14 @@ function markdownCode(code: string, lang: string = "")
 
 \`\`\`
 
-  `.replace("{lang}", lang).replace("{code}", code);
+  `.replace('{lang}', lang).replace('{code}', code);
   
   return md;
 }
 
-function markdownCodeRemote(src: string, lang: string = "") {
+function markdownCodeRemote(src: string, lang: string = '') {
     let error = undefined;
-    let output = "";
+    let output = '';
     const request = new XMLHttpRequest();
     request.open('GET', src, false);  // `false` makes the request synchronous
     request.onload = () => {
@@ -139,7 +139,7 @@ function markdownCodeRemote(src: string, lang: string = "") {
 
 function loadThemesListRemote() {
     let error = undefined;
-    let output = "";
+    let output = '';
     const request = new XMLHttpRequest();
     request.open('GET', 'themes-list.json', false);  // `false` makes the request synchronous
     request.onload = () => {
@@ -154,7 +154,7 @@ function loadThemesListRemote() {
         throw new Error(error);
     }
 
-    let list = JSON.parse(output);
+    const list = JSON.parse(output);
     
     return list.themes;
 }

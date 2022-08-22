@@ -27,7 +27,7 @@ interface ArgTypes {
 	checked: boolean;
 	disabled: boolean;
 	indeterminate: boolean;
-  'value-change': any;
+  // 'value-change': any;
   check_icon: TemplateResult;
   indeterminate_icon: TemplateResult;
 }
@@ -43,7 +43,6 @@ const Template: Story<ArgTypes> = (args: ArgTypes) => html`
     ?checked="${args.checked}"
     ?disabled="${args.disabled}"
     ?indeterminate="${args.indeterminate}"
-    @value-change="${(e: any) => console.log(e)}"
     >
     </omni-check>
 `;
@@ -137,7 +136,6 @@ const CustomSlotTemplate: Story<ArgTypes> = (args: ArgTypes) => html`
     ?checked="${args.checked}"
     ?disabled="${args.disabled}"
     ?indeterminate="${args.indeterminate}"
-    @value-change="${(e: any) => console.log(e)}"
     >
       ${args.check_icon}
       ${args.indeterminate_icon}

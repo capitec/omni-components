@@ -5,11 +5,11 @@ test(`isFunction() returns false for non-functions`, () => {
 });
 
 test(`isFunction() returns true for functions`, () => {
-	expect(Utilities.isFunction(() => { })).toEqual(true);
+	expect(Utilities.isFunction(() => { /* */ })).toEqual(true);
 });
 
 test(`isPromise() returns false for non-promises`, () => {
-	expect(Utilities.isPromise(() => { })).toEqual(false);
+	expect(Utilities.isPromise(() => { /* */ })).toEqual(false);
 });
 
 test(`isPromise() returns true for promises`, () => {

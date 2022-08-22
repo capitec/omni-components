@@ -37,7 +37,6 @@ const Template: Story<ArgTypes> = (args: ArgTypes) => html`
     error="${args.error}"
     ?checked="${args.checked}"
     ?disabled="${args.disabled}"
-    @value-change="${(e: any) => console.log(e)}"
     >
     </omni-radio>
 `;
