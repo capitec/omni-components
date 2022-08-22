@@ -1,4 +1,4 @@
-import { css, html, LitElement, TemplateResult } from 'lit';
+import { css, html, LitElement, nothing, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import ComponentStyles from '../styles/ComponentStyles';
 
@@ -8,7 +8,9 @@ import ComponentStyles from '../styles/ComponentStyles';
  * ```js 
  * import '@innofake/omni-components/button'; 
  * ```
+ * 
  * @example
+ * 
  * ```html
  * <omni-button 
  *   label="Some Action"
@@ -16,41 +18,46 @@ import ComponentStyles from '../styles/ComponentStyles';
  * </omni-button>
  * ```
  * 
+ * @element omni-button
+ * 
+ * Registry of all properties defined by the component.
+ * 
+ * @property {string} [label] - Text label.
+ * @property {"primary"|"secondary"|"clear"|"white"} [type="secondary"] - Display type.
+ * @property {"left"|"top"|"right"|"bottom"} [slotPosition="left"] - Position of slotted content.
+ * @property {boolean} [disabled=false] - Indicator if the component is disabled.
+ * 
+ * @fires {CustomEvent} click - When the button component is clicked.
+ * 
  */
 @customElement('omni-button')
 export class Button extends LitElement {
 
-    @property({ type: String, reflect: true }) label?: string;
-    @property({ type: String, reflect: true }) type?: 'primary' | 'secondary' | 'clear' | 'white' | 'icon' | string = 'secondary';
-    @property({ type: Boolean, reflect: true }) disabled?: boolean;
-
-	// --------------
-	// INITIALISATION
-	// --------------
-
-	/**
-	 * @hideconstructor
-	 */
-     constructor() {
-
-		super();
-	}
-
-	// ------------------
-	// LIFECYCLE HANDLERS
-	// ------------------
-
-	// ----------------
-	// PUBLIC FUNCTIONS
-	// ----------------	
-
-	// --------------
-	// EVENT HANDLERS
-	// --------------
+	@property({ type: String, reflect: true }) label?: string;
+	@property({ type: String, reflect: true }) type?: ButtonType = 'secondary';
+	@property({ type: String, reflect: true, attribute: 'slot-position' }) slotPosition?: SlotPositionType = 'left';
+	@property({ type: Boolean, reflect: true }) disabled?: boolean;
 
 	// -----------------
 	// PRIVATE FUNCTIONS
 	// -----------------
+
+	private _click(e: Event) {
+
+		// Ignore the event if the component is disabled.
+		if (this.disabled) {
+			return e.stopImmediatePropagation();
+		}
+
+		// Prevent the event from bubbling up.
+		e.preventDefault();
+		e.stopPropagation();
+
+		// Notify any subscribers that the link was clicked.
+		this.dispatchEvent(new CustomEvent('click', {
+			detail: null
+		}));
+	}
 
 	// -------------------
 	// RENDERING TEMPLATES
@@ -99,12 +106,32 @@ export class Button extends LitElement {
 						-webkit-box-shadow .1s ease;
 				}
 
+				/* primary */
+
+				.button.primary {
+					background-color: var(--omni-button-primary-background-color, #009DE0);
+					border-color: var(--omni-button-primary-border-color, #009DE0);
+					border-width: var(--omni-button-primary-border-width, 1px);
+					color: var(--omni-button-primary-font-color, #FFFFFF);
+				}
+
+				.button.primary:hover {
+					box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.15);
+				}
+						
+				.button.primary:active {
+					background-color: var(--omni-button-primary-background-tapped-color, #0091CE);
+					box-shadow: none;
+				}
+
 				.button.secondary {
 					background-color: var(--omni-button-default-background-color, #FFFFFF);
 					border-color: var(--omni-button-default-border-color, #009DE0);
 					border-width: var(--omni-button-default-border-width, 1px);
 					color: var(--omni-button-default-font-color, #009DE0);
 				}
+
+				/* secondary */
 				
 				.button.secondary:hover  {
 					box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.15);
@@ -114,16 +141,81 @@ export class Button extends LitElement {
 					background-color: var(--omni-button-default-background-tapped-color, rgba(0,131,187,0.1));
 					box-shadow: none;
 				}
+
+				/* clear */
+
+				.button.clear {
+					background-color: var(--omni-button-clear-background-color, white);
+					border-color: var(--omni-button-clear-border-color, blue);
+					border-width: var(--omni-button-clear-border-width, 0);
+					color: var(--omni-button-clear-font-color, #009DE0);
+				}
+
+				.button.clear:hover {
+					background-color: rgba(0, 131, 187, 0.05);
+				}
+						
+				.button.clear:active {
+					background-color: var(--omni-button-clear-background-tapped-color, rgba(0,131,187,0.1));
+					box-shadow: none;
+					border-color: var(--omni-button-clear-border-color, blue);
+					border-width: var(--omni-button-clear-border-width, 0);
+					outline:none;
+				}
+
+				/* white */
+
+				.button.white {
+					background-color: var(--omni-button-white-background-color, white);
+					border-color: var(--omni-button-white-border-color, blue);
+					border-width: var(--omni-button-white-border-width, 0);
+					color: var(--omni-button-white-font-color, #009DE0);
+				}
+
+				.button.white:hover {
+					/* background: rgba(255, 255, 255, 0.1); */
+					box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.15);
+				}
+
+				/* slot */
+
+				.button.slot-left {
+					flex-direction: row;
+					text-align: left;
+				}
+
+				.button.slot-right {
+					flex-direction: row-reverse;
+					text-align: left;
+				}
+
+				.button.slot-top {
+					flex-direction: column;
+					text-align: center;
+				}
+
+				.button.slot-bottom {
+					flex-direction: column-reverse;
+					text-align: center;
+				}
 			`
 		];
 	}
 
 	protected override render(): TemplateResult {
 		return html`
-			<button class="button ${this.type ? this.type : 'secondary'} ${this.disabled ? 'disabled' : ''}">
-				${this.label ? html`<div class="label">${this.label}</div>` : ``}
+			<button 
+				class="button slot-${this.slotPosition} ${this.type ? this.type : 'secondary'} ${this.disabled ? 'disabled' : ''}"
+				@click="${this._click}">
 				<slot></slot>
+				${this.label ? html`<div class="label">${this.label}</div>` : nothing}
 			</button>
 		`;
 	}
 }
+
+export const buttonType = ['primary', 'secondary', 'clear', 'white'] as const;
+export type ButtonType = typeof buttonType[number];
+
+export const slotPositionType = ['left', 'top', 'right', 'bottom'] as const;
+export type SlotPositionType = typeof slotPositionType[number];
