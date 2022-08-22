@@ -102,5 +102,70 @@ function loadCustomElementsRemote(): any {
     return customElements;
 }
 
+function markdownCode(code: string, lang: string = "") 
+{
+  const md = `
 
-export { loadCustomElementsRemote, loadCssPropertiesRemote, loadCssProperties, loadThemeVariablesRemote }
+\`\`\`{lang}
+
+{code}
+
+\`\`\`
+
+  `.replace("{lang}", lang).replace("{code}", code);
+  
+  return md;
+}
+
+function markdownCodeRemote(src: string, lang: string = "") {
+    let error = undefined;
+    let output = "";
+    const request = new XMLHttpRequest();
+    request.open('GET', src, false);  // `false` makes the request synchronous
+    request.onload = () => {
+        output = request.responseText;
+    };
+    request.onerror = () => {
+        error = `${request.status} - ${request.statusText}`;
+    };
+    request.send(null);
+    
+    if (error) {
+        throw new Error(error);
+    }
+    
+    return markdownCode(output, lang);
+}
+
+function loadThemesListRemote() {
+    let error = undefined;
+    let output = "";
+    const request = new XMLHttpRequest();
+    request.open('GET', 'themes-list.json', false);  // `false` makes the request synchronous
+    request.onload = () => {
+        output = request.responseText;
+    };
+    request.onerror = () => {
+        error = `${request.status} - ${request.statusText}`;
+    };
+    request.send(null);
+    
+    if (error) {
+        throw new Error(error);
+    }
+
+    let list = JSON.parse(output);
+    
+    return list.themes;
+}
+
+
+export { 
+    loadCustomElementsRemote, 
+    loadCssPropertiesRemote, 
+    loadCssProperties, 
+    loadThemeVariablesRemote, 
+    markdownCode, 
+    markdownCodeRemote, 
+    loadThemesListRemote  
+};

@@ -1,0 +1,15 @@
+:root {
+    --omni-theme-font-color: rgb(0, 58, 14);
+    --omni-theme-colored-font-color: #4e6654;
+    --omni-theme-font-family: Arial, Helvetica, sans-serif;
+
+    --omni-theme-hint-font-color: lightgrey;
+    --omni-theme-error-font-color: rgb(255, 0, 212);
+    --omni-theme-disabled-background-color: #DEDEDE;
+    --omni-theme-disabled-border-color: #dedede44;
+    --omni-theme-filled-background-color: #00e070;
+    --omni-theme-track-filled-background-color: #7fec88;
+    --omni-theme-track-background-color: #7C7C7C;
+    --omni-theme-light-box-shadow-color: #e6ffee;
+    --omni-theme-light-background-color: #FFFFFF;
+}

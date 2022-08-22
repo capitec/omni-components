@@ -1,14 +1,6 @@
-import { Meta } from '@storybook/addon-docs';
-import Code from './assets/code-brackets.svg';
-import Colors from './assets/colors.svg';
-import Comments from './assets/comments.svg';
-import Direction from './assets/direction.svg';
-import Flow from './assets/flow.svg';
-import Plugin from './assets/plugin.svg';
-import Repo from './assets/repo.svg';
-import StackAlt from './assets/stackalt.svg';
+import { Description, Meta } from '@storybook/addon-docs';
 import { CssPropsBlock } from "@innofake/storybook-addon-cssprops";
-import { loadThemeVariablesRemote } from '../src/utils/StoryUtils';
+import { loadThemeVariablesRemote, markdownCodeRemote, loadThemesListRemote } from '../src/utils/StoryUtils';
 
 import '../dist/label';
 
@@ -54,10 +46,21 @@ Theme variables typically affect
 &nbsp;&nbsp;&nbsp;&nbsp;◉ accessibility options
 
 
-Currently provided theme variables are listed below and can be modified for a live preview of its affects on all components, including this page.
+Currently provided theme variables are listed below and can be modified for a live preview of its effects on components.
 
 </omni-label>
 
+<CssPropsBlock />
+
 </div>
 
-<CssPropsBlock />
+<omni-label label="Example Themes Source" type="title"></omni-label>
+<div>{
+  loadThemesListRemote().map(theme => {
+    return (
+            <div>
+            {theme}
+              <Description markdown={markdownCodeRemote(`themes/${theme}`, "css")} />
+            </div>)
+  })
+  }</div>
