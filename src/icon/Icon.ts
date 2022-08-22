@@ -1,6 +1,5 @@
-import { html, css, LitElement, CSSResultGroup, TemplateResult, } from 'lit';
+import { html, css, LitElement, TemplateResult, } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import {ifDefined} from 'lit/directives/if-defined.js';
 import ComponentStyles from '../styles/ComponentStyles';
 
 /**
@@ -52,8 +51,8 @@ import ComponentStyles from '../styles/ComponentStyles';
 @customElement('omni-icon')
 export class Icon extends LitElement {
 
-	@property({ type: String, reflect: true }) size?: string = "default";
-	@property({ type: String, reflect: true }) icon?: String;
+	@property({ type: String, reflect: true }) size?: string = 'default';
+	@property({ type: String, reflect: true }) icon?: string;
 
 	// --------------
 	// INITIALISATION

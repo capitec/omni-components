@@ -14,4 +14,4 @@ export default function indeterminate_icon(): TemplateResult {
     `;
 }
 
-export { indeterminate_icon }
+export { indeterminate_icon };

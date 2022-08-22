@@ -41,6 +41,7 @@ module.exports = {
 	],
 	webpackFinal: async (config, { configType }) => {
 
+		// config.devtool = 'source-map',
 		config.watchOptions = {
 			ignored: [
 				'**/node_modules'

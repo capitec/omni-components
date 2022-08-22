@@ -1,4 +1,4 @@
-import { html, TemplateResult } from 'lit';
+import { html } from 'lit';
 import { Story, Meta } from '@storybook/web-components';
 import { loadCssPropertiesRemote } from '../utils/StoryUtils';
 
@@ -7,7 +7,7 @@ import './Radio.js';
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'UI Components/Radio',
-  component: "omni-radio",
+  component: 'omni-radio',
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
   },
@@ -21,7 +21,7 @@ export default {
 
 interface ArgTypes {
 	label: string;
-	data: Object;
+	data: object;
 	hint: string;
 	error: string;
 	checked: boolean;
@@ -44,7 +44,7 @@ const Template: Story<ArgTypes> = (args: ArgTypes) => html`
 
 export const Default = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-Default.storyName = "Default"
+Default.storyName = 'Default';
 Default.parameters = {
 };
 Default.args = {
