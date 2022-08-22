@@ -44,7 +44,7 @@ import '@innofake/omni-components/check';
 | Event           | Type                                           | Description                                      |
 |-----------------|------------------------------------------------|--------------------------------------------------|
 | `value-change`  | `CustomEvent<{ old: Boolean; new: Boolean; }>` | Dispatched when the control value is changed to either on or off. |
-| `value-changed` | `CustomEvent<{ old: Boolean; new: Boolean; }>` |                                                  |
+| `value-changed` | `CustomEvent<{ old: boolean; new: boolean; }>` |                                                  |
 
 ## Slots
 
