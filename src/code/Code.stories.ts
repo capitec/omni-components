@@ -1,7 +1,5 @@
-import { html, TemplateResult } from 'lit';
-import { Story, Meta, WebComponentsFramework } from '@storybook/web-components';
-import { expect, jest } from '@storybook/jest';
-import { within, userEvent } from '@storybook/testing-library';
+import { html } from 'lit';
+import { Story, Meta } from '@storybook/web-components';
 import { loadCssPropertiesRemote } from '../utils/StoryUtils';
 
 import './Code.js';
@@ -9,7 +7,7 @@ import './Code.js';
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'UI Components/Code',
-  component: "omni-code",
+  component: 'omni-code',
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
   },
@@ -37,7 +35,7 @@ const Template: Story<ArgTypes> = (args: ArgTypes) => html`
 
 export const Default = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-Default.storyName = "Default"
+Default.storyName = 'Default';
 Default.parameters = {
 };
 Default.args = {

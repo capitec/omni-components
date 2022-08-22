@@ -10,7 +10,7 @@
  * 
  * @returns {*} Value of the resolved path.
  */
-export function getValue(obj: any, path: string, separator: string = `.`) {
+export function getValue(obj: any, path: string, separator = `.`) {
 
     try {
 
@@ -38,7 +38,7 @@ export function getValue(obj: any, path: string, separator: string = `.`) {
  *
  * @returns {void}
  */
-export function setValue(obj: any, path: string, value: any, separator: string = '.') {
+export function setValue(obj: any, path: string, value: any, separator = '.') {
 
     separator = separator || `.`;
 
@@ -56,7 +56,7 @@ export function setValue(obj: any, path: string, value: any, separator: string =
  * @param {Number|String|Object} value - Value to check 
  * @returns {Boolean} - Boolean for if the value is non-null or non-undefined
  */
-export function hasValue(value: Number | String | Object) {
+export function hasValue(value: number | string | object) {
     return !(value === null || value === undefined);
 }
 
@@ -70,7 +70,7 @@ export function hasValue(value: Number | String | Object) {
  *  - ```Function``` as [Array.prototype.reduce()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce#Syntax) callback function.
  * @returns {Object} Contains a property as key for each group.
  */
-export function groupBy(arr: Array<any>, target: String | Function) {
+export function groupBy(arr: Array<any>, target: string | Function) {
 
     let result = [];
 

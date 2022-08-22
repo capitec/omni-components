@@ -32,21 +32,47 @@
 ## ⭑ Table of Contents
 
 * [➜ Welcome to Omni Components ](#-welcome-to-omni-components-)
-* [➜ omni-check](#-omni-check)
+* [➜ omni-button](#-omni-button)
 	* [⭑ Example](#-example)
-* [➜ omni-code](#-omni-code)
+* [➜ omni-check](#-omni-check)
 	* [⭑ Example](#-example-1)
-* [➜ omni-icon](#-omni-icon)
+* [➜ omni-code](#-omni-code)
 	* [⭑ Example](#-example-2)
-* [➜ omni-label](#-omni-label)
+* [➜ omni-icon](#-omni-icon)
 	* [⭑ Example](#-example-3)
-* [➜ omni-radio](#-omni-radio)
+* [➜ omni-label](#-omni-label)
 	* [⭑ Example](#-example-4)
-* [➜ omni-switch](#-omni-switch)
+* [➜ omni-radio](#-omni-radio)
 	* [⭑ Example](#-example-5)
+* [➜ omni-switch](#-omni-switch)
+	* [⭑ Example](#-example-6)
 * [➜ Contributing and Usage](#-contributing-and-usage)
 	* [⭑ License](#-license)
 &nbsp;
+
+
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#omni-button)
+
+# ➜ omni-button
+
+A control that allows an action to be executed.
+
+```js 
+import '@innofake/omni-components/button'; 
+```
+
+
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#example)
+
+## ⭑ Example
+
+```html
+<omni-button 
+  label="Some Action"
+  type="primary">
+</omni-button>
+```
+
 
 
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#omni-check)
@@ -213,30 +239,6 @@ import '@innofake/omni-components/switch';
 
 # ➜ Contributing and Usage
 <!-- readme: contributors -start -->
-<table>
-<tr>
-    <td align="center">
-        <a href="https://github.com/BOTLANNER">
-            <img src="https://avatars.githubusercontent.com/u/16349308?v=4" width="100;" alt="BOTLANNER"/>
-            <br />
-            <sub><b>BOTLANNER</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/chromaticWaster">
-            <img src="https://avatars.githubusercontent.com/u/22874454?v=4" width="100;" alt="chromaticWaster"/>
-            <br />
-            <sub><b>chromaticWaster</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/stefan505">
-            <img src="https://avatars.githubusercontent.com/u/10812446?v=4" width="100;" alt="stefan505"/>
-            <br />
-            <sub><b>stefan505</b></sub>
-        </a>
-    </td></tr>
-</table>
 <!-- readme: contributors -end -->
 
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#license)

@@ -1,4 +1,4 @@
-import { html, TemplateResult } from 'lit';
+import { html } from 'lit';
 import { Story, Meta } from '@storybook/web-components';
 import { loadCssPropertiesRemote } from '../utils/StoryUtils';
 
@@ -8,10 +8,10 @@ import './Label.js';
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'UI Components/Label',
-  component: "omni-label",
+  component: 'omni-label',
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
-     type: { control: { type: "select", options: ["default", "title", "subtitle", "strong"] } }
+     type: { control: { type: 'select', options: ['default', 'title', 'subtitle', 'strong'] } }
   },
   parameters: {
     cssprops: loadCssPropertiesRemote('omni-label')
@@ -34,7 +34,7 @@ const Template: Story<ArgTypes> = (args: ArgTypes) => html`
 
 export const Default = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-Default.storyName = "Default"
+Default.storyName = 'Default';
 Default.parameters = {
 };
 Default.args = {

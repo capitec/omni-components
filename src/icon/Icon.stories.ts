@@ -1,7 +1,5 @@
 import { html, TemplateResult } from 'lit';
-import { Story, Meta, WebComponentsFramework } from '@storybook/web-components';
-import { expect, jest } from '@storybook/jest';
-import { within, userEvent } from '@storybook/testing-library';
+import { Story, Meta } from '@storybook/web-components';
 import { loadCssPropertiesRemote } from '../utils/StoryUtils';
 
 import './Icon.js';
@@ -9,13 +7,13 @@ import './Icon.js';
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'UI Components/Icon',
-  component: "omni-icon",
+  component: 'omni-icon',
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: { 
-    size: { control: 'select', options: ["default", "extra-small", "small", "medium", "large"] }
+    size: { control: 'select', options: ['default', 'extra-small', 'small', 'medium', 'large'] }
   },
 	parameters: {
-    cssprops: loadCssPropertiesRemote("omni-icon")
+    cssprops: loadCssPropertiesRemote('omni-icon')
   }
 } as Meta;
 
@@ -63,7 +61,7 @@ const MaterialTemplate: Story<ArgTypes> = (args: ArgTypes) => html`
 
 export const Default = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-Default.storyName = "Default"
+Default.storyName = 'Default';
 Default.parameters = {
 };
 Default.args = {
@@ -78,7 +76,7 @@ Default.args = {
 
 export const SVG = SvgTemplate.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-SVG.storyName = "SVG"
+SVG.storyName = 'SVG';
 SVG.parameters = {
 };
 SVG.args = {
@@ -92,7 +90,7 @@ SVG.args = {
 
 export const IconPath = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-IconPath.storyName = "Local Source"
+IconPath.storyName = 'Local Source';
 IconPath.parameters = {
 };
 IconPath.args = {
@@ -103,7 +101,7 @@ IconPath.args = {
 
 export const URL = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-URL.storyName = "Remote Source"
+URL.storyName = 'Remote Source';
 URL.parameters = {
 };
 URL.args = {

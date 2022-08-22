@@ -14,4 +14,4 @@ export default function check_icon(): TemplateResult {
     `;
 }
 
-export { check_icon }
+export { check_icon };
