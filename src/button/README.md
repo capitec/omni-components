@@ -9,10 +9,7 @@ import '@innofake/omni-components/button';
 ## Example
 
 ```html
-<omni-button 
-  label="Some Action"
-  type="primary">
-</omni-button>
+<omni-button   label="Some Action"  type="primary"></omni-button>
 ```
 
 ## Properties

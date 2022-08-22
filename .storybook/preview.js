@@ -2,7 +2,8 @@ import { setCustomElementsManifest } from '@storybook/web-components';
 import customElements from '../custom-elements.json';
 import pretty from 'pretty';
 
-import basicTheme from '!!style-loader?injectType=lazyStyleTag!css-loader!../themes/default-theme.css'
+import blueTheme from '!!style-loader?injectType=lazyStyleTag!css-loader!../themes/blue-theme.css'
+import greenTheme from '!!style-loader?injectType=lazyStyleTag!css-loader!../themes/green-theme.css'
 
 import cssVariablesTheme from '@etchteam/storybook-addon-css-variables-theme';
 import CustomDocsPage from '../stories/DocsPage.mdx';
@@ -36,7 +37,8 @@ export const parameters = {
 	},
 	cssVariables: {
 		files: {
-			'default': basicTheme
+			'blue': blueTheme,
+			'green': greenTheme
 		}
 	},
 	options: {
