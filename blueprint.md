@@ -15,6 +15,9 @@
 
 &nbsp;
 # Contributing and Usage
-<!-- readme: contributors -start -->
-<!-- readme: contributors -end -->
+
+## ⭑ Contributors
+{{ load:contributors.md }}
+
+
 {{ template:license }}

@@ -3,6 +3,8 @@ import { css } from 'lit';
 /** 
  * @cssprop --omni-theme-font-color - Theme Font color.
  * @cssprop --omni-theme-font-family - Theme Font Family.
+ * @cssprop --omni-theme-font-color - Theme Font color.
+ * @cssprop --omni-theme-colored-font-color - Theme Colored Font color.
  * @cssprop --omni-theme-hint-font-color - Theme Hint Font Color.
  * @cssprop --omni-theme-error-font-color - Theme Error Font Color.
  * @cssprop --omni-theme-disabled-background-color - Theme Disable Background Color.
@@ -91,94 +93,3 @@ export default css`
         font-feature-settings: 'liga';
     }
 `;
-
-
-/**
- * The default css variables defined as a cssProps object used in {@link https://www.npmjs.com/package/@ljcl/storybook-addon-cssprops}
- */
-export const DefaultCssProperties = {
-  "omni-theme-font-color": {
-    value: "black",
-    control: "color",
-    description: "Theme Font color",
-    category: "CSS Variables",
-    subcategory: "Theme Variables"
-  },
-  "omni-theme-colored-font-color": {
-    value: "#4E6066",
-    control: "color",
-    description: "Theme Colored Font color",
-    category: "CSS Variables",
-    subcategory: "Theme Variables"
-  },
-  "omni-theme-font-family": {
-    value: "Arial, Helvetica, sans-serif",
-    control: "text",
-    description: "Theme Font Family",
-    category: "CSS Variables",
-    subcategory: "Theme Variables"
-  },
-  "omni-theme-hint-font-color": {
-    value: "lightgrey",
-    control: "color",
-    description: "Theme Hint Font color",
-    category: "CSS Variables",
-    subcategory: "Theme Variables"
-  },
-  "omni-theme-error-font-color": {
-    value: "red",
-    control: "color",
-    description: "Theme Error Font color",
-    category: "CSS Variables",
-    subcategory: "Theme Variables"
-  },
-  "omni-theme-disabled-background-color": {
-    value: "#DEDEDE",
-    control: "color",
-    description: "Theme Disabled Background color",
-    category: "CSS Variables",
-    subcategory: "Theme Variables"
-  },
-  "omni-theme-disabled-border-color": {
-    value: "#dedede44",
-    control: "color",
-    description: "Theme Disabled Border Color",
-    category: "CSS Variables",
-    subcategory: "Theme Variables"
-  },
-  "omni-theme-filled-background-color": {
-    value: "#009DE0",
-    control: "color",
-    description: "Theme Filled Background Color",
-    category: "CSS Variables",
-    subcategory: "Theme Variables"
-  },
-  "omni-theme-track-filled-background-color": {
-    value: "#7FCAEC",
-    control: "color",
-    description: "Theme Track Filled Background Color",
-    category: "CSS Variables",
-    subcategory: "Theme Variables"
-  },
-  "omni-theme-track-background-color": {
-    value: "#7C7C7C",
-    control: "color",
-    description: "Theme Track Background Color",
-    category: "CSS Variables",
-    subcategory: "Theme Variables"
-  },
-  "omni-theme-light-box-shadow-color": {
-    value: "#E6F7FF",
-    control: "color",
-    description: "Theme Light Box Shadow Color",
-    category: "CSS Variables",
-    subcategory: "Theme Variables"
-  },
-  "omni-theme-light-background-color": {
-    value: "#FFFFFF",
-    control: "color",
-    description: "Theme Light Background Color",
-    category: "CSS Variables",
-    subcategory: "Theme Variables"
-  },
-}

@@ -31,7 +31,6 @@ interface ArgTypes {
 	error: string;
 	checked: boolean;
 	disabled: boolean;
-  'value-change': any;
 }
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
@@ -44,7 +43,6 @@ const Template: Story<ArgTypes> = (args: ArgTypes) => html`
     error="${args.error}"
     ?checked="${args.checked}"
     ?disabled="${args.disabled}"
-    @value-change="${(e: any) => console.log(e)}"
     >
     </omni-switch>
 `;
