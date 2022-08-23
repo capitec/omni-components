@@ -39,14 +39,15 @@
 * [➜ omni-code](#-omni-code)
 	* [⭑ Example](#-example-2)
 * [➜ omni-icon](#-omni-icon)
-	* [⭑ Example](#-example-3)
+	* [⭑ Examples](#-examples)
 * [➜ omni-label](#-omni-label)
-	* [⭑ Example](#-example-4)
+	* [⭑ Example](#-example-3)
 * [➜ omni-radio](#-omni-radio)
-	* [⭑ Example](#-example-5)
+	* [⭑ Example](#-example-4)
 * [➜ omni-switch](#-omni-switch)
-	* [⭑ Example](#-example-6)
+	* [⭑ Example](#-example-5)
 * [➜ Contributing and Usage](#-contributing-and-usage)
+	* [⭑ ⭑ Contributors](#--contributors)
 	* [⭑ License](#-license)
 &nbsp;
 
@@ -139,16 +140,22 @@ import '@innofake/omni-components/icon';
 ```
 
 
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#example)
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#examples)
 
-## ⭑ Example
+## ⭑ Examples
 
 ```html
 <omni-icon
   size="default|extra-small|small|medium|large">
 	   <svg version="1.1" id="diagram" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="375px" height="150px"><path d="M45,11.5H33.333c0.735-1.159,1.167-2.528,1.167-4C34.5,3.364,31.136,0,27,0s-7.5,3.364-7.5,7.5c0,1.472,0.432,2.841,1.167,4H9l-9,32h54L45,11.5z M22.5,7.5C22.5,5.019,24.519,3,27,3s4.5,2.019,4.5,4.5c0,1.752-1.017,3.257-2.481,4h-4.037 C23.517,10.757,22.5,9.252,22.5,7.5z" id="control"/></svg>
 </omni-icon>
+```
 
+```html
+<omni-icon
+  size="default|extra-small|small|medium|large"
+  icon="＠material/person">
+</omni-icon>
 ```
 
 
@@ -236,8 +243,40 @@ import '@innofake/omni-components/switch';
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#contributing-and-usage)
 
 # ➜ Contributing and Usage
+
+
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#-contributors)
+
+## ⭑ ⭑ Contributors
+
 <!-- readme: contributors -start -->
+<table>
+<tr>
+    <td align="center">
+        <a href="https://github.com/BOTLANNER">
+            <img src="https://avatars.githubusercontent.com/u/16349308?v=4" width="100;" alt="BOTLANNER"/>
+            <br />
+            <sub><b>BOTLANNER</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/chromaticWaster">
+            <img src="https://avatars.githubusercontent.com/u/22874454?v=4" width="100;" alt="chromaticWaster"/>
+            <br />
+            <sub><b>chromaticWaster</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/stefan505">
+            <img src="https://avatars.githubusercontent.com/u/10812446?v=4" width="100;" alt="stefan505"/>
+            <br />
+            <sub><b>stefan505</b></sub>
+        </a>
+    </td></tr>
+</table>
 <!-- readme: contributors -end -->
+
+
 
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#license)
 
