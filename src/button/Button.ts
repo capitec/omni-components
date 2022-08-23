@@ -124,14 +124,14 @@ export class Button extends LitElement {
 					box-shadow: none;
 				}
 
+				/* secondary */
+
 				.button.secondary {
 					background-color: var(--omni-button-default-background-color, #FFFFFF);
 					border-color: var(--omni-button-default-border-color, #009DE0);
 					border-width: var(--omni-button-default-border-width, 1px);
 					color: var(--omni-button-default-font-color, #009DE0);
 				}
-
-				/* secondary */
 				
 				.button.secondary:hover  {
 					box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.15);
@@ -173,11 +173,50 @@ export class Button extends LitElement {
 				}
 
 				.button.white:hover {
-					/* background: rgba(255, 255, 255, 0.1); */
 					box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.15);
 				}
 
-				/* slot */
+				/* disabled */
+
+				.button.disabled {
+					cursor: default;
+					border-color: var(--omni-button-disabled-border-color, lightgrey);
+					background-color: var(--omni-button-disabled-background-color, lightgrey);
+				}
+
+				.button.disabled:hover {
+					box-shadow: none;
+					background-color: var(--omni-button-disabled-background-color, lightgrey);
+				}
+
+				.button.disabled:focus {
+					outline: 0;
+				}
+
+				.button:focus {
+					outline: none;
+				}
+
+				/**
+				 * Disable the hover state on touch enabled devices, e.g. mobile phones.
+				 * On these devices hover acts like focus instead which keeps the button looking like it is in a pressed state.
+				 * Learn more here: https://webdevpuneet.com/how-to-remove-hover-on-touch-devices.
+				 */
+				@media (hover: none) {
+
+					.button.clear:hover:not(.disabled) {
+						background-color: unset;
+					}
+
+					.button.primary:hover,
+					.button.secondary:hover,
+					.button.clear:hover,
+					.button.white:hover {
+						box-shadow: unset;
+					}
+				}
+
+				/* slot position */
 
 				.button.slot-left {
 					flex-direction: row;
@@ -198,6 +237,24 @@ export class Button extends LitElement {
 					flex-direction: column-reverse;
 					text-align: center;
 				}
+
+				/* slot margins */
+
+				.button.slot-left > ::slotted(*) {
+					margin-right: var(--omni-button-icon-spacing, 10px);
+				}
+
+				.button.slot-top > ::slotted(*) {
+					margin-bottom: var(--omni-button-icon-spacing, 10px);
+				}
+
+				.button.slot-right > ::slotted(*) {
+					margin-left: var(--omni-button-icon-spacing, 10px);
+				}
+
+				.button.slot-bottom > ::slotted(*) {
+					margin-top: var(--omni-button-icon-spacing, 10px);
+				}
 			`
 		];
 	}
@@ -208,7 +265,7 @@ export class Button extends LitElement {
 				class="button slot-${this.slotPosition} ${this.type ? this.type : 'secondary'} ${this.disabled ? 'disabled' : ''}"
 				@click="${this._click}">
 				<slot></slot>
-				${this.label ? html`<div class="label">${this.label}</div>` : nothing}
+				${this.label ? html`<label class="label">${this.label}</label>` : nothing}
 			</button>
 		`;
 	}

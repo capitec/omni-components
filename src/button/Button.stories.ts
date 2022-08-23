@@ -24,21 +24,22 @@ export default {
 } as Meta;
 
 interface ArgTypes {
-    label: string;
     type: ButtonType;
-    slotPosition: SlotPositionType,
-    disabled: boolean
+    label: string;
+    slotPosition: SlotPositionType;
+    disabled: boolean;
 }
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const DefaultTemplate: Story<ArgTypes> = (args: ArgTypes) => html`
     <omni-button 
         data-testid="test-button"
-        label="${args.label}"
         type="${args.type}"
+        label="${args.label}"
         slot-position="${args.slotPosition}"
-        ?disabled=${args.disabled}
-    ></omni-button>
+        ?disabled=${args.disabled}>
+        <div>X</div>
+    </omni-button>
 `;
 
 export const Default = DefaultTemplate.bind({});
@@ -46,8 +47,8 @@ export const Default = DefaultTemplate.bind({});
 Default.storyName = 'Default';
 Default.parameters = { };
 Default.args = {
-    label: 'Default',
     type: 'secondary',
+    label: 'Default',
     slotPosition: 'left',
     disabled: false
 };
@@ -63,29 +64,29 @@ const Template: Story<ArgTypes> = (args: ArgTypes) => html`
 export const Primary = Template.bind({});
 Primary.storyName = 'Primary';
 Primary.args = {
-    label: 'Primary',
-    type: 'primary'
+    type: 'primary',
+    label: 'Primary'
 };
 
 export const Secondary = Template.bind({});
 Secondary.storyName = 'Secondary';
 Secondary.args = {
-    label: 'Secondary',
-    type: 'secondary'
+    type: 'secondary',
+    label: 'Secondary'
 };
 
 export const Clear = Template.bind({});
 Clear.storyName = 'Clear';
 Clear.args = {
-    label: 'Clear',
-    type: 'clear'
+    type: 'clear',
+    label: 'Clear'
 };
 
 export const White = Template.bind({});
 White.storyName = 'White';
 White.args = {
-    label: 'White',
-    type: 'white'
+    type: 'white',
+    label: 'White'
 };
 
 const IconTemplate: Story<ArgTypes> = (args: ArgTypes) => html`
@@ -108,9 +109,29 @@ IconLeft.args = {
     slotPosition: 'left'
 };
 
-export const Icon = IconTemplate.bind({});
-Icon.storyName = 'Icon/Top';
-Icon.args = {
+export const IconTop = IconTemplate.bind({});
+IconTop.storyName = 'Icon/Top';
+IconTop.args = {
     label: 'Icon',
     slotPosition: 'top'
+};
+
+export const IconRight = IconTemplate.bind({});
+IconRight.storyName = 'Icon/Right';
+IconRight.args = {
+    label: 'Icon',
+    slotPosition: 'right'
+};
+
+export const IconBottom = IconTemplate.bind({});
+IconBottom.storyName = 'Icon/Bottom';
+IconBottom.args = {
+    label: 'Icon',
+    slotPosition: 'bottom'
+};
+
+export const Icon = IconTemplate.bind({});
+Icon.storyName = 'Icon/No Label';
+Icon.args = {
+
 };
