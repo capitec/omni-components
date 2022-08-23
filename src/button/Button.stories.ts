@@ -55,39 +55,14 @@ Default.args = {
 };
 
 const Template: Story<ArgTypes> = (args: ArgTypes) => html`
-    <omni-button 
-        label="${args.label}"
-        type="${args.type}"
-        data-testid="test-button">
-    </omni-button>
+    <omni-button label="${args.label}" type="${args.type}" data-testid="test-button"></omni-button>
 `;
 
-export const Primary = Template.bind({});
-Primary.storyName = 'Primary';
-Primary.args = {
+export const Type = Template.bind({});
+Type.storyName = 'Type';
+Type.args = {
     type: 'primary',
     label: 'Primary'
-};
-
-export const Secondary = Template.bind({});
-Secondary.storyName = 'Secondary';
-Secondary.args = {
-    type: 'secondary',
-    label: 'Secondary'
-};
-
-export const Clear = Template.bind({});
-Clear.storyName = 'Clear';
-Clear.args = {
-    type: 'clear',
-    label: 'Clear'
-};
-
-export const White = Template.bind({});
-White.storyName = 'White';
-White.args = {
-    type: 'white',
-    label: 'White'
 };
 
 const IconTemplate: Story<ArgTypes> = (args: ArgTypes) => html`
