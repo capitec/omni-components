@@ -35,7 +35,7 @@ export class Button extends LitElement {
 
 	@property({ type: String, reflect: true }) label?: string;
 	@property({ type: String, reflect: true }) type?: ButtonType = 'secondary';
-	@property({ type: String, reflect: true, attribute: 'slot-position' }) slotPosition?: SlotPositionType = 'left';
+	@property({ type: String, reflect: true, attribute: 'slot-position' }) slotPosition?: SlotPositionType;
 	@property({ type: Boolean, reflect: true }) disabled?: boolean;
 
 	// -----------------
@@ -262,7 +262,7 @@ export class Button extends LitElement {
 	protected override render(): TemplateResult {
 		return html`
 			<button 
-				class="button slot-${this.slotPosition} ${this.type ? this.type : 'secondary'} ${this.disabled ? 'disabled' : ''}"
+				class="button ${this.slotPosition ? `slot-${this.slotPosition}` : ''} ${this.type ? this.type : 'secondary'} ${this.disabled ? 'disabled' : ''}"
 				@click="${this._click}">
 				<slot></slot>
 				${this.label ? html`<label class="label">${this.label}</label>` : nothing}

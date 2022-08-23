@@ -24,7 +24,7 @@ export default {
     }
 } as Meta;
 
-interface ArgTypes {
+interface Args {
     type: ButtonType;
     label: string;
     slotPosition: SlotPositionType;
@@ -32,49 +32,72 @@ interface ArgTypes {
 }
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const DefaultTemplate: Story<ArgTypes> = (args: ArgTypes) => html`
+const InteractiveTemplate: Story<Args> = (args: Args) => html`
     <omni-button 
         data-testid="test-button"
         type="${args.type}"
         label="${args.label}"
         slot-position="${args.slotPosition}"
         ?disabled=${args.disabled}>
-        <div>X</div>
+        <omni-icon size="default" icon="/assets/direction.svg"></omni-icon>
     </omni-button>
 `;
 
-export const Default = DefaultTemplate.bind({});
+export const Interactive = InteractiveTemplate.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-Default.storyName = 'Default';
-Default.parameters = { };
-Default.args = {
+Interactive.storyName = 'Interactive';
+Interactive.parameters = { };
+Interactive.args = {
     type: 'secondary',
     label: 'Default',
-    slotPosition: 'left',
+    slotPosition: 'top',
     disabled: false
 };
 
-const Template: Story<ArgTypes> = (args: ArgTypes) => html`
-    <omni-button label="${args.label}" type="${args.type}" data-testid="test-button"></omni-button>
+// ----
+// TYPE
+// ----
+
+const TypeTemplate: Story<Args> = (args: Args) => html`
+    <omni-button type="${args.type}" label="${args.label}" data-testid="test-button"></omni-button>
 `;
 
-export const Type = Template.bind({});
+export const Type = TypeTemplate.bind({});
 Type.storyName = 'Type';
 Type.args = {
     type: 'primary',
-    label: 'Primary'
+    label: 'Click'
 };
 
-const IconTemplate: Story<ArgTypes> = (args: ArgTypes) => html`
+// -----
+// LABEL
+// -----
+
+const LabelTemplate: Story<Args> = (args: Args) => html`
+    <omni-button label="${args.label}" data-testid="test-button"></omni-button>
+`;
+
+export const Label = LabelTemplate.bind({});
+Label.storyName = 'Label';
+Label.args = {
+    label: 'Click'
+};
+
+// -----
+// LABEL
+// -----
+
+const SlotTemplate: Story<Args> = (args: Args) => html`
     <omni-button 
-        data-testid="test-button"
-        label="${args.label}">
+        data-testid="test-button">
         <omni-icon icon="@material/thumb_up"></omni-icon>
     </omni-button>
 `;
 
-export const IconLeft = IconTemplate.bind({});
-IconLeft.storyName = 'Icon';
-IconLeft.args = {
-    label: 'Icon'
-};
+// ----
+// SLOT
+// ----
+
+export const Slot = SlotTemplate.bind({});
+Slot.storyName = 'Slot';
+Slot.args = { };
