@@ -31,17 +31,6 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
-      - name: Checkout 🛎️
-        uses: actions/checkout@v3
-        with:
-          persist-credentials: true
-          fetch-depth: 0
-      - name: Use Node.js 16.x ✔
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16.x
-          registry-url: 'https://registry.npmjs.org'
-          always-auth: true
       - name: Contribute List ➕
         uses: akhilmhdh/contributors-readme-action@v2.3.6
         # Only on branch pushes, not on tagged releases
@@ -53,6 +42,20 @@ jobs:
             auto_detect_branch_protection: false
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+      - name: Ensure branch up to date 🌿 
+        run: |
+          git pull
+      - name: Use Node.js 16.x ✔
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          registry-url: 'https://registry.npmjs.org'
+          always-auth: true
       - name: Install Package Dependencies 🔗
         run: |
           npm ci
