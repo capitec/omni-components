@@ -4,6 +4,7 @@ import { loadCssPropertiesRemote } from '../utils/StoryUtils.js';
 import { ButtonType, buttonType, slotPositionType, SlotPositionType } from './Button';
 
 import './Button.js';
+import '../icon/Icon.js';
 
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
@@ -92,46 +93,13 @@ White.args = {
 const IconTemplate: Story<ArgTypes> = (args: ArgTypes) => html`
     <omni-button 
         data-testid="test-button"
-        label="${args.label}"
-        slot-position="${args.slotPosition}">
-        <svg version="1.1" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" width="16px" height="16px">
-            <g transform="translate(-2,-2)">
-                <path d="m8.229 14.062-3.521-3.541L5.75 9.479l2.479 2.459 6.021-6L15.292 7Z"></path>
-            </g>
-        </svg>
+        label="${args.label}">
+        <omni-icon icon="@material/thumb_up"></omni-icon>
     </omni-button>
 `;
 
 export const IconLeft = IconTemplate.bind({});
-IconLeft.storyName = 'Icon/Left';
+IconLeft.storyName = 'Icon';
 IconLeft.args = {
-    label: 'Icon',
-    slotPosition: 'left'
-};
-
-export const IconTop = IconTemplate.bind({});
-IconTop.storyName = 'Icon/Top';
-IconTop.args = {
-    label: 'Icon',
-    slotPosition: 'top'
-};
-
-export const IconRight = IconTemplate.bind({});
-IconRight.storyName = 'Icon/Right';
-IconRight.args = {
-    label: 'Icon',
-    slotPosition: 'right'
-};
-
-export const IconBottom = IconTemplate.bind({});
-IconBottom.storyName = 'Icon/Bottom';
-IconBottom.args = {
-    label: 'Icon',
-    slotPosition: 'bottom'
-};
-
-export const Icon = IconTemplate.bind({});
-Icon.storyName = 'Icon/No Label';
-Icon.args = {
-
+    label: 'Icon'
 };
