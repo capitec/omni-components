@@ -4,15 +4,16 @@ const jsdoc = require(`jsdoc-api`);
 const jsdocParse = require('jsdoc-parse');
 const fs = require(`fs`);
 const path = require(`path`);
+const { execSync } = require('child_process');
 
 if (!fs.existsSync('custom-elements.json')) {
-    console.warn(`No 'custom-elements.json' available. Skipping README generation for Non-UI Components`);
-    return;
+    console.warn(`No 'custom-elements.json' available. Attempting to generate`);
+    execSync('npm run docs:custom-elements');
 }
 
 if (!fs.existsSync('dist')) {
-    console.warn(`No 'dist' available. Skipping README generation for Non-UI Components`);
-    return;
+    console.warn(`No 'dist' available. Attempting Typescript compile`);
+    execSync('npm run compile');
 }
 
 const manifestRaw = fs.readFileSync('custom-elements.json', 'utf-8');
