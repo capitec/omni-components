@@ -16,7 +16,7 @@
 &nbsp;
 # Contributing and Usage
 
-## ⭑ Contributors
+## Contributors
 {{ load:contributors.md }}
 
 

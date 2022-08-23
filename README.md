@@ -54,7 +54,7 @@
 
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#omni-button)
 
-# ➜ omni-button
+# ➜ [omni-button](./src/button/README.md)
 
 A control that allows an action to be executed.
 

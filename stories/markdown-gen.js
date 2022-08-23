@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable no-undef */
 const jsdoc = require(`jsdoc-api`);
 const jsdocParse = require('jsdoc-parse');
 const fs = require(`fs`);
@@ -15,7 +17,7 @@ if (!fs.existsSync('dist')) {
 
 const manifestRaw = fs.readFileSync('custom-elements.json', 'utf-8');
 const manifest = JSON.parse(manifestRaw);
-const codeSnippet = '```'
+const codeSnippet = '```';
 
 const groupedManifests = [];
 manifest.modules.forEach(module => {
@@ -32,7 +34,7 @@ manifest.modules.forEach(module => {
     ) {
         const dir = path.dirname(module.path);
         if (!groupedManifests[dir]) {
-            groupedManifests[dir] = []
+            groupedManifests[dir] = [];
         }
         
         groupedManifests[dir].push(module.path);
@@ -48,7 +50,7 @@ for (const dir in groupedManifests) {
             const docs = jsdocParse(docsRaw);
 
             sections.push(generateMarkdownSection(file, docs));
-        })
+        });
 
         const markdown = generateMarkdown(sections);
         fs.writeFileSync(`${dir}/README.md`, markdown);
@@ -69,10 +71,10 @@ function generateMarkdownSection(file, docs) {
     if (!classDef) {
         const anyMember = docs.find(d => d.memberof);
         if (anyMember) {
-            section += `# \`${anyMember.memberof}\``
+            section += `# \`${anyMember.memberof}\``;
         }
     } else {
-        section += `# \`${classDef.name}\``
+        section += `# \`${classDef.name}\``;
         section += `\r\n`;
         section += fixCodeElements(filterLinks(classDef.description));
         section += `\r\n`;
@@ -94,19 +96,19 @@ function generateMarkdownSection(file, docs) {
     
     if (instanceMembers && instanceMembers.length > 0) {
         section += `\r\n`;
-        section += `## Instance Members`
+        section += `## Instance Members`;
 
         section += `\r\n`;
-        section += `<table>`
-        section += `<thead>`
-        section += `<tr>`
-        section += `<th>Name</th>`
-        section += `<th>Type</th>`
-        section += `<th>Description</th>`
-        section += `<th>Example</th>`
-        section += `</tr>`
-        section += `</thead>`
-        section += `<tbody>`
+        section += `<table>`;
+        section += `<thead>`;
+        section += `<tr>`;
+        section += `<th>Name</th>`;
+        section += `<th>Type</th>`;
+        section += `<th>Description</th>`;
+        section += `<th>Example</th>`;
+        section += `</tr>`;
+        section += `</thead>`;
+        section += `<tbody>`;
 
         instanceMembers.forEach(member => {
             section += `\r\n`;
@@ -122,17 +124,17 @@ function generateMarkdownSection(file, docs) {
             section += `\`${getType(member)}\``;
             section += `\r\n`;
             section += `\r\n`;
-            section += `</td><td>${fixCodeElements(filterLinks(member.description))}</td><td>`
+            section += `</td><td>${fixCodeElements(filterLinks(member.description))}</td><td>`;
             section += `\r\n`;
             section += `\r\n`;
-            section += `${getExamples(member)}`
+            section += `${getExamples(member)}`;
             section += `\r\n`;
             section += `\r\n`;
-            section += `</td></tr>`
+            section += `</td></tr>`;
         });
         section += `\r\n`;
-        section += `</tbody>`
-        section += `</table>`
+        section += `</tbody>`;
+        section += `</table>`;
         section += `\r\n`;
     }
 
@@ -140,19 +142,19 @@ function generateMarkdownSection(file, docs) {
     
     if (globalMembers && globalMembers.length > 0) {
         section += `\r\n`;
-        section += `## Global Members`
+        section += `## Global Members`;
 
         section += `\r\n`;
-        section += `<table>`
-        section += `<thead>`
-        section += `<tr>`
-        section += `<th>Name</th>`
-        section += `<th>Type</th>`
-        section += `<th>Description</th>`
-        section += `<th>Example</th>`
-        section += `</tr>`
-        section += `</thead>`
-        section += `<tbody>`
+        section += `<table>`;
+        section += `<thead>`;
+        section += `<tr>`;
+        section += `<th>Name</th>`;
+        section += `<th>Type</th>`;
+        section += `<th>Description</th>`;
+        section += `<th>Example</th>`;
+        section += `</tr>`;
+        section += `</thead>`;
+        section += `<tbody>`;
 
         globalMembers.forEach(member => {
             section += `\r\n`;
@@ -168,18 +170,18 @@ function generateMarkdownSection(file, docs) {
             section += `\`${getType(member)}\``;
             section += `\r\n`;
             section += `\r\n`;
-            section += `</td><td>${fixCodeElements(filterLinks(member.description))}</td><td>`
+            section += `</td><td>${fixCodeElements(filterLinks(member.description))}</td><td>`;
             section += `\r\n`;
             section += `\r\n`;
-            section += `${getImport(file,member)}`
-            section += `${getExamples(member)}`
+            section += `${getImport(file,member)}`;
+            section += `${getExamples(member)}`;
             section += `\r\n`;
             section += `\r\n`;
-            section += `</td></tr>`
+            section += `</td></tr>`;
         });
         section += `\r\n`;
-        section += `</tbody>`
-        section += `</table>`
+        section += `</tbody>`;
+        section += `</table>`;
         section += `\r\n`;
     }
 
@@ -187,20 +189,20 @@ function generateMarkdownSection(file, docs) {
     
     if (instanceFunctions && instanceFunctions.length > 0) {
         section += `\r\n`;
-        section += `## Instance Functions`
+        section += `## Instance Functions`;
 
         section += `\r\n`;
-        section += `<table>`
-        section += `<thead>`
-        section += `<tr>`
-        section += `<th>Name</th>`
-        section += `<th>Description</th>`
-        section += `<th>Parameters</th>`
-        section += `<th>Return</th>`
-        section += `<th>Example</th>`
-        section += `</tr>`
-        section += `</thead>`
-        section += `<tbody>`
+        section += `<table>`;
+        section += `<thead>`;
+        section += `<tr>`;
+        section += `<th>Name</th>`;
+        section += `<th>Description</th>`;
+        section += `<th>Parameters</th>`;
+        section += `<th>Return</th>`;
+        section += `<th>Example</th>`;
+        section += `</tr>`;
+        section += `</thead>`;
+        section += `<tbody>`;
 
         instanceFunctions.forEach(member => {
             section += `\r\n`;
@@ -216,7 +218,7 @@ function generateMarkdownSection(file, docs) {
             section += `${getParameters(member)}`;
             section += `\r\n`;
             section += `\r\n`;
-            section += `</td><td>`
+            section += `</td><td>`;
             section += `\r\n`;
             section += `\r\n`;
             section += `${getReturns(member)}`;
@@ -225,14 +227,14 @@ function generateMarkdownSection(file, docs) {
             section += `</td><td>`;
             section += `\r\n`;
             section += `\r\n`;
-            section += `${getExamples(member)}`
+            section += `${getExamples(member)}`;
             section += `\r\n`;
             section += `\r\n`;
-            section += `</td></tr>`
+            section += `</td></tr>`;
         });
         section += `\r\n`;
-        section += `</tbody>`
-        section += `</table>`
+        section += `</tbody>`;
+        section += `</table>`;
         section += `\r\n`;
     }
 
@@ -240,20 +242,20 @@ function generateMarkdownSection(file, docs) {
     
     if (globalFunctions && globalFunctions.length > 0) {
         section += `\r\n`;
-        section += `## Global Functions`
+        section += `## Global Functions`;
 
         section += `\r\n`;
-        section += `<table>`
-        section += `<thead>`
-        section += `<tr>`
-        section += `<th>Name</th>`
-        section += `<th>Description</th>`
-        section += `<th>Parameters</th>`
-        section += `<th>Return</th>`
-        section += `<th>Example</th>`
-        section += `</tr>`
-        section += `</thead>`
-        section += `<tbody>`
+        section += `<table>`;
+        section += `<thead>`;
+        section += `<tr>`;
+        section += `<th>Name</th>`;
+        section += `<th>Description</th>`;
+        section += `<th>Parameters</th>`;
+        section += `<th>Return</th>`;
+        section += `<th>Example</th>`;
+        section += `</tr>`;
+        section += `</thead>`;
+        section += `<tbody>`;
 
         globalFunctions.forEach(member => {
             section += `\r\n`;
@@ -269,7 +271,7 @@ function generateMarkdownSection(file, docs) {
             section += `${getParameters(member)}`;
             section += `\r\n`;
             section += `\r\n`;
-            section += `</td><td>`
+            section += `</td><td>`;
             section += `\r\n`;
             section += `\r\n`;
             section += `${getReturns(member)}`;
@@ -278,19 +280,19 @@ function generateMarkdownSection(file, docs) {
             section += `</td><td>`;
             section += `\r\n`;
             section += `\r\n`;
-            section += `${getImport(file,member)}`
-            section += `${getExamples(member)}`
+            section += `${getImport(file,member)}`;
+            section += `${getExamples(member)}`;
             section += `\r\n`;
             section += `\r\n`;
-            section += `</td></tr>`
+            section += `</td></tr>`;
         });
         section += `\r\n`;
-        section += `</tbody>`
-        section += `</table>`
+        section += `</tbody>`;
+        section += `</table>`;
         section += `\r\n`;
     }
 
-    section += `\r\n\r\n![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)\r\n\r\n`
+    section += `\r\n\r\n![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)\r\n\r\n`;
     return section;
 }
 
