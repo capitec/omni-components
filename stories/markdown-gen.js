@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable no-undef */
-const jsdoc = require(`jsdoc-api`);
+const jsdoc = require(`@innofake/jsdoc-api-debuggable`);
 const jsdocParse = require('jsdoc-parse');
 const fs = require(`fs`);
 const path = require(`path`);

@@ -1,12 +1,31 @@
 import { setCustomElementsManifest } from '@storybook/web-components';
 import customElements from '../custom-elements.json';
 import pretty from 'pretty';
-
-import blueTheme from '!!style-loader?injectType=lazyStyleTag!css-loader!../themes/blue-theme.css'
-import greenTheme from '!!style-loader?injectType=lazyStyleTag!css-loader!../themes/green-theme.css'
+import { loadThemesListRemote } from '../src/utils/StoryUtils';
 
 import cssVariablesTheme from '@etchteam/storybook-addon-css-variables-theme';
 import CustomDocsPage from '../stories/DocsPage.mdx';
+
+async function importCss(file) {
+	return await import(`!!style-loader?injectType=lazyStyleTag!css-loader!../themes/${file}`);
+}
+
+function lazyCssPromise(cssPromise) {
+	return {
+		use: async () => {
+			(await cssPromise).use();
+		},
+		unuse: async () => {
+			(await cssPromise).unuse();
+		}
+	}
+}
+
+let cssFiles = {};
+loadThemesListRemote().forEach(f => {
+	const theme = importCss(f);
+	cssFiles[f] = lazyCssPromise(theme);
+});
 
 // Auto generate properties in the docs view from the custom elements manifest.
 setCustomElementsManifest(customElements);
@@ -36,10 +55,7 @@ export const parameters = {
 		],
 	},
 	cssVariables: {
-		files: {
-			'blue': blueTheme,
-			'green': greenTheme
-		}
+		files: cssFiles
 	},
 	options: {
 		storySort: {

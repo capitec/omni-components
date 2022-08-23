@@ -79,7 +79,7 @@
     "jest": "^27.0.0",
     "jest-github-actions-reporter": "^1.0.3",
     "jest-playwright-preset": "^1.5.1",
-    "jsdoc-api": "npm:@innofake/jsdoc-api-debuggable@^7.1.1",
+    "@innofake/jsdoc-api-debuggable": "^7.1.1",
     "jsdoc-parse": "^6.1.0",
     "pretty": "^2.0.0",
     "react-textarea-autosize": "^8.3.4",
