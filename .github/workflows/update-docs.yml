@@ -43,6 +43,16 @@ jobs:
           node-version: 16.x
           registry-url: 'https://registry.npmjs.org'
           always-auth: true
+      - name: Contribute List ➕
+        uses: akhilmhdh/contributors-readme-action@v2.3.6
+        # Only on branch pushes, not on tagged releases
+        if: ${{ startsWith(github.ref, 'refs/heads/') }}
+        with:
+            image_size: 100
+            use_username: true
+            readme_path: contributors.md
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Install Package Dependencies 🔗
         run: |
           npm ci
@@ -56,16 +66,6 @@ jobs:
         with:
           commit_message: Updated docs
           branch: ${{ env.GITHUB_REF_NAME }}
-      - name: Contribute List ➕
-        uses: akhilmhdh/contributors-readme-action@v2.3.6
-        # Only on branch pushes, not on tagged releases
-        if: ${{ startsWith(github.ref, 'refs/heads/') }}
-        with:
-            image_size: 100
-            use_username: true
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Publish Beta Docs 🚀
         uses: JamesIves/github-pages-deploy-action@v4.3.4
         # Develop branch only

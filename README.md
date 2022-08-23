@@ -151,8 +151,6 @@ import '@innofake/omni-components/icon';
 
 ```
 
-```
-
 
 
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#omni-label)

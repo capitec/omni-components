@@ -18,10 +18,12 @@ import ComponentStyles from '../styles/ComponentStyles';
  * </omni-icon>
  * ```
  * 
+ * @example
+ * 
  * ```html
  * <omni-icon
  *   size="default|extra-small|small|medium|large"
- *   icon="@material/person">
+ *   icon="＠material/person">
  * </omni-icon>
  * ```
  * 
