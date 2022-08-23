@@ -50,6 +50,7 @@ jobs:
             image_size: 100
             use_username: true
             readme_path: contributors.md
+            auto_detect_branch_protection: false
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Install Package Dependencies 🔗
