@@ -214,8 +214,10 @@ export class Button extends LitElement {
 	}
 }
 
+/* Types for "type" property */
 export const buttonType = ['primary', 'secondary', 'clear', 'white'] as const;
 export type ButtonType = typeof buttonType[number];
 
+/* Types for "slotPosition" property */
 export const slotPositionType = ['left', 'top', 'right', 'bottom'] as const;
 export type SlotPositionType = typeof slotPositionType[number];
