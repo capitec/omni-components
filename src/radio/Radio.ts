@@ -284,11 +284,11 @@ export class Radio extends LitElement {
 
 					margin: var(--omni-radio-padding, 2px);
 
-					background-color: var(--omni-radio-background-color, var(--omni-light-background-color));
+					background-color: var(--omni-radio-background-color, var(--omni-background-color));
 
 					border-width: var(--omni-radio-border-width, 2px);
 					border-style: var(--omni-radio-border-style, solid);
-					border-color: var(--omni-radio-border-color, var(--omni-filled-background-color));
+					border-color: var(--omni-radio-border-color, var(--omni-primary-color));
 					border-radius: var(--omni-radio-border-radius, 50%);
 					
 					outline: 0;
@@ -300,27 +300,27 @@ export class Radio extends LitElement {
 
 					border-width: var(--omni-radio-indicator-border-width, 2px);
 					border-style: solid;
-					border-color: var(--omni-radio-indicator-border-color, var(--omni-light-background-color));
+					border-color: var(--omni-radio-indicator-border-color, var(--omni-background-color));
 					border-radius: var(--omni-radio-border-radius, 50%);
 
-					color: var(--omni-radio-indicator-color, var(--omni-light-background-color));
+					color: var(--omni-radio-indicator-color, var(--omni-background-color));
 				}
 				
 				/* CHECKED STATE STYLES */
 
 				.container.checked > #content {
-					background-color: var(--omni-radio-checked-background-color, var(--omni-filled-background-color));
+					background-color: var(--omni-radio-checked-background-color, var(--omni-primary-color));
 				}
 				
 				/* HOVER STATE STYLES */
 
 				.container > #content:hover {
-					box-shadow: var(--omni-radio-hover-box-shadow, 0 0 4px 4px var(--omni-light-box-shadow-color));
-					background-color: var(--omni-radio-hover-background-color, var(--omni-light-box-shadow-color));
+					box-shadow: var(--omni-radio-hover-box-shadow, var(--omni-box-shadow));
+					background-color: var(--omni-radio-hover-background-color, var(--omni-box-shadow-color));
 				}
 
 				.container.checked:hover > #content {
-					background-color: var(--omni-radio-checked-background-color, var(--omni-filled-background-color));
+					background-color: var(--omni-radio-checked-background-color, var(--omni-primary-color));
 				}
 				/* DISABLED STATE STYLES */
 

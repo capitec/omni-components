@@ -344,7 +344,7 @@ export class Code extends LitElement {
 
 				/* Handle */
 				pre[class*="language-"]::-webkit-scrollbar-thumb {
-					background: var(--omni-code-scrollbar-thumb-background, var(--omni-filled-background-color));
+					background: var(--omni-code-scrollbar-thumb-background, var(--omni-primary-color));
 					border-radius: var(--omni-code-scrollbar-thumb-border-radius, 10px);
 				}
 
