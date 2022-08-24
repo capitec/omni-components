@@ -111,7 +111,7 @@ export class Radio extends LitElement {
 	// ----------------
 
 	override focus() {
-		this.shadowRoot.getElementById(`content`).focus();
+		this.shadowRoot.getElementById('content').focus();
 	}
 
 	// --------------
@@ -153,9 +153,9 @@ export class Radio extends LitElement {
 		}
 
 		// Intercept space and enter key events to toggle the component checked state.
-		const keyCode = (event.code || ``).toUpperCase();
+		const keyCode = (event.code || '').toUpperCase();
 
-		if (keyCode === `SPACE` || keyCode === `ENTER`) {
+		if (keyCode === 'SPACE' || keyCode === 'ENTER') {
 
 			// Toggle the component checked state.
 			this._toggleChecked();
@@ -181,14 +181,14 @@ export class Radio extends LitElement {
 		const oldValue = this.checked;
 		this.checked = !oldValue;
 
-		this.dispatchEvent(new CustomEvent(`value-changed`, {
+		this.dispatchEvent(new CustomEvent('value-changed', {
 			detail: {
 				old: oldValue,
 				new: this.checked
 			}
 		}));
 
-		this.dispatchEvent(new CustomEvent(`value-change`, {
+		this.dispatchEvent(new CustomEvent('value-change', {
 			detail: {
 				old: oldValue,
 				new: this.checked
@@ -352,15 +352,15 @@ export class Radio extends LitElement {
 	 */
 	override render(): TemplateResult {
 		return html`
-            <div class="container${this.checked ? ` checked` : ``}${this.disabled ? ` disabled` : ``}">
-                <div id="content" tabindex="${this.disabled ? `` : 0}" @click="${this._click}" @keydown="${this._keyDown}">
-                    ${this.checked ? html`<div class="indicator"></div>` : ``}
+            <div class="container${this.checked ? ' checked' : ''}${this.disabled ? ' disabled' : ''}">
+                <div id="content" tabindex="${this.disabled ? '' : 0}" @click="${this._click}" @keydown="${this._keyDown}">
+                    ${this.checked ? html`<div class="indicator"></div>` : ''}
                 </div>
             
                 <label id="label" class="label" @click="${this._click}">
                     ${this.label}
-                    ${this.hint && !this.error ? html`<div class="hint">${this.hint}</div>` : ``}
-                    ${this.error ? html`<div class="error">${this.error}</div>` : ``}
+                    ${this.hint && !this.error ? html`<div class="hint">${this.hint}</div>` : ''}
+                    ${this.error ? html`<div class="error">${this.error}</div>` : ''}
                 </label>
             </div>
 		`;
