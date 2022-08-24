@@ -59,21 +59,6 @@ import '@innofake/omni-components/button';
 
 </td></tr><tr><td>
 
-[omni-code](src/code/README.md)
-
-</td><td>Code</td><td>
-
-A control to syntax highlight and display source code.
-
-
-```js
- 
-import '@innofake/omni-components/code'; 
-
-```
-
-</td></tr><tr><td>
-
 [omni-check](src/check/README.md)
 
 </td><td>Check</td><td>
@@ -84,6 +69,21 @@ A control that allows a user to check a value on or off.
 ```js
  
 import '@innofake/omni-components/check'; 
+
+```
+
+</td></tr><tr><td>
+
+[omni-code](src/code/README.md)
+
+</td><td>Code</td><td>
+
+A control to syntax highlight and display source code.
+
+
+```js
+ 
+import '@innofake/omni-components/code'; 
 
 ```
 

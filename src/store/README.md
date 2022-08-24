@@ -1,14 +1,33 @@
 
 # `Store`
-Base class used to create a contextual observable store.Core concepts and capabilities include:- Be default store state is immutable (recommended).- Consumers can subscribe to store state changes via exposed RxJS Observables.- Store state change history can be captured and accessed (in memory only).- Store state changes can be logged to console.
+Base class used to create a contextual observable store.
+
+Core concepts and capabilities include:
+- Be default store state is immutable (recommended).
+- Consumers can subscribe to store state changes via exposed RxJS Observables.
+- Store state change history can be captured and accessed (in memory only).
+- Store state changes can be logged to console.
+
+
 ```js
-import { Store } from '@innofake/omni-components/store';
+
+import { Store } from '@innofake/omni-components/store';
+
 ```
 
 
 ```js
 
-class ClientStore extends Store {  constructor() {    super({      name: 'client-store',      persistence: `sessionStorage`    });  }}export default new ClientStore();
+class ClientStore extends Store {
+  constructor() {
+    super({
+      name: 'client-store',
+      persistence: `sessionStorage`
+    });
+  }
+}
+
+export default new ClientStore();
 
 ```
             
@@ -42,7 +61,13 @@ class ClientStore extends Store {  constructor() {    super({      name: 'cli
 
 ```js
 
-// Subscribeconst clientStoreSub = ClientStore.stateChanged.subscribe(state => {  this.clients = state && state.clients ? state.clients : null;});// UnsubscribeclientStoreSub.unsubscribe();
+// Subscribe
+const clientStoreSub = ClientStore.stateChanged.subscribe(state => {
+  this.clients = state && state.clients ? state.clients : null;
+});
+
+// Unsubscribe
+clientStoreSub.unsubscribe();
 
 ```
             
@@ -63,7 +88,14 @@ class ClientStore extends Store {  constructor() {    super({      name: 'cli
 
 ```js
 
-// Subscribeconst clientStoreSub = ClientStore.stateChangedWithName.subscribe(changes => {  this.clients = changes.state && changes.state.clients ? changes.state.clients : null;  const stateAction = changes.name;});// UnsubscribeclientStoreSub.unsubscribe();
+// Subscribe
+const clientStoreSub = ClientStore.stateChangedWithName.subscribe(changes => {
+  this.clients = changes.state && changes.state.clients ? changes.state.clients : null;
+  const stateAction = changes.name;
+});
+
+// Unsubscribe
+clientStoreSub.unsubscribe();
 
 ```
             
@@ -84,7 +116,13 @@ class ClientStore extends Store {  constructor() {    super({      name: 'cli
 
 ```js
 
-// Subscribeconst clientStoreSub = ClientStore.stateChangedNoPayload.subscribe(() => {  console.log(`State Changed`)});// UnsubscribeclientStoreSub.unsubscribe();
+// Subscribe
+const clientStoreSub = ClientStore.stateChangedNoPayload.subscribe(() => {
+  console.log(`State Changed`)
+});
+
+// Unsubscribe
+clientStoreSub.unsubscribe();
 
 ```
             
@@ -105,7 +143,13 @@ class ClientStore extends Store {  constructor() {    super({      name: 'cli
 
 ```js
 
-// Subscribeconst clientStoreSub = ClientStore.stateChangedNoPayloadWithName.subscribe(name => {  console.log(`State Changed: ${name}`);});// UnsubscribeclientStoreSub.unsubscribe();
+// Subscribe
+const clientStoreSub = ClientStore.stateChangedNoPayloadWithName.subscribe(name => {
+  console.log(`State Changed: ${name}`);
+});
+
+// Unsubscribe
+clientStoreSub.unsubscribe();
 
 ```
             
@@ -120,13 +164,20 @@ class ClientStore extends Store {  constructor() {    super({      name: 'cli
 
 ``Observable``
 
-</td><td>Provides RxJS Observable that can be subscribed to in order to retrieve store changes,includes properties that changed as well.</td><td>
+</td><td>Provides RxJS Observable that can be subscribed to in order to retrieve store changes,
+includes properties that changed as well.</td><td>
 
 
 
 ```js
 
-// Subscribeconst clientStorePropertiesSub = ClientStore.stateChangedProperties.subscribe(changes => {  this.clients = changes.state && changes.state.clients ? changes.state.clients : null;});// UnsubscribeclientStorePropertiesSub.unsubscribe();
+// Subscribe
+const clientStorePropertiesSub = ClientStore.stateChangedProperties.subscribe(changes => {
+  this.clients = changes.state && changes.state.clients ? changes.state.clients : null;
+});
+
+// Unsubscribe
+clientStorePropertiesSub.unsubscribe();
 
 ```
             
@@ -141,13 +192,21 @@ class ClientStore extends Store {  constructor() {    super({      name: 'cli
 
 ``Observable``
 
-</td><td>Provides RxJS Observable that can be subscribed to in order to retrieve store changes,includes properties that changed as well as state name.</td><td>
+</td><td>Provides RxJS Observable that can be subscribed to in order to retrieve store changes,
+includes properties that changed as well as state name.</td><td>
 
 
 
 ```js
 
-// Subscribeconst clientStorePropertiesSub = ClientStore.stateChangedPropertiesWithName.subscribe(changes => {  this.clients = changes.state && changes.state.clients ? changes.state.clients : null;  const stateAction = changes.name;});// UnsubscribeclientStorePropertiesSub.unsubscribe();
+// Subscribe
+const clientStorePropertiesSub = ClientStore.stateChangedPropertiesWithName.subscribe(changes => {
+  this.clients = changes.state && changes.state.clients ? changes.state.clients : null;
+  const stateAction = changes.name;
+});
+
+// Unsubscribe
+clientStorePropertiesSub.unsubscribe();
 
 ```
             
@@ -177,7 +236,10 @@ class ClientStore extends Store {  constructor() {    super({      name: 'cli
 
 </td><td>Gets store state.</td><td>
 
-deepCloneReturnedState {`boolean`} - When true, returns a cloned copy of the store state (recommended).NOTE: When false and the settings had "persistence: 'memory'", a reference to the store state willbe returned and it's up to the consumer to ensure the state isn't changed from the outside.
+deepCloneReturnedState {`boolean`} - When true, returns a cloned copy of the store state (recommended).
+
+NOTE: When false and the settings had "persistence: 'memory'", a reference to the store state will
+be returned and it's up to the consumer to ensure the state isn't changed from the outside.
 
 </td><td>
 
@@ -196,7 +258,10 @@ deepCloneReturnedState {`boolean`} - When true, returns a cloned copy of the sto
 
 propertyName {`String`} - Name of the property to return from the store state.
 
- deepCloneReturnedState {`Boolean`} - When true, returns a cloned copy of the store state (recommended).NOTE: When false and the settings had "persistence: 'memory'", a reference to the store state willbe returned and it's up to the consumer to ensure the state isn't changed from the outside.
+ deepCloneReturnedState {`Boolean`} - When true, returns a cloned copy of the store state (recommended).
+
+NOTE: When false and the settings had "persistence: 'memory'", a reference to the store state will
+be returned and it's up to the consumer to ensure the state isn't changed from the outside.
 
 </td><td>
 
@@ -211,7 +276,10 @@ propertyName {`String`} - Name of the property to return from the store state.
 
 `setState`
 
-</td><td>Sets store state.NOTE: State to set MUST be serializable to and from JSON for immutability supportand / or supported persistence mechanisms.</td><td>
+</td><td>Sets store state.
+
+NOTE: State to set MUST be serializable to and from JSON for immutability support
+and / or supported persistence mechanisms.</td><td>
 
 state {`Object`|`function`} - State to set, can be an object or a function that accepts latest state as input parameter.
 
@@ -304,7 +372,10 @@ Settings for [Store](#store) constructor.
 
 ``
 
-</td><td>{"memory"|"sessionStorage|"localStorage"} [persistence="memory"] Where to persist store data to:- "memory" - All state is stored in memory for the current session, i.e. it cannot survive page reloads.- "sessionStorage" - All state is stored in domain storage for the current session only, i.e it can survive page reloads as long as the tab remains open.- "localStorage" - All state is stored in local storage , i.e it can survive page reloads and browser reopen</td><td>
+</td><td>{"memory"|"sessionStorage|"localStorage"} [persistence="memory"] Where to persist store data to:
+- "memory" - All state is stored in memory for the current session, i.e. it cannot survive page reloads.
+- "sessionStorage" - All state is stored in domain storage for the current session only, i.e it can survive page reloads as long as the tab remains open.
+- "localStorage" - All state is stored in local storage , i.e it can survive page reloads and browser reopen</td><td>
 
 
 
@@ -317,7 +388,10 @@ Settings for [Store](#store) constructor.
 
 ``
 
-</td><td>[trackStateHistory=false] When true, stores the state mutation history.NOTE this will perpetually grow memory use within the current session and usage thereofshould be carefully considered, if needed at all.</td><td>
+</td><td>[trackStateHistory=false] When true, stores the state mutation history.
+
+NOTE this will perpetually grow memory use within the current session and usage thereof
+should be carefully considered, if needed at all.</td><td>
 
 
 
