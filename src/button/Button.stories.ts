@@ -31,6 +31,10 @@ interface Args {
     disabled: boolean;
 }
 
+// -----------
+// INTERACTIVE
+// -----------
+
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const InteractiveTemplate: Story<Args> = (args: Args) => html`
     <omni-button 
@@ -39,7 +43,7 @@ const InteractiveTemplate: Story<Args> = (args: Args) => html`
         label="${args.label}"
         slot-position="${args.slotPosition}"
         ?disabled=${args.disabled}>
-        <omni-icon size="default" icon="/assets/direction.svg"></omni-icon>
+        <omni-icon icon="@material/thumb_up"></omni-icon>
     </omni-button>
 `;
 
@@ -49,7 +53,7 @@ Interactive.storyName = 'Interactive';
 Interactive.parameters = { };
 Interactive.args = {
     type: 'secondary',
-    label: 'Default',
+    label: 'Button',
     slotPosition: 'top',
     disabled: false
 };
@@ -83,20 +87,16 @@ Label.args = {
     label: 'Click'
 };
 
-// -----
-// LABEL
-// -----
-
-const SlotTemplate: Story<Args> = (args: Args) => html`
-    <omni-button 
-        data-testid="test-button">
-        <omni-icon icon="@material/thumb_up"></omni-icon>
-    </omni-button>
-`;
-
 // ----
 // SLOT
 // ----
+
+const SlotTemplate: Story<Args> = () => html`
+    <omni-button 
+        data-testid="test-button">
+        <omni-icon size="default" icon="/assets/direction.svg"></omni-icon>
+    </omni-button>
+`;
 
 export const Slot = SlotTemplate.bind({});
 Slot.storyName = 'Slot';
