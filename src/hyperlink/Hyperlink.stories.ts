@@ -1,10 +1,12 @@
-import { html, TemplateResult } from 'lit';
-import { Story, Meta, WebComponentsFramework } from '@storybook/web-components';
+import { html } from 'lit';
+import { Story, Meta } from '@storybook/web-components';
 import { expect, jest } from '@storybook/jest';
 import { within, userEvent } from '@storybook/testing-library';
 import { loadCssPropertiesRemote } from '../utils/StoryUtils';
 
 import './Hyperlink.js';
+
+const cssProps = loadCssPropertiesRemote('omni-hyperlink');
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -15,48 +17,59 @@ export default {
       size: { control: 'select', options: ["default", "small"] }
     },
       parameters: {
-      cssprops: loadCssPropertiesRemote("omni-hyperlink"),
+      cssprops: cssProps,
+      actions: {
+        handles: ['value-changed','value-change']
+      }
     }
-  } as Meta;
+} as Meta;
 
 interface ArgTypes {
 	label: string;
 	href: string;
-    target: string;
-    disabled: boolean;
-    inline: boolean;
-    size: string;
+  target: string;
+  disabled: boolean;
+  inline: boolean;
+  size: string;
 }
 
+// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
+// Templates that story permutations will bind to.
 const Template: Story<ArgTypes> = (args: ArgTypes) => html`
     <omni-hyperlink 
+    data-testid="test-hyperlink"
     label="${args.label}" 
     href="${args.href}"
-    target:"${args.target}"
-    disabled: "${args.disabled}"
-    size:"${args.size}
+    target="${args.target}"
+    ?disabled="${args.disabled}"
+    ?inline="${args.inline}"
+    size="${args.size}"
     >
     </omni-hyperlink>
 `;
 
+const InlineTemplate: Story<ArgTypes> = (args: ArgTypes) => html`
+  <p>
+    this is an inline hyperlink
+    <omni-hyperlink 
+    label="${args.label}" 
+    href="${args.href}"
+    target="${args.target}"
+    ?disabled="${args.disabled}"
+    ?inline="${args.inline}"
+    size="${args.size}"
+    >
+    </omni-hyperlink> feel free to click
+  </p>
+`;
+
 export const Default = Template.bind({});
 Default.storyName = "Default"
-Default.parameters = {};
 Default.args = {
     label:'Click me to take you to Storybook',
     href:'https://storybook.js.org',
     target: '',
     disabled: false,
-    inline: false,
-    size: ''
-}
-
-export const Disabled = Template.bind({});
-Disabled.args = {
-    label: 'Click all you want',
-    href: 'https://storybook.js.org',
-    target:'',
-    disabled: true,
     inline: false,
     size: ''
 }
@@ -70,6 +83,27 @@ Small.args = {
     inline: false,
     size: 'small'
 }
+
+export const Disabled = Template.bind({});
+Disabled.args = {
+  label: "Disabled hyperlink",
+  href: 'www.google.com',
+  target: '',
+  disabled: true,
+  inline: false,
+  size: ''
+}
+
+export const Inline = InlineTemplate.bind({});
+Inline.args = {
+  label: "Inline hyperlink",
+  href: 'www.google.com',
+  target: '_blank',
+  disabled: false,
+  inline: true,
+  size: ''
+}
+
 
 
 

@@ -29,13 +29,13 @@ import ComponentStyles from '../styles/ComponentStyles';
  *  - `_parent` Parent browsing context of the current one. If no parent, behave as "_self".
  *  - `_top` Topmost browsing context (the "highest" context thats an ancestor of the current one). If no ancestors, behaves as "_self".
  * @property {Boolean} [disabled=false] - Indicator if the link is disabled.
- * @attribute {Boolean} [inline=false] - Indicator if the link is used as part of a sentence.
- * @attribute {String} [size]- Size of the Hyperlink text:
+ * @property {Boolean} [inline=false] - Indicator if the link is used as part of a sentence.
+ * @property {String} [size] - Size of the Hyperlink text:
  *  - `default` Size variation to apply.
  *  - `small` Size variation to apply.
  * 
  *
- * @cssprop --omni-hyperlink-color-dsiabled - Hyperlink disabled color.
+ * @cssprop --omni-hyperlink-color-disabled - Hyperlink disabled color.
  * 
  * @cssprop --omni-hyperlink-text-decorator - Hyperlink text decorator.
  * 
@@ -55,7 +55,7 @@ import ComponentStyles from '../styles/ComponentStyles';
  * @cssprop --omni-hyperlink-text-decorator-hover - Hyperlink text decorator when in hover state.
  * 
  * @cssprop --omni-hyperlink-color-visited - Hyperlink color when visited
- * @cssprop --omni-hyperlink-text-decorator-visisted - Hyperlink text decorator when visited.
+ * @cssprop --omni-hyperlink-text-decorator-visited - Hyperlink text decorator when visited.
  * 
 */
 @customElement('omni-hyperlink')
@@ -65,8 +65,8 @@ export class Hyperlink extends LitElement {
     @property({ type: String, reflect: true}) href?: String;
     @property({ type: String, reflect: true}) target: String = "_self";
     @property({ type: Boolean, reflect: true}) disabled: Boolean = false;
-    @property({ attribute: true, type: Boolean, reflect: true}) inline: Boolean = false;
-    @property ({ attribute: true, type: String, reflect: true}) size?: String;
+    @property({ type: Boolean, reflect: true}) inline: Boolean = false;
+    @property({ type: String, reflect: true}) size?: String;
 
     // --------------
 	// INITIALISATION
