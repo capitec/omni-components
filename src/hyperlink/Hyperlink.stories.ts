@@ -104,6 +104,38 @@ Inline.args = {
   size: ''
 }
 
+// Play function testing
+Default.play = async (context) => {
+  const canvas = within(context.canvasElement);
+  console.log(canvas);
+
+  const element = canvas.getByTitle
+
+  /*
+  const Hyperlink = canvas.getByTitle('omni-hyperlink');
+  
+  console.log(Hyperlink);
+  const click = jest.fn();
 
 
+  Hyperlink.addEventListener('click',() => click());
+  await userEvent.click(Hyperlink);
+  await userEvent.click(Hyperlink);
+
+  await expect(click).toBeCalledTimes(2);
+
+  
+  const Hyperlink = canvas.getByTestId('test-hyperlink');
+  console.log(Hyperlink);
+  const click = jest.fn();
+  Hyperlink.addEventListener('click', () => click());
+
+  const content = Hyperlink.shadowRoot.get;
+  console.log(content);
+
+  await userEvent.click(content);
+  */
+
+
+}
 

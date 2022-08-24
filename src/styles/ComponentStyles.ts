@@ -19,7 +19,7 @@ import { css } from 'lit';
  * @cssprop --omni-theme-hint-font-color - The XXXX
  * @cssprop --omni-theme-inactive-color - The XXXX
  * @cssprop --omni-theme-box-shadow-color - The XXXX
- * @cssprop 
+ * 
  * @cssprop --omni-theme-border-radius - The XXXX
  * @cssprop --omni-theme-border-width - The XXXX
  * @cssprop --omni-theme-box-shadow - The XXXX
