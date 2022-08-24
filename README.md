@@ -32,205 +32,123 @@
 ## ⭑ Table of Contents
 
 * [➜ Welcome to Omni Components ](#-welcome-to-omni-components-)
-* [➜ omni-button](#-omni-button)
-	* [⭑ Example](#-example)
-* [➜ omni-check](#-omni-check)
-	* [⭑ Example](#-example-1)
-* [➜ omni-code](#-omni-code)
-	* [⭑ Example](#-example-2)
-* [➜ omni-icon](#-omni-icon)
-	* [⭑ Example](#-example-3)
-* [➜ omni-label](#-omni-label)
-	* [⭑ Example](#-example-4)
-* [➜ omni-radio](#-omni-radio)
-	* [⭑ Example](#-example-5)
-* [➜ omni-switch](#-omni-switch)
-	* [⭑ Example](#-example-6)
+* [➜ UI Components](#-ui-components)
 * [➜ Contributing and Usage](#-contributing-and-usage)
+	* [⭑ Contributors](#-contributors)
 	* [⭑ License](#-license)
 &nbsp;
 
 
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#omni-button)
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#ui-components)
 
-# ➜ omni-button
+# ➜ UI Components
+<table><thead><tr><th>Tag Name</th><th>Class</th><th>Description</th></tr></thead><tbody><tr><td>
+
+[omni-button](src/button/README.md)
+
+</td><td>Button</td><td>
 
 A control that allows an action to be executed.
 
-```js 
+
+```js
+ 
 import '@innofake/omni-components/button'; 
+
 ```
 
+</td></tr><tr><td>
 
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#example)
+[omni-check](src/check/README.md)
 
-## ⭑ Example
-
-```html
-<omni-button 
-  label="Some Action"
-  type="primary">
-</omni-button>
-```
-
-
-
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#omni-check)
-
-# ➜ omni-check
+</td><td>Check</td><td>
 
 A control that allows a user to check a value on or off.
 
-```js 
+
+```js
+ 
 import '@innofake/omni-components/check'; 
+
 ```
 
+</td></tr><tr><td>
 
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#example)
+[omni-code](src/code/README.md)
 
-## ⭑ Example
-
-```html
-<omni-check
-  label="My Toggle Value"
-  .data="{'id': 12345, 'name': 'Test'}"
-  hint="Required"
-  error="Field level error message"
-  checked
-  disabled>
-</omni-check>
-```
-
-
-
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#omni-code)
-
-# ➜ omni-code
+</td><td>Code</td><td>
 
 A control to syntax highlight and display source code.
 
-```js 
+
+```js
+ 
 import '@innofake/omni-components/code'; 
+
 ```
 
+</td></tr><tr><td>
 
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#example)
+[omni-icon](src/icon/README.md)
 
-## ⭑ Example
-
-```html
-<omni-code language="html">
- <div>
-   <h1>Hello World</h1>
- </div>
-</omni-menu>
-```
-
-
-
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#omni-icon)
-
-# ➜ omni-icon
+</td><td>Icon</td><td>
 
 Component that displays an icon
 
-```js 
+
+```js
+ 
 import '@innofake/omni-components/icon'; 
-```
-
-
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#example)
-
-## ⭑ Example
-
-```html
-<omni-icon
-  size="default|extra-small|small|medium|large">
-	   <svg version="1.1" id="diagram" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="375px" height="150px"><path d="M45,11.5H33.333c0.735-1.159,1.167-2.528,1.167-4C34.5,3.364,31.136,0,27,0s-7.5,3.364-7.5,7.5c0,1.472,0.432,2.841,1.167,4H9l-9,32h54L45,11.5z M22.5,7.5C22.5,5.019,24.519,3,27,3s4.5,2.019,4.5,4.5c0,1.752-1.017,3.257-2.481,4h-4.037 C23.517,10.757,22.5,9.252,22.5,7.5z" id="control"/></svg>
-</omni-icon>
 
 ```
 
-```
+</td></tr><tr><td>
 
+[omni-label](src/label/README.md)
 
-
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#omni-label)
-
-# ➜ omni-label
+</td><td>Label</td><td>
 
 A simple label component that renders a styled text string.
 
-```js 
+
+```js
+ 
 import '@innofake/omni-components/label'; 
+
 ```
 
+</td></tr><tr><td>
 
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#example)
+[omni-radio](src/radio/README.md)
 
-## ⭑ Example
-
-```html
-<omni-label
-  label="Hello World"
-  type="strong">
-</omni-label>
-```
-
-
-
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#omni-radio)
-
-# ➜ omni-radio
+</td><td>Radio</td><td>
 
 A control that allows a user to select a single value from a small group of values.
 
-```js 
+
+```js
+ 
 import '@innofake/omni-components/radio'; 
+
 ```
 
+</td></tr><tr><td>
 
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#example)
+[omni-switch](src/switch/README.md)
 
-## ⭑ Example
-
-```html
-<omni-radio
-  label="My Toggle Value"
-  data="{'id': 12345, 'name': 'Test'}"
-  hint="Required"
-  error="Field level error message"
-  checked
-  disabled>
-</omni-radio>
-```
-
-
-
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#omni-switch)
-
-# ➜ omni-switch
+</td><td>Switch</td><td>
 
 A control that allows a user to switch a value on or off.
 
-```js 
+
+```js
+ 
 import '@innofake/omni-components/switch'; 
+
 ```
 
+</td></tr></tbody></table>
 
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#example)
-
-## ⭑ Example
-
-```html
-<omni-switch
-  label="My Switch Value"
-  data="{'id': 12345, 'name': 'Test'}"
-  hint="Required"
-  error="Field level error message"
-  checked>
-</omni-switch>
-```
 
 
 &nbsp;
@@ -238,8 +156,40 @@ import '@innofake/omni-components/switch';
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#contributing-and-usage)
 
 # ➜ Contributing and Usage
+
+
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#contributors)
+
+## ⭑ Contributors
+
 <!-- readme: contributors -start -->
+<table>
+<tr>
+    <td align="center">
+        <a href="https://github.com/BOTLANNER">
+            <img src="https://avatars.githubusercontent.com/u/16349308?v=4" width="100;" alt="BOTLANNER"/>
+            <br />
+            <sub><b>BOTLANNER</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/chromaticWaster">
+            <img src="https://avatars.githubusercontent.com/u/22874454?v=4" width="100;" alt="chromaticWaster"/>
+            <br />
+            <sub><b>chromaticWaster</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/stefan505">
+            <img src="https://avatars.githubusercontent.com/u/10812446?v=4" width="100;" alt="stefan505"/>
+            <br />
+            <sub><b>stefan505</b></sub>
+        </a>
+    </td></tr>
+</table>
 <!-- readme: contributors -end -->
+
+
 
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#license)
 

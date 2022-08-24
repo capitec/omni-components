@@ -14,7 +14,7 @@ class TodoMemoryStoreImpl extends Store {
 		});
 	}
 
-	add(todo: { text?: string; id?: any; }) {
+	add(todo: { text?: string; id?: string; }) {
 
 		todo.id = v4();
 
@@ -27,10 +27,10 @@ class TodoMemoryStoreImpl extends Store {
 		}
 	}
 
-	edit(todo: { id: any; }) {
+	edit(todo: { id: string; }) {
 
 		const todos = this.getState().todos;
-		const index = todos.findIndex((c: { id: any; }) => c.id === todo.id);
+		const index = todos.findIndex((c: { id: string; }) => c.id === todo.id);
 
 		if (index !== -1) {
 			todos[index] = todo;
@@ -54,7 +54,7 @@ class TodoMemoryStoreImpl extends Store {
 	}
 }
 
-let TodoMemoryStore = new TodoMemoryStoreImpl();
+const TodoMemoryStore = new TodoMemoryStoreImpl();
 
 
 beforeEach(() => {
