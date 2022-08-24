@@ -48,17 +48,17 @@ export class Code extends LitElement {
 	@property({ type: String, reflect: true }) header?: string;
 	@property({ type: String, reflect: true }) language = 'html';
 
-    private _content = '';
+	private _content = '';
 	@property({ type: String, reflect: true })
-    get content(): string {
+	get content(): string {
 		return this._content;
-    }
-    set content(val: string) {
+	}
+	set content(val: string) {
 		const oldVal = this._content;
 
 		this._parseContent(val);
 		this.requestUpdate(`content`, oldVal);
-    }
+	}
 
 	// ----------
 	// INITIALISATION
@@ -67,7 +67,7 @@ export class Code extends LitElement {
 	/**
 	 * @hideconstructor
 	 */
-     constructor() {
+	constructor() {
 
 		super();
 	}
@@ -104,7 +104,7 @@ export class Code extends LitElement {
 	// PRIVATE METHODS
 	// ----------
 
-	_parseContent(source: string) : void {
+	_parseContent(source: string): void {
 
 		if (source.length > 0) {
 
@@ -173,7 +173,12 @@ export class Code extends LitElement {
 					-moz-hyphens: none;
 					-ms-hyphens: none;
 					hyphens: none;
-
+        
+					-webkit-touch-callout: text;
+					-webkit-user-select: text;
+					-khtml-user-select: text;
+					-moz-user-select: text;
+					-ms-user-select: text;
 					user-select: text;
 				}
 
@@ -350,7 +355,7 @@ export class Code extends LitElement {
 
 				/* Handle on hover */
 				pre[class*="language-"]::-webkit-scrollbar-thumb:hover {
-					background: var(--omni-code-scrollbar-thumb-hover-background, #008BC7);
+					background: var(--omni-code-scrollbar-thumb-hover-background, var(--omni-accent-color));
 				}
 
 				.header {
@@ -371,18 +376,21 @@ export class Code extends LitElement {
 	 */
 	override render(): TemplateResult {
 		return html`
-			<div class="hidden"><slot></slot></div>
+			<div class="hidden">
+				<slot></slot>
+			</div>
 			${this.header ? html`
-				<div class="header">${this.header}</div>
-				${this._renderPre(true)}
+			<div class="header">${this.header}</div>
+			${this._renderPre(true)}
 			` : html`
-				${this._renderPre(false)}
+			${this._renderPre(false)}
 			`}
 		`;
 	}
 
-	_renderPre(withTitle: boolean) : TemplateResult {
+	_renderPre(withTitle: boolean): TemplateResult {
 
-		return html`<pre data-with-header="${withTitle}" class="language-${this.language}" style="white-space: pre-wrap;"><code>${unsafeHTML(this._content)}</code></pre>`;
+		return html`<pre data-with-header="${withTitle}" class="language-${this.language}"
+	style="white-space: pre-wrap;"><code>${unsafeHTML(this._content)}</code></pre>`;
 	}
 }

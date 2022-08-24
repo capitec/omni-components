@@ -63,7 +63,7 @@ export class Icon extends LitElement {
 	/**
 	 * @hideconstructor
 	 */
-     constructor() {
+	constructor() {
 
 		super();
 	}
@@ -71,7 +71,7 @@ export class Icon extends LitElement {
 	// ------------------
 	// LIFECYCLE HANDLERS
 	// ------------------
-	
+
 	// n/a
 
 	// ----------------
@@ -112,8 +112,9 @@ export class Icon extends LitElement {
 					fill: var(--omni-icon-fill, currentColor);
 					background-color: var(--omni-icon-background-color);
 				}
+    
 				/* MATERIAL ICON STYLES */
-
+			
 				.material-icon {
 					font-family: 'Material Icons';
 					font-weight: normal;
@@ -127,19 +128,19 @@ export class Icon extends LitElement {
 					direction: ltr;
 					padding: 0px;
 					margin: 0px;
-
+			
 					align-self: center;
 					justify-self: center;
-
+			
 					/* Support for all WebKit browsers. */
 					-webkit-font-smoothing: antialiased;
 					
 					/* Support for Safari and Chrome. */
 					text-rendering: optimizeLegibility;
-
+			
 					/* Support for Firefox. */
 					-moz-osx-font-smoothing: grayscale;
-
+			
 					/* Support for IE. */
 					font-feature-settings: 'liga';
 				}
@@ -205,14 +206,16 @@ export class Icon extends LitElement {
 
 			if (this.icon.startsWith(`@material/`)) {
 				return html`
-					<div class="material-icon ${this.size}" >${this.icon.replace(`@material/`, ``)}</div>
+					<div class="material-icon ${this.size}">${this.icon.replace(`@material/`, ``)}</div>
 				`;
-			} 
+			}
 			return html`
-				<img class="svg-icon ${this.size}" src="${this.icon}" alt="${this.icon}"/>
+				<img class="svg-icon ${this.size}" src="${this.icon}" alt="${this.icon}" />
 			`;
 		}
 
-		return html`<div class="svg-icon ${this.size}" ><slot></slot></div>`;
+		return html`<div class="svg-icon ${this.size}">
+	<slot></slot>
+</div>`;
 	}
 }

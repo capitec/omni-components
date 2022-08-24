@@ -9,14 +9,7 @@ import '@innofake/omni-components/check';
 ## Example
 
 ```html
-<omni-check
-  label="My Toggle Value"
-  .data="{'id': 12345, 'name': 'Test'}"
-  hint="Required"
-  error="Field level error message"
-  checked
-  disabled>
-</omni-check>
+<omni-check  label="My Toggle Value"  .data="{'id': 12345, 'name': 'Test'}"  hint="Required"  error="Field level error message"  checked  disabled></omni-check>
 ```
 
 ## Properties
@@ -64,21 +57,21 @@ import '@innofake/omni-components/check';
 | `--omni-check-checked-background-color`       | Checked Background color.       |
 | `--omni-check-disabled-background-color`      | Disabled Background color.      |
 | `--omni-check-disabled-border-color`          | Disabled border color.          |
+| `--omni-check-error-label-font-color`         | Error font color.               |
+| `--omni-check-error-label-font-family`        | Error font family.              |
+| `--omni-check-error-label-font-size`          | Error font size.                |
+| `--omni-check-error-label-font-weight`        | Error font weight.              |
 | `--omni-check-height`                         | Height.                         |
+| `--omni-check-hint-label-font-color`          | Hint font color.                |
+| `--omni-check-hint-label-font-family`         | Hint font family.               |
+| `--omni-check-hint-label-font-size`           | Hint font size.                 |
+| `--omni-check-hint-label-font-weight`         | Hint font weight.               |
 | `--omni-check-hover-background-color`         | Hover background color.         |
 | `--omni-check-hover-box-shadow`               | Hover box shadow.               |
 | `--omni-check-indeterminate-background-color` | Indeterminate Background color. |
 | `--omni-check-indicator-border-color`         | Indicator Border color.         |
 | `--omni-check-indicator-border-width`         | Indicator Border width.         |
 | `--omni-check-indicator-color`                | Indicator color.                |
-| `--omni-check-input-error-label-font-color`   | Error font color.               |
-| `--omni-check-input-error-label-font-family`  | Error font family.              |
-| `--omni-check-input-error-label-font-size`    | Error font size.                |
-| `--omni-check-input-error-label-font-weight`  | Error font weight.              |
-| `--omni-check-input-hint-label-font-color`    | Hint font color.                |
-| `--omni-check-input-hint-label-font-family`   | Hint font family.               |
-| `--omni-check-input-hint-label-font-size`     | Hint font size.                 |
-| `--omni-check-input-hint-label-font-weight`   | Hint font weight.               |
 | `--omni-check-label-font-color`               | Label font color.               |
 | `--omni-check-label-font-family`              | Label font family.              |
 | `--omni-check-label-font-size`                | Label font size.                |
