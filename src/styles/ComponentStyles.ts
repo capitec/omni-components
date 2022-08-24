@@ -1,19 +1,28 @@
 import { css } from 'lit';
 
 /** 
- * @cssprop --omni-theme-font-color - Theme Font color.
- * @cssprop --omni-theme-font-family - Theme Font Family.
- * @cssprop --omni-theme-font-color - Theme Font color.
- * @cssprop --omni-theme-colored-font-color - Theme Colored Font color.
- * @cssprop --omni-theme-hint-font-color - Theme Hint Font Color.
- * @cssprop --omni-theme-error-font-color - Theme Error Font Color.
- * @cssprop --omni-theme-disabled-background-color - Theme Disable Background Color.
- * @cssprop --omni-theme-disabled-border-color - Theme Disable Border Color.
- * @cssprop --omni-theme-filled-background-color - Theme Filled Background Color.
- * @cssprop --omni-theme-track-filled-background-color - Theme Track Filled Background Color.
- * @cssprop --omni-theme-track-background-color - Theme Track Background Color.
- * @cssprop --omni-theme-light-box-shadow-color - Theme Light Box Shadow Color.
- * @cssprop --omni-theme-light-background-color - Theme Light Background Color.
+ * @cssprop --omni-theme-primary-color - The XXXX
+ * @cssprop --omni-theme-accent-color - The XXXX
+ * 
+ * @cssprop --omni-theme-font-family - The XXXX
+ * @cssprop --omni-theme-font-size - The XXXX
+ * @cssprop --omni-theme-font-weight - The XXXX
+ * @cssprop --omni-theme-line-height - The XXXX
+ * @cssprop --omni-theme-letter-spacing - The XXXX
+ * 
+ * @cssprop --omni-theme-font-color - The XXXX
+ * @cssprop --omni-theme-background-color - The XXXX
+ * @cssprop --omni-theme-disabled-border-color - The XXXX
+ * @cssprop --omni-theme-disabled-background-color - The XXXX
+ * @cssprop --omni-theme-error-font-color - The XXXX
+ * @cssprop --omni-theme-error-border-color - The XXXX
+ * @cssprop --omni-theme-hint-font-color - The XXXX
+ * @cssprop --omni-theme-inactive-color - The XXXX
+ * @cssprop --omni-theme-box-shadow-color - The XXXX
+ * @cssprop 
+ * @cssprop --omni-theme-border-radius - The XXXX
+ * @cssprop --omni-theme-border-width - The XXXX
+ * @cssprop --omni-theme-box-shadow - The XXXX
  */
 export default css`
 
@@ -25,19 +34,39 @@ export default css`
         
         /* ----- THEMES -----*/
 
-        --omni-font-color: var(--omni-theme-font-color, black);
-        --omni-colored-font-color: var(--omni-theme-colored-font-color, #4E6066);
-        --omni-font-family: var(--omni-theme-font-family, Arial, Helvetica, sans-serif);
+        --omni-primary-color: var(--omni-theme-primary-color, #009DE0);
+        --omni-accent-color: var(--omni-theme-accent-color, #7FCAEC);
 
-        --omni-hint-font-color: var(--omni-theme-hint-font-color, lightgrey);
-        --omni-error-font-color: var(--omni-theme-error-font-color, red);
-        --omni-disabled-background-color: var(--omni-theme-disabled-background-color, #DEDEDE);
+        --omni-font-family: var(--omni-theme-font-family, Arial, Helvetica, sans-serif);
+        --omni-font-size: var(--omni-theme-font-size, 14px);
+        --omni-font-weight: var(--omni-theme-font-weight, inherit);
+
+        --omni-line-height: var(--omni-theme-line-height, inherit);
+        --omni-letter-spacing: var(--omni-theme-letter-spacing, inherit);
+
+        --omni-font-color: var(--omni-theme-font-color, black);
+        --omni-background-color: var(--omni-theme-background-color, #FFFFFF);
         --omni-disabled-border-color: var(--omni-theme-disabled-border-color, #dedede44);
-        --omni-filled-background-color: var(--omni-theme-filled-background-color, #009DE0);
-        --omni-track-filled-background-color: var(--omni-theme-track-filled-background-color, #7FCAEC);
-        --omni-track-background-color: var(--omni-theme-track-background-color, #7C7C7C);
-        --omni-light-box-shadow-color: var(--omni-theme-light-box-shadow-color, #E6F7FF);
-        --omni-light-background-color: var(--omni-theme-light-background-color, #FFFFFF);
+        --omni-disabled-background-color: var(--omni-theme-disabled-background-color, #DEDEDE);
+        --omni-error-font-color: var(--omni-theme-error-font-color, red);
+        --omni-error-border-color: var(--omni-theme-error-border-color, red);
+        --omni-hint-font-color: var(--omni-theme-hint-font-color, lightgrey);
+        --omni-inactive-color: var(--omni-theme-inactive-color, #7C7C7C);
+        --omni-box-shadow-color: var(--omni-theme-box-shadow-color, #E6F7FF);
+
+        --omni-border-radius: var(--omni-theme-border-radius, 4px);
+        --omni-border-width: var(--omni-theme-border-width, 1px);
+       
+       /*  
+        --omni-margin: var(--omni-theme-margin, 1px);
+        --omni-padding: var(--omni-theme-padding, 1px);
+        --omni-outline: var(--omni-theme-outline, 1px);
+        */
+
+
+
+
+        --omni-box-shadow: var(--omni-theme-box-shadow, 0 0 4px 4px var(--omni-box-shadow-color));
 
         /* ----- -----*/
 

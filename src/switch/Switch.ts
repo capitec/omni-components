@@ -250,7 +250,7 @@ export class Switch extends LitElement {
 					grid-row: 1;
 					grid-column: 1;
 					
-					background-color: var(--omni-switch-track-background-color, var(--omni-track-background-color));
+					background-color: var(--omni-switch-track-background-color, var(--omni-inactive-color));
 					border-radius: var(--omni-switch-track-border-radius, 16px);
 					margin-left: var(--omni-switch-track-inset, 8px);
 					margin-right: var(--omni-switch-track-inset, 8px);
@@ -265,7 +265,7 @@ export class Switch extends LitElement {
 				.container > #content > .knob > div {
 					width: var(--omni-switch-knob-width, 14px);
 					height: 100%;
-					background-color: var(--omni-switch-knob-background-color, var(--omni-light-background-color));
+					background-color: var(--omni-switch-knob-background-color, var(--omni-background-color));
 					border-radius: 50%;
 					box-shadow: var(--omni-switch-knob-box-shadow, 0 2px 4px 0 rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.15));
 					
@@ -282,16 +282,16 @@ export class Switch extends LitElement {
 				
 				/* CHECKED STATE STYLES */
 				.container.checked > #content > .track {
-					background-color: var(--omni-switch-checked-track-background-color, var(--omni-track-filled-background-color));
+					background-color: var(--omni-switch-checked-track-background-color, var(--omni-accent-color));
 				}
 				
 				.container.checked > #content > .knob > div {
-					background-color: var(--omni-switch-checked-knob-background-color, var(--omni-filled-background-color));
+					background-color: var(--omni-switch-checked-knob-background-color, var(--omni-primary-color));
 					left: calc(100% - var(--omni-switch-knob-width, 14px));
 					box-shadow: none;
 				}
 				.container.checked > #content:hover > .knob > div {
-					background-color: var(--omni-switch-checked-knob-background-color, var(--omni-filled-background-color));
+					background-color: var(--omni-switch-checked-knob-background-color, var(--omni-primary-color));
 					left: calc(100% - var(--omni-switch-knob-width, 14px));
 					box-shadow: var(--omni-switch-checked-hover-knob-box-shadow, 0 0 3px 3px rgba(0, 157, 224, 0.10));
 				}

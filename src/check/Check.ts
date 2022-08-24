@@ -232,7 +232,7 @@ export class Check extends LitElement {
 				/* LABEL STYLES */
 				
 				.container > .label {
-					color: var(--omni-check-label-font-color, var(--omni-colored-font-color));
+					color: var(--omni-check-label-font-color, var(--omni-font-color));
 					font-family: var(--omni-check-label-font-family, var(--omni-font-family));
 					font-size: var(--omni-check-label-font-size, 14px);
 					font-weight: var(--omni-check-label-font-weight, 300);
@@ -273,11 +273,11 @@ export class Check extends LitElement {
 					width: var(--omni-check-width, 22px);
 					height: var(--omni-check-height, 22px);
 
-					background-color: var(--omni-check-background-color, var(--omni-light-background-color));
+					background-color: var(--omni-check-background-color, var(--omni-background-color));
 
 					border-width: var(--omni-check-border-width, 2px);
 					border-style: solid;
-					border-color: var(--omni-check-border-color, var(--omni-filled-background-color));
+					border-color: var(--omni-check-border-color, var(--omni-primary-color));
 					border-radius: var(--omni-check-border-radius, 4px);
 					
 					outline: 0;
@@ -292,10 +292,10 @@ export class Check extends LitElement {
 
 					border-width: var(--omni-check-indicator-border-width, 1px);
 					border-style: solid;
-					border-color: var(--omni-check-indicator-border-color, var(--omni-filled-background-color));
+					border-color: var(--omni-check-indicator-border-color, var(--omni-primary-color));
 					border-radius: var(--omni-check-border-radius, 4px);
 
-					color: var(--omni-check-indicator-color, var(--omni-light-background-color));
+					color: var(--omni-check-indicator-color, var(--omni-background-color));
 
 					display: flex;
 					align-items: center;
@@ -307,30 +307,30 @@ export class Check extends LitElement {
 				/* CHECKED STATE STYLES */
 
 				.container.checked > #content {
-					background-color: var(--omni-check-checked-background-color, var(--omni-filled-background-color));
+					background-color: var(--omni-check-checked-background-color, var(--omni-primary-color));
 				}
 				/* INDETERMINATE STATE STYLES */
 
 				.container.indeterminate > #content {
-					background-color: var(--omni-check-indeterminate-background-color, var(--omni-filled-background-color));
-					color: var(--omni-check-indicator-color, var(--omni-light-background-color));
+					background-color: var(--omni-check-indeterminate-background-color, var(--omni-primary-color));
+					color: var(--omni-check-indicator-color, var(--omni-background-color));
 				}
 				
 				.container.indeterminate > #content > .indicator {
 
-					color: var(--omni-check-indicator-color, var(--omni-light-background-color));
+					color: var(--omni-check-indicator-color, var(--omni-background-color));
 					fill: currentColor;
 				}
 				
 				/* HOVER STATE STYLES */
 
 				.container > #content:hover {
-					box-shadow: var(--omni-check-hover-box-shadow,0 0 4px 4px var(--omni-light-box-shadow-color));
-					background-color: var(--omni-check-hover-background-color,var(--omni-light-box-shadow-color));
+					box-shadow: var(--omni-check-hover-box-shadow, var(--omni-box-shadow));
+					background-color: var(--omni-check-hover-background-color,var(--omni-box-shadow-color));
 				}
 
 				.container.checked:hover > #content {
-					background-color: var(--omni-check-checked-background-color, var(--omni-filled-background-color));
+					background-color: var(--omni-check-checked-background-color, var(--omni-primary-color));
 				}
 
 				.container.checked.disabled:hover > #content {
@@ -338,7 +338,7 @@ export class Check extends LitElement {
 				}
 				
 				.container.indeterminate:hover > #content {
-					background-color: var(--omni-check-indeterminate-background-color, var(--omni-filled-background-color));
+					background-color: var(--omni-check-indeterminate-background-color, var(--omni-primary-color));
 				}
 
 				.container.disabled.indeterminate:hover > #content {
