@@ -137,7 +137,7 @@ export class Hyperlink extends LitElement {
             }
 
             :host([disabled]) {
-                --omni-hyperlink-color: var(--omni-hyperlink-color-disabled, #7C7C7C)
+                --omni-hyperlink-color: var(--omni-hyperlink-color-disabled, var(--omni-background-color))
             }
 
             :host([disabled]) a {
@@ -149,10 +149,10 @@ export class Hyperlink extends LitElement {
             }
             
             .hyperlink {
-                font-size: var(--omni-hyperlink-font-size, 16px);
+                font-size: var(--omni-hyperlink-font-size, var(--omni-font-size));
                 font-family: var(--omni-font-family, "Hind Vadodara");
-                font-weight: var(--omni-hyperlink-font-weight, 500);
-                color: var(--omni-hyperlink-color, #009DE0);
+                font-weight: var(--omni-hyperlink-font-weight, var(--omni-font-weight));
+                color: var(--omni-hyperlink-color, var(--omni-primary-color));
                 text-decoration: var(--omni-hyperlink-text-decorator, none);
                 outline: none;
             }
