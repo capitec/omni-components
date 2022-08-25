@@ -1,92 +1,92 @@
 import { html } from 'lit';
-import { Story, Meta } from '@storybook/web-components';
+import { Meta } from '@storybook/web-components';
+import { ifNotEmpty } from '../utils/Directives.js';
 import { loadCssPropertiesRemote } from '../utils/StoryUtils';
-
 import './Code.js';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'UI Components/Code',
   component: 'omni-code',
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-  argTypes: {
+  argTypes: {},
+  parameters: {
+    cssprops: loadCssPropertiesRemote('omni-code'),
   },
-	parameters: {
-    cssprops: loadCssPropertiesRemote('omni-code')
-	}
 } as Meta;
 
 interface ArgTypes {
-	header: string;
-	content: string;
-	language: string;
+  header: string;
+  content: string;
+  language: string;
 }
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: Story<ArgTypes> = (args: ArgTypes) => html`
-    <omni-code 
-    language="${args.language}" 
-    data-testid="test-code"
-    header="${args.header}" 
-    content="${args.content}" 
+export const Interactive = {
+  render: (args: ArgTypes) => html`
+    <omni-code language="${ifNotEmpty(args.language)}" data-testid="test-code" header="${ifNotEmpty(args.header)}" content="${ifNotEmpty(args.content)}"></omni-code>
+  `,
+  name: 'Interactive',
+  parameters: {},
+  args: {
+    header: '',
+    content: 'Hello',
+    language: 'html',
+  },
+};
+
+export const HTML_as_content = {
+  render: (args: ArgTypes) => html`
+    <omni-code
+      language="${args.language}"
+      data-testid="test-code"
+      header="${args.header}"
+      content="${args.content}"
     >
     </omni-code>
-`;
-
-export const Default = Template.bind({});
-// More on args: https://storybook.js.org/docs/react/writing-stories/args
-Default.storyName = 'Default';
-Default.parameters = {
-};
-Default.args = {
-  header:'' ,
-  content:'Hello' ,
-  language:'html' ,
-};
-
-// export const Header = Template.bind({});
-// Header.args = {
-//   header:'Header' ,
-//   content:'' ,
-//   language:'' ,
-// };
-
-export const HTML_as_content = Template.bind({});
-HTML_as_content.args = {
-  header:'HTML' ,
-  content:`  
+  `,
+  args: {
+    header: 'HTML',
+    content: `  
    <div>
      <h1>Hello World</h1>
    </div>
-  ` ,
-  language:'html' ,
+  `,
+    language: 'html',
+  },
 };
 
-
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template2: Story<ArgTypes> = (args: ArgTypes) => html`
-    <omni-code 
-    language="${args.language}" 
-    data-testid="test-code"
-    header="${args.header}" 
-    content="${args.content}" 
+export const HTML_as_child_element = {
+  render: (args: ArgTypes) => html`
+    <omni-code
+      language="${args.language}"
+      data-testid="test-code"
+      header="${args.header}"
+      content="${args.content}"
     >
-    <div>
-      <h1>Hello World</h1>
-    </div>
+      <div>
+        <h1>Hello World</h1>
+      </div>
     </omni-code>
-`;
-export const HTML_as_child_element = Template2.bind({});
-HTML_as_child_element.args = {
-  header:'HTML as child element' ,
-  language:'html' ,
+  `,
+  args: {
+    header: 'HTML as child element',
+    language: 'html',
+  },
 };
 
-export const JavaScript = Template.bind({});
-JavaScript.args = {
-  header:'JavaScript' ,
-  content:`  
+export const JavaScript = {
+  render: (args: ArgTypes) => html`
+    <omni-code
+      language="${args.language}"
+      data-testid="test-code"
+      header="${args.header}"
+      content="${args.content}"
+    >
+    </omni-code>
+  `,
+  args: {
+    header: 'JavaScript',
+    content: `  
     alert('this is javascript');
-  ` ,
-  language:'javascript' ,
+  `,
+    language: 'javascript',
+  },
 };

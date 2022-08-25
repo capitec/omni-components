@@ -1,106 +1,91 @@
 import { html } from 'lit';
-import { Story, Meta } from '@storybook/web-components';
+import { Meta } from '@storybook/web-components';
+import { ifNotEmpty } from '../utils/Directives.js';
 import { loadCssPropertiesRemote } from '../utils/StoryUtils';
-
 import './Radio.js';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'UI Components/Radio',
   component: 'omni-radio',
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-  argTypes: {
+  argTypes: {},
+  parameters: {
+    actions: {
+      handles: ['value-change'],
+    },
+    cssprops: loadCssPropertiesRemote('omni-radio'),
   },
-	parameters: {
-		actions: {
-			handles: ['value-change']
-		},
-    cssprops: loadCssPropertiesRemote('omni-radio')
-	}
 } as Meta;
 
 interface ArgTypes {
-	label: string;
-	data: object;
-	hint: string;
-	error: string;
-	checked: boolean;
-	disabled: boolean;
+  label: string;
+  data: object;
+  hint: string;
+  error: string;
+  checked: boolean;
+  disabled: boolean;
 }
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: Story<ArgTypes> = (args: ArgTypes) => html`
-    <omni-radio 
-    label="${args.label}" 
-    .data="${args.data}" 
-    hint="${args.hint}" 
-    error="${args.error}"
-    ?checked="${args.checked}"
-    ?disabled="${args.disabled}"
-    >
-    </omni-radio>
-`;
-
-export const Default = Template.bind({});
-// More on args: https://storybook.js.org/docs/react/writing-stories/args
-Default.storyName = 'Default';
-Default.parameters = {
-};
-Default.args = {
-  label:'' ,
-  data:{} ,
-  hint:'' ,
-  error: '',  
-  checked:false,
-  disabled:false
+export const Interactive = {
+  render: (args: ArgTypes) => html`
+    <omni-radio label="${ifNotEmpty(args.label)}" .data="${args.data}" hint="${ifNotEmpty(args.hint)}" error="${ifNotEmpty(args.error)}" ?checked="${args.checked}" ?disabled="${args.disabled}"></omni-radio>
+  `,
+  name: 'Interactive',
+  parameters: {},
+  args: {
+    label: '',
+    data: {},
+    hint: '',
+    error: '',
+    checked: false,
+    disabled: false,
+  },
 };
 
-export const Label = Template.bind({});
-Label.args = {
-  label:'Label' ,
-  data:{} ,
-  hint:'' ,
-  error: '',  
-  checked:false,
-  disabled:false
+export const Label = {
+  render: (args: ArgTypes) => html`
+    <omni-radio label="${args.label}"></omni-radio>
+  `,
+  args: {
+    label: 'Label',
+  },
 };
 
-export const Hint = Template.bind({});
-Hint.args = {
-  label:'Hint' ,
-  data:{} ,
-  hint:'This is a hint' ,
-  error: '',  
-  checked:false,
-  disabled:false
+export const Hint = {
+  render: (args: ArgTypes) => html`
+    <omni-radio label="${args.label}" hint="${args.hint}"></omni-radio>
+  `,
+  args: {
+    label: 'Hint',
+    hint: 'This is a hint'
+  },
 };
 
-export const Error = Template.bind({});
-Error.args = {
-  label:'Error' ,
-  data:{} ,
-  hint:'' ,
-  error: 'This is an error state',  
-  checked:false,
-  disabled:false
+export const Error = {
+  render: (args: ArgTypes) => html`
+    <omni-radio label="${args.label}" error="${args.error}"></omni-radio>
+  `,
+  args: {
+    label: 'Error',
+    error: 'This is an error state'
+  },
 };
 
-export const Checked = Template.bind({});
-Checked.args = {
-  label:'Checked' ,
-  data:{} ,
-  hint:'' ,
-  error: '',  
-  checked:true,
-  disabled:false
+export const Checked = {
+  render: (args: ArgTypes) => html`
+    <omni-radio label="${args.label}" ?checked="${args.checked}"></omni-radio>
+  `,
+  args: {
+    label: 'Checked',
+    checked: true,
+  },
 };
 
-export const Disabled = Template.bind({});
-Disabled.args = {
-  label:'Disabled' ,
-  data:{} ,
-  hint:'' ,
-  error: '',  
-  checked:false,
-  disabled:true
+export const Disabled = {
+  render: (args: ArgTypes) => html`
+    <omni-radio label="${args.label}" ?disabled="${args.disabled}"></omni-radio>
+  `,
+  args: {
+    label: 'Disabled',
+    disabled: true,
+  },
 };

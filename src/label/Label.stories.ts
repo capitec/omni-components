@@ -1,61 +1,68 @@
 import { html } from 'lit';
-import { Story, Meta } from '@storybook/web-components';
+import { Meta } from '@storybook/web-components';
+import { ifNotEmpty } from '../utils/Directives.js';
 import { loadCssPropertiesRemote } from '../utils/StoryUtils';
-
-
 import './Label.js';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'UI Components/Label',
   component: 'omni-label',
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
-     type: { control: { type: 'select', options: ['default', 'title', 'subtitle', 'strong'] } }
+    type: {
+      control: {
+        type: 'radio',
+        options: ['default', 'title', 'subtitle', 'strong'],
+      },
+    },
   },
   parameters: {
-    cssprops: loadCssPropertiesRemote('omni-label')
-  }
+    cssprops: loadCssPropertiesRemote('omni-label'),
+  },
 } as Meta;
 
 interface ArgTypes {
-	label: string;
-	type: string;
+  label: string;
+  type: string;
 }
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: Story<ArgTypes> = (args: ArgTypes) => html`
-    <omni-label 
-    label="${args.label}" 
-    type="${args.type}" 
-    >
-    </omni-label>
-`;
-
-export const Default = Template.bind({});
-// More on args: https://storybook.js.org/docs/react/writing-stories/args
-Default.storyName = 'Default';
-Default.parameters = {
-};
-Default.args = {
-  label:'Label' ,
-  type:'default'
+export const Interactive = {
+  render: (args: ArgTypes) => html`
+    <omni-label label="${ifNotEmpty(args.label)}" type="${args.type}"> </omni-label>
+  `,
+  name: 'Interactive',
+  parameters: {},
+  args: {
+    label: 'Label',
+    type: 'default',
+  },
 };
 
-export const Title = Template.bind({});
-Title.args = {
-  label:'Title',
-  type:'title'
+export const Title = {
+  render: (args: ArgTypes) => html`
+    <omni-label label="${args.label}" type="${args.type}"> </omni-label>
+  `,
+  args: {
+    label: 'Title',
+    type: 'title',
+  },
 };
 
-export const Subtitle = Template.bind({});
-Subtitle.args = {
-  label:'Subtitle',
-  type:'subtitle'
+export const Subtitle = {
+  render: (args: ArgTypes) => html`
+    <omni-label label="${args.label}" type="${args.type}"> </omni-label>
+  `,
+  args: {
+    label: 'Subtitle',
+    type: 'subtitle',
+  },
 };
 
-export const Strong = Template.bind({});
-Strong.args = {
-  label:'Strong',
-  type:'strong'
+export const Strong = {
+  render: (args: ArgTypes) => html`
+    <omni-label label="${args.label}" type="${args.type}"> </omni-label>
+  `,
+  args: {
+    label: 'Strong',
+    type: 'strong',
+  },
 };
