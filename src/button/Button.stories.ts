@@ -2,11 +2,11 @@ import { Meta, StoryContext } from '@storybook/web-components';
 import { userEvent, within } from '@storybook/testing-library';
 import { expect, jest } from '@storybook/jest';
 import { html } from 'lit';
-import { ifDefined } from 'lit/directives/if-defined.js';
 import { loadCssPropertiesRemote } from '../utils/StoryUtils.js';
 import { Button, ButtonType, buttonType, slotPositionType, SlotPositionType } from './Button.js';
 import './Button.js';
 import '../icon/Icon.js';
+import { ifNotEmpty } from '../utils/Directives.js';
 
 export default {
     title: 'UI Components/Button',
@@ -41,7 +41,7 @@ export const Interactive = {
     <omni-button
         data-testid="test-button"
         type="${args.type}"
-        label="${ifDefined(args.label ? args.label : null)}"
+        label="${ifNotEmpty(args.label)}"
         slot-position="${args.slotPosition}"
         ?disabled=${args.disabled}>
         <omni-icon icon="@material/thumb_up"></omni-icon>
