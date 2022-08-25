@@ -68,9 +68,9 @@ const InlineTemplate: Story<ArgTypes> = (args: ArgTypes) => html`
 export const Default = Template.bind({});
 Default.storyName = "Default"
 Default.args = {
-    label:'Click me to take you to Storybook',
-    href:'https://storybook.js.org',
-    target: '_blank',
+    label:'Click me',
+    href:'https://example.com',
+    target: '',
     disabled: false,
     inline: false,
     size: ''
@@ -78,8 +78,8 @@ Default.args = {
 
 export const Small = Template.bind({});
 Small.args = {
-    label: 'I am a small hyperlink',
-    href: 'www.google.com',
+    label: 'Click me',
+    href: 'https://example.com',
     target: '',
     disabled: false,
     inline: false,
@@ -88,18 +88,18 @@ Small.args = {
 
 export const Disabled = Template.bind({});
 Disabled.args = {
-  label: "Disabled hyperlink",
-  href: 'www.google.com',
+  label: 'Click me',
+  href: 'https://example.com',
   target: '',
-  disabled: true,
-  inline: false,
+  disabled:true,
+  inline:false,
   size: ''
 }
 
 export const Inline = InlineTemplate.bind({});
 Inline.args = {
-  label: "Inline hyperlink",
-  href: 'www.google.com',
+  label: 'Click me',
+  href: 'https://example.com',
   target: '_blank',
   disabled: false,
   inline: true,
