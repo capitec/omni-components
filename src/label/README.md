@@ -19,10 +19,10 @@ import '@innofake/omni-components/label';
 
 | Property   | Attribute | Modifiers | Type                                             | Default   | Description                                      |
 |------------|-----------|-----------|--------------------------------------------------|-----------|--------------------------------------------------|
-| `label`    | `label`   |           | `String`                                         |           | The label string to display.                     |
+| `label`    | `label`   |           | `string`                                         |           | The label string to display.                     |
 | `override` |           |           |                                                  |           | The element style template.                      |
 | `styles`   |           | readonly  | `CSSResult[]`                                    |           |                                                  |
-| `type`     | `type`    |           | `"default"\|"title"\|"subtitle"\|"strong"\|String` | "default" | The type of label to display:<br />- `default` Normal font weight.<br />- `title` Larger font and weight.<br />- `subtitle` Larger font and weight.<br />- `strong` Largest font and weight. |
+| `type`     | `type`    |           | `"default"\|"title"\|"subtitle"\|"strong"\|string` | "default" | The type of label to display:<br />- `default` Normal font weight.<br />- `title` Larger font and weight.<br />- `subtitle` Larger font and weight.<br />- `strong` Largest font and weight. |
 
 ## CSS Custom Properties
 

@@ -1,5 +1,31 @@
 
 
+## Global Functions
+<table><thead><tr><th>Name</th><th>Description</th><th>Parameters</th><th>Return</th><th>Example</th></tr></thead><tbody>
+<tr><td>
+
+`ifNotEmpty`
+
+</td><td>Lit directive that only applies when provided value is not falsy(undefined, null, or empty string)</td><td>
+
+value {} - 
+
+</td><td>
+
+{} - value or nothing
+
+</td><td>
+
+
+```js
+
+    import { ifNotEmpty } from '@innofake/omni-components/utils';
+    
+```
+
+</td></tr>
+</tbody></table>
+
 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)
 
@@ -39,7 +65,8 @@ obj {`Object`} - Object to retrieve value from.
 
 `setValue`
 
-</td><td>Assigns the value to the object in a nested fashion.Specify a path as e.g. "food.fruit.apple".</td><td>
+</td><td>Assigns the value to the object in a nested fashion.
+Specify a path as e.g. "food.fruit.apple".</td><td>
 
 obj {`Object`} - Object to set value on.
 
@@ -93,9 +120,11 @@ value {`Number`|`String`|`Object`} - Value to check
 
 arr {`Array`} - Array to group.
 
- target {`String`|`function`} - Grouping target: - 
+ target {`String`|`function`} - Grouping target:
+ - 
 ```String
-``` as property to group on, e.g. "userId" - 
+``` as property to group on, e.g. "userId"
+ - 
 ```Function
 ``` as [Array.prototype.reduce()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce#Syntax) callback function.
 
