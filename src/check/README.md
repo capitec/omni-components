@@ -23,13 +23,13 @@ import '@innofake/omni-components/check';
 
 | Property        | Attribute       | Modifiers | Type          | Default | Description                                      |
 |-----------------|-----------------|-----------|---------------|---------|--------------------------------------------------|
-| `checked`       | `checked`       |           | `Boolean`     | false   | Indicator if the component is checked or not.    |
+| `checked`       | `checked`       |           | `boolean`     | false   | Indicator if the component is checked or not.    |
 | `data`          | `data`          |           | `Object`      |         | Data associated with the component.              |
-| `disabled`      | `disabled`      |           | `Boolean`     | false   | Indicator if the component is disabled.          |
-| `error`         | `error`         |           | `String`      |         | An error message to guide users to correct a mistake. |
-| `hint`          | `hint`          |           | `String`      |         | A hint message to assist the user.               |
-| `indeterminate` | `indeterminate` |           | `Boolean`     | false   | Indicator if the component is in and indeterminate state. |
-| `label`         | `label`         |           | `String`      |         | The label text.                                  |
+| `disabled`      | `disabled`      |           | `boolean`     | false   | Indicator if the component is disabled.          |
+| `error`         | `error`         |           | `string`      |         | An error message to guide users to correct a mistake. |
+| `hint`          | `hint`          |           | `string`      |         | A hint message to assist the user.               |
+| `indeterminate` | `indeterminate` |           | `boolean`     | false   | Indicator if the component is in and indeterminate state. |
+| `label`         | `label`         |           | `string`      |         | The label text.                                  |
 | `override`      |                 |           |               |         | The element style template.                      |
 | `styles`        |                 | readonly  | `CSSResult[]` |         |                                                  |
 
