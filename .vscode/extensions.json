@@ -1,6 +1,7 @@
 {
     "recommendations": [
         "dbaeumer.vscode-eslint",
-        "runem.lit-plugin"
+        "runem.lit-plugin",
+        "streetsidesoftware.code-spell-checker"
     ]
 }
