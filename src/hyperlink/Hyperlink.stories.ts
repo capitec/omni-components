@@ -10,10 +10,7 @@ export default {
   title: 'UI Components/Hyperlink',
   component: 'omni-hyperlink',
   argTypes: { 
-    size: { control: 'select', options: ['default', 'small'] },
-    target: { control: 'select', options: ['_self', '_blank', '_parent', '_top']},
-    disabled: { control: 'select', options: ['true', 'false'] },
-    inline: { control: 'select', options: ['true', 'false'] }
+    size: { control: 'radio', options: ['default', 'small'] },
   },
   parameters: {
     cssprops: loadCssPropertiesRemote('omni-hyperlink'),
@@ -41,7 +38,7 @@ export const Interactive = {
       target="${ifNotEmpty(args.target)}"
       ?disabled="${args.disabled}"
       ?inline="${args.inline}"
-      size="${ifNotEmpty(args.size)}"
+      size="${args.size}"
     ></omni-hyperlink>
   `,
   name: 'Interactive',
@@ -73,7 +70,8 @@ export const Small = {
 };
 
 export const Disabled = {
-  render: (args: ArgTypes) => html`<omni-hyperlink label="${args.label}" ?disabled="${args.disabled}"></omni-hyperlink>`,
+  render: (args: ArgTypes) => html`<omni-hyperlink data-testid="test-hyperlink" label="${args.label}" ?disabled="${args.disabled}"></omni-hyperlink>`,
+  
   args: {
     label: 'You never click this #BoratVoice',
     disabled: true,

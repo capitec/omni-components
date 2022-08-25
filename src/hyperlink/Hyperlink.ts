@@ -1,4 +1,4 @@
-import { html, css, LitElement, CSSResultGroup, TemplateResult } from 'lit';
+import { html, css, LitElement, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import ComponentStyles from '../styles/ComponentStyles';
 
@@ -28,9 +28,9 @@ import ComponentStyles from '../styles/ComponentStyles';
  *  - `_blank` Usually a new tab, users can configure the browser to open a new window instead.
  *  - `_parent` Parent browsing context of the current one. If no parent, behave as "_self".
  *  - `_top` Topmost browsing context (the "highest" context thats an ancestor of the current one). If no ancestors, behaves as "_self".
- * @property {Boolean} [disabled=false] - Indicator if the link is disabled.
- * @property {Boolean} [inline=false] - Indicator if the link is used as part of a sentence.
- * @property {String} [size] - Size of the Hyperlink text:
+ * @property {boolean} [disabled=false] - Indicator if the link is disabled.
+ * @property {boolean} [inline=false] - Indicator if the link is used as part of a sentence.
+ * @property {string} [size] - Size of the Hyperlink text:
  *  - `default` Size variation to apply.
  *  - `small` Size variation to apply.
  * 
@@ -59,12 +59,12 @@ import ComponentStyles from '../styles/ComponentStyles';
 @customElement('omni-hyperlink')
 export class Hyperlink extends LitElement {
 
-    @property({ type: String, reflect: true }) label?: String;
-    @property({ type: String, reflect: true}) href?: String;
-    @property({ type: String, reflect: true}) target: String = "_self";
-    @property({ type: Boolean, reflect: true}) disabled: Boolean = false;
-    @property({ type: Boolean, reflect: true}) inline: Boolean = false;
-    @property({ type: String, reflect: true}) size?: String;
+    @property({ type: String, reflect: true }) label?: string;
+    @property({ type: String, reflect: true}) href?: string;
+    @property({ type: String, reflect: true}) target: string = '_self';
+    @property({ type: Boolean, reflect: true}) disabled: boolean = false;
+    @property({ type: Boolean, reflect: true}) inline: boolean = false;
+    @property({ type: String, reflect: true}) size?: string;
 
     // --------------
 	// INITIALISATION
@@ -111,7 +111,7 @@ export class Hyperlink extends LitElement {
 		event.stopPropagation();
 	}
 
-    	// ---------------
+    // ---------------
 	// PRIVATE METHODS
 	// ---------------
 	
@@ -153,9 +153,9 @@ export class Hyperlink extends LitElement {
             }
 
             :host([size="small"]) .hyperlink {
-                font-size: var(--omni-hyperlink-font-size-small, 14px);
+                font-size: var(--omni-hyperlink-font-size-small, 0.87em);
                 font-family: var(--omni-font-family-small, "Hind Vadodara");
-                font-weight: var(--omni-hyperlink-font-weight-small, 500);
+                font-weight: var(--omni-hyperlink-font-weight-small, var(--omni-font-weight));
             }
 
             .hyperlink:active {
