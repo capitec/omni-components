@@ -236,7 +236,7 @@ export class Radio extends LitElement {
 					font-weight: var(--omni-radio-label-font-weight, var(--omni-font-weight));
 					line-height: var(--omni-radio-label-line-height, 20px);
 
-					margin-left: var(--omni-radio-label-spacing, var(--omni-margin-left));
+					margin-left: var(--omni-radio-label-spacing, 8px);
 
 					cursor: default;
 				}

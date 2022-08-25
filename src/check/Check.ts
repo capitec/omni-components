@@ -237,7 +237,7 @@ export class Check extends LitElement {
 					font-size: var(--omni-check-label-font-size, var(--omni-font-size));
 					font-weight: var(--omni-check-label-font-weight, var(--omni-font-weight));
 
-					margin-left: var(--omni-check-label-spacing, var(--omni-margin-left));
+					margin-left: var(--omni-check-label-spacing, 8px);
 
 					cursor: pointer;
 				}

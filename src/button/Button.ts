@@ -83,10 +83,10 @@ export class Button extends LitElement {
 					text-align: left;
 					
 					font-family: var(--omni-button-font-family, var(--omni-font-family));
-					font-size: var(--omni-button-font-size, 14px);
-					font-weight: var(--omni-button-font-weight, bold);
+					font-size: var(--omni-button-font-size, var(--omni-font-size));
+					font-weight: var(--omni-button-font-weight, bolder);
 					line-height: var(--omni-button-line-height);
-					border-radius: var(--omni-button-border-radius, 4px);
+					border-radius: var(--omni-button-border-radius, var(--omni-border-radius));
 					border-style: solid;
 
 					padding-top: var(--omni-button-padding-top, 10px);
@@ -106,13 +106,21 @@ export class Button extends LitElement {
 						-webkit-box-shadow .1s ease;
 				}
 
+				.button > .label {
+					cursor: pointer;
+				}
+
+				.button.disabled > .label {
+					cursor: default;
+				}
+
 				/* primary */
 
 				.button.primary {
-					background-color: var(--omni-button-primary-background-color, #009DE0);
-					border-color: var(--omni-button-primary-border-color, #009DE0);
-					border-width: var(--omni-button-primary-border-width, 1px);
-					color: var(--omni-button-primary-font-color, #FFFFFF);
+					background-color: var(--omni-button-primary-background-color, var(--omni-primary-color));
+					border-color: var(--omni-button-primary-border-color, var(--omni-primary-color));
+					border-width: var(--omni-button-primary-border-width, var(--omni-border-width));
+					color: var(--omni-button-primary-font-color, var(--omni-background-color));
 				}
 
 				.button.primary:hover {
@@ -120,17 +128,17 @@ export class Button extends LitElement {
 				}
 						
 				.button.primary:active {
-					background-color: var(--omni-button-primary-background-tapped-color, #0091CE);
+					background-color: var(--omni-button-primary-background-tapped-color, var(--omni-primary-active-color));
 					box-shadow: none;
 				}
 
 				/* secondary */
 
 				.button.secondary {
-					background-color: var(--omni-button-default-background-color, #FFFFFF);
-					border-color: var(--omni-button-default-border-color, #009DE0);
-					border-width: var(--omni-button-default-border-width, 1px);
-					color: var(--omni-button-default-font-color, #009DE0);
+					background-color: var(--omni-button-default-background-color, var(--omni-background-color));
+					border-color: var(--omni-button-default-border-color, var(--omni-primary-color));
+					border-width: var(--omni-button-default-border-width, var(--omni-border-width));
+					color: var(--omni-button-default-font-color, var(--omni-primary-color));
 				}
 				
 				.button.secondary:hover  {
@@ -138,28 +146,28 @@ export class Button extends LitElement {
 				}
 
 				.button.secondary:active {
-					background-color: var(--omni-button-default-background-tapped-color, rgba(0,131,187,0.1));
+					background-color: var(--omni-button-default-background-tapped-color, var(--omni-background-active-color));
 					box-shadow: none;
 				}
 
 				/* clear */
 
 				.button.clear {
-					background-color: var(--omni-button-clear-background-color, white);
-					border-color: var(--omni-button-clear-border-color, blue);
-					border-width: var(--omni-button-clear-border-width, 0);
-					color: var(--omni-button-clear-font-color, #009DE0);
+					background-color: var(--omni-button-clear-background-color, transparent);
+					border-color: var(--omni-button-clear-border-color, transparent);
+					border-width: var(--omni-button-clear-border-width, var(--omni-border-width));
+					color: var(--omni-button-clear-font-color, var(--omni-primary-color));
 				}
 
 				.button.clear:hover {
-					background-color: rgba(0, 131, 187, 0.05);
+					background-color: var(--omni-button-clear-background-hover-color, var(--omni-background-hover-color));
 				}
 						
 				.button.clear:active {
-					background-color: var(--omni-button-clear-background-tapped-color, rgba(0,131,187,0.1));
+					background-color: var(--omni-button-clear-background-tapped-color, var(--omni-background-active-color));
 					box-shadow: none;
-					border-color: var(--omni-button-clear-border-color, blue);
-					border-width: var(--omni-button-clear-border-width, 0);
+					border-color: var(--omni-button-clear-border-color, transparent);
+					border-width: var(--omni-button-clear-border-width, var(--omni-border-width));
 					outline:none;
 				}
 
@@ -167,26 +175,36 @@ export class Button extends LitElement {
 
 				.button.white {
 					background-color: var(--omni-button-white-background-color, white);
-					border-color: var(--omni-button-white-border-color, blue);
-					border-width: var(--omni-button-white-border-width, 0);
-					color: var(--omni-button-white-font-color, #009DE0);
+					border-color: var(--omni-button-white-border-color, white);
+					border-width: var(--omni-button-white-border-width, var(--omni-border-width));
+					color: var(--omni-button-white-font-color, var(--omni-primary-color));
 				}
 
 				.button.white:hover {
+					background-color: var(--omni-button-white-background-hover-color, white);
 					box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.15);
+				}
+
+				.button.white:active {
+					background-color: var(--omni-button-clear-background-tapped-color, var(--omni-background-active-color));
+					box-shadow: none;
+					border-color: var(--omni-button-clear-border-color, transparent);
+					border-width: var(--omni-button-clear-border-width, var(--omni-border-width));
+					outline:none;
 				}
 
 				/* disabled */
 
 				.button.disabled {
 					cursor: default;
-					border-color: var(--omni-button-disabled-border-color, lightgrey);
-					background-color: var(--omni-button-disabled-background-color, lightgrey);
+					border-color: var(--omni-button-disabled-border-color, var(--omni-disabled-border-color));
+					background-color: var(--omni-button-disabled-background-color, var(--omni-disabled-background-color));
 				}
 
-				.button.disabled:hover {
+				.button.disabled:hover, 
+				.button.disabled:active {
 					box-shadow: none;
-					background-color: var(--omni-button-disabled-background-color, lightgrey);
+					background-color: var(--omni-button-disabled-background-color, var(--omni-disabled-background-color));
 				}
 
 				.button.disabled:focus {

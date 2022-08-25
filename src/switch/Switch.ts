@@ -212,7 +212,7 @@ export class Switch extends LitElement {
 					font-family: var(--omni-switch-label-font-family, var(--omni-font-family));
 					font-size: var(--omni-switch-label-font-size, var(--omni-font-size));
 					font-weight: var(--omni-switch-label-font-weight, var(--omni-font-weight));
-					margin-left: var(--omni-switch-label-spacing, var(--omni-margin-left));
+					margin-left: var(--omni-switch-label-spacing, 8px);
 					cursor: default;
 				}
 				.container > .label > .hint {
