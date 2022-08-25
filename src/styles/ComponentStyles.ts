@@ -7,8 +7,6 @@ import { css } from 'lit';
  * @cssprop --omni-theme-font-family - The XXXX
  * @cssprop --omni-theme-font-size - The XXXX
  * @cssprop --omni-theme-font-weight - The XXXX
- * @cssprop --omni-theme-line-height - The XXXX
- * @cssprop --omni-theme-letter-spacing - The XXXX
  * 
  * @cssprop --omni-theme-font-color - The XXXX
  * @cssprop --omni-theme-background-color - The XXXX
@@ -39,10 +37,7 @@ export default css`
 
         --omni-font-family: var(--omni-theme-font-family, Arial, Helvetica, sans-serif);
         --omni-font-size: var(--omni-theme-font-size, 14px);
-        --omni-font-weight: var(--omni-theme-font-weight, inherit);
-
-        --omni-line-height: var(--omni-theme-line-height, inherit);
-        --omni-letter-spacing: var(--omni-theme-letter-spacing, inherit);
+        --omni-font-weight: var(--omni-theme-font-weight, normal);
 
         --omni-font-color: var(--omni-theme-font-color, black);
         --omni-background-color: var(--omni-theme-background-color, #FFFFFF);
@@ -55,15 +50,14 @@ export default css`
         --omni-box-shadow-color: var(--omni-theme-box-shadow-color, #E6F7FF);
 
         --omni-border-radius: var(--omni-theme-border-radius, 4px);
-        --omni-border-width: var(--omni-theme-border-width, 1px);
-       
+        --omni-border-width: var(--omni-theme-border-width, 2px);
+        
+        --omni-margin-left: var(--omni-theme-margin-left, 8px);
        /*  
         --omni-margin: var(--omni-theme-margin, 1px);
         --omni-padding: var(--omni-theme-padding, 1px);
         --omni-outline: var(--omni-theme-outline, 1px);
         */
-
-
 
 
         --omni-box-shadow: var(--omni-theme-box-shadow, 0 0 4px 4px var(--omni-box-shadow-color));
@@ -88,37 +82,5 @@ export default css`
 
     :host([hidden]) {
         display: none;
-    }
-    
-    /* MATERIAL ICON STYLES */
-
-    .material-icon {
-        font-family: 'Material Icons';
-        font-weight: normal;
-        font-style: normal;
-        display: inline-block;
-        line-height: 1;
-        text-transform: none;
-        letter-spacing: normal;
-        word-wrap: normal;
-        white-space: nowrap;
-        direction: ltr;
-        padding: 0px;
-        margin: 0px;
-
-        align-self: center;
-        justify-self: center;
-
-        /* Support for all WebKit browsers. */
-        -webkit-font-smoothing: antialiased;
-        
-        /* Support for Safari and Chrome. */
-        text-rendering: optimizeLegibility;
-
-        /* Support for Firefox. */
-        -moz-osx-font-smoothing: grayscale;
-
-        /* Support for IE. */
-        font-feature-settings: 'liga';
     }
 `;

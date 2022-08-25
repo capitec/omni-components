@@ -49,15 +49,15 @@ import { indeterminate_icon } from '../icons/Indeterminate.icon.js';
  * @cssprop --omni-check-label-font-weight - Label font weight.
  * @cssprop --omni-check-label-spacing - Label spacing.
  * 
- * @cssprop --omni-check-input-hint-label-font-color - Hint font color.
- * @cssprop --omni-check-input-hint-label-font-family - Hint font family.
- * @cssprop --omni-check-input-hint-label-font-size - Hint font size.
- * @cssprop --omni-check-input-hint-label-font-weight - Hint font weight.
+ * @cssprop --omni-check-hint-label-font-color - Hint font color.
+ * @cssprop --omni-check-hint-label-font-family - Hint font family.
+ * @cssprop --omni-check-hint-label-font-size - Hint font size.
+ * @cssprop --omni-check-hint-label-font-weight - Hint font weight.
  * 
- * @cssprop --omni-check-input-error-label-font-color - Error font color.
- * @cssprop --omni-check-input-error-label-font-family - Error font family.
- * @cssprop --omni-check-input-error-label-font-size - Error font size.
- * @cssprop --omni-check-input-error-label-font-weight - Error font weight.
+ * @cssprop --omni-check-error-label-font-color - Error font color.
+ * @cssprop --omni-check-error-label-font-family - Error font family.
+ * @cssprop --omni-check-error-label-font-size - Error font size.
+ * @cssprop --omni-check-error-label-font-weight - Error font weight.
  * 
  * @cssprop --omni-check-width - Width.
  * @cssprop --omni-check-height - Height.
@@ -87,9 +87,9 @@ export class Check extends LitElement {
 	@property({ type: Object, reflect: true }) data?: object;
 	@property({ type: String, reflect: true }) hint?: string;
 	@property({ type: String, reflect: true }) error?: string;
-	@property({ type: Boolean, reflect: true }) checked = false;  
-	@property({ type: Boolean, reflect: true }) disabled = false;  
-	@property({ type: Boolean, reflect: true }) indeterminate = false;  
+	@property({ type: Boolean, reflect: true }) checked = false;
+	@property({ type: Boolean, reflect: true }) disabled = false;
+	@property({ type: Boolean, reflect: true }) indeterminate = false;
 
 	// --------------
 	// INITIALISATION
@@ -98,7 +98,7 @@ export class Check extends LitElement {
 	/**
 	 * @hideconstructor
 	 */
-     constructor() {
+	constructor() {
 
 		super();
 	}
@@ -183,7 +183,7 @@ export class Check extends LitElement {
 	 * @ignore
 	 * @returns {void}
 	 */
-	_toggleChecked(e: MouseEvent|KeyboardEvent): void {
+	_toggleChecked(e: MouseEvent | KeyboardEvent): void {
 
 		const oldValue = this.checked;
 		this.checked = !oldValue;
@@ -234,28 +234,28 @@ export class Check extends LitElement {
 				.container > .label {
 					color: var(--omni-check-label-font-color, var(--omni-font-color));
 					font-family: var(--omni-check-label-font-family, var(--omni-font-family));
-					font-size: var(--omni-check-label-font-size, 14px);
-					font-weight: var(--omni-check-label-font-weight, 300);
+					font-size: var(--omni-check-label-font-size, var(--omni-font-size));
+					font-weight: var(--omni-check-label-font-weight, var(--omni-font-weight));
 
-					margin-left: var(--omni-check-label-spacing, 8px);
+					margin-left: var(--omni-check-label-spacing, var(--omni-margin-left));
 
 					cursor: pointer;
 				}
 
 				.container > .label > .hint {
-					color: var(--omni-check-input-hint-label-font-color, var(--omni-hint-font-color));
-					font-family: var(--omni-check-input-hint-label-font-family, var(--omni-font-family));
-					font-size: var(--omni-check-input-hint-label-font-size, 12px);
-					font-weight: var(--omni-check-input-hint-label-font-weight, 300);
+					color: var(--omni-check-hint-label-font-color, var(--omni-hint-font-color));
+					font-family: var(--omni-check-hint-label-font-family, var(--omni-font-family));
+					font-size: var(--omni-check-hint-label-font-size, 0.86em);
+					font-weight: var(--omni-check-hint-label-font-weight, 300);
 
 					padding-top: 4px;
 				}
 
 				.container > .label > .error {
-					color: var(--omni-check-input-error-label-font-color, var(--omni-error-font-color));
-					font-family: var(--omni-check-input-error-label-font-family, var(--omni-font-family));
-					font-size: var(--omni-check-input-error-label-font-size, 12px);
-					font-weight: var(--omni-check-input-error-label-font-weight, 300);
+					color: var(--omni-check-error-label-font-color, var(--omni-error-font-color));
+					font-family: var(--omni-check-error-label-font-family, var(--omni-font-family));
+					font-size: var(--omni-check-error-label-font-size, 0.86em);
+					font-weight: var(--omni-check-error-label-font-weight, 300);
 
 					padding-top: 4px;
 				}
@@ -275,10 +275,10 @@ export class Check extends LitElement {
 
 					background-color: var(--omni-check-background-color, var(--omni-background-color));
 
-					border-width: var(--omni-check-border-width, 2px);
+					border-width: var(--omni-check-border-width, var(--omni-border-width));
 					border-style: solid;
 					border-color: var(--omni-check-border-color, var(--omni-primary-color));
-					border-radius: var(--omni-check-border-radius, 4px);
+					border-radius: var(--omni-check-border-radius, var(--omni-border-radius));
 					
 					outline: 0;
 				}
@@ -293,7 +293,7 @@ export class Check extends LitElement {
 					border-width: var(--omni-check-indicator-border-width, 1px);
 					border-style: solid;
 					border-color: var(--omni-check-indicator-border-color, var(--omni-primary-color));
-					border-radius: var(--omni-check-border-radius, 4px);
+					border-radius: var(--omni-check-border-radius, var(--omni-border-radius));
 
 					color: var(--omni-check-indicator-color, var(--omni-background-color));
 
@@ -371,14 +371,13 @@ export class Check extends LitElement {
 	 */
 	override render(): TemplateResult {
 		return html`
-			<div 
+			<div
 				class="container${this.indeterminate ? ` indeterminate` : this.checked ? ` checked` : ``}${this.disabled ? ` disabled` : ``}">
-				<div
-					id="content"
-					@keydown="${this._keyDown}">
-					<div class="indicator">${this.indeterminate ? html`<slot name="indeterminate_icon">${indeterminate_icon()}</slot>` : this.checked ? html`<slot name="check_icon">${check_icon()}</slot>` : ``}</div>
+				<div id="content" @keydown="${this._keyDown}">
+					<div class="indicator">${this.indeterminate ? html`<slot name="indeterminate_icon">${indeterminate_icon()}
+						</slot>` : this.checked ? html`<slot name="check_icon">${check_icon()}</slot>` : ``}</div>
 				</div>
-
+			
 				<label class="label">
 					${this.label}
 					${this.hint && !this.error ? html`<div class="hint">${this.hint}</div>` : ``}
