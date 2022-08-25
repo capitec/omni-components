@@ -31,13 +31,13 @@ import ComponentStyles from '../styles/ComponentStyles';
  * 
  * Registry of all properties defined by the component.
  * 
- * @property {"default"|"extra-small"|"small"|"medium"|"large"|String} [size="default"] - The size to display the icon at. Options include:
+ * @property {"default"|"extra-small"|"small"|"medium"|"large"|string} [size="default"] - The size to display the icon at. Options include:
  *  - `default` Icon size is 24px.
  *  - `extra-small` Icon size is 8px.
  *  - `small` Icon size is 16px.
  *  - `medium` Icon size is 32px.
  *  - `large` Icon size is 48px.
- * @property {String} icon - The name of the icon to display. Takes preference over the slotted icon
+ * @property {string} icon - The name of the icon to display. Takes preference over the slotted icon
  * 
  * @slot default - The icon to be displayed
  * 

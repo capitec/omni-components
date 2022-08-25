@@ -1,5 +1,6 @@
 import { html, TemplateResult } from 'lit';
 import { Meta } from '@storybook/web-components';
+import { ifNotEmpty } from '../utils/Directives.js';
 import { loadCssPropertiesRemote } from '../utils/StoryUtils';
 import './Icon.js';
 
@@ -23,15 +24,15 @@ interface ArgTypes {
   svg: TemplateResult;
 }
 
-export const Default = {
+export const Interactive = {
   render: (args: ArgTypes) => html`
     <!-- Icons loaded by content path instead of font-based or slotted content will not be able to be styled directly -->
 
-    <omni-icon data-testid="test-icon" size="${args.size}" icon="${args.icon}">
+    <omni-icon data-testid="test-icon" size="${ifNotEmpty(args.size)}" icon="${ifNotEmpty(args.icon)}">
       ${args.svg}
     </omni-icon>
   `,
-  name: 'Default',
+  name: 'Interactive',
   parameters: {},
   args: {
     size: 'default',

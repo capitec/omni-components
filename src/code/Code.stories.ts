@@ -1,5 +1,6 @@
 import { html } from 'lit';
 import { Meta } from '@storybook/web-components';
+import { ifNotEmpty } from '../utils/Directives.js';
 import { loadCssPropertiesRemote } from '../utils/StoryUtils';
 import './Code.js';
 
@@ -18,17 +19,11 @@ interface ArgTypes {
   language: string;
 }
 
-export const Default = {
+export const Interactive = {
   render: (args: ArgTypes) => html`
-    <omni-code
-      language="${args.language}"
-      data-testid="test-code"
-      header="${args.header}"
-      content="${args.content}"
-    >
-    </omni-code>
+    <omni-code language="${ifNotEmpty(args.language)}" data-testid="test-code" header="${ifNotEmpty(args.header)}" content="${ifNotEmpty(args.content)}"></omni-code>
   `,
-  name: 'Default',
+  name: 'Interactive',
   parameters: {},
   args: {
     header: '',

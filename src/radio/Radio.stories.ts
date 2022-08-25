@@ -1,6 +1,6 @@
 import { html } from 'lit';
 import { Meta } from '@storybook/web-components';
-import { ifDefined } from 'lit/directives/if-defined.js';
+import { ifNotEmpty } from '../utils/Directives.js';
 import { loadCssPropertiesRemote } from '../utils/StoryUtils';
 import './Radio.js';
 
@@ -25,11 +25,11 @@ interface ArgTypes {
   disabled: boolean;
 }
 
-export const Default = {
+export const Interactive = {
   render: (args: ArgTypes) => html`
-    <omni-radio label="${ifDefined(args.label ? args.label : undefined)}" .data="${args.data}" hint="${ifDefined(args.hint ? args.hint : undefined)}" error="${ifDefined(args.error ? args.error : undefined)}" ?checked="${args.checked}" ?disabled="${args.disabled}"></omni-radio>
+    <omni-radio label="${ifNotEmpty(args.label)}" .data="${args.data}" hint="${ifNotEmpty(args.hint)}" error="${ifNotEmpty(args.error)}" ?checked="${args.checked}" ?disabled="${args.disabled}"></omni-radio>
   `,
-  name: 'Default',
+  name: 'Interactive',
   parameters: {},
   args: {
     label: '',
