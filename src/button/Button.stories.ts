@@ -36,10 +36,6 @@ interface Args {
     disabled: boolean;
 }
 
-// -----------
-// INTERACTIVE
-// -----------
-
 export const Interactive = {
     render: (args: Args) => html`
     <omni-button
