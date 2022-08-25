@@ -27,8 +27,52 @@ import ComponentStyles from '../styles/ComponentStyles';
  * @property {"left"|"top"|"right"|"bottom"} [slotPosition="left"] - Position of slotted content.
  * @property {boolean} [disabled=false] - Indicator if the component is disabled.
  * 
+ * @slot default - Content to render inside button, can be positioned using {@link slotPosition} property.
+ * 
  * @fires {CustomEvent} click - When the button component is clicked.
  * 
+ * @cssprop --omni-button-font-family - Component font family.
+ * @cssprop --omni-button-font-size - Component font size.
+ * @cssprop --omni-button-font-weight - Component font weight.
+ * @cssprop --omni-button-line-height - Component line height.
+ * @cssprop --omni-button-border-radius - Component border radius.
+ * @cssprop --omni-button-padding-top - Component padding top.
+ * @cssprop --omni-button-padding-bottom - Component padding bottom.
+ * @cssprop --omni-button-padding-left - Component padding left.
+ * @cssprop --omni-button-padding-right - Component padding right.
+ * @cssprop --omni-button-primary-background-color - Primary "type" background color.
+ * @cssprop --omni-button-primary-border-color - Primary "type" border color.
+ * @cssprop --omni-button-primary-border-width - Primary "type" border width.
+ * @cssprop --omni-button-primary-color - Primary "type" color.
+ * @cssprop --omni-button-primary-active-background-color - Primary "type" active back color.
+ * @cssprop --omni-button-secondary-background-color - Secondary "type" background color.
+ * @cssprop --omni-button-secondary-border-color - Secondary "type" border color.
+ * @cssprop --omni-button-secondary-border-width - Secondary "type" border width.
+ * @cssprop --omni-button-secondary-color - Secondary "type" color.
+ * @cssprop --omni-button-secondary-active-background-color - Secondary "type" active background color.
+ * @cssprop --omni-button-clear-background-color - Clear "type" background color.
+ * @cssprop --omni-button-clear-border-color - Clear "type" border color.
+ * @cssprop --omni-button-clear-border-width - Clear "type" border width.
+ * @cssprop --omni-button-clear-color - Clear "type" color.
+ * @cssprop --omni-button-clear-hover-background-color - XXXX
+ * @cssprop --omni-button-clear-active-background-color - Clear "type" active background color.
+ * @cssprop --omni-button-clear-active-border-color - Clear "type" active border color.
+ * @cssprop --omni-button-clear-active-border-width - Clear "type" active border width.
+ * @cssprop --omni-button-white-background-color - White "type" background color.
+ * @cssprop --omni-button-white-border-color - White "type" border color.
+ * @cssprop --omni-button-white-border-width - White "type" border width.
+ * @cssprop --omni-button-white-color - White "type" color.
+ * @cssprop --omni-button-white-hover-background-color - White "type" hover background color.
+ * @cssprop --omni-button-white-active-background-color - White "type" active background color.
+ * @cssprop --omni-button-white-active-border-color - White "type" active border color.
+ * @cssprop --omni-button-white-active-border-width - White "type" active border width.
+ * @cssprop --omni-button-disabled-border-color - Disabled border color.
+ * @cssprop --omni-button-disabled-background-color - Disabled background color.
+ * @cssprop --omni-button-disabled-active-hover-background-color - Disabled active background color.
+ * @cssprop --omni-button-slot-margin-right - Slot margin left (When positioned right of label).
+ * @cssprop --omni-button-slot-margin-bottom - Slot margin bottom (When positioned top of label).
+ * @cssprop --omni-button-slot-margin-left - Slot margin left (When positioned right of label).
+ * @cssprop --omni-button-slot-margin-top - Slot margin top (When positioned bottom of label).
  */
 @customElement('omni-button')
 export class Button extends LitElement {
@@ -120,7 +164,7 @@ export class Button extends LitElement {
 					background-color: var(--omni-button-primary-background-color, var(--omni-primary-color));
 					border-color: var(--omni-button-primary-border-color, var(--omni-primary-color));
 					border-width: var(--omni-button-primary-border-width, var(--omni-border-width));
-					color: var(--omni-button-primary-font-color, var(--omni-background-color));
+					color: var(--omni-button-primary-color, var(--omni-background-color));
 				}
 
 				.button.primary:hover {
@@ -128,17 +172,17 @@ export class Button extends LitElement {
 				}
 						
 				.button.primary:active {
-					background-color: var(--omni-button-primary-background-tapped-color, var(--omni-primary-active-color));
+					background-color: var(--omni-button-primary-active-background-color, var(--omni-primary-active-color));
 					box-shadow: none;
 				}
 
 				/* secondary */
 
 				.button.secondary {
-					background-color: var(--omni-button-default-background-color, var(--omni-background-color));
-					border-color: var(--omni-button-default-border-color, var(--omni-primary-color));
-					border-width: var(--omni-button-default-border-width, var(--omni-border-width));
-					color: var(--omni-button-default-font-color, var(--omni-primary-color));
+					background-color: var(--omni-button-secondary-background-color, var(--omni-background-color));
+					border-color: var(--omni-button-secondary-border-color, var(--omni-primary-color));
+					border-width: var(--omni-button-secondary-border-width, var(--omni-border-width));
+					color: var(--omni-button-secondary-color, var(--omni-primary-color));
 				}
 				
 				.button.secondary:hover  {
@@ -146,7 +190,7 @@ export class Button extends LitElement {
 				}
 
 				.button.secondary:active {
-					background-color: var(--omni-button-default-background-tapped-color, var(--omni-background-active-color));
+					background-color: var(--omni-button-secondary-active-background-color, var(--omni-background-active-color));
 					box-shadow: none;
 				}
 
@@ -156,18 +200,18 @@ export class Button extends LitElement {
 					background-color: var(--omni-button-clear-background-color, transparent);
 					border-color: var(--omni-button-clear-border-color, transparent);
 					border-width: var(--omni-button-clear-border-width, var(--omni-border-width));
-					color: var(--omni-button-clear-font-color, var(--omni-primary-color));
+					color: var(--omni-button-clear-color, var(--omni-primary-color));
 				}
 
 				.button.clear:hover {
-					background-color: var(--omni-button-clear-background-hover-color, var(--omni-background-hover-color));
+					background-color: var(--omni-button-clear-hover-background-color, var(--omni-background-hover-color));
 				}
 						
 				.button.clear:active {
-					background-color: var(--omni-button-clear-background-tapped-color, var(--omni-background-active-color));
+					background-color: var(--omni-button-clear-active-background-color, var(--omni-background-active-color));
 					box-shadow: none;
-					border-color: var(--omni-button-clear-border-color, transparent);
-					border-width: var(--omni-button-clear-border-width, var(--omni-border-width));
+					border-color: var(--omni-button-clear-active-border-color, transparent);
+					border-width: var(--omni-button-clear-active-border-width, var(--omni-border-width));
 					outline:none;
 				}
 
@@ -177,19 +221,19 @@ export class Button extends LitElement {
 					background-color: var(--omni-button-white-background-color, white);
 					border-color: var(--omni-button-white-border-color, white);
 					border-width: var(--omni-button-white-border-width, var(--omni-border-width));
-					color: var(--omni-button-white-font-color, var(--omni-primary-color));
+					color: var(--omni-button-white-color, var(--omni-primary-color));
 				}
 
 				.button.white:hover {
-					background-color: var(--omni-button-white-background-hover-color, white);
+					background-color: var(--omni-button-white-hover-background-color, white);
 					box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.15);
 				}
 
 				.button.white:active {
-					background-color: var(--omni-button-clear-background-tapped-color, var(--omni-background-active-color));
+					background-color: var(--omni-button-white-active-background-color, var(--omni-background-active-color));
 					box-shadow: none;
-					border-color: var(--omni-button-clear-border-color, transparent);
-					border-width: var(--omni-button-clear-border-width, var(--omni-border-width));
+					border-color: var(--omni-button-white-active-border-color, transparent);
+					border-width: var(--omni-button-white-active-border-width, var(--omni-border-width));
 					outline:none;
 				}
 
@@ -204,7 +248,7 @@ export class Button extends LitElement {
 				.button.disabled:hover, 
 				.button.disabled:active {
 					box-shadow: none;
-					background-color: var(--omni-button-disabled-background-color, var(--omni-disabled-background-color));
+					background-color: var(--omni-button-disabled-active-hover-background-color, var(--omni-disabled-background-color));
 				}
 
 				.button.disabled:focus {
@@ -259,19 +303,19 @@ export class Button extends LitElement {
 				/* slot margins */
 
 				.button.slot-left > ::slotted(*) {
-					margin-right: var(--omni-button-icon-spacing, 10px);
+					margin-right: var(--omni-button-slot-margin-right, 10px);
 				}
 
 				.button.slot-top > ::slotted(*) {
-					margin-bottom: var(--omni-button-icon-spacing, 10px);
+					margin-bottom: var(--omni-button-slot-margin-bottom, 10px);
 				}
 
 				.button.slot-right > ::slotted(*) {
-					margin-left: var(--omni-button-icon-spacing, 10px);
+					margin-left: var(--omni-button-slot-margin-left, 10px);
 				}
 
 				.button.slot-bottom > ::slotted(*) {
-					margin-top: var(--omni-button-icon-spacing, 10px);
+					margin-top: var(--omni-button-slot-margin-top, 10px);
 				}
 			`
 		];
