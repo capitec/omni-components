@@ -1,6 +1,7 @@
 import { html, TemplateResult } from 'lit';
 import { Meta } from '@storybook/web-components';
 import { loadCssPropertiesRemote } from '../utils/StoryUtils';
+import { ifNotEmpty } from '../utils/Directives.js';
 import './Check.js';
 
 export default {
@@ -28,13 +29,11 @@ interface ArgTypes {
   indeterminate_icon: TemplateResult;
 }
 
-export const Default = {
+export const Interactive = {
   render: (args: ArgTypes) => html`
-    <omni-check data-testid="test-check" label="${args.label}" .data="${args.data}" hint="${args.hint}"
-      error="${args.error}" ?checked="${args.checked}" ?disabled="${args.disabled}" ?indeterminate="${args.indeterminate}">
-    </omni-check>
+    <omni-check data-testid="test-check" label="${ifNotEmpty(args.label)}" .data="${args.data}" hint="${ifNotEmpty(args.hint)}" error="${ifNotEmpty(args.error)}" ?checked="${args.checked}" ?disabled="${args.disabled}" ?indeterminate="${args.indeterminate}"></omni-check>
   `,
-  name: 'Default',
+  name: 'Interactive',
   parameters: {},
   args: {
     label: '',

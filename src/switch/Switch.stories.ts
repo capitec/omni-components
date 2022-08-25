@@ -2,6 +2,7 @@ import { html } from 'lit';
 import { Meta } from '@storybook/web-components';
 import { expect, jest } from '@storybook/jest';
 import { within, userEvent } from '@storybook/testing-library';
+import { ifNotEmpty } from '../utils/Directives.js';
 import { loadCssPropertiesRemote } from '../utils/StoryUtils';
 import './Switch.js';
 
@@ -26,20 +27,11 @@ interface ArgTypes {
   disabled: boolean;
 }
 
-export const Default = {
+export const Interactive = {
   render: (args: ArgTypes) => html`
-    <omni-switch
-      data-testid="test-switch"
-      label="${args.label}"
-      .data="${args.data}"
-      hint="${args.hint}"
-      error="${args.error}"
-      ?checked="${args.checked}"
-      ?disabled="${args.disabled}"
-    >
-    </omni-switch>
+    <omni-switch data-testid="test-switch" label="${ifNotEmpty(args.label)}" .data="${args.data}" hint="${ifNotEmpty(args.hint)}" error="${ifNotEmpty(args.error)}" ?checked="${args.checked}" ?disabled="${args.disabled}"></omni-switch>
   `,
-  name: 'Default',
+  name: 'Interactive',
   parameters: {},
   args: {
     label: '',

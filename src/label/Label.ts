@@ -22,8 +22,8 @@ import ComponentStyles from '../styles/ComponentStyles';
  * 
  * Registry of all properties defined by the component.
  * 
- * @property {String} label - The label string to display.
- * @property {"default"|"title"|"subtitle"|"strong"|String}  [type="default"] - The type of label to display:
+ * @property {string} label - The label string to display.
+ * @property {"default"|"title"|"subtitle"|"strong"|string}  [type="default"] - The type of label to display:
  *  - `default` Normal font weight.
  *  - `title` Larger font and weight.
  *  - `subtitle` Larger font and weight.

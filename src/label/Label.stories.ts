@@ -1,5 +1,6 @@
 import { html } from 'lit';
 import { Meta } from '@storybook/web-components';
+import { ifNotEmpty } from '../utils/Directives.js';
 import { loadCssPropertiesRemote } from '../utils/StoryUtils';
 import './Label.js';
 
@@ -24,11 +25,11 @@ interface ArgTypes {
   type: string;
 }
 
-export const Default = {
+export const Interactive = {
   render: (args: ArgTypes) => html`
-    <omni-label label="${args.label}" type="${args.type}"> </omni-label>
+    <omni-label label="${ifNotEmpty(args.label)}" type="${args.type}"> </omni-label>
   `,
-  name: 'Default',
+  name: 'Interactive',
   parameters: {},
   args: {
     label: 'Label',

@@ -28,15 +28,15 @@ import { indeterminate_icon } from '../icons/Indeterminate.icon.js';
  * 
  * Registry of all properties defined by the component.
  * 
- * @property {String} [label] - The label text.
+ * @property {string} [label] - The label text.
  * @property {Object} [data] - Data associated with the component.
  * 
- * @property {String} [hint] - A hint message to assist the user.
- * @property {String} [error] - An error message to guide users to correct a mistake.
+ * @property {string} [hint] - A hint message to assist the user.
+ * @property {string} [error] - An error message to guide users to correct a mistake.
  * 
- * @property {Boolean} [checked=false] - Indicator if the component is checked or not.
- * @property {Boolean} [disabled=false] - Indicator if the component is disabled.
- * @property {Boolean} [indeterminate=false] - Indicator if the component is in and indeterminate state.
+ * @property {boolean} [checked=false] - Indicator if the component is checked or not.
+ * @property {boolean} [disabled=false] - Indicator if the component is disabled.
+ * @property {boolean} [indeterminate=false] - Indicator if the component is in and indeterminate state.
  * 
  * @slot indeterminate_icon - Replaces the icon for the indeterminate state
  * @slot check_icon - Replaces the icon for the checked state
