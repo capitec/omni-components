@@ -263,9 +263,10 @@ export class Button extends LitElement {
 		return html`
 			<button 
 				class="button ${this.slotPosition ? `slot-${this.slotPosition}` : ''} ${this.type ? this.type : 'secondary'} ${this.disabled ? 'disabled' : ''}"
+				id="button"
 				@click="${this._click}">
 				<slot></slot>
-				${this.label ? html`<label class="label">${this.label}</label>` : nothing}
+				${this.label ? html`<label id="label" class="label">${this.label}</label>` : nothing}
 			</button>
 		`;
 	}

@@ -1,21 +1,23 @@
 import { Meta, Story } from '@storybook/web-components';
+import { userEvent, within } from '@storybook/testing-library';
+import { expect, jest } from '@storybook/jest';
 import { html } from 'lit';
 import { loadCssPropertiesRemote } from '../utils/StoryUtils.js';
-import { ButtonType, buttonType, slotPositionType, SlotPositionType } from './Button';
 
+import { Button, ButtonType, buttonType, slotPositionType, SlotPositionType } from './Button.js';
 import './Button.js';
 import '../icon/Icon.js';
 
+// More on writing stories: https://storybook.js.org/docs/web-components/writing-stories/introduction
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
     title: 'UI Components/Button',
     component: 'omni-button',
-    // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-    argTypes: { 
+    // More on argTypes: https://storybook.js.org/docs/web-components/api/argtypes
+    argTypes: {
         type: { control: 'select', options: buttonType },
         slotPosition: { control: 'select', options: slotPositionType }
-      },
+    },
     parameters: {
         actions: {
             handles: ['value-change']
@@ -35,7 +37,8 @@ interface Args {
 // INTERACTIVE
 // -----------
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
+// More templates and args: https://storybook.js.org/docs/web-components/writing-stories/introduction#using-args
+
 const InteractiveTemplate: Story<Args> = (args: Args) => html`
     <omni-button 
         data-testid="test-button"
@@ -48,14 +51,22 @@ const InteractiveTemplate: Story<Args> = (args: Args) => html`
 `;
 
 export const Interactive = InteractiveTemplate.bind({});
-// More on args: https://storybook.js.org/docs/react/writing-stories/args
 Interactive.storyName = 'Interactive';
-Interactive.parameters = { };
+Interactive.parameters = {};
 Interactive.args = {
     type: 'secondary',
     label: 'Button',
     slotPosition: 'top',
     disabled: false
+};
+Interactive.play = async (context) => {
+    const button = within(context.canvasElement).getByTestId<Button>('test-button');
+    const click = jest.fn();
+    button.addEventListener('click', () => click());
+
+    await userEvent.click(button);
+    await userEvent.click(button);
+    await expect(click).toBeCalledTimes(2);
 };
 
 // ----
@@ -72,6 +83,12 @@ Type.args = {
     type: 'primary',
     label: 'Click'
 };
+Type.play = async (context) => {
+    const button = within(context.canvasElement).getByTestId<Button>('test-button');
+    const buttonElement = button.shadowRoot.getElementById('button');
+    const foundPrimaryClass = buttonElement.classList.contains('primary');
+    await expect(foundPrimaryClass).toBeTruthy();
+};
 
 // -----
 // LABEL
@@ -86,18 +103,29 @@ Label.storyName = 'Label';
 Label.args = {
     label: 'Click'
 };
+Label.play = async (context) => {
+    const button = within(context.canvasElement).getByTestId<Button>('test-button');
+    const labelElement = button.shadowRoot.getElementById('label');
+    const labelMatches = labelElement.innerText === Label.args.label;
+    await expect(labelMatches).toBeTruthy();
+};
 
 // ----
 // SLOT
 // ----
 
 const SlotTemplate: Story<Args> = () => html`
-    <omni-button 
-        data-testid="test-button">
+    <omni-button data-testid="test-button">
         <omni-icon size="default" icon="/assets/direction.svg"></omni-icon>
     </omni-button>
 `;
 
 export const Slot = SlotTemplate.bind({});
 Slot.storyName = 'Slot';
-Slot.args = { };
+Slot.args = {};
+Slot.play = async (context) => {
+    const button = within(context.canvasElement).getByTestId<Button>('test-button');
+    const slot = button.shadowRoot.querySelector('slot');
+    const found = slot.assignedElements().find(e => e.tagName.toLowerCase() === 'omni-icon');
+    await expect(found).toBeTruthy();
+};
