@@ -1,50 +1,139 @@
-import { Meta, Story } from '@storybook/web-components';
+import { Meta, StoryContext } from '@storybook/web-components';
+import { userEvent, within } from '@storybook/testing-library';
+import { expect, jest } from '@storybook/jest';
 import { html } from 'lit';
 import { loadCssPropertiesRemote } from '../utils/StoryUtils.js';
-
+import { Button, ButtonType, buttonType, slotPositionType, SlotPositionType } from './Button.js';
 import './Button.js';
+import '../icon/Icon.js';
+import { ifNotEmpty } from '../utils/Directives.js';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
     title: 'UI Components/Button',
-    component: 'omni-button ',
-    // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
+    component: 'omni-button',
     argTypes: {
+        type: {
+            control: 'radio',
+            options: buttonType,
+        },
+        slotPosition: {
+            control: 'radio',
+            options: slotPositionType,
+        },
     },
     parameters: {
         actions: {
-            handles: ['value-change']
+            handles: ['value-change'],
         },
-        cssprops: loadCssPropertiesRemote('omni-button')
-    }
+        cssprops: loadCssPropertiesRemote('omni-button'),
+    },
 } as Meta;
 
-interface ArgTypes {
+interface Args {
+    type: ButtonType;
     label: string;
-    type: string;
+    slotPosition: SlotPositionType;
+    disabled: boolean;
 }
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: Story<ArgTypes> = (args: ArgTypes) => html`
-    <omni-button 
+export const Interactive = {
+    render: (args: Args) => html`
+    <omni-button
         data-testid="test-button"
-        label="${args.label}" 
-    >
+        type="${args.type}"
+        label="${ifNotEmpty(args.label)}"
+        slot-position="${args.slotPosition}"
+        ?disabled=${args.disabled}>
+        <omni-icon icon="@material/thumb_up"></omni-icon>
     </omni-button>
-`;
-
-export const Default = Template.bind({});
-// More on args: https://storybook.js.org/docs/react/writing-stories/args
-Default.storyName = 'Default';
-Default.parameters = {
+  `,
+    name: 'Interactive',
+    args: {
+        type: 'secondary',
+        label: 'Button',
+        slotPosition: 'top',
+        disabled: false,
+    },
+    play: async (context: StoryContext) => {
+        const button = within(context.canvasElement).getByTestId<Button>('test-button');
+        const click = jest.fn();
+        button.addEventListener('click', () => click());
+        await userEvent.click(button);
+        await userEvent.click(button);
+        await expect(click).toBeCalledTimes(2);
+    },
 };
-Default.args = {
-    label: 'Primary'
+
+export const Type = {
+    render: (args: Args) => html`
+    <omni-button type="${args.type}" label="${args.label}" data-testid="test-button"></omni-button>
+  `,
+    name: 'Type',
+    args: {
+        type: 'primary',
+        label: 'Click',
+    },
+    play: async (context: StoryContext) => {
+        const button = within(context.canvasElement).getByTestId<Button>('test-button');
+        const buttonElement = button.shadowRoot.getElementById('button');
+        const foundPrimaryClass = buttonElement.classList.contains('primary');
+        await expect(foundPrimaryClass).toBeTruthy();
+    },
 };
 
-export const Secondary = Template.bind({});
-Secondary.storyName = 'Secondary';
-Secondary.args = {
-    label: 'Secondary',
-    type: 'Secondary'
+export const Label = {
+    render: (args: Args) => html`
+    <omni-button label="${args.label}" data-testid="test-button"></omni-button>
+  `,
+    name: 'Label',
+    args: {
+        label: 'Click',
+    },
+    play: async (context: StoryContext) => {
+        const button = within(context.canvasElement).getByTestId<Button>('test-button');
+        const labelElement = button.shadowRoot.getElementById('label');
+        const labelMatches = labelElement.innerText === Label.args.label;
+        await expect(labelMatches).toBeTruthy();
+    },
+};
+
+export const Slot = {
+    render: () => html`
+    <omni-button data-testid="test-button">
+      <omni-icon size="default" icon="/assets/direction.svg"></omni-icon>
+    </omni-button>
+  `,
+    name: 'Slot',
+    args: {},
+    play: async (context: StoryContext) => {
+        const button = within(context.canvasElement).getByTestId<Button>('test-button');
+        const slotElement = button.shadowRoot.querySelector('slot');
+        const foundSlottedOmniIconElement = slotElement
+            .assignedElements()
+            .find((e) => e.tagName.toLowerCase() === 'omni-icon');
+        await expect(foundSlottedOmniIconElement).toBeTruthy();
+    },
+};
+
+export const Disabled = {
+    render: (args: Args) => html`
+    <omni-button disabled label="${args.label}" data-testid="test-button"></omni-button>
+  `,
+    name: 'Disabled',
+    args: {
+        label: 'Disabled',
+    },
+    play: async (context: StoryContext) => {
+        const button = within(context.canvasElement).getByTestId<Button>('test-button'); // Test for disabled CSS.
+
+        const buttonElement = button.shadowRoot.getElementById('button');
+        const foundDisabledClass = buttonElement.classList.contains('disabled');
+        await expect(foundDisabledClass).toBeTruthy(); // Test for not clickable.
+
+        const click = jest.fn();
+        button.addEventListener('click', () => click());
+        await userEvent.click(button);
+        await userEvent.click(button);
+        await expect(click).toBeCalledTimes(0);
+    },
 };

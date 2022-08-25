@@ -105,7 +105,7 @@ export class Switch extends LitElement {
 	// ----------------
 
 	override focus() {
-		this.shadowRoot.getElementById(`track`).focus();
+		this.shadowRoot.getElementById('track').focus();
 	}
 
 	// --------------
@@ -149,16 +149,7 @@ export class Switch extends LitElement {
 		// Invert the checked state.
 		this.checked = !oldValue;
 
-		// Notify any subscribers that the value changed.
-		this.dispatchEvent(new CustomEvent(`value-changed`, {
-			detail: {
-				old: oldValue,
-				new: this.checked
-			},
-			bubbles: true
-		}));
-
-		this.dispatchEvent(new CustomEvent(`value-change`, {
+		this.dispatchEvent(new CustomEvent('value-change', {
 			detail: {
 				old: oldValue,
 				new: this.checked
@@ -183,9 +174,9 @@ export class Switch extends LitElement {
 		}
 
 		// Intercept space and enter key events to switch the component checked state.
-		const keyCode = (event.code || ``).toUpperCase();
+		const keyCode = (event.code || '').toUpperCase();
 
-		if (keyCode === `SPACE` || keyCode === `ENTER` || keyCode === `NUMPADENTER`) {
+		if (keyCode === 'SPACE' || keyCode === 'ENTER' || keyCode === 'NUMPADENTER') {
 
 			// Switch the component checked state.
 			this._switchChecked();
@@ -221,7 +212,7 @@ export class Switch extends LitElement {
 					font-family: var(--omni-switch-label-font-family, var(--omni-font-family));
 					font-size: var(--omni-switch-label-font-size, var(--omni-font-size));
 					font-weight: var(--omni-switch-label-font-weight, var(--omni-font-weight));
-					margin-left: var(--omni-switch-label-spacing, var(--omni-margin-left));
+					margin-left: var(--omni-switch-label-spacing, 8px);
 					cursor: default;
 				}
 				.container > .label > .hint {
@@ -321,17 +312,20 @@ export class Switch extends LitElement {
 	 */
 	override render(): TemplateResult {
 		return html`
-			<div class="container${this.checked ? ` checked` : ``}${this.disabled ? ` disabled` : ``}">
-				<div id="content" @click="${this._click}" @keydown="${this._keyDown}">
-					<div id="track" class="track" tabindex="${this.disabled ? `` : 0}"></div>
+			<div class="container${this.checked ? ' checked' : ''}${this.disabled ? ' disabled' : ''}">
+				<div
+					id="content"
+					@click="${this._click}"
+					@keydown="${this._keyDown}">
+					<div id="track" class="track" tabindex="${this.disabled ? '' : 0}"></div>
 					<div class="knob">
 						<div></div>
 					</div>
 				</div>
 				<label class="label" @click="${this._click}">
 					${this.label}
-					${this.hint && !this.error ? html`<div class="hint">${this.hint}</div>` : ``}
-					${this.error ? html`<div class="error">${this.error}</div>` : ``}
+					${this.hint && !this.error ? html`<div class="hint">${this.hint}</div>` : ''}
+					${this.error ? html`<div class="error">${this.error}</div>` : ''}
 				</label>
 			</div>
 		`;
