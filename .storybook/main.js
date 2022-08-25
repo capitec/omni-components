@@ -1,9 +1,12 @@
+var webpack = require('webpack');
+
 module.exports = {
 	framework: "@storybook/web-components",
 	stories: [
-		"../stories/*.stories.@(js|jsx|ts|tsx|mdx)",
-		"../dist/**/*.stories.@(js|jsx|ts|tsx|mdx)",
-		"../src/**/*.stories.@(mdx)"
+		"../stories/*.stories.@(mdx)",
+		"../dist/**/*.stories.@(js)",
+		"../src/**/*.stories.@(mdx)",
+
 	],
 	addons: [
 		'@etchteam/storybook-addon-css-variables-theme',
@@ -32,7 +35,8 @@ module.exports = {
 	],
 	features: {
 		postcss: false,
-		interactionsDebugger: true
+		interactionsDebugger: true,
+		previewCsfV3: true,
 	},
 	staticDirs: [
 		{ from: '../custom-elements.json', to: 'custom-elements.json' },
@@ -43,12 +47,22 @@ module.exports = {
 	],
 	webpackFinal: async (config, { configType }) => {
 
-		config.devtool = 'source-map',
-			config.watchOptions = {
-				ignored: [
-					'**/node_modules'
-				],
-			}
+		config.devtool = false,
+		config.plugins.push(new webpack.SourceMapDevToolPlugin({
+			exclude: ['node_modules', 'vendors'],
+			moduleFilenameTemplate: info => {
+				if (info.resourcePath && info.resourcePath.includes('../../')) {
+					// Fix relative source-maps to src as path is relative to dist directory and needs to be relative to web root instead
+					return `webpack:///${info.resourcePath.replace('../../', "./")}?${info.loaders}`;
+				}
+				return `webpack:///${info.resourcePath}?${info.loaders}`;
+			  } 
+		}))
+		config.watchOptions = {
+			ignored: [
+				'**/node_modules'
+			],
+		}
 
 		return config;
 	}
