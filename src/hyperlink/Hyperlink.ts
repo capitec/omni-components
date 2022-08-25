@@ -37,10 +37,8 @@ import ComponentStyles from '../styles/ComponentStyles';
  *
  * @cssprop --omni-hyperlink-color-disabled - Hyperlink disabled color.
  * 
- * @cssprop --omni-hyperlink-text-decorator - Hyperlink text decorator.
- * 
  * @cssprop --omni-hyperlink-font-size - Hyperlink font size.
- * @cssprop --omni-font-family - Hyperlink font weight.
+ * @cssprop --omni-hyperlink-font-family - Hyperlink font weight.
  * @cssprop --omni-hyperlink-font-weight - Hyperlink font weight.
  * @cssprop --omni-hyperlink-color - Hyperlink color.
  * @cssprop --omni-hyperlink-text-decorator - Hyperlink text decorator
@@ -136,21 +134,18 @@ export class Hyperlink extends LitElement {
                 display: inline-block;
             }
 
-            :host([disabled]) {
-                --omni-hyperlink-color: var(--omni-hyperlink-color-disabled, var(--omni-background-color))
-            }
-
             :host([disabled]) a {
                 pointer-events: none;
+				color: var(--omni-hyperlink-color-disabled, var(--omni-disabled-background-color))
             }
 
             :host([inline]) {
-                --omni-hyperlink-text-decorator: underline;
+                text-decoration: underline;
             }
             
             .hyperlink {
                 font-size: var(--omni-hyperlink-font-size, var(--omni-font-size));
-                font-family: var(--omni-font-family, "Hind Vadodara");
+                font-family: var(--omni-hyperlink-font-family, var(--omni-font-family));
                 font-weight: var(--omni-hyperlink-font-weight, var(--omni-font-weight));
                 color: var(--omni-hyperlink-color, var(--omni-primary-color));
                 text-decoration: var(--omni-hyperlink-text-decorator, none);
