@@ -16,7 +16,7 @@
             "error",
             "single",
             {
-                "allowTemplateLiterals": true
+                "allowTemplateLiterals": false
             }
         ],
         "semi": [
