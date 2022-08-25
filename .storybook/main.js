@@ -1,11 +1,10 @@
 module.exports = {
-  "framework": "@storybook/web-components",
-  "stories": [
-    "../stories/*.stories.@(js|jsx|ts|tsx|mdx)",
-    "../dist/**/*.stories.@(js|jsx|ts|tsx|mdx)",
-    "../src/**/*.stories.@(mdx)",
-
-  ],
+	framework: "@storybook/web-components",
+	stories: [
+		"../stories/*.stories.@(js|jsx|ts|tsx|mdx)",
+		"../dist/**/*.stories.@(js|jsx|ts|tsx|mdx)",
+		"../src/**/*.stories.@(mdx)"
+	],
 	addons: [
 		'@etchteam/storybook-addon-css-variables-theme',
 		'@storybook/addon-essentials',
@@ -33,7 +32,7 @@ module.exports = {
 	],
 	features: {
 		postcss: false,
-    interactionsDebugger: true,
+		interactionsDebugger: true
 	},
 	staticDirs: [
 		{ from: '../custom-elements.json', to: 'custom-elements.json' },
@@ -44,12 +43,12 @@ module.exports = {
 	],
 	webpackFinal: async (config, { configType }) => {
 
-		// config.devtool = 'source-map',
-		config.watchOptions = {
-			ignored: [
-				'**/node_modules'
-			],
-		}
+		config.devtool = 'source-map',
+			config.watchOptions = {
+				ignored: [
+					'**/node_modules'
+				],
+			}
 
 		return config;
 	}
