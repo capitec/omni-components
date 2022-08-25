@@ -2,6 +2,7 @@ import { html } from 'lit';
 import { Meta } from '@storybook/web-components';
 import { expect, jest } from '@storybook/jest';
 import { within, userEvent } from '@storybook/testing-library';
+import { ifNotEmpty } from '../utils/Directives.js';
 import { loadCssPropertiesRemote } from '../utils/StoryUtils';
 import './Hyperlink.js'; 
 
@@ -35,12 +36,12 @@ export const Interactive = {
   render: (args: ArgTypes) => html`
     <omni-hyperlink
       data-testid="test-hyperlink"
-      label="${args.label}"
-      href="${args.href}"
-      target="${args.target}"
+      label="${ifNotEmpty(args.label)}"
+      href="${ifNotEmpty(args.href)}"
+      target="${ifNotEmpty(args.target)}"
       ?disabled="${args.disabled}"
       ?inline="${args.inline}"
-      size="${args.size}"
+      size="${ifNotEmpty(args.size)}"
     ></omni-hyperlink>
   `,
   name: 'Interactive',
