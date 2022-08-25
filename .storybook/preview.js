@@ -72,7 +72,9 @@ export const parameters = {
 						 // Remove test ids from displayed source
 			input = input.replace(new RegExp("data-testid=(\"([^\"]|\"\")*\")"), "")
 						 // Update any object references to curly braces for easier reading
-						 .replace("[object Object]", "{}");
+						 .replaceAll("[object Object]", "{}")
+						 // Remove empty string assignments to fix boolean attributes
+						 .replaceAll("=\"\"", "");
 						 // Remove any properties with empty string assignments at the end of the html tag
 			// 			 .replace(new RegExp("(([\\r\\n]+| )([^ \\r\\n])*)=(\"([^\"]|\"\"){0}\")>"), " >")
 						 // Remove any properties with empty string assignments within the tag
