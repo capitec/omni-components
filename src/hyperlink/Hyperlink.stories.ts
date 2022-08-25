@@ -15,8 +15,8 @@ export default {
     argTypes: { 
       size: { control: 'select', options: ['default', 'small'] },
       target: {control: 'select', options: ['_self','_blank','_parent','_top']},
-      disabled:{control: 'select',options:['true','false']},
-      inline:{control: 'select',options:['true','false']}
+      disabled:{control: 'select', options: ['true','false']},
+      inline:{control: 'select', options: ['true','false']}
     },
       parameters: {
       cssprops: loadCssPropertiesRemote('omni-hyperlink'),
