@@ -1,15 +1,18 @@
 :root {
 
-    --omni-theme-primary-color: #00e070;
-    --omni-theme-accent-color: #7fec88;
+    --omni-theme-primary-color: #00E070;
+    --omni-theme-primary-hover-color: #00D868;
+    --omni-theme-primary-active-color: #00D161;
 
-    --omni-theme-font-family: Arial, Helvetica, sans-serif;
-    --omni-theme-font-size: 20px;
-    --omni-theme-font-weight: normal;
+    --omni-theme-accent-color: #7FEC88;
+    --omni-theme-accent-hover-color: #77E480;
+    --omni-theme-accent-active-color: #70DD79;
+
+    --omni-theme-background-color: #FFFFFF;
+    --omni-theme-background-hover-color: #F7F7F7;
+    --omni-theme-background-active-color: #F0F0F0;
 
     --omni-theme-font-color: rgb(0, 58, 14);
-
-    --omni-theme-background-color: white;
 
     --omni-theme-disabled-border-color: #dedede44;
     --omni-theme-disabled-background-color: #DEDEDE;
@@ -18,6 +21,10 @@
     --omni-theme-hint-font-color: lightgrey;
     --omni-theme-inactive-color: #7c7c7c;
     --omni-theme-box-shadow-color: #e6ffee;
+
+    --omni-theme-font-family: Arial, Helvetica, sans-serif;
+    --omni-theme-font-size: 20px;
+    --omni-theme-font-weight: normal;
 
     --omni-theme-border-radius: 8px;
     --omni-theme-border-width: 4px;

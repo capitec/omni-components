@@ -1,8 +1,8 @@
 var webpack = require('webpack');
 
 module.exports = {
-	"framework": "@storybook/web-components",
-	"stories": [
+	framework: "@storybook/web-components",
+	stories: [
 		"../stories/*.stories.@(mdx)",
 		"../dist/**/*.stories.@(js)",
 		"../src/**/*.stories.@(mdx)",

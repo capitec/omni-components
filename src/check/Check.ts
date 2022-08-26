@@ -1,4 +1,4 @@
-import { html, css, LitElement, TemplateResult } from 'lit';
+import { html, css, LitElement, TemplateResult, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import ComponentStyles from '../styles/ComponentStyles';
 import { check_icon } from '../icons/Check.icon.js';
@@ -111,7 +111,7 @@ export class Check extends LitElement {
 		super.connectedCallback();
 		this.tabIndex = this.disabled ? -1 : 0;
 
-		this.addEventListener(`click`, this._click);
+		this.addEventListener('click', this._click);
 	}
 
 	// ----------------
@@ -119,7 +119,7 @@ export class Check extends LitElement {
 	// ----------------	
 
 	override focus() {
-		this.shadowRoot.getElementById(`content`).focus();
+		this.shadowRoot.getElementById('content').focus();
 	}
 
 	// --------------
@@ -159,9 +159,9 @@ export class Check extends LitElement {
 		}
 
 		// Intercept space and enter key events to toggle the component checked state.
-		const keyCode = (e.code || ``).toUpperCase();
+		const keyCode = (e.code || '').toUpperCase();
 
-		if (keyCode === `SPACE` || keyCode === `ENTER`) {
+		if (keyCode === 'SPACE' || keyCode === 'ENTER') {
 
 			// Toggle the component checked state.
 			this._toggleChecked(e);
@@ -188,14 +188,14 @@ export class Check extends LitElement {
 		const oldValue = this.checked;
 		this.checked = !oldValue;
 
-		this.dispatchEvent(new CustomEvent(`value-changed`, {
+		this.dispatchEvent(new CustomEvent('value-changed', {
 			detail: {
 				old: oldValue,
 				new: this.checked
 			}
 		}));
 
-		this.dispatchEvent(new CustomEvent(`value-change`, {
+		this.dispatchEvent(new CustomEvent('value-change', {
 			detail: {
 				old: oldValue,
 				new: this.checked
@@ -237,7 +237,7 @@ export class Check extends LitElement {
 					font-size: var(--omni-check-label-font-size, var(--omni-font-size));
 					font-weight: var(--omni-check-label-font-weight, var(--omni-font-weight));
 
-					margin-left: var(--omni-check-label-spacing, var(--omni-margin-left));
+					margin-left: var(--omni-check-label-spacing, 8px);
 
 					cursor: pointer;
 				}
@@ -371,17 +371,18 @@ export class Check extends LitElement {
 	 */
 	override render(): TemplateResult {
 		return html`
-			<div
-				class="container${this.indeterminate ? ` indeterminate` : this.checked ? ` checked` : ``}${this.disabled ? ` disabled` : ``}">
-				<div id="content" @keydown="${this._keyDown}">
-					<div class="indicator">${this.indeterminate ? html`<slot name="indeterminate_icon">${indeterminate_icon()}
-						</slot>` : this.checked ? html`<slot name="check_icon">${check_icon()}</slot>` : ``}</div>
+			<div 
+				class="container${this.indeterminate ? ' indeterminate' : this.checked ? ' checked' : ''}${this.disabled ? ' disabled' : ''}">
+				<div
+					id="content"
+					@keydown="${this._keyDown}">
+					<div class="indicator">${this.indeterminate ? html`<slot name="indeterminate_icon">${indeterminate_icon()}</slot>` : this.checked ? html`<slot name="check_icon">${check_icon()}</slot>` : nothing}</div>
 				</div>
 			
 				<label class="label">
 					${this.label}
-					${this.hint && !this.error ? html`<div class="hint">${this.hint}</div>` : ``}
-					${this.error ? html`<div class="error">${this.error}</div>` : ``}
+					${this.hint && !this.error ? html`<div class="hint">${this.hint}</div>` : nothing}
+					${this.error ? html`<div class="error">${this.error}</div>` : nothing}
 				</label>
 			</div>
 		`;

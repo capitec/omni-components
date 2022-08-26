@@ -204,9 +204,9 @@ export class Icon extends LitElement {
 
 		if (this.icon) {
 
-			if (this.icon.startsWith(`@material/`)) {
+			if (this.icon.startsWith('@material/')) {
 				return html`
-					<div class="material-icon ${this.size}">${this.icon.replace(`@material/`, ``)}</div>
+					<div class="material-icon ${this.size}" >${this.icon.replace('@material/', '')}</div>
 				`;
 			}
 			return html`
