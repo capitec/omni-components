@@ -21,7 +21,7 @@
 <a href="https://www.npmjs.com/package/@innofake/omni-components"><img alt="NPM Version" src="https://img.shields.io/npm/v/@innofake/omni-components.svg" height="20"/></a>
 <a href="https://david-dm.org/innofake/omni-components"><img alt="Dependencies" src="https://img.shields.io/david/innofake/omni-components.svg" height="20"/></a>
 <a href="https://github.com/innofake/omni-components/graphs/contributors"><img alt="Contributors" src="https://img.shields.io/github/contributors/innofake/omni-components.svg" height="20"/></a>
-<a href=""><img alt="Repository: Private" src="https://img.shields.io/badge/Repository-private-lightgrey.svg" height="20"/></a>
+<a href="https://github.com/innofake/omni-components/actions/workflows/build.yml"><img alt="Build" src="https://github.com/innofake/omni-components/actions/workflows/build.yml/badge.svg" height="20"/></a>
 	</p>
 
 
