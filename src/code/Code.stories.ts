@@ -1,7 +1,10 @@
 import { html } from 'lit';
-import { Meta } from '@storybook/web-components';
+import { Meta, StoryContext } from '@storybook/web-components';
+import { userEvent, within } from '@storybook/testing-library';
+import { expect, jest } from '@storybook/jest';
 import { ifNotEmpty } from '../utils/Directives.js';
 import { loadCssPropertiesRemote } from '../utils/StoryUtils';
+import { Code } from './Code.js';
 import './Code.js';
 
 export default {
@@ -30,6 +33,14 @@ export const Interactive = {
     content: 'Hello',
     language: 'html',
   },
+  play: async (context: StoryContext) => {
+      const code = within(context.canvasElement).getByTestId<Code>('test-code');
+      await expect(code).toBeTruthy();
+
+      const htmlCodeBlock = code.shadowRoot.querySelector('.language-html');
+      await expect(htmlCodeBlock).toBeTruthy();
+
+  },
 };
 
 export const HTML_as_content = {
@@ -51,6 +62,14 @@ export const HTML_as_content = {
   `,
     language: 'html',
   },
+  play: async (context: StoryContext) => {
+      const code = within(context.canvasElement).getByTestId<Code>('test-code');
+      await expect(code).toBeTruthy();
+
+      const htmlCodeBlock = code.shadowRoot.querySelector('.language-html');
+      await expect(htmlCodeBlock).toBeTruthy();
+
+  },
 };
 
 export const HTML_as_child_element = {
@@ -70,6 +89,14 @@ export const HTML_as_child_element = {
     header: 'HTML as child element',
     language: 'html',
   },
+  play: async (context: StoryContext) => {
+      const code = within(context.canvasElement).getByTestId<Code>('test-code');
+      await expect(code).toBeTruthy();
+
+      const htmlCodeBlock = code.shadowRoot.querySelector('.language-html');
+      await expect(htmlCodeBlock).toBeTruthy();
+
+  },
 };
 
 export const JavaScript = {
@@ -88,5 +115,13 @@ export const JavaScript = {
     alert('this is javascript');
   `,
     language: 'javascript',
+  },
+  play: async (context: StoryContext) => {
+      const code = within(context.canvasElement).getByTestId<Code>('test-code');
+      await expect(code).toBeTruthy();
+
+      const jsCodeBlock = code.shadowRoot.querySelector('.language-javascript');
+      await expect(jsCodeBlock).toBeTruthy();
+
   },
 };

@@ -181,13 +181,6 @@ export class Radio extends LitElement {
 		const oldValue = this.checked;
 		this.checked = !oldValue;
 
-		this.dispatchEvent(new CustomEvent('value-changed', {
-			detail: {
-				old: oldValue,
-				new: this.checked
-			}
-		}));
-
 		this.dispatchEvent(new CustomEvent('value-change', {
 			detail: {
 				old: oldValue,
