@@ -9,6 +9,7 @@ import ComponentStyles from '../styles/ComponentStyles';
  * import '@innofake/omni-components/hyperlink'; 
  * ```
  * 
+ * @example
  * 
  * ```html
  * <omni-hyperlink 
@@ -66,36 +67,10 @@ export class Hyperlink extends LitElement {
     @property({ type: Boolean, reflect: true}) inline: boolean = false;
     @property({ type: String, reflect: true}) size?: string;
 
-    // --------------
-	// INITIALISATION
-	// --------------
-
-	/**
-	 * @hideconstructor
-	 */
-     constructor() {
-		super();
-	}
-
-    // -------------------
-	// LIFECYCLE OVERRIDES
-	// -------------------
-
-	// n/a	
-
-	// --------------
-	// EVENT HANDLERS
-	// --------------
-
-	/**
-	 * Handles component click events.
-	 * 
-	 * @param {MouseEvent} event - The event details.
-	 * 
-	 * @ignore
-	 * @returns {void}
-	 */
-	_linkClicked(event: MouseEvent): void {
+	// -----------------
+	// PRIVATE FUNCTIONS
+	// -----------------
+	_linkClicked(e: Event): void {
 
 		// Ignore the event if the component is disabled.
 		if (this.disabled) {
@@ -103,28 +78,19 @@ export class Hyperlink extends LitElement {
 		}
 
 		// Notify any subscribers that the link was clicked.
-		this.dispatchEvent(new CustomEvent(`click`, {
+		this.dispatchEvent(new CustomEvent('click', {
 			detail: {}
 		}));
 
 		// Prevent the event from bubbling up.
-		event.stopPropagation();
+		e.stopPropagation();
 	}
 
-    // ---------------
-	// PRIVATE METHODS
-	// ---------------
-	
-	// n/a
 
 	// -------------------
 	// RENDERING TEMPLATES
 	// -------------------
 
-	/**
-	 * The element style template.
-	 * 
-	 */
 	static override get styles() {
 
 		return [
@@ -189,3 +155,9 @@ export class Hyperlink extends LitElement {
 	}
 
 }
+
+/* Types for "target" property */
+export const linkTarget = ['_self', '_blank', '_parent', '_top'] as const;
+export type LinkTarget = typeof linkTarget[number];
+
+
