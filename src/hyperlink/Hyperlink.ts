@@ -100,7 +100,7 @@ export class Hyperlink extends LitElement {
 
             :host([size="small"]) .hyperlink {
                 font-size: var(--omni-hyperlink-font-size-small, 0.87em);
-                font-family: var(--omni-font-family-small, "Hind Vadodara");
+                font-family: var(--omni-font-family-small, var(--omni-font-family));
                 font-weight: var(--omni-hyperlink-font-weight-small, var(--omni-font-weight));
             }
 
