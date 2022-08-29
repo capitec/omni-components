@@ -40,14 +40,48 @@ import ComponentStyles from '../styles/ComponentStyles';
  * @property {number} [min=0] - The minimum allowed value. Note should only be used when type is set to `numeric` or `currency` or `numeric-input`.
  * @property {number} [max=0] - The maximum allowed value. Note should only be used when type is set to `numeric` or `currency` or `numeric-input`.
  * @property {"alpha-numeric"|"numeric"|"currency"|"password"|"search"|String} type - Type of input supported
+ * 
+ * 
+ * 
+ * @cssprop --omni-text-field-font-family - Component font family.
+ * @cssprop --omni-text-field-font-size - Component font size.
+ * @cssprop --omni-text-field-font-weight - Component font weight.
+ * 
+ * 
  */
 @customElement('omni-text-field')
 export class TextField extends LitElement {
 
-    @property({ type: String, reflect: true}) label?: string;
-    @property({ type: String, reflect: true}) value?: string;
-    @property({ type: Object, reflect: true}) data?: object;
-    @property({ type: String, reflect: true}) hint?: string;
+    @property({ type: String, reflect: true }) label?: string;
+    @property({ type: String, reflect: true }) value?: string;
+    @property({ type: Object, reflect: true }) data?: object;
+    @property({ type: String, reflect: true }) hint?: string;
+    @property({ type: String, reflect: true }) error?: string;
+    @property({ type: Boolean, reflect: true }) focussed = false;
+    @property({ type: Boolean, reflect: true }) disabled = false;
+    @property({ type: Number, reflect: true }) minLength = 0;
+    @property({ type: Number, reflect: true }) maxLength = 0;
+    @property({ type: Number, reflect: true}) min = 0;
+    @property({ type: Number, reflect: true}) max = 0;
+    @property({ type: String, reflect: true}) type?: TextFieldType = 'alpha-numeric';
+
+    protected override render(): TemplateResult {
+		return html`
+        <div class="">
+            <input 
+              class=""
+              id="inputField"
+              .type="${this.type}"
+              value=""
+              minlength=""
+              maxlength=""
+            >
+        </div>
+		`;
+	}
 
 
 }
+/* Types for "type" property */
+export const textFieldType = ['alpha-numeric', 'numeric', 'password', 'search'] as const;
+export type TextFieldType = typeof textFieldType[number];
