@@ -4,7 +4,7 @@ Welcome! We encourage any contribution to this project. As a contributor, here's
 
 * [Code of Conduct](#code-of-conduct)
 
-## <a name="coc"></a> Code of Conduct
+## Code of Conduct
 
 Please read and follow our [Code of Conduct](https://github.com/innofake/omni-components/blob/develop/CODE_OF_CONDUCT.md).
 
