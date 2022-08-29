@@ -65,7 +65,8 @@ obj {`Object`} - Object to retrieve value from.
 
 `setValue`
 
-</td><td>Assigns the value to the object in a nested fashion.Specify a path as e.g. "food.fruit.apple".</td><td>
+</td><td>Assigns the value to the object in a nested fashion.
+Specify a path as e.g. "food.fruit.apple".</td><td>
 
 obj {`Object`} - Object to set value on.
 
@@ -119,9 +120,11 @@ value {`Number`|`String`|`Object`} - Value to check
 
 arr {`Array`} - Array to group.
 
- target {`String`|`function`} - Grouping target: - 
+ target {`String`|`function`} - Grouping target:
+ - 
 ```String
-``` as property to group on, e.g. "userId" - 
+``` as property to group on, e.g. "userId"
+ - 
 ```Function
 ``` as [Array.prototype.reduce()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce#Syntax) callback function.
 
