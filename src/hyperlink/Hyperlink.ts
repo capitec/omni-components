@@ -62,7 +62,7 @@ export class Hyperlink extends LitElement {
 
     @property({ type: String, reflect: true }) label?: string;
     @property({ type: String, reflect: true}) href?: string;
-    @property({ type: String, reflect: true}) target: string = '_self';
+    @property({ type: String, reflect: true}) target?: LinkTarget = '_self';
     @property({ type: Boolean, reflect: true}) disabled: boolean = false;
     @property({ type: Boolean, reflect: true}) inline: boolean = false;
     @property({ type: String, reflect: true}) size?: string;
