@@ -2,7 +2,7 @@
 
 Welcome! We encourage any contribution to this project. As a contributor, here's important guidelines we would like you to follow:
 
-* [Code of Conduct](#coc)
+* [Code of Conduct](#code-of-conduct)
 
 ## <a name="coc"></a> Code of Conduct
 
