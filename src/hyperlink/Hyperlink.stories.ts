@@ -4,7 +4,7 @@ import { expect, jest } from '@storybook/jest';
 import { within, userEvent } from '@storybook/testing-library';
 import { ifNotEmpty } from '../utils/Directives.js';
 import { loadCssPropertiesRemote } from '../utils/StoryUtils';
-import { Hyperlink, LinkTarget, linkTarget } from './Hyperlink.js';
+import { LinkTarget, linkTarget } from './Hyperlink.js';
 import './Hyperlink.js'; 
 
 export default {
@@ -66,7 +66,7 @@ export const Interactive = {
 export const Small = {
   render: (args: ArgTypes) => html`<omni-hyperlink data-testid="test-hyperlink" label="${args.label}" size="${args.size}"></omni-hyperlink>`,
   args: {
-    label: 'Small click',
+    label: 'Click',
     size: 'small',
   }
 };
@@ -75,7 +75,7 @@ export const Disabled = {
   render: (args: ArgTypes) => html`<omni-hyperlink data-testid="test-hyperlink" label="${args.label}" ?disabled="${args.disabled}"></omni-hyperlink>`,
   
   args: {
-    label: 'Click disabled',
+    label: 'Click',
     disabled: true,
   },
   play: async (context: { canvasElement: HTMLElement; }) => {
@@ -93,21 +93,18 @@ export const Disabled = {
 };
 
 export const Inline = {
-  render: (args: ArgTypes) => html`<p>Inline <omni-hyperlink label="${args.label}" ?inline="${args.inline}"></omni-hyperlink> click</p>`,
+  render: (args: ArgTypes) => html`<p data-testid="test-paragraph">Inline <omni-hyperlink label="${args.label}" ?inline="${args.inline}"></omni-hyperlink> example</p>`,
   args: {
-    label: 'Click inline',
+    label: 'Click',
     inline: true
   },
   play: async (context: { canvasElement: HTMLElement; }) => {
     const canvas = within(context.canvasElement);
 
-    const Hyperlink = canvas.getByTestId('test-hyperlink');
+    const paragraph = canvas.getByTestId('test-paragraph');
+    console.log(paragraph);
+    const hyperlinkElement = paragraph.querySelector('omni-hyperlink');
 
-    const click = jest.fn();
-    Hyperlink.addEventListener('click', () => click());
-
-    await userEvent.click(Hyperlink);
-    await userEvent.click(Hyperlink);
-    await expect(click).toBeCalledTimes(0);
+    await expect(hyperlinkElement).toBeTruthy();
   },
 };
