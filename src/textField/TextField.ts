@@ -28,12 +28,26 @@ import ComponentStyles from '../styles/ComponentStyles';
  * </omni-text-field>
  * ```
  * 
- * @prop {"alpha-numeric"|"numeric"|"currency"|"password"|"search"|String} type - Type of input supported
- * @prop {"alpha-numeric"|"numeric"|"none"|String} keyboardMode - Keyboard mode supported
+ * @property {string} [label] - Text field label.
+ * @property {string} [value] - The value entered into the text-field.
+ * @property {object} [data] - Data associated with the component.
+ * @property {string} [hint] - A hint message to assist the user.
+ * @property {string} [error] - A error message guiding a user to correct a mistake.
+ * @property {boolean} [focussed=false] - Indicator if the component should be focussed.
+ * @property {boolean} [disabled=false] - Indicator if the component should be editable.
+ * @property {number} [minlength=0] - Value of the minlength attribute on the input
+ * @property {number} [maxlength=0] - Value of the maxlength attribute on the input
+ * @property {number} [min=0] - The minimum allowed value. Note should only be used when type is set to `numeric` or `currency` or `numeric-input`.
+ * @property {number} [max=0] - The maximum allowed value. Note should only be used when type is set to `numeric` or `currency` or `numeric-input`.
+ * @property {"alpha-numeric"|"numeric"|"currency"|"password"|"search"|String} type - Type of input supported
  */
 @customElement('omni-text-field')
 export class TextField extends LitElement {
 
+    @property({ type: String, reflect: true}) label?: string;
+    @property({ type: String, reflect: true}) value?: string;
+    @property({ type: Object, reflect: true}) data?: object;
+    @property({ type: String, reflect: true}) hint?: string;
 
 
 }
