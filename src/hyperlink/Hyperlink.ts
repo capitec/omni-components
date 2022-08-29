@@ -74,7 +74,7 @@ export class Hyperlink extends LitElement {
 
 		// Ignore the event if the component is disabled.
 		if (this.disabled) {
-			return event.stopImmediatePropagation();
+			return e.stopImmediatePropagation();
 		}
 
 		// Notify any subscribers that the link was clicked.

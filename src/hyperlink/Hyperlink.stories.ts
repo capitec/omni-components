@@ -102,7 +102,6 @@ export const Inline = {
     const canvas = within(context.canvasElement);
 
     const paragraph = canvas.getByTestId('test-paragraph');
-    console.log(paragraph);
     const hyperlinkElement = paragraph.querySelector('omni-hyperlink');
 
     await expect(hyperlinkElement).toBeTruthy();
