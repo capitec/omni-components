@@ -46,7 +46,7 @@ export const Interactive = {
   name: 'Interactive',
   args: {
     label: 'Click',
-    href: 'https://example.com',
+    href: '',
     target: '',
     disabled: false,
     inline: false,
@@ -63,20 +63,56 @@ export const Interactive = {
   },
 };
 
-export const Small = {
-  render: (args: ArgTypes) => html`<omni-hyperlink data-testid="test-hyperlink" label="${args.label}" size="${args.size}"></omni-hyperlink>`,
+export const Label = {
+  render: (args: ArgTypes) => html`<omni-hyperlink data-testid="test-hyperlink" label="${args.label}"></omni-hyperlink>`,
+  name:'Label',
   args: {
-    label: 'Click',
-    size: 'small',
+    label:'Click',
+  },
+  play: async (context :{ canvasElement: HTMLElement;}) => {
+    const canvas = within(context.canvasElement);
+    const HyperlinkElement = canvas.getByTestId('test-hyperlink');
+    const anchorTag = HyperlinkElement.shadowRoot.querySelector('a');
+
+    const labelMatches = anchorTag.innerText === Label.args.label;
+    await expect(labelMatches).toBeTruthy();
+  },
+};
+
+
+export const Size = {
+  render: (args: ArgTypes) => html`<omni-hyperlink data-testid="test-hyperlink" label="${args.label}" size="${args.size}"></omni-hyperlink>`,
+  name:'Size',
+  args: {
+    label:'Click',
+    size:'small',
   }
+};
+
+export const Href = {
+  render: (args: ArgTypes) => html`<omni-hyperlink data-testid="test-hyperlink" label="${args.label}" href="${args.href}"></omni-hyperlink>`,
+  name: 'Href',
+  args: {
+    label:'Click',
+    href:'http://example.com'
+  },
+  play: async (context :{ canvasElement: HTMLElement;}) => {
+    const canvas = within(context.canvasElement);
+    const Hyperlink = canvas.getByTestId('test-hyperlink');
+
+    const foundHrefProp = Hyperlink.attributes.getNamedItem('href');
+    const hrefMatch = foundHrefProp.value === Href.args.href;
+    await expect(hrefMatch).toBeTruthy();
+
+  },
 };
 
 export const Disabled = {
   render: (args: ArgTypes) => html`<omni-hyperlink data-testid="test-hyperlink" label="${args.label}" ?disabled="${args.disabled}"></omni-hyperlink>`,
-  
+  name:'Disabled',
   args: {
-    label: 'Click',
-    disabled: true,
+    label:'Click',
+    disabled:true,
   },
   play: async (context: { canvasElement: HTMLElement; }) => {
     const canvas = within(context.canvasElement);
@@ -94,9 +130,10 @@ export const Disabled = {
 
 export const Inline = {
   render: (args: ArgTypes) => html`<p data-testid="test-paragraph">Inline <omni-hyperlink label="${args.label}" ?inline="${args.inline}"></omni-hyperlink> example</p>`,
+  name:'Inline',
   args: {
-    label: 'Click',
-    inline: true
+    label:'Click',
+    inline:true
   },
   play: async (context: { canvasElement: HTMLElement; }) => {
     const canvas = within(context.canvasElement);
