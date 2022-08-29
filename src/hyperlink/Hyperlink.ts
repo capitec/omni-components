@@ -121,13 +121,7 @@ export class Hyperlink extends LitElement {
 		];
 	}
 
-
-    /**
-	 * Apply changes to the element DOM when a property value changes.
-	 * 
-	 * @returns {TemplateResult} The updated DOM template.
-	 */
-	override render(): TemplateResult {
+	protected override render(): TemplateResult {
 		return html`<a class="hyperlink" ?disabled="${this.disabled}" href="${this.href ? this.href : 'javascript:void(0)'}" .target="${this.target}" tabindex="0">${this.label}</a>`;
 	}
 
