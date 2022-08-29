@@ -57,7 +57,7 @@ export class Code extends LitElement {
 		const oldVal = this._content;
 
 		this._parseContent(val);
-		this.requestUpdate(`content`, oldVal);
+		this.requestUpdate('content', oldVal);
 	}
 
 	// ----------
@@ -91,7 +91,7 @@ export class Code extends LitElement {
 	// -----------
 
 	override focus() {
-		this.shadowRoot.getElementById(`track`).focus();
+		this.shadowRoot.getElementById('track').focus();
 	}
 
 	// ----------
@@ -109,8 +109,8 @@ export class Code extends LitElement {
 		if (source.length > 0) {
 
 			// Remove the starting newline character.
-			if (source.startsWith(`\n`)) {
-				source = source.replace(`\n`, ``);
+			if (source.startsWith('\n')) {
+				source = source.replace('\n', '');
 			}
 
 			// Remove any trailing whitespace, newlines or tabs.
@@ -120,20 +120,20 @@ export class Code extends LitElement {
 			let count = 0;
 			let key = source[count];
 
-			while (key === `\t`) {
+			while (key === '\t') {
 				key = source[++count];
 			}
 
 			// Replace that amount of tabs on every line to normalise the string to start with zero padding.
-			source = source.replace(new RegExp(source.substr(0, count), `g`), ``);
+			source = source.replace(new RegExp(source.substr(0, count), 'g'), '');
 
 			// Replace empty HTML attribute values [disabled=""] with empty string [disabled]
-			if (this.language === `html`) {
-				source = source.replace(/(="")/gi, ``);
+			if (this.language === 'html') {
+				source = source.replace(/(="")/gi, '');
 			}
 
 			// Set the code preview content.
-			this._content = Prism.highlight(source, Prism.languages[this.language], `css`);
+			this._content = Prism.highlight(source, Prism.languages[this.language], 'css');
 
 		}
 	}
