@@ -105,5 +105,6 @@ export const Inline = {
     const hyperlinkElement = paragraph.querySelector('omni-hyperlink');
 
     await expect(hyperlinkElement).toBeTruthy();
+    await expect(paragraph.contains(hyperlinkElement)).toBeTruthy();
   },
 };

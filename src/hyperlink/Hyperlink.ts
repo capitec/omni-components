@@ -67,26 +67,6 @@ export class Hyperlink extends LitElement {
     @property({ type: Boolean, reflect: true}) inline: boolean = false;
     @property({ type: String, reflect: true}) size?: string;
 
-	// -----------------
-	// PRIVATE FUNCTIONS
-	// -----------------
-	_linkClicked(e: Event): void {
-
-		// Ignore the event if the component is disabled.
-		if (this.disabled) {
-			return e.stopImmediatePropagation();
-		}
-
-		// Notify any subscribers that the link was clicked.
-		this.dispatchEvent(new CustomEvent('click', {
-			detail: {}
-		}));
-
-		// Prevent the event from bubbling up.
-		e.stopPropagation();
-	}
-
-
 	// -------------------
 	// RENDERING TEMPLATES
 	// -------------------
@@ -148,10 +128,7 @@ export class Hyperlink extends LitElement {
 	 * @returns {TemplateResult} The updated DOM template.
 	 */
 	override render(): TemplateResult {
-		if (this.href) {
-			return html`<a class="hyperlink" href="${this.href}" .target="${this.target}" tabindex="0">${this.label}</a>`;
-		}
-		return html`<a class="hyperlink" href="javascript:void(0)" @click="${(e: MouseEvent) => this._linkClicked(e)}" .target="${this.target}" tabindex="0">${this.label}</a>`;
+		return html`<a class="hyperlink" ?disabled="${this.disabled}" href="${this.href ? this.href : 'javascript:void(0)'}" .target="${this.target}" tabindex="0">${this.label}</a>`;
 	}
 
 }
