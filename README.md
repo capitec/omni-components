@@ -74,6 +74,21 @@ import '@innofake/omni-components/check';
 
 </td></tr><tr><td>
 
+[omni-icon](src/icon/README.md)
+
+</td><td>Icon</td><td>
+
+Component that displays an icon
+
+
+```js
+ 
+import '@innofake/omni-components/icon'; 
+
+```
+
+</td></tr><tr><td>
+
 [omni-code](src/code/README.md)
 
 </td><td>Code</td><td>
@@ -89,16 +104,31 @@ import '@innofake/omni-components/code';
 
 </td></tr><tr><td>
 
-[omni-icon](src/icon/README.md)
+[omni-check-icon](src/icons/README.md)
 
-</td><td>Icon</td><td>
+</td><td>CheckIcon</td><td>
 
-Component that displays an icon
+A check icon component
 
 
 ```js
  
-import '@innofake/omni-components/icon'; 
+import '@innofake/omni-components/icons/Check.icon.js'; 
+
+```
+
+</td></tr><tr><td>
+
+[omni-indeterminate-icon](src/icons/README.md)
+
+</td><td>CheckIcon</td><td>
+
+An indeterminate icon component
+
+
+```js
+ 
+import '@innofake/omni-components/icons/Indeterminate.icon.js'; 
 
 ```
 
