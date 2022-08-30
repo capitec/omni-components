@@ -1,11 +1,12 @@
-import { html, TemplateResult } from 'lit';
+import { html } from 'lit';
 import { Meta, StoryContext } from '@storybook/web-components';
-import { userEvent, within, fireEvent } from '@storybook/testing-library';
-import { expect, jest } from '@storybook/jest';
+import { within } from '@storybook/testing-library';
+import { expect } from '@storybook/jest';
 import { ifNotEmpty } from '../utils/Directives.js';
-import { loadCssPropertiesRemote } from '../utils/StoryUtils';
+import { loadCssPropertiesRemote, loadDefaultSlotForRemote, raw } from '../utils/StoryUtils';
 import { Icon } from './Icon.js';
 import './Icon.js';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 
 export default {
   title: 'UI Components/Icon',
@@ -15,6 +16,10 @@ export default {
       control: 'radio',
       options: ['default', 'extra-small', 'small', 'medium', 'large'],
     },
+    slot: {
+      control: 'text',
+      description: loadDefaultSlotForRemote('omni-icon').description
+    }
   },
   parameters: {
     cssprops: loadCssPropertiesRemote('omni-icon'),
@@ -24,7 +29,7 @@ export default {
 interface ArgTypes {
   size: string;
   icon: string;
-  svg: TemplateResult;
+  slot: string;
 }
 
 export const Interactive = {
@@ -32,24 +37,24 @@ export const Interactive = {
     <!-- Icons loaded by content path instead of font-based or slotted content will not be able to be styled directly -->
 
     <omni-icon data-testid="test-icon" size="${ifNotEmpty(args.size)}" icon="${ifNotEmpty(args.icon)}">
-      ${args.svg}
+      ${unsafeHTML(args.slot)}
     </omni-icon>
   `,
   name: 'Interactive',
   parameters: {},
   args: {
     size: 'default',
-    svg: html`<svg
-                version="1.1"
-                viewBox="0 0 16 16"
-                xmlns="http://www.w3.org/2000/svg"
-                width="100%"
-                height="100%"
-              >
-                <g transform="translate(-2,-2)">
-                  <path d="m8.229 14.062-3.521-3.541L5.75 9.479l2.479 2.459 6.021-6L15.292 7Z" />
-                </g>
-              </svg>`,
+    slot: raw`<svg
+    version="1.1"
+    viewBox="0 0 16 16"
+    xmlns="http://www.w3.org/2000/svg"
+    width="100%"
+    height="100%"
+  >
+    <g transform="translate(-2,-2)">
+      <path d="m8.229 14.062-3.521-3.541L5.75 9.479l2.479 2.459 6.021-6L15.292 7Z" />
+    </g>
+  </svg>`,
     icon: undefined as string,
   },
   play: async (context: StoryContext) => {
@@ -65,14 +70,14 @@ export const Interactive = {
 export const SVG = {
   render: (args: ArgTypes) => html`
     <omni-icon data-testid="test-icon" size="${args.size}"> 
-      ${args.svg} 
+      ${unsafeHTML(args.slot)} 
     </omni-icon>
   `,
   name: 'SVG',
   parameters: {},
   args: {
     size: 'large',
-    svg: html`<svg
+    slot: `<svg
                 version="1.1"
                 viewBox="0 0 16 16"
                 xmlns="http://www.w3.org/2000/svg"

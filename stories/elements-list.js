@@ -67,7 +67,6 @@ manifest.modules.forEach(module => {
         !module.path.endsWith('index.ts') &&
         !module.path.includes('stories') &&
         !module.path.toLowerCase().includes('story') &&
-        // !module.path.toLowerCase().includes('icons') &&
         !module.path.toLowerCase().includes('internal') &&
         !module.path.includes('test') &&
         (module.exports.find(ex => ex.kind === 'custom-element-definition') || module.declarations.find(d => d.tagName && d.customElement))
