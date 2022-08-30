@@ -89,6 +89,21 @@ import '@innofake/omni-components/code';
 
 </td></tr><tr><td>
 
+[omni-hyperlink](src/hyperlink/README.md)
+
+</td><td>Hyperlink</td><td>
+
+A link control that allows a user to indicate an action to be executed. Typically used for navigational purposes.
+
+
+```js
+ 
+import '@innofake/omni-components/hyperlink'; 
+
+```
+
+</td></tr><tr><td>
+
 [omni-icon](src/icon/README.md)
 
 </td><td>Icon</td><td>
@@ -203,17 +218,17 @@ import '@innofake/omni-components/switch';
         </a>
     </td>
     <td align="center">
-        <a href="https://github.com/stefan505">
-            <img src="https://avatars.githubusercontent.com/u/10812446?v=4" width="100;" alt="stefan505"/>
-            <br />
-            <sub><b>stefan505</b></sub>
-        </a>
-    </td>
-    <td align="center">
         <a href="https://github.com/chromaticWaster">
             <img src="https://avatars.githubusercontent.com/u/22874454?v=4" width="100;" alt="chromaticWaster"/>
             <br />
             <sub><b>chromaticWaster</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/stefan505">
+            <img src="https://avatars.githubusercontent.com/u/10812446?v=4" width="100;" alt="stefan505"/>
+            <br />
+            <sub><b>stefan505</b></sub>
         </a>
     </td></tr>
 </table>
