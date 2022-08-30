@@ -46,13 +46,12 @@ Basic Guidelines:
 
 ### Branches
 
-main - describe
-develop - describe
-others - describe
+* `main` - Used for stable releases, which we do once a month.
+* `develop` - Default branch of the repo for all Pull Requests.
 
 ### Getting Started
 
-Dependencies
+#### Dependencies
 Forking
 Running
 
