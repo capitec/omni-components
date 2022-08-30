@@ -137,9 +137,8 @@ export const Inline = {
     const canvas = within(context.canvasElement);
 
     const paragraph = canvas.getByTestId('test-paragraph');
-    const hyperlinkElement = paragraph.querySelector('omni-hyperlink');
+    const hyperlinkElement = paragraph.querySelector<HTMLElement>('omni-hyperlink');
 
-    await expect(hyperlinkElement).toBeTruthy();
-    await expect(paragraph.contains(hyperlinkElement)).toBeTruthy();
+    await expect(paragraph).toContainElement(hyperlinkElement);
   }
 };
