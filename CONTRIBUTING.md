@@ -19,8 +19,8 @@ Issues are intended for:
 * [Logging Feature Requests](#logging-feature-requests)
 
 Basic Guidelines:
-* **Do** search for a similar / existing Issue prior to logging a new one.
-* **Don't** use issues for any personal support. Use [Discussions](https://github.com/innofake/omni-components/discussions) or [StackOverflow](https://stackoverflow.com/) instead.
+* **Do** search for a similar / existing Issue prior to submitting a new one.
+* **Do not** use issues for any personal support. Use [Discussions](https://github.com/innofake/omni-components/discussions) or [StackOverflow](https://stackoverflow.com/) instead.
 * **Do not** side-track or derail issues threads. Stick to the topic please.
 * **Do not** post comments using just "+1", "++" or "👍". Use reactions instead.
 
@@ -29,16 +29,16 @@ Basic Guidelines:
 A bug is an error, flaw or fault associated with any part of the project.
 
 Basic Guidelines:
-* **Do** search for a similar / existing Issue prior to logging a new one.
+* **Do** search for a similar / existing Issue prior to submitting a new one.
 * **Do** describe the bug concisely. Avoid adding extraneous code, logs or screenshots.
-* **Do** add a minimal test or repro (e.g. [CodePen](https://codepen.io/), [jsFiddle](https://jsfiddle.net/), etc.) to demonstrate the bug.
+* **Do** add a minimal test or repro (e.g. [CodePen](https://codepen.io/), [jsFiddle](https://jsfiddle.net/)) to demonstrate the bug.
 
 ### Logging Feature Requests
 
 A feature request is an improvement or new capability associated with any part of the project.
 
 Basic Guidelines:
-* **Do** search for a similar / existing Issue prior to logging a new one.
+* **Do** search for a similar / existing Issue prior to submitting a new one.
 * **Do** provide sufficient motivation / use case(s) for the feature.
 * **Do not** submit multiple requests within one request.
 
@@ -61,13 +61,39 @@ Basic Guidelines:
 #### Setup
 
 1. [Fork](https://github.com/innofake/omni-components) the repository and create a branch from `develop`.
-2. Run `npm ci` inside the repository root.
-3. Start up the development project with `npm run storybook` (or by launching debugging in VS Code).
+2. Clone the forked repo and run `npm ci` inside the repository root.
+3. Start up the dev server with `npm run storybook` (or by launching debugging in VS Code).
 
-## Standards & Practices
+### Storybook
+
+This project makes extensive use of [Storybook](https://storybook.js.org/) for the purpose of developing, testing as well as exploring published component documentation.
+
+### Directory Structure
+
+When working with our components, please note the following key parts of the directory structure:
+
+```
+├── src
+│   ├── button
+│   │   ├── Button.stories.ts
+│   │   ├── Button.ts
+│   │   ├── index.ts
+│   │   ├── README.md
+│   ├── ...
+├── stories
+├── themes
+├── ...
+```
+
+* `src` - Contains all UI components, organized into a flat list of folders for each component, e.g. `button`:
+  * `Button.stories.ts` - The [Story](https://storybook.js.org/docs/web-components/get-started/whats-a-story) file for the component.
+  * `Button.ts` - The component. *(NOTE: There might be more than one related component, depending on complexity and composition)*
+  * `index.ts` - The directory-level index, containing one or more component exports.
+* `stories` - Storybook application related helpers and components.
+* `themes` - Built-in basic themes, viewable within the Storybook application.
 ### Naming Conventions
 
-1. Folder names MUST be created using all lower case Kebab Case, e.g. `real-time`.
+1. Folder names MUST be created using all lower case Kebab Case, e.g. `my-component`.
 2. File names for classes MUST be created using Pascal Case, e.g. `MyComponent`.
 3. Module names MUST match that of the file name, e.g. `MyComponent.ts` contains `export class MyComponent { ... }`.
 4. Properties MUST be created using Camel Case, e.g. `@property({...}) innerPosition: string;`.
