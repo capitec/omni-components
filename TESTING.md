@@ -368,7 +368,7 @@ The following cases will be covered
 &nbsp;
 
 >**Note**
->For the purposes of minimizing code duplication we will only focus on the play function itself for the rest of the examples.
+>For the purposes of minimizing code duplication we will only focus on the play function itself for the rest of the exported object examples.
 
 &nbsp;
 
@@ -469,6 +469,8 @@ To ensure that your interaction tests passed successfully you can use one of the
 - Run the **npm run test:storybook** command this will start a local instance of Storybook and run all the specified interaction tests along with code coverage output which can be used to confirm if your components meets the Definition of Done.
 
 ### Running code coverage test
+
+By running the **npm run test:storybook**
 
 
 
