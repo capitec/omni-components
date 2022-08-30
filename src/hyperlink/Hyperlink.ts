@@ -6,7 +6,7 @@ import ComponentStyles from '../styles/ComponentStyles';
  * A link control that allows a user to indicate an action to be executed. Typically used for navigational purposes.
  * 
  * ```js 
- * import '@innofake/omni-components/hyperlink'; 
+ * import '@capitec/omni-components/hyperlink'; 
  * ```
  * 
  * @example

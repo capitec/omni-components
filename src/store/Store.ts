@@ -16,7 +16,7 @@ import { StoreStateSettings } from './StoreStateSettings.js';
  * - Store state changes can be logged to console.
  * 
  * ```js 
- * import { Store } from '@innofake/omni-components/store'; 
+ * import { Store } from '@capitec/omni-components/store'; 
  * ```
  *
  * @example

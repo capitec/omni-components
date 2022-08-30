@@ -4,14 +4,14 @@
       "width": "150"
     },
 	"ids": {
-		"github": "innofake/omni-components",
-		"npm": "@innofake/omni-components"
+		"github": "capitec/omni-components",
+		"npm": "@capitec/omni-components"
 	},
     "badges": [
         {
             "alt": "Build",
-            "img": "https://github.com/innofake/omni-components/actions/workflows/build.yml/badge.svg",
-            "url": "https://github.com/innofake/omni-components/actions/workflows/build.yml"
+            "img": "https://github.com/capitec/omni-components/actions/workflows/build.yml/badge.svg",
+            "url": "https://github.com/capitec/omni-components/actions/workflows/build.yml"
         }
     ],
     "line": "aqua",

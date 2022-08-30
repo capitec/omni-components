@@ -6,7 +6,7 @@ import ComponentStyles from '../styles/ComponentStyles';
  * A simple label component that renders a styled text string.
  *
  * ```js 
- * import '@innofake/omni-components/label'; 
+ * import '@capitec/omni-components/label'; 
  * ```
  * 
  * @example
