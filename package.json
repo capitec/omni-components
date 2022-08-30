@@ -1,5 +1,5 @@
 {
-  "name": "@innofake/omni-components",
+  "name": "@capitec/omni-components",
   "version": "0.0.1",
   "description": "Omni Components come with minimal dependencies to reduce the bloat in your project. All web components base off Lit (https://lit.dev) and are each available as fully standalone imports or at a group level import.",
   "scripts": {
@@ -39,15 +39,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/innofake/omni-components.git"
+    "url": "git+https://github.com/capitec/omni-components.git"
   },
   "keywords": [],
-  "author": "innofake",
+  "author": "capitec",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/innofake/omni-components/issues"
+    "url": "https://github.com/capitec/omni-components/issues"
   },
-  "homepage": "https://github.com/innofake/omni-components#readme",
+  "homepage": "https://github.com/capitec/omni-components#readme",
   "devDependencies": {
     "@appnest/readme": "^1.2.7",
     "@custom-elements-manifest/analyzer": "^0.6.3",

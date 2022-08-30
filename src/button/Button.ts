@@ -6,7 +6,7 @@ import ComponentStyles from '../styles/ComponentStyles';
  * A control that allows an action to be executed.
  * 
  * ```js 
- * import '@innofake/omni-components/button'; 
+ * import '@capitec/omni-components/button'; 
  * ```
  * 
  * @example
@@ -27,9 +27,7 @@ import ComponentStyles from '../styles/ComponentStyles';
  * @property {"left"|"top"|"right"|"bottom"} [slotPosition="left"] - Position of slotted content.
  * @property {boolean} [disabled=false] - Indicator if the component is disabled.
  * 
- * @slot default - Content to render inside button, can be positioned using {@link slotPosition} property.
- * 
- * @fires {CustomEvent} click - When the button component is clicked.
+ * @slot - Content to render inside button, can be positioned using {@link slotPosition} property.
  * 
  * @cssprop --omni-button-font-family - Component font family.
  * @cssprop --omni-button-font-size - Component font size.
@@ -85,23 +83,6 @@ export class Button extends LitElement {
 	// -----------------
 	// PRIVATE FUNCTIONS
 	// -----------------
-
-	private _click(e: Event) {
-
-		// Ignore the event if the component is disabled.
-		if (this.disabled) {
-			return e.stopImmediatePropagation();
-		}
-
-		// Prevent the event from bubbling up.
-		e.preventDefault();
-		e.stopPropagation();
-
-		// Notify any subscribers that the link was clicked.
-		this.dispatchEvent(new CustomEvent('click', {
-			detail: null
-		}));
-	}
 
 	// -------------------
 	// RENDERING TEMPLATES
@@ -324,9 +305,11 @@ export class Button extends LitElement {
 	protected override render(): TemplateResult {
 		return html`
 			<button 
+				?disabled=${this.disabled}
 				class="button ${this.slotPosition ? `slot-${this.slotPosition}` : ''} ${this.type ? this.type : 'secondary'} ${this.disabled ? 'disabled' : ''}"
 				id="button"
-				@click="${this._click}">
+				aria-disabled=${this.disabled ? 'true' : 'false'}
+        		tabindex=${this.disabled ? '-1' : '0'}>
 				<slot></slot>
 				${this.label ? html`<label id="label" class="label">${this.label}</label>` : nothing}
 			</button>
