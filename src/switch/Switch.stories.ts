@@ -1,9 +1,11 @@
 import { html } from 'lit';
-import { Meta } from '@storybook/web-components';
+import { Meta, StoryContext } from '@storybook/web-components';
+import { userEvent, within, fireEvent } from '@storybook/testing-library';
 import { expect, jest } from '@storybook/jest';
-import { within, userEvent } from '@storybook/testing-library';
 import { ifNotEmpty } from '../utils/Directives.js';
 import { loadCssPropertiesRemote } from '../utils/StoryUtils';
+import { Switch } from './Switch.js';
+
 import './Switch.js';
 
 export default {
@@ -41,18 +43,21 @@ export const Interactive = {
     checked: false,
     disabled: false,
   },
-  play: async (context: { canvasElement: HTMLElement; }) => {
-    const canvas = within(context.canvasElement);
-    const Switch = canvas.getByTestId(`test-switch`);
-    console.log(Switch);
-    const valueChange = jest.fn();
-    Switch.addEventListener('value-change', () => valueChange());
-    const content = Switch.shadowRoot.getElementById(`content`);
-    console.log(content);
-    await userEvent.click(content);
-    await userEvent.click(content);
-    await expect(valueChange).toBeCalledTimes(2);
-  },
+  play: async (context: StoryContext) => {
+      const switchElement = within(context.canvasElement).getByTestId<Switch>('test-switch');
+      const valueChange = jest.fn();
+      switchElement.addEventListener('value-change', valueChange);
+
+      const content = switchElement.shadowRoot.getElementById('content');
+      await userEvent.click(content);    
+      await fireEvent.keyDown(content, {
+        key: ' ',
+        code: 'Space',
+      });
+
+      await expect(valueChange).toBeCalledTimes(2);
+
+  }
 };
 
 export const Label = {
@@ -62,6 +67,11 @@ export const Label = {
   args: {
     label: 'Label'
   },
+  play: async (context: StoryContext) => {
+      const switchElement = within(context.canvasElement).getByTestId<Switch>('test-switch');
+      const labelElement = switchElement.shadowRoot.querySelector<HTMLElement>('.label');
+      await expect(labelElement).toHaveTextContent(Label.args.label);
+  }
 };
 
 export const Hint = {
@@ -72,6 +82,11 @@ export const Hint = {
     label: 'Hint',
     hint: 'This is a hint'
   },
+  play: async (context: StoryContext) => {
+      const switchElement = within(context.canvasElement).getByTestId<Switch>('test-switch');
+      const element = switchElement.shadowRoot.querySelector<HTMLElement>('.hint');
+      await expect(element).toHaveTextContent(Hint.args.hint);
+  }
 };
 
 export const Error = {
@@ -82,6 +97,11 @@ export const Error = {
     label: 'Error',
     error: 'This is an error state'
   },
+  play: async (context: StoryContext) => {
+      const switchElement = within(context.canvasElement).getByTestId<Switch>('test-switch');
+      const element = switchElement.shadowRoot.querySelector<HTMLElement>('.error');
+      await expect(element).toHaveTextContent(Error.args.error);
+  }
 };
 
 export const Checked = {
@@ -92,6 +112,12 @@ export const Checked = {
     label: 'Checked',
     checked: true,
   },
+  play: async (context: StoryContext) => {
+      const switchElement = within(context.canvasElement).getByTestId<Switch>('test-switch');
+      const checkedElement = switchElement.shadowRoot.querySelector<HTMLElement>('.checked');
+      await expect(checkedElement).toBeTruthy();
+
+  }
 };
 
 export const Disabled = {
@@ -103,4 +129,21 @@ export const Disabled = {
     label: 'Disabled',
     disabled: true,
   },
+  play: async (context: StoryContext) => {
+      const switchElement = within(context.canvasElement).getByTestId<Switch>('test-switch');
+      const valueChange = jest.fn();
+      switchElement.addEventListener('value-change', valueChange);
+
+      const disabledElement = switchElement.shadowRoot.querySelector<HTMLElement>('.disabled');
+      await expect(disabledElement).toBeTruthy();
+      
+      const content = switchElement.shadowRoot.getElementById('content');
+      await userEvent.click(content);    
+      await fireEvent.keyDown(content, {
+        key: ' ',
+        code: 'Space',
+      });
+      await expect(valueChange).toBeCalledTimes(0);
+
+  }
 };

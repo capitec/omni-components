@@ -1,8 +1,9 @@
 import { html, css, LitElement, TemplateResult, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import ComponentStyles from '../styles/ComponentStyles';
-import { check_icon } from '../icons/Check.icon.js';
-import { indeterminate_icon } from '../icons/Indeterminate.icon.js';
+
+import '../icons/Indeterminate.icon.js';
+import '../icons/Check.icon.js';
 
 /**
  * A control that allows a user to check a value on or off.
@@ -376,7 +377,7 @@ export class Check extends LitElement {
 				<div
 					id="content"
 					@keydown="${this._keyDown}">
-					<div class="indicator">${this.indeterminate ? html`<slot name="indeterminate_icon">${indeterminate_icon()}</slot>` : this.checked ? html`<slot name="check_icon">${check_icon()}</slot>` : nothing}</div>
+					<div class="indicator">${this.indeterminate ? html`<slot name="indeterminate_icon"><omni-indeterminate-icon></omni-indeterminate-icon></slot>` : this.checked ? html`<slot name="check_icon"><omni-check-icon></omni-check-icon></slot>` : nothing}</div>
 				</div>
 			
 				<label class="label">

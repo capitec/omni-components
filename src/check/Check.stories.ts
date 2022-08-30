@@ -1,7 +1,10 @@
 import { html, TemplateResult } from 'lit';
-import { Meta } from '@storybook/web-components';
+import { Meta, StoryContext } from '@storybook/web-components';
+import { userEvent, within, fireEvent } from '@storybook/testing-library';
+import { expect, jest } from '@storybook/jest';
 import { loadCssPropertiesRemote } from '../utils/StoryUtils';
 import { ifNotEmpty } from '../utils/Directives.js';
+import { Check } from './Check.js';
 import './Check.js';
 
 export default {
@@ -44,6 +47,21 @@ export const Interactive = {
     disabled: false,
     indeterminate: false,
   },
+  play: async (context: StoryContext) => {
+      const check = within(context.canvasElement).getByTestId<Check>('test-check');
+      const valueChange = jest.fn();
+      check.addEventListener('value-change', valueChange);
+      await userEvent.click(check);
+
+      const content = check.shadowRoot.getElementById('content');
+    
+      await fireEvent.keyDown(content, {
+        key: ' ',
+        code: 'Space',
+      });
+      await expect(valueChange).toBeCalledTimes(2);
+
+  }
 };
 
 export const Label = {
@@ -53,6 +71,13 @@ export const Label = {
   args: {
     label: 'Label'
   },
+  play: async (context: StoryContext) => {
+      const check = within(context.canvasElement).getByTestId<Check>('test-check');
+      const labelElement = check.shadowRoot.querySelector('label');
+      await expect(labelElement).toBeTruthy();
+      await expect(labelElement).toHaveTextContent(Label.args.label);
+
+  }
 };
 
 export const Hint = {
@@ -63,6 +88,13 @@ export const Hint = {
     label: 'Hint',
     hint: 'This is a hint'
   },
+  play: async (context: StoryContext) => {
+      const check = within(context.canvasElement).getByTestId<Check>('test-check');
+      const hintElement = check.shadowRoot.querySelector<HTMLElement>('.hint');
+      await expect(hintElement).toBeTruthy();
+      await expect(hintElement).toHaveTextContent(Hint.args.hint);
+
+  }
 };
 
 export const Error = {
@@ -73,6 +105,13 @@ export const Error = {
     label: 'Error',
     error: 'This is an error state'
   },
+  play: async (context: StoryContext) => {
+      const check = within(context.canvasElement).getByTestId<Check>('test-check');
+      const errorElement = check.shadowRoot.querySelector<HTMLElement>('.error');
+      await expect(errorElement).toBeTruthy();
+      await expect(errorElement).toHaveTextContent(Error.args.error);
+
+  }
 };
 
 export const Checked = {
@@ -83,6 +122,12 @@ export const Checked = {
     label: 'Checked',
     checked: true
   },
+  play: async (context: StoryContext) => {
+      const check = within(context.canvasElement).getByTestId<Check>('test-check');
+      const checkedElement = check.shadowRoot.querySelector<HTMLElement>('.checked');
+      await expect(checkedElement).toBeTruthy();
+
+  }
 };
 
 export const Indeterminate = {
@@ -93,6 +138,12 @@ export const Indeterminate = {
     label: 'Indeterminate',
     indeterminate: true,
   },
+  play: async (context: StoryContext) => {
+      const check = within(context.canvasElement).getByTestId<Check>('test-check');
+      const indeterminateElement = check.shadowRoot.querySelector<HTMLElement>('.indeterminate');
+      await expect(indeterminateElement).toBeTruthy();
+
+  }
 };
 
 export const Disabled = {
@@ -103,6 +154,23 @@ export const Disabled = {
     label: 'Disabled',
     disabled: true,
   },
+  play: async (context: StoryContext) => {
+      const check = within(context.canvasElement).getByTestId<Check>('test-check');
+      const valueChange = jest.fn();
+      check.addEventListener('value-change', valueChange);
+
+      const disabledElement = check.shadowRoot.querySelector<HTMLElement>('.disabled');
+      await expect(disabledElement).toBeTruthy();
+      
+      const content = check.shadowRoot.getElementById('content');
+      await userEvent.click(content);    
+      await fireEvent.keyDown(content, {
+        key: ' ',
+        code: 'Space',
+      });
+      await expect(valueChange).toBeCalledTimes(0);
+
+  }
 };
 
 export const CustomCheckIcon = {
@@ -121,6 +189,17 @@ export const CustomCheckIcon = {
                         transform="translate(843.77 509.04) scale(.48018)" />
                     </svg>`,
   },
+  play: async (context: StoryContext) => {
+      const check = within(context.canvasElement).getByTestId<Check>('test-check');
+      const slotElement = check.shadowRoot.querySelector<HTMLSlotElement>('slot[name=check_icon]');
+      await expect(slotElement).toBeTruthy();
+
+      const foundSlottedSvgElement = slotElement
+          .assignedElements()
+          .find((e) => e.tagName.toLowerCase() === 'svg');
+      await expect(foundSlottedSvgElement).toBeTruthy();
+
+  }
 };
 
 export const CustomIndeterminateIcon = {
@@ -148,4 +227,15 @@ export const CustomIndeterminateIcon = {
                                 d="M2.875 13.938c-1.067 0-1.938.884-1.938 2.062s.87 2.062 1.938 2.062h26.25c1.067 0 1.937-.884 1.937-2.062s-.87-2.062-1.937-2.062H2.875z" />
                             </svg>`,
   },
+  play: async (context: StoryContext) => {
+      const check = within(context.canvasElement).getByTestId<Check>('test-check');
+      const slotElement = check.shadowRoot.querySelector<HTMLSlotElement>('slot[name=indeterminate_icon]');
+      await expect(slotElement).toBeTruthy();
+      
+      const foundSlottedSvgElement = slotElement
+          .assignedElements()
+          .find((e) => e.tagName.toLowerCase() === 'svg');
+      await expect(foundSlottedSvgElement).toBeTruthy();
+
+  }
 };

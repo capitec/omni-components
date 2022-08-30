@@ -9,9 +9,9 @@
 	},
     "badges": [
         {
-            "alt": "Repository: Private",
-            "img": "https://img.shields.io/badge/Repository-private-lightgrey.svg",
-            "url": ""
+            "alt": "Build",
+            "img": "https://github.com/innofake/omni-components/actions/workflows/build.yml/badge.svg",
+            "url": "https://github.com/innofake/omni-components/actions/workflows/build.yml"
         }
     ],
     "line": "aqua",

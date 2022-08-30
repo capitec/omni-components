@@ -40,10 +40,9 @@ import '@innofake/omni-components/radio';
 
 ## Events
 
-| Event           | Type                                           | Description                                      |
-|-----------------|------------------------------------------------|--------------------------------------------------|
-| `value-change`  | `CustomEvent<{ old: Boolean; new: Boolean; }>` | Dispatched when the control value is changed to either on or off. |
-| `value-changed` | `CustomEvent<{ old: boolean; new: boolean; }>` |                                                  |
+| Event          | Type                                           | Description                                      |
+|----------------|------------------------------------------------|--------------------------------------------------|
+| `value-change` | `CustomEvent<{ old: Boolean; new: Boolean; }>` | Dispatched when the control value is changed to either on or off. |
 
 ## CSS Custom Properties
 
