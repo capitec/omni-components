@@ -3,7 +3,6 @@
 This guide will take you through the process of creating a Story for your UI component  to render permutations  along with some basic interaction tests.
 
 &nbsp;
-
 # Table of Contents
 
 [What is Storybook](#what-is-storybook)
@@ -16,7 +15,7 @@ This guide will take you through the process of creating a Story for your UI com
   * [ArgTypes](#argtypes)
   * [Story objects](#story-objects)
   * [Running Storybook](#running-storybook)
-  * [Adding Stories](#adding-stories)
+  * [Adding more stories](#adding-more-stories)
   * [UI Interaction Testing](#ui-interaction-testing)
      + [Class test](#class-test)
      + [Slotted content test](#slotted-content-test)
@@ -26,8 +25,6 @@ This guide will take you through the process of creating a Story for your UI com
 &nbsp;
 
 ---
-
-&nbsp;
 ## Prerequisites 
 
 ### Workstation
@@ -42,10 +39,8 @@ This guide will take you through the process of creating a Story for your UI com
 - Familiarity with existing Javascript testing frameworks like Jest and Playwright.
 
 &nbsp;
-&nbsp;
 
 ---
-</br>
 
 ## What is Storybook
 
@@ -61,20 +56,18 @@ For more detail you can follow Storybooks [docs](https://storybook.js.org/docs/w
 
 >**Note**
 >
-> You can extend Storybook with an ecosystem of addons that help you do things like fine-tune responsive layouts or verify accessibility. This has already been setup on this repository.
+> You can extend Storybook with an ecosystem of addons that help you do things like fine-tune responsive layouts or verify accessibility and simulate interaction tests. This has already been setup on this repository.
 >
 &nbsp;
 
 ---
-
-</br>
 
 ## Definition of Done
 
 All components have to fulfill the following criteria to meet the definition of done.
 
 - Component(s) must be written in Typescript according to the [Component development standard](https://example.com).
-- Component(s) requires a completed story written in Typescript that adheres to Component Story Format 3.
+- Component(s) requires a completed story written in Typescript that adheres to [Component Story Format 3](https://storybook.js.org/blog/component-story-format-3-0/#:~:text=For%20your%20convenience%2C%20there%27s%20a%20codemod%20to%20upgrade%20your%20stories).
 - The story will need the relevant interaction tests to cover the following criteria.
     - Confirm the firing of event(s).
     - Confirm the non firing of event(s) based on a disabled state.
@@ -87,17 +80,16 @@ All components have to fulfill the following criteria to meet the definition of 
 &nbsp;
 
 ---
+</br>
 
-&nbsp;
 ## Component files
 
-&nbsp;
 
 **For the purposes of the examples we will use the Button component**
 
-When developing a new component, or if you want to check the an existing components for reference pay attention to the following. 
+When developing a new component, or if you want to check the an existing components for reference pay attention to the following structure. 
 
-All components will exist in the src folder with a folder name specific to the component.
+All components will exist in the src folder with a folder name specific to the component(mention to the casing standard).
 
 - Button.ts - Button component file. 
 - Button.stories.ts - Story file for the Button component.
@@ -214,11 +206,16 @@ interface Args {
 
 ## ArgTypes
 
-In the Story you can leverage the use of argTypes. This will specify the behavior of your args by specifying the type, you constrain the values that can be assigned that aren't explicitly set 
+In the Story you can leverage the use of argTypes. This will specify the behavior of your args by specifying the type, you constrain the values that can be assigned that aren't explicitly set.
+
+Once set it will automatically generates a component args table the table will list the arguments for the component with integrated controls to allow you to change the args of the rendered story
 
 For this example we want to limit the options for the type property to be limited to the supported values **primary**, **secondary** and **clear**.
 
-The button component has a type property that is of type string along with a slot
+The slotPosition property will be limited to the following options **left**,**top**, **right** and **bottom**.
+
+For detail on ArgTypes read the following documentation. 
+For more detail on the ArgsTable read the following documentation.
 
 ```js
 
@@ -228,8 +225,8 @@ export default {
     argTypes: {
         // This will render a radio group with the Buttons type property options
         type: {
-            control: 'radio',
-            options: buttonType,
+            control: 'radio', // control to render
+            options: buttonType, // options for the control
         },
         // This will render a radio group with the Button slot position property options
         slotPosition: {
@@ -251,7 +248,7 @@ Consider adding a image or gif of the result here
 
 ## Story objects
 
-All named exports are **objects**
+In a  Story all named exports are **objects**
 
 The code snippet demonstrates how the we declare the the Interactive object the render function tells the story how to render this allows us to carry over all the annotations to subsequent exports 
 
@@ -292,9 +289,12 @@ To run Storybook on your workstation locally open the Component repo in a VS cod
 
 You should see **Storybook Debug** listed click the play icon, this will compile the source code and run a local instance of Storybook that you can debug on your workstation.
 
-A Storybook tab is opened in your default browser. 
+When in the same state an alternative to clicking the play icon is to click **F5** on your keyboard.
+
+A new Storybook tab is opened in your default browser. 
 
 - The component is listed under "UI Components/"component name"" 
+
 - Docs page is documentation provided for the component aggregated onto a single page it includes
     - Component properties.
     - Component events.
@@ -302,11 +302,18 @@ A Storybook tab is opened in your default browser.
     - Theme variables.
     - Stories section listing all exported object in your story file.
 
+
+- Canvas page for each Story of the component this view will render your component in an Iframe and allow you to test that specific permutation in isolation. it includes the following tabs listed below.
+    - Controls - List of all the properties for the Story that can be altered in real time to update the component being rendered
+    - Accessibility - Lists the accessibility tests and informs us if the component doesnt meet 
+    - Interactions - Lists the interaction test you can simulate the different steps via the controls on this tab along with confirming if your Play function passed.
+    - CSS Custom Properties - Lists all the component specific variables and theme variables that can be altered to see the effect on the component in real time. 
+
 </br>
 
 ---
 
-## Adding Stories
+## Adding more stories
 
 Based on the Interactive object that was created earlier we can create more object exports for each Story we want to provide. This is to encapsulate the different rendered permutations the Button component has 
 
@@ -363,12 +370,18 @@ The following cases will be covered
 
 >**Note**
 >
->A **data-testid** attribute is added to the render template of the export objects we use this attribute to target the component.
+>A **data-testid** attribute is added to the render template of the exported objects we use this attribute to target the component in the Play function.
 >
 
 
 
+>**Note**
+>For the purposes of minimizing code duplication we will only focus on the play function itself for the rest of the examples.
+
+
 ### Class test
+
+This is a test to confirm if the **Primary** class is applied on the Button component by setting the type property to primary.
 
 ```js
 
@@ -393,9 +406,11 @@ export const Type = {
 
 ```
 
-For the purposes of minimizing code duplication we will only focus on the play function itself for the rest of the examples.
+
 
 ### Event test
+
+This is a test to simulate the firing of the click event for the component. and event listener is added to the component and the click event is fired 2 times, we assert that the event was fired twice.
 
 ```js
     // Play function testing that the click event was fired twice
@@ -424,6 +439,10 @@ For the purposes of minimizing code duplication we will only focus on the play f
 
 ### Disabled test
 
+This test confirms if the button component is in a disabled state by confirming if the class is applied to the component. 
+
+The next test is to confirm that the click event does not fire when interacting with the Button component in a disabled state.
+
 ```js
     play: async (context: StoryContext) => {
         const button = within(context.canvasElement).getByTestId<Button>('test-button'); // Test for disabled CSS.
@@ -443,4 +462,7 @@ For the purposes of minimizing code duplication we will only focus on the play f
 ## Checking the tests
 
 To ensure that your interaction tests passed successfully you can use one of the 2 options. 
+
+- Run Storybook locally and check that the Story renders as expected for each permutation and the interaction tests pass for the specified permutation.
+- Run the **npm run test:storybook** command this will start a local instance of Storybook and run all the specified interaction tests along with code coverage output which can be used to confirm if your components meets the Definition of Done.
 
