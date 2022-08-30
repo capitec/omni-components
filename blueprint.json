@@ -1,10 +1,9 @@
 {
     "logo": {
-      "src": "https://avatars.githubusercontent.com/u/107934107",
+      "src": "https://avatars.githubusercontent.com/u/109590421",
       "width": "150"
     },
 	"ids": {
-		"github": "capitec/omni-components",
 		"npm": "@capitec/omni-components"
 	},
     "badges": [

@@ -2,9 +2,9 @@
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#welcome-to-omni-components-)
 
 # ➜ Welcome to Omni Components 
-<h1 align="center">@innofake/omni-components</h1>
+<h1 align="center">@capitec/omni-components</h1>
 <p align="center">
-  <img src="https://avatars.githubusercontent.com/u/107934107" alt="Logo" width="150" height="auto" />
+  <img src="https://avatars.githubusercontent.com/u/109590421" alt="Logo" width="150" height="auto" />
 </p>
 
 <p align="center">
@@ -17,11 +17,9 @@
 <p align="center">0.0.1</p>
 
 <p align="center">
-		<a href="https://npmcharts.com/compare/@innofake/omni-components?minimal=true"><img alt="Downloads per month" src="https://img.shields.io/npm/dm/@innofake/omni-components.svg" height="20"/></a>
-<a href="https://www.npmjs.com/package/@innofake/omni-components"><img alt="NPM Version" src="https://img.shields.io/npm/v/@innofake/omni-components.svg" height="20"/></a>
-<a href="https://david-dm.org/innofake/omni-components"><img alt="Dependencies" src="https://img.shields.io/david/innofake/omni-components.svg" height="20"/></a>
-<a href="https://github.com/innofake/omni-components/graphs/contributors"><img alt="Contributors" src="https://img.shields.io/github/contributors/innofake/omni-components.svg" height="20"/></a>
-<a href="https://github.com/innofake/omni-components/actions/workflows/build.yml"><img alt="Build" src="https://github.com/innofake/omni-components/actions/workflows/build.yml/badge.svg" height="20"/></a>
+		<a href="https://npmcharts.com/compare/@capitec/omni-components?minimal=true"><img alt="Downloads per month" src="https://img.shields.io/npm/dm/@capitec/omni-components.svg" height="20"/></a>
+<a href="https://www.npmjs.com/package/@capitec/omni-components"><img alt="NPM Version" src="https://img.shields.io/npm/v/@capitec/omni-components.svg" height="20"/></a>
+<a href="https://github.com/capitec/omni-components/actions/workflows/build.yml"><img alt="Build" src="https://github.com/capitec/omni-components/actions/workflows/build.yml/badge.svg" height="20"/></a>
 	</p>
 
 
@@ -89,21 +87,6 @@ import '@innofake/omni-components/code';
 
 </td></tr><tr><td>
 
-[omni-hyperlink](src/hyperlink/README.md)
-
-</td><td>Hyperlink</td><td>
-
-A link control that allows a user to indicate an action to be executed. Typically used for navigational purposes.
-
-
-```js
- 
-import '@innofake/omni-components/hyperlink'; 
-
-```
-
-</td></tr><tr><td>
-
 [omni-icon](src/icon/README.md)
 
 </td><td>Icon</td><td>
@@ -114,36 +97,6 @@ Component that displays an icon
 ```js
  
 import '@innofake/omni-components/icon'; 
-
-```
-
-</td></tr><tr><td>
-
-[omni-check-icon](src/icons/README.md)
-
-</td><td>CheckIcon</td><td>
-
-A check icon component
-
-
-```js
- 
-import '@innofake/omni-components/icons/Check.icon.js'; 
-
-```
-
-</td></tr><tr><td>
-
-[omni-indeterminate-icon](src/icons/README.md)
-
-</td><td>IndeterminateIcon</td><td>
-
-An indeterminate icon component
-
-
-```js
- 
-import '@innofake/omni-components/icons/Indeterminate.icon.js'; 
 
 ```
 
