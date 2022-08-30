@@ -21,8 +21,8 @@ Issues are intended for:
 Basic Guidelines:
 * **Do** search for a similar / existing Issue prior to logging a new one.
 * **Don't** use issues for any personal support. Use [Discussions](https://github.com/innofake/omni-components/discussions) or [StackOverflow](https://stackoverflow.com/) instead.
-* **Don't** side-track or derail issues threads. Stick to the topic please.
-* **Don't** post comments using just "+1", "++" or "👍". Use reactions instead.
+* **Do not** side-track or derail issues threads. Stick to the topic please.
+* **Do not** post comments using just "+1", "++" or "👍". Use reactions instead.
 
 ### Reporting Bugs
 
