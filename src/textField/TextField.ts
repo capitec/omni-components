@@ -2,8 +2,6 @@ import { css, html, LitElement, nothing, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import ComponentStyles from '../styles/ComponentStyles';
 
-
-
 /**
  * An input control that allows a user to enter a single line of text.
  * 
@@ -43,6 +41,10 @@ import ComponentStyles from '../styles/ComponentStyles';
  * 
  * 
  * 
+ * @cssprop --omni-text-field-container
+ * 
+ *
+ * 
  * @cssprop --omni-text-field-font-family - Component font family.
  * @cssprop --omni-text-field-font-size - Component font size.
  * @cssprop --omni-text-field-font-weight - Component font weight.
@@ -67,15 +69,14 @@ export class TextField extends LitElement {
 
     protected override render(): TemplateResult {
 		return html`
-        <div class="">
-            <input 
-              class=""
-              id="inputField"
-              .type="${this.type}"
-              value=""
-              minlength=""
-              maxlength=""
-            >
+        <div
+           class="container
+           ${this.value}
+           ${this.error ? ' error': ''}
+           ${this.focussed === true ? ' focussed': ''}
+           ${this.disabled ? ' disabled': ''}">
+
+           <input>
         </div>
 		`;
 	}
