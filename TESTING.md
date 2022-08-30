@@ -61,7 +61,7 @@ For more detail you can follow Storybooks [docs](https://storybook.js.org/docs/w
 
 >**Note**
 >
-> You can extend Storybook with an ecosystem of addons that help you do things like fine-tune responsive layouts or verify accessibility. This has already been setup on this repository.
+> You can extend Storybook with an ecosystem of addons that help you do things like fine-tune responsive layouts or verify accessibility and simulate interaction tests. This has already been setup on this repository.
 >
 &nbsp;
 
@@ -74,7 +74,7 @@ For more detail you can follow Storybooks [docs](https://storybook.js.org/docs/w
 All components have to fulfill the following criteria to meet the definition of done.
 
 - Component(s) must be written in Typescript according to the [Component development standard](https://example.com).
-- Component(s) requires a completed story written in Typescript that adheres to Component Story Format 3.
+- Component(s) requires a completed story written in Typescript that adheres to [Component Story Format 3](https://storybook.js.org/blog/component-story-format-3-0/#:~:text=For%20your%20convenience%2C%20there%27s%20a%20codemod%20to%20upgrade%20your%20stories).
 - The story will need the relevant interaction tests to cover the following criteria.
     - Confirm the firing of event(s).
     - Confirm the non firing of event(s) based on a disabled state.
@@ -87,17 +87,16 @@ All components have to fulfill the following criteria to meet the definition of 
 &nbsp;
 
 ---
+</br>
 
-&nbsp;
 ## Component files
 
-&nbsp;
 
 **For the purposes of the examples we will use the Button component**
 
-When developing a new component, or if you want to check the an existing components for reference pay attention to the following. 
+When developing a new component, or if you want to check the an existing components for reference pay attention to the following structure. 
 
-All components will exist in the src folder with a folder name specific to the component.
+All components will exist in the src folder with a folder name specific to the component(mention to the casing standard).
 
 - Button.ts - Button component file. 
 - Button.stories.ts - Story file for the Button component.
