@@ -60,17 +60,27 @@ Basic Guidelines:
 
 #### Setup
 
-1. [Fork](ttps://github.com/innofake/omni-components) the repository and create a branch from `develop`.
+1. [Fork](https://github.com/innofake/omni-components) the repository and create a branch from `develop`.
 2. Run `npm ci` inside the repository root.
 3. Start up the development project with `npm run storybook` (or by pressing F5 in VS Code).
 
-### Standards & Practices
+## Standards & Practices
+### Naming Conventions
 
-Naming Conventions (see OCWP)
+1. Folder names MUST be created using all lower case Kebab Case, e.g. `real-time`.
+2. File names for classes MUST be created using Pascal Case, e.g. `MyComponent`.
+3. Module names MUST match that of the file name, e.g. `MyComponent.ts` contains `export class MyComponent { ... }`.
+4. Properties MUST be created using Camel Case, e.g. `@property({...}) innerPosition: string;`.
+4. Properties MUST NOT contain any verbs, e.g. `@property({...}) label: string;`.
+
 Best Practices (see OCWP)
  - including commits, merging, etc.
 Definition of Done (see OCWP)
 
+### Comments
+
+
+
 ### Submit Pull Requests
 
-ASDFASDSA
+XXXXX
