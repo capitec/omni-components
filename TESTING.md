@@ -1,6 +1,6 @@
 # Testing
 
-This guide will take you through the process of creating a Story for your UI component  to render permutations  along with some basic interaction tests.
+This guide will take you through the process of creating a Story for your UI component to render all its supported permutations along with some basic interaction tests.
 
 &nbsp;
 # Table of Contents
@@ -44,6 +44,8 @@ This guide will take you through the process of creating a Story for your UI com
 
 ## What is Storybook
 
+For the purposes of testing the UI components we leverage the use of Storybook.
+
 Storybook is a tool for UI development. It makes development faster and easier by isolating components. 
 
 This allows you to work on one component at a time. You can develop entire UIs without needing to start up a complex dev stack, force certain data into your database, or navigate around your application.
@@ -52,12 +54,13 @@ Storybook helps you document components for reuse and automatically visually tes
 
 For more detail you can follow Storybooks [docs](https://storybook.js.org/docs/web-components/get-started/introduction)
 
-</br>
+&nbsp;
 
 >**Note**
 >
 > You can extend Storybook with an ecosystem of addons that help you do things like fine-tune responsive layouts or verify accessibility and simulate interaction tests. This has already been setup on this repository.
 >
+
 &nbsp;
 
 ---
@@ -80,7 +83,6 @@ All components have to fulfill the following criteria to meet the definition of 
 &nbsp;
 
 ---
-</br>
 
 ## Component files
 
@@ -119,8 +121,6 @@ All components will exist in the src folder with a folder name specific to the c
 
 ## Story file
 
-&nbsp;
-
 A story describes a component with a set of arguments that define how the component should render.
 
 All stories are written in Component Story Format 3 for detail on the format familiarise yourself with the following [documentation](https://storybook.js.org/blog/component-story-format-3-0/#:~:text=For%20your%20convenience%2C%20there%27s%20a%20codemod%20to%20upgrade%20your%20stories).
@@ -133,6 +133,9 @@ The default export for a component story defines metadata about the component it
 - parameters - Static named metadata about the story used to control its behavior.
 
 All named exports are objects this allows reuse of stories
+
+&nbsp;
+&nbsp;
 
 ---
 
@@ -173,11 +176,10 @@ export default {
     },
 } as Meta;
 ```
-<br/>
+
+&nbsp;
 
 ---
-
-</br>
 
 ## Args
 
@@ -185,7 +187,7 @@ Args is Storybooks mechanism for defining the arguments for a object which will 
 
 It reduces the boilerplate code you need to write for each permutation of the component.
 
-</br>
+&nbsp;
 
 ```js
 
@@ -198,11 +200,9 @@ interface Args {
 
 ```
 
-</br>
+&nbsp;
 
 ---
-
-</br>
 
 ## ArgTypes
 
@@ -238,13 +238,9 @@ export default {
 
 ```
 
-Consider adding a image or gif of the result here
-
-</br>
+&nbsp;
 
 ---
-
-</br>
 
 ## Story objects
 
@@ -277,11 +273,10 @@ export const Interactive = {
     }
     };
 ```
-</br>
+
+&nbsp;
 
 ---
-
-</br>
 
 ## Running Storybook
 
@@ -309,7 +304,7 @@ A new Storybook tab is opened in your default browser.
     - Interactions - Lists the interaction test you can simulate the different steps via the controls on this tab along with confirming if your Play function passed.
     - CSS Custom Properties - Lists all the component specific variables and theme variables that can be altered to see the effect on the component in real time. 
 
-</br>
+&nbsp;
 
 ---
 
@@ -345,15 +340,12 @@ export const Label = {
 };
 
 ```
-</br>
+
+&nbsp;
 
 ---
 
-</br>
-
 ## UI interaction testing 
-
-</br>
 
 Storybook testing is facilitated by the test runner which turns all stories into executable tests it is powered by Jest and Playwright.
 
@@ -373,11 +365,12 @@ The following cases will be covered
 >A **data-testid** attribute is added to the render template of the exported objects we use this attribute to target the component in the Play function.
 >
 
-
+&nbsp;
 
 >**Note**
 >For the purposes of minimizing code duplication we will only focus on the play function itself for the rest of the examples.
 
+&nbsp;
 
 ### Class test
 
@@ -406,7 +399,7 @@ export const Type = {
 
 ```
 
-
+&nbsp;
 
 ### Event test
 
@@ -424,7 +417,11 @@ This is a test to simulate the firing of the click event for the component. and 
     },
 ```
 
-### Slotted content test
+&nbsp;
+
+### Slotted test
+
+This is a play function will confirm if there is slotted content in the button component. We query the shadowRoot to confirm if the slot does exist and confirm if the slotted content is a Omni-icon component.
 
 ```js
     play: async (context: StoryContext) => {
@@ -436,6 +433,8 @@ This is a test to simulate the firing of the click event for the component. and 
         await expect(foundSlottedOmniIconElement).toBeTruthy();
     },
 ```
+
+&nbsp;
 
 ### Disabled test
 
@@ -459,10 +458,17 @@ The next test is to confirm that the click event does not fire when interacting 
     },
 ```
 
+&nbsp;
+
+---
 ## Checking the tests
 
 To ensure that your interaction tests passed successfully you can use one of the 2 options. 
 
 - Run Storybook locally and check that the Story renders as expected for each permutation and the interaction tests pass for the specified permutation.
 - Run the **npm run test:storybook** command this will start a local instance of Storybook and run all the specified interaction tests along with code coverage output which can be used to confirm if your components meets the Definition of Done.
+
+### Running code coverage test
+
+
 
