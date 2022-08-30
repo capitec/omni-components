@@ -1,12 +1,13 @@
 # Testing
 
-This guide will take you through the process of creating a Story for your UI component to render all its supported permutations along with some basic interaction tests.
+This guide will take you through the process of creating a Story for your UI component to render all supported permutations along with some basic interaction tests.
 
 &nbsp;
 # Table of Contents
 
 [What is Storybook](#what-is-storybook)
   * [Definition of Done](#definition-of-done)
+  * [Do's and Don'ts](#dos-and-donts)
   * [Component files](#component-files)
 
 [Story file](#story-file)
@@ -27,9 +28,9 @@ This guide will take you through the process of creating a Story for your UI com
 ---
 ## Prerequisites 
 
-### Workstation
+### Developing 
 
-- Visual Code
+- Lit
 - Typescript
 - Node
 
@@ -60,6 +61,8 @@ For more detail you can follow Storybooks [docs](https://storybook.js.org/docs/w
 >
 > You can extend Storybook with an ecosystem of addons that help you do things like fine-tune responsive layouts or verify accessibility and simulate interaction tests. This has already been setup on this repository.
 >
+>&nbsp;
+>
 
 &nbsp;
 
@@ -83,6 +86,12 @@ All components have to fulfill the following criteria to meet the definition of 
 &nbsp;
 
 ---
+
+## Dos and Donts
+
+
+---
+
 
 ## Component files
 
@@ -359,18 +368,27 @@ The following cases will be covered
 - Test if a UI component has events that fire or not depending on state
 - Test if a UI component has content that only renders in specific permutations
 
+&nbsp;
 
 >**Note**
 >
 >A **data-testid** attribute is added to the render template of the exported objects we use this attribute to target the component in the Play function.
 >
+>&nbsp;
+>
 
 &nbsp;
 
 >**Note**
+>
 >For the purposes of minimizing code duplication we will only focus on the play function itself for the rest of the exported object examples.
+>
+>&nbsp;
+>
 
 &nbsp;
+
+---
 
 ### Class test
 
