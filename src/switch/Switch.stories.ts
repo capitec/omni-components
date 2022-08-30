@@ -1,130 +1,149 @@
-import { html, TemplateResult } from 'lit';
-import { Story, Meta, WebComponentsFramework } from '@storybook/web-components';
+import { html } from 'lit';
+import { Meta, StoryContext } from '@storybook/web-components';
+import { userEvent, within, fireEvent } from '@storybook/testing-library';
 import { expect, jest } from '@storybook/jest';
-import { within, userEvent } from '@storybook/testing-library';
+import { ifNotEmpty } from '../utils/Directives.js';
 import { loadCssPropertiesRemote } from '../utils/StoryUtils';
+import { Switch } from './Switch.js';
 
 import './Switch.js';
 
-let cssProps = loadCssPropertiesRemote("omni-switch");
-
-
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'UI Components/Switch',
-  component: "omni-switch",
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-  argTypes: {
+  component: 'omni-switch',
+  argTypes: {},
+  parameters: {
+    cssprops: loadCssPropertiesRemote('omni-switch'),
+    actions: {
+      handles: ['value-change'],
+    },
   },
-	parameters: {
-    cssprops: cssProps,
-		actions: {
-			handles: ['value-changed','value-change']
-		}
-	}
 } as Meta;
 
 interface ArgTypes {
-	label: string;
-	data: Object;
-	hint: string;
-	error: string;
-	checked: boolean;
-	disabled: boolean;
-  "value-change": any;
+  label: string;
+  data: object;
+  hint: string;
+  error: string;
+  checked: boolean;
+  disabled: boolean;
 }
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: Story<ArgTypes> = (args: ArgTypes) => html`
-    <omni-switch 
-    data-testid="test-switch"
-    label="${args.label}" 
-    .data="${args.data}" 
-    hint="${args.hint}" 
-    error="${args.error}"
-    ?checked="${args.checked}"
-    ?disabled="${args.disabled}"
-    @value-change="${(e: any) => console.log(e)}"
-    >
-    </omni-switch>
-`;
+export const Interactive = {
+  render: (args: ArgTypes) => html`
+    <omni-switch data-testid="test-switch" label="${ifNotEmpty(args.label)}" .data="${args.data}" hint="${ifNotEmpty(args.hint)}" error="${ifNotEmpty(args.error)}" ?checked="${args.checked}" ?disabled="${args.disabled}"></omni-switch>
+  `,
+  name: 'Interactive',
+  parameters: {},
+  args: {
+    label: '',
+    data: {},
+    hint: '',
+    error: '',
+    checked: false,
+    disabled: false,
+  },
+  play: async (context: StoryContext) => {
+      const switchElement = within(context.canvasElement).getByTestId<Switch>('test-switch');
+      const valueChange = jest.fn();
+      switchElement.addEventListener('value-change', valueChange);
 
-export const Default = Template.bind({});
-// More on args: https://storybook.js.org/docs/react/writing-stories/args
-Default.storyName = "Default"
-Default.parameters = {
-};
-Default.args = {
-  label:'' ,
-  data:{} ,
-  hint:'' ,
-  error: '',  
-  checked:false,
-  disabled:false
-};
-Default.play = async (context) => {
-  
-  const canvas = within(context.canvasElement);
+      const content = switchElement.shadowRoot.getElementById('content');
+      await userEvent.click(content);    
+      await fireEvent.keyDown(content, {
+        key: ' ',
+        code: 'Space',
+      });
 
-  const Switch = canvas.getByTestId(`test-switch`);
-  console.log(Switch);
-  const valueChange = jest.fn();
-  Switch.addEventListener('value-change',()=> valueChange());
+      await expect(valueChange).toBeCalledTimes(2);
 
-  const content = Switch.shadowRoot.getElementById(`content`);
-  console.log(content);
-
-  await userEvent.click(content);
-  await userEvent.click(content);
-  await expect(valueChange).toBeCalledTimes(2);
-}
-
-export const Label = Template.bind({});
-Label.args = {
-  label:'Label' ,
-  data:{} ,
-  hint:'' ,
-  error: '',  
-  checked:false,
-  disabled:false
+  }
 };
 
-export const Hint = Template.bind({});
-Hint.args = {
-  label:'Hint' ,
-  data:{} ,
-  hint:'This is a hint' ,
-  error: '',  
-  checked:false,
-  disabled:false
+export const Label = {
+  render: (args: ArgTypes) => html`
+    <omni-switch data-testid="test-switch" label="${args.label}"></omni-switch>
+  `,
+  args: {
+    label: 'Label'
+  },
+  play: async (context: StoryContext) => {
+      const switchElement = within(context.canvasElement).getByTestId<Switch>('test-switch');
+      const labelElement = switchElement.shadowRoot.querySelector<HTMLElement>('.label');
+      await expect(labelElement).toHaveTextContent(Label.args.label);
+  }
 };
 
-export const Error = Template.bind({});
-Error.args = {
-  label:'Error' ,
-  data:{} ,
-  hint:'' ,
-  error: 'This is an error state',  
-  checked:false,
-  disabled:false
+export const Hint = {
+  render: (args: ArgTypes) => html`
+    <omni-switch data-testid="test-switch" label="${args.label}" hint="${args.hint}"></omni-switch>
+  `,
+  args: {
+    label: 'Hint',
+    hint: 'This is a hint'
+  },
+  play: async (context: StoryContext) => {
+      const switchElement = within(context.canvasElement).getByTestId<Switch>('test-switch');
+      const element = switchElement.shadowRoot.querySelector<HTMLElement>('.hint');
+      await expect(element).toHaveTextContent(Hint.args.hint);
+  }
 };
 
-export const Checked = Template.bind({});
-Checked.args = {
-  label:'Checked' ,
-  data:{} ,
-  hint:'' ,
-  error: '',  
-  checked:true,
-  disabled:false
+export const Error = {
+  render: (args: ArgTypes) => html`
+    <omni-switch data-testid="test-switch" label="${args.label}" error="${args.error}"></omni-switch>
+  `,
+  args: {
+    label: 'Error',
+    error: 'This is an error state'
+  },
+  play: async (context: StoryContext) => {
+      const switchElement = within(context.canvasElement).getByTestId<Switch>('test-switch');
+      const element = switchElement.shadowRoot.querySelector<HTMLElement>('.error');
+      await expect(element).toHaveTextContent(Error.args.error);
+  }
 };
 
-export const Disabled = Template.bind({});
-Disabled.args = {
-  label:'Disabled' ,
-  data:{} ,
-  hint:'' ,
-  error: '',  
-  checked:false,
-  disabled:true
+export const Checked = {
+  render: (args: ArgTypes) => html`
+    <omni-switch data-testid="test-switch" label="${args.label}" ?checked="${args.checked}"></omni-switch>
+  `,
+  args: {
+    label: 'Checked',
+    checked: true,
+  },
+  play: async (context: StoryContext) => {
+      const switchElement = within(context.canvasElement).getByTestId<Switch>('test-switch');
+      const checkedElement = switchElement.shadowRoot.querySelector<HTMLElement>('.checked');
+      await expect(checkedElement).toBeTruthy();
+
+  }
+};
+
+export const Disabled = {
+  render: (args: ArgTypes) => html`
+    <omni-switch
+      data-testid="test-switch" label="${args.label}" ?disabled="${args.disabled}"></omni-switch>
+  `,
+  args: {
+    label: 'Disabled',
+    disabled: true,
+  },
+  play: async (context: StoryContext) => {
+      const switchElement = within(context.canvasElement).getByTestId<Switch>('test-switch');
+      const valueChange = jest.fn();
+      switchElement.addEventListener('value-change', valueChange);
+
+      const disabledElement = switchElement.shadowRoot.querySelector<HTMLElement>('.disabled');
+      await expect(disabledElement).toBeTruthy();
+      
+      const content = switchElement.shadowRoot.getElementById('content');
+      await userEvent.click(content);    
+      await fireEvent.keyDown(content, {
+        key: ' ',
+        code: 'Space',
+      });
+      await expect(valueChange).toBeCalledTimes(0);
+
+  }
 };

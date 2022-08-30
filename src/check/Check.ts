@@ -1,14 +1,15 @@
-import { html, css, LitElement, CSSResultGroup, TemplateResult, } from 'lit';
+import { html, css, LitElement, TemplateResult, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import ComponentStyles from '../styles/ComponentStyles';
-import { check_icon } from '../icons/Check.icon.js';
-import { indeterminate_icon } from '../icons/Indeterminate.icon.js';
+
+import '../icons/Indeterminate.icon.js';
+import '../icons/Check.icon.js';
 
 /**
  * A control that allows a user to check a value on or off.
  *
  * ```js 
- * import '@innofake/omni-components/check'; 
+ * import '@capitec/omni-components/check'; 
  * ```
  * 
  * @example
@@ -28,15 +29,15 @@ import { indeterminate_icon } from '../icons/Indeterminate.icon.js';
  * 
  * Registry of all properties defined by the component.
  * 
- * @property {String} [label] - The label text.
+ * @property {string} [label] - The label text.
  * @property {Object} [data] - Data associated with the component.
  * 
- * @property {String} [hint] - A hint message to assist the user.
- * @property {String} [error] - An error message to guide users to correct a mistake.
+ * @property {string} [hint] - A hint message to assist the user.
+ * @property {string} [error] - An error message to guide users to correct a mistake.
  * 
- * @property {Boolean} [checked=false] - Indicator if the component is checked or not.
- * @property {Boolean} [disabled=false] - Indicator if the component is disabled.
- * @property {Boolean} [indeterminate=false] - Indicator if the component is in and indeterminate state.
+ * @property {boolean} [checked=false] - Indicator if the component is checked or not.
+ * @property {boolean} [disabled=false] - Indicator if the component is disabled.
+ * @property {boolean} [indeterminate=false] - Indicator if the component is in and indeterminate state.
  * 
  * @slot indeterminate_icon - Replaces the icon for the indeterminate state
  * @slot check_icon - Replaces the icon for the checked state
@@ -49,15 +50,15 @@ import { indeterminate_icon } from '../icons/Indeterminate.icon.js';
  * @cssprop --omni-check-label-font-weight - Label font weight.
  * @cssprop --omni-check-label-spacing - Label spacing.
  * 
- * @cssprop --omni-check-input-hint-label-font-color - Hint font color.
- * @cssprop --omni-check-input-hint-label-font-family - Hint font family.
- * @cssprop --omni-check-input-hint-label-font-size - Hint font size.
- * @cssprop --omni-check-input-hint-label-font-weight - Hint font weight.
+ * @cssprop --omni-check-hint-label-font-color - Hint font color.
+ * @cssprop --omni-check-hint-label-font-family - Hint font family.
+ * @cssprop --omni-check-hint-label-font-size - Hint font size.
+ * @cssprop --omni-check-hint-label-font-weight - Hint font weight.
  * 
- * @cssprop --omni-check-input-error-label-font-color - Error font color.
- * @cssprop --omni-check-input-error-label-font-family - Error font family.
- * @cssprop --omni-check-input-error-label-font-size - Error font size.
- * @cssprop --omni-check-input-error-label-font-weight - Error font weight.
+ * @cssprop --omni-check-error-label-font-color - Error font color.
+ * @cssprop --omni-check-error-label-font-family - Error font family.
+ * @cssprop --omni-check-error-label-font-size - Error font size.
+ * @cssprop --omni-check-error-label-font-weight - Error font weight.
  * 
  * @cssprop --omni-check-width - Width.
  * @cssprop --omni-check-height - Height.
@@ -84,12 +85,12 @@ import { indeterminate_icon } from '../icons/Indeterminate.icon.js';
 export class Check extends LitElement {
 
 	@property({ type: String, reflect: true }) label?: string;
-	@property({ type: Object, reflect: true }) data?: Object;
-	@property({ type: String, reflect: true }) hint?: String;
-	@property({ type: String, reflect: true }) error?: String;
-	@property({ type: Boolean, reflect: true }) checked: Boolean = false;  
-	@property({ type: Boolean, reflect: true }) disabled: Boolean = false;  
-	@property({ type: Boolean, reflect: true }) indeterminate: Boolean = false;  
+	@property({ type: Object, reflect: true }) data?: object;
+	@property({ type: String, reflect: true }) hint?: string;
+	@property({ type: String, reflect: true }) error?: string;
+	@property({ type: Boolean, reflect: true }) checked = false;
+	@property({ type: Boolean, reflect: true }) disabled = false;
+	@property({ type: Boolean, reflect: true }) indeterminate = false;
 
 	// --------------
 	// INITIALISATION
@@ -98,7 +99,7 @@ export class Check extends LitElement {
 	/**
 	 * @hideconstructor
 	 */
-     constructor() {
+	constructor() {
 
 		super();
 	}
@@ -111,7 +112,7 @@ export class Check extends LitElement {
 		super.connectedCallback();
 		this.tabIndex = this.disabled ? -1 : 0;
 
-		this.addEventListener(`click`, this._click);
+		this.addEventListener('click', this._click);
 	}
 
 	// ----------------
@@ -119,7 +120,7 @@ export class Check extends LitElement {
 	// ----------------	
 
 	override focus() {
-		this.shadowRoot.getElementById(`content`).focus();
+		this.shadowRoot.getElementById('content').focus();
 	}
 
 	// --------------
@@ -159,9 +160,9 @@ export class Check extends LitElement {
 		}
 
 		// Intercept space and enter key events to toggle the component checked state.
-		const keyCode = (e.code || ``).toUpperCase();
+		const keyCode = (e.code || '').toUpperCase();
 
-		if (keyCode === `SPACE` || keyCode === `ENTER`) {
+		if (keyCode === 'SPACE' || keyCode === 'ENTER') {
 
 			// Toggle the component checked state.
 			this._toggleChecked(e);
@@ -183,19 +184,19 @@ export class Check extends LitElement {
 	 * @ignore
 	 * @returns {void}
 	 */
-	_toggleChecked(e: MouseEvent|KeyboardEvent): void {
+	_toggleChecked(e: MouseEvent | KeyboardEvent): void {
 
 		const oldValue = this.checked;
 		this.checked = !oldValue;
 
-		this.dispatchEvent(new CustomEvent(`value-changed`, {
+		this.dispatchEvent(new CustomEvent('value-changed', {
 			detail: {
 				old: oldValue,
 				new: this.checked
 			}
 		}));
 
-		this.dispatchEvent(new CustomEvent(`value-change`, {
+		this.dispatchEvent(new CustomEvent('value-change', {
 			detail: {
 				old: oldValue,
 				new: this.checked
@@ -232,10 +233,10 @@ export class Check extends LitElement {
 				/* LABEL STYLES */
 				
 				.container > .label {
-					color: var(--omni-check-label-font-color, var(--omni-colored-font-color));
+					color: var(--omni-check-label-font-color, var(--omni-font-color));
 					font-family: var(--omni-check-label-font-family, var(--omni-font-family));
-					font-size: var(--omni-check-label-font-size, 14px);
-					font-weight: var(--omni-check-label-font-weight, 300);
+					font-size: var(--omni-check-label-font-size, var(--omni-font-size));
+					font-weight: var(--omni-check-label-font-weight, var(--omni-font-weight));
 
 					margin-left: var(--omni-check-label-spacing, 8px);
 
@@ -243,19 +244,19 @@ export class Check extends LitElement {
 				}
 
 				.container > .label > .hint {
-					color: var(--omni-check-input-hint-label-font-color, var(--omni-hint-font-color));
-					font-family: var(--omni-check-input-hint-label-font-family, var(--omni-font-family));
-					font-size: var(--omni-check-input-hint-label-font-size, 12px);
-					font-weight: var(--omni-check-input-hint-label-font-weight, 300);
+					color: var(--omni-check-hint-label-font-color, var(--omni-hint-font-color));
+					font-family: var(--omni-check-hint-label-font-family, var(--omni-font-family));
+					font-size: var(--omni-check-hint-label-font-size, 0.86em);
+					font-weight: var(--omni-check-hint-label-font-weight, 300);
 
 					padding-top: 4px;
 				}
 
 				.container > .label > .error {
-					color: var(--omni-check-input-error-label-font-color, var(--omni-error-font-color));
-					font-family: var(--omni-check-input-error-label-font-family, var(--omni-font-family));
-					font-size: var(--omni-check-input-error-label-font-size, 12px);
-					font-weight: var(--omni-check-input-error-label-font-weight, 300);
+					color: var(--omni-check-error-label-font-color, var(--omni-error-font-color));
+					font-family: var(--omni-check-error-label-font-family, var(--omni-font-family));
+					font-size: var(--omni-check-error-label-font-size, 0.86em);
+					font-weight: var(--omni-check-error-label-font-weight, 300);
 
 					padding-top: 4px;
 				}
@@ -273,12 +274,12 @@ export class Check extends LitElement {
 					width: var(--omni-check-width, 22px);
 					height: var(--omni-check-height, 22px);
 
-					background-color: var(--omni-check-background-color, var(--omni-light-background-color));
+					background-color: var(--omni-check-background-color, var(--omni-background-color));
 
-					border-width: var(--omni-check-border-width, 2px);
+					border-width: var(--omni-check-border-width, var(--omni-border-width));
 					border-style: solid;
-					border-color: var(--omni-check-border-color, var(--omni-filled-background-color));
-					border-radius: var(--omni-check-border-radius, 4px);
+					border-color: var(--omni-check-border-color, var(--omni-primary-color));
+					border-radius: var(--omni-check-border-radius, var(--omni-border-radius));
 					
 					outline: 0;
 				}
@@ -292,10 +293,10 @@ export class Check extends LitElement {
 
 					border-width: var(--omni-check-indicator-border-width, 1px);
 					border-style: solid;
-					border-color: var(--omni-check-indicator-border-color, var(--omni-filled-background-color));
-					border-radius: var(--omni-check-border-radius, 4px);
+					border-color: var(--omni-check-indicator-border-color, var(--omni-primary-color));
+					border-radius: var(--omni-check-border-radius, var(--omni-border-radius));
 
-					color: var(--omni-check-indicator-color, var(--omni-light-background-color));
+					color: var(--omni-check-indicator-color, var(--omni-background-color));
 
 					display: flex;
 					align-items: center;
@@ -307,30 +308,30 @@ export class Check extends LitElement {
 				/* CHECKED STATE STYLES */
 
 				.container.checked > #content {
-					background-color: var(--omni-check-checked-background-color, var(--omni-filled-background-color));
+					background-color: var(--omni-check-checked-background-color, var(--omni-primary-color));
 				}
 				/* INDETERMINATE STATE STYLES */
 
 				.container.indeterminate > #content {
-					background-color: var(--omni-check-indeterminate-background-color, var(--omni-filled-background-color));
-					color: var(--omni-check-indicator-color, var(--omni-light-background-color));
+					background-color: var(--omni-check-indeterminate-background-color, var(--omni-primary-color));
+					color: var(--omni-check-indicator-color, var(--omni-background-color));
 				}
 				
 				.container.indeterminate > #content > .indicator {
 
-					color: var(--omni-check-indicator-color, var(--omni-light-background-color));
+					color: var(--omni-check-indicator-color, var(--omni-background-color));
 					fill: currentColor;
 				}
 				
 				/* HOVER STATE STYLES */
 
 				.container > #content:hover {
-					box-shadow: var(--omni-check-hover-box-shadow,0 0 4px 4px var(--omni-light-box-shadow-color));
-					background-color: var(--omni-check-hover-background-color,var(--omni-light-box-shadow-color));
+					box-shadow: var(--omni-check-hover-box-shadow, var(--omni-box-shadow));
+					background-color: var(--omni-check-hover-background-color,var(--omni-box-shadow-color));
 				}
 
 				.container.checked:hover > #content {
-					background-color: var(--omni-check-checked-background-color, var(--omni-filled-background-color));
+					background-color: var(--omni-check-checked-background-color, var(--omni-primary-color));
 				}
 
 				.container.checked.disabled:hover > #content {
@@ -338,7 +339,7 @@ export class Check extends LitElement {
 				}
 				
 				.container.indeterminate:hover > #content {
-					background-color: var(--omni-check-indeterminate-background-color, var(--omni-filled-background-color));
+					background-color: var(--omni-check-indeterminate-background-color, var(--omni-primary-color));
 				}
 
 				.container.disabled.indeterminate:hover > #content {
@@ -372,17 +373,17 @@ export class Check extends LitElement {
 	override render(): TemplateResult {
 		return html`
 			<div 
-				class="container${this.indeterminate ? ` indeterminate` : this.checked ? ` checked` : ``}${this.disabled ? ` disabled` : ``}">
+				class="container${this.indeterminate ? ' indeterminate' : this.checked ? ' checked' : ''}${this.disabled ? ' disabled' : ''}">
 				<div
 					id="content"
 					@keydown="${this._keyDown}">
-					<div class="indicator">${this.indeterminate ? html`<slot name="indeterminate_icon">${indeterminate_icon()}</slot>` : this.checked ? html`<slot name="check_icon">${check_icon()}</slot>` : ``}</div>
+					<div class="indicator">${this.indeterminate ? html`<slot name="indeterminate_icon"><omni-indeterminate-icon></omni-indeterminate-icon></slot>` : this.checked ? html`<slot name="check_icon"><omni-check-icon></omni-check-icon></slot>` : nothing}</div>
 				</div>
-
+			
 				<label class="label">
 					${this.label}
-					${this.hint && !this.error ? html`<div class="hint">${this.hint}</div>` : ``}
-					${this.error ? html`<div class="error">${this.error}</div>` : ``}
+					${this.hint && !this.error ? html`<div class="hint">${this.hint}</div>` : nothing}
+					${this.error ? html`<div class="error">${this.error}</div>` : nothing}
 				</label>
 			</div>
 		`;

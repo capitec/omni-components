@@ -1,4 +1,4 @@
-import { html, css, LitElement, CSSResultGroup, TemplateResult } from 'lit';
+import { html, css, LitElement, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import ComponentStyles from '../styles/ComponentStyles';
 
@@ -6,7 +6,7 @@ import ComponentStyles from '../styles/ComponentStyles';
  * A simple label component that renders a styled text string.
  *
  * ```js 
- * import '@innofake/omni-components/label'; 
+ * import '@capitec/omni-components/label'; 
  * ```
  * 
  * @example
@@ -22,8 +22,8 @@ import ComponentStyles from '../styles/ComponentStyles';
  * 
  * Registry of all properties defined by the component.
  * 
- * @property {String} label - The label string to display.
- * @property {"default"|"title"|"subtitle"|"strong"|String}  [type="default"] - The type of label to display:
+ * @property {string} label - The label string to display.
+ * @property {"default"|"title"|"subtitle"|"strong"|string}  [type="default"] - The type of label to display:
  *  - `default` Normal font weight.
  *  - `title` Larger font and weight.
  *  - `subtitle` Larger font and weight.
@@ -55,7 +55,7 @@ import ComponentStyles from '../styles/ComponentStyles';
 export class Label extends LitElement {
 
 	@property({ type: String, reflect: true }) label?: string;
-	@property({ type: String, reflect: true }) type?: String;
+	@property({ type: String, reflect: true }) type?: string;
 
 	// --------------
 	// INITIALISATION
@@ -64,7 +64,7 @@ export class Label extends LitElement {
 	/**
 	 * @hideconstructor
 	 */
-     constructor() {
+	constructor() {
 
 		super();
 	}
@@ -78,19 +78,19 @@ export class Label extends LitElement {
 	// ----------------
 	// PUBLIC FUNCTIONS
 	// ----------------
-	
+
 	// n/a
 
 	// --------------
 	// EVENT HANDLERS
 	// --------------
-	
+
 	// n/a
 
 	// ---------------
 	// PRIVATE METHODS
 	// ---------------
-	
+
 	// n/a
 
 	// -------------------
@@ -109,26 +109,26 @@ export class Label extends LitElement {
 				:host {
 					color: var(--omni-label-font-color, var(--omni-font-color));
 					font-family: var(--omni-label-font-family, var(--omni-font-family));
-					font-size: var(--omni-label-font-size, 12px);
-					font-weight: var(--omni-label-font-weight, normal);
+					font-size: var(--omni-label-font-size, var(--omni-font-size));
+					font-weight: var(--omni-label-font-weight, var(--omni-font-weight));
 					white-space: pre-wrap;
 					cursor: var(--omni-label-cursor, default);
 				}
 				:host([type="title"]) {
-					font-size: var(--omni-label-title-font-size, 20px);
+					font-size: var(--omni-label-title-font-size, 1.42em);
 					font-weight: var(--omni-label-title-font-weight, bold);
 				}
 				:host([type="subtitle"]) {
-					font-size: var(--omni-label-subtitle-font-size, 16px);
+					font-size: var(--omni-label-subtitle-font-size, 1.14em);
 					font-weight: var(--omni-label-subtitle-font-weight, bold);
 				}
 				:host([type="strong"]) {
-					font-size: var(--omni-label-strong-font-size, 12px);
+					font-size: var(--omni-label-strong-font-size, var(--omni-font-size));
 					font-weight: var(--omni-label-strong-font-weight, bold);
 				}				
 				:host([type="default"]) {
-					font-size: var(--omni-label-default-font-size, 12px);
-					font-weight: var(--omni-label-default-font-weight, normal);
+					font-size: var(--omni-label-default-font-size, var(--omni-font-size));
+					font-weight: var(--omni-label-default-font-weight, var(--omni-font-weight));
 				}
 			`
 		];
@@ -140,6 +140,6 @@ export class Label extends LitElement {
 	 * @returns {TemplateResult} The updated DOM template.
 	 */
 	override render(): TemplateResult {
-		return html`${this.label}`;
+		return html`${this.label}<slot></slot>`;
 	}
 }

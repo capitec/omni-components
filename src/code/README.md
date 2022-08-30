@@ -3,7 +3,7 @@
 A control to syntax highlight and display source code.
 
 ```js 
-import '@innofake/omni-components/code'; 
+import '@capitec/omni-components/code'; 
 ```
 
 ## Example

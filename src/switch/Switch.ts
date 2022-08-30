@@ -1,4 +1,4 @@
-import { html, css, LitElement, CSSResultGroup, TemplateResult } from 'lit';
+import { html, css, LitElement, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import ComponentStyles from '../styles/ComponentStyles';
 
@@ -6,7 +6,7 @@ import ComponentStyles from '../styles/ComponentStyles';
  * A control that allows a user to switch a value on or off.
  *
  * ```js 
- * import '@innofake/omni-components/switch'; 
+ * import '@capitec/omni-components/switch'; 
  * ```
  * 
  * @example
@@ -76,11 +76,11 @@ import ComponentStyles from '../styles/ComponentStyles';
 export class Switch extends LitElement {
 
 	@property({ type: String, reflect: true }) label?: string;
-	@property({ type: Object, reflect: true }) data?: Object;
-	@property({ type: String, reflect: true }) hint?: String;
-	@property({ type: String, reflect: true }) error?: String;
-	@property({ type: Boolean, reflect: true }) checked: Boolean = false;  
-	@property({ type: Boolean, reflect: true }) disabled: Boolean = false;  
+	@property({ type: Object, reflect: true }) data?: object;
+	@property({ type: String, reflect: true }) hint?: string;
+	@property({ type: String, reflect: true }) error?: string;
+	@property({ type: Boolean, reflect: true }) checked = false;
+	@property({ type: Boolean, reflect: true }) disabled = false;
 
 	// --------------
 	// INITIALISATION
@@ -89,7 +89,7 @@ export class Switch extends LitElement {
 	/**
 	 * @hideconstructor
 	 */
-     constructor() {
+	constructor() {
 
 		super();
 	}
@@ -105,7 +105,7 @@ export class Switch extends LitElement {
 	// ----------------
 
 	override focus() {
-		this.shadowRoot.getElementById(`track`).focus();
+		this.shadowRoot.getElementById('track').focus();
 	}
 
 	// --------------
@@ -136,7 +136,7 @@ export class Switch extends LitElement {
 	// ---------------
 
 	/**
-	 * Switchs the current checked state of the component.
+	 * Switch the current checked state of the component.
 	 * 
 	 * @ignore
 	 * @returns {void}
@@ -149,16 +149,7 @@ export class Switch extends LitElement {
 		// Invert the checked state.
 		this.checked = !oldValue;
 
-		// Notify any subscribers that the value changed.
-		this.dispatchEvent(new CustomEvent(`value-changed`, {
-			detail: {
-				old: oldValue,
-				new: this.checked
-			},
-			bubbles: true
-		}));
-
-		this.dispatchEvent(new CustomEvent(`value-change`, {
+		this.dispatchEvent(new CustomEvent('value-change', {
 			detail: {
 				old: oldValue,
 				new: this.checked
@@ -183,9 +174,9 @@ export class Switch extends LitElement {
 		}
 
 		// Intercept space and enter key events to switch the component checked state.
-		const keyCode = (event.code || ``).toUpperCase();
+		const keyCode = (event.code || '').toUpperCase();
 
-		if (keyCode === `SPACE` || keyCode === `ENTER` || keyCode === `NUMPADENTER`) {
+		if (keyCode === 'SPACE' || keyCode === 'ENTER' || keyCode === 'NUMPADENTER') {
 
 			// Switch the component checked state.
 			this._switchChecked();
@@ -213,35 +204,28 @@ export class Switch extends LitElement {
 				.container {
 					display: flex;
 					align-items: center;
-					
-					-webkit-touch-callout: none;
-					-webkit-user-select: none;
-					-khtml-user-select: none;
-					-moz-user-select: none;
-					-ms-user-select: none;
-					user-select: none;
 				}
 				/* LABEL STYLES */
 				
 				.container > .label {
 					color: var(--omni-switch-label-font-color, var(--omni-font-color));
 					font-family: var(--omni-switch-label-font-family, var(--omni-font-family));
-					font-size: var(--omni-switch-label-font-size, 14px);
-					font-weight: var(--omni-switch-label-font-weight, 300);
+					font-size: var(--omni-switch-label-font-size, var(--omni-font-size));
+					font-weight: var(--omni-switch-label-font-weight, var(--omni-font-weight));
 					margin-left: var(--omni-switch-label-spacing, 8px);
 					cursor: default;
 				}
 				.container > .label > .hint {
 					color: var(--omni-switch-input-hint-label-font-color, var(--omni-hint-font-color));
 					font-family: var(--omni-switch-input-hint-label-font-family, var(--omni-font-family));
-					font-size: var(--omni-switch-input-hint-label-font-size, 12px);
+					font-size: var(--omni-switch-input-hint-label-font-size, 0.86em);
 					font-weight: var(--omni-switch-input-hint-label-font-weight, 300);
 					padding-top: 4px;
 				}
 				.container > .label > .error {
 					color: var(--omni-switch-input-error-label-font-color, var(--omni-error-font-color));
 					font-family: var(--omni-switch-input-error-label-font-family, var(--omni-font-family));
-					font-size: var(--omni-switch-input-error-label-font-size, 12px);
+					font-size: var(--omni-switch-input-error-label-font-size, 0.86em);
 					font-weight: var(--omni-switch-input-error-label-font-weight, 300);
 					padding-top: 4px;
 				}
@@ -259,7 +243,7 @@ export class Switch extends LitElement {
 					grid-row: 1;
 					grid-column: 1;
 					
-					background-color: var(--omni-switch-track-background-color, var(--omni-track-background-color));
+					background-color: var(--omni-switch-track-background-color, var(--omni-inactive-color));
 					border-radius: var(--omni-switch-track-border-radius, 16px);
 					margin-left: var(--omni-switch-track-inset, 8px);
 					margin-right: var(--omni-switch-track-inset, 8px);
@@ -274,7 +258,7 @@ export class Switch extends LitElement {
 				.container > #content > .knob > div {
 					width: var(--omni-switch-knob-width, 14px);
 					height: 100%;
-					background-color: var(--omni-switch-knob-background-color, var(--omni-light-background-color));
+					background-color: var(--omni-switch-knob-background-color, var(--omni-background-color));
 					border-radius: 50%;
 					box-shadow: var(--omni-switch-knob-box-shadow, 0 2px 4px 0 rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.15));
 					
@@ -286,23 +270,23 @@ export class Switch extends LitElement {
 				}
 				
 				.container > #content:hover > .knob > div {
-					box-shadow: var(--omni-switch-knob-hover-box-shadow, 0 0 3px 3px rgba(0, 157, 224, 0.10));
+					box-shadow: var(--omni-switch-knob-hover-box-shadow, 0 0 3px 3px var(--omni-box-shadow-color));
 				}
 				
 				/* CHECKED STATE STYLES */
 				.container.checked > #content > .track {
-					background-color: var(--omni-switch-checked-track-background-color, var(--omni-track-filled-background-color));
+					background-color: var(--omni-switch-checked-track-background-color, var(--omni-accent-color));
 				}
 				
 				.container.checked > #content > .knob > div {
-					background-color: var(--omni-switch-checked-knob-background-color, var(--omni-filled-background-color));
+					background-color: var(--omni-switch-checked-knob-background-color, var(--omni-primary-color));
 					left: calc(100% - var(--omni-switch-knob-width, 14px));
 					box-shadow: none;
 				}
 				.container.checked > #content:hover > .knob > div {
-					background-color: var(--omni-switch-checked-knob-background-color, var(--omni-filled-background-color));
+					background-color: var(--omni-switch-checked-knob-background-color, var(--omni-primary-color));
 					left: calc(100% - var(--omni-switch-knob-width, 14px));
-					box-shadow: var(--omni-switch-checked-hover-knob-box-shadow, 0 0 3px 3px rgba(0, 157, 224, 0.10));
+					box-shadow: var(--omni-switch-checked-hover-knob-box-shadow, 0 0 3px 3px var(--omni-box-shadow-color));
 				}
 				/* DISABLED STATE STYLES */
 				.container.disabled > #content {
@@ -328,20 +312,20 @@ export class Switch extends LitElement {
 	 */
 	override render(): TemplateResult {
 		return html`
-			<div class="container${this.checked ? ` checked` : ``}${this.disabled ? ` disabled` : ``}">
+			<div class="container${this.checked ? ' checked' : ''}${this.disabled ? ' disabled' : ''}">
 				<div
 					id="content"
 					@click="${this._click}"
 					@keydown="${this._keyDown}">
-					<div id="track" class="track" tabindex="${this.disabled ? `` : 0}"></div>
+					<div id="track" class="track" tabindex="${this.disabled ? '' : 0}"></div>
 					<div class="knob">
 						<div></div>
 					</div>
 				</div>
 				<label class="label" @click="${this._click}">
 					${this.label}
-					${this.hint && !this.error ? html`<div class="hint">${this.hint}</div>` : ``}
-					${this.error ? html`<div class="error">${this.error}</div>` : ``}
+					${this.hint && !this.error ? html`<div class="hint">${this.hint}</div>` : ''}
+					${this.error ? html`<div class="error">${this.error}</div>` : ''}
 				</label>
 			</div>
 		`;

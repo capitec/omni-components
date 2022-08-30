@@ -4,6 +4,39 @@
 <table><thead><tr><th>Name</th><th>Description</th><th>Parameters</th><th>Return</th><th>Example</th></tr></thead><tbody>
 <tr><td>
 
+`ifNotEmpty`
+
+</td><td>Lit directive that only applies when provided value is not falsy(undefined, null, or empty string)</td><td>
+
+value {} - 
+
+</td><td>
+
+{} - value or nothing
+
+</td><td>
+
+
+```js
+
+    import { ifNotEmpty } from '@capitec/omni-components/utils';
+    
+```
+
+</td></tr>
+</tbody></table>
+
+
+![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)
+
+
+
+
+
+## Global Functions
+<table><thead><tr><th>Name</th><th>Description</th><th>Parameters</th><th>Return</th><th>Example</th></tr></thead><tbody>
+<tr><td>
+
 `getValue`
 
 </td><td>Retrieves the value from the object in a nested fashion. Specify a path as e.g. "food.fruit.apple". Click [here](https://hackernoon.com/accessing-nested-objects-in-javascript-f02f1bd6387f) for more info.</td><td>
@@ -23,7 +56,7 @@ obj {`Object`} - Object to retrieve value from.
 
 ```js
 
-    import { getValue } from '@innofake/omni-components/utils';
+    import { getValue } from '@capitec/omni-components/utils';
     
 ```
 
@@ -52,7 +85,7 @@ obj {`Object`} - Object to set value on.
 
 ```js
 
-    import { setValue } from '@innofake/omni-components/utils';
+    import { setValue } from '@capitec/omni-components/utils';
     
 ```
 
@@ -74,7 +107,7 @@ value {`Number`|`String`|`Object`} - Value to check
 
 ```js
 
-    import { hasValue } from '@innofake/omni-components/utils';
+    import { hasValue } from '@capitec/omni-components/utils';
     
 ```
 
@@ -104,7 +137,7 @@ arr {`Array`} - Array to group.
 
 ```js
 
-    import { groupBy } from '@innofake/omni-components/utils';
+    import { groupBy } from '@capitec/omni-components/utils';
     
 ```
 
@@ -126,7 +159,7 @@ value {`*`} - Value to inspect.
 
 ```js
 
-    import { isFunction } from '@innofake/omni-components/utils';
+    import { isFunction } from '@capitec/omni-components/utils';
     
 ```
 
@@ -148,7 +181,7 @@ value {`*`} - Value to inspect.
 
 ```js
 
-    import { isObject } from '@innofake/omni-components/utils';
+    import { isObject } from '@capitec/omni-components/utils';
     
 ```
 
@@ -170,7 +203,7 @@ obj {`*`} - Value to inspect
 
 ```js
 
-    import { isEmptyObject } from '@innofake/omni-components/utils';
+    import { isEmptyObject } from '@capitec/omni-components/utils';
     
 ```
 
@@ -192,7 +225,7 @@ s {`*`} - Value to inspect
 
 ```js
 
-    import { isString } from '@innofake/omni-components/utils';
+    import { isString } from '@capitec/omni-components/utils';
     
 ```
 
@@ -214,7 +247,7 @@ value {`*`} - Value to inspect.
 
 ```js
 
-    import { isPromise } from '@innofake/omni-components/utils';
+    import { isPromise } from '@capitec/omni-components/utils';
     
 ```
 
@@ -238,7 +271,7 @@ bytes {`Number`} - Size passed in.
 
 ```js
 
-    import { formatBytes } from '@innofake/omni-components/utils';
+    import { formatBytes } from '@capitec/omni-components/utils';
     
 ```
 
@@ -260,7 +293,7 @@ inObject {`*`} - Object or Array to clone.
 
 ```js
 
-    import { deepCopy } from '@innofake/omni-components/utils';
+    import { deepCopy } from '@capitec/omni-components/utils';
     
 ```
 
@@ -282,7 +315,7 @@ str {`string`} - Item to check
 
 ```js
 
-    import { isURL } from '@innofake/omni-components/utils';
+    import { isURL } from '@capitec/omni-components/utils';
     
 ```
 

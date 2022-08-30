@@ -1,4 +1,4 @@
-import { html, css, LitElement, CSSResultGroup, TemplateResult } from 'lit';
+import { html, css, LitElement, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import ComponentStyles from '../styles/ComponentStyles';
 
@@ -6,7 +6,7 @@ import ComponentStyles from '../styles/ComponentStyles';
  * A control that allows a user to select a single value from a small group of values.
  *
  * ```js 
- * import '@innofake/omni-components/radio'; 
+ * import '@capitec/omni-components/radio'; 
  * ```
  * 
  * @example
@@ -82,11 +82,11 @@ import ComponentStyles from '../styles/ComponentStyles';
 export class Radio extends LitElement {
 
 	@property({ type: String, reflect: true }) label?: string;
-	@property({ type: Object, reflect: true }) data?: Object;
-	@property({ type: String, reflect: true }) hint?: String;
-	@property({ type: String, reflect: true }) error?: String;
-	@property({ type: Boolean, reflect: true }) checked: Boolean = false;  
-	@property({ type: Boolean, reflect: true }) disabled: Boolean = false;  
+	@property({ type: Object, reflect: true }) data?: object;
+	@property({ type: String, reflect: true }) hint?: string;
+	@property({ type: String, reflect: true }) error?: string;
+	@property({ type: Boolean, reflect: true }) checked = false;
+	@property({ type: Boolean, reflect: true }) disabled = false;
 
 	// --------------
 	// INITIALISATION
@@ -95,7 +95,7 @@ export class Radio extends LitElement {
 	/**
 	 * @hideconstructor
 	 */
-     constructor() {
+	constructor() {
 
 		super();
 	}
@@ -111,7 +111,7 @@ export class Radio extends LitElement {
 	// ----------------
 
 	override focus() {
-		this.shadowRoot.getElementById(`content`).focus();
+		this.shadowRoot.getElementById('content').focus();
 	}
 
 	// --------------
@@ -153,9 +153,9 @@ export class Radio extends LitElement {
 		}
 
 		// Intercept space and enter key events to toggle the component checked state.
-		const keyCode = (event.code || ``).toUpperCase();
+		const keyCode = (event.code || '').toUpperCase();
 
-		if (keyCode === `SPACE` || keyCode === `ENTER`) {
+		if (keyCode === 'SPACE' || keyCode === 'ENTER') {
 
 			// Toggle the component checked state.
 			this._toggleChecked();
@@ -176,19 +176,12 @@ export class Radio extends LitElement {
 	 * @ignore
 	 * @returns {void}
 	 */
-     _toggleChecked(): void {
+	_toggleChecked(): void {
 
 		const oldValue = this.checked;
 		this.checked = !oldValue;
 
-		this.dispatchEvent(new CustomEvent(`value-changed`, {
-			detail: {
-				old: oldValue,
-				new: this.checked
-			}
-		}));
-
-		this.dispatchEvent(new CustomEvent(`value-change`, {
+		this.dispatchEvent(new CustomEvent('value-change', {
 			detail: {
 				old: oldValue,
 				new: this.checked
@@ -224,13 +217,6 @@ export class Radio extends LitElement {
 					--omni-radio-height: 24px;
 
 					--omni-radio-padding: 2px;
-					
-					-webkit-touch-callout: none;
-					-webkit-user-select: none;
-					-khtml-user-select: none;
-					-moz-user-select: none;
-					-ms-user-select: none;
-					user-select: none;
 				}
 			`,
 			css`
@@ -239,8 +225,8 @@ export class Radio extends LitElement {
 				.container > .label {
 					color: var(--omni-label-font-color, var(--omni-font-color));
 					font-family: var(--omni-label-font-family, var(--omni-font-family));
-					font-size: var(--omni-label-font-size, 14px);
-					font-weight: var(--omni-radio-label-font-weight, 500);
+					font-size: var(--omni-label-font-size, var(--omni-font-size));
+					font-weight: var(--omni-radio-label-font-weight, var(--omni-font-weight));
 					line-height: var(--omni-radio-label-line-height, 20px);
 
 					margin-left: var(--omni-radio-label-spacing, 8px);
@@ -251,7 +237,7 @@ export class Radio extends LitElement {
 				.container > .label > .hint {
 					color: var(--omni-input-hint-label-font-color, var(--omni-hint-font-color));
 					font-family: var(--omni-input-hint-label-font-family, var(--omni-font-family));
-					font-size: var(--omni-input-hint-label-font-size, 12px);
+					font-size: var(--omni-input-hint-label-font-size, 0.86em);
 					font-weight: var(--omni-input-hint-label-font-weight, 300);
 
 					padding-top: 4px;
@@ -260,7 +246,7 @@ export class Radio extends LitElement {
 				.container > .label > .error {
 					color: var(--omni-input-error-label-font-color, var(--omni-error-font-color));
 					font-family: var(--omni-input-error-label-font-family, var(--omni-font-family));
-					font-size: var(--omni-input-error-label-font-size, 12px);
+					font-size: var(--omni-input-error-label-font-size, 0.86em);
 					font-weight: var(--omni-input-error-label-font-weight, 300);
 
 					padding-top: 4px;
@@ -284,11 +270,11 @@ export class Radio extends LitElement {
 
 					margin: var(--omni-radio-padding, 2px);
 
-					background-color: var(--omni-radio-background-color, var(--omni-light-background-color));
+					background-color: var(--omni-radio-background-color, var(--omni-background-color));
 
-					border-width: var(--omni-radio-border-width, 2px);
+					border-width: var(--omni-radio-border-width, var( --omni-border-width));
 					border-style: var(--omni-radio-border-style, solid);
-					border-color: var(--omni-radio-border-color, var(--omni-filled-background-color));
+					border-color: var(--omni-radio-border-color, var(--omni-primary-color));
 					border-radius: var(--omni-radio-border-radius, 50%);
 					
 					outline: 0;
@@ -298,29 +284,29 @@ export class Radio extends LitElement {
 					width: calc(var(--omni-radio-width) - var(--omni-radio-padding)*2);
 					height: calc(var(--omni-radio-height) - var(--omni-radio-padding)*2);
 
-					border-width: var(--omni-radio-indicator-border-width, 2px);
+					border-width: var(--omni-radio-indicator-border-width, var( --omni-border-width));
 					border-style: solid;
-					border-color: var(--omni-radio-indicator-border-color, var(--omni-light-background-color));
+					border-color: var(--omni-radio-indicator-border-color, var(--omni-background-color));
 					border-radius: var(--omni-radio-border-radius, 50%);
 
-					color: var(--omni-radio-indicator-color, var(--omni-light-background-color));
+					color: var(--omni-radio-indicator-color, var(--omni-background-color));
 				}
 				
 				/* CHECKED STATE STYLES */
 
 				.container.checked > #content {
-					background-color: var(--omni-radio-checked-background-color, var(--omni-filled-background-color));
+					background-color: var(--omni-radio-checked-background-color, var(--omni-primary-color));
 				}
 				
 				/* HOVER STATE STYLES */
 
 				.container > #content:hover {
-					box-shadow: var(--omni-radio-hover-box-shadow, 0 0 4px 4px var(--omni-light-box-shadow-color));
-					background-color: var(--omni-radio-hover-background-color, var(--omni-light-box-shadow-color));
+					box-shadow: var(--omni-radio-hover-box-shadow, var(--omni-box-shadow));
+					background-color: var(--omni-radio-hover-background-color, var(--omni-box-shadow-color));
 				}
 
 				.container.checked:hover > #content {
-					background-color: var(--omni-radio-checked-background-color, var(--omni-filled-background-color));
+					background-color: var(--omni-radio-checked-background-color, var(--omni-primary-color));
 				}
 				/* DISABLED STATE STYLES */
 
@@ -352,15 +338,15 @@ export class Radio extends LitElement {
 	 */
 	override render(): TemplateResult {
 		return html`
-            <div class="container${this.checked ? ` checked` : ``}${this.disabled ? ` disabled` : ``}">
-                <div id="content" tabindex="${this.disabled ? `` : 0}" @click="${this._click}" @keydown="${this._keyDown}">
-                    ${this.checked ? html`<div class="indicator"></div>` : ``}
+            <div class="container${this.checked ? ' checked' : ''}${this.disabled ? ' disabled' : ''}">
+                <div id="content" tabindex="${this.disabled ? '' : 0}" @click="${this._click}" @keydown="${this._keyDown}">
+                    ${this.checked ? html`<div class="indicator"></div>` : ''}
                 </div>
             
                 <label id="label" class="label" @click="${this._click}">
                     ${this.label}
-                    ${this.hint && !this.error ? html`<div class="hint">${this.hint}</div>` : ``}
-                    ${this.error ? html`<div class="error">${this.error}</div>` : ``}
+                    ${this.hint && !this.error ? html`<div class="hint">${this.hint}</div>` : ''}
+                    ${this.error ? html`<div class="error">${this.error}</div>` : ''}
                 </label>
             </div>
 		`;

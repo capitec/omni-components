@@ -1,13 +1,12 @@
-import { html, css, LitElement, CSSResultGroup, TemplateResult, } from 'lit';
+import { html, css, LitElement, TemplateResult, } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import {ifDefined} from 'lit/directives/if-defined.js';
 import ComponentStyles from '../styles/ComponentStyles';
 
 /**
  * Component that displays an icon
  *
  * ```js 
- * import '@innofake/omni-components/icon'; 
+ * import '@capitec/omni-components/icon'; 
  * ```
  * 
  * @example
@@ -19,10 +18,12 @@ import ComponentStyles from '../styles/ComponentStyles';
  * </omni-icon>
  * ```
  * 
+ * @example
+ * 
  * ```html
  * <omni-icon
  *   size="default|extra-small|small|medium|large"
- *   icon="@material/person">
+ *   icon="＠material/person">
  * </omni-icon>
  * ```
  * 
@@ -30,15 +31,15 @@ import ComponentStyles from '../styles/ComponentStyles';
  * 
  * Registry of all properties defined by the component.
  * 
- * @property {"default"|"extra-small"|"small"|"medium"|"large"|String} [size="default"] - The size to display the icon at. Options include:
+ * @property {"default"|"extra-small"|"small"|"medium"|"large"|string} [size="default"] - The size to display the icon at. Options include:
  *  - `default` Icon size is 24px.
  *  - `extra-small` Icon size is 8px.
  *  - `small` Icon size is 16px.
  *  - `medium` Icon size is 32px.
  *  - `large` Icon size is 48px.
- * @property {String} icon - The name of the icon to display. Takes preference over the slotted icon
+ * @property {string} icon - The name of the icon to display. Takes preference over the slotted icon
  * 
- * @slot default - The icon to be displayed
+ * @slot - The icon to be displayed
  * 
  * @cssprop --omni-icon-fill - Icon fill color.
  * @cssprop --omni-icon-background-color - Icon background color.
@@ -52,8 +53,8 @@ import ComponentStyles from '../styles/ComponentStyles';
 @customElement('omni-icon')
 export class Icon extends LitElement {
 
-	@property({ type: String, reflect: true }) size?: string = "default";
-	@property({ type: String, reflect: true }) icon?: String;
+	@property({ type: String, reflect: true }) size?: string = 'default';
+	@property({ type: String, reflect: true }) icon?: string;
 
 	// --------------
 	// INITIALISATION
@@ -62,7 +63,7 @@ export class Icon extends LitElement {
 	/**
 	 * @hideconstructor
 	 */
-     constructor() {
+	constructor() {
 
 		super();
 	}
@@ -70,7 +71,7 @@ export class Icon extends LitElement {
 	// ------------------
 	// LIFECYCLE HANDLERS
 	// ------------------
-	
+
 	// n/a
 
 	// ----------------
@@ -111,8 +112,9 @@ export class Icon extends LitElement {
 					fill: var(--omni-icon-fill, currentColor);
 					background-color: var(--omni-icon-background-color);
 				}
+    
 				/* MATERIAL ICON STYLES */
-
+			
 				.material-icon {
 					font-family: 'Material Icons';
 					font-weight: normal;
@@ -126,19 +128,19 @@ export class Icon extends LitElement {
 					direction: ltr;
 					padding: 0px;
 					margin: 0px;
-
+			
 					align-self: center;
 					justify-self: center;
-
+			
 					/* Support for all WebKit browsers. */
 					-webkit-font-smoothing: antialiased;
 					
 					/* Support for Safari and Chrome. */
 					text-rendering: optimizeLegibility;
-
+			
 					/* Support for Firefox. */
 					-moz-osx-font-smoothing: grayscale;
-
+			
 					/* Support for IE. */
 					font-feature-settings: 'liga';
 				}
@@ -202,16 +204,18 @@ export class Icon extends LitElement {
 
 		if (this.icon) {
 
-			if (this.icon.startsWith(`@material/`)) {
+			if (this.icon.startsWith('@material/')) {
 				return html`
-					<div class="material-icon ${this.size}" >${this.icon.replace(`@material/`, ``)}</div>
+					<div class="material-icon ${this.size}" >${this.icon.replace('@material/', '')}</div>
 				`;
-			} 
+			}
 			return html`
-				<img class="svg-icon ${this.size}" src="${this.icon}" alt="${this.icon}"/>
+				<img class="svg-icon ${this.size}" src="${this.icon}" alt="${this.icon}" />
 			`;
 		}
 
-		return html`<div class="svg-icon ${this.size}" ><slot></slot></div>`;
+		return html`<div class="svg-icon ${this.size}">
+	<slot></slot>
+</div>`;
 	}
 }

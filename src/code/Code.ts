@@ -1,15 +1,14 @@
-import { html, css, LitElement, CSSResultGroup, TemplateResult } from 'lit';
+import { html, css, LitElement, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html';
 import ComponentStyles from '../styles/ComponentStyles';
-// @ts-ignore
 import Prism from 'prismjs';
 
 /**
  * A control to syntax highlight and display source code.
  *
  * ```js 
- * import '@innofake/omni-components/code'; 
+ * import '@capitec/omni-components/code'; 
  * ```
  * 
  * @example
@@ -47,19 +46,19 @@ import Prism from 'prismjs';
 export class Code extends LitElement {
 
 	@property({ type: String, reflect: true }) header?: string;
-	@property({ type: String, reflect: true }) language: string = "html";
+	@property({ type: String, reflect: true }) language = 'html';
 
-    private _content: string = '';
+	private _content = '';
 	@property({ type: String, reflect: true })
-    get content(): string {
+	get content(): string {
 		return this._content;
-    }
-    set content(val: string) {
+	}
+	set content(val: string) {
 		const oldVal = this._content;
 
 		this._parseContent(val);
-		this.requestUpdate(`content`, oldVal);
-    }
+		this.requestUpdate('content', oldVal);
+	}
 
 	// ----------
 	// INITIALISATION
@@ -68,7 +67,7 @@ export class Code extends LitElement {
 	/**
 	 * @hideconstructor
 	 */
-     constructor() {
+	constructor() {
 
 		super();
 	}
@@ -92,7 +91,7 @@ export class Code extends LitElement {
 	// -----------
 
 	override focus() {
-		this.shadowRoot.getElementById(`track`).focus();
+		this.shadowRoot.getElementById('track').focus();
 	}
 
 	// ----------
@@ -105,13 +104,13 @@ export class Code extends LitElement {
 	// PRIVATE METHODS
 	// ----------
 
-	_parseContent(source: String) : void {
+	_parseContent(source: string): void {
 
 		if (source.length > 0) {
 
 			// Remove the starting newline character.
-			if (source.startsWith(`\n`)) {
-				source = source.replace(`\n`, ``);
+			if (source.startsWith('\n')) {
+				source = source.replace('\n', '');
 			}
 
 			// Remove any trailing whitespace, newlines or tabs.
@@ -121,20 +120,20 @@ export class Code extends LitElement {
 			let count = 0;
 			let key = source[count];
 
-			while (key === `\t`) {
+			while (key === '\t') {
 				key = source[++count];
 			}
 
 			// Replace that amount of tabs on every line to normalise the string to start with zero padding.
-			source = source.replace(new RegExp(source.substr(0, count), `g`), ``);
+			source = source.replace(new RegExp(source.substr(0, count), 'g'), '');
 
 			// Replace empty HTML attribute values [disabled=""] with empty string [disabled]
-			if (this.language === `html`) {
-				source = source.replace(/(="")/gi, ``);
+			if (this.language === 'html') {
+				source = source.replace(/(="")/gi, '');
 			}
 
 			// Set the code preview content.
-			this._content = Prism.highlight(source, Prism.languages[this.language], `css`);
+			this._content = Prism.highlight(source, Prism.languages[this.language], 'css');
 
 		}
 	}
@@ -174,7 +173,12 @@ export class Code extends LitElement {
 					-moz-hyphens: none;
 					-ms-hyphens: none;
 					hyphens: none;
-
+        
+					-webkit-touch-callout: text;
+					-webkit-user-select: text;
+					-khtml-user-select: text;
+					-moz-user-select: text;
+					-ms-user-select: text;
 					user-select: text;
 				}
 
@@ -186,7 +190,7 @@ export class Code extends LitElement {
 					border-radius: 0.3em 0.3em 0.3em 0.3em;
 				}
 
-				pre[with-header="true"] {
+				pre[data-with-header="true"] {
 					border-radius: 0 0 0.3em 0.3em;
 					margin: 0 0 .5em 0;
 				}
@@ -345,13 +349,13 @@ export class Code extends LitElement {
 
 				/* Handle */
 				pre[class*="language-"]::-webkit-scrollbar-thumb {
-					background: var(--omni-code-scrollbar-thumb-background, var(--omni-filled-background-color));
+					background: var(--omni-code-scrollbar-thumb-background, var(--omni-primary-color));
 					border-radius: var(--omni-code-scrollbar-thumb-border-radius, 10px);
 				}
 
 				/* Handle on hover */
 				pre[class*="language-"]::-webkit-scrollbar-thumb:hover {
-					background: var(--omni-code-scrollbar-thumb-hover-background, #008BC7);
+					background: var(--omni-code-scrollbar-thumb-hover-background, var(--omni-accent-color));
 				}
 
 				.header {
@@ -372,18 +376,21 @@ export class Code extends LitElement {
 	 */
 	override render(): TemplateResult {
 		return html`
-			<div class="hidden"><slot></slot></div>
+			<div class="hidden">
+				<slot></slot>
+			</div>
 			${this.header ? html`
-				<div class="header">${this.header}</div>
-				${this._renderPre(true)}
+			<div class="header">${this.header}</div>
+			${this._renderPre(true)}
 			` : html`
-				${this._renderPre(false)}
+			${this._renderPre(false)}
 			`}
 		`;
 	}
 
-	_renderPre(withTitle: boolean) : TemplateResult {
+	_renderPre(withTitle: boolean): TemplateResult {
 
-		return html`<pre with-header="${withTitle}" class="language-${this.language}" style="white-space: pre-wrap;"><code>${unsafeHTML(this._content)}</code></pre>`;
+		return html`<pre data-with-header="${withTitle}" class="language-${this.language}"
+	style="white-space: pre-wrap;"><code>${unsafeHTML(this._content)}</code></pre>`;
 	}
 }

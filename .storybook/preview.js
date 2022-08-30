@@ -1,11 +1,31 @@
 import { setCustomElementsManifest } from '@storybook/web-components';
 import customElements from '../custom-elements.json';
 import pretty from 'pretty';
-
-import basicTheme from '!!style-loader?injectType=lazyStyleTag!css-loader!../themes/default-theme.css'
+import { loadThemesListRemote } from '../src/utils/StoryUtils';
 
 import cssVariablesTheme from '@etchteam/storybook-addon-css-variables-theme';
 import CustomDocsPage from '../stories/DocsPage.mdx';
+
+async function importCss(file) {
+	return await import(`!!style-loader?injectType=lazyStyleTag!css-loader!../themes/${file}`);
+}
+
+function lazyCssPromise(cssPromise) {
+	return {
+		use: async () => {
+			(await cssPromise).use();
+		},
+		unuse: async () => {
+			(await cssPromise).unuse();
+		}
+	}
+}
+
+let cssFiles = {};
+loadThemesListRemote().forEach(f => {
+	const theme = importCss(f);
+	cssFiles[f] = lazyCssPromise(theme);
+});
 
 // Auto generate properties in the docs view from the custom elements manifest.
 setCustomElementsManifest(customElements);
@@ -35,9 +55,7 @@ export const parameters = {
 		],
 	},
 	cssVariables: {
-		files: {
-			'default': basicTheme
-		}
+		files: cssFiles
 	},
 	options: {
 		storySort: {
@@ -54,7 +72,9 @@ export const parameters = {
 						 // Remove test ids from displayed source
 			input = input.replace(new RegExp("data-testid=(\"([^\"]|\"\")*\")"), "")
 						 // Update any object references to curly braces for easier reading
-						 .replace("[object Object]", "{}");
+						 .replaceAll("[object Object]", "{}")
+						 // Remove empty string assignments to fix boolean attributes
+						 .replaceAll("=\"\"", "");
 						 // Remove any properties with empty string assignments at the end of the html tag
 			// 			 .replace(new RegExp("(([\\r\\n]+| )([^ \\r\\n])*)=(\"([^\"]|\"\"){0}\")>"), " >")
 						 // Remove any properties with empty string assignments within the tag

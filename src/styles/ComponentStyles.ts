@@ -1,21 +1,40 @@
 import { css } from 'lit';
 
-/** * 
- * @cssprop --omni-theme-font-color - Theme Font color.
- * @cssprop --omni-theme-font-family - Theme Font Family.
- * @cssprop --omni-theme-hint-font-color - Theme Hint Font Color.
- * @cssprop --omni-theme-error-font-color - Theme Error Font Color.
- * @cssprop --omni-theme-disabled-background-color - Theme Disable Background Color.
- * @cssprop --omni-theme-disabled-border-color - Theme Disable Border Color.
- * @cssprop --omni-theme-filled-background-color - Theme Filled Background Color.
- * @cssprop --omni-theme-track-filled-background-color - Theme Track Filled Background Color.
- * @cssprop --omni-theme-track-background-color - Theme Track Background Color.
- * @cssprop --omni-theme-light-box-shadow-color - Theme Light Box Shadow Color.
- * @cssprop --omni-theme-light-background-color - Theme Light Background Color.
+/** 
+ * @cssprop --omni-theme-primary-color - The XXXX
+ * @cssprop --omni-theme-primary-hover-color - The XXXX
+ * @cssprop --omni-theme-primary-active-color - The XXXX
+ * 
+ * @cssprop --omni-theme-accent-color - The XXXX
+ * @cssprop --omni-theme-accent-hover-color - The XXXX
+ * @cssprop --omni-theme-accent-active-color - The XXXX
+ * 
+ * @cssprop --omni-theme-background-color - The XXXX
+ * @cssprop --omni-theme-background-hover-color - The XXXX
+ * @cssprop --omni-theme-background-active-color - The XXXX
+ * 
+ * @cssprop --omni-theme-font-color - The XXXX
+ * 
+ * @cssprop --omni-theme-disabled-border-color - The XXXX
+ * @cssprop --omni-theme-disabled-background-color - The XXXX
+ * @cssprop --omni-theme-error-font-color - The XXXX
+ * @cssprop --omni-theme-error-border-color - The XXXX
+ * @cssprop --omni-theme-hint-font-color - The XXXX
+ * @cssprop --omni-theme-inactive-color - The XXXX
+ * @cssprop --omni-theme-box-shadow-color - The XXXX
+ * 
+ * @cssprop --omni-theme-font-family - The XXXX
+ * @cssprop --omni-theme-font-size - The XXXX
+ * @cssprop --omni-theme-font-weight - The XXXX
+ * 
+ * @cssprop --omni-theme-border-radius - The XXXX
+ * @cssprop --omni-theme-border-width - The XXXX
+ * 
+ * @cssprop --omni-theme-box-shadow - The XXXX
  */
 export default css`
-    * {
 
+    * {
         box-sizing: border-box;
     }
 
@@ -23,19 +42,49 @@ export default css`
         
         /* ----- THEMES -----*/
 
-        --omni-font-color: var(--omni-theme-font-color,black);
-        --omni-colored-font-color: var(--omni-theme-colored-font-color,#4E6066);
-        --omni-font-family: var(--omni-theme-font-family,Arial, Helvetica, sans-serif);
+        /* Handy tool for color lighten / darken: https://www.cssfontstack.com/oldsites/hexcolortool/. */
 
-        --omni-hint-font-color: var(--omni-theme-hint-font-color,lightgrey);
-        --omni-error-font-color: var(--omni-theme-error-font-color,red);
-        --omni-disabled-background-color: var(--omni-theme-disabled-background-color, #DEDEDE);
+        --omni-primary-color: var(--omni-theme-primary-color, #009DE0);
+        --omni-primary-hover-color: var(--omni-theme-primary-hover-color, #0095D8); /* 3% darker */
+        --omni-primary-active-color: var(--omni-theme-primary-active-color, #008ED1); /* 6% darker */
+
+        --omni-accent-color: var(--omni-theme-accent-color, #7FCAEC);
+        --omni-accent-hover-color: var(--omni-theme-accent-hover-color, #77C2E4); /* 3% darker */
+        --omni-accent-active-color: var(--omni-theme-accent-active-color, #70BBDD); /* 6% darker */
+
+        --omni-background-color: var(--omni-theme-background-color, #FFFFFF);
+        --omni-background-hover-color: var(--omni-theme-background-hover-color, #F7F7F7); /* 3% darker */
+        --omni-background-active-color: var(--omni-theme-background-active-color, #F0F0F0); /* 6% darker */
+
+        --omni-font-color: var(--omni-theme-font-color, black);
         --omni-disabled-border-color: var(--omni-theme-disabled-border-color, #dedede44);
-        --omni-filled-background-color: var(--omni-theme-filled-background-color, #009DE0);
-        --omni-track-filled-background-color: var(--omni-theme-track-filled-background-color, #7FCAEC);
-        --omni-track-background-color: var(--omni-theme-track-background-color, #7C7C7C);
-        --omni-light-box-shadow-color: var(--omni-theme-light-box-shadow-color, #E6F7FF);
-        --omni-light-background-color: var(--omni-theme-light-background-color,#FFFFFF);
+        --omni-disabled-background-color: var(--omni-theme-disabled-background-color, #DEDEDE);
+        --omni-error-font-color: var(--omni-theme-error-font-color, red);
+        --omni-error-border-color: var(--omni-theme-error-border-color, red);
+        --omni-hint-font-color: var(--omni-theme-hint-font-color, lightgrey);
+        --omni-inactive-color: var(--omni-theme-inactive-color, #7C7C7C);
+        --omni-box-shadow-color: var(--omni-theme-box-shadow-color, #E6F7FF);
+
+        --omni-font-family: var(--omni-theme-font-family, Arial, Helvetica, sans-serif);
+        --omni-font-size: var(--omni-theme-font-size, 14px);
+        --omni-font-weight: var(--omni-theme-font-weight, normal);
+
+        --omni-border-radius: var(--omni-theme-border-radius, 4px);
+        --omni-border-width: var(--omni-theme-border-width, 2px);
+
+        /*
+        --omni-cursor: var(--omni-theme-cursor, default);
+        --omni-cursor-target: var(--omni-theme-target-cursor, pointer);
+        --omni-cursor-disabled: var(--omni-theme-cursor-disabled, not-allowed);
+        */
+
+       /*  
+        --omni-margin: var(--omni-theme-margin, 1px);
+        --omni-padding: var(--omni-theme-padding, 1px);
+        --omni-outline: var(--omni-theme-outline, 1px);
+        */
+
+        --omni-box-shadow: var(--omni-theme-box-shadow, 0 0 4px 4px var(--omni-box-shadow-color));
 
         /* ----- -----*/
 
@@ -58,127 +107,4 @@ export default css`
     :host([hidden]) {
         display: none;
     }
-    
-    /* MATERIAL ICON STYLES */
-
-    .material-icon {
-        font-family: 'Material Icons';
-        font-weight: normal;
-        font-style: normal;
-        display: inline-block;
-        line-height: 1;
-        text-transform: none;
-        letter-spacing: normal;
-        word-wrap: normal;
-        white-space: nowrap;
-        direction: ltr;
-        padding: 0px;
-        margin: 0px;
-
-        align-self: center;
-        justify-self: center;
-
-        /* Support for all WebKit browsers. */
-        -webkit-font-smoothing: antialiased;
-        
-        /* Support for Safari and Chrome. */
-        text-rendering: optimizeLegibility;
-
-        /* Support for Firefox. */
-        -moz-osx-font-smoothing: grayscale;
-
-        /* Support for IE. */
-        font-feature-settings: 'liga';
-    }
 `;
-
-
-/**
- * The default css variables defined as a cssProps object used in {@link https://www.npmjs.com/package/@ljcl/storybook-addon-cssprops}
- */
- export const DefaultCssProperties = {
-    "omni-theme-font-color": {
-        value: "black",
-        control: "color",
-        description: "Theme Font color",
-        category: "CSS Variables",
-        subcategory: "Theme Variables"
-      },
-    "omni-theme-colored-font-color": {
-        value: "#4E6066",
-        control: "color",
-        description: "Theme Colored Font color",
-        category: "CSS Variables",
-        subcategory: "Theme Variables"
-      },
-    "omni-theme-font-family": {
-        value: "Arial, Helvetica, sans-serif",
-        control: "text",
-        description: "Theme Font Family",
-        category: "CSS Variables",
-        subcategory: "Theme Variables"
-      },
-    "omni-theme-hint-font-color": {
-        value: "lightgrey",
-        control: "color",
-        description: "Theme Hint Font color",
-        category: "CSS Variables",
-        subcategory: "Theme Variables"
-      },
-    "omni-theme-error-font-color": {
-        value: "red",
-        control: "color",
-        description: "Theme Error Font color",
-        category: "CSS Variables",
-        subcategory: "Theme Variables"
-      },
-    "omni-theme-disabled-background-color": {
-        value: "#DEDEDE",
-        control: "color",
-        description: "Theme Disabled Background color",
-        category: "CSS Variables",
-        subcategory: "Theme Variables"
-      },
-    "omni-theme-disabled-border-color": {
-        value: "#dedede44",
-        control: "color",
-        description: "Theme Disabled Border Color",
-        category: "CSS Variables",
-        subcategory: "Theme Variables"
-      },
-    "omni-theme-filled-background-color": {
-        value: "#009DE0",
-        control: "color",
-        description: "Theme Filled Background Color",
-        category: "CSS Variables",
-        subcategory: "Theme Variables"
-      },
-    "omni-theme-track-filled-background-color": {
-        value: "#7FCAEC",
-        control: "color",
-        description: "Theme Track Filled Background Color",
-        category: "CSS Variables",
-        subcategory: "Theme Variables"
-      },
-    "omni-theme-track-background-color": {
-        value: "#7C7C7C",
-        control: "color",
-        description: "Theme Track Background Color",
-        category: "CSS Variables",
-        subcategory: "Theme Variables"
-      },
-    "omni-theme-light-box-shadow-color": {
-        value: "#E6F7FF",
-        control: "color",
-        description: "Theme Light Box Shadow Color",
-        category: "CSS Variables",
-        subcategory: "Theme Variables"
-      },
-    "omni-theme-light-background-color": {
-        value: "#FFFFFF",
-        control: "color",
-        description: "Theme Light Background Color",
-        category: "CSS Variables",
-        subcategory: "Theme Variables"
-      },
-}

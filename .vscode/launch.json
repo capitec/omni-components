@@ -11,12 +11,12 @@
             "command": "npm run storybook",
             "internalConsoleOptions": "openOnFirstSessionStart",
             "serverReadyAction": {
-            "pattern": "Local:.+(https?://[^:]+:[0-9]+)",
-            "uriFormat": "%s",
-            "action": "debugWithChrome"
-            },            
-			"sourceMaps": true,
-			"trace": true
+                "pattern": "Local:.+(https?://[^:]+:[0-9]+)",
+                "uriFormat": "%s",
+                "action": "debugWithChrome",
+                "webRoot": "${workspaceFolder}"
+            },
+            "sourceMaps": true
         }
     ]
 }

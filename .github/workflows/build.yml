@@ -1,4 +1,4 @@
-name: Update Documentation
+name: Build
 
 on: 
   push:
@@ -7,8 +7,7 @@ on:
     types:
       - published
 
-permissions:
-  contents: write    
+permissions: write-all
 
 env:
   DOCS_BASE_PATH: docs/Omni-Components
@@ -32,11 +31,25 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
+      - name: Contribute List ➕
+        uses: akhilmhdh/contributors-readme-action@v2.3.6
+        # Only on branch pushes, not on tagged releases
+        if: ${{ startsWith(github.ref, 'refs/heads/') }}
+        with:
+            image_size: 100
+            use_username: true
+            readme_path: contributors.md
+            auto_detect_branch_protection: false
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Checkout 🛎️
         uses: actions/checkout@v3
         with:
           persist-credentials: true
           fetch-depth: 0
+      - name: Ensure branch up to date 🌿 
+        run: |
+          git pull
       - name: Use Node.js 16.x ✔
         uses: actions/setup-node@v3
         with:
@@ -56,16 +69,6 @@ jobs:
         with:
           commit_message: Updated docs
           branch: ${{ env.GITHUB_REF_NAME }}
-      - name: Contribute List ➕
-        uses: akhilmhdh/contributors-readme-action@v2.3.6
-        # Only on branch pushes, not on tagged releases
-        if: ${{ startsWith(github.ref, 'refs/heads/') }}
-        with:
-            image_size: 100
-            use_username: true
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Publish Beta Docs 🚀
         uses: JamesIves/github-pages-deploy-action@v4.3.4
         # Develop branch only
@@ -80,7 +83,7 @@ jobs:
           clean-exclude: |
             versions
           git-config-name: Deploy Bot
-          git-config-email: info@innofake.io
+          git-config-email: opensource@capitecbank.co.za
           
       - name: Update DOCS_VERSION_PATH ⬆
         # Tagged release branch only
@@ -101,7 +104,7 @@ jobs:
           clean-exclude: |
             versions
           git-config-name: Deploy Bot
-          git-config-email: info@innofake.io
+          git-config-email: opensource@capitecbank.co.za
 
       - name: Publish Latest Docs 🚀
         uses: JamesIves/github-pages-deploy-action@v4.3.4
@@ -118,4 +121,4 @@ jobs:
           clean-exclude: |
             versions
           git-config-name: Deploy Bot
-          git-config-email: info@innofake.io
+          git-config-email: opensource@capitecbank.co.za
