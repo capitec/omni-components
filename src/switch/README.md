@@ -3,7 +3,7 @@
 A control that allows a user to switch a value on or off.
 
 ```js 
-import '@innofake/omni-components/switch'; 
+import '@capitec/omni-components/switch'; 
 ```
 
 ## Example

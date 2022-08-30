@@ -3,7 +3,7 @@
 A check icon component
 
 ```js 
-import '@innofake/omni-components/icons/Check.icon.js'; 
+import '@capitec/omni-components/icons/Check.icon.js'; 
 ```
 
 ## Example
@@ -25,7 +25,7 @@ import '@innofake/omni-components/icons/Check.icon.js';
 An indeterminate icon component
 
 ```js 
-import '@innofake/omni-components/icons/Indeterminate.icon.js'; 
+import '@capitec/omni-components/icons/Indeterminate.icon.js'; 
 ```
 
 ## Example

@@ -6,7 +6,7 @@ import ComponentStyles from '../styles/ComponentStyles';
  * A check icon component
  *
  * ```js 
- * import '@innofake/omni-components/icons/Check.icon.js'; 
+ * import '@capitec/omni-components/icons/Check.icon.js'; 
  * ```
  * 
  * @example

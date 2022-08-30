@@ -3,7 +3,7 @@
 A control that allows an action to be executed.
 
 ```js 
-import '@innofake/omni-components/button'; 
+import '@capitec/omni-components/button'; 
 ```
 
 ## Example
