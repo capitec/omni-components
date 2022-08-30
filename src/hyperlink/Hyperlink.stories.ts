@@ -86,7 +86,16 @@ export const Size = {
   args: {
     label:'Click',
     size:'small',
-  }
+  },
+  play: async (context :{ canvasElement: HTMLElement;}) => {
+    const canvas = within(context.canvasElement);
+    const Hyperlink = canvas.getByTestId('test-hyperlink');
+
+    const foundSmallProp = Hyperlink.attributes.getNamedItem('size');
+    const smallMatch = foundSmallProp.value === Size.args.size;
+    await expect(smallMatch).toBeTruthy();
+
+  },
 };
 
 export const Href = {
