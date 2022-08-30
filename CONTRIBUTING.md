@@ -70,7 +70,7 @@ This project makes extensive use of [Storybook](https://storybook.js.org/) for t
 
 ### Directory Structure
 
-When working with our components, please note the following key parts of the directory structure:
+When working with our components, please note the following key directories:
 
 ```
 ├── src
@@ -85,12 +85,18 @@ When working with our components, please note the following key parts of the dir
 ├── ...
 ```
 
-* `src` - Contains all UI components, organized into a flat list of folders for each component, e.g. `button`:
+* `src` - Contains all UI components, organized into a flat list of directories for each component, e.g. `button`:
   * `Button.stories.ts` - The [Story](https://storybook.js.org/docs/web-components/get-started/whats-a-story) file for the component.
   * `Button.ts` - The component. *(NOTE: There might be more than one related component, depending on complexity and composition)*
   * `index.ts` - The directory-level index, containing one or more component exports.
+  * `README.md` - The generated README file for the component (Generated when Pull Request is merged).
 * `stories` - Storybook application related helpers and components.
-* `themes` - Built-in basic themes, viewable within the Storybook application.
+* `themes` - Basic built-in themes, viewable within the Storybook application.
+
+### Definition of Done
+
+* **Do** write all Components and Stories using TypeScript.
+* XXXX
 ### Naming Conventions
 
 1. Folder names MUST be created using all lower case Kebab Case, e.g. `my-component`.
