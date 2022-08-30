@@ -1,7 +1,10 @@
 import { html, TemplateResult } from 'lit';
-import { Meta } from '@storybook/web-components';
+import { Meta, StoryContext } from '@storybook/web-components';
+import { userEvent, within, fireEvent } from '@storybook/testing-library';
+import { expect, jest } from '@storybook/jest';
 import { ifNotEmpty } from '../utils/Directives.js';
 import { loadCssPropertiesRemote } from '../utils/StoryUtils';
+import { Icon } from './Icon.js';
 import './Icon.js';
 
 export default {
@@ -49,6 +52,14 @@ export const Interactive = {
               </svg>`,
     icon: undefined as string,
   },
+  play: async (context: StoryContext) => {
+      const icon = within(context.canvasElement).getByTestId<Icon>('test-icon');
+      const slotElement = icon.shadowRoot.querySelector('slot');
+      const foundSlottedSvgElement = slotElement
+          .assignedElements()
+          .find((e) => e.tagName.toLowerCase() === 'svg');
+      await expect(foundSlottedSvgElement).toBeTruthy();
+  }
 };
 
 export const SVG = {
@@ -73,6 +84,14 @@ export const SVG = {
                 </g>
               </svg>`,
   },
+  play: async (context: StoryContext) => {
+      const icon = within(context.canvasElement).getByTestId<Icon>('test-icon');
+      const slotElement = icon.shadowRoot.querySelector('slot');
+      const foundSlottedSvgElement = slotElement
+          .assignedElements()
+          .find((e) => e.tagName.toLowerCase() === 'svg');
+      await expect(foundSlottedSvgElement).toBeTruthy();
+  }
 };
 
 export const IconPath = {
@@ -87,6 +106,12 @@ export const IconPath = {
     size: 'default',
     icon: '/assets/colors.svg',
   },
+  play: async (context: StoryContext) => {
+      const icon = within(context.canvasElement).getByTestId<Icon>('test-icon');
+      const imgElement = icon.shadowRoot.querySelector('img');
+      await expect(imgElement).toBeTruthy();
+      await expect(imgElement.src.endsWith(IconPath.args.icon)).toBeTruthy();
+  }
 };
 
 export const URL = {
@@ -101,6 +126,12 @@ export const URL = {
     size: 'default',
     icon: 'https://img.shields.io/badge/Source-remote-lightgrey.svg'
   },
+  play: async (context: StoryContext) => {
+      const icon = within(context.canvasElement).getByTestId<Icon>('test-icon');
+      const imgElement = icon.shadowRoot.querySelector('img');
+      await expect(imgElement).toBeTruthy();
+      await expect(imgElement.src).toEqual(URL.args.icon);
+  }
 };
 
 export const Material = {
@@ -114,5 +145,11 @@ export const Material = {
   args: {
     size: 'default',
     icon: '@material/receipt_long'
+  },
+  play: async (context: StoryContext) => {
+      const icon = within(context.canvasElement).getByTestId<Icon>('test-icon');
+      const materialElement = icon.shadowRoot.querySelector<HTMLElement>('.material-icon');
+      await expect(materialElement).toBeTruthy();
+      await expect(materialElement.innerText).toEqual(Material.args.icon.replace('@material/',''));
   }
 };
