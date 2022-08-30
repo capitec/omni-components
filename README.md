@@ -2,7 +2,7 @@
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#welcome-to-omni-components-)
 
 # ➜ Welcome to Omni Components 
-<h1 align="center">@innofake/omni-components</h1>
+<h1 align="center">@capitec/omni-components</h1>
 <p align="center">
   <img src="https://avatars.githubusercontent.com/u/107934107" alt="Logo" width="150" height="auto" />
 </p>
@@ -17,11 +17,11 @@
 <p align="center">0.0.1</p>
 
 <p align="center">
-		<a href="https://npmcharts.com/compare/@innofake/omni-components?minimal=true"><img alt="Downloads per month" src="https://img.shields.io/npm/dm/@innofake/omni-components.svg" height="20"/></a>
-<a href="https://www.npmjs.com/package/@innofake/omni-components"><img alt="NPM Version" src="https://img.shields.io/npm/v/@innofake/omni-components.svg" height="20"/></a>
-<a href="https://david-dm.org/innofake/omni-components"><img alt="Dependencies" src="https://img.shields.io/david/innofake/omni-components.svg" height="20"/></a>
-<a href="https://github.com/innofake/omni-components/graphs/contributors"><img alt="Contributors" src="https://img.shields.io/github/contributors/innofake/omni-components.svg" height="20"/></a>
-<a href="https://github.com/innofake/omni-components/actions/workflows/build.yml"><img alt="Build" src="https://github.com/innofake/omni-components/actions/workflows/build.yml/badge.svg" height="20"/></a>
+		<a href="https://npmcharts.com/compare/@capitec/omni-components?minimal=true"><img alt="Downloads per month" src="https://img.shields.io/npm/dm/@capitec/omni-components.svg" height="20"/></a>
+<a href="https://www.npmjs.com/package/@capitec/omni-components"><img alt="NPM Version" src="https://img.shields.io/npm/v/@capitec/omni-components.svg" height="20"/></a>
+<a href="https://david-dm.org/capitec/omni-components"><img alt="Dependencies" src="https://img.shields.io/david/capitec/omni-components.svg" height="20"/></a>
+<a href="https://github.com/capitec/omni-components/graphs/contributors"><img alt="Contributors" src="https://img.shields.io/github/contributors/capitec/omni-components.svg" height="20"/></a>
+<a href="https://github.com/capitec/omni-components/actions/workflows/build.yml"><img alt="Build" src="https://github.com/capitec/omni-components/actions/workflows/build.yml/badge.svg" height="20"/></a>
 	</p>
 
 
@@ -53,7 +53,7 @@ A control that allows an action to be executed.
 
 ```js
  
-import '@innofake/omni-components/button'; 
+import '@capitec/omni-components/button'; 
 
 ```
 
@@ -68,7 +68,7 @@ A control that allows a user to check a value on or off.
 
 ```js
  
-import '@innofake/omni-components/check'; 
+import '@capitec/omni-components/check'; 
 
 ```
 
@@ -83,7 +83,7 @@ A control to syntax highlight and display source code.
 
 ```js
  
-import '@innofake/omni-components/code'; 
+import '@capitec/omni-components/code'; 
 
 ```
 
@@ -98,7 +98,7 @@ A link control that allows a user to indicate an action to be executed. Typicall
 
 ```js
  
-import '@innofake/omni-components/hyperlink'; 
+import '@capitec/omni-components/hyperlink'; 
 
 ```
 
@@ -113,7 +113,7 @@ Component that displays an icon
 
 ```js
  
-import '@innofake/omni-components/icon'; 
+import '@capitec/omni-components/icon'; 
 
 ```
 
@@ -128,7 +128,7 @@ A check icon component
 
 ```js
  
-import '@innofake/omni-components/icons/Check.icon.js'; 
+import '@capitec/omni-components/icons/Check.icon.js'; 
 
 ```
 
@@ -143,7 +143,7 @@ An indeterminate icon component
 
 ```js
  
-import '@innofake/omni-components/icons/Indeterminate.icon.js'; 
+import '@capitec/omni-components/icons/Indeterminate.icon.js'; 
 
 ```
 
@@ -158,7 +158,7 @@ A simple label component that renders a styled text string.
 
 ```js
  
-import '@innofake/omni-components/label'; 
+import '@capitec/omni-components/label'; 
 
 ```
 
@@ -173,7 +173,7 @@ A control that allows a user to select a single value from a small group of valu
 
 ```js
  
-import '@innofake/omni-components/radio'; 
+import '@capitec/omni-components/radio'; 
 
 ```
 
@@ -188,7 +188,7 @@ A control that allows a user to switch a value on or off.
 
 ```js
  
-import '@innofake/omni-components/switch'; 
+import '@capitec/omni-components/switch'; 
 
 ```
 
