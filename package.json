@@ -92,7 +92,7 @@
   },
   "dependencies": {
     "lit": "^2.2.7",
-    "prismjs": "1.23.0",
+    "prismjs": "1.27.0",
     "rxjs": "6.6.6"
   },
   "customElements": "custom-elements.json"
