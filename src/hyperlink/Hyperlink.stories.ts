@@ -71,12 +71,9 @@ export const Label = {
   },
   play: async (context :{ canvasElement: HTMLElement;}) => {
     const canvas = within(context.canvasElement);
-    const HyperlinkElement = canvas.getByTestId('test-hyperlink');
-    const anchorTag = HyperlinkElement.shadowRoot.querySelector('a');
-
-    const labelMatches = anchorTag.innerText === Label.args.label;
-    await expect(labelMatches).toBeTruthy();
-  },
+    const Hyperlink = canvas.getByTestId('test-hyperlink');
+    await expect(Hyperlink.shadowRoot.querySelector('a')).toHaveTextContent(Label.args.label);
+  }
 };
 
 
@@ -90,12 +87,8 @@ export const Size = {
   play: async (context :{ canvasElement: HTMLElement;}) => {
     const canvas = within(context.canvasElement);
     const Hyperlink = canvas.getByTestId('test-hyperlink');
-
-    const foundSmallProp = Hyperlink.attributes.getNamedItem('size');
-    const smallMatch = foundSmallProp.value === Size.args.size;
-    await expect(smallMatch).toBeTruthy();
-
-  },
+    await expect(Hyperlink).toHaveAttribute('size', Size.args.size);
+  }
 };
 
 export const Href = {
@@ -108,12 +101,8 @@ export const Href = {
   play: async (context :{ canvasElement: HTMLElement;}) => {
     const canvas = within(context.canvasElement);
     const Hyperlink = canvas.getByTestId('test-hyperlink');
-
-    const foundHrefProp = Hyperlink.attributes.getNamedItem('href');
-    const hrefMatch = foundHrefProp.value === Href.args.href;
-    await expect(hrefMatch).toBeTruthy();
-
-  },
+    await expect(Hyperlink).toHaveAttribute('href', Href.args.href);
+  }
 };
 
 export const Disabled = {
@@ -152,5 +141,5 @@ export const Inline = {
 
     await expect(hyperlinkElement).toBeTruthy();
     await expect(paragraph.contains(hyperlinkElement)).toBeTruthy();
-  },
+  }
 };
