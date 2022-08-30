@@ -33,9 +33,9 @@ import '@innofake/omni-components/icon';
 
 ## Slots
 
-| Name      | Description              |
-|-----------|--------------------------|
-| `default` | The icon to be displayed |
+| Name | Description              |
+|------|--------------------------|
+|      | The icon to be displayed |
 
 ## CSS Custom Properties
 
