@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const codeSnippet = '```';
 
 function loadCssProperties(element: string, customElements: any, cssDeclarations: any = undefined): any {
     if (!cssDeclarations) {
@@ -40,7 +42,7 @@ function loadThemeVariablesRemote() {
         error = request.status;
     };
     request.send(null);
-    
+
     if (error) {
         console.warn(error);
         return {};
@@ -67,13 +69,13 @@ function loadCssPropertiesRemote(element: string, cssDeclarations: any = undefin
         error = request.status;
     };
     request.send(null);
-    
+
     if (error) {
         return cssDeclarations;
     }
 
     const customElements = JSON.parse(output);
-    
+
     cssDeclarations = loadCssProperties(element, customElements, cssDeclarations);
 
     // console.log(element, cssDeclarations);
@@ -92,7 +94,7 @@ function loadCustomElementsRemote(): any {
         error = `${request.status} - ${request.statusText}`;
     };
     request.send(null);
-    
+
     if (error) {
         throw new Error(error);
     }
@@ -102,9 +104,79 @@ function loadCustomElementsRemote(): any {
     return customElements;
 }
 
-function markdownCode(code: string, lang: string = '') 
-{
-  const md = `
+function loadCustomElementsModuleFor(elementName: string, customElements: any) {
+    return customElements.modules.find((module: any) => module.declarations.find((d: any) => d.tagName === elementName && d.customElement));
+}
+
+function loadCustomElementsModuleForRemote(elementName: string) {
+    const customElements = loadCustomElementsRemote();
+    return loadCustomElementsModuleFor(elementName, customElements);
+}
+
+function loadSlotFor(elementName: string, slotName :string, customElements: any) {
+    const module = loadCustomElementsModuleFor(elementName, customElements);
+    return loadSlotForModule(module, slotName);
+}
+
+function loadSlotForRemote(elementName: string, slotName: string) {
+    const module = loadCustomElementsModuleForRemote(elementName);
+    return loadSlotForModule(module, slotName);
+}
+
+function loadSlotForModule(elementModule: any, slotName: string): { name: string; description: string } {
+    const declaration = elementModule.declarations.find((d: any) => d.slots && d.slots.length > 0 && d.slots.find((s: any) => s.name === ''));
+    if (declaration) {
+        const slot = declaration.slots.find((s: any) => s.name === slotName);
+        if (slot) {
+            return {
+                name: slot.name,
+                description: formatMarkdownCodeElements(filterJsDocLinks(slot.description))
+            };
+        }
+    }
+    return undefined;
+}
+
+function loadDefaultSlotFor(elementName: string, customElements: any) {
+    const module = loadCustomElementsModuleFor(elementName, customElements);
+    return loadDefaultSlotForModule(module);
+}
+
+function loadDefaultSlotForRemote(elementName: string) {
+    const module = loadCustomElementsModuleForRemote(elementName);
+    return loadDefaultSlotForModule(module);
+}
+
+function loadDefaultSlotForModule(elementModule: any) {
+    return loadSlotForModule(elementModule, '');
+}
+
+function assignToSlot(slotName: string, rawHtml: string) {
+    if (!rawHtml || !slotName) return rawHtml;
+
+    const parser = new DOMParser();
+
+    const doc = parser.parseFromString(rawHtml, 'text/xml');
+    const errorNode = doc.querySelector('parsererror');
+    if (errorNode) {
+      // parsing failed
+      return rawHtml;
+    }
+    
+    // parsing succeeded
+    const element = doc.documentElement;
+    element.removeAttribute('slot');
+    element.setAttribute('slot', slotName);
+
+    const serializer = new XMLSerializer();
+    rawHtml = serializer.serializeToString(doc);
+
+    return rawHtml;
+
+}
+
+function markdownCode(code: string, lang: string = '') {
+    const md = `
 
 \`\`\`{lang}
 
@@ -113,8 +185,8 @@ function markdownCode(code: string, lang: string = '')
 \`\`\`
 
   `.replace('{lang}', lang).replace('{code}', code);
-  
-  return md;
+
+    return md;
 }
 
 function markdownCodeRemote(src: string, lang: string = '') {
@@ -129,11 +201,11 @@ function markdownCodeRemote(src: string, lang: string = '') {
         error = `${request.status} - ${request.statusText}`;
     };
     request.send(null);
-    
+
     if (error) {
         throw new Error(error);
     }
-    
+
     return markdownCode(output, lang);
 }
 
@@ -149,23 +221,87 @@ function loadThemesListRemote() {
         error = `${request.status} - ${request.statusText}`;
     };
     request.send(null);
-    
+
     if (error) {
         throw new Error(error);
     }
 
     const list = JSON.parse(output);
-    
+
     return list.themes;
 }
 
+function formatMarkdownCodeElements(str: string, lang: string = 'js') {
+    if (!str) {
+        return str;
+    }
+    return str.replaceAll(`${codeSnippet}`, `\r\n${codeSnippet}`)
+        .replaceAll(`${codeSnippet}${lang}`, `${codeSnippet}${lang}\r\n`);
+}
 
-export { 
-    loadCustomElementsRemote, 
-    loadCssPropertiesRemote, 
-    loadCssProperties, 
-    loadThemeVariablesRemote, 
-    markdownCode, 
-    markdownCodeRemote, 
-    loadThemesListRemote  
+
+function filterJsDocLinks(jsdoc: string) {
+    if (!jsdoc) return jsdoc;
+
+    const renderLink = ((link: { tag: string; text: string; url: string; raw: string; }) => {
+        if (!link.url.includes(':')) {
+            // Local markdown links are not valid in the properties section of storybook
+            return `**${link.text}**`;
+        }
+        return `[${link.text}](${link.url}`;
+    });
+
+    const matches = Array.from(jsdoc.matchAll(/(?:\[(.*?)\])?{@(link|tutorial) (.*?)(?:(?:\|| +)(.*?))?}/gm));
+
+    if (!matches) return jsdoc;
+
+    for (const match of matches) {
+        const tag = match[2].trim();
+        const url = match[3].trim();
+        let text = url;
+
+        if (match[4]) {
+            text = match[4].trim();
+        } else if (match[1]) {
+            text = match[1].trim();
+        }
+
+        jsdoc = jsdoc.replace(match[0], renderLink({ tag, url, text, raw: match[0] }));
+    }
+
+    return jsdoc;
+}
+
+/**
+ * Interprets a template literal as a raw HTML string.
+ *
+ * ```ts
+ * const header = (title: string) => raw`<h1>${title}</h1>`;
+ * ```
+ *
+ * The `raw` tag returns a string that can be used directly as ```innerHTML``` or as ```unsafeHTML``` via lit.
+ */
+const raw = (strings: TemplateStringsArray) => strings.join('\r\n');
+
+
+export {
+    loadCustomElementsRemote,
+    loadCustomElementsModuleFor,
+    loadCustomElementsModuleForRemote,
+    loadSlotFor,
+    loadSlotForModule,
+    loadSlotForRemote,
+    loadDefaultSlotFor,
+    loadDefaultSlotForRemote,
+    loadDefaultSlotForModule,
+    loadCssPropertiesRemote,
+    loadCssProperties,
+    loadThemeVariablesRemote,
+    markdownCode,
+    markdownCodeRemote,
+    loadThemesListRemote,
+    filterJsDocLinks,
+    formatMarkdownCodeElements,
+    assignToSlot,
+    raw
 };

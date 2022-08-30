@@ -1,8 +1,8 @@
 /* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-var-requires */
-const jsdoc = require(`@innofake/jsdoc-api-debuggable`);
+const jsdoc = require('@innofake/jsdoc-api-debuggable');
 const jsdocParse = require('jsdoc-parse');
-const fs = require(`fs`);
+const fs = require('fs');
 
 try {
     const docsRaw = jsdoc.explainSync({ files: 'dist/styles/ComponentStyles.js' });
@@ -12,7 +12,7 @@ try {
 
     let themeVariables = {};
     cssVars.forEach(cssProp => {
-        let parts = cssProp.value.split(` - `);
+        let parts = cssProp.value.split(' - ');
         let propName = parts[0];
         let description = parts[parts.length - 1];
         let cssProperty = {
@@ -23,7 +23,7 @@ try {
             value: ''
         };
 
-        themeVariables[propName.replace(`--`, ``)] = cssProperty;
+        themeVariables[propName.replace('--', '')] = cssProperty;
 
     });
 

@@ -39,7 +39,7 @@ import ComponentStyles from '../styles/ComponentStyles';
  *  - `large` Icon size is 48px.
  * @property {string} icon - The name of the icon to display. Takes preference over the slotted icon
  * 
- * @slot default - The icon to be displayed
+ * @slot - The icon to be displayed
  * 
  * @cssprop --omni-icon-fill - Icon fill color.
  * @cssprop --omni-icon-background-color - Icon background color.
