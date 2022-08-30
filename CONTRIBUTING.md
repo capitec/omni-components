@@ -52,8 +52,17 @@ Basic Guidelines:
 ### Getting Started
 
 #### Dependencies
-Forking
-Running
+
+* Git (v2+)
+* Node.js (v16+)
+* NPM (v7+)
+* VS Code + Recommended Extensions (recommended, but not required).
+
+#### Setup
+
+1. [Fork](ttps://github.com/innofake/omni-components) the repository and create a branch from `develop`.
+2. Run `npm ci` inside the repository root.
+3. Start up the development project with `npm run storybook` (or by pressing F5 in VS Code).
 
 ### Standards & Practices
 
@@ -62,6 +71,6 @@ Best Practices (see OCWP)
  - including commits, merging, etc.
 Definition of Done (see OCWP)
 
-### Creating Pull Requests
+### Submit Pull Requests
 
 ASDFASDSA
