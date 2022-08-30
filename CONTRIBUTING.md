@@ -62,7 +62,7 @@ Basic Guidelines:
 
 1. [Fork](https://github.com/innofake/omni-components) the repository and create a branch from `develop`.
 2. Run `npm ci` inside the repository root.
-3. Start up the development project with `npm run storybook` (or by pressing F5 in VS Code).
+3. Start up the development project with `npm run storybook` (or by launching debugging in VS Code).
 
 ## Standards & Practices
 ### Naming Conventions
