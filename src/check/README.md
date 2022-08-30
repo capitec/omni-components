@@ -3,7 +3,7 @@
 A control that allows a user to check a value on or off.
 
 ```js 
-import '@innofake/omni-components/check'; 
+import '@capitec/omni-components/check'; 
 ```
 
 ## Example
