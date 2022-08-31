@@ -66,11 +66,11 @@ Basic Guidelines:
 
 ### Storybook
 
-This project makes extensive use of [Storybook](https://storybook.js.org/) for the purpose of developing, testing as well as exploring published component documentation.
+This project makes extensive use of [Storybook](https://storybook.js.org/) for the purpose of developing, testing as well as exploring published component documentation. This is done using [stories](https://storybook.js.org/docs/web-components/writing-stories/introduction) with [play functions](https://storybook.js.org/docs/web-components/writing-stories/play-function).
 
 ### Directory Structure
 
-When working with our components, please note the following key directories:
+When adding or editing components, please note the following key directories:
 
 ```
 ├── src
@@ -80,38 +80,48 @@ When working with our components, please note the following key directories:
 │   │   ├── index.ts
 │   │   ├── README.md
 │   ├── ...
-├── stories
 ├── themes
 ├── ...
 ```
 
-* `src` - Contains all UI components, organized into a flat list of directories for each component, e.g. `button`:
-  * `Button.stories.ts` - The [Story](https://storybook.js.org/docs/web-components/get-started/whats-a-story) file for the component.
-  * `Button.ts` - The component. *(NOTE: There might be more than one related component, depending on complexity and composition)*
+* `src` - Contains all components, organized into a flat list of directories for each component, e.g. `button`. Each directory contains:
+  * `Button.stories.ts` - The stories for the component.
+  * `Button.ts` - The component. *(NOTE: There might be more than one, depending on complexity and composition)*
   * `index.ts` - The directory-level index, containing one or more component exports.
-  * `README.md` - The generated README file for the component (Generated when Pull Request is merged).
-* `stories` - Storybook application related helpers and components.
+  * `README.md` - The generated README for the component (Generated when Pull Request is merged).
 * `themes` - Basic built-in themes, viewable within the Storybook application.
 
 ### Definition of Done
 
-* **Do** write all Components and Stories using TypeScript.
-* XXXX
+#### Components
+* **Do** implement using TypeScript, following common language associated best practices.
+* **Do** base off [Lit](https://lit.dev/).
+* **Do** follow our naming conventions and best practices below.
+
+> 💡 TIP: Refer to existing components for examples. 
+
+#### Stories
+* **Do** implement using TypeScript, following common language associated best practices.
+* **Do** implement using [Component Story Format (CSF) 3](https://storybook.js.org/blog/component-story-format-3-0/).
+* **Do** implement one or more [play functions](https://storybook.js.org/docs/web-components/writing-stories/play-function) per story to test component state, behavior and events.
+
+> 💡 TIP: Refer to existing component stories for examples. 
+
+#### Themes
+* **Do** add or extend the built-in themes inline with .
+
 ### Naming Conventions
 
-1. Folder names MUST be created using all lower case Kebab Case, e.g. `my-component`.
-2. File names for classes MUST be created using Pascal Case, e.g. `MyComponent`.
-3. Module names MUST match that of the file name, e.g. `MyComponent.ts` contains `export class MyComponent { ... }`.
-4. Properties MUST be created using Camel Case, e.g. `@property({...}) innerPosition: string;`.
-4. Properties MUST NOT contain any verbs, e.g. `@property({...}) label: string;`.
+* **Do** use lower case [kebab case](https://en.wikipedia.org/wiki/Letter_case#Kebab_case) for component folder names, e.g. `some-component`.
+* **Do** use using [pascal case](https://en.wikipedia.org/wiki/Camel_case) for component file names, e.g. `MyComponent.ts`.
+* **Do** use using [pascal case](https://en.wikipedia.org/wiki/Camel_case) suffixed with `stories` for component story file names, e.g. `MyComponent.stories.ts`.
+* **Do** ensure component class name match that of the file name, e.g. `SomeComponent.ts` contains `export class SomeComponent { ... }`.
+* **Do not** use any verbs or prefixes within component property names, instead **do** use nouns, e.g. `mode`, `position`.
+* **Do** follow common [TypeScript](https://www.typescriptlang.org/docs/) and [Storybook](https://storybook.js.org/docs/web-components/writing-stories/introduction) related conventions. 
 
-Best Practices (see OCWP)
- - including commits, merging, etc.
-Definition of Done (see OCWP)
+### Best Practices
 
-### Comments
-
-
+* **Do** implement only one component class within a component file.
 
 ### Submit Pull Requests
 
