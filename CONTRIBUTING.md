@@ -46,8 +46,8 @@ Basic Guidelines:
 
 ### Branches
 
-* `main` - Used for stable releases, which we do once a month.
 * `develop` - Default branch of the repo for all Pull Requests.
+* `main` - Used for stable releases, which we do once a month.
 
 ### Getting Started
 
@@ -88,41 +88,49 @@ When adding or editing components, please note the following key directories:
   * `Button.stories.ts` - The stories for the component.
   * `Button.ts` - The component. *(NOTE: There might be more than one, depending on complexity and composition)*
   * `index.ts` - The directory-level index, containing one or more component exports.
-  * `README.md` - The generated README for the component (Generated when Pull Request is merged).
+  * `README.md` - The README for the component *(NOTE: Generated when Pull Request is merged)*.
 * `themes` - Basic built-in themes, viewable within the Storybook application.
-
-### Definition of Done
-
-#### Components
-* **Do** implement using TypeScript, following common language associated best practices.
-* **Do** base off [Lit](https://lit.dev/).
-* **Do** follow our naming conventions and best practices below.
-
-> 💡 TIP: Refer to existing components for examples. 
-
-#### Stories
-* **Do** implement using TypeScript, following common language associated best practices.
-* **Do** implement using [Component Story Format (CSF) 3](https://storybook.js.org/blog/component-story-format-3-0/).
-* **Do** implement one or more [play functions](https://storybook.js.org/docs/web-components/writing-stories/play-function) per story to test component state, behavior and events.
-
-> 💡 TIP: Refer to existing component stories for examples. 
-
-#### Themes
-* **Do** add or extend the built-in themes inline with .
 
 ### Naming Conventions
 
 * **Do** use lower case [kebab case](https://en.wikipedia.org/wiki/Letter_case#Kebab_case) for component folder names, e.g. `some-component`.
 * **Do** use using [pascal case](https://en.wikipedia.org/wiki/Camel_case) for component file names, e.g. `MyComponent.ts`.
-* **Do** use using [pascal case](https://en.wikipedia.org/wiki/Camel_case) suffixed with `stories` for component story file names, e.g. `MyComponent.stories.ts`.
+* **Do** use the name of the component, suffixed with `stories` for component story file names, e.g. `MyComponent.stories.ts`.
 * **Do** ensure component class name match that of the file name, e.g. `SomeComponent.ts` contains `export class SomeComponent { ... }`.
 * **Do not** use any verbs or prefixes within component property names, instead **do** use nouns, e.g. `mode`, `position`.
-* **Do** follow common [TypeScript](https://www.typescriptlang.org/docs/) and [Storybook](https://storybook.js.org/docs/web-components/writing-stories/introduction) related conventions. 
+* **Do** name CSS custom properties as follows:
+  * Component: `--omni-<component>-<state>-<css-property>`, e.g. `--omni-button-primary-background-color`
+  * Theme: `--omni-theme-<state>-<css-property>`, e.g. `--omni-theme-primary-color`
+* **Do** follow standard [TypeScript](https://www.typescriptlang.org/docs/), [Lit](https://lit.dev/docs/) and [Storybook](https://storybook.js.org/docs/web-components/writing-stories/introduction) related conventions. 
 
-### Best Practices
+> 💡 TIP: Refer to existing components and stories for examples. 
 
+### Definition of Done
+#### General
+* **Do** implement using [TypeScript](https://www.typescriptlang.org/docs/) using common language associated best practices.
+* **Do** follow our naming conventions.
+
+#### Components
+* **Do** base off [LitElement](https://lit.dev/).
+* **Do** utilize LitElement's [decorators](https://lit.dev/docs/components/decorators/), required for element and property names.
+* **Do** ensure sufficient comments [JSDoc](https://jsdoc.app/) and general code comments are added.
+* **Do** set suitable CSS custom property defaults, **avoid** hard-coding CSS property values suitable.
+* **Do** adhere to and leverage existing DOM standards around attributes and events.
 * **Do** implement only one component class within a component file.
 
-### Submit Pull Requests
+#### Stories
+* **Do** implement using [Component Story Format (CSF) 3](https://storybook.js.org/blog/component-story-format-3-0/).
+* **Do** implement one or more [play functions](https://storybook.js.org/docs/web-components/writing-stories/play-function) per story to test component state, behavior and events.
+  * **Do** set the `data-testid` within every story template.
 
-XXXXX
+#### Themes
+* **Do** maintain each built-in theme, by ensuring all `--omni-theme-*` CSS custom properties are implemented across theme.
+* **Do** test each theme thoroughly via the Storybook application.
+
+> 💡 TIP: Refer to existing components, stories and themes for examples for any of the above.
+
+### Submit Pull Requests
+#### Checks
+
+* All story play function tests pass.
+* All story play function tests has at least 80% code coverage of components.
