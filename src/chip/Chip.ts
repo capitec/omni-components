@@ -90,7 +90,7 @@ export class Chip extends LitElement {
                 box-sizing: border-box;
                 border: var(--omni-chip-border, 1px solid #E1E1E1);
                 border-radius: var(--omni-chip-border-radius, 16px);
-                background-color: var(--omni-chip-background-color, #F7F7F7);
+                background-color: var(--omni-chip-background-color, var(--omni-background-color));
                 padding: var(--omni-chip-padding, 4px);
                 cursor: pointer;
                 display: flex;
@@ -100,7 +100,7 @@ export class Chip extends LitElement {
 
             
             .chip:hover {
-                border: var(--theme-chip-hover-border, 1px solid #009DE0);
+                border: var(--theme-chip-hover-border, 1px solid var(--omni-primary-color));
                 box-shadow: var(--theme-chip-hover-shadow, 0 2px 4px 0 rgba(0,0,0,0.25), 0 1px 3px 0 rgba(0,0,0,0.15));                
             }
 
@@ -108,10 +108,10 @@ export class Chip extends LitElement {
                 display: inline-block;
                 padding-left: var(--omni-chip-label-padding-left, 8px);
                 padding-right: var(--omni-chip-label-padding-right, 8px);
-                color: var(--omni-chip-label-color, #4E6066);
-                font-family: var(--omni-chip-label-font-family, "Hind Vadodara");
-				font-size: var(--omni-chip-label-font-size, 14px);
-				font-weight: var(--omni-chip-label-font-weight, 400);
+                color: var(--omni-chip-label-color, var(--omni-primary-color));
+                font-family: var(--omni-chip-label-font-family, var(--omni-font-family));
+				font-size: var(--omni-chip-label-font-size, var(--omni-font-size));
+				font-weight: var(--omni-chip-label-font-weight, var(--omni-font-weight));
                 line-height: var(--omni-chip-label-line-height, 20px);
             }
 
@@ -121,7 +121,7 @@ export class Chip extends LitElement {
                 padding-left: var(--omni-chip-icon-padding-left, 0px);
                 height: 24px;
                 width: 24px;
-                fill: #009DE0;
+                fill: var(--omni-primary-color);
             }
             
 			`
