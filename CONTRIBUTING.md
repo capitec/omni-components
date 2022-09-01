@@ -138,9 +138,10 @@ Here's a *non-exhaustive* list of requirements that are key to contributing to t
 > 💡 TIP: Refer to existing components, stories and themes for examples for any of the above.
 
 ## Pull Requests
-WIP
 ### Requirements
-* **Do** request merging back to `develop` branch.
+* **Do** ensure the branch is up to date with the `develop` branch.
+* **Do** ensure there's no conflicts with the `develop` branch.
+* **Do** ensure that all automatic [checks](#checks) pass.
 
 ### Checks
 
