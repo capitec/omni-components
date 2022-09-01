@@ -6,7 +6,7 @@ import ComponentStyles from '../styles/ComponentStyles';
  * An indeterminate icon component
  *
  * ```js 
- * import '@innofake/omni-components/icons/Indeterminate.icon.js'; 
+ * import '@capitec/omni-components/icons/Indeterminate.icon.js'; 
  * ```
  * 
  * @example

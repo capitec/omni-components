@@ -355,7 +355,7 @@ function getReturns(member) {
 
 function getImport(file, member) {
     return fixCodeElements(`${codeSnippet}js
-    import { ${member.name} } from '${path.dirname(file).replace('dist/', '@innofake/omni-components/')}';
+    import { ${member.name} } from '${path.dirname(file).replace('dist/', '@capitec/omni-components/')}';
     ${codeSnippet}`);
 }
 

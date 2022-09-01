@@ -11,7 +11,7 @@ Core concepts and capabilities include:
 
 ```js
 
-import { Store } from '@innofake/omni-components/store';
+import { Store } from '@capitec/omni-components/store';
 
 ```
 

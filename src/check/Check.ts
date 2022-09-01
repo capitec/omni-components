@@ -9,7 +9,7 @@ import '../icons/Check.icon.js';
  * A control that allows a user to check a value on or off.
  *
  * ```js 
- * import '@innofake/omni-components/check'; 
+ * import '@capitec/omni-components/check'; 
  * ```
  * 
  * @example
@@ -372,8 +372,7 @@ export class Check extends LitElement {
 	 */
 	override render(): TemplateResult {
 		return html`
-			<div 
-				class="container${this.indeterminate ? ' indeterminate' : this.checked ? ' checked' : ''}${this.disabled ? ' disabled' : ''}">
+			<div class="container${this.indeterminate ? ' indeterminate' : this.checked ? ' checked' : ''}${this.disabled ? ' disabled' : ''}">
 				<div
 					id="content"
 					@keydown="${this._keyDown}">

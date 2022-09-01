@@ -83,7 +83,7 @@ jobs:
           clean-exclude: |
             versions
           git-config-name: Deploy Bot
-          git-config-email: info@innofake.io
+          git-config-email: opensource@capitecbank.co.za
           
       - name: Update DOCS_VERSION_PATH ⬆
         # Tagged release branch only
@@ -104,7 +104,7 @@ jobs:
           clean-exclude: |
             versions
           git-config-name: Deploy Bot
-          git-config-email: info@innofake.io
+          git-config-email: opensource@capitecbank.co.za
 
       - name: Publish Latest Docs 🚀
         uses: JamesIves/github-pages-deploy-action@v4.3.4
@@ -121,4 +121,4 @@ jobs:
           clean-exclude: |
             versions
           git-config-name: Deploy Bot
-          git-config-email: info@innofake.io
+          git-config-email: opensource@capitecbank.co.za
