@@ -61,7 +61,7 @@ A feature request is an improvement or new capability associated with *any part*
 #### Setup
 
 1. [Fork](https://github.com/capitec/omni-components) the repository and create a branch from `develop`.
-2. Clone the forked repo and run `npm ci` inside the repository root on the created branch.
+2. Clone the forked repo, checkout you branch, and run `npm ci` inside the repository root.
 3. Start up the dev server with `npm run storybook` (or by launching debugging in VS Code).
 
 ### Storybook
