@@ -39,6 +39,7 @@ import '@capitec/omni-components/code';
 | `--omni-code-header-background`                | Header background.                   |
 | `--omni-code-header-border`                    | Header border.                       |
 | `--omni-code-header-border-radius`             | Header border radius.                |
+| `--omni-code-header-family`                    | Header font family.                  |
 | `--omni-code-header-font-weight`               | Header font weight.                  |
 | `--omni-code-header-padding`                   | Header padding.                      |
 | `--omni-code-scrollbar-thumb-background`       | Scrollbar thumb background.          |
