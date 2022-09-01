@@ -96,7 +96,7 @@ When adding or editing components, please note the following key directories:
 * **Do** use *lower case* [kebab case](https://en.wikipedia.org/wiki/Letter_case#Kebab_case) for component folder names, e.g. `some-component`. 🍢
 * **Do** use [pascal case](https://en.wikipedia.org/wiki/Camel_case) for component file names, e.g. `SomeComponent.ts`.
 * **Do** use the name of the component, suffixed with `stories` for component story file names, e.g. `SomeComponent.stories.ts`.
-* **Do** ensure component class name matches its file name, e.g. `SomeComponent.ts` contains `export class SomeComponent { ... }`.
+* **Do** match component name with its file name, e.g. `SomeComponent.ts` contains `export class SomeComponent { ... }`.
 * **Do** prefix the custom element name with `omni-`.
 * **Do** use any verbs or prefixes within component property names, instead **do** use nouns, e.g. `mode`, `position`.
 * **Do** name CSS custom properties as follows: 
