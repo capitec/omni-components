@@ -98,6 +98,12 @@ export class Chip extends LitElement {
                 align-items: center;
             }
 
+            
+            .chip:hover {
+                border: var(--theme-chip-hover-border, 1px solid #009DE0);
+                box-shadow: var(--theme-chip-hover-shadow, 0 2px 4px 0 rgba(0,0,0,0.25), 0 1px 3px 0 rgba(0,0,0,0.15));                
+            }
+
             .label {
                 display: inline-block;
                 padding-left: var(--omni-chip-label-padding-left, 8px);
@@ -115,6 +121,7 @@ export class Chip extends LitElement {
                 padding-left: var(--omni-chip-icon-padding-left, 0px);
                 height: 24px;
                 width: 24px;
+                fill: #009DE0;
             }
             
 			`
