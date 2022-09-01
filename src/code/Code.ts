@@ -39,6 +39,7 @@ import Prism from 'prismjs';
  * @cssprop --omni-code-header-border-radius - Header border radius. 
  * @cssprop --omni-code-header-padding - Header padding. 
  * @cssprop --omni-code-header-border - Header border. 
+ * @cssprop --omni-code-header-family - Header font family.
  * @cssprop --omni-code-header-font-weight - Header font weight. 
  * 
  */
@@ -363,6 +364,7 @@ export class Code extends LitElement {
 					border-radius: var(--omni-code-header-border-radius, 0.3em 0.3em 0 0);
 					padding: var(--omni-code-header-padding, 4px 12px);
 					border: var(--omni-code-header-border, 1px solid #CCCCCC);
+					font-family: var(--omni-code-header-family, var(--omni-font-family));
 					font-weight: var(--omni-code-header-font-weight, 500);
 				}
 			`

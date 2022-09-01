@@ -44,13 +44,13 @@ export default css`
 
         /* Handy tool for color lighten / darken: https://www.cssfontstack.com/oldsites/hexcolortool/. */
 
-        --omni-primary-color: var(--omni-theme-primary-color, #009DE0);
-        --omni-primary-hover-color: var(--omni-theme-primary-hover-color, #0095D8); /* 3% darker */
-        --omni-primary-active-color: var(--omni-theme-primary-active-color, #008ED1); /* 6% darker */
+        --omni-primary-color: var(--omni-theme-primary-color, #808080);
+        --omni-primary-hover-color: var(--omni-theme-primary-hover-color, #787878); /* 3% darker */
+        --omni-primary-active-color: var(--omni-theme-primary-active-color, #787878); /* 6% darker */
 
-        --omni-accent-color: var(--omni-theme-accent-color, #7FCAEC);
-        --omni-accent-hover-color: var(--omni-theme-accent-hover-color, #77C2E4); /* 3% darker */
-        --omni-accent-active-color: var(--omni-theme-accent-active-color, #70BBDD); /* 6% darker */
+        --omni-accent-color: var(--omni-theme-accent-color, #C3C3C3);
+        --omni-accent-hover-color: var(--omni-theme-accent-hover-color, #BBBBBB); /* 3% darker */
+        --omni-accent-active-color: var(--omni-theme-accent-active-color, #B4B4B4); /* 6% darker */
 
         --omni-background-color: var(--omni-theme-background-color, #FFFFFF);
         --omni-background-hover-color: var(--omni-theme-background-hover-color, #F7F7F7); /* 3% darker */
@@ -63,7 +63,7 @@ export default css`
         --omni-error-border-color: var(--omni-theme-error-border-color, red);
         --omni-hint-font-color: var(--omni-theme-hint-font-color, lightgrey);
         --omni-inactive-color: var(--omni-theme-inactive-color, #7C7C7C);
-        --omni-box-shadow-color: var(--omni-theme-box-shadow-color, #E6F7FF);
+        --omni-box-shadow-color: var(--omni-theme-box-shadow-color, #F2F2F2);
 
         --omni-font-family: var(--omni-theme-font-family, Arial, Helvetica, sans-serif);
         --omni-font-size: var(--omni-theme-font-size, 14px);

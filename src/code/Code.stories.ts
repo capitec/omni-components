@@ -109,6 +109,7 @@ export const JavaScript = {
     >
     </omni-code>
   `,
+  name: 'JavaScript',
   args: {
     header: 'JavaScript',
     content: `  

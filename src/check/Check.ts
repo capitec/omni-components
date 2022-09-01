@@ -372,8 +372,7 @@ export class Check extends LitElement {
 	 */
 	override render(): TemplateResult {
 		return html`
-			<div 
-				class="container${this.indeterminate ? ' indeterminate' : this.checked ? ' checked' : ''}${this.disabled ? ' disabled' : ''}">
+			<div class="container${this.indeterminate ? ' indeterminate' : this.checked ? ' checked' : ''}${this.disabled ? ' disabled' : ''}">
 				<div
 					id="content"
 					@keydown="${this._keyDown}">

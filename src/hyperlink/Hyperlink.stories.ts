@@ -130,7 +130,7 @@ export const Inline = {
   render: (args: ArgTypes) => html`<p data-testid="test-paragraph">Inline <omni-hyperlink label="${args.label}" ?inline="${args.inline}"></omni-hyperlink> example</p>`,
   name:'Inline',
   args: {
-    label:'Click',
+    label:'click',
     inline:true
   },
   play: async (context: { canvasElement: HTMLElement; }) => {
