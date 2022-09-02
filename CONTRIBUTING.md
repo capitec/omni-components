@@ -93,12 +93,12 @@ When adding or editing components, please note the following key directories:
 
 ### Naming Conventions
 
-* **Do** use *lower case* [kebab case](https://en.wikipedia.org/wiki/Letter_case#Kebab_case) for component folder names, e.g. `some-component`. 🍢
-* **Do** use [pascal case](https://en.wikipedia.org/wiki/Camel_case) for component file names, e.g. `SomeComponent.ts`.
-* **Do** use the name of the component, suffixed with `stories` for component story file names, e.g. `SomeComponent.stories.ts`.
+* **Do** use *lower case* [kebab-case](https://en.wikipedia.org/wiki/Letter_case#Kebab_case) for component folder names, e.g. `some-component`. 🍢
+* **Do** use uppercase first letter [CamelCase](https://en.wikipedia.org/wiki/Camel_case) for component file names, e.g. `SomeComponent.ts`.
+* **Do** use the name of the component, suffixed with `.stories` for component story file names, e.g. `SomeComponent.stories.ts`.
 * **Do** match component name with its file name, e.g. `SomeComponent.ts` contains `export class SomeComponent { ... }`.
 * **Do** prefix the custom element name with `omni-`.
-* **Do** use any verbs or prefixes within component property names, instead **do** use nouns, e.g. `mode`, `position`.
+* **Do not** use any verbs or prefixes within component property names, instead **do** use nouns, e.g. `mode`, `position`.
 * **Do** name CSS custom properties as follows: 
   * Component: `--omni-<component>-<state>-<css-property>`, e.g. `--omni-button-primary-background-color`
   * Theme: `--omni-theme-<state>-<css-property>`, e.g. `--omni-theme-primary-color`
@@ -118,16 +118,16 @@ Here's a *non-exhaustive* list of requirements that are key to contributing to t
 * **Do** implement "mobile first" templates, leveraging [Responsive Design](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design) layout and styling principles. 📱
 * **Do** utilize LitElement's [decorators](https://lit.dev/docs/components/decorators/), required for element and property names.
 * **Do** ensure sufficient [JSDoc](https://jsdoc.app/) as well as general code comments are added.
-* **Do** use and extend existing shared CSS custom property and theme variables. (See [`src/styles/ComponentStyles.ts`](https://github.com/capitec/omni-components/blob/develop/src/styles/ComponentStyles.ts))
+* **Do** use and extend existing shared CSS component and theme custom properties. (See [`src/styles/ComponentStyles.ts`](https://github.com/capitec/omni-components/blob/develop/src/styles/ComponentStyles.ts))
 * **Do** set suitable CSS custom property defaults, **avoid** hard-coding CSS property values directly within components, unless deemed required.
 * **Do** adhere to and leverage existing DOM standards when making use of [`<input>`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement) element.
 * **Do** implement suitable DOM [accessibility](https://developer.mozilla.org/en-US/docs/Web/Accessibility) features.
-* **Do** consider optimal ways to compose components, e.g. rather slot an `icon` into a `button` than referencing `icon` directly.
+* **Do** allow components to be user customizable via [slot](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot) implementations.
 * **Do** implement only *one* component class within a component file.
 
 #### Stories
 * **Do** use [Component Story Format (CSF) 3](https://storybook.js.org/blog/component-story-format-3-0/).
-* **Do** implement one or more [play functions](https://storybook.js.org/docs/web-components/writing-stories/play-function) per story to test component state, behavior and events.
+* **Do** implement a [play function](https://storybook.js.org/docs/web-components/writing-stories/play-function) per story to test story-specific component state and event behaviours.
   * **Do** set the `data-testid` within every story template.
   * **Do** ensure there are no [accessibility](https://storybook.js.org/docs/web-components/writing-tests/accessibility-testing) violations.
 
@@ -146,4 +146,4 @@ Here's a *non-exhaustive* list of requirements that are key to contributing to t
 ### Checks
 
 * All story play function tests pass.
-* All story play function tests has at least 80% code coverage of components.
+<!--- * All story play function tests has at least 80% code coverage of components. --->
