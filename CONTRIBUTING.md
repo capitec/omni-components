@@ -13,12 +13,8 @@ Please read and follow our [Code of Conduct](https://github.com/capitec/omni-com
 
 ## Issues
 
-Issues are intended for:
+Engagement always starts with an Issue where conversations and debates can occur around [bugs](#bugs) and [feature requests](#feature-requests):
 
-* [Bugs](#bugs)
-* [Feature Requests](#feature-requests)
-
-### Guidelines
 * **Do** search for a similar / existing Issue prior to submitting a new one.
 * **Do not** use issues for any personal support. Use [Discussions](https://github.com/capitec/omni-components/discussions) or [StackOverflow](https://stackoverflow.com/) instead.
 * **Do not** side-track or derail issues threads. Stick to the topic please.
@@ -26,31 +22,29 @@ Issues are intended for:
 
 ### Bugs
 
-A bug is an error, flaw or fault associated with *any part* of the project.
+A bug is an error, flaw or fault associated with *any part* of the project:
 
-### Guidelines
 * **Do** search for a similar / existing Issue prior to submitting a new one.
 * **Do** describe the bug concisely, **avoid** adding extraneous code, logs or screenshots.
 * **Do** attach a minimal test or repro (e.g. [CodePen](https://codepen.io/), [jsFiddle](https://jsfiddle.net/)) to demonstrate the bug.
 
 ### Feature Requests
 
-A feature request is an improvement or new capability associated with *any part* of the project.
+A feature request is an improvement or new capability associated with *any part* of the project:
 
-### Guidelines
 * **Do** search for a similar / existing Issue prior to submitting a new one.
 * **Do** provide sufficient motivation / use case(s) for the feature. 
 * **Do not** submit multiple unrelated requests within one request.
 
-## Development
+> 💡 TIP: We suggest that you engage as much as possible within an Issue prior to proceeding with any contributions. 
 
+## Development
 ### Branches
 
 * `develop` - Default branch for all Pull Requests.
 * `main` - Stable branch for all periodic releases.
 
 ### Getting Started
-
 #### Dependencies
 
 * Git (v2+)
@@ -127,7 +121,7 @@ Here's a *non-exhaustive* list of requirements that are key to contributing to t
 
 #### Stories
 * **Do** use [Component Story Format (CSF) 3](https://storybook.js.org/blog/component-story-format-3-0/).
-* **Do** implement a [play function](https://storybook.js.org/docs/web-components/writing-stories/play-function) per story to test story-specific component state and event behaviours.
+* **Do** implement a [play function](https://storybook.js.org/docs/web-components/writing-stories/play-function) per story to test story-specific component state and event behaviors. 🛝
   * **Do** set the `data-testid` within every story template.
   * **Do** ensure there are no [accessibility](https://storybook.js.org/docs/web-components/writing-tests/accessibility-testing) violations.
 
@@ -141,7 +135,7 @@ Here's a *non-exhaustive* list of requirements that are key to contributing to t
 ### Requirements
 * **Do** ensure the branch is up to date with the `develop` branch.
 * **Do** ensure there's no conflicts with the `develop` branch.
-* **Do** ensure that all automatic [checks](#checks) pass.
+* **Do** ensure that all automatic [checks](#checks) pass. ✔
 
 ### Checks
 
