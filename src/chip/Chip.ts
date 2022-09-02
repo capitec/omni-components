@@ -28,6 +28,8 @@ import '../icons/Close.icon.js';
  * @property {string} [label] - The label string to display.
  * @property {boolean} [closable] - Sets if the close button should be shown.
  * 
+ * @slot - Content to render inside chip
+ * 
  * 
  * @cssprop --omni-chip-border - Component border.
  * @cssprop --omni-chip-border-radius - Component border radius.
@@ -123,6 +125,11 @@ export class Chip extends LitElement {
                 width: 24px;
                 fill: var(--omni-primary-color);
             }
+
+            slot[name=slot]::slotted(*) {
+                height: 24px;
+                width: 24px;
+            }
             
 			`
 		];
@@ -131,11 +138,10 @@ export class Chip extends LitElement {
     protected override render(): TemplateResult {
 		return html`
             <button class="chip">
-                <div></div>
-                ${this.avatar || this.avatarImage ? html`<slot></slot>` : ''}
+                <slot name="slot"></slot>
 				<div class="label">${this.label}</div>
 				<div class="icon" @click="${(e: MouseEvent) => this._removeClicked(e)}">
-					<slot name='close_icon'><omni-close-icon></omni-close-icon></slot>
+					<omni-close-icon></omni-close-icon>
 				</div>
 			</button>
 		`;

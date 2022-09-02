@@ -7,8 +7,8 @@ import { Chip } from './Chip.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 
-
 import './Chip.js';
+import '../icon/Icon.js';
 
 export default {
     title: 'UI Components/Chip',
@@ -25,6 +25,7 @@ export default {
 interface Args {
     label: string;
     closable: boolean;
+    slot: string
 }
 
 
@@ -33,13 +34,16 @@ export const Interactive = {
     <omni-chip
         data-testid="test-chip"
         label="${ifNotEmpty(args.label)}"
-        ?closable=${args.closable}>
+        ?closable=${args.closable}
+        >
+        ${unsafeHTML(args.slot)}
     </omni-chip>
   `,
     name: 'Interactive',
     args: {
         label: 'Chip',
-        closable: false
+        closable: false,
+        slot: raw`<omni-icon icon="@material/thumb_up"></omni-icon>`
     }
 };
 
@@ -67,7 +71,7 @@ export const Label = {
         ?closable=${args.closable}>
     </omni-chip>
   `,
-    name: 'Closable',
+    name: 'Label',
     args: {
         label: 'Chip',
         closable: false
@@ -75,17 +79,18 @@ export const Label = {
 };
 
 
-export const Avatar = {
+export const Slot = {
     render: (args: Args) => html`
     <omni-chip
         data-testid="test-chip"
         label="${ifNotEmpty(args.label)}"
         ?closable=${args.closable}>
+        <omni-icon size="default" icon="/assets/direction.svg"></omni-icon>
     </omni-chip>
   `,
-    name: 'Closable',
+    name: 'Slot',
     args: {
         label: 'Chip',
-        closable: false
+        closable: true
     }
 };
