@@ -109,7 +109,7 @@ export const IconPath = {
   parameters: {},
   args: {
     size: 'default',
-    icon: '/assets/colors.svg',
+    icon: 'assets/colors.svg',
   },
   play: async (context: StoryContext) => {
       const icon = within(context.canvasElement).getByTestId<Icon>('test-icon');
