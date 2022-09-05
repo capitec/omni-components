@@ -27,8 +27,10 @@ import '../icons/Close.icon.js';
  * 
  * @property {string} [label] - The label string to display.
  * @property {boolean} [closable] - Sets if the close button should be shown.
+ * @property {boolean} [disabled=false] - Indicator if the component is disabled.
  * 
- * @slot - Content to render inside chip
+ * @slot avatar_icon - Replaces the icon for the avatar slot
+ * @slot close_icon - Replaces the icon for the closed slot
  * 
  * 
  * @cssprop --omni-chip-border - Component border.
@@ -44,6 +46,11 @@ import '../icons/Close.icon.js';
  * @cssprop --omni-chip-label-font-weight - Component label font weight.
  * @cssprop --omni-chip-label-line-height - Component label line height.
  * 
+ * @cssprop --omni-chip-disabled-border-color - Component disabled border colour.
+ * @cssprop --omni-chip-disabled-background-color - Component disabled background colour.
+ * @cssprop --omni-chip-disabled-active-hover-background-color - Component icon left padding.
+ * 
+ * @cssprop --omni-chip-icon-padding-left - Component icon left padding.
  * @cssprop --omni-chip-icon-padding-left - Component icon left padding.
  * 
  */
@@ -52,8 +59,7 @@ export class Chip extends LitElement {
 
     @property({ type: String, reflect: true }) label?: string;
     @property({ type: Boolean, reflect: true }) closable?: boolean;
-	@property({ type: String, reflect: true }) avatar?: string;
-	@property({ type: String, reflect: true}) avatarImage?: string;
+    @property({ type: Boolean, reflect: true }) disabled?: boolean;
 
 	_removeClicked(event: MouseEvent) {
 
@@ -106,6 +112,29 @@ export class Chip extends LitElement {
                 box-shadow: var(--theme-chip-hover-shadow, 0 2px 4px 0 rgba(0,0,0,0.25), 0 1px 3px 0 rgba(0,0,0,0.15));                
             }
 
+            /* disabled */
+
+            .chip.disabled {
+                cursor: default;
+                border-color: var(--omni-chip-disabled-border-color, var(--omni-disabled-border-color));
+                background-color: var(--omni-chip-disabled-background-color, var(--omni-disabled-background-color));
+            }
+
+            .chip.disabled:hover, 
+            .chip.disabled:active {
+                box-shadow: none;
+                background-color: var(--omni-chip-disabled-active-hover-background-color, var(--omni-disabled-background-color));
+            }
+
+            .chip.disabled:focus {
+                outline: 0;
+            }
+
+            .chip:focus {
+                outline: none;
+            }
+
+
             .label {
                 display: inline-block;
                 padding-left: var(--omni-chip-label-padding-left, 8px);
@@ -125,11 +154,6 @@ export class Chip extends LitElement {
                 width: 24px;
                 fill: var(--omni-primary-color);
             }
-
-            slot[name=slot]::slotted(*) {
-                height: 24px;
-                width: 24px;
-            }
             
 			`
 		];
@@ -137,11 +161,13 @@ export class Chip extends LitElement {
 
     protected override render(): TemplateResult {
 		return html`
-            <button class="chip">
-                <slot name="slot"></slot>
-				<div class="label">${this.label}</div>
-				<div class="icon" @click="${(e: MouseEvent) => this._removeClicked(e)}">
-					<omni-close-icon></omni-close-icon>
+            <button 
+                ?disabled=${this.disabled}
+                class="chip ${this.disabled ? 'disabled' : ''}">
+                <slot name="avatar_icon"></slot>
+				<div id="label" class="label">${this.label}</div>
+				<div id="closeButton" class="icon" @click="${(e: MouseEvent) => this._removeClicked(e)}">
+                    ${this.closable ? html`<slot name="close_icon"><omni-close-icon></omni-close-icon></slot>` : nothing}
 				</div>
 			</button>
 		`;
