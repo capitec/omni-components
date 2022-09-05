@@ -32,6 +32,7 @@ import '../icons/Close.icon.js';
  * @slot avatar_icon - Replaces the icon for the avatar slot
  * @slot close_icon - Replaces the icon for the closed slot
  * 
+ * @fires {CustomEvent<{}>} remove - Dispatched when the close icon is clicked.
  * 
  * @cssprop --omni-chip-border - Component border.
  * @cssprop --omni-chip-border-radius - Component border radius.

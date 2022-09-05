@@ -160,12 +160,11 @@ export const AvatarSlotIcon = {
     },
     play: async (context: StoryContext) => {
         const chip = within(context.canvasElement).getByTestId<Chip>('test-chip');
-        const click = jest.fn();
-        chip.addEventListener('click', click);
-        await userEvent.click(chip);
-        await userEvent.click(chip);
+        const slotElement = chip.shadowRoot.querySelector<HTMLSlotElement>('slot[name="avatar_icon"]');
+        await expect(slotElement).toBeTruthy();
 
-        await expect(click).toBeCalledTimes(0);
+        const foundSlottedSvgElement = slotElement.assignedElements().find((e) => e.tagName.toLowerCase() === 'svg');
+        await expect(foundSlottedSvgElement).toBeTruthy();
   
     }
 };
@@ -187,11 +186,10 @@ export const CustomCloseIcon = {
     },
     play: async (context: StoryContext) => {
         const chip = within(context.canvasElement).getByTestId<Chip>('test-chip');
-        const click = jest.fn();
-        chip.addEventListener('click', click);
-        await userEvent.click(chip);
-        await userEvent.click(chip);
+        const slotElement = chip.shadowRoot.querySelector<HTMLSlotElement>('slot[name=close_icon]');
+        await expect(slotElement).toBeTruthy();
 
-        await expect(click).toBeCalledTimes(0); 
+        const foundSlottedSvgElement = slotElement.assignedElements().find((e) => e.tagName.toLocaleLowerCase() === 'svg');
+        await expect(foundSlottedSvgElement).toBeTruthy();
     }
 };
