@@ -26,7 +26,7 @@ import '../icons/Close.icon.js';
  *  Registry of all properties defined by the component.
  * 
  * @property {string} [label] - The label string to display.
- * @property {boolean} [closable] - Sets if the close button should be shown.
+ * @property {boolean} [closable] - Sets if the chip has a close button.
  * @property {boolean} [disabled=false] - Indicator if the component is disabled.
  * 
  * @slot avatar_icon - Replaces the icon for the avatar slot
@@ -49,10 +49,12 @@ import '../icons/Close.icon.js';
  * 
  * @cssprop --omni-chip-disabled-border-color - Component disabled border colour.
  * @cssprop --omni-chip-disabled-background-color - Component disabled background colour.
- * @cssprop --omni-chip-disabled-active-hover-background-color - Component icon left padding.
+ * @cssprop --omni-chip-disabled-hover-background-color - Component icon left padding.
  * 
- * @cssprop --omni-chip-icon-padding-left - Component icon left padding.
- * @cssprop --omni-chip-icon-padding-left - Component icon left padding.
+ * @cssprop --omni-chip-close-icon-padding-left - Component close icon left padding.
+ * @cssprop --omni-chip-close-icon-height - Component close icon height.
+ * @cssprop --omni-chip-close-icon-width - Component close icon width.
+ * @cssprop --omni-chip-close-icon-color - Component close icon color.
  * 
  */
 @customElement('omni-chip')
@@ -124,7 +126,7 @@ export class Chip extends LitElement {
             .chip.disabled:hover, 
             .chip.disabled:active {
                 box-shadow: none;
-                background-color: var(--omni-chip-disabled-active-hover-background-color, var(--omni-disabled-background-color));
+                background-color: var(--omni-chip-disabled-hover-background-color, var(--omni-disabled-background-color));
             }
 
             .chip.disabled:focus {
@@ -150,10 +152,10 @@ export class Chip extends LitElement {
             .icon {    
                 display: grid;
                 justify-content: center;
-                padding-left: var(--omni-chip-icon-padding-left, 0px);
-                height: 24px;
-                width: 24px;
-                fill: var(--omni-primary-color);
+                padding-left: var(--omni-chip-close-icon-padding-left, 0px);
+                height: var(--omni-chip-close-icon-height,24px);
+                width: var(--omni-chip-close-icon-width,24px);
+                fill: var(--omni-chip-close-icon-color,var(--omni-primary-color));
             }
             
 			`
