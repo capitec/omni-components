@@ -62,9 +62,11 @@ export const Interactive = {
     play: async (context: StoryContext) => {
         const chip = within(context.canvasElement).getByTestId<Chip>('test-chip');
         const click = jest.fn();
+
         chip.addEventListener('click', click);
         await userEvent.click(chip);
         await userEvent.click(chip);
+
         await expect(click).toBeCalledTimes(2);
   
     }
@@ -111,9 +113,7 @@ export const Label = {
     },
     play: async (context: StoryContext) => {
         const chip = within(context.canvasElement).getByTestId<Chip>('test-chip');
-        const labelElement = chip.shadowRoot.getElementById('label');
-        const labelMatches = labelElement.innerText === Label.args.label;
-        await expect(labelMatches).toBeTruthy();
+        await expect(chip.shadowRoot.getElementById('label')).toHaveTextContent(Label.args.label);
     }
 };
 
@@ -131,7 +131,12 @@ export const Disabled = {
         disabled: true
     },
     play: async (context: StoryContext) => {
+
         const chip = within(context.canvasElement).getByTestId<Chip>('test-chip');
+        const buttonElement = chip.shadowRoot.getElementById('button');
+        const foundDisabledClass = buttonElement.classList.contains('disabled');
+        await expect(foundDisabledClass).toBeTruthy(); // Test for not clickable.
+
         const click = jest.fn();
         chip.addEventListener('click', click);
         await userEvent.click(chip);

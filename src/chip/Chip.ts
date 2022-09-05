@@ -162,7 +162,8 @@ export class Chip extends LitElement {
 
     protected override render(): TemplateResult {
 		return html`
-            <button 
+            <button
+                id="button"
                 ?disabled=${this.disabled}
                 class="chip ${this.disabled ? 'disabled' : ''}">
                 <slot name="avatar_icon"></slot>
