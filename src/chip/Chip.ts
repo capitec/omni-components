@@ -64,6 +64,10 @@ export class Chip extends LitElement {
     @property({ type: Boolean, reflect: true }) closable?: boolean;
     @property({ type: Boolean, reflect: true }) disabled?: boolean;
 
+    // -----------------
+	// PRIVATE FUNCTIONS
+	// -----------------
+
 	_removeClicked(event: MouseEvent) {
 
 		// Notify any subscribers that the link was clicked.
@@ -74,8 +78,6 @@ export class Chip extends LitElement {
 		// Prevent the event from bubbling up.
 		event.stopPropagation();
 	}
-
-
 
     // -------------------
 	// RENDERING TEMPLATES
@@ -115,6 +117,27 @@ export class Chip extends LitElement {
                 box-shadow: var(--theme-chip-hover-shadow, 0 2px 4px 0 rgba(0,0,0,0.25), 0 1px 3px 0 rgba(0,0,0,0.15));                
             }
 
+            
+            .label {
+                display: inline-block;
+                padding-left: var(--omni-chip-label-padding-left, 8px);
+                padding-right: var(--omni-chip-label-padding-right, 8px);
+                color: var(--omni-chip-label-color, var(--omni-primary-color));
+                font-family: var(--omni-chip-label-font-family, var(--omni-font-family));
+				font-size: var(--omni-chip-label-font-size, var(--omni-font-size));
+				font-weight: var(--omni-chip-label-font-weight, var(--omni-font-weight));
+                line-height: var(--omni-chip-label-line-height, 20px);
+            }
+
+            .icon {    
+                display: grid;
+                justify-content: center;
+                padding-left: var(--omni-chip-close-icon-padding-left, 0px);
+                height: var(--omni-chip-close-icon-height,24px);
+                width: var(--omni-chip-close-icon-width,24px);
+                fill: var(--omni-chip-close-icon-color,var(--omni-primary-color));
+            }
+
             /* disabled */
 
             .chip.disabled {
@@ -135,29 +158,7 @@ export class Chip extends LitElement {
 
             .chip:focus {
                 outline: none;
-            }
-
-
-            .label {
-                display: inline-block;
-                padding-left: var(--omni-chip-label-padding-left, 8px);
-                padding-right: var(--omni-chip-label-padding-right, 8px);
-                color: var(--omni-chip-label-color, var(--omni-primary-color));
-                font-family: var(--omni-chip-label-font-family, var(--omni-font-family));
-				font-size: var(--omni-chip-label-font-size, var(--omni-font-size));
-				font-weight: var(--omni-chip-label-font-weight, var(--omni-font-weight));
-                line-height: var(--omni-chip-label-line-height, 20px);
-            }
-
-            .icon {    
-                display: grid;
-                justify-content: center;
-                padding-left: var(--omni-chip-close-icon-padding-left, 0px);
-                height: var(--omni-chip-close-icon-height,24px);
-                width: var(--omni-chip-close-icon-width,24px);
-                fill: var(--omni-chip-close-icon-color,var(--omni-primary-color));
-            }
-            
+            }           
 			`
 		];
 	}
@@ -165,7 +166,7 @@ export class Chip extends LitElement {
     protected override render(): TemplateResult {
 		return html`
             <button
-                id="button"
+                id="chip"
                 ?disabled=${this.disabled}
                 class="chip ${this.disabled ? 'disabled' : ''}">
                 <slot name="avatar_icon"></slot>

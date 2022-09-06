@@ -2,7 +2,7 @@ import { Meta, StoryContext } from '@storybook/web-components';
 import { userEvent, within } from '@storybook/testing-library';
 import { expect, jest } from '@storybook/jest';
 import { html, nothing } from 'lit';
-import { assignToSlot, loadCssPropertiesRemote, loadDefaultSlotForRemote, raw } from '../utils/StoryUtils.js';
+import { assignToSlot, loadCssPropertiesRemote } from '../utils/StoryUtils.js';
 import { Chip } from './Chip.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
@@ -133,8 +133,8 @@ export const Disabled = {
     play: async (context: StoryContext) => {
 
         const chip = within(context.canvasElement).getByTestId<Chip>('test-chip');
-        const buttonElement = chip.shadowRoot.getElementById('button');
-        const foundDisabledClass = buttonElement.classList.contains('disabled');
+        const chipElement = chip.shadowRoot.getElementById('chip');
+        const foundDisabledClass = chipElement.classList.contains('disabled');
         await expect(foundDisabledClass).toBeTruthy(); // Test for not clickable.
 
         const click = jest.fn();
