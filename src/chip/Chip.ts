@@ -133,7 +133,8 @@ export class Chip extends LitElement {
                 line-height: var(--omni-chip-label-line-height, 20px);
             }
 
-            .icon {    
+            .icon,
+            ::slotted(*) {    
                 display: grid;
                 justify-content: center;
                 padding-left: var(--omni-chip-close-icon-padding-left, 0px);
