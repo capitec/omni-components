@@ -9,16 +9,16 @@ import '../icons/Close.icon.js';
  * A chip control.
  *
  * ```js 
- * import 'capitec/omni-components/chip'; 
+ * import '@capitec/omni-components/chip'; 
  * ```
  * 
  * @example
  * 
  * ```html
- * <capitec-chip 
+ * <omni-chip 
  *   label="Chip title"
  *   closable>
- * </capitec-chip>
+ * </omni-chip>
  * ```
  * 
  * @element omni-chip
@@ -29,7 +29,7 @@ import '../icons/Close.icon.js';
  * @property {boolean} [closable] - Sets if the chip has a close button.
  * @property {boolean} [disabled=false] - Indicator if the component is disabled.
  * 
- * @slot avatar_icon - Replaces the icon for the avatar slot
+ * @slot chip_icon - Replaces the icon for the chip slot
  * @slot close_icon - Replaces the icon for the closed slot
  * 
  * @fires {CustomEvent<{}>} remove - Dispatched when the close icon is clicked.
@@ -169,7 +169,7 @@ export class Chip extends LitElement {
                 id="chip"
                 ?disabled=${this.disabled}
                 class="chip ${this.disabled ? 'disabled' : ''}">
-                <slot name="avatar_icon"></slot>
+                <slot name="chip_icon"></slot>
 				<div id="label" class="label">${this.label}</div>
 				<div id="closeButton" class="icon" @click="${(e: MouseEvent) => this._removeClicked(e)}">
                     ${this.closable ? html`<slot name="close_icon"><omni-close-icon></omni-close-icon></slot>` : nothing}
