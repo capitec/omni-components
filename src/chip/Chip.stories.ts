@@ -40,7 +40,6 @@ interface Args {
     close_icon: string;
 }
 
-
 export const Interactive = {
     render: (args: Args) => html`
     <omni-chip
@@ -99,7 +98,6 @@ export const Closable = {
     }
 };
 
-
 export const Label = {
     render: (args: Args) => html`
     <omni-chip
@@ -146,7 +144,6 @@ export const Disabled = {
   
     }
 };
-
 
 export const ChipSlotIcon = {
     render: (args: Args) => html`
