@@ -71,6 +71,23 @@ export const Interactive = {
     }
 };
 
+export const Label = {
+    render: (args: Args) => html`
+    <omni-chip
+        data-testid="test-chip"
+        label="${ifNotEmpty(args.label)}">
+    </omni-chip>
+  `,
+    name: 'Label',
+    args: {
+        label: 'Label'
+    },
+    play: async (context: StoryContext) => {
+        const chip = within(context.canvasElement).getByTestId<Chip>('test-chip');
+        await expect(chip.shadowRoot.getElementById('label')).toHaveTextContent(Label.args.label);
+    }
+};
+
 export const Closable = {
     render: (args: Args) => html`
     <omni-chip
@@ -95,23 +112,6 @@ export const Closable = {
         await userEvent.click(closeButton);
         await expect(remove).toBeCalledTimes(2);
   
-    }
-};
-
-export const Label = {
-    render: (args: Args) => html`
-    <omni-chip
-        data-testid="test-chip"
-        label="${ifNotEmpty(args.label)}">
-    </omni-chip>
-  `,
-    name: 'Label',
-    args: {
-        label: 'Label'
-    },
-    play: async (context: StoryContext) => {
-        const chip = within(context.canvasElement).getByTestId<Chip>('test-chip');
-        await expect(chip.shadowRoot.getElementById('label')).toHaveTextContent(Label.args.label);
     }
 };
 
