@@ -3,12 +3,15 @@ import { userEvent, within } from '@storybook/testing-library';
 import { expect, jest } from '@storybook/jest';
 import { html } from 'lit';
 import { loadCssPropertiesRemote, loadDefaultSlotForRemote, raw } from '../utils/StoryUtils.js';
-import { Button, ButtonType, buttonType, slotPositionType, SlotPositionType } from './Button.js';
+import { Button } from './Button.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 
 import './Button.js';
 import '../icon/Icon.js';
+
+const buttonOptions = ['primary', 'secondary', 'clear', 'white'] as const;
+const slotPositionOptions = ['left', 'top', 'right', 'bottom'] as const;
 
 export default {
     title: 'UI Components/Button',
@@ -16,11 +19,11 @@ export default {
     argTypes: {
         type: {
             control: 'radio',
-            options: buttonType,
+            options: buttonOptions,
         },
         slotPosition: {
             control: 'radio',
-            options: slotPositionType,
+            options: slotPositionOptions,
         },
         'slot-position': {
             control: false
@@ -39,9 +42,9 @@ export default {
 } as Meta;
 
 interface Args {
-    type: ButtonType;
+    type: typeof buttonOptions[number];
     label: string;
-    slotPosition: SlotPositionType;
+    slotPosition: typeof slotPositionOptions[number];
     disabled: boolean;
     slot: string
 }
