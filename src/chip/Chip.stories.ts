@@ -14,7 +14,7 @@ export default {
     title: 'UI Components/Chip',
     component: 'omni-chip',
     argTypes: {
-        avatar_icon: {
+        chip_icon: {
           control: 'text',
         },
         close_icon: {
@@ -36,7 +36,7 @@ interface Args {
     slot: string;
     disabled: boolean;
 
-    avatar_icon: string;
+    chip_icon: string;
     close_icon: string;
 }
 
@@ -48,7 +48,7 @@ export const Interactive = {
         label="${ifNotEmpty(args.label)}"
         ?closable=${args.closable}
         ?disabled="${args.disabled}"
-        >${(args.avatar_icon ? html`${'\r\n'}${unsafeHTML(assignToSlot('avatar_icon', args.avatar_icon))}` : nothing)}${(args.close_icon ? html`${'\r\n'}${unsafeHTML(assignToSlot('close_icon', args.close_icon))}` : nothing)}
+        >${(args.chip_icon ? html`${'\r\n'}${unsafeHTML(assignToSlot('chip_icon', args.chip_icon))}` : nothing)}${(args.close_icon ? html`${'\r\n'}${unsafeHTML(assignToSlot('close_icon', args.close_icon))}` : nothing)}
     </omni-chip>
   `,
     name: 'Interactive',
@@ -56,7 +56,7 @@ export const Interactive = {
         label: 'Chip',
         closable: false,
         disabled: false,
-        avatar_icon: '',
+        chip_icon: '',
         close_icon: '',
     },
     play: async (context: StoryContext) => {
@@ -148,24 +148,24 @@ export const Disabled = {
 };
 
 
-export const AvatarSlotIcon = {
+export const ChipSlotIcon = {
     render: (args: Args) => html`
     <omni-chip
         data-testid="test-chip"
         label="${ifNotEmpty(args.label)}"
         ?closable=${args.closable}>
-        ${unsafeHTML(args.avatar_icon)} 
+        ${unsafeHTML(args.chip_icon)} 
     </omni-chip>
   `,
-    name: 'Avatar Slot',
+    name: 'Chip Slot',
     args: {
-        label: 'Avatar',
+        label: 'Chip',
         closable: false,
-        avatar_icon: '<svg slot="avatar_icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100%" height="100%"><path d="M12 2.25c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12 6.615 2.25 12 2.25Zm0 1.5a8.25 8.25 0 1 0 0 16.5 8.25 8.25 0 0 0 0-16.5ZM12 7a.75.75 0 0 1 .75.75v3.5h3.5a.75.75 0 0 1 .743.648L17 12a.75.75 0 0 1-.75.75h-3.5v3.5a.75.75 0 0 1-.648.743L12 17a.75.75 0 0 1-.75-.75v-3.5h-3.5a.75.75 0 0 1-.743-.648L7 12a.75.75 0 0 1 .75-.75h3.5v-3.5a.75.75 0 0 1 .648-.743Z"/></svg>'
+        chip_icon: '<svg slot="chip_icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100%" height="100%"><path d="M12 2.25c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12 6.615 2.25 12 2.25Zm0 1.5a8.25 8.25 0 1 0 0 16.5 8.25 8.25 0 0 0 0-16.5ZM12 7a.75.75 0 0 1 .75.75v3.5h3.5a.75.75 0 0 1 .743.648L17 12a.75.75 0 0 1-.75.75h-3.5v3.5a.75.75 0 0 1-.648.743L12 17a.75.75 0 0 1-.75-.75v-3.5h-3.5a.75.75 0 0 1-.743-.648L7 12a.75.75 0 0 1 .75-.75h3.5v-3.5a.75.75 0 0 1 .648-.743Z"/></svg>'
     },
     play: async (context: StoryContext) => {
         const chip = within(context.canvasElement).getByTestId<Chip>('test-chip');
-        const slotElement = chip.shadowRoot.querySelector<HTMLSlotElement>('slot[name="avatar_icon"]');
+        const slotElement = chip.shadowRoot.querySelector<HTMLSlotElement>('slot[name="chip_icon"]');
         await expect(slotElement).toBeTruthy();
 
         const foundSlottedSvgElement = slotElement.assignedElements().find((e) => e.tagName.toLowerCase() === 'svg');
