@@ -17,14 +17,14 @@ import '@capitec/omni-components/button';
 
 ## Properties
 
-| Property       | Attribute       | Modifiers | Type                                       | Default     | Description                             |
-|----------------|-----------------|-----------|--------------------------------------------|-------------|-----------------------------------------|
-| `disabled`     | `disabled`      |           | `boolean`                                  | false       | Indicator if the component is disabled. |
-| `label`        | `label`         |           | `string`                                   |             | Text label.                             |
-| `override`     |                 |           |                                            |             |                                         |
-| `slotPosition` | `slot-position` |           | `"left"\|"top"\|"right"\|"bottom"`         | "left"      | Position of slotted content.            |
-| `styles`       |                 | readonly  | `CSSResult[]`                              |             |                                         |
-| `type`         | `type`          |           | `"primary"\|"secondary"\|"clear"\|"white"` | "secondary" | Display type.                           |
+| Property       | Attribute       | Modifiers | Type                                             | Default     | Description                             |
+|----------------|-----------------|-----------|--------------------------------------------------|-------------|-----------------------------------------|
+| `disabled`     | `disabled`      |           | `boolean`                                        |             | Indicator if the component is disabled. |
+| `label`        | `label`         |           | `string`                                         |             | Text label.                             |
+| `override`     |                 |           |                                                  |             |                                         |
+| `slotPosition` | `slot-position` |           | `"left" \| "top" \| "right" \| "bottom"`         | "left"      | Position of slotted content.            |
+| `styles`       |                 | readonly  | `CSSResult[]`                                    |             |                                         |
+| `type`         | `type`          |           | `"primary" \| "secondary" \| "clear" \| "white"` | "secondary" | Display type.                           |
 
 ## Slots
 
@@ -44,7 +44,7 @@ import '@capitec/omni-components/button';
 | `--omni-button-clear-border-color`               | Clear "type" border color.                       |
 | `--omni-button-clear-border-width`               | Clear "type" border width.                       |
 | `--omni-button-clear-color`                      | Clear "type" color.                              |
-| `--omni-button-clear-hover-background-color`     | XXXX                                             |
+| `--omni-button-clear-hover-background-color`     | Clear "type" hover background color.             |
 | `--omni-button-disabled-active-hover-background-color` | Disabled active background color.                |
 | `--omni-button-disabled-background-color`        | Disabled background color.                       |
 | `--omni-button-disabled-border-color`            | Disabled border color.                           |
