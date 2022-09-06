@@ -68,7 +68,11 @@ export class Chip extends LitElement {
 	// PRIVATE FUNCTIONS
 	// -----------------
 
-	_removeClicked(event: MouseEvent) {
+	_removeClicked(e: MouseEvent) {
+
+        if (this.disabled) {
+			return e.stopImmediatePropagation();
+		}
 
 		// Notify any subscribers that the link was clicked.
 		this.dispatchEvent(new CustomEvent('remove', {
@@ -76,7 +80,7 @@ export class Chip extends LitElement {
 		}));
 
 		// Prevent the event from bubbling up.
-		event.stopPropagation();
+		e.stopPropagation();
 	}
 
     // -------------------
