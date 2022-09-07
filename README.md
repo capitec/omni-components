@@ -72,6 +72,21 @@ import '@capitec/omni-components/check';
 
 </td></tr><tr><td>
 
+[omni-chip](src/chip/README.md)
+
+</td><td>Chip</td><td>
+
+A control that can be used for input, setting attributes, or performing actions.
+
+
+```js
+ 
+import '@capitec/omni-components/chip'; 
+
+```
+
+</td></tr><tr><td>
+
 [omni-code](src/code/README.md)
 
 </td><td>Code</td><td>
@@ -127,6 +142,21 @@ A check icon component
 ```js
  
 import '@capitec/omni-components/icons/Check.icon.js'; 
+
+```
+
+</td></tr><tr><td>
+
+[omni-close-icon](src/icons/README.md)
+
+</td><td>CloseIcon</td><td>
+
+A Close icon component
+
+
+```js
+ 
+import '@innofake/omni-components/icons/Close.icon.js'; 
 
 ```
 

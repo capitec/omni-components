@@ -21,16 +21,16 @@ import '@capitec/omni-components/radio';
 
 ## Properties
 
-| Property   | Attribute  | Modifiers | Type          | Default | Description                                      |
-|------------|------------|-----------|---------------|---------|--------------------------------------------------|
-| `checked`  | `checked`  |           | `boolean`     | false   | Indicator if the component is checked or not.    |
-| `data`     | `data`     |           | `Object`      |         | Data associated with the component.              |
-| `disabled` | `disabled` |           | `boolean`     | false   | Indicator if the component is disabled.          |
-| `error`    | `error`    |           | `string`      |         | An error message to guide users to correct a mistake. |
-| `hint`     | `hint`     |           | `string`      |         | A hint message to assist the user.               |
-| `label`    | `label`    |           | `string`      |         | The radio label text.                            |
-| `override` |            |           |               |         | The element style template.                      |
-| `styles`   |            | readonly  | `CSSResult[]` |         |                                                  |
+| Property   | Attribute  | Modifiers | Type          | Description                                      |
+|------------|------------|-----------|---------------|--------------------------------------------------|
+| `checked`  | `checked`  |           | `boolean`     | Indicator if the component is checked or not.    |
+| `data`     | `data`     |           | `object`      | Data associated with the component.              |
+| `disabled` | `disabled` |           | `boolean`     | Indicator if the component is disabled.          |
+| `error`    | `error`    |           | `string`      | An error message to guide users to correct a mistake. |
+| `hint`     | `hint`     |           | `string`      | A hint message to assist the user.               |
+| `label`    | `label`    |           | `string`      | Text label.                                      |
+| `override` |            |           |               | The element style template.                      |
+| `styles`   |            | readonly  | `CSSResult[]` |                                                  |
 
 ## Methods
 
