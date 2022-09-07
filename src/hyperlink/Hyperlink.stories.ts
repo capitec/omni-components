@@ -4,8 +4,9 @@ import { expect, jest } from '@storybook/jest';
 import { within, userEvent } from '@storybook/testing-library';
 import { ifNotEmpty } from '../utils/Directives.js';
 import { loadCssPropertiesRemote } from '../utils/StoryUtils';
-import { LinkTarget, linkTarget } from './Hyperlink.js';
 import './Hyperlink.js'; 
+
+const linkTarget = ['_self', '_blank', '_parent', '_top'] as const;
 
 export default {
   title: 'UI Components/Hyperlink',
@@ -25,7 +26,7 @@ export default {
 interface ArgTypes {
   label: string;
   href: string;
-  target: LinkTarget;
+  target: typeof linkTarget[number];
   disabled: boolean;
   inline: boolean;
   size: string;

@@ -24,10 +24,6 @@ import '../icons/Close.icon.js';
  * 
  * Registry of all properties defined by the component.
  * 
- * @property {string} [label] - The label string to display.
- * @property {boolean} [closable=false] - Sets if the chip has a close button.
- * @property {boolean} [disabled=false] - Indicator if the component is disabled.
- * 
  * @slot chip_icon - Replaces the icon for the chip slot
  * @slot close_icon - Replaces the icon for the closed slot
  * 
@@ -60,9 +56,23 @@ import '../icons/Close.icon.js';
 @customElement('omni-chip')
 export class Chip extends LitElement {
 
-    @property({ type: String, reflect: true }) label?: string;
-    @property({ type: Boolean, reflect: true }) closable = false;
-    @property({ type: Boolean, reflect: true }) disabled = false;
+	/**
+	 * Text label.
+	 * @attr
+	 */
+    @property({ type: String, reflect: true }) label: string;
+
+    /**
+     * Sets if the chip has a close button.
+     * @attr
+     */
+    @property({ type: Boolean, reflect: true }) closable: boolean;
+    
+    /**
+     * Indicator if the component is disabled.
+     * @attr
+     */
+    @property({ type: Boolean, reflect: true }) disabled: boolean;
 
     // -----------------
 	// PRIVATE FUNCTIONS

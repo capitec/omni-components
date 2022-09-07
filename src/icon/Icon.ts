@@ -31,14 +31,6 @@ import ComponentStyles from '../styles/ComponentStyles';
  * 
  * Registry of all properties defined by the component.
  * 
- * @property {"default"|"extra-small"|"small"|"medium"|"large"|string} [size="default"] - The size to display the icon at. Options include:
- *  - `default` Icon size is 24px.
- *  - `extra-small` Icon size is 8px.
- *  - `small` Icon size is 16px.
- *  - `medium` Icon size is 32px.
- *  - `large` Icon size is 48px.
- * @property {string} icon - The name of the icon to display. Takes preference over the slotted icon
- * 
  * @slot - The icon to be displayed
  * 
  * @cssprop --omni-icon-fill - Icon fill color.
@@ -53,8 +45,17 @@ import ComponentStyles from '../styles/ComponentStyles';
 @customElement('omni-icon')
 export class Icon extends LitElement {
 
-	@property({ type: String, reflect: true }) size?: string = 'default';
-	@property({ type: String, reflect: true }) icon?: string;
+	/**
+	 * The size to display the icon at
+	 * @attr
+	 */
+	@property({ type: String, reflect: true }) size: 'default' | 'extra-small' | 'small' | 'medium' | 'large' = 'default';
+
+	/**
+	 * The name of the icon to display. Takes preference over the slotted icon.
+	 * @attr
+	 */
+	@property({ type: String, reflect: true }) icon: string;
 
 	// --------------
 	// INITIALISATION

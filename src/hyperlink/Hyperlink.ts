@@ -22,20 +22,6 @@ import ComponentStyles from '../styles/ComponentStyles';
  * 
  * Registry of all properties defined by the component.
  * 
- * @property {string} [label] - The label string to display.
- * @property {string} [href] - URL to link to. NOTE, suppresses "click" event if specified.
- * @property {"_self"|"_blank"|"_parent"|"_top"|String} [target="_self"] - Where to load the URL specified in "href":
- *  - `_self` Current browsing context.
- *  - `_blank` Usually a new tab, users can configure the browser to open a new window instead.
- *  - `_parent` Parent browsing context of the current one. If no parent, behave as "_self".
- *  - `_top` Topmost browsing context (the "highest" context thats an ancestor of the current one). If no ancestors, behaves as "_self".
- * @property {boolean} [disabled=false] - Indicator if the link is disabled.
- * @property {boolean} [inline=false] - Indicator if the link is used as part of a sentence.
- * @property {string} [size] - Size of the Hyperlink text:
- *  - `default` Size variation to apply.
- *  - `small` Size variation to apply.
- * 
- *
  * @cssprop --omni-hyperlink-color-disabled - Hyperlink disabled color.
  * 
  * @cssprop --omni-hyperlink-font-size - Hyperlink font size.
@@ -60,12 +46,41 @@ import ComponentStyles from '../styles/ComponentStyles';
 @customElement('omni-hyperlink')
 export class Hyperlink extends LitElement {
 
-    @property({ type: String, reflect: true }) label?: string;
-    @property({ type: String, reflect: true}) href?: string;
-    @property({ type: String, reflect: true}) target?: LinkTarget = '_self';
-    @property({ type: Boolean, reflect: true}) disabled: boolean = false;
-    @property({ type: Boolean, reflect: true}) inline: boolean = false;
-    @property({ type: String, reflect: true}) size?: string;
+    /**
+	 * Text label.
+	 * @attr
+     */
+    @property({ type: String, reflect: true }) label: string;
+
+    /**
+     * URL to link to.
+     * @attr
+     */
+    @property({ type: String, reflect: true}) href: string;
+
+    /**
+     * Where to load the URL specified in "href"
+     * @attr [target="_self"]
+     */
+    @property({ type: String, reflect: true}) target: '_self' | '_blank' | '_parent' | '_top' = '_self';
+
+	/**
+	 * Indicator if the component is disabled.
+	 * @attr
+	 */
+    @property({ type: Boolean, reflect: true}) disabled: boolean;
+
+    /**
+     * Indicator if the link is used as part of a sentence.
+     * @attr
+     */
+    @property({ type: Boolean, reflect: true}) inline: boolean;
+
+    /**
+     * Size of the Hyperlink text.
+     * @attr
+     */
+    @property({ type: String, reflect: true}) size: string;
 
 	// -------------------
 	// RENDERING TEMPLATES
@@ -122,13 +137,9 @@ export class Hyperlink extends LitElement {
 	}
 
 	protected override render(): TemplateResult {
-		return html`<a class="hyperlink" ?disabled="${this.disabled}" href="${this.href ? this.href : 'javascript:void(0)'}" .target="${this.target}" tabindex="0">${this.label}</a>`;
+		return html`<a class="hyperlink" ?disabled=${this.disabled} href="${this.href ? this.href : 'javascript:void(0)'}" .target="${this.target}" tabindex="0">${this.label}</a>`;
 	}
 
 }
-
-/* Types for "target" property */
-export const linkTarget = ['_self', '_blank', '_parent', '_top'] as const;
-export type LinkTarget = typeof linkTarget[number];
 
 
