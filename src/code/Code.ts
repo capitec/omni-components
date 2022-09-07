@@ -25,10 +25,6 @@ import Prism from 'prismjs';
  * 
  * Registry of all properties defined by the component.
  * 
- * @property {String} [header] Renders a small header above the block itself.
- * @property {String} [content] Raw text to parse as content. If this property is specified, it will take precedence over slotted content. This should also be used if you are using dynamic content
- * @property {String} language Programming language used, e.g. html, css, javascript, etc.
- * 
  * @cssprop --omni-code-scrollbar-width - Scrollbar Width.
  * @cssprop --omni-code-scrollbar-track-box-shadow - Scrollbar track box shadow.
  * @cssprop --omni-code-scrollbar-track-border-width - Scrollbar track border width.
@@ -46,11 +42,26 @@ import Prism from 'prismjs';
 @customElement('omni-code')
 export class Code extends LitElement {
 
-	@property({ type: String, reflect: true }) header?: string;
-	@property({ type: String, reflect: true }) language = 'html';
+	/**
+	 * Renders a small header above the block itself.
+	 * @attr
+	 */
+	@property({ type: String, reflect: true }) header: string;
+
+	/**
+	 * Programming language used, e.g. html, css, javascript, etc.
+	 * @attr [language="html"]
+	 */
+	@property({ type: String, reflect: true }) language: string;
 
 	private _content = '';
+
+	/**
+	 * Raw text to parse as content. If this property is specified, it will take precedence over slotted content. This should also be used if you are using dynamic content
+	 * @attr
+	 */
 	@property({ type: String, reflect: true })
+
 	get content(): string {
 		return this._content;
 	}

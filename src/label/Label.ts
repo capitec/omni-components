@@ -21,15 +21,7 @@ import ComponentStyles from '../styles/ComponentStyles';
  * @element omni-label
  * 
  * Registry of all properties defined by the component.
- * 
- * @property {string} label - The label string to display.
- * @property {"default"|"title"|"subtitle"|"strong"|string}  [type="default"] - The type of label to display:
- *  - `default` Normal font weight.
- *  - `title` Larger font and weight.
- *  - `subtitle` Larger font and weight.
- *  - `strong` Largest font and weight.
- * 
- * 
+ *  
  * @cssprop --omni-label-font-color - Label font color.
  * @cssprop --omni-label-font-family - Label font family.
  * @cssprop --omni-label-font-size - Label font size.
@@ -54,8 +46,17 @@ import ComponentStyles from '../styles/ComponentStyles';
 @customElement('omni-label')
 export class Label extends LitElement {
 
-	@property({ type: String, reflect: true }) label?: string;
-	@property({ type: String, reflect: true }) type?: string;
+	/**
+	 * Text label.
+	 * @attr
+	 */
+	@property({ type: String, reflect: true }) label: string;
+	
+	/**
+	 * The type of label to display.
+	 * @attr [type="default"]
+	 */
+	@property({ type: String, reflect: true }) type: 'default' | 'title' | 'subtitle' | 'strong' = 'default';
 
 	// --------------
 	// INITIALISATION

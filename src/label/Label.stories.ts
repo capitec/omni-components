@@ -7,6 +7,8 @@ import { loadCssPropertiesRemote } from '../utils/StoryUtils';
 import { Label } from './Label.js';
 import './Label.js';
 
+const labelOptions = ['default','title','subtitle','strong'] as const;
+
 export default {
   title: 'UI Components/Label',
   component: 'omni-label',
@@ -14,7 +16,7 @@ export default {
     type: {
       control: {
         type: 'radio',
-        options: ['default', 'title', 'subtitle', 'strong'],
+        options: labelOptions
       },
     },
   },
@@ -25,9 +27,9 @@ export default {
 
 interface ArgTypes {
   label: string;
-  type: string;
+  type: typeof labelOptions[number];
 }
-
+  
 export const Interactive = {
   render: (args: ArgTypes) => html`
     <omni-label data-testid="test-label" label="${ifNotEmpty(args.label)}" type="${args.type}"> </omni-label>
