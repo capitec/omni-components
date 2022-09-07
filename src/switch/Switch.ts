@@ -31,7 +31,6 @@ import ComponentStyles from '../styles/ComponentStyles';
  * @property {boolean} [disabled=false] - Indicator if the component is disabled.
  * 
  * @fires {CustomEvent<{ old: Boolean; new: Boolean; }>} value-change - Dispatched when the switch checked state is changed.
- * @fires {CustomEvent<{ old: Boolean; new: Boolean; }>} value-changed - Dispatched when the switch checked state is changed.
  * 
  * @cssprop --omni-switch-label-font-color - Label font color.
  * @cssprop --omni-switch-label-font-family - Label font family.

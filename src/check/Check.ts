@@ -90,7 +90,7 @@ export class Check extends LitElement {
 	 * A hint message to assist the user.
 	 * @attr
 	 */
-	@property({ type: String, reflect: true }) hint?: string;
+	@property({ type: String, reflect: true }) hint: string;
 
 	/**
 	 * An error message to guide users to correct a mistake.
@@ -114,7 +114,7 @@ export class Check extends LitElement {
 	 * Indicator if the component is in and indeterminate state.
 	 * @attr
 	 */
-	@property({ type: Boolean, reflect: true }) indeterminate = false;
+	@property({ type: Boolean, reflect: true }) indeterminate: boolean;
 
 	// --------------
 	// INITIALISATION
