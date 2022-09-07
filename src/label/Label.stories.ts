@@ -29,7 +29,7 @@ interface ArgTypes {
   label: string;
   type: typeof labelOptions[number];
 }
-
+  
 export const Interactive = {
   render: (args: ArgTypes) => html`
     <omni-label data-testid="test-label" label="${ifNotEmpty(args.label)}" type="${args.type}"> </omni-label>

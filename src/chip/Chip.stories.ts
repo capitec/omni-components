@@ -1,8 +1,8 @@
 import { Meta, StoryContext } from '@storybook/web-components';
-import { userEvent, within } from '@storybook/testing-library';
+import { findAllByDisplayValue, userEvent, within } from '@storybook/testing-library';
 import { expect, jest } from '@storybook/jest';
 import { html, nothing } from 'lit';
-import { assignToSlot, loadCssPropertiesRemote, raw } from '../utils/StoryUtils.js';
+import { assignToSlot, loadCssPropertiesRemote, loadDefaultSlotFor, raw } from '../utils/StoryUtils.js';
 import { Chip } from './Chip.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
@@ -42,14 +42,14 @@ interface Args {
 
 export const Interactive = {
     render: (args: Args) => html`
-    <omni-chip
-        data-testid="test-chip"
-        label="${ifNotEmpty(args.label)}"
-        ?closable=${args.closable}
-        ?disabled="${args.disabled}"
-        >${(args.chip_icon ? html`${'\r\n'}${unsafeHTML(assignToSlot('chip_icon', args.chip_icon))}` : nothing)}${(args.close_icon ? html`${'\r\n'}${unsafeHTML(assignToSlot('close_icon', args.close_icon))}` : nothing)}
-    </omni-chip>
-  `,
+        <omni-chip
+            data-testid="test-chip"
+            label="${ifNotEmpty(args.label)}"
+            ?closable=${args.closable}
+            ?disabled="${args.disabled}"
+            >${(args.chip_icon ? html`${'\r\n'}${unsafeHTML(assignToSlot('chip_icon', args.chip_icon))}` : nothing)}${(args.close_icon ? html`${'\r\n'}${unsafeHTML(assignToSlot('close_icon', args.close_icon))}` : nothing)}
+        </omni-chip>
+    `,
     name: 'Interactive',
     args: {
         label: 'Chip',
@@ -73,11 +73,11 @@ export const Interactive = {
 
 export const Label = {
     render: (args: Args) => html`
-    <omni-chip
-        data-testid="test-chip"
-        label="${ifNotEmpty(args.label)}">
-    </omni-chip>
-  `,
+        <omni-chip
+            data-testid="test-chip"
+            label="${ifNotEmpty(args.label)}">
+        </omni-chip>
+    `,
     name: 'Label',
     args: {
         label: 'Label'
@@ -90,12 +90,12 @@ export const Label = {
 
 export const Closable = {
     render: (args: Args) => html`
-    <omni-chip
-        data-testid="test-chip"
-        label="${ifNotEmpty(args.label)}"
-        ?closable=${args.closable}>
-    </omni-chip>
-  `,
+        <omni-chip
+            data-testid="test-chip"
+            label="${ifNotEmpty(args.label)}"
+            ?closable=${args.closable}>
+        </omni-chip>
+    `,
     name: 'Closable',
     args: {
         label: 'Closable',
@@ -117,12 +117,12 @@ export const Closable = {
 
 export const Disabled = {
     render: (args: Args) => html`
-    <omni-chip
-        data-testid="test-chip"
-        label="${ifNotEmpty(args.label)}"
-        ?disabled="${args.disabled}">
-    </omni-chip>
-  `,
+        <omni-chip
+            data-testid="test-chip"
+            label="${ifNotEmpty(args.label)}"
+            ?disabled="${args.disabled}">
+        </omni-chip>
+    `,
     name: 'Disabled',
     args: {
         label: 'Disabled',
@@ -147,13 +147,13 @@ export const Disabled = {
 
 export const ChipSlotIcon = {
     render: (args: Args) => html`
-    <omni-chip
-        data-testid="test-chip"
-        label="${ifNotEmpty(args.label)}"
-        ?closable=${args.closable}>
-        ${unsafeHTML(args.chip_icon)} 
-    </omni-chip>
-  `,
+        <omni-chip
+            data-testid="test-chip"
+            label="${ifNotEmpty(args.label)}"
+            ?closable=${args.closable}>
+            ${unsafeHTML(args.chip_icon)} 
+        </omni-chip>
+    `,
     name: 'Chip Icon',
     args: {
         label: 'Chip',
@@ -173,14 +173,14 @@ export const ChipSlotIcon = {
 
 export const CustomCloseIcon = {
     render: (args: Args) => html`
-    <omni-chip
-        data-testid="test-chip"
-        label="${ifNotEmpty(args.label)}"
-        ?closable=${args.closable}>
-        ${unsafeHTML(args.chip_icon)} 
-        ${unsafeHTML(args.close_icon)} 
-    </omni-chip>
-  `,
+        <omni-chip
+            data-testid="test-chip"
+            label="${ifNotEmpty(args.label)}"
+            ?closable=${args.closable}>
+            ${unsafeHTML(args.chip_icon)} 
+            ${unsafeHTML(args.close_icon)} 
+        </omni-chip>
+    `,
     name: 'Custom Close Icon',
     args: {
         label: 'Close',

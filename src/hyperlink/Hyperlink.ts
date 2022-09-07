@@ -34,7 +34,7 @@ import ComponentStyles from '../styles/ComponentStyles';
  * @cssprop --omni-font-family-small - Hyperlink small font family variation
  * @cssprop --omni-hyperlink-font-weight-small - Hyperlink small font weight
  * 
- * @cssprop --omni-hyperlink-color-active - Hyperlink colour when in an active state.
+ * @cssprop --omni-hyperlink-color-active - Hyperlink color when in an active state.
  * @cssprop --omni-hyperlink-text-decorator-active Hyperlink text decorator in active state.
  * 
  * @cssprop --omni-hyperlink-text-decorator-hover - Hyperlink text decorator when in hover state.
