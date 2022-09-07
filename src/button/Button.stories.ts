@@ -2,11 +2,16 @@ import { Meta, StoryContext } from '@storybook/web-components';
 import { userEvent, within } from '@storybook/testing-library';
 import { expect, jest } from '@storybook/jest';
 import { html } from 'lit';
-import { loadCssPropertiesRemote } from '../utils/StoryUtils.js';
-import { Button, ButtonType, buttonType, slotPositionType, SlotPositionType } from './Button.js';
+import { loadCssPropertiesRemote, loadDefaultSlotForRemote, raw } from '../utils/StoryUtils.js';
+import { Button } from './Button.js';
+import { ifNotEmpty } from '../utils/Directives.js';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
+
 import './Button.js';
 import '../icon/Icon.js';
-import { ifNotEmpty } from '../utils/Directives.js';
+
+const buttonOptions = ['primary', 'secondary', 'clear', 'white'] as const;
+const slotPositionOptions = ['left', 'top', 'right', 'bottom'] as const;
 
 export default {
     title: 'UI Components/Button',
@@ -14,12 +19,19 @@ export default {
     argTypes: {
         type: {
             control: 'radio',
-            options: buttonType,
+            options: buttonOptions,
         },
         slotPosition: {
             control: 'radio',
-            options: slotPositionType,
+            options: slotPositionOptions,
         },
+        'slot-position': {
+            control: false
+        },
+        slot: {
+          control: 'text',
+          description: loadDefaultSlotForRemote('omni-button').description
+        }
     },
     parameters: {
         actions: {
@@ -30,10 +42,11 @@ export default {
 } as Meta;
 
 interface Args {
-    type: ButtonType;
+    type: typeof buttonOptions[number];
     label: string;
-    slotPosition: SlotPositionType;
+    slotPosition: typeof slotPositionOptions[number];
     disabled: boolean;
+    slot: string
 }
 
 export const Interactive = {
@@ -44,7 +57,7 @@ export const Interactive = {
         label="${ifNotEmpty(args.label)}"
         slot-position="${args.slotPosition}"
         ?disabled=${args.disabled}>
-        <omni-icon icon="@material/thumb_up"></omni-icon>
+        ${unsafeHTML(args.slot)}
     </omni-button>
   `,
     name: 'Interactive',
@@ -53,6 +66,7 @@ export const Interactive = {
         label: 'Button',
         slotPosition: 'top',
         disabled: false,
+        slot: raw`<omni-icon icon="@material/thumb_up"></omni-icon>`
     },
     play: async (context: StoryContext) => {
         const button = within(context.canvasElement).getByTestId<Button>('test-button');
@@ -100,7 +114,7 @@ export const Label = {
 export const Slot = {
     render: () => html`
     <omni-button data-testid="test-button">
-      <omni-icon size="default" icon="/assets/direction.svg"></omni-icon>
+      <omni-icon size="default" icon="assets/direction.svg"></omni-icon>
     </omni-button>
   `,
     name: 'Slot',

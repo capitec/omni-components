@@ -1,0 +1,10 @@
+{
+	"lit-plugin.rules.no-unknown-slot": "off",
+    "workbench.colorCustomizations": {
+		"activityBar.background": "#0f3b65",
+		"activityBar.foreground": "#FFFFFF",
+		"activityBar.inactiveForeground": "#ffffffbe",
+		"titleBar.activeBackground": "#0f3b65",
+		"titleBar.activeForeground": "#FFFFFF"
+	}
+}

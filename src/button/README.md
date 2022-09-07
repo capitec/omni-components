@@ -3,7 +3,7 @@
 A control that allows an action to be executed.
 
 ```js 
-import '@innofake/omni-components/button'; 
+import '@capitec/omni-components/button'; 
 ```
 
 ## Example
@@ -26,17 +26,11 @@ import '@innofake/omni-components/button';
 | `styles`       |                 | readonly  | `CSSResult[]`                              |             |                                         |
 | `type`         | `type`          |           | `"primary"\|"secondary"\|"clear"\|"white"` | "secondary" | Display type.                           |
 
-## Events
-
-| Event   | Type          | Description                           |
-|---------|---------------|---------------------------------------|
-| `click` | `CustomEvent` | When the button component is clicked. |
-
 ## Slots
 
-| Name      | Description                                      |
-|-----------|--------------------------------------------------|
-| `default` | Content to render inside button, can be positioned using {@link slotPosition} property. |
+| Name | Description                                      |
+|------|--------------------------------------------------|
+|      | Content to render inside button, can be positioned using {@link slotPosition} property. |
 
 ## CSS Custom Properties
 

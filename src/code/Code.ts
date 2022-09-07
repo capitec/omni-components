@@ -8,7 +8,7 @@ import Prism from 'prismjs';
  * A control to syntax highlight and display source code.
  *
  * ```js 
- * import '@innofake/omni-components/code'; 
+ * import '@capitec/omni-components/code'; 
  * ```
  * 
  * @example
@@ -39,6 +39,7 @@ import Prism from 'prismjs';
  * @cssprop --omni-code-header-border-radius - Header border radius. 
  * @cssprop --omni-code-header-padding - Header padding. 
  * @cssprop --omni-code-header-border - Header border. 
+ * @cssprop --omni-code-header-family - Header font family.
  * @cssprop --omni-code-header-font-weight - Header font weight. 
  * 
  */
@@ -57,7 +58,7 @@ export class Code extends LitElement {
 		const oldVal = this._content;
 
 		this._parseContent(val);
-		this.requestUpdate(`content`, oldVal);
+		this.requestUpdate('content', oldVal);
 	}
 
 	// ----------
@@ -91,7 +92,7 @@ export class Code extends LitElement {
 	// -----------
 
 	override focus() {
-		this.shadowRoot.getElementById(`track`).focus();
+		this.shadowRoot.getElementById('track').focus();
 	}
 
 	// ----------
@@ -109,8 +110,8 @@ export class Code extends LitElement {
 		if (source.length > 0) {
 
 			// Remove the starting newline character.
-			if (source.startsWith(`\n`)) {
-				source = source.replace(`\n`, ``);
+			if (source.startsWith('\n')) {
+				source = source.replace('\n', '');
 			}
 
 			// Remove any trailing whitespace, newlines or tabs.
@@ -120,20 +121,20 @@ export class Code extends LitElement {
 			let count = 0;
 			let key = source[count];
 
-			while (key === `\t`) {
+			while (key === '\t') {
 				key = source[++count];
 			}
 
 			// Replace that amount of tabs on every line to normalise the string to start with zero padding.
-			source = source.replace(new RegExp(source.substr(0, count), `g`), ``);
+			source = source.replace(new RegExp(source.substr(0, count), 'g'), '');
 
 			// Replace empty HTML attribute values [disabled=""] with empty string [disabled]
-			if (this.language === `html`) {
-				source = source.replace(/(="")/gi, ``);
+			if (this.language === 'html') {
+				source = source.replace(/(="")/gi, '');
 			}
 
 			// Set the code preview content.
-			this._content = Prism.highlight(source, Prism.languages[this.language], `css`);
+			this._content = Prism.highlight(source, Prism.languages[this.language], 'css');
 
 		}
 	}
@@ -363,6 +364,7 @@ export class Code extends LitElement {
 					border-radius: var(--omni-code-header-border-radius, 0.3em 0.3em 0 0);
 					padding: var(--omni-code-header-padding, 4px 12px);
 					border: var(--omni-code-header-border, 1px solid #CCCCCC);
+					font-family: var(--omni-code-header-family, var(--omni-font-family));
 					font-weight: var(--omni-code-header-font-weight, 500);
 				}
 			`

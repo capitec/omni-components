@@ -6,7 +6,7 @@ import ComponentStyles from '../styles/ComponentStyles';
  * A control that allows an action to be executed.
  * 
  * ```js 
- * import '@innofake/omni-components/button'; 
+ * import '@capitec/omni-components/button'; 
  * ```
  * 
  * @example
@@ -20,16 +20,7 @@ import ComponentStyles from '../styles/ComponentStyles';
  * 
  * @element omni-button
  * 
- * Registry of all properties defined by the component.
- * 
- * @property {string} [label] - Text label.
- * @property {"primary"|"secondary"|"clear"|"white"} [type="secondary"] - Display type.
- * @property {"left"|"top"|"right"|"bottom"} [slotPosition="left"] - Position of slotted content.
- * @property {boolean} [disabled=false] - Indicator if the component is disabled.
- * 
- * @slot default - Content to render inside button, can be positioned using {@link slotPosition} property.
- * 
- * @fires {CustomEvent} click - When the button component is clicked.
+ * @slot - Content to render inside button, can be positioned using {@link slotPosition} property.
  * 
  * @cssprop --omni-button-font-family - Component font family.
  * @cssprop --omni-button-font-size - Component font size.
@@ -54,7 +45,7 @@ import ComponentStyles from '../styles/ComponentStyles';
  * @cssprop --omni-button-clear-border-color - Clear "type" border color.
  * @cssprop --omni-button-clear-border-width - Clear "type" border width.
  * @cssprop --omni-button-clear-color - Clear "type" color.
- * @cssprop --omni-button-clear-hover-background-color - XXXX
+ * @cssprop --omni-button-clear-hover-background-color - Clear "type" hover background color.
  * @cssprop --omni-button-clear-active-background-color - Clear "type" active background color.
  * @cssprop --omni-button-clear-active-border-color - Clear "type" active border color.
  * @cssprop --omni-button-clear-active-border-width - Clear "type" active border width.
@@ -77,31 +68,33 @@ import ComponentStyles from '../styles/ComponentStyles';
 @customElement('omni-button')
 export class Button extends LitElement {
 
-	@property({ type: String, reflect: true }) label?: string;
-	@property({ type: String, reflect: true }) type?: ButtonType = 'secondary';
-	@property({ type: String, reflect: true, attribute: 'slot-position' }) slotPosition?: SlotPositionType;
-	@property({ type: Boolean, reflect: true }) disabled?: boolean;
+	/**
+	 * Display type.
+	 * @attr
+	 */
+	@property({ type: String, reflect: true }) type: 'primary' | 'secondary' | 'clear' | 'white' = 'secondary';
+
+	/**
+	 * Text label.
+	 * @attr
+	 */
+	@property({ type: String, reflect: true }) label: string;
+
+	/**
+	 * Position of slotted content.
+	 * @attr [slot-position="left"]
+	 */
+	@property({ type: String, reflect: true, attribute: 'slot-position' }) slotPosition: 'left' | 'top' | 'right' | 'bottom' = 'left';
+
+	/**
+	 * Indicator if the component is disabled.
+	 * @attr
+	 */
+	@property({ type: Boolean, reflect: true }) disabled: boolean;
 
 	// -----------------
 	// PRIVATE FUNCTIONS
 	// -----------------
-
-	private _click(e: Event) {
-
-		// Ignore the event if the component is disabled.
-		if (this.disabled) {
-			return e.stopImmediatePropagation();
-		}
-
-		// Prevent the event from bubbling up.
-		e.preventDefault();
-		e.stopPropagation();
-
-		// Notify any subscribers that the link was clicked.
-		this.dispatchEvent(new CustomEvent('click', {
-			detail: null
-		}));
-	}
 
 	// -------------------
 	// RENDERING TEMPLATES
@@ -324,20 +317,14 @@ export class Button extends LitElement {
 	protected override render(): TemplateResult {
 		return html`
 			<button 
+				?disabled=${this.disabled}
 				class="button ${this.slotPosition ? `slot-${this.slotPosition}` : ''} ${this.type ? this.type : 'secondary'} ${this.disabled ? 'disabled' : ''}"
 				id="button"
-				@click="${this._click}">
+				aria-disabled=${this.disabled ? 'true' : 'false'}
+        		tabindex=${this.disabled ? '-1' : '0'}>
 				<slot></slot>
 				${this.label ? html`<label id="label" class="label">${this.label}</label>` : nothing}
 			</button>
 		`;
 	}
 }
-
-/* Types for "type" property */
-export const buttonType = ['primary', 'secondary', 'clear', 'white'] as const;
-export type ButtonType = typeof buttonType[number];
-
-/* Types for "slotPosition" property */
-export const slotPositionType = ['left', 'top', 'right', 'bottom'] as const;
-export type SlotPositionType = typeof slotPositionType[number];
