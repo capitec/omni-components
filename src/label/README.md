@@ -17,12 +17,12 @@ import '@capitec/omni-components/label';
 
 ## Properties
 
-| Property   | Attribute | Modifiers | Type                                             | Default   | Description                                      |
-|------------|-----------|-----------|--------------------------------------------------|-----------|--------------------------------------------------|
-| `label`    | `label`   |           | `string`                                         |           | The label string to display.                     |
-| `override` |           |           |                                                  |           | The element style template.                      |
-| `styles`   |           | readonly  | `CSSResult[]`                                    |           |                                                  |
-| `type`     | `type`    |           | `"default"\|"title"\|"subtitle"\|"strong"\|string` | "default" | The type of label to display:<br />- `default` Normal font weight.<br />- `title` Larger font and weight.<br />- `subtitle` Larger font and weight.<br />- `strong` Largest font and weight. |
+| Property   | Attribute | Modifiers | Type                                             | Default   | Description                   |
+|------------|-----------|-----------|--------------------------------------------------|-----------|-------------------------------|
+| `label`    | `label`   |           | `string`                                         |           | Text label.                   |
+| `override` |           |           |                                                  |           | The element style template.   |
+| `styles`   |           | readonly  | `CSSResult[]`                                    |           |                               |
+| `type`     | `type`    |           | `"default" \| "title" \| "subtitle" \| "strong"` | "default" | The type of label to display. |
 
 ## CSS Custom Properties
 
