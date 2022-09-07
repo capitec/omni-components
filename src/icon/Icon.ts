@@ -47,7 +47,7 @@ export class Icon extends LitElement {
 
 	/**
 	 * The size to display the icon at
-	 * @attr
+	 * @attr [size="default"]
 	 */
 	@property({ type: String, reflect: true }) size: 'default' | 'extra-small' | 'small' | 'medium' | 'large' = 'default';
 

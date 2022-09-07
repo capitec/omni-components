@@ -50,9 +50,9 @@ export class Code extends LitElement {
 
 	/**
 	 * Programming language used, e.g. html, css, javascript, etc.
-	 * @attr
+	 * @attr [language="html"]
 	 */
-	@property({ type: String, reflect: true }) language = 'html';
+	@property({ type: String, reflect: true }) language: string;
 
 	private _content = '';
 

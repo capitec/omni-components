@@ -25,11 +25,6 @@ import ComponentStyles from '../styles/ComponentStyles';
  * 
  * Registry of all properties defined by the component.
  * 
- * @property {string} [error] - An error message to guide users to correct a mistake.
- * 
- * @property {boolean} [checked=false] - Indicator if the component is checked or not.
- * @property {boolean} [disabled=false] - Indicator if the component is disabled.
- * 
  * @fires {CustomEvent<{ old: Boolean; new: Boolean; }>} value-change - Dispatched when the switch checked state is changed.
  * 
  * @cssprop --omni-switch-label-font-color - Label font color.
