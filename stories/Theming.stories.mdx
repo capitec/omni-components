@@ -1,12 +1,23 @@
-import { Description, Meta } from '@storybook/addon-docs';
+import { Description, Meta, Canvas, Story, Source } from '@storybook/addon-docs';
 import { CssPropsBlock } from "@innofake/storybook-addon-cssprops";
-import { loadThemeVariablesRemote, markdownCodeRemote, loadThemesListRemote } from '../src/utils/StoryUtils';
+import { html, css } from 'lit';
+import { loadThemeVariablesRemote, markdownCodeRemote, loadThemesListRemote, loadFileRemote } from '../src/utils/StoryUtils';
 
 import '../dist/label';
+import '../dist/button';
+import '../dist/switch';
+import '../dist/check';
 
 <Meta title="Theme Support" parameters={{ 
-  cssprops: loadThemeVariablesRemote()
+  cssprops: loadThemeVariablesRemote(),
+  docs: {
+		source: {
+			state: false,
+			format: false
+		},
+  }
 }}/>
+
 
 <style>{`
 
@@ -23,6 +34,19 @@ import '../dist/label';
     font-family: inherit;
     font-size: inherit;
     color: inherit;
+  }
+
+  .flex-row {
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin: 6px;
+  }
+
+  .flex-row > * {
+    margin: 6px;
   }
 
   
@@ -50,17 +74,37 @@ Currently provided theme variables are listed below and can be modified for a li
 
 </omni-label>
 
-<CssPropsBlock />
-
 </div>
+
+<!-- This is to enable changing if themes as it only applies when stories are available -->
+
+<Story name="Theme Support" 
+      decorators={[(story) => html`<div class="flex-row">${story()}</div>`]} >{
+  html`
+          <omni-button label="Button" type="primary"></omni-button>
+          <omni-switch label="Switch" checked></omni-switch>
+          <omni-check label="Check" checked></omni-check>
+      `
+}</Story>
+
+
+
+<CssPropsBlock />
 
 <omni-label label="Example Themes Source" type="title"></omni-label>
 <div>{
   loadThemesListRemote().map(theme => {
     return (
             <div>
-            {theme}
-              <Description markdown={markdownCodeRemote(`themes/${theme}`, "css")} />
+            <omni-label label={theme} type="subtitle"></omni-label>
+            <Source
+                language="css"
+                code={loadFileRemote(`themes/${theme}`)}
+                format={false}
+                dark
+            />
             </div>)
   })
   }</div>
+
+  

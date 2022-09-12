@@ -59,7 +59,7 @@ export const parameters = {
 	},
 	options: {
 		storySort: {
-			order: ['Welcome', 'UI Components', '*'],
+			order: ['Welcome', '*', 'Contributing', 'UI Components', 'Non-UI Components' ],
 		}
 	},
 	viewMode: 'docs',
