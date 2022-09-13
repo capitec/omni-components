@@ -13,6 +13,7 @@
             "url": "https://github.com/capitec/omni-components/actions/workflows/build.yml"
         }
     ],
+	
     "line": "aqua",
     "headingPrefix": {
       "1": "➜ ",
