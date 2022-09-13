@@ -1,5 +1,6 @@
 # Dependency directories
 node_modules/
+_node_modules/
 
 # TypeScript v1 declaration files
 typings/
