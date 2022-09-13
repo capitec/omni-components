@@ -1,0 +1,11 @@
+{
+    "excludePaths": [
+      "stories",
+      "story",
+      "style",
+      "icon",
+      "internal",
+      "test"
+    ],
+    "importRoot": "@capitec/omni-components"
+}
