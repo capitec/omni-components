@@ -1,7 +1,6 @@
 import { css, html, LitElement, nothing, TemplateResult, } from 'lit';
 export { ifDefined } from 'lit/directives/if-defined.js';
 import { customElement, property } from 'lit/decorators.js';
-import ComponentStyles from '../styles/ComponentStyles';
 import InputStyles from '../styles/InputStyles';
 
 
@@ -62,13 +61,13 @@ export class TextField extends LitElement {
      * Indicator if the component should be focussed
      * @attr
      */
-    @property({ type: Boolean, reflect: true }) focussed = false;
+    @property({ type: Boolean, reflect: true }) focussed: boolean;
 
     /**
      * Indicator if the component should be editable.
      * @attr
      */
-    @property({ type: Boolean, reflect: true }) disabled = false;
+    @property({ type: Boolean, reflect: true }) disabled: boolean;
 
 
 	constructor() {
@@ -77,7 +76,17 @@ export class TextField extends LitElement {
 
     override connectedCallback(): void {
         super.connectedCallback();
+        this.addEventListener('input', this._keyInput.bind(this));
         this.addEventListener('focus', this._focusGained.bind(this));
+        this.addEventListener('focusout', this._focusLost.bind(this));
+    }
+
+    override disconnectedCallback(): void {
+        super.disconnectedCallback();
+        this.addEventListener('input', this._keyInput);
+        this.removeEventListener('focus', this._focusGained);
+        this.removeEventListener('focusout', this._focusLost);
+        // this.removeEventListener('focus',);
     }
 
     // --------------
@@ -103,19 +112,28 @@ export class TextField extends LitElement {
 		this.focussed = true;
 	}
 
-	/**
-	 * @param  {KeyboardEvent} event keyboard event
+    /**
+	 * Handle focus lost events.
+	 * 
+	 * @param {FocusEvent} event - The event details.
+	 * 
+	 * @ignore
 	 * @returns {void}
 	 */
-     _keyInput(event: KeyboardEvent) {
+	_focusLost() {
 
-        if(!this.focussed){
-            this.focussed === true;
-        }
-      
-        if (event.key === 'Enter') {
-			// this._valueChanged();
-		}
+		// Update the component focus state.
+		this.focussed = false;
+	}
+
+	/**
+	 * @param  {InputEvent} event keyboard event
+	 * @returns {void}
+	 */
+     _keyInput() {
+
+        const inputField = <HTMLInputElement>this.shadowRoot.getElementById('inputField');
+        this.value = inputField.value;
 	}
 
     static override get styles() {
@@ -123,10 +141,7 @@ export class TextField extends LitElement {
 		return [
             InputStyles,
 			css`
-
-
-
-			`
+    		`
 		];
 	}
 
@@ -140,25 +155,18 @@ export class TextField extends LitElement {
            ${this.focussed === true ? ' focussed': ''}
            ${this.disabled === true ? ' disabled': ''}">
 
-           <label class="label${this.focussed === true ? ' blue' : ' idle'}" for="inputField">${this.label}</label>
+           <label class="label${this.error ? ' error' : ''}${this.focussed === true ? ' blue' : ' idle'}" for="inputField">${this.label}</label>
            <input
 			    class="field"
 			    id="inputField"
 			    type="text"
-			    .value="${this.value}" tabindex="${this.disabled ? '' : 0}"
+			    value="${this.value}" ?readonly="${this.disabled}" tabindex="${this.disabled ? '' : 0}"
                 />
 			
-				${this.hint && !this.error ? html`<div class="hint">${this.hint}</div>` : ''}
-				${this.error ? html`<div class="error">${this.error}</div>` : ''}
+				${this.hint && !this.error ? html`<div class="hint">${this.hint}</div>` : nothing}
+				${this.error ? html`<div class="error">${this.error}</div>` : nothing}
         </div>
 		`;
 	}
-
-    /*
-    protected override render(): TemplateResult {
-		return super.render();
-	}
-    */
-
 
 }
