@@ -19,6 +19,7 @@ typings/
 
 # Output directories
 dist
+dist-esm
 docs
 coverage
 .nyc_output
