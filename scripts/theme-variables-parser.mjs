@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const jsdoc = require('@innofake/jsdoc-api-debuggable');
-const jsdocParse = require('jsdoc-parse');
-const fs = require('fs');
+import { explainSync } from '@innofake/jsdoc-api-debuggable';
+import jsdocParse from 'jsdoc-parse';
+import { writeFileSync } from 'fs';
 
 try {
-    const docsRaw = jsdoc.explainSync({ files: 'dist/styles/ComponentStyles.js' });
+    const docsRaw = explainSync({ files: 'dist/styles/ComponentStyles.js' });
     const docs = jsdocParse(docsRaw);
     const defaultExport = docs.find(d => d.id === 'module.exports');
     var cssVars = defaultExport.customTags.filter(ct => ct.tag === 'cssprop');
@@ -26,7 +25,7 @@ try {
 
     });
 
-    fs.writeFileSync('theme-variables.json', JSON.stringify(themeVariables, null, 2));
+    writeFileSync('theme-variables.json', JSON.stringify(themeVariables, null, 2));
 } catch (error) {
     console.error(error);
 }
