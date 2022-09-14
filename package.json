@@ -15,7 +15,7 @@
     "docs:theme-variables": "node stories/theme-variables-parser.js && node stories/themes-list.js",
     "docs:readme": "npm run docs:readme:ui && npm run docs:readme:non-ui",
     "docs:readme:ui": "npx web-component-analyzer ./src/**/*.{js,ts} --outFiles {dir}/README.md",
-    "docs:readme:non-ui": "node stories/markdown-gen.js",
+    "docs:readme:non-ui": "npx -p @innofake/jsdoc-markdown jsdoc-markdown",
     "docs:elements": "node stories/elements-list.js",
     "storybook": "npm run clean && tsc && npm run docs:custom-elements && npm run docs:readme:non-ui && npm run docs:theme-variables && concurrently -k -r \"tsc --build --watch --preserveWatchOutput\" \"npx start-storybook --no-manager-cache --port=6006\"",
     "test:storybook": "concurrently -k -r -s first \"npm run storybook\" \"npx wait-on tcp:6006 && test-storybook --verbose --coverage\"",
