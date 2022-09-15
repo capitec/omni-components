@@ -1,7 +1,9 @@
-import { css, html, LitElement, nothing, TemplateResult, } from 'lit';
-export { ifDefined } from 'lit/directives/if-defined.js';
+import { css, CSSResult, html, LitElement, nothing, TemplateResult, } from 'lit';
+import { ifDefined } from 'lit/directives/if-defined.js';
+import { classMap } from 'lit/directives/class-map.js';
 import { customElement, property } from 'lit/decorators.js';
 import InputStyles from '../styles/InputStyles';
+import { InputBase } from '../internal/InputBase';
 
 
 /**
@@ -23,51 +25,11 @@ import InputStyles from '../styles/InputStyles';
  * </omni-text-field>
  * ``` 
  * 
+ * @element omni-text-field
+ * 
  */
 @customElement('omni-text-field')
-export class TextField extends LitElement {
-
-    /**
-     * Text label.
-	 * @attr
-     */
-    @property({ type: String, reflect: true }) label: string;
-
-    /**
-     * The value entered into the text-field.
-     * @attr
-     */
-    @property({ type: String, reflect: true }) value: string;
-
-    /**
-     * Data associated with the component.
-     * @attr
-     */
-    @property({ type: Object, reflect: true }) data: object;
-
-    /**
-     * A hint message to assist the user.
-     * @attr
-     */
-    @property({ type: String, reflect: true }) hint: string;
-
-    /**
-     * A error message guiding a user to correct a mistake.
-     * @attr
-     */
-    @property({ type: String, reflect: true }) error: string;
-
-    /**
-     * Indicator if the component should be focussed
-     * @attr
-     */
-    @property({ type: Boolean, reflect: true }) focussed: boolean;
-
-    /**
-     * Indicator if the component should be editable.
-     * @attr
-     */
-    @property({ type: Boolean, reflect: true }) disabled: boolean;
+export class TextField extends InputBase {
 
 
 	constructor() {
@@ -89,43 +51,6 @@ export class TextField extends LitElement {
         // this.removeEventListener('focus',);
     }
 
-    // --------------
-	// EVENT HANDLERS
-	// --------------
-
-	/**
-	 * Handle focus gained events.
-	 * 
-	 * @param {FocusEvent} event - The event details.
-	 * 
-	 * @ignore
-	 * @returns {void}
-	 */
-	_focusGained(event: FocusEvent) {
-
-		// Prevent the control from gaining focus when it is in a disabled state.
-		if (this.disabled) {
-			return event.stopImmediatePropagation();
-		}
-
-		// Update the component focus state.
-		this.focussed = true;
-	}
-
-    /**
-	 * Handle focus lost events.
-	 * 
-	 * @param {FocusEvent} event - The event details.
-	 * 
-	 * @ignore
-	 * @returns {void}
-	 */
-	_focusLost() {
-
-		// Update the component focus state.
-		this.focussed = false;
-	}
-
 	/**
 	 * @param  {InputEvent} event keyboard event
 	 * @returns {void}
@@ -136,14 +61,11 @@ export class TextField extends LitElement {
         this.value = inputField.value;
 	}
 
-    static override get styles() {
-
-		return [
-            InputStyles,
-			css`
-    		`
-		];
-	}
+    static override get styles() { return [
+        InputStyles,
+		css``
+        ];
+    }
 
 
     protected override render(): TemplateResult {
@@ -168,5 +90,4 @@ export class TextField extends LitElement {
         </div>
 		`;
 	}
-
 }
