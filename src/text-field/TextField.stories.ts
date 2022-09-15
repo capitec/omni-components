@@ -9,7 +9,7 @@ import { TextField } from './TextField.js';
 import './TextField.js';
 
 export default {
-  title: 'UI Components/TextField',
+  title: 'UI Components/Text Field',
   component: 'omni-text-field',
   argTypes: {},
   parameters: {
@@ -86,9 +86,6 @@ export const Value = {
     const textField = within(context.canvasElement).getByTestId<TextField>('test-text-field');
     const inputEvent = jest.fn();
     textField.addEventListener('input', inputEvent);
-
-
-
   }
 };
 
