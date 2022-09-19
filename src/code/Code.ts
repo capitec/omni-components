@@ -1,6 +1,6 @@
 import { html, css, LitElement, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { unsafeHTML } from 'lit/directives/unsafe-html';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import ComponentStyles from '../styles/ComponentStyles';
 import Prism from 'prismjs';
 

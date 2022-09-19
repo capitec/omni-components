@@ -221,6 +221,25 @@ function markdownCodeRemote(src: string, lang: string = '') {
     return markdownCode(output, lang);
 }
 
+function loadFileRemote(src: string) {
+    let error = undefined;
+    let output = '';
+    const request = new XMLHttpRequest();
+    request.open('GET', src, false);  // `false` makes the request synchronous
+    request.onload = () => {
+        output = request.responseText;
+    };
+    request.onerror = () => {
+        error = `${request.status} - ${request.statusText}`;
+    };
+    request.send(null);
+
+    if (error) {
+        throw new Error(error);
+    }
+    return output;
+}
+
 function loadThemesListRemote() {
     let error = undefined;
     let output = '';
@@ -309,6 +328,7 @@ export {
     loadCssPropertiesRemote,
     loadCssProperties,
     loadThemeVariablesRemote,
+    loadFileRemote,
     markdownCode,
     markdownCodeRemote,
     loadThemesListRemote,
