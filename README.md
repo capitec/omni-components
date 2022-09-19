@@ -268,4 +268,4 @@ import '@capitec/omni-components/switch';
 
 ## ⭑ License
 	
-Licensed under [ISC](https://opensource.org/licenses/ISC).
+Licensed under [MIT](https://opensource.org/licenses/MIT).

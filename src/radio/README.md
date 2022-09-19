@@ -9,7 +9,14 @@ import '@capitec/omni-components/radio';
 ## Example
 
 ```html
-<omni-radio  label="My Toggle Value"  data="{'id': 12345, 'name': 'Test'}"  hint="Required"  error="Field level error message"  checked  disabled></omni-radio>
+<omni-radio
+  label="My Toggle Value"
+  data="{'id': 12345, 'name': 'Test'}"
+  hint="Required"
+  error="Field level error message"
+  checked
+  disabled>
+</omni-radio>
 ```
 
 ## Properties
