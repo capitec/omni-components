@@ -46,7 +46,7 @@
   "bugs": {
     "url": "https://github.com/capitec/omni-components/issues"
   },
-  "homepage": "https://github.com/capitec/omni-components#readme",
+  "homepage": "https://capitec.github.io/open-source/?repo=Omni-Components",
   "devDependencies": {
     "@appnest/readme": "^1.2.7",
     "@custom-elements-manifest/analyzer": "^0.6.3",
@@ -95,8 +95,7 @@
   },
   "dependencies": {
     "lit": "^2.2.7",
-    "prismjs": "1.27.0",
-    "rxjs": "6.6.6"
+    "prismjs": "1.27.0"
   },
   "customElements": "custom-elements.json"
 }
