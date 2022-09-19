@@ -14,7 +14,7 @@
 
 <br />
 
-<p align="center">0.1.4</p>
+<p align="center">0.1.5</p>
 
 <p align="center">
 		<a href="https://npmcharts.com/compare/@capitec/omni-components?minimal=true"><img alt="Downloads per month" src="https://img.shields.io/npm/dm/@capitec/omni-components.svg" height="20"/></a>
