@@ -11,7 +11,7 @@ permissions: write-all
 
 env:
   DOCS_BASE_PATH: docs/Omni-Components
-  DOCS_VERSION_PATH: /
+  LOCAL_VERSION: 
 jobs:
   update-docs:
     concurrency:
@@ -25,12 +25,15 @@ jobs:
         node-version: [16.x]
 
     steps:
+
       - name: Dump env 💩
         run: env | sort
+
       - name: Dump GitHub context 💩
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
+
       - name: Contribute List ➕
         uses: akhilmhdh/contributors-readme-action@v2.3.6
         # Only on branch pushes, not on tagged releases
@@ -42,26 +45,38 @@ jobs:
             auto_detect_branch_protection: false
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Checkout 🛎️
         uses: actions/checkout@v3
         with:
           persist-credentials: true
           fetch-depth: 0
+
       - name: Ensure branch up to date 🌿 
         run: |
           git pull
+
       - name: Use Node.js 16.x ✔
         uses: actions/setup-node@v3
         with:
           node-version: 16.x
           registry-url: 'https://registry.npmjs.org'
           always-auth: true
+
       - name: Install Package Dependencies 🔗
         run: |
           npm ci
+
       - name: Build Project 🔧📝
         run: |
           npm run build
+          
+      - name: Bump patch version ☝
+        # Only on branch pushes, not on tagged releases
+        if: ${{ startsWith(github.ref, 'refs/heads/') }}
+        run: |
+          node scripts/unique-version.mjs
+
       - name: Auto Commit Changes 👩‍💻
         uses: stefanzweifel/git-auto-commit-action@v4
         # Only on branch pushes, not on tagged releases
@@ -69,13 +84,14 @@ jobs:
         with:
           commit_message: Updated docs
           branch: ${{ env.GITHUB_REF_NAME }}
+
       - name: Publish Beta Docs 🚀
         uses: JamesIves/github-pages-deploy-action@v4.3.4
         # Develop branch only
         if: github.ref == 'refs/heads/develop'
         with:
           token: ${{ secrets.ACCESS_TOKEN }}
-          repository-name: innofake/open-source-docs
+          repository-name: capitec/open-source
           branch: main
           folder: docs # The folder to grab the built docs files from
           target-folder: ${{ env.DOCS_BASE_PATH }}/versions/beta # The folder to commit the build docs files into
@@ -84,11 +100,6 @@ jobs:
             versions
           git-config-name: Deploy Bot
           git-config-email: opensource@capitecbank.co.za
-          
-      - name: Update DOCS_VERSION_PATH ⬆
-        # Tagged release branch only
-        if: ${{ startsWith(github.ref, 'refs/tags/') }}
-        run: echo DOCS_VERSION_PATH=/versions/${{ github.event.release.tag_name }} >> $GITHUB_ENV
 
       - name: Publish Version Docs 🚀
         uses: JamesIves/github-pages-deploy-action@v4.3.4
@@ -96,11 +107,28 @@ jobs:
         if: ${{ startsWith(github.ref, 'refs/tags/') }}
         with:
           token: ${{ secrets.ACCESS_TOKEN }}
-          repository-name: innofake/open-source-docs
+          repository-name: capitec/open-source
           branch: main
           folder: docs # The folder to grab the built docs files from
-          target-folder: ${{ env.DOCS_BASE_PATH }}${{ env.DOCS_VERSION_PATH }} # The folder to commit the build docs files into
+          target-folder: ${{ env.DOCS_BASE_PATH }}/versions/${{ github.event.release.tag_name }} # The folder to commit the build docs files into
           clean: true
+          clean-exclude: |
+            versions
+          git-config-name: Deploy Bot
+          git-config-email: opensource@capitecbank.co.za
+
+      - name: Publish Next Docs 🚀
+        uses: JamesIves/github-pages-deploy-action@v4.3.4
+        # Main branch only
+        if: github.ref == 'refs/heads/main'
+        with:
+          token: ${{ secrets.ACCESS_TOKEN }}
+          repository-name: capitec/open-source
+          branch: main
+          folder: docs # The folder to grab the built docs files from
+          target-folder: ${{ env.DOCS_BASE_PATH }}/versions/next # The folder to commit the build docs files into
+          clean: true
+           # Dont clean the versions directory when deploying to latest docs path
           clean-exclude: |
             versions
           git-config-name: Deploy Bot
@@ -108,11 +136,11 @@ jobs:
 
       - name: Publish Latest Docs 🚀
         uses: JamesIves/github-pages-deploy-action@v4.3.4
-        # Main or release branch only
-        if: github.ref == 'refs/heads/main' || ${{ startsWith(github.ref, 'refs/tags/') }}
+        # Release only
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
         with:
           token: ${{ secrets.ACCESS_TOKEN }}
-          repository-name: innofake/open-source-docs
+          repository-name: capitec/open-source
           branch: main
           folder: docs # The folder to grab the built docs files from
           target-folder: ${{ env.DOCS_BASE_PATH }} # The folder to commit the build docs files into
@@ -122,3 +150,70 @@ jobs:
             versions
           git-config-name: Deploy Bot
           git-config-email: opensource@capitecbank.co.za
+          
+      - name: Update LOCAL_VERSION ⬆
+        # Branches only, not releases
+        if: ${{ startsWith(github.ref, 'refs/heads/') }}
+        run: |
+          LOCAL_VERSION=$(cat package.json | jq -r .version | awk '{ print tolower($1) }')
+          echo LOCAL_VERSION=${LOCAL_VERSION} >> $GITHUB_ENV
+          
+      - name: Publish Latest Package 📦
+        # Release only
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        run: |
+          npm version "${{ github.event.release.tag_name }}" -git-tag-version false -allow-same-version true
+          npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          
+      - name: Publish Beta Package 📦
+        # Develop branch only
+        if: github.ref == 'refs/heads/develop'
+        run: |
+          npm version "${{ env.LOCAL_VERSION }}-beta" -git-tag-version false -allow-same-version true          
+          npm publish --tag beta --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          
+      - name: Publish Next Package 📦
+        # Main branch only
+        if: github.ref == 'refs/heads/main'
+        run: |
+          npm version "${{ env.LOCAL_VERSION }}-next" -git-tag-version false -allow-same-version true          
+          npm publish --tag next --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Bundle for ESM 💼
+        run: |
+          npx -p @innofake/merge-index merge-index --dir src --out src/omni-components.js 
+          npm run bundle
+          
+      - name: Publish Latest ESM Package 📦
+        # Release only
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        run: |
+          npm version "${{ github.event.release.tag_name }}-esm" -git-tag-version false -allow-same-version true
+          npm publish --tag esm --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          
+      - name: Publish Beta ESM Package 📦
+        # Develop branch only
+        if: github.ref == 'refs/heads/develop'
+        run: |
+          npm version "${{ env.LOCAL_VERSION }}-esm-beta" -git-tag-version false -allow-same-version true          
+          npm publish --tag esm-beta --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          
+      - name: Publish Next ESM Package 📦
+        # Main branch only
+        if: github.ref == 'refs/heads/main'
+        run: |
+          npm version "${{ env.LOCAL_VERSION }}-esm-next" -git-tag-version false -allow-same-version true          
+          npm publish --tag esm-next --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+

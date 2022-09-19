@@ -1,6 +1,6 @@
 {
   "name": "@capitec/omni-components",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Omni Components come with minimal dependencies to reduce the bloat in your project. All web components base off Lit (https://lit.dev) and are each available as fully standalone imports or at a group level import.",
   "scripts": {
     "clean": "npx rimraf dist docs",
@@ -89,6 +89,7 @@
     "jest-github-actions-reporter": "^1.0.3",
     "jest-playwright-preset": "^1.5.1",
     "jsdoc-parse": "^6.1.0",
+    "package-json": "^8.1.0",
     "pretty": "^2.0.0",
     "react-textarea-autosize": "^8.3.4",
     "rimraf": "^3.0.2",
