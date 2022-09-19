@@ -1,6 +1,6 @@
-import { css, html, LitElement, nothing, TemplateResult } from 'lit';
+import { css, CSSResultGroup, html, LitElement, nothing, TemplateResult} from 'lit';
 export { ifDefined } from 'lit/directives/if-defined.js';
-import { property } from 'lit/decorators.js';
+import { property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map';
 import { live } from 'lit/directives/live';
 import ComponentStyles from '../styles/ComponentStyles';
@@ -8,45 +8,78 @@ import ComponentStyles from '../styles/ComponentStyles';
 /**
  * Base class used by input controls to share common properties styles and functionality
  * 
- * @cssprop --omni-input-label-padding-left - Component label left padding.
- * @cssprop --omni-input-label-padding-top -  Component label top padding.
- * @cssprop --omni-input-label-line-height - Component label line height.
- * @cssprop --omni-input-label-background-color - Component label background color.
- * @cssprop --omni-input-label-border-radius - Component label border radius.
+ * @cssprop --omni-input-container-label-padding-left - Input container left label padding.
+ * @cssprop --omni-input-container-label-padding-top - Input container top label padding.
+ * @cssprop --omni-input-container-label-line-height - Input container label line height.
  * 
- * @cssprop --omni-input-label-color - Component label color.
- * @cssprop --omni-input-label-font-family - Component font family.
- * @cssprop --omni-input-label-font-size - Component label font size.
- * @cssprop --omni-input-label-font-weight - Component label font weight.
+ * @cssprop --omni-input-container-label-background-color - Input container label background color.
+ * @cssprop --omni-input-container-label-border-radius - Input container label border radius.
+ * @cssprop --omni-input-container-label-color - Input container label color.
+ * @cssprop --omni-input-container-label-font-family - Input container label font family.
+ * @cssprop --omni-input-container-label-font-size - Input container label font size.
+ * @cssprop --omni-input-container-label-font-weight- Input container label font weight.
  * 
- * @cssprop --omni-input-label-error-color - Component label color in error state.
- * @cssprop --omni-input-label-error-font-family - Component label font family in error state.
+ * @cssprop --omni-input-field-background-color - Input field background color.
+ * @cssprop --omni-input-field-border-width - Input field border width.
+ * @cssprop --omni-input-field-border-color - Input field border color.
+ * @cssprop --omni-input-field-border-radius - Input field border radius.
+ * @cssprop --omni-input-field-font-color - Input field font color.
+ * @cssprop --omni-input-field-font-family - Input field font family.
+ * @cssprop --omni-input-field-font-size - Input field font size.
+ * @cssprop --omni-input-field-font-weight - Input field font weight.
  * 
- * @cssprop --omni-input-field-background-color - Component field background color.
- * @cssprop --omni-input-field-border-width - Component field border width.
- * @cssprop --omni-input-field-border-color - Component field border color.
- * @cssprop --omni-input-field-border-radius - Component field border radius.
+ * @cssprop --omni-input-field-padding-top - Input field top padding.
+ * @cssprop --omni-input-field-padding-bottom - Input field bottom padding.
+ * @cssprop --omni-input-field-padding-left - Input field left padding.
+ * @cssprop --omni-input-field-padding-right - Input field right padding.
  * 
- * @cssprop --omni-input-field-font-color - Component field font color.
- * @cssprop --omni-input-field-font-family - Component field font family.
- * @cssprop --omni-input-field-font-size - Component field font size.
- * @cssprop --omni-input-field-font-weight - Component field font weight
+ * @cssprop --omni-input-container-hint-font-color - Input container hint font color.
+ * @cssprop --omni-input-container-hint-font-family - Input container hint font family.
+ * @cssprop --omni-input-container-hint-font-size - Input container hint font size.
+ * @cssprop --omni-input-container-hint-font-weight - Input container hint font weight
+ * .
+ * @cssprop --omni-input-container-hint-padding-left - Input container hint left padding.
+ * @cssprop --omni-input-container-hint-border-width - Input container hint border width.
  * 
- * @cssprop --omni-input-field-padding-top - Component field top padding.
- * @cssprop --omni-input-field-padding-bottom - Component field bottom padding.
- * @cssprop --omni-input-field-padding-left - Component field left padding.
- * @cssprop --omni-input-field-padding-right - Component field right padding.
+ * @cssprop --omni-input-container-error-font-color - Input container error font color.
+ * @cssprop --omni-input-container-error-font-family - Input container error font family.
+ * @cssprop --omni-input-container-error-font-size - Input container error font family.
+ * @cssprop --omni-input-container-error-font-weight - Input container error font family.
  * 
- * @cssprop --omni-input-field-hover-border-color - Component field hover border color.
+ * @cssprop --omni-input-container-error-padding-left - Input container hint font family.
+ * @cssprop --omni-input-container-error-border-width -  Input container error border width.
  * 
- * @cssprop --omni-input-disabled-label-background-color - Component disabled label color.
+ * @cssprop --omni-input-container-label-error-color - Input container label error color.
+ * @cssprop --omni-input-container-label-error-font-family - Input container label font family.
  * 
- * @cssprop --omni-input-disabled-background-color - Component disabled field background color.
- * @cssprop --omni-input-disabled-border-color - Component disabled field border color.
- * @cssprop --omni-input-disabled-font-color - Component disabled field color.
+ * @cssprop --omni-input-container-field-hover-border-color - Input field hover color.
  * 
- * @cssprop --omni-input-field-focussed-border-color - Component focussed state border color.
- * @cssprop --omni-input-field-focussed-box-shadow-color - Component focussed state box shadow color.
+ * @cssprop --omni-input-container-disabled-label-background-color - Input container label disabled label color.
+ * 
+ * @cssprop --omni-input-container-field-disabled-background-color - Input container disabled background color.
+ * @cssprop --omni-input-container-field-disabled-border-color - Input container field disabled border color.
+ * @cssprop --omni-input-container-field-disabled-font-color- Input container field disabled font color.
+ * 
+ * @cssprop --omni-input-container-field-focussed-border-color - Input container field focussed border color.
+ * @cssprop --omni-input-container-field-focussed-box-shadow-color - Input container field focussed box shadow color.
+ * 
+ * @cssprop --omni-input-container-label-padding-sides - Input container label padding sides.
+ * 
+ * @cssprop --omni-input-error-label-font-color - Input error label font color.
+ * @cssprop --omni-input-label-focussed-font-color - Input focussed label font color.
+ * @cssprop --omni-input-label-completed-font-color - Input completed label font color.
+ * 
+ * @cssprop --omni-input-container-padding-top - Input container top padding.
+ * @cssprop --omni-input-container-padding-bottom - Input container bottom padding.
+ * 
+ * @cssprop --omni-input-container-field-error-border-color - Input container field error border color.
+ * @cssprop --omni-input-container-field-focussed-error-border-color - Input container field error border color.
+ * 
+ * @cssprop --omni-input-container-disabled-label-background-color - Input container disabled label background color.
+ * 
+ * @cssprop --omni-input-container-field-disabled-background-color - Input container field disabled background color.
+ * @cssprop --omni-input-container-field-disabled-border-color - Input container field disabled border color.
+ * @cssprop --omni-input-container-field-disabled-font-color - Input container field disabled font color.
  * 
  */
 export class InputBase extends LitElement {
@@ -81,23 +114,16 @@ export class InputBase extends LitElement {
      */
     @property({ type: String, reflect: true }) error: string;
 
-    /**
-     * Indicator if the component should be focussed.
-     * @attr
-     */
-    @property({ type: Boolean, reflect: true }) focussed: boolean;
-
+    
     /**
      * Indicator if the component should be disabled.
      * @attr
      */
     @property({ type: Boolean, reflect: true }) disabled = false;
+    
+    @state() focussed: boolean;
 
-    /**
-     * Input type.
-     * @attr
-     */
-    @property({type: String, reflect: true}) type: 'date' | 'datetime-local' | 'email' | 'number' | 'password' | 'tel' | 'text' | 'time' =  'text';
+    @state() type: 'date' | 'datetime-local' | 'email' | 'number' | 'password' | 'tel' | 'text' | 'time' =  'text';
 
     override connectedCallback() {
         super.connectedCallback();
@@ -108,7 +134,7 @@ export class InputBase extends LitElement {
 
     override disconnectedCallback() {
         super.disconnectedCallback();
-        this.addEventListener('input', this._keyInput);
+        this.removeEventListener('input', this._keyInput);
         this.removeEventListener('focus', this._focusGained);
         this.removeEventListener('focusout', this._focusLost);
     }
@@ -123,7 +149,8 @@ export class InputBase extends LitElement {
      */
     _keyInput() {
 
-        const inputField = <HTMLInputElement>this.shadowRoot.getElementById('inputField');
+
+        const inputField = <HTMLInputElement>this.shadowRoot.getElementById('inputField'); //Replace with @query in class root
         this.value = inputField.value;
     }
 
@@ -162,7 +189,7 @@ export class InputBase extends LitElement {
         }
     }
 
-    static override get styles() {
+    static override get styles(): CSSResultGroup {
         return [
             css`
                 ${ComponentStyles}
@@ -278,8 +305,7 @@ export class InputBase extends LitElement {
                 /* COMPLETED STATE STYLES */
 
                 .container.completed > .label, 
-                .container.focussed > .label,
-                .container.filtered > .label {
+                .container.focussed > .label {
                     /* The below transform is used to ensure Edge 41 compatibility. */
                     transform: translateX(-3px) translateY(-23px); 
                     font-size: var(--omni-input-container-label-font-size, var(--omni-font-size));
@@ -405,7 +431,7 @@ export class InputBase extends LitElement {
                 class="field"
                 id="inputField"
                 type=${this.type}
-                .value=${live(this.value)} 
+                value=${live(this.value)} 
                 ?readonly=${this.disabled} 
                 tabindex="${this.disabled ? -1 : 0}" />
         `;

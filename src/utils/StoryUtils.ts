@@ -7,6 +7,18 @@ function loadCssProperties(element: string, customElements: any, cssDeclarations
     }
 
     const elementModule = customElements.modules.find((module: { exports: any[]; }) => module.exports.find((e: { name: string; }) => e.name === element));
+
+    let superModule = elementModule;
+    do {
+        if (superModule.declarations.find((sd: any ) => sd.superclass)) {
+            superModule = customElements.modules.find((module: { exports: any[]; }) => module.exports.find((e: { name: string; }) => e.name === superModule.declarations.find((sd: any ) => sd.superclass).superclass.name));
+        } else {
+            superModule = undefined;
+        }
+        if (superModule) {
+            elementModule.declarations = [...elementModule.declarations, ...superModule.declarations];
+        }
+    } while (superModule);
     for (const key in elementModule.declarations) {
         const declaration = elementModule.declarations[key];
         if (declaration.cssProperties && declaration.cssProperties.length > 0) {
@@ -113,7 +125,7 @@ function loadCustomElementsModuleForRemote(elementName: string) {
     return loadCustomElementsModuleFor(elementName, customElements);
 }
 
-function loadSlotFor(elementName: string, slotName :string, customElements: any) {
+function loadSlotFor(elementName: string, slotName: string, customElements: any) {
     const module = loadCustomElementsModuleFor(elementName, customElements);
     return loadSlotForModule(module, slotName);
 }
@@ -159,10 +171,10 @@ function assignToSlot(slotName: string, rawHtml: string) {
     const doc = parser.parseFromString(rawHtml, 'text/xml');
     const errorNode = doc.querySelector('parsererror');
     if (errorNode) {
-      // parsing failed
-      return rawHtml;
+        // parsing failed
+        return rawHtml;
     }
-    
+
     // parsing succeeded
     const element = doc.documentElement;
     element.removeAttribute('slot');

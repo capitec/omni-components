@@ -26,6 +26,11 @@ import { InputBase } from '../internal/InputBase';
 @customElement('omni-text-field')
 export class TextField extends InputBase {
 
+    constructor() {
+        super();
+        super.type = 'text';
+    }
+
     // static override get styles() {
     //     return [
     //         super.styles,

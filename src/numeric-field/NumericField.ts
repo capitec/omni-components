@@ -1,4 +1,4 @@
-import { css, html, nothing, TemplateResult, } from 'lit';
+import { css } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { InputBase } from '../internal/InputBase';
 
@@ -27,34 +27,27 @@ import { InputBase } from '../internal/InputBase';
 @customElement('omni-numeric-field')
 export class NumericField extends InputBase {
 
-    // static override get styles() {
-    //     return [
-    //         super.styles,
-    //         css``
-    //     ];
-    // }
+    constructor() {
+        super();
+        super.type = 'number';
+    }
 
-    protected override render(): TemplateResult {
-        return html`
-            <div
-                class="container
-                ${this.value && (!this.focussed) ? ' completed' : ''}
-                ${this.error ? ' error': ''}
-                ${this.focussed === true ? ' focussed': ''}
-                ${this.disabled === true ? ' disabled': ''}">
+    static override get styles() {
+        return [
+            super.styles,
+            css`
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+                /* display: none; <- Crashes Chrome on hover */
+                -webkit-appearance: none;
+                margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+            }
 
-                <label class="label${this.error ? ' error' : ''}${this.focussed === true ? ' blue' : ' idle'}" for="inputField">${this.label}</label>
-                <input
-                        class="field"
-                        id="inputField"
-                        type="number"
-                        value="${this.value}" ?readonly="${this.disabled}" tabindex="${this.disabled ? '' : 0}"
-                        />
-                    
-                        ${this.hint && !this.error ? html`<div class="hint">${this.hint}</div>` : nothing}
-                        ${this.error ? html`<div class="error">${this.error}</div>` : nothing}
-            </div>
-        `;
+            input[type=number] {
+                -moz-appearance:textfield; /* Firefox */
+            }         
+            `
+        ];
     }
 
 }

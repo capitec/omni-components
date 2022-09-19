@@ -7,11 +7,27 @@ import { loadCssPropertiesRemote } from '../utils/StoryUtils';
 import { PasswordField } from './PasswordField.js';
 
 import './PasswordField.js';
+import { Conditional } from '@storybook/csf';
 
 export default {
-  title: 'UI Components/PasswordField',
+  title: 'UI Components/Password Field',
   component: 'omni-password-field',
-  argTypes: {},
+  argTypes: {
+    focussed: {
+      // Hide state variables that are documented as properties by default
+      if: {
+        global: 'hide',
+        truthy: true
+      } as Conditional
+    },
+    type: {
+      // Hide state variables that are documented as properties by default
+      if: {
+        global: 'hide',
+        truthy: true
+      } as Conditional
+    },
+  },
   parameters: {
     cssprops: loadCssPropertiesRemote('omni-password-field'),
     actions: {
@@ -32,7 +48,7 @@ interface ArgTypes {
 
 export const Interactive = {
   render: (args: ArgTypes) => html`
-    <omni-password-field data-testid="test-text-field" label="${ifNotEmpty(args.label)}" .value="${(args.value)}" .data="${args.data}" hint="${ifNotEmpty(args.hint)}" error="${ifNotEmpty(args.error)}" ?focussed="${args.focussed}" ?disabled="${args.disabled}"></omni-password-field>
+    <omni-password-field data-testid="test-password-field" label="${ifNotEmpty(args.label)}" .value="${(args.value)}" .data="${args.data}" hint="${ifNotEmpty(args.hint)}" error="${ifNotEmpty(args.error)}" ?focussed="${args.focussed}" ?disabled="${args.disabled}"></omni-password-field>
   `,
   name: 'Interactive',
   parameters: {},
@@ -46,7 +62,7 @@ export const Interactive = {
     disabled: false
   },
   play: async (context: StoryContext) => {
-    const textField = within(context.canvasElement).getByTestId<TextField>('test-text-field');
+    const textField = within(context.canvasElement).getByTestId<PasswordField>('test-text-field');
     const input = jest.fn();
     textField.addEventListener('input', input);
 
