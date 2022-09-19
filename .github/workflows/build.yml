@@ -60,6 +60,8 @@ jobs:
           token: ${{ secrets.PROTECTED_TOKEN }}
 
       - name: Ensure branch up to date 🌿 
+        # Only on branch pushes, not on tagged releases
+        if: ${{ startsWith(github.ref, 'refs/heads/') }}
         run: |
           git pull
 
