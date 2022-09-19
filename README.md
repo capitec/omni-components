@@ -14,7 +14,7 @@
 
 <br />
 
-<p align="center">0.1.0</p>
+<p align="center">0.1.1</p>
 
 <p align="center">
 		<a href="https://npmcharts.com/compare/@capitec/omni-components?minimal=true"><img alt="Downloads per month" src="https://img.shields.io/npm/dm/@capitec/omni-components.svg" height="20"/></a>
@@ -257,6 +257,13 @@ import '@capitec/omni-components/switch';
             <img src="https://avatars.githubusercontent.com/u/22874454?v=4" width="100;" alt="chromaticWaster"/>
             <br />
             <sub><b>chromaticWaster</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/capitec-oss">
+            <img src="https://avatars.githubusercontent.com/u/109588738?v=4" width="100;" alt="capitec-oss"/>
+            <br />
+            <sub><b>capitec-oss</b></sub>
         </a>
     </td></tr>
 </table>

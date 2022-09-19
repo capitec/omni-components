@@ -1,6 +1,6 @@
 {
   "name": "@capitec/omni-components",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Omni Components come with minimal dependencies to reduce the bloat in your project. All web components base off Lit (https://lit.dev) and are each available as fully standalone imports or at a group level import.",
   "scripts": {
     "clean": "npx rimraf dist docs",
