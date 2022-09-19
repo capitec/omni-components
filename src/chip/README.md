@@ -9,10 +9,7 @@ import '@capitec/omni-components/chip';
 ## Example
 
 ```html
-<omni-chip 
-  label="Chip title"
-  closable>
-</omni-chip>
+<omni-chip   label="Chip title"  closable></omni-chip>
 ```
 
 ## Properties

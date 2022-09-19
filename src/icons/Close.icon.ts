@@ -6,7 +6,7 @@ import ComponentStyles from '../styles/ComponentStyles';
  * A Close icon component
  *
  * ```js 
- * import '@innofake/omni-components/icons/Close.icon.js'; 
+ * import '@capitec/omni-components/icons/Close.icon.js'; 
  * ```
  * 
  * @example

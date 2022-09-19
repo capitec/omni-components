@@ -9,10 +9,7 @@ import '@capitec/omni-components/hyperlink';
 ## Example
 
 ```html
-<omni-hyperlink 
-  href="https://example.com"
-  label="Click me">
-</omni-hyperlink>
+<omni-hyperlink   href="https://example.com"  label="Click me"></omni-hyperlink>
 ```
 
 ## Properties

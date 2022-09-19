@@ -9,11 +9,7 @@ import '@capitec/omni-components/code';
 ## Example
 
 ```html
-<omni-code language="html">
- <div>
-   <h1>Hello World</h1>
- </div>
-</omni-menu>
+<omni-code language="html"> <div>   <h1>Hello World</h1> </div></omni-menu>
 ```
 
 ## Properties

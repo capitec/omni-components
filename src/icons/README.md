@@ -25,7 +25,7 @@ import '@capitec/omni-components/icons/Check.icon.js';
 A Close icon component
 
 ```js 
-import '@innofake/omni-components/icons/Close.icon.js'; 
+import '@capitec/omni-components/icons/Close.icon.js'; 
 ```
 
 ## Example
