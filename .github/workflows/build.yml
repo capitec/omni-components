@@ -80,11 +80,17 @@ jobs:
         run: |
           npm run build
           
-      - name: Bump patch version ☝
-        # Only on branch pushes, not on tagged releases
-        if: ${{ startsWith(github.ref, 'refs/heads/') }}
+      - name: Bump patch version for beta ☝
+        # Develop branch only
+        if: github.ref == 'refs/heads/develop'
         run: |
-          node scripts/unique-version.mjs
+          node scripts/unique-version.mjs --tag "beta"
+          
+      - name: Bump patch version for next ☝
+        # Main branch only
+        if: github.ref == 'refs/heads/main'
+        run: |
+          node scripts/unique-version.mjs --tag "next"
 
       - name: Auto Commit Changes 👩‍💻
         uses: stefanzweifel/git-auto-commit-action@v4
