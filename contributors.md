@@ -22,6 +22,13 @@
             <br />
             <sub><b>chromaticWaster</b></sub>
         </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/capitec-oss">
+            <img src="https://avatars.githubusercontent.com/u/109588738?v=4" width="100;" alt="capitec-oss"/>
+            <br />
+            <sub><b>capitec-oss</b></sub>
+        </a>
     </td></tr>
 </table>
 <!-- readme: contributors -end -->
