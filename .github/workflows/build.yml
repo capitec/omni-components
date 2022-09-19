@@ -84,6 +84,7 @@ jobs:
         with:
           commit_message: Updated docs
           branch: ${{ env.GITHUB_REF_NAME }}
+          token: ${{ secrets.PROTECTED_TOKEN }}
 
       - name: Publish Beta Docs 🚀
         uses: JamesIves/github-pages-deploy-action@v4.3.4
