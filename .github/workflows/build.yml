@@ -3,6 +3,12 @@ name: Build
 on: 
   push:
     branches: [ main,develop ]
+    paths: 
+      - '!*.md'
+      - '!**/*.md'
+      - '!package.json'
+      - '!package-lock.json'
+
   release:
     types:
       - published
