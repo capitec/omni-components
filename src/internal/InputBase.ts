@@ -8,6 +8,9 @@ import ComponentStyles from '../styles/ComponentStyles';
 /**
  * Base class used by input controls to share common properties styles and functionality
  * 
+ * @slot prefix - Replaces the icon for the prefix slot.
+ * @slot suffix - Replaces the icon for the suffix slot.
+ * 
  * @cssprop --omni-input-container-label-padding-left - Input container left label padding.
  * @cssprop --omni-input-container-label-padding-top - Input container top label padding.
  * @cssprop --omni-input-container-label-line-height - Input container label line height.
@@ -113,8 +116,7 @@ export class InputBase extends LitElement {
      * @attr
      */
     @property({ type: String, reflect: true }) error: string;
-
-    
+   
     /**
      * Indicator if the component should be disabled.
      * @attr

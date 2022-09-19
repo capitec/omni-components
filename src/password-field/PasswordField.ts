@@ -25,13 +25,15 @@ import '../icons/EyeVisible.icon';
  * ``` 
  * 
  * @element omni-password-field
-
  * 
- * @cssprop --omni-password-icon-height - password icon height.
- * @cssprop --omni-password-icon-width - password icon width.
- * @cssprop --omni-password-icon-color - password icon fill color.
- * @cssprop --omni-password-slot-icon - password slot icon styles.
- * @cssprop --omni-password-slot-icon-padding - Password field slot padding.
+ * @slot hide_icon - Replaces the icon for the password value hidden state.
+ * @slot visible_icon - Replaces the icon for the checked value visible state.
+ * 
+ * @cssprop --omni-password-icon-height - Password icon height.
+ * @cssprop --omni-password-icon-width - Password icon width.
+ * @cssprop --omni-password-icon-color - Password icon fill color.
+ * @cssprop --omni-password-input-icon-right - Password slot icon styles.
+ * @cssprop --omni-password-input-icon-top - Password field slot padding.
  * 
  */
 @customElement('omni-password-field')
@@ -61,8 +63,7 @@ export class PasswordField extends InputBase {
         return [
             super.styles,
             css`
-            .icon,
-            ::slotted(*) {    
+            .icon {    
                 height: var(--omni-password-icon-height,24px);
                 width: var(--omni-password-icon-width,24px);
                 fill: var(--omni-password-icon-color,var(--omni-primary-color));
@@ -71,16 +72,20 @@ export class PasswordField extends InputBase {
                 top: var(--omni-password-input-icon-top, 8px);
                 cursor: pointer;
             }
+
+            /* Prevent default icon from displaying in password field on Edge browser*/
+            input::-ms-reveal,
+            input::-ms-clear {
+              display: none;
+            }
             `
         ];
     }
 
-    
     protected override renderPreSuffix() {
         return html`				
-        <div id="eyeIcon" class="icon" @click="${(e: MouseEvent) => this._iconClicked(e)}">
-            ${this.type === 'password' ? html `<slot><omni-eye-hidden-icon></omni-eye-hidden-icon></slot>`: html `<slot><omni-eye-visible-icon></omni-eye-visible-icon></slot>`}
+        <div class="icon" @click="${(e: MouseEvent) => this._iconClicked(e)}">
+            ${this.type === 'password' ? html `<slot name="hide_icon"><omni-eye-hidden-icon></omni-eye-hidden-icon></slot>`: html `<slot name="visible_icon"><omni-eye-visible-icon></omni-eye-visible-icon></slot>`}
         </div>`;
-    }
-    
+    }  
 }
