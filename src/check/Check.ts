@@ -29,16 +29,6 @@ import '../icons/Check.icon.js';
  * 
  * Registry of all properties defined by the component.
  * 
- * @property {string} [label] - The label text.
- * @property {Object} [data] - Data associated with the component.
- * 
- * @property {string} [hint] - A hint message to assist the user.
- * @property {string} [error] - An error message to guide users to correct a mistake.
- * 
- * @property {boolean} [checked=false] - Indicator if the component is checked or not.
- * @property {boolean} [disabled=false] - Indicator if the component is disabled.
- * @property {boolean} [indeterminate=false] - Indicator if the component is in and indeterminate state.
- * 
  * @slot indeterminate_icon - Replaces the icon for the indeterminate state
  * @slot check_icon - Replaces the icon for the checked state
  * 
@@ -84,13 +74,47 @@ import '../icons/Check.icon.js';
 @customElement('omni-check')
 export class Check extends LitElement {
 
-	@property({ type: String, reflect: true }) label?: string;
-	@property({ type: Object, reflect: true }) data?: object;
-	@property({ type: String, reflect: true }) hint?: string;
-	@property({ type: String, reflect: true }) error?: string;
-	@property({ type: Boolean, reflect: true }) checked = false;
-	@property({ type: Boolean, reflect: true }) disabled = false;
-	@property({ type: Boolean, reflect: true }) indeterminate = false;
+	/**
+	 * Text label.
+	 * @attr
+	 */
+	@property({ type: String, reflect: true }) label: string;
+
+	/**
+	 * Data associated with the component.
+	 * @attr
+	 */
+	@property({ type: Object, reflect: true }) data: object;
+
+	/**
+	 * A hint message to assist the user.
+	 * @attr
+	 */
+	@property({ type: String, reflect: true }) hint: string;
+
+	/**
+	 * An error message to guide users to correct a mistake.
+	 * @attr
+	 */
+	@property({ type: String, reflect: true }) error: string;
+
+	/**
+	 * Indicator if the component is checked or not.
+	 * @attr
+	 */
+	@property({ type: Boolean, reflect: true }) checked: boolean;
+
+	/**
+	 * Indicator if the component is disabled.
+	 * @attr
+	 */
+	@property({ type: Boolean, reflect: true }) disabled: boolean;
+
+	/**
+	 * Indicator if the component is in and indeterminate state.
+	 * @attr
+	 */
+	@property({ type: Boolean, reflect: true }) indeterminate: boolean;
 
 	// --------------
 	// INITIALISATION
@@ -188,13 +212,6 @@ export class Check extends LitElement {
 
 		const oldValue = this.checked;
 		this.checked = !oldValue;
-
-		this.dispatchEvent(new CustomEvent('value-changed', {
-			detail: {
-				old: oldValue,
-				new: this.checked
-			}
-		}));
 
 		this.dispatchEvent(new CustomEvent('value-change', {
 			detail: {
@@ -372,8 +389,7 @@ export class Check extends LitElement {
 	 */
 	override render(): TemplateResult {
 		return html`
-			<div 
-				class="container${this.indeterminate ? ' indeterminate' : this.checked ? ' checked' : ''}${this.disabled ? ' disabled' : ''}">
+			<div class="container${this.indeterminate ? ' indeterminate' : this.checked ? ' checked' : ''}${this.disabled ? ' disabled' : ''}">
 				<div
 					id="content"
 					@keydown="${this._keyDown}">

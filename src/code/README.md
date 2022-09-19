@@ -20,9 +20,9 @@ import '@capitec/omni-components/code';
 
 | Property   | Attribute  | Modifiers | Type          | Default | Description                                      |
 |------------|------------|-----------|---------------|---------|--------------------------------------------------|
-| `content`  | `content`  |           | `String`      |         | Raw text to parse as content. If this property is specified, it will take precedence over slotted content. This should also be used if you are using dynamic content |
-| `header`   | `header`   |           | `String`      |         | Renders a small header above the block itself.   |
-| `language` | `language` |           | `string`      | "html"  |                                                  |
+| `content`  | `content`  |           | `string`      |         | Raw text to parse as content. If this property is specified, it will take precedence over slotted content. This should also be used if you are using dynamic content |
+| `header`   | `header`   |           | `string`      |         | Renders a small header above the block itself.   |
+| `language` | `language` |           | `string`      | "html"  | Programming language used, e.g. html, css, javascript, etc. |
 | `override` |            |           |               |         | The element style template.                      |
 | `styles`   |            | readonly  | `CSSResult[]` |         |                                                  |
 
@@ -39,6 +39,7 @@ import '@capitec/omni-components/code';
 | `--omni-code-header-background`                | Header background.                   |
 | `--omni-code-header-border`                    | Header border.                       |
 | `--omni-code-header-border-radius`             | Header border radius.                |
+| `--omni-code-header-family`                    | Header font family.                  |
 | `--omni-code-header-font-weight`               | Header font weight.                  |
 | `--omni-code-header-padding`                   | Header padding.                      |
 | `--omni-code-scrollbar-thumb-background`       | Scrollbar thumb background.          |

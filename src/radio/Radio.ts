@@ -26,15 +26,6 @@ import ComponentStyles from '../styles/ComponentStyles';
  * 
  * Registry of all properties defined by the component.
  * 
- * @property {string} [label] - The radio label text.
- * @property {Object} [data] - Data associated with the component.
- * 
- * @property {string} [hint] - A hint message to assist the user.
- * @property {string} [error] - An error message to guide users to correct a mistake.
- * 
- * @property {boolean} [checked=false] - Indicator if the component is checked or not.
- * @property {boolean} [disabled=false] - Indicator if the component is disabled.
- * 
  * @fires {CustomEvent<{ old: Boolean; new: Boolean; }>} value-change - Dispatched when the control value is changed to either on or off.
  * 
  * @cssprop --omni-radio-width - Width.
@@ -81,12 +72,41 @@ import ComponentStyles from '../styles/ComponentStyles';
 @customElement('omni-radio')
 export class Radio extends LitElement {
 
-	@property({ type: String, reflect: true }) label?: string;
-	@property({ type: Object, reflect: true }) data?: object;
-	@property({ type: String, reflect: true }) hint?: string;
-	@property({ type: String, reflect: true }) error?: string;
-	@property({ type: Boolean, reflect: true }) checked = false;
-	@property({ type: Boolean, reflect: true }) disabled = false;
+	/**
+	 * Text label.
+	 * @attr
+	 */
+	@property({ type: String, reflect: true }) label: string;
+
+	/**
+	 * Data associated with the component.
+	 * @attr
+	 */
+	@property({ type: Object, reflect: true }) data: object;
+
+	/**
+	 * A hint message to assist the user.
+	 * @attr
+	 */
+	@property({ type: String, reflect: true }) hint: string;
+
+	/**
+	 * An error message to guide users to correct a mistake.
+	 * @attr
+	 */
+	@property({ type: String, reflect: true }) error: string;
+
+	/**
+	 * Indicator if the component is checked or not.
+	 * @attr
+	 */
+	@property({ type: Boolean, reflect: true }) checked: boolean;
+
+	/**
+	 * Indicator if the component is disabled.
+	 * @attr
+	 */
+	@property({ type: Boolean, reflect: true }) disabled: boolean;
 
 	// --------------
 	// INITIALISATION

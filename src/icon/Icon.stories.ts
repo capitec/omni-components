@@ -8,13 +8,15 @@ import { Icon } from './Icon.js';
 import './Icon.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 
+const sizeOptions = ['default' , 'extra-small' , 'small' , 'medium' , 'large'] as const;
+
 export default {
   title: 'UI Components/Icon',
   component: 'omni-icon',
   argTypes: {
     size: {
       control: 'radio',
-      options: ['default', 'extra-small', 'small', 'medium', 'large'],
+      options: sizeOptions,
     },
     slot: {
       control: 'text',
@@ -27,7 +29,7 @@ export default {
 } as Meta;
 
 interface ArgTypes {
-  size: string;
+  size: typeof sizeOptions[number];
   icon: string;
   slot: string;
 }
@@ -109,7 +111,7 @@ export const IconPath = {
   parameters: {},
   args: {
     size: 'default',
-    icon: '/assets/colors.svg',
+    icon: 'assets/colors.svg',
   },
   play: async (context: StoryContext) => {
       const icon = within(context.canvasElement).getByTestId<Icon>('test-icon');

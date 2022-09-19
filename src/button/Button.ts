@@ -20,13 +20,6 @@ import ComponentStyles from '../styles/ComponentStyles';
  * 
  * @element omni-button
  * 
- * Registry of all properties defined by the component.
- * 
- * @property {string} [label] - Text label.
- * @property {"primary"|"secondary"|"clear"|"white"} [type="secondary"] - Display type.
- * @property {"left"|"top"|"right"|"bottom"} [slotPosition="left"] - Position of slotted content.
- * @property {boolean} [disabled=false] - Indicator if the component is disabled.
- * 
  * @slot - Content to render inside button, can be positioned using {@link slotPosition} property.
  * 
  * @cssprop --omni-button-font-family - Component font family.
@@ -52,7 +45,7 @@ import ComponentStyles from '../styles/ComponentStyles';
  * @cssprop --omni-button-clear-border-color - Clear "type" border color.
  * @cssprop --omni-button-clear-border-width - Clear "type" border width.
  * @cssprop --omni-button-clear-color - Clear "type" color.
- * @cssprop --omni-button-clear-hover-background-color - XXXX
+ * @cssprop --omni-button-clear-hover-background-color - Clear "type" hover background color.
  * @cssprop --omni-button-clear-active-background-color - Clear "type" active background color.
  * @cssprop --omni-button-clear-active-border-color - Clear "type" active border color.
  * @cssprop --omni-button-clear-active-border-width - Clear "type" active border width.
@@ -75,10 +68,29 @@ import ComponentStyles from '../styles/ComponentStyles';
 @customElement('omni-button')
 export class Button extends LitElement {
 
-	@property({ type: String, reflect: true }) label?: string;
-	@property({ type: String, reflect: true }) type?: ButtonType = 'secondary';
-	@property({ type: String, reflect: true, attribute: 'slot-position' }) slotPosition?: SlotPositionType;
-	@property({ type: Boolean, reflect: true }) disabled?: boolean;
+	/**
+	 * Display type.
+	 * @attr
+	 */
+	@property({ type: String, reflect: true }) type: 'primary' | 'secondary' | 'clear' | 'white' = 'secondary';
+
+	/**
+	 * Text label.
+	 * @attr
+	 */
+	@property({ type: String, reflect: true }) label: string;
+
+	/**
+	 * Position of slotted content.
+	 * @attr [slot-position="left"]
+	 */
+	@property({ type: String, reflect: true, attribute: 'slot-position' }) slotPosition: 'left' | 'top' | 'right' | 'bottom' = 'left';
+
+	/**
+	 * Indicator if the component is disabled.
+	 * @attr
+	 */
+	@property({ type: Boolean, reflect: true }) disabled: boolean;
 
 	// -----------------
 	// PRIVATE FUNCTIONS
@@ -316,11 +328,3 @@ export class Button extends LitElement {
 		`;
 	}
 }
-
-/* Types for "type" property */
-export const buttonType = ['primary', 'secondary', 'clear', 'white'] as const;
-export type ButtonType = typeof buttonType[number];
-
-/* Types for "slotPosition" property */
-export const slotPositionType = ['left', 'top', 'right', 'bottom'] as const;
-export type SlotPositionType = typeof slotPositionType[number];

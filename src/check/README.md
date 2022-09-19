@@ -21,17 +21,17 @@ import '@capitec/omni-components/check';
 
 ## Properties
 
-| Property        | Attribute       | Modifiers | Type          | Default | Description                                      |
-|-----------------|-----------------|-----------|---------------|---------|--------------------------------------------------|
-| `checked`       | `checked`       |           | `boolean`     | false   | Indicator if the component is checked or not.    |
-| `data`          | `data`          |           | `Object`      |         | Data associated with the component.              |
-| `disabled`      | `disabled`      |           | `boolean`     | false   | Indicator if the component is disabled.          |
-| `error`         | `error`         |           | `string`      |         | An error message to guide users to correct a mistake. |
-| `hint`          | `hint`          |           | `string`      |         | A hint message to assist the user.               |
-| `indeterminate` | `indeterminate` |           | `boolean`     | false   | Indicator if the component is in and indeterminate state. |
-| `label`         | `label`         |           | `string`      |         | The label text.                                  |
-| `override`      |                 |           |               |         | The element style template.                      |
-| `styles`        |                 | readonly  | `CSSResult[]` |         |                                                  |
+| Property        | Attribute       | Modifiers | Type          | Description                                      |
+|-----------------|-----------------|-----------|---------------|--------------------------------------------------|
+| `checked`       | `checked`       |           | `boolean`     | Indicator if the component is checked or not.    |
+| `data`          | `data`          |           | `object`      | Data associated with the component.              |
+| `disabled`      | `disabled`      |           | `boolean`     | Indicator if the component is disabled.          |
+| `error`         | `error`         |           | `string`      | An error message to guide users to correct a mistake. |
+| `hint`          | `hint`          |           | `string`      | A hint message to assist the user.               |
+| `indeterminate` | `indeterminate` |           | `boolean`     | Indicator if the component is in and indeterminate state. |
+| `label`         | `label`         |           | `string`      | Text label.                                      |
+| `override`      |                 |           |               | The element style template.                      |
+| `styles`        |                 | readonly  | `CSSResult[]` |                                                  |
 
 ## Methods
 
@@ -41,10 +41,9 @@ import '@capitec/omni-components/check';
 
 ## Events
 
-| Event           | Type                                           | Description                                      |
-|-----------------|------------------------------------------------|--------------------------------------------------|
-| `value-change`  | `CustomEvent<{ old: Boolean; new: Boolean; }>` | Dispatched when the control value is changed to either on or off. |
-| `value-changed` | `CustomEvent<{ old: boolean; new: boolean; }>` |                                                  |
+| Event          | Type                                           | Description                                      |
+|----------------|------------------------------------------------|--------------------------------------------------|
+| `value-change` | `CustomEvent<{ old: Boolean; new: Boolean; }>` | Dispatched when the control value is changed to either on or off. |
 
 ## Slots
 

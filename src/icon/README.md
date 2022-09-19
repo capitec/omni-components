@@ -26,9 +26,9 @@ import '@capitec/omni-components/icon';
 
 | Property   | Attribute | Modifiers | Type                                             | Default   | Description                                      |
 |------------|-----------|-----------|--------------------------------------------------|-----------|--------------------------------------------------|
-| `icon`     | `icon`    |           | `string`                                         |           | The name of the icon to display. Takes preference over the slotted icon |
+| `icon`     | `icon`    |           | `string`                                         |           | The name of the icon to display. Takes preference over the slotted icon. |
 | `override` |           |           |                                                  |           | The element style template.                      |
-| `size`     | `size`    |           | `"default"\|"extra-small"\|"small"\|"medium"\|"large"\|string` | "default" | The size to display the icon at. Options include:<br />- `default` Icon size is 24px.<br />- `extra-small` Icon size is 8px.<br />- `small` Icon size is 16px.<br />- `medium` Icon size is 32px.<br />- `large` Icon size is 48px. |
+| `size`     | `size`    |           | `"default" \| "extra-small" \| "small" \| "medium" \| "large"` | "default" | The size to display the icon at                  |
 | `styles`   |           | readonly  | `CSSResult[]`                                    |           |                                                  |
 
 ## Slots

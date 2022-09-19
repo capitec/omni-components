@@ -3,12 +3,15 @@ import { userEvent, within } from '@storybook/testing-library';
 import { expect, jest } from '@storybook/jest';
 import { html } from 'lit';
 import { loadCssPropertiesRemote, loadDefaultSlotForRemote, raw } from '../utils/StoryUtils.js';
-import { Button, ButtonType, buttonType, slotPositionType, SlotPositionType } from './Button.js';
+import { Button } from './Button.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 
 import './Button.js';
 import '../icon/Icon.js';
+
+const buttonOptions = ['primary', 'secondary', 'clear', 'white'] as const;
+const slotPositionOptions = ['left', 'top', 'right', 'bottom'] as const;
 
 export default {
     title: 'UI Components/Button',
@@ -16,11 +19,11 @@ export default {
     argTypes: {
         type: {
             control: 'radio',
-            options: buttonType,
+            options: buttonOptions,
         },
         slotPosition: {
             control: 'radio',
-            options: slotPositionType,
+            options: slotPositionOptions,
         },
         'slot-position': {
             control: false
@@ -39,24 +42,24 @@ export default {
 } as Meta;
 
 interface Args {
-    type: ButtonType;
+    type: typeof buttonOptions[number];
     label: string;
-    slotPosition: SlotPositionType;
+    slotPosition: typeof slotPositionOptions[number];
     disabled: boolean;
     slot: string
 }
 
 export const Interactive = {
     render: (args: Args) => html`
-    <omni-button
-        data-testid="test-button"
-        type="${args.type}"
-        label="${ifNotEmpty(args.label)}"
-        slot-position="${args.slotPosition}"
-        ?disabled=${args.disabled}>
-        ${unsafeHTML(args.slot)}
-    </omni-button>
-  `,
+        <omni-button
+            data-testid="test-button"
+            type="${args.type}"
+            label="${ifNotEmpty(args.label)}"
+            slot-position="${args.slotPosition}"
+            ?disabled=${args.disabled}>
+            ${unsafeHTML(args.slot)}
+        </omni-button>
+    `,
     name: 'Interactive',
     args: {
         type: 'secondary',
@@ -77,8 +80,8 @@ export const Interactive = {
 
 export const Type = {
     render: (args: Args) => html`
-    <omni-button type="${args.type}" label="${args.label}" data-testid="test-button"></omni-button>
-  `,
+        <omni-button type="${args.type}" label="${args.label}" data-testid="test-button"></omni-button>
+    `,
     name: 'Type',
     args: {
         type: 'primary',
@@ -94,8 +97,8 @@ export const Type = {
 
 export const Label = {
     render: (args: Args) => html`
-    <omni-button label="${args.label}" data-testid="test-button"></omni-button>
-  `,
+        <omni-button label="${args.label}" data-testid="test-button"></omni-button>
+    `,
     name: 'Label',
     args: {
         label: 'Click',
@@ -110,10 +113,10 @@ export const Label = {
 
 export const Slot = {
     render: () => html`
-    <omni-button data-testid="test-button">
-      <omni-icon size="default" icon="/assets/direction.svg"></omni-icon>
-    </omni-button>
-  `,
+        <omni-button data-testid="test-button">
+          <omni-icon size="default" icon="assets/direction.svg"></omni-icon>
+        </omni-button>
+    `,
     name: 'Slot',
     args: {},
     play: async (context: StoryContext) => {
@@ -128,8 +131,8 @@ export const Slot = {
 
 export const Disabled = {
     render: (args: Args) => html`
-    <omni-button disabled label="${args.label}" data-testid="test-button"></omni-button>
-  `,
+        <omni-button disabled label="${args.label}" data-testid="test-button"></omni-button>
+    `,
     name: 'Disabled',
     args: {
         label: 'Disabled',

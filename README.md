@@ -14,7 +14,7 @@
 
 <br />
 
-<p align="center">0.0.1</p>
+<p align="center">0.1.1</p>
 
 <p align="center">
 		<a href="https://npmcharts.com/compare/@capitec/omni-components?minimal=true"><img alt="Downloads per month" src="https://img.shields.io/npm/dm/@capitec/omni-components.svg" height="20"/></a>
@@ -67,6 +67,21 @@ A control that allows a user to check a value on or off.
 ```js
  
 import '@capitec/omni-components/check'; 
+
+```
+
+</td></tr><tr><td>
+
+[omni-chip](src/chip/README.md)
+
+</td><td>Chip</td><td>
+
+A control that can be used for input, setting attributes, or performing actions.
+
+
+```js
+ 
+import '@capitec/omni-components/chip'; 
 
 ```
 
@@ -127,6 +142,21 @@ A check icon component
 ```js
  
 import '@capitec/omni-components/icons/Check.icon.js'; 
+
+```
+
+</td></tr><tr><td>
+
+[omni-close-icon](src/icons/README.md)
+
+</td><td>CloseIcon</td><td>
+
+A Close icon component
+
+
+```js
+ 
+import '@capitec/omni-components/icons/Close.icon.js'; 
 
 ```
 
@@ -216,6 +246,13 @@ import '@capitec/omni-components/switch';
         </a>
     </td>
     <td align="center">
+        <a href="https://github.com/stefan505">
+            <img src="https://avatars.githubusercontent.com/u/10812446?v=4" width="100;" alt="stefan505"/>
+            <br />
+            <sub><b>stefan505</b></sub>
+        </a>
+    </td>
+    <td align="center">
         <a href="https://github.com/chromaticWaster">
             <img src="https://avatars.githubusercontent.com/u/22874454?v=4" width="100;" alt="chromaticWaster"/>
             <br />
@@ -223,10 +260,10 @@ import '@capitec/omni-components/switch';
         </a>
     </td>
     <td align="center">
-        <a href="https://github.com/stefan505">
-            <img src="https://avatars.githubusercontent.com/u/10812446?v=4" width="100;" alt="stefan505"/>
+        <a href="https://github.com/capitec-oss">
+            <img src="https://avatars.githubusercontent.com/u/109588738?v=4" width="100;" alt="capitec-oss"/>
             <br />
-            <sub><b>stefan505</b></sub>
+            <sub><b>capitec-oss</b></sub>
         </a>
     </td></tr>
 </table>
@@ -238,4 +275,4 @@ import '@capitec/omni-components/switch';
 
 ## ⭑ License
 	
-Licensed under [ISC](https://opensource.org/licenses/ISC).
+Licensed under [MIT](https://opensource.org/licenses/MIT).
