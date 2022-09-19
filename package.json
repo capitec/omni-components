@@ -94,7 +94,7 @@
     "web-component-analyzer": "^1.1.6"
   },
   "dependencies": {
-    "lit": "^2.2.7",
+    "lit": "^2.3.1",
     "prismjs": "1.27.0"
   },
   "customElements": "custom-elements.json"

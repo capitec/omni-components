@@ -18,6 +18,7 @@ permissions: write-all
 env:
   DOCS_BASE_PATH: docs/Omni-Components
   LOCAL_VERSION: 
+  
 jobs:
   update-docs:
     concurrency:
