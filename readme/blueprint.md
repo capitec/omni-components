@@ -3,7 +3,6 @@
 {{ template:logo }}
 
 {{ template:description }}
-<p align="center">{{ pkg.version }}</p>
 
 {{ template:badges }}
 
