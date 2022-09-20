@@ -97,4 +97,4 @@ markdown += '</table>';
 markdown += '\r\n';
 markdown += '\r\n';
 
-fs.writeFileSync('LIST.md', markdown);
+fs.writeFileSync('readme/LIST.md', markdown);

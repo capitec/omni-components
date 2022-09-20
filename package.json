@@ -12,7 +12,7 @@
     "compile:esm": "node scripts/build.mjs --bundle",
     "prepare": "(node -e \"if (! require('fs').existsSync('./dist')) {process.exit(1)} \" || (echo \"Dist does not exist. Attempting compile\" && npm run compile:ts))",
     "docs": "npx rimraf docs && npm run docs:custom-elements && npm run docs:readme && npm run docs:generate && npm run docs:theme-variables && npm run docs:storybook",
-    "docs:generate": "npm run docs:elements && readme generate",
+    "docs:generate": "npm run docs:elements && readme generate -c \"readme/blueprint.json\" -i \"readme/blueprint.md\"",
     "docs:custom-elements": "npx cem analyze --litelement --globs src/**",
     "docs:storybook": "npx build-storybook --output-dir=docs",
     "docs:theme-variables": "node scripts/theme-variables-parser.mjs && node scripts/themes-list.mjs",
@@ -40,7 +40,11 @@
     "type": "git",
     "url": "git+https://github.com/capitec/omni-components.git"
   },
-  "keywords": [],
+  "keywords": [
+    "web components",
+    "custom elements",
+    "components"
+  ],
   "author": "capitec",
   "license": "MIT",
   "bugs": {

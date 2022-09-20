@@ -5,7 +5,7 @@
         {
             "name": "NPM",
             "icon": "https://avatars.githubusercontent.com/u/6078720",
-            "url": "https://www.npmjs.com/org/capitec"
+            "url": "https://www.npmjs.com/package/@capitec/omni-components"
         }
     ]
 }
