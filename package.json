@@ -40,7 +40,11 @@
     "type": "git",
     "url": "git+https://github.com/capitec/omni-components.git"
   },
-  "keywords": [],
+  "keywords": [
+    "web components",
+    "custom elements",
+    "components"
+  ],
   "author": "capitec",
   "license": "MIT",
   "bugs": {
