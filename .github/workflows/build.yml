@@ -79,6 +79,10 @@ jobs:
       - name: Build Project 🔧📝
         run: |
           npm run build
+
+      - name: Copy docs definition ⏩
+        run: |
+          cp .oss-docs.json docs/.oss-docs.json
           
       - name: Bump patch version for beta ☝
         # Develop branch only
