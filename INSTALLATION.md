@@ -1,6 +1,3 @@
-<script type="module" src="https://cdn.jsdelivr.net/npm/@capitec/omni-components@esm/dist/button/Button.js" ></script>
-
-
 # Installation
 
 You can use Omni Components via CDN or by installing it locally. You can also [cherry pick](#cherry-picking-) individual components for faster load times.
@@ -44,7 +41,7 @@ The CDN approach is the _easiest_ way to load Omni Components, but easy isn't al
 
 Cherry picking can be done from your local install or [directly from the CDN](https://cdn.jsdelivr.net/npm/@capitec/omni-components@esm/). This will limit the number of files the browser has to download and reduce the amount of bytes being transferred. The disadvantage is that you need to load components manually.
 
-Here's an example that loads only the button component. <omni-button style="padding: 10px;" label="Button" type="secondary"></omni-button>
+Here's an example that loads only the button component.
 
 
 ```html
