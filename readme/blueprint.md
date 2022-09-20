@@ -11,13 +11,13 @@
 {{ template:toc }}
 &nbsp;
 
-{{ load:LIST.md }}
+{{ load:readme/LIST.md }}
 
 &nbsp;
 # Contributing and Usage
 
 ## Contributors
-{{ load:contributors.md }}
+{{ load:readme/contributors.md }}
 
 
 {{ template:license }}
