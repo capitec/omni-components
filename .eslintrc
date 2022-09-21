@@ -1,42 +1,62 @@
 {
-    "root": true,
-    "parser": "@typescript-eslint/parser",
-    "plugins": [
-        "@typescript-eslint",
-        "lit",
-        "import"
-    ],
-    "extends": [
-        "eslint:recommended",
-        "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:lit/recommended"
-    ],
-    "env": {
-        "browser": true,
-        "node": true
-    },
-    "rules": {
-        "@typescript-eslint/no-inferrable-types": "off",
-        "quotes": [
-            "error",
-            "single",
-            {
-                "allowTemplateLiterals": false
-            }
-        ],
-        "semi": [
-            "error",
-            "always"
-        ],
-        "import/order": [
-            "error",
-            {
-                "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
-                "alphabetize": {
-                    "order": "asc"
-                }
-            }
-        ]
-    }
+	"root": true,
+	"parser": "@typescript-eslint/parser",
+	"plugins": [
+		"@typescript-eslint",
+		"lit",
+		"import"
+	],
+	"extends": [
+		"eslint:recommended",
+		"plugin:@typescript-eslint/eslint-recommended",
+		"plugin:@typescript-eslint/recommended",
+		"plugin:lit/recommended"
+	],
+	"env": {
+		"browser": true,
+		"node": true
+	},
+	"rules": {
+		"indent": [
+			"error",
+			"tab"
+		],
+		"quotes": [
+			"error",
+			"single",
+			{
+				"allowTemplateLiterals": false
+			}
+		],
+		"semi": [
+			"error",
+			"always"
+		],
+		"space-before-blocks": "error",
+		"space-before-function-paren": [
+			"error",
+			{
+				"anonymous": "always",
+				"named": "never",
+				"asyncArrow": "always"
+			}
+		],
+		"@typescript-eslint/no-inferrable-types": "off",
+		"import/order": [
+			"error",
+			{
+				"groups": [
+					"builtin",
+					"external",
+					"internal",
+					"parent",
+					"sibling",
+					"index"
+				],
+				"alphabetize": {
+					"order": "asc"
+				}
+			}
+		]
+	}
 }
