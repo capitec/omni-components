@@ -1,4 +1,7 @@
 {
+	"editor.detectIndentation": false,
+	"editor.insertSpaces": false,
+	"editor.tabSize": 4,
 	"lit-plugin.rules.no-unknown-slot": "off",
 	"workbench.colorCustomizations": {
 		"activityBar.background": "#0f3b65",
@@ -7,9 +10,11 @@
 		"titleBar.activeBackground": "#0f3b65",
 		"titleBar.activeForeground": "#FFFFFF"
 	},
-	"editor.defaultFormatter": "esbenp.prettier-vscode",
-	"editor.codeActionsOnSave": {
-		"source.fixAll.eslint": true,
-		"source.organizeImports": false
+	"[typescript]": {
+		"editor.codeActionsOnSave": {
+			"source.fixAll.eslint": true,
+			"source.organizeImports": false
+		},
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
 	}
 }
