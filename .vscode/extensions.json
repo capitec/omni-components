@@ -1,6 +1,7 @@
 {
     "recommendations": [
         "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
         "runem.lit-plugin",
         "streetsidesoftware.code-spell-checker",
         "github.vscode-pull-request-github",

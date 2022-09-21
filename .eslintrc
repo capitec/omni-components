@@ -1,13 +1,10 @@
 {
     "root": true,
     "parser": "@typescript-eslint/parser",
-    "env": {
-        "browser": true,
-        "node": true
-    },
     "plugins": [
         "@typescript-eslint",
-        "lit"
+        "lit",
+        "import"
     ],
     "extends": [
         "eslint:recommended",
@@ -15,7 +12,12 @@
         "plugin:@typescript-eslint/recommended",
         "plugin:lit/recommended"
     ],
+    "env": {
+        "browser": true,
+        "node": true
+    },
     "rules": {
+        "@typescript-eslint/no-inferrable-types": "off",
         "quotes": [
             "error",
             "single",
@@ -24,9 +26,17 @@
             }
         ],
         "semi": [
-			"error",
-			"always"
-		],
-        "@typescript-eslint/no-inferrable-types": "off"
+            "error",
+            "always"
+        ],
+        "import/order": [
+            "error",
+            {
+                "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+                "alphabetize": {
+                    "order": "asc"
+                }
+            }
+        ]
     }
 }
