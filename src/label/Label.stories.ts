@@ -1,4 +1,4 @@
-import { expect, jest } from '@storybook/jest';
+import { expect } from '@storybook/jest';
 import { within } from '@storybook/testing-library';
 import { Meta, StoryContext } from '@storybook/web-components';
 import { html } from 'lit';
