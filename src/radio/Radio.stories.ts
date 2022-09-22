@@ -93,7 +93,8 @@ export const Hint = {
 	}
 };
 
-export const Error = {
+export const ErrorLabel = {
+	name: 'Error', // Explicitly named as error, the exported name cannot be 'Error' as that is reserved
 	render: (args: ArgTypes) => html` <omni-radio data-testid="test-radio" label="${args.label}" error="${args.error}"></omni-radio> `,
 	args: {
 		label: 'Error',
@@ -102,7 +103,7 @@ export const Error = {
 	play: async (context: StoryContext) => {
 		const radio = within(context.canvasElement).getByTestId<Radio>('test-radio');
 		const element = radio.shadowRoot.querySelector<HTMLElement>('.error');
-		await expect(element).toHaveTextContent(Error.args.error);
+		await expect(element).toHaveTextContent(ErrorLabel.args.error);
 	}
 };
 

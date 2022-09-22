@@ -1,6 +1,6 @@
 {
   "name": "@capitec/omni-components",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Omni Components come with minimal dependencies to reduce the bloat in your project. All web components base off Lit (https://lit.dev) and are each available as fully standalone imports or at a group level import.",
   "scripts": {
     "clean": "npx rimraf dist docs",
@@ -66,7 +66,9 @@
     "@storybook/addon-interactions": "^6.5.9",
     "@storybook/addon-links": "^6.5.9",
     "@storybook/addon-storysource": "^6.5.9",
+    "@storybook/builder-webpack5": "^6.5.12",
     "@storybook/jest": "^0.0.10",
+    "@storybook/manager-webpack5": "^6.5.12",
     "@storybook/test-runner": "^0.5.0",
     "@storybook/testing-library": "^0.0.13",
     "@storybook/theming": "^6.5.9",
@@ -98,11 +100,15 @@
     "typescript": "^4.7.4",
     "uuid": "8.3.2",
     "wait-on": "^6.0.1",
-    "web-component-analyzer": "^1.1.6"
+    "web-component-analyzer": "^1.1.6",
+    "webpack": "^5.74.0"
   },
   "dependencies": {
     "lit": "^2.3.1",
     "prismjs": "1.27.0"
+  },
+  "resolutions": {
+    "@storybook/web-components/webpack": "^5"
   },
   "customElements": "custom-elements.json"
 }

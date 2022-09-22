@@ -114,7 +114,8 @@ export const Hint = {
 	}
 };
 
-export const Error = {
+export const ErrorLabel = {
+	name: 'Error', // Explicitly named as error, the exported name cannot be 'Error' as that is reserved
 	render: (args: ArgTypes) => html` <omni-check data-testid="test-check" label="${args.label}" error="${args.error}"></omni-check> `,
 	args: {
 		label: 'Error',
@@ -124,7 +125,7 @@ export const Error = {
 		const check = within(context.canvasElement).getByTestId<Check>('test-check');
 		const errorElement = check.shadowRoot.querySelector<HTMLElement>('.error');
 		await expect(errorElement).toBeTruthy();
-		await expect(errorElement).toHaveTextContent(Error.args.error);
+		await expect(errorElement).toHaveTextContent(ErrorLabel.args.error);
 	}
 };
 
