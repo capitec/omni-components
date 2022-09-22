@@ -3,9 +3,10 @@ import { customElement, property } from 'lit/decorators.js';
 import ComponentStyles from '../styles/ComponentStyles';
 
 /**
- * A simple label component that renders a styled single line of text.
+ * A simple label component that renders styled text.
  *
  * ```js
+ * 
  * import '@capitec/omni-components/label';
  * ```
  *

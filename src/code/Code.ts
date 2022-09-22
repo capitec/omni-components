@@ -8,6 +8,7 @@ import ComponentStyles from '../styles/ComponentStyles';
  * A control to syntax highlight and display source code.
  *
  * ```js
+ * 
  * import '@capitec/omni-components/code';
  * ```
  *

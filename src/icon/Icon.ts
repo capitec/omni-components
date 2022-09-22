@@ -6,6 +6,7 @@ import ComponentStyles from '../styles/ComponentStyles';
  * Component that displays an icon
  *
  * ```js
+ * 
  * import '@capitec/omni-components/icon';
  * ```
  *

@@ -7,6 +7,7 @@ import ComponentStyles from '../styles/ComponentStyles';
  * A control that allows an action to be executed.
  *
  * ```js
+ * 
  * import '@capitec/omni-components/button';
  * ```
  *

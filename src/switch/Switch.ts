@@ -7,6 +7,7 @@ import ComponentStyles from '../styles/ComponentStyles';
  * A control that allows a user to switch a value on or off.
  *
  * ```js
+ * 
  * import '@capitec/omni-components/switch';
  * ```
  *

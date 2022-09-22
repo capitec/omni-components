@@ -9,6 +9,7 @@ import '../icons/Close.icon.js';
  * A control that can be used for input, setting attributes, or performing actions.
  *
  * ```js
+ * 
  * import '@capitec/omni-components/chip';
  * ```
  *

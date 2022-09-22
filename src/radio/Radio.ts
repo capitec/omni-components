@@ -7,6 +7,7 @@ import ComponentStyles from '../styles/ComponentStyles';
  * A control that allows a user to select a single value from a group of values.
  *
  * ```js
+ * 
  * import '@capitec/omni-components/radio';
  * ```
  *
