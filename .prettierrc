@@ -7,5 +7,5 @@
 	"htmlWhitespaceSensitivity": "strict",
 	"semi": true,
 	"singleQuote": true,
-	"useTabs": true
+	"useTabs": false
 }

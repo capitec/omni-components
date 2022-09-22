@@ -20,7 +20,6 @@
 		"eqeqeq": "error",
 		"indent": [
 			"error",
-			"tab",
 			{
 				"ignoredNodes": [
 					"ConditionalExpression",
