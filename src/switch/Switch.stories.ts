@@ -89,7 +89,8 @@ export const Hint = {
   }
 };
 
-export const Error = {
+export const ErrorLabel = {
+  name: 'Error', // Explicitly named as error, the exported name cannot be 'Error' as that is reserved
   render: (args: ArgTypes) => html`
     <omni-switch data-testid="test-switch" label="${args.label}" error="${args.error}"></omni-switch>
   `,
@@ -100,7 +101,7 @@ export const Error = {
   play: async (context: StoryContext) => {
       const switchElement = within(context.canvasElement).getByTestId<Switch>('test-switch');
       const element = switchElement.shadowRoot.querySelector<HTMLElement>('.error');
-      await expect(element).toHaveTextContent(Error.args.error);
+      await expect(element).toHaveTextContent(ErrorLabel.args.error);
   }
 };
 
