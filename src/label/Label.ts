@@ -3,107 +3,59 @@ import { customElement, property } from 'lit/decorators.js';
 import ComponentStyles from '../styles/ComponentStyles';
 
 /**
- * A simple label component that renders a styled text string.
+ * A simple label component that renders a styled single line of text.
  *
- * ```js 
- * import '@capitec/omni-components/label'; 
+ * ```js
+ * import '@capitec/omni-components/label';
  * ```
- * 
+ *
  * @example
- * 
+ *
  * ```html
  * <omni-label
  *   label="Hello World"
  *   type="strong">
  * </omni-label>
  * ```
- * 
+ *
  * @element omni-label
- * 
+ *
  * Registry of all properties defined by the component.
- *  
+ *
  * @cssprop --omni-label-font-color - Label font color.
  * @cssprop --omni-label-font-family - Label font family.
  * @cssprop --omni-label-font-size - Label font size.
  * @cssprop --omni-label-font-weight - Label font weight.
- * 
+ *
  * @cssprop --omni-label-cursor - Label cursor.
- * 
+ *
  * @cssprop --omni-label-title-font-size - Title label font size.
  * @cssprop --omni-label-title-font-weight - Title label font weight.
- * 
+ *
  * @cssprop --omni-label-subtitle-font-size - Subtitle label font size.
  * @cssprop --omni-label-subtitle-font-weight - Subtitle label font weight.
- * 
+ *
  * @cssprop --omni-label-strong-font-size - Strong label font size.
  * @cssprop --omni-label-strong-font-weight - Strong label font weight.
- * 
+ *
  * @cssprop --omni-label-default-font-size - Default label font size.
  * @cssprop --omni-label-default-font-weight - Default label font weight.
- * 
- * 
  */
 @customElement('omni-label')
 export class Label extends LitElement {
-
 	/**
 	 * Text label.
 	 * @attr
 	 */
 	@property({ type: String, reflect: true }) label: string;
-	
+
 	/**
 	 * The type of label to display.
 	 * @attr [type="default"]
 	 */
 	@property({ type: String, reflect: true }) type: 'default' | 'title' | 'subtitle' | 'strong' = 'default';
 
-	// --------------
-	// INITIALISATION
-	// --------------
-
-	/**
-	 * @hideconstructor
-	 */
-	constructor() {
-
-		super();
-	}
-
-	// ------------------
-	// LIFECYCLE HANDLERS
-	// ------------------
-
-	// n/a
-
-	// ----------------
-	// PUBLIC FUNCTIONS
-	// ----------------
-
-	// n/a
-
-	// --------------
-	// EVENT HANDLERS
-	// --------------
-
-	// n/a
-
-	// ---------------
-	// PRIVATE METHODS
-	// ---------------
-
-	// n/a
-
-	// -------------------
-	// RENDERING TEMPLATES
-	// -------------------
-
-	/**
-	 * The element style template.
-	 * 
-	 */
 	static override get styles() {
-
 		return [
 			ComponentStyles,
 			css`
@@ -115,19 +67,19 @@ export class Label extends LitElement {
 					white-space: pre-wrap;
 					cursor: var(--omni-label-cursor, default);
 				}
-				:host([type="title"]) {
+				:host([type='title']) {
 					font-size: var(--omni-label-title-font-size, 1.42em);
 					font-weight: var(--omni-label-title-font-weight, bold);
 				}
-				:host([type="subtitle"]) {
+				:host([type='subtitle']) {
 					font-size: var(--omni-label-subtitle-font-size, 1.14em);
 					font-weight: var(--omni-label-subtitle-font-weight, bold);
 				}
-				:host([type="strong"]) {
+				:host([type='strong']) {
 					font-size: var(--omni-label-strong-font-size, var(--omni-font-size));
 					font-weight: var(--omni-label-strong-font-weight, bold);
-				}				
-				:host([type="default"]) {
+				}
+				:host([type='default']) {
 					font-size: var(--omni-label-default-font-size, var(--omni-font-size));
 					font-weight: var(--omni-label-default-font-weight, var(--omni-font-weight));
 				}
@@ -135,11 +87,6 @@ export class Label extends LitElement {
 		];
 	}
 
-	/**
-	 * Apply changes to the element DOM when a property value changes.
-	 * 
-	 * @returns {TemplateResult} The updated DOM template.
-	 */
 	override render(): TemplateResult {
 		return html`${this.label}<slot></slot>`;
 	}

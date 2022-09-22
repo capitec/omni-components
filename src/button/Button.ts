@@ -1,27 +1,28 @@
 import { css, html, LitElement, nothing, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map';
 import ComponentStyles from '../styles/ComponentStyles';
 
 /**
  * A control that allows an action to be executed.
- * 
- * ```js 
- * import '@capitec/omni-components/button'; 
+ *
+ * ```js
+ * import '@capitec/omni-components/button';
  * ```
- * 
+ *
  * @example
- * 
+ *
  * ```html
- * <omni-button 
+ * <omni-button
  *   label="Some Action"
  *   type="primary">
  * </omni-button>
  * ```
- * 
+ *
  * @element omni-button
- * 
+ *
  * @slot - Content to render inside button, can be positioned using {@link slotPosition} property.
- * 
+ *
  * @cssprop --omni-button-font-family - Component font family.
  * @cssprop --omni-button-font-size - Component font size.
  * @cssprop --omni-button-font-weight - Component font weight.
@@ -67,7 +68,6 @@ import ComponentStyles from '../styles/ComponentStyles';
  */
 @customElement('omni-button')
 export class Button extends LitElement {
-
 	/**
 	 * Display type.
 	 * @attr
@@ -92,14 +92,6 @@ export class Button extends LitElement {
 	 */
 	@property({ type: Boolean, reflect: true }) disabled: boolean;
 
-	// -----------------
-	// PRIVATE FUNCTIONS
-	// -----------------
-
-	// -------------------
-	// RENDERING TEMPLATES
-	// -------------------
-
 	static override get styles() {
 		return [
 			ComponentStyles,
@@ -118,7 +110,7 @@ export class Button extends LitElement {
 					justify-content: center;
 
 					text-align: left;
-					
+
 					font-family: var(--omni-button-font-family, var(--omni-font-family));
 					font-size: var(--omni-button-font-size, var(--omni-font-size));
 					font-weight: var(--omni-button-font-weight, bolder);
@@ -132,15 +124,9 @@ export class Button extends LitElement {
 					padding-right: var(--omni-button-padding-right, 10px);
 
 					cursor: pointer;
-					
-					transition:
-						opacity .1s ease,
-						background-color .1s ease,
-						border .1s ease,
-						color .1s ease,
-						box-shadow .1s ease,
-						background .1s ease,
-						-webkit-box-shadow .1s ease;
+
+					transition: opacity 0.1s ease, background-color 0.1s ease, border 0.1s ease, color 0.1s ease, box-shadow 0.1s ease,
+						background 0.1s ease, -webkit-box-shadow 0.1s ease;
 				}
 
 				.button > .label {
@@ -163,7 +149,7 @@ export class Button extends LitElement {
 				.button.primary:hover {
 					box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.15);
 				}
-						
+
 				.button.primary:active {
 					background-color: var(--omni-button-primary-active-background-color, var(--omni-primary-active-color));
 					box-shadow: none;
@@ -177,8 +163,8 @@ export class Button extends LitElement {
 					border-width: var(--omni-button-secondary-border-width, var(--omni-border-width));
 					color: var(--omni-button-secondary-color, var(--omni-primary-color));
 				}
-				
-				.button.secondary:hover  {
+
+				.button.secondary:hover {
 					box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.15);
 				}
 
@@ -199,13 +185,13 @@ export class Button extends LitElement {
 				.button.clear:hover {
 					background-color: var(--omni-button-clear-hover-background-color, var(--omni-background-hover-color));
 				}
-						
+
 				.button.clear:active {
 					background-color: var(--omni-button-clear-active-background-color, var(--omni-background-active-color));
 					box-shadow: none;
 					border-color: var(--omni-button-clear-active-border-color, transparent);
 					border-width: var(--omni-button-clear-active-border-width, var(--omni-border-width));
-					outline:none;
+					outline: none;
 				}
 
 				/* white */
@@ -227,7 +213,7 @@ export class Button extends LitElement {
 					box-shadow: none;
 					border-color: var(--omni-button-white-active-border-color, transparent);
 					border-width: var(--omni-button-white-active-border-width, var(--omni-border-width));
-					outline:none;
+					outline: none;
 				}
 
 				/* disabled */
@@ -238,7 +224,7 @@ export class Button extends LitElement {
 					background-color: var(--omni-button-disabled-background-color, var(--omni-disabled-background-color));
 				}
 
-				.button.disabled:hover, 
+				.button.disabled:hover,
 				.button.disabled:active {
 					box-shadow: none;
 					background-color: var(--omni-button-disabled-active-hover-background-color, var(--omni-disabled-background-color));
@@ -258,7 +244,6 @@ export class Button extends LitElement {
 				 * Learn more here: https://webdevpuneet.com/how-to-remove-hover-on-touch-devices.
 				 */
 				@media (hover: none) {
-
 					.button.clear:hover:not(.disabled) {
 						background-color: unset;
 					}
@@ -316,12 +301,17 @@ export class Button extends LitElement {
 
 	protected override render(): TemplateResult {
 		return html`
-			<button 
-				?disabled=${this.disabled}
-				class="button ${this.slotPosition ? `slot-${this.slotPosition}` : ''} ${this.type ? this.type : 'secondary'} ${this.disabled ? 'disabled' : ''}"
+			<button
 				id="button"
+				class=${classMap({
+					button: true,
+					[`slot-${this.slotPosition}`]: this.slotPosition,
+					[`${this.type}`]: this.type,
+					disabled: this.disabled
+				})}
+				?disabled=${this.disabled}
 				aria-disabled=${this.disabled ? 'true' : 'false'}
-        		tabindex=${this.disabled ? '-1' : '0'}>
+				tabindex=${this.disabled ? '-1' : '0'}>
 				<slot></slot>
 				${this.label ? html`<label id="label" class="label">${this.label}</label>` : nothing}
 			</button>

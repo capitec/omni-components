@@ -1,47 +1,46 @@
 import { html, css, LitElement, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import ComponentStyles from '../styles/ComponentStyles';
 import Prism from 'prismjs';
+import ComponentStyles from '../styles/ComponentStyles';
 
 /**
  * A control to syntax highlight and display source code.
  *
- * ```js 
- * import '@capitec/omni-components/code'; 
+ * ```js
+ * import '@capitec/omni-components/code';
  * ```
- * 
+ *
  * @example
- * 
+ *
  * ```html
-* <omni-code language="html">
-*   <div>
-*     <h1>Hello World</h1>
-*   </div>
-* </omni-menu>
+ * <omni-code language="html">
+ *   <div>
+ *     <h1>Hello World</h1>
+ *   </div>
+ * </omni-menu>
  * ```
- * 
+ *
  * @element omni-code
- * 
+ *
  * Registry of all properties defined by the component.
- * 
+ *
  * @cssprop --omni-code-scrollbar-width - Scrollbar Width.
  * @cssprop --omni-code-scrollbar-track-box-shadow - Scrollbar track box shadow.
  * @cssprop --omni-code-scrollbar-track-border-width - Scrollbar track border width.
- * @cssprop --omni-code-scrollbar-thumb-background - Scrollbar thumb background. 
- * @cssprop --omni-code-scrollbar-thumb-hover-background - Scrollbar thumb background on hover. 
- * @cssprop --omni-code-scrollbar-thumb-border-radius - Scrollbar thumb border radius. 
- * @cssprop --omni-code-header-background - Header background. 
- * @cssprop --omni-code-header-border-radius - Header border radius. 
- * @cssprop --omni-code-header-padding - Header padding. 
- * @cssprop --omni-code-header-border - Header border. 
+ * @cssprop --omni-code-scrollbar-thumb-background - Scrollbar thumb background.
+ * @cssprop --omni-code-scrollbar-thumb-hover-background - Scrollbar thumb background on hover.
+ * @cssprop --omni-code-scrollbar-thumb-border-radius - Scrollbar thumb border radius.
+ * @cssprop --omni-code-header-background - Header background.
+ * @cssprop --omni-code-header-border-radius - Header border radius.
+ * @cssprop --omni-code-header-padding - Header padding.
+ * @cssprop --omni-code-header-border - Header border.
  * @cssprop --omni-code-header-family - Header font family.
- * @cssprop --omni-code-header-font-weight - Header font weight. 
- * 
+ * @cssprop --omni-code-header-font-weight - Header font weight.
+ *
  */
 @customElement('omni-code')
 export class Code extends LitElement {
-
 	/**
 	 * Renders a small header above the block itself.
 	 * @attr
@@ -61,7 +60,6 @@ export class Code extends LitElement {
 	 * @attr
 	 */
 	@property({ type: String, reflect: true })
-
 	get content(): string {
 		return this._content;
 	}
@@ -72,24 +70,7 @@ export class Code extends LitElement {
 		this.requestUpdate('content', oldVal);
 	}
 
-	// ----------
-	// INITIALISATION
-	// ----------
-
-	/**
-	 * @hideconstructor
-	 */
-	constructor() {
-
-		super();
-	}
-
-	// ------------
-	// LIFECYCLE HANDLERS
-	// ------------
-
 	override connectedCallback() {
-
 		super.connectedCallback();
 
 		// Format the slotted content to a source code preview.
@@ -98,28 +79,12 @@ export class Code extends LitElement {
 		}
 	}
 
-	// -----------
-	// PUBLIC FUNCTIONS
-	// -----------
-
 	override focus() {
 		this.shadowRoot.getElementById('track').focus();
 	}
 
-	// ----------
-	// EVENT HANDLERS
-	// ----------
-
-	// n/a
-
-	// ----------
-	// PRIVATE METHODS
-	// ----------
-
 	_parseContent(source: string): void {
-
 		if (source.length > 0) {
-
 			// Remove the starting newline character.
 			if (source.startsWith('\n')) {
 				source = source.replace('\n', '');
@@ -146,25 +111,15 @@ export class Code extends LitElement {
 
 			// Set the code preview content.
 			this._content = Prism.highlight(source, Prism.languages[this.language], 'css');
-
 		}
 	}
 
-	// -------------
-	// RENDERING TEMPLATES
-	// -------------
-
-	/**
-	 * The element style template.
-	 * 
-	 */
 	static override get styles() {
-
 		return [
 			ComponentStyles,
 			css`
-				code[class*="language-"],
-				pre[class*="language-"] {
+				code[class*='language-'],
+				pre[class*='language-'] {
 					color: #f8f8f2;
 					background: none;
 					text-shadow: 0 1px rgba(0, 0, 0, 0.3);
@@ -185,7 +140,7 @@ export class Code extends LitElement {
 					-moz-hyphens: none;
 					-ms-hyphens: none;
 					hyphens: none;
-        
+
 					-webkit-touch-callout: text;
 					-webkit-user-select: text;
 					-khtml-user-select: text;
@@ -195,28 +150,28 @@ export class Code extends LitElement {
 				}
 
 				/* Code blocks */
-				pre[class*="language-"] {
+				pre[class*='language-'] {
 					padding: 1em;
-					margin: .5em 0;
+					margin: 0.5em 0;
 					overflow: auto;
 					border-radius: 0.3em 0.3em 0.3em 0.3em;
 				}
 
-				pre[data-with-header="true"] {
+				pre[data-with-header='true'] {
 					border-radius: 0 0 0.3em 0.3em;
-					margin: 0 0 .5em 0;
+					margin: 0 0 0.5em 0;
 				}
 
-				:not(pre) > code[class*="language-"],
-				pre[class*="language-"] {
+				:not(pre) > code[class*='language-'],
+				pre[class*='language-'] {
 					background: #272822;
 				}
 
 				/* Inline code */
-				:not(pre) > code[class*="language-"] {
-					padding: .1em;
+				:not(pre) > code[class*='language-'] {
+					padding: 0.1em;
 					margin: 0;
-					border-radius: .3em;
+					border-radius: 0.3em;
 					white-space: normal;
 				}
 
@@ -232,7 +187,7 @@ export class Code extends LitElement {
 				}
 
 				.namespace {
-					opacity: .7;
+					opacity: 0.7;
 				}
 
 				.token.property,
@@ -294,13 +249,13 @@ export class Code extends LitElement {
 					cursor: help;
 				}
 
-				pre[class*="language-"].line-numbers {
+				pre[class*='language-'].line-numbers {
 					position: relative;
 					padding-left: 3.8em;
 					counter-reset: linenumber;
 				}
 
-				pre[class*="language-"].line-numbers > code {
+				pre[class*='language-'].line-numbers > code {
 					position: relative;
 					white-space: inherit;
 				}
@@ -319,7 +274,6 @@ export class Code extends LitElement {
 					-moz-user-select: none;
 					-ms-user-select: none;
 					user-select: none;
-
 				}
 
 				.line-numbers-rows > span {
@@ -344,37 +298,37 @@ export class Code extends LitElement {
 					width: 100%;
 				}
 
-				pre[class*="language-css"]{
+				pre[class*='language-css'] {
 					overflow-y: auto;
 				}
 
 				/* width */
-				pre[class*="language"]::-webkit-scrollbar {
+				pre[class*='language']::-webkit-scrollbar {
 					width: var(--omni-code-scrollbar-width, 10px);
 				}
 
 				/* Track */
-				pre[class*="language-"]::-webkit-scrollbar-track {
+				pre[class*='language-']::-webkit-scrollbar-track {
 					box-shadow: var(--omni-code-scrollbar-track-box-shadow, inset 0 0 5px grey);
 					border-radius: var(--omni-code-scrollbar-track-border-width, 0px);
 				}
 
 				/* Handle */
-				pre[class*="language-"]::-webkit-scrollbar-thumb {
+				pre[class*='language-']::-webkit-scrollbar-thumb {
 					background: var(--omni-code-scrollbar-thumb-background, var(--omni-primary-color));
 					border-radius: var(--omni-code-scrollbar-thumb-border-radius, 10px);
 				}
 
 				/* Handle on hover */
-				pre[class*="language-"]::-webkit-scrollbar-thumb:hover {
+				pre[class*='language-']::-webkit-scrollbar-thumb:hover {
 					background: var(--omni-code-scrollbar-thumb-hover-background, var(--omni-accent-color));
 				}
 
 				.header {
-					background: var(--omni-code-header-background, #F4F4F4);
+					background: var(--omni-code-header-background, #f4f4f4);
 					border-radius: var(--omni-code-header-border-radius, 0.3em 0.3em 0 0);
 					padding: var(--omni-code-header-padding, 4px 12px);
-					border: var(--omni-code-header-border, 1px solid #CCCCCC);
+					border: var(--omni-code-header-border, 1px solid #cccccc);
 					font-family: var(--omni-code-header-family, var(--omni-font-family));
 					font-weight: var(--omni-code-header-font-weight, 500);
 				}
@@ -382,27 +336,21 @@ export class Code extends LitElement {
 		];
 	}
 
-	/**
-	 * Apply changes to the element DOM when a property value changes.
-	 * 
-	 * @returns {TemplateResult} The updated DOM template.
-	 */
 	override render(): TemplateResult {
 		return html`
 			<div class="hidden">
 				<slot></slot>
 			</div>
-			${this.header ? html`
-			<div class="header">${this.header}</div>
-			${this._renderPre(true)}
-			` : html`
-			${this._renderPre(false)}
-			`}
+			${this.header
+				? html`
+						<div class="header">${this.header}</div>
+						${this._renderPre(true)}
+				  `
+				: html` ${this._renderPre(false)} `}
 		`;
 	}
 
 	_renderPre(withTitle: boolean): TemplateResult {
-
 		return html`<pre data-with-header="${withTitle}" class="language-${this.language}"
 	style="white-space: pre-wrap;"><code>${unsafeHTML(this._content)}</code></pre>`;
 	}
