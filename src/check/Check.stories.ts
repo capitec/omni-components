@@ -2,7 +2,7 @@ import { expect, jest } from '@storybook/jest';
 import { userEvent, within, fireEvent } from '@storybook/testing-library';
 import { Meta, StoryContext } from '@storybook/web-components';
 import { html, nothing } from 'lit';
-import { unsafeHTML } from 'lit/directives/unsafe-html';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import { assignToSlot, loadCssPropertiesRemote, raw } from '../utils/StoryUtils';
 import { Check } from './Check.js';
