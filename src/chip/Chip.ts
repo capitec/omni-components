@@ -1,6 +1,6 @@
 import { css, html, LitElement, nothing, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map';
+import { classMap } from 'lit/directives/class-map.js';
 import ComponentStyles from '../styles/ComponentStyles';
 
 import '../icons/Close.icon.js';
