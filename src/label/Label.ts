@@ -6,7 +6,7 @@ import ComponentStyles from '../styles/ComponentStyles';
  * A simple label component that renders styled text.
  *
  * ```js
- * 
+ *
  * import '@capitec/omni-components/label';
  * ```
  *
@@ -44,51 +44,51 @@ import ComponentStyles from '../styles/ComponentStyles';
  */
 @customElement('omni-label')
 export class Label extends LitElement {
-	/**
-	 * Text label.
-	 * @attr
-	 */
-	@property({ type: String, reflect: true }) label: string;
+    /**
+     * Text label.
+     * @attr
+     */
+    @property({ type: String, reflect: true }) label: string;
 
-	/**
-	 * The type of label to display.
-	 * @attr [type="default"]
-	 */
-	@property({ type: String, reflect: true }) type: 'default' | 'title' | 'subtitle' | 'strong' = 'default';
+    /**
+     * The type of label to display.
+     * @attr [type="default"]
+     */
+    @property({ type: String, reflect: true }) type: 'default' | 'title' | 'subtitle' | 'strong' = 'default';
 
-	static override get styles() {
-		return [
-			ComponentStyles,
-			css`
-				:host {
-					color: var(--omni-label-font-color, var(--omni-font-color));
-					font-family: var(--omni-label-font-family, var(--omni-font-family));
-					font-size: var(--omni-label-font-size, var(--omni-font-size));
-					font-weight: var(--omni-label-font-weight, var(--omni-font-weight));
-					white-space: pre-wrap;
-					cursor: var(--omni-label-cursor, default);
-				}
-				:host([type='title']) {
-					font-size: var(--omni-label-title-font-size, 1.42em);
-					font-weight: var(--omni-label-title-font-weight, bold);
-				}
-				:host([type='subtitle']) {
-					font-size: var(--omni-label-subtitle-font-size, 1.14em);
-					font-weight: var(--omni-label-subtitle-font-weight, bold);
-				}
-				:host([type='strong']) {
-					font-size: var(--omni-label-strong-font-size, var(--omni-font-size));
-					font-weight: var(--omni-label-strong-font-weight, bold);
-				}
-				:host([type='default']) {
-					font-size: var(--omni-label-default-font-size, var(--omni-font-size));
-					font-weight: var(--omni-label-default-font-weight, var(--omni-font-weight));
-				}
-			`
-		];
-	}
+    static override get styles() {
+        return [
+            ComponentStyles,
+            css`
+                :host {
+                    color: var(--omni-label-font-color, var(--omni-font-color));
+                    font-family: var(--omni-label-font-family, var(--omni-font-family));
+                    font-size: var(--omni-label-font-size, var(--omni-font-size));
+                    font-weight: var(--omni-label-font-weight, var(--omni-font-weight));
+                    white-space: pre-wrap;
+                    cursor: var(--omni-label-cursor, default);
+                }
+                :host([type='title']) {
+                    font-size: var(--omni-label-title-font-size, 1.42em);
+                    font-weight: var(--omni-label-title-font-weight, bold);
+                }
+                :host([type='subtitle']) {
+                    font-size: var(--omni-label-subtitle-font-size, 1.14em);
+                    font-weight: var(--omni-label-subtitle-font-weight, bold);
+                }
+                :host([type='strong']) {
+                    font-size: var(--omni-label-strong-font-size, var(--omni-font-size));
+                    font-weight: var(--omni-label-strong-font-weight, bold);
+                }
+                :host([type='default']) {
+                    font-size: var(--omni-label-default-font-size, var(--omni-font-size));
+                    font-weight: var(--omni-label-default-font-weight, var(--omni-font-weight));
+                }
+            `
+        ];
+    }
 
-	override render(): TemplateResult {
-		return html`${this.label}<slot></slot>`;
-	}
+    override render(): TemplateResult {
+        return html`${this.label}<slot></slot>`;
+    }
 }

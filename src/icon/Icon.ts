@@ -6,7 +6,7 @@ import ComponentStyles from '../styles/ComponentStyles';
  * Component that displays an icon
  *
  * ```js
- * 
+ *
  * import '@capitec/omni-components/icon';
  * ```
  *
@@ -45,124 +45,124 @@ import ComponentStyles from '../styles/ComponentStyles';
  */
 @customElement('omni-icon')
 export class Icon extends LitElement {
-	/**
-	 * The size to display the icon at
-	 * @attr [size="default"]
-	 */
-	@property({ type: String, reflect: true }) size: 'default' | 'extra-small' | 'small' | 'medium' | 'large' = 'default';
+    /**
+     * The size to display the icon at
+     * @attr [size="default"]
+     */
+    @property({ type: String, reflect: true }) size: 'default' | 'extra-small' | 'small' | 'medium' | 'large' = 'default';
 
-	/**
-	 * The name of the icon to display. Takes preference over the slotted icon.
-	 * @attr
-	 */
-	@property({ type: String, reflect: true }) icon: string;
+    /**
+     * The name of the icon to display. Takes preference over the slotted icon.
+     * @attr
+     */
+    @property({ type: String, reflect: true }) icon: string;
 
-	static override get styles() {
-		return [
-			ComponentStyles,
-			css`
-				:host {
-					width: fit-content;
-					justify-content: center;
-					color: var(--omni-icon-fill, currentColor);
-					fill: var(--omni-icon-fill, currentColor);
-					background-color: var(--omni-icon-background-color);
-				}
+    static override get styles() {
+        return [
+            ComponentStyles,
+            css`
+                :host {
+                    width: fit-content;
+                    justify-content: center;
+                    color: var(--omni-icon-fill, currentColor);
+                    fill: var(--omni-icon-fill, currentColor);
+                    background-color: var(--omni-icon-background-color);
+                }
 
-				/* MATERIAL ICON STYLES */
+                /* MATERIAL ICON STYLES */
 
-				.material-icon {
-					font-family: 'Material Icons';
-					font-weight: normal;
-					font-style: normal;
-					display: inline-block;
-					line-height: 1;
-					text-transform: none;
-					letter-spacing: normal;
-					word-wrap: normal;
-					white-space: nowrap;
-					direction: ltr;
-					padding: 0px;
-					margin: 0px;
+                .material-icon {
+                    font-family: 'Material Icons';
+                    font-weight: normal;
+                    font-style: normal;
+                    display: inline-block;
+                    line-height: 1;
+                    text-transform: none;
+                    letter-spacing: normal;
+                    word-wrap: normal;
+                    white-space: nowrap;
+                    direction: ltr;
+                    padding: 0px;
+                    margin: 0px;
 
-					align-self: center;
-					justify-self: center;
+                    align-self: center;
+                    justify-self: center;
 
-					/* Support for all WebKit browsers. */
-					-webkit-font-smoothing: antialiased;
+                    /* Support for all WebKit browsers. */
+                    -webkit-font-smoothing: antialiased;
 
-					/* Support for Safari and Chrome. */
-					text-rendering: optimizeLegibility;
+                    /* Support for Safari and Chrome. */
+                    text-rendering: optimizeLegibility;
 
-					/* Support for Firefox. */
-					-moz-osx-font-smoothing: grayscale;
+                    /* Support for Firefox. */
+                    -moz-osx-font-smoothing: grayscale;
 
-					/* Support for IE. */
-					font-feature-settings: 'liga';
-				}
+                    /* Support for IE. */
+                    font-feature-settings: 'liga';
+                }
 
-				.material-icon.large {
-					font-size: var(--omni-icon-size-large, 48px);
-				}
+                .material-icon.large {
+                    font-size: var(--omni-icon-size-large, 48px);
+                }
 
-				.material-icon.medium {
-					font-size: var(--omni-icon-size-medium, 32px);
-				}
+                .material-icon.medium {
+                    font-size: var(--omni-icon-size-medium, 32px);
+                }
 
-				.material-icon.small {
-					font-size: var(--omni-icon-size-small, 16px);
-				}
+                .material-icon.small {
+                    font-size: var(--omni-icon-size-small, 16px);
+                }
 
-				.material-icon.extra-small {
-					font-size: var(--omni-icon-size-extra-small, 8.25px);
-				}
+                .material-icon.extra-small {
+                    font-size: var(--omni-icon-size-extra-small, 8.25px);
+                }
 
-				.material-icon.default {
-					font-size: var(--omni-icon-size-default, 24px);
-				}
+                .material-icon.default {
+                    font-size: var(--omni-icon-size-default, 24px);
+                }
 
-				/* SVG ICON STYLES */
+                /* SVG ICON STYLES */
 
-				.svg-icon.large {
-					height: var(--omni-icon-size-large, 48px);
-					/*width: 48px;*/
-				}
+                .svg-icon.large {
+                    height: var(--omni-icon-size-large, 48px);
+                    /*width: 48px;*/
+                }
 
-				.svg-icon.medium {
-					height: var(--omni-icon-size-medium, 32px);
-					/*width: 32px;*/
-				}
+                .svg-icon.medium {
+                    height: var(--omni-icon-size-medium, 32px);
+                    /*width: 32px;*/
+                }
 
-				.svg-icon.small {
-					height: var(--omni-icon-size-small, 16px);
-					/*width: 16px;*/
-				}
+                .svg-icon.small {
+                    height: var(--omni-icon-size-small, 16px);
+                    /*width: 16px;*/
+                }
 
-				.svg-icon.extra-small {
-					height: var(--omni-icon-size-extra-small, 8.25px);
-					/*width: 16px;*/
-				}
+                .svg-icon.extra-small {
+                    height: var(--omni-icon-size-extra-small, 8.25px);
+                    /*width: 16px;*/
+                }
 
-				.svg-icon.default {
-					height: var(--omni-icon-size-default, 24px);
-					/*width: 24px;*/
-				}
-			`
-		];
-	}
+                .svg-icon.default {
+                    height: var(--omni-icon-size-default, 24px);
+                    /*width: 24px;*/
+                }
+            `
+        ];
+    }
 
-	override render(): TemplateResult {
-		if (this.icon) {
-			if (this.icon.startsWith('@material/')) {
-				return html`<div class="material-icon ${this.size}">${this.icon.replace('@material/', '')}</div>`;
-			}
-			return html`<img class="svg-icon ${this.size}" src="${this.icon}" alt="${this.icon}" />`;
-		}
+    override render(): TemplateResult {
+        if (this.icon) {
+            if (this.icon.startsWith('@material/')) {
+                return html`<div class="material-icon ${this.size}">${this.icon.replace('@material/', '')}</div>`;
+            }
+            return html`<img class="svg-icon ${this.size}" src="${this.icon}" alt="${this.icon}" />`;
+        }
 
-		return html`
-			<div class="svg-icon ${this.size}">
-				<slot></slot>
-			</div>
-		`;
-	}
+        return html`
+            <div class="svg-icon ${this.size}">
+                <slot></slot>
+            </div>
+        `;
+    }
 }

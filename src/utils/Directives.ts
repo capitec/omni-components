@@ -7,5 +7,5 @@ import { nothing } from 'lit';
  * @returns value or nothing
  */
 export function ifNotEmpty(value: string): string | any {
-	return (null !== value && value ? value : nothing);
+    return null !== value && value ? value : nothing;
 }

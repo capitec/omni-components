@@ -20,6 +20,7 @@
 		"eqeqeq": "error",
 		"indent": [
 			"error",
+			4,
 			{
 				"ignoredNodes": [
 					"ConditionalExpression",
@@ -37,7 +38,7 @@
 			"error",
 			"single",
 			{
-				"allowTemplateLiterals": false
+				"allowTemplateLiterals": true
 			}
 		],
 		"semi": [
