@@ -6,7 +6,7 @@ import { assignToSlot, loadCssPropertiesRemote, raw } from '../utils/StoryUtils'
 import { ifNotEmpty } from '../utils/Directives.js';
 import { Check } from './Check.js';
 import './Check.js';
-import { unsafeHTML } from 'lit/directives/unsafe-html';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 
 export default {
   title: 'UI Components/Check',
