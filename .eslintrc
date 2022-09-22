@@ -17,9 +17,22 @@
 		"node": true
 	},
 	"rules": {
+		"eqeqeq": "error",
 		"indent": [
 			"error",
-			"tab"
+			"tab",
+			{
+				"ignoredNodes": [
+					"ConditionalExpression",
+					"TemplateLiteral *"
+				]
+			}
+		],
+		"no-multiple-empty-lines": [
+			"error",
+			{
+				"max": 1
+			}
 		],
 		"quotes": [
 			"error",

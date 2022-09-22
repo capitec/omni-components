@@ -1,9 +1,10 @@
 {
 	"bracketSameLine": true,
 	"endOfLine": "auto",
-	"printWidth": 100,
+	"printWidth": 140,
 	"tabWidth": 4,
 	"trailingComma": "none",
+	"htmlWhitespaceSensitivity": "strict",
 	"semi": true,
 	"singleQuote": true,
 	"useTabs": true
