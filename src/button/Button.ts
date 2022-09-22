@@ -7,7 +7,7 @@ import ComponentStyles from '../styles/ComponentStyles';
  * A control that allows an action to be executed.
  *
  * ```js
- * 
+ *
  * import '@capitec/omni-components/button';
  * ```
  *
@@ -126,8 +126,15 @@ export class Button extends LitElement {
 
 					cursor: pointer;
 
-					transition: opacity 0.1s ease, background-color 0.1s ease, border 0.1s ease, color 0.1s ease, box-shadow 0.1s ease,
-						background 0.1s ease, -webkit-box-shadow 0.1s ease;
+					/* prettier-ignore */
+					transition:
+						opacity .1s ease,
+						background-color .1s ease,
+						border .1s ease,
+						color .1s ease,
+						box-shadow .1s ease,
+						background .1s ease,
+						-webkit-box-shadow .1s ease;
 				}
 
 				.button > .label {
