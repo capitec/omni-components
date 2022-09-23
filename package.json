@@ -4,7 +4,8 @@
   "description": "Omni Components come with minimal dependencies to reduce the bloat in your project. All web components base off Lit (https://lit.dev) and are each available as fully standalone imports or at a group level import.",
   "scripts": {
     "clean": "npx rimraf dist docs",
-    "lint": "eslint . --ext .ts",
+    "lint": "eslint . --ext .ts --fix",
+    "lint:check": "eslint . --ext .ts",
     "build": "npm run compile && npm run docs",
     "compile": "npm run clean && npm run compile:ts",
     "compile:ts": "tsc",
@@ -19,7 +20,9 @@
     "docs:readme": "npx web-component-analyzer ./src/**/*.{js,ts} --outFiles {dir}/README.md",
     "docs:elements": "node scripts/elements-list.mjs",
     "storybook": "npm run clean && tsc && npm run docs:custom-elements && npm run docs:theme-variables && concurrently -k -r \"tsc --build --watch --preserveWatchOutput\" \"npx start-storybook --no-manager-cache --port=6006\"",
-    "test": "concurrently -k -r -s first \"npm run storybook\" \"npx wait-on tcp:6006 && test-storybook --verbose --coverage\""
+    "test": "concurrently -k -r -s first \"npm run storybook\" \"npx wait-on tcp:6006 && test-storybook --verbose --coverage\"",
+    "format": "prettier --config .prettierrc 'src/**/*.ts' --write",
+	"format:check": "prettier --config .prettierrc 'src/**/*.ts' --check"
   },
   "files": [
     "dist",
@@ -83,6 +86,7 @@
     "concurrently": "^7.2.2",
     "esbuild": "^0.15.7",
     "eslint": "^8.22.0",
+    "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-lit": "^1.6.1",
     "fs-extra": "^10.1.0",
     "globby": "^13.1.2",
@@ -91,6 +95,7 @@
     "jest-playwright-preset": "^1.5.1",
     "jsdoc-parse": "^6.1.0",
     "package-json": "^8.1.0",
+    "prettier": "^2.7.1",
     "pretty": "^2.0.0",
     "react-textarea-autosize": "^8.3.4",
     "rimraf": "^3.0.2",

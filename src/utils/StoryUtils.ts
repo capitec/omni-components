@@ -6,7 +6,9 @@ function loadCssProperties(element: string, customElements: any, cssDeclarations
         cssDeclarations = {};
     }
 
-    const elementModule = customElements.modules.find((module: { exports: any[]; }) => module.exports.find((e: { name: string; }) => e.name === element));
+    const elementModule = customElements.modules.find((module: { exports: any[] }) =>
+        module.exports.find((e: { name: string }) => e.name === element)
+    );
     for (const key in elementModule.declarations) {
         const declaration = elementModule.declarations[key];
         if (declaration.cssProperties && declaration.cssProperties.length > 0) {
@@ -14,7 +16,10 @@ function loadCssProperties(element: string, customElements: any, cssDeclarations
                 const cssProperty = declaration.cssProperties[cssKey];
                 if (!cssDeclarations[cssProperty.name.replace('--', '')]) {
                     cssDeclarations[cssProperty.name.replace('--', '')] = {
-                        control: cssProperty.name.includes('color') || cssProperty.name.includes('colour') || cssProperty.name.includes('fill') ? 'color' : 'text',
+                        control:
+                            cssProperty.name.includes('color') || cssProperty.name.includes('colour') || cssProperty.name.includes('fill')
+                                ? 'color'
+                                : 'text',
                         description: cssProperty.description,
                         category: 'CSS Variables',
                         subcategory: 'Component Variables',
@@ -34,7 +39,7 @@ function loadThemeVariablesRemote() {
     let error = undefined;
     let output = '';
     const request = new XMLHttpRequest();
-    request.open('GET', 'theme-variables.json', false);  // `false` makes the request synchronous
+    request.open('GET', 'theme-variables.json', false); // `false` makes the request synchronous
     request.onload = () => {
         output = request.responseText;
     };
@@ -61,7 +66,7 @@ function loadCssPropertiesRemote(element: string, cssDeclarations: any = undefin
     let error = undefined;
     let output = '';
     const request = new XMLHttpRequest();
-    request.open('GET', 'custom-elements.json', false);  // `false` makes the request synchronous
+    request.open('GET', 'custom-elements.json', false); // `false` makes the request synchronous
     request.onload = () => {
         output = request.responseText;
     };
@@ -86,7 +91,7 @@ function loadCustomElementsRemote(): any {
     let error = undefined;
     let output = '';
     const request = new XMLHttpRequest();
-    request.open('GET', 'custom-elements.json', false);  // `false` makes the request synchronous
+    request.open('GET', 'custom-elements.json', false); // `false` makes the request synchronous
     request.onload = () => {
         output = request.responseText;
     };
@@ -113,7 +118,7 @@ function loadCustomElementsModuleForRemote(elementName: string) {
     return loadCustomElementsModuleFor(elementName, customElements);
 }
 
-function loadSlotFor(elementName: string, slotName :string, customElements: any) {
+function loadSlotFor(elementName: string, slotName: string, customElements: any) {
     const module = loadCustomElementsModuleFor(elementName, customElements);
     return loadSlotForModule(module, slotName);
 }
@@ -124,7 +129,9 @@ function loadSlotForRemote(elementName: string, slotName: string) {
 }
 
 function loadSlotForModule(elementModule: any, slotName: string): { name: string; description: string } {
-    const declaration = elementModule.declarations.find((d: any) => d.slots && d.slots.length > 0 && d.slots.find((s: any) => s.name === ''));
+    const declaration = elementModule.declarations.find(
+        (d: any) => d.slots && d.slots.length > 0 && d.slots.find((s: any) => s.name === '')
+    );
     if (declaration) {
         const slot = declaration.slots.find((s: any) => s.name === slotName);
         if (slot) {
@@ -159,10 +166,10 @@ function assignToSlot(slotName: string, rawHtml: string) {
     const doc = parser.parseFromString(rawHtml, 'text/xml');
     const errorNode = doc.querySelector('parsererror');
     if (errorNode) {
-      // parsing failed
-      return rawHtml;
+        // parsing failed
+        return rawHtml;
     }
-    
+
     // parsing succeeded
     const element = doc.documentElement;
     element.removeAttribute('slot');
@@ -172,7 +179,6 @@ function assignToSlot(slotName: string, rawHtml: string) {
     rawHtml = serializer.serializeToString(doc);
 
     return rawHtml;
-
 }
 
 function markdownCode(code: string, lang: string = '') {
@@ -184,7 +190,9 @@ function markdownCode(code: string, lang: string = '') {
 
 \`\`\`
 
-  `.replace('{lang}', lang).replace('{code}', code);
+  `
+        .replace('{lang}', lang)
+        .replace('{code}', code);
 
     return md;
 }
@@ -193,7 +201,7 @@ function markdownCodeRemote(src: string, lang: string = '') {
     let error = undefined;
     let output = '';
     const request = new XMLHttpRequest();
-    request.open('GET', src, false);  // `false` makes the request synchronous
+    request.open('GET', src, false); // `false` makes the request synchronous
     request.onload = () => {
         output = request.responseText;
     };
@@ -213,7 +221,7 @@ function loadFileRemote(src: string) {
     let error = undefined;
     let output = '';
     const request = new XMLHttpRequest();
-    request.open('GET', src, false);  // `false` makes the request synchronous
+    request.open('GET', src, false); // `false` makes the request synchronous
     request.onload = () => {
         output = request.responseText;
     };
@@ -232,7 +240,7 @@ function loadThemesListRemote() {
     let error = undefined;
     let output = '';
     const request = new XMLHttpRequest();
-    request.open('GET', 'themes-list.json', false);  // `false` makes the request synchronous
+    request.open('GET', 'themes-list.json', false); // `false` makes the request synchronous
     request.onload = () => {
         output = request.responseText;
     };
@@ -254,21 +262,19 @@ function formatMarkdownCodeElements(str: string, lang: string = 'js') {
     if (!str) {
         return str;
     }
-    return str.replaceAll(`${codeSnippet}`, `\r\n${codeSnippet}`)
-        .replaceAll(`${codeSnippet}${lang}`, `${codeSnippet}${lang}\r\n`);
+    return str.replaceAll(`${codeSnippet}`, `\r\n${codeSnippet}`).replaceAll(`${codeSnippet}${lang}`, `${codeSnippet}${lang}\r\n`);
 }
-
 
 function filterJsDocLinks(jsdoc: string) {
     if (!jsdoc) return jsdoc;
 
-    const renderLink = ((link: { tag: string; text: string; url: string; raw: string; }) => {
+    const renderLink = (link: { tag: string; text: string; url: string; raw: string }) => {
         if (!link.url.includes(':')) {
             // Local markdown links are not valid in the properties section of storybook
             return `**${link.text}**`;
         }
         return `[${link.text}](${link.url}`;
-    });
+    };
 
     const matches = Array.from(jsdoc.matchAll(/(?:\[(.*?)\])?{@(link|tutorial) (.*?)(?:(?:\|| +)(.*?))?}/gm));
 
@@ -301,7 +307,6 @@ function filterJsDocLinks(jsdoc: string) {
  * The `raw` tag returns a string that can be used directly as ```innerHTML``` or as ```unsafeHTML``` via lit.
  */
 const raw = (strings: TemplateStringsArray) => strings.join('\r\n');
-
 
 export {
     loadCustomElementsRemote,
