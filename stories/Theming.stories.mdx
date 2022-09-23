@@ -2,7 +2,11 @@ import { Description, Meta, Canvas, Story, Source } from '@storybook/addon-docs'
 import { CssPropsBlock } from "@innofake/storybook-addon-cssprops";
 import { html, css } from 'lit';
 import { loadThemeVariablesRemote, markdownCodeRemote, loadThemesListRemote, loadFileRemote } from '../src/utils/StoryUtils';
-import { customTheme, uploadTheme } from '../.storybook/preview.js';
+import { customTheme, uploadTheme, updateTheme } from '../.storybook/preview.js';
+import { useState } from 'react';
+import CodeMirror from '@uiw/react-codemirror';
+import { githubDark } from '@uiw/codemirror-theme-github';
+import { css as cssLang } from '@codemirror/lang-css';
 
 import '../dist/label';
 import '../dist/button';
@@ -112,12 +116,45 @@ Currently provided theme variables are listed below and can be modified for a li
   })
   }</div>
 
+export const uploadThemeInternal = async (e) => {
+  await uploadTheme(e);
+  UploadedStylesUpdater.requestUpdate();
+}
+
+export const UploadedStylesUpdater = {
+  setValue: (...args) => console.log(args),
+  value: -999,
+  requestUpdate: () => UploadedStylesUpdater.setValue(UploadedStylesUpdater.value + 1)
+}
+
+export const UploadedStyles = () => {
+    const [value, setValue] = useState(2)
+    UploadedStylesUpdater.setValue = setValue;
+    UploadedStylesUpdater.value = value;
+    return (<div>
+    <CodeMirror
+    value={customTheme.style.innerHTML}
+    height="500px"
+    theme={githubDark}
+    extensions={[cssLang()]}
+    onChange={(value, viewUpdate) => {
+      updateTheme(value);
+      UploadedStylesUpdater.requestUpdate();
+    }}
+    />
+     </div>)
+}
 
 <div>
-  <omni-label label="Upload Custom Theme" type="subtitle"></omni-label>
+  <omni-label label="Custom Theme" type="subtitle"></omni-label>
   <br/>
-  <input className="hidden" id="cssValue" type="file" accept=".css" onInput={(e) => uploadTheme(e)} />
-  <omni-button label="Upload Custom Theme" type="secondary" onClick={(e) => document.getElementById('cssValue').click()} ></omni-button>
+  <input className="hidden" id="cssValue" type="file" accept=".css" onInput={(e) => uploadThemeInternal(e)} />
+  <omni-button label="Upload Theme" type="secondary" onClick={(e) => document.getElementById('cssValue').click()} ></omni-button>
+<div>
+  <br/>
+  <br/>
+  <UploadedStyles />
+</div>
 </div>
 
   

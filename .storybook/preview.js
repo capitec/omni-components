@@ -33,6 +33,8 @@ export const customTheme = {
 	style: document.createElement('style')
 };
 
+customTheme.style.appendChild(document.createTextNode(':root {\r\n\t\r\n}'));
+
 function clearElements(el) {
 	el.innerHTML = '';
 	var child = el.lastElementChild;
@@ -40,6 +42,12 @@ function clearElements(el) {
 		el.removeChild(child);
 		child = el.lastElementChild;
 	}
+}
+
+export function updateTheme(cssRaw) {
+				
+	clearElements(customTheme.style);
+	customTheme.style.appendChild(document.createTextNode(cssRaw));
 }
 
 export async function uploadTheme (e) {
@@ -52,10 +60,7 @@ export async function uploadTheme (e) {
 			let reader = new FileReader();
 			reader.onload = (evt) => {
 				let cssRaw = evt.target.result;
-				
-				clearElements(customTheme.style);
-				customTheme.style.appendChild(document.createTextNode(cssRaw));
-	
+				updateTheme(cssRaw);
 				inputField.value = "";
 
 				resolve();	
@@ -71,7 +76,7 @@ export async function uploadTheme (e) {
 	}
 }
 
-cssFiles['Custom Uploaded Theme'] = {
+cssFiles['Custom Theme'] = {
 	use: () => {
 	  customTheme.counter++;
 	  head.appendChild(customTheme.style);
