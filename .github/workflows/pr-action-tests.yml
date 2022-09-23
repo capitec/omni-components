@@ -6,7 +6,49 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 jobs:
-  pr-run-storybook-tests:
+
+  pr-lint-checks:
+    name: Lint Checks
+    timeout-minutes: 15 
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v3
+          - uses: actions/setup-node@v3
+            with:
+              node-version: 16.x
+              registry-url: 'https://registry.npmjs.org'
+              always-auth: true
+
+          - name: Install Package Dependencies 🔗
+            run: |
+              npm ci
+
+          - name: Run Lint Checks
+            run: |
+              npm run lint:check
+
+  pr-format-checks:
+    name: Format Checks
+    timeout-minutes: 15 
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v3
+          - uses: actions/setup-node@v3
+            with:
+              node-version: 16.x
+              registry-url: 'https://registry.npmjs.org'
+              always-auth: true
+
+          - name: Install Package Dependencies 🔗
+            run: |
+              npm ci
+
+          - name: Run Format Checks
+            run: |
+              npm run format:check
+
+  pr-run-tests:
+    needs: [pr-lint-checks, pr-format-checks]
     timeout-minutes: 15 
     runs-on: ubuntu-latest
     steps:
@@ -16,10 +58,17 @@ jobs:
           node-version: 16.x
           registry-url: 'https://registry.npmjs.org'
           always-auth: true
-      - run: npm ci
-      - run: npx playwright install-deps webkit
-      - run: npm run compile
-      - name: Test Storybook
+
+      - name: Install Package Dependencies
+        run: npm ci
+
+      - name: Install Playwright Webkit Dependencies
+        run: npx playwright install-deps webkit
+
+      - name: Compile Code
+        run: npm run compile
+
+      - name: Run Storybook Tests
         run: npm run test
         env:
           CI: true
