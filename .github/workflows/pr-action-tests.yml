@@ -10,22 +10,22 @@ jobs:
   pr-lint-checks:
     name: Lint Checks
     timeout-minutes: 15 
-        runs-on: ubuntu-latest
-        steps:
-          - uses: actions/checkout@v3
-          - uses: actions/setup-node@v3
-            with:
-              node-version: 16.x
-              registry-url: 'https://registry.npmjs.org'
-              always-auth: true
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v3
+        - uses: actions/setup-node@v3
+          with:
+            node-version: 16.x
+            registry-url: 'https://registry.npmjs.org'
+            always-auth: true
 
-          - name: Install Package Dependencies 🔗
-            run: |
-              npm ci
+        - name: Install Package Dependencies 🔗
+          run: |
+            npm ci
 
-          - name: Run Lint Checks
-            run: |
-              npm run lint:check
+        - name: Run Lint Checks
+          run: |
+            npm run lint:check
 
   pr-format-checks:
     name: Format Checks
