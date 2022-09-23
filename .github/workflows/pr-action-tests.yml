@@ -49,6 +49,7 @@ jobs:
 
   pr-run-tests:
     needs: [pr-lint-checks, pr-format-checks]
+    name: "Tests"
     timeout-minutes: 15 
     runs-on: ubuntu-latest
     steps:
