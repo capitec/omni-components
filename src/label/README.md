@@ -1,9 +1,10 @@
 # omni-label
 
-A simple label component that renders a styled text string.
+A simple label component that renders styled text.
 
-```js 
-import '@capitec/omni-components/label'; 
+```js
+
+import '@capitec/omni-components/label';
 ```
 
 ## Example
@@ -20,7 +21,7 @@ import '@capitec/omni-components/label';
 | Property   | Attribute | Modifiers | Type                                             | Default   | Description                   |
 |------------|-----------|-----------|--------------------------------------------------|-----------|-------------------------------|
 | `label`    | `label`   |           | `string`                                         |           | Text label.                   |
-| `override` |           |           |                                                  |           | The element style template.   |
+| `override` |           |           |                                                  |           |                               |
 | `styles`   |           | readonly  | `CSSResult[]`                                    |           |                               |
 | `type`     | `type`    |           | `"default" \| "title" \| "subtitle" \| "strong"` | "default" | The type of label to display. |
 
