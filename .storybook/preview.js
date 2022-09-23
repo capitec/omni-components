@@ -27,6 +27,66 @@ loadThemesListRemote().forEach(f => {
 	cssFiles[f] = lazyCssPromise(theme);
 });
 
+var head = document.head || document.getElementsByTagName('head')[0];
+export const customTheme = {
+	counter: 0,
+	style: document.createElement('style')
+};
+
+function clearElements(el) {
+	el.innerHTML = '';
+	var child = el.lastElementChild;
+	while (child) {
+		el.removeChild(child);
+		child = el.lastElementChild;
+	}
+}
+
+export async function uploadTheme (e) {
+	if (e.target.files.length > 0) {
+		const inputField = e.target;
+		const file = e.target.files[0];
+
+		await new Promise((resolve,reject) => {
+		
+			let reader = new FileReader();
+			reader.onload = (evt) => {
+				let cssRaw = evt.target.result;
+				
+				clearElements(customTheme.style);
+				customTheme.style.appendChild(document.createTextNode(cssRaw));
+	
+				inputField.value = "";
+
+				resolve();	
+			};
+			reader.onerror = (event) => {
+				reject(event.target.error)
+			}
+			reader.onabort = (event) => {
+				reject(event.target.error)
+			}
+			reader.readAsText(file);
+		});
+	}
+}
+
+cssFiles['Custom Uploaded Theme'] = {
+	use: () => {
+	  customTheme.counter++;
+	  head.appendChild(customTheme.style);
+	},
+	unuse: () => {
+	  customTheme.counter--;
+	  if (customTheme.counter < 1) {
+		  customTheme.counter = 0;
+		  if (customTheme.style && customTheme.style.parentElement) {
+			customTheme.style.parentElement.removeChild(customTheme.style);
+		  }
+	  }
+	}
+};
+
 // Auto generate properties in the docs view from the custom elements manifest.
 setCustomElementsManifest(customElements);
 

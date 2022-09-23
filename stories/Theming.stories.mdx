@@ -2,6 +2,7 @@ import { Description, Meta, Canvas, Story, Source } from '@storybook/addon-docs'
 import { CssPropsBlock } from "@innofake/storybook-addon-cssprops";
 import { html, css } from 'lit';
 import { loadThemeVariablesRemote, markdownCodeRemote, loadThemesListRemote, loadFileRemote } from '../src/utils/StoryUtils';
+import { customTheme, uploadTheme } from '../.storybook/preview.js';
 
 import '../dist/label';
 import '../dist/button';
@@ -47,6 +48,10 @@ import '../dist/check';
 
   .flex-row > * {
     margin: 6px;
+  }
+
+  .hidden {
+    display: none;
   }
 
   
@@ -106,5 +111,13 @@ Currently provided theme variables are listed below and can be modified for a li
             </div>)
   })
   }</div>
+
+
+<div>
+  <omni-label label="Upload Custom Theme" type="subtitle"></omni-label>
+  <br/>
+  <input className="hidden" id="cssValue" type="file" accept=".css" onInput={(e) => uploadTheme(e)} />
+  <omni-button label="Upload Custom Theme" type="secondary" onClick={(e) => document.getElementById('cssValue').click()} ></omni-button>
+</div>
 
   
