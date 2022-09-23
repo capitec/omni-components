@@ -28,11 +28,14 @@ loadThemesListRemote().forEach(f => {
 });
 
 var head = document.head || document.getElementsByTagName('head')[0];
+
+// Exported object in order to track current custom theme content
 export const customTheme = {
 	counter: 0,
 	style: document.createElement('style')
 };
 
+// Set default custom theme to be an empty root selector
 customTheme.style.appendChild(document.createTextNode(':root {\r\n\t\r\n}'));
 
 function clearElements(el) {
@@ -76,6 +79,7 @@ export async function uploadTheme (e) {
 	}
 }
 
+// Added custom theme to dropdown list with use/unuse behaviour to add and remove at preview <head> tag
 cssFiles['Custom Theme'] = {
 	use: () => {
 	  customTheme.counter++;
