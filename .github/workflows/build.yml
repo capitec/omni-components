@@ -19,7 +19,7 @@ env:
   DOCS_BASE_PATH: docs/Omni-Components
   LOCAL_VERSION:   
 jobs:
-  update-docs:
+  build-and-release:
     concurrency:
       group: ${{ github.ref }}
       cancel-in-progress: true

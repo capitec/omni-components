@@ -1,9 +1,10 @@
 # omni-radio
 
-A control that allows a user to select a single value from a small group of values.
+A control that allows a user to select a single value from a group of values.
 
-```js 
-import '@capitec/omni-components/radio'; 
+```js
+
+import '@capitec/omni-components/radio';
 ```
 
 ## Example
@@ -29,7 +30,7 @@ import '@capitec/omni-components/radio';
 | `error`    | `error`    |           | `string`      | An error message to guide users to correct a mistake. |
 | `hint`     | `hint`     |           | `string`      | A hint message to assist the user.               |
 | `label`    | `label`    |           | `string`      | Text label.                                      |
-| `override` |            |           |               | The element style template.                      |
+| `override` |            |           |               |                                                  |
 | `styles`   |            | readonly  | `CSSResult[]` |                                                  |
 
 ## Methods

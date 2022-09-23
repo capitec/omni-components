@@ -1,10 +1,20 @@
 {
+	"editor.detectIndentation": false,
+	"editor.insertSpaces": false,
+	"editor.tabSize": 4,
 	"lit-plugin.rules.no-unknown-slot": "off",
-    "workbench.colorCustomizations": {
+	"workbench.colorCustomizations": {
 		"activityBar.background": "#0f3b65",
 		"activityBar.foreground": "#FFFFFF",
 		"activityBar.inactiveForeground": "#ffffffbe",
 		"titleBar.activeBackground": "#0f3b65",
 		"titleBar.activeForeground": "#FFFFFF"
+	},
+	"[typescript]": {
+		"editor.codeActionsOnSave": {
+			"source.fixAll.eslint": true,
+			"source.organizeImports": false
+		},
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
 	}
 }

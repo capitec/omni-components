@@ -1,11 +1,11 @@
-import { Meta, StoryContext } from '@storybook/web-components';
-import { userEvent, within } from '@storybook/testing-library';
 import { expect, jest } from '@storybook/jest';
+import { userEvent, within } from '@storybook/testing-library';
+import { Meta, StoryContext } from '@storybook/web-components';
 import { html } from 'lit';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
+import { ifNotEmpty } from '../utils/Directives.js';
 import { loadCssPropertiesRemote, loadDefaultSlotForRemote, raw } from '../utils/StoryUtils.js';
 import { Button } from './Button.js';
-import { ifNotEmpty } from '../utils/Directives.js';
-import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 
 import './Button.js';
 import '../icon/Icon.js';
@@ -19,26 +19,26 @@ export default {
     argTypes: {
         type: {
             control: 'radio',
-            options: buttonOptions,
+            options: buttonOptions
         },
         slotPosition: {
             control: 'radio',
-            options: slotPositionOptions,
+            options: slotPositionOptions
         },
         'slot-position': {
             control: false
         },
         slot: {
-          control: 'text',
-          description: loadDefaultSlotForRemote('omni-button').description
+            control: 'text',
+            description: loadDefaultSlotForRemote('omni-button').description
         }
     },
     parameters: {
         actions: {
-            handles: ['value-change'],
+            handles: ['value-change']
         },
-        cssprops: loadCssPropertiesRemote('omni-button'),
-    },
+        cssprops: loadCssPropertiesRemote('omni-button')
+    }
 } as Meta;
 
 interface Args {
@@ -46,7 +46,7 @@ interface Args {
     label: string;
     slotPosition: typeof slotPositionOptions[number];
     disabled: boolean;
-    slot: string
+    slot: string;
 }
 
 export const Interactive = {
@@ -75,46 +75,42 @@ export const Interactive = {
         await userEvent.click(button);
         await userEvent.click(button);
         await expect(click).toBeCalledTimes(2);
-    },
+    }
 };
 
 export const Type = {
-    render: (args: Args) => html`
-        <omni-button type="${args.type}" label="${args.label}" data-testid="test-button"></omni-button>
-    `,
+    render: (args: Args) => html` <omni-button type="${args.type}" label="${args.label}" data-testid="test-button"></omni-button> `,
     name: 'Type',
     args: {
         type: 'primary',
-        label: 'Click',
+        label: 'Click'
     },
     play: async (context: StoryContext) => {
         const button = within(context.canvasElement).getByTestId<Button>('test-button');
         const buttonElement = button.shadowRoot.getElementById('button');
         const foundPrimaryClass = buttonElement.classList.contains('primary');
         await expect(foundPrimaryClass).toBeTruthy();
-    },
+    }
 };
 
 export const Label = {
-    render: (args: Args) => html`
-        <omni-button label="${args.label}" data-testid="test-button"></omni-button>
-    `,
+    render: (args: Args) => html` <omni-button label="${args.label}" data-testid="test-button"></omni-button> `,
     name: 'Label',
     args: {
-        label: 'Click',
+        label: 'Click'
     },
     play: async (context: StoryContext) => {
         const button = within(context.canvasElement).getByTestId<Button>('test-button');
         const labelElement = button.shadowRoot.getElementById('label');
         const labelMatches = labelElement.innerText === Label.args.label;
         await expect(labelMatches).toBeTruthy();
-    },
+    }
 };
 
 export const Slot = {
     render: () => html`
         <omni-button data-testid="test-button">
-          <omni-icon size="default" icon="assets/direction.svg"></omni-icon>
+            <omni-icon size="default" icon="assets/direction.svg"></omni-icon>
         </omni-button>
     `,
     name: 'Slot',
@@ -122,20 +118,16 @@ export const Slot = {
     play: async (context: StoryContext) => {
         const button = within(context.canvasElement).getByTestId<Button>('test-button');
         const slotElement = button.shadowRoot.querySelector('slot');
-        const foundSlottedOmniIconElement = slotElement
-            .assignedElements()
-            .find((e) => e.tagName.toLowerCase() === 'omni-icon');
+        const foundSlottedOmniIconElement = slotElement.assignedElements().find((e) => e.tagName.toLowerCase() === 'omni-icon');
         await expect(foundSlottedOmniIconElement).toBeTruthy();
-    },
+    }
 };
 
 export const Disabled = {
-    render: (args: Args) => html`
-        <omni-button disabled label="${args.label}" data-testid="test-button"></omni-button>
-    `,
+    render: (args: Args) => html` <omni-button disabled label="${args.label}" data-testid="test-button"></omni-button> `,
     name: 'Disabled',
     args: {
-        label: 'Disabled',
+        label: 'Disabled'
     },
     play: async (context: StoryContext) => {
         const button = within(context.canvasElement).getByTestId<Button>('test-button'); // Test for disabled CSS.
@@ -149,5 +141,5 @@ export const Disabled = {
         await userEvent.click(button);
         await userEvent.click(button);
         await expect(click).toBeCalledTimes(0);
-    },
+    }
 };
