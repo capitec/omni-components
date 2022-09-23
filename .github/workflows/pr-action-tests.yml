@@ -7,8 +7,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  pr-setup:
-    name: Setup
+  pr-lint-checks:
+    name: Lint Checks
     timeout-minutes: 15 
     runs-on: ubuntu-latest
     steps:
@@ -23,32 +23,45 @@ jobs:
         run: |
           npm ci
 
-  pr-lint-checks:
-    needs: pr-setup
-    name: Lint Checks
-    timeout-minutes: 15 
-    runs-on: ubuntu-latest
-    steps:
       - name: Run Lint Checks
         run: |
           npm run lint:check
 
   pr-format-checks:
-    needs: pr-setup
     name: Format Checks
     timeout-minutes: 15 
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          registry-url: 'https://registry.npmjs.org'
+          always-auth: true
+
+      - name: Install Package Dependencies 🔗
+        run: |
+          npm ci
+
       - name: Run Format Checks
         run: |
           npm run format:check
 
   pr-run-tests:
-    needs: pr-setup
     name: "Tests"
     timeout-minutes: 15 
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          registry-url: 'https://registry.npmjs.org'
+          always-auth: true
+
+      - name: Install Package Dependencies
+        run: npm ci
+
       - name: Install Playwright Webkit Dependencies
         run: npx playwright install-deps webkit
 
