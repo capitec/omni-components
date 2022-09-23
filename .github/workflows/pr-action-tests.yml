@@ -1,4 +1,4 @@
-name: pull-request-tests
+name: Pull Request
 on:
   pull_request:
     branches: [ main, develop]
