@@ -49,8 +49,9 @@ A control that allows an action to be executed.
 
 
 ```js
- 
-import '@capitec/omni-components/button'; 
+
+
+import '@capitec/omni-components/button';
 
 ```
 
@@ -64,8 +65,9 @@ A control that allows a user to check a value on or off.
 
 
 ```js
- 
-import '@capitec/omni-components/check'; 
+
+
+import '@capitec/omni-components/check';
 
 ```
 
@@ -79,8 +81,9 @@ A control that can be used for input, setting attributes, or performing actions.
 
 
 ```js
- 
-import '@capitec/omni-components/chip'; 
+
+
+import '@capitec/omni-components/chip';
 
 ```
 
@@ -94,8 +97,9 @@ A control to syntax highlight and display source code.
 
 
 ```js
- 
-import '@capitec/omni-components/code'; 
+
+
+import '@capitec/omni-components/code';
 
 ```
 
@@ -109,8 +113,9 @@ A link control that allows a user to indicate an action to be executed. Typicall
 
 
 ```js
- 
-import '@capitec/omni-components/hyperlink'; 
+
+
+import '@capitec/omni-components/hyperlink';
 
 ```
 
@@ -124,8 +129,9 @@ Component that displays an icon
 
 
 ```js
- 
-import '@capitec/omni-components/icon'; 
+
+
+import '@capitec/omni-components/icon';
 
 ```
 
@@ -135,12 +141,12 @@ import '@capitec/omni-components/icon';
 
 </td><td>CheckIcon</td><td>
 
-A check icon component
+A check icon component.
 
 
 ```js
- 
-import '@capitec/omni-components/icons/Check.icon.js'; 
+
+import '@capitec/omni-components/icons/Check.icon.js';
 
 ```
 
@@ -150,12 +156,12 @@ import '@capitec/omni-components/icons/Check.icon.js';
 
 </td><td>CloseIcon</td><td>
 
-A Close icon component
+A Close icon component.
 
 
 ```js
- 
-import '@capitec/omni-components/icons/Close.icon.js'; 
+
+import '@capitec/omni-components/icons/Close.icon.js';
 
 ```
 
@@ -165,12 +171,12 @@ import '@capitec/omni-components/icons/Close.icon.js';
 
 </td><td>IndeterminateIcon</td><td>
 
-An indeterminate icon component
+An indeterminate icon component.
 
 
 ```js
- 
-import '@capitec/omni-components/icons/Indeterminate.icon.js'; 
+
+import '@capitec/omni-components/icons/Indeterminate.icon.js';
 
 ```
 
@@ -180,12 +186,13 @@ import '@capitec/omni-components/icons/Indeterminate.icon.js';
 
 </td><td>Label</td><td>
 
-A simple label component that renders a styled text string.
+A simple label component that renders styled text.
 
 
 ```js
- 
-import '@capitec/omni-components/label'; 
+
+
+import '@capitec/omni-components/label';
 
 ```
 
@@ -195,12 +202,13 @@ import '@capitec/omni-components/label';
 
 </td><td>Radio</td><td>
 
-A control that allows a user to select a single value from a small group of values.
+A control that allows a user to select a single value from a group of values.
 
 
 ```js
- 
-import '@capitec/omni-components/radio'; 
+
+
+import '@capitec/omni-components/radio';
 
 ```
 
@@ -214,8 +222,9 @@ A control that allows a user to switch a value on or off.
 
 
 ```js
- 
-import '@capitec/omni-components/switch'; 
+
+
+import '@capitec/omni-components/switch';
 
 ```
 

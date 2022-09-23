@@ -1,6 +1,6 @@
 {
   "name": "@capitec/omni-components",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Omni Components come with minimal dependencies to reduce the bloat in your project. All web components base off Lit (https://lit.dev) and are each available as fully standalone imports or at a group level import.",
   "scripts": {
     "clean": "npx rimraf dist docs",
@@ -22,7 +22,7 @@
     "storybook": "npm run clean && tsc && npm run docs:custom-elements && npm run docs:theme-variables && concurrently -k -r \"tsc --build --watch --preserveWatchOutput\" \"npx start-storybook --no-manager-cache --port=6006\"",
     "test": "concurrently -k -r -s first \"npm run storybook\" \"npx wait-on tcp:6006 && test-storybook --verbose --coverage\"",
     "format": "prettier --config .prettierrc 'src/**/*.ts' --write",
-	"format:check": "prettier --config .prettierrc 'src/**/*.ts' --check"
+    "format:check": "prettier --config .prettierrc 'src/**/*.ts' --check"
   },
   "files": [
     "dist",
