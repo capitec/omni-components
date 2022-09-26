@@ -56,6 +56,7 @@
   "homepage": "https://capitec.github.io/open-source/?repo=Omni-Components",
   "devDependencies": {
     "@appnest/readme": "^1.2.7",
+    "@codemirror/lang-css": "^6.0.0",
     "@custom-elements-manifest/analyzer": "^0.6.3",
     "@custom-elements-manifest/to-markdown": "^0.1.0",
     "@etchteam/storybook-addon-css-variables-theme": "^1.2.1",
@@ -80,6 +81,8 @@
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.33.1",
     "@typescript-eslint/parser": "^5.33.1",
+    "@uiw/codemirror-theme-github": "^4.12.3",
+    "@uiw/react-codemirror": "^4.12.3",
     "@webcomponents/webcomponentsjs": "^2.6.0",
     "chalk": "^5.0.1",
     "command-line-args": "^5.2.1",
