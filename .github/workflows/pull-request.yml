@@ -7,8 +7,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  pr-lint-checks:
-    name: Lint Checks
+  pr-lint:
+    name: Lint
     timeout-minutes: 15 
     runs-on: ubuntu-latest
     steps:
@@ -27,8 +27,8 @@ jobs:
         run: |
           npm run lint:check
 
-  pr-format-checks:
-    name: Format Checks
+  pr-format:
+    name: Format
     timeout-minutes: 15 
     runs-on: ubuntu-latest
     steps:
@@ -47,8 +47,9 @@ jobs:
         run: |
           npm run format:check
 
-  pr-run-tests:
-    name: "Tests"
+  pr-test:
+    needs: ["pr-lint", "pr-format"]
+    name: "Test"
     timeout-minutes: 15 
     runs-on: ubuntu-latest
     steps:
