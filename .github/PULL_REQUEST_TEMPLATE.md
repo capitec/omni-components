@@ -6,13 +6,13 @@
 
 ### All Submissions:
 
-* [ ] Have you followed the guidelines in our Contributing document?
-* [ ] Have you checked to ensure there aren't other open [Pull Requests](../pulls) for the same update/change?
+* [ ] I have followed the guidelines in the Contributing document.
+* [ ] I have checked to ensure there aren't other open [Pull Requests](../pulls) for the same update/change.
 
 
 ### Changes to Core Features:
 
-* [ ] Have you added an explanation of what your changes do and why you'd like us to include them?
-* [ ] Have you written new tests for your core changes, as applicable?
-* [ ] Have you successfully ran tests with your changes locally?
-* [ ] Have you added/updated docs, as applicable?
+* [ ] I have added an explanation of what my changes do and why I would like to include them.
+* [ ] I have written new tests for my core changes, as applicable.
+* [ ] I have successfully ran tests with my changes locally.
+* [ ] I have added/updated docs, as applicable.
