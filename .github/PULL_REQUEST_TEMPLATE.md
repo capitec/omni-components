@@ -1,6 +1,6 @@
 ### Description:
 
-(*Link to bug/feature from issues and how you resolve it*)
+(*Link to bug/feature from [Issues](../issues) and how you resolve it*)
 
 ### Screenshots (if appropriate):
 
