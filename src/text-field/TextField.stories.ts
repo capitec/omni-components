@@ -1,9 +1,10 @@
-import { html } from 'lit';
+import { html, nothing } from 'lit';
 import { Meta, StoryContext } from '@storybook/web-components';
 import { userEvent, within, fireEvent } from '@storybook/testing-library';
 import { expect, jest } from '@storybook/jest';
 import { ifNotEmpty } from '../utils/Directives.js';
-import { loadCssPropertiesRemote } from '../utils/StoryUtils';
+import { assignToSlot, loadCssPropertiesRemote, raw } from '../utils/StoryUtils';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { TextField } from './TextField.js';
 
 import './TextField.js';
@@ -11,11 +12,18 @@ import './TextField.js';
 export default {
   title: 'UI Components/Text Field',
   component: 'omni-text-field',
-  argTypes: {},
+  argTypes: {
+    prefix: {
+      control: 'text',
+    },
+    suffix: {
+      control: 'text',
+    },
+  },
   parameters: {
     cssprops: loadCssPropertiesRemote('omni-text-field'),
     actions: {
-      handles: ['input'],
+      handles: ['input','focus', 'focusOut']
     },
   },
 } as Meta;
@@ -26,13 +34,15 @@ value: string;
 data: object;
 hint: string;
 error: string;
-focussed: boolean;
 disabled: boolean;
+
+suffix: string;
+prefix: string;
 }
 
 export const Interactive = {
   render: (args: ArgTypes) => html`
-    <omni-text-field data-testid="test-text-field" label="${ifNotEmpty(args.label)}" .value="${(args.value)}" .data="${args.data}" hint="${ifNotEmpty(args.hint)}" error="${ifNotEmpty(args.error)}" ?focussed="${args.focussed}" ?disabled="${args.disabled}"></omni-text-field>
+    <omni-text-field data-testid="test-text-field" label="${ifNotEmpty(args.label)}" .value="${(args.value)}" .data="${args.data}" hint="${ifNotEmpty(args.hint)}" error="${ifNotEmpty(args.error)}" ?disabled="${args.disabled}">${(args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix',args.prefix))}` : nothing)}${(args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix',args.suffix))}` : nothing)}${args.prefix || args.suffix ? '\r\n' : nothing}</omni-text-field>
   `,
   name: 'Interactive',
   parameters: {},
@@ -42,7 +52,6 @@ export const Interactive = {
     data: {},
     hint: '',
     error: '',
-    focussed: false,
     disabled: false
   },
   play: async (context: StoryContext) => {
@@ -95,8 +104,8 @@ export const Hint = {
  `,
  name: 'Hint',
  args: {
-  label: 'The Text Label',
-  hint: 'The Field hint' 
+  label: 'Hint Label',
+  hint: 'Hint Message' 
   },
   play: async (context: StoryContext) => {
     const textField = within(context.canvasElement).getByTestId<TextField>('test-text-field');
@@ -110,12 +119,12 @@ export const Hint = {
 
 export const Error = {
   render: (args: ArgTypes) => html`
-  <omni-text-field data-testid="test-text-field" .value="${args.value}" error="${ifNotEmpty(args.error)}"></omni-text-field>
+  <omni-text-field data-testid="test-text-field" label="${args.label}" error="${ifNotEmpty(args.error)}"></omni-text-field>
  `,
  name: 'Error',
  args: {
-  value: 'The invalid value',
-  error: 'The error label to inform you',
+  label: 'Error Label',
+  error: 'Error Message',
   },
   play: async (context: StoryContext) => {
     const textField = within(context.canvasElement).getByTestId<TextField>('test-text-field');
@@ -153,6 +162,61 @@ export const Disabled = {
     await expect(inputField).toHaveValue('');
 
     await expect(input).toBeCalledTimes(0);
+  }
+};
+
+export const PrefixSlot = {
+  render: (args: ArgTypes) => html`
+  <omni-text-field data-testid="test-text-field" label="${args.label}">${unsafeHTML(args.prefix)} </omni-text-field>
+ `,
+ name: 'Prefix Slot',
+ args: {
+  label: '',
+  prefix: raw`<svg slot="prefix" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100%" height="100%"><path d="M12 2.25c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12 6.615 2.25 12 2.25Zm0 1.5a8.25 8.25 0 1 0 0 16.5 8.25 8.25 0 0 0 0-16.5ZM12 7a.75.75 0 0 1 .75.75v3.5h3.5a.75.75 0 0 1 .743.648L17 12a.75.75 0 0 1-.75.75h-3.5v3.5a.75.75 0 0 1-.648.743L12 17a.75.75 0 0 1-.75-.75v-3.5h-3.5a.75.75 0 0 1-.743-.648L7 12a.75.75 0 0 1 .75-.75h3.5v-3.5a.75.75 0 0 1 .648-.743Z"/></svg>`
+  },
+  play: async (context: StoryContext) => {
+    const textField = within(context.canvasElement).getByTestId<TextField>('test-text-field');
+    const errorElement  = textField.shadowRoot.querySelector<HTMLElement>('.error');
+    await expect(errorElement).toBeTruthy();
+    await expect(errorElement).toHaveTextContent(Error.args.error);
+
+  }
+};
+
+export const SuffixSlot = {
+  render: (args: ArgTypes) => html`
+  <omni-text-field data-testid="test-text-field" label="${args.label}">${unsafeHTML(args.suffix)} </omni-text-field>
+ `,
+ name: 'Suffix Slot',
+ args: {
+  label: '',
+  suffix: raw`<svg slot="suffix" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100%" height="100%"><path d="M12 2.25c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12 6.615 2.25 12 2.25Zm0 1.5a8.25 8.25 0 1 0 0 16.5 8.25 8.25 0 0 0 0-16.5ZM12 7a.75.75 0 0 1 .75.75v3.5h3.5a.75.75 0 0 1 .743.648L17 12a.75.75 0 0 1-.75.75h-3.5v3.5a.75.75 0 0 1-.648.743L12 17a.75.75 0 0 1-.75-.75v-3.5h-3.5a.75.75 0 0 1-.743-.648L7 12a.75.75 0 0 1 .75-.75h3.5v-3.5a.75.75 0 0 1 .648-.743Z"/></svg>`,
+  },
+  play: async (context: StoryContext) => {
+    const textField = within(context.canvasElement).getByTestId<TextField>('test-text-field');
+    const errorElement  = textField.shadowRoot.querySelector<HTMLElement>('.error');
+    await expect(errorElement).toBeTruthy();
+    await expect(errorElement).toHaveTextContent(Error.args.error);
+
+  }
+};
+
+export const PrefixSuffixSlot = {
+  render: (args: ArgTypes) => html`
+  <omni-text-field data-testid="test-text-field" label="${args.label}">${unsafeHTML(args.prefix)}${unsafeHTML(args.suffix)} </omni-text-field>
+ `,
+ name: 'Prefix & Suffix Slot',
+ args: {
+  label: 'Label',
+  prefix: raw`<svg slot="prefix" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100%" height="100%"><path d="M12 2.25c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12 6.615 2.25 12 2.25Zm0 1.5a8.25 8.25 0 1 0 0 16.5 8.25 8.25 0 0 0 0-16.5ZM12 7a.75.75 0 0 1 .75.75v3.5h3.5a.75.75 0 0 1 .743.648L17 12a.75.75 0 0 1-.75.75h-3.5v3.5a.75.75 0 0 1-.648.743L12 17a.75.75 0 0 1-.75-.75v-3.5h-3.5a.75.75 0 0 1-.743-.648L7 12a.75.75 0 0 1 .75-.75h3.5v-3.5a.75.75 0 0 1 .648-.743Z"/></svg>`,
+  suffix: raw`<svg slot="suffix" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100%" height="100%"><path d="M12 2.25c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12 6.615 2.25 12 2.25Zm0 1.5a8.25 8.25 0 1 0 0 16.5 8.25 8.25 0 0 0 0-16.5ZM12 7a.75.75 0 0 1 .75.75v3.5h3.5a.75.75 0 0 1 .743.648L17 12a.75.75 0 0 1-.75.75h-3.5v3.5a.75.75 0 0 1-.648.743L12 17a.75.75 0 0 1-.75-.75v-3.5h-3.5a.75.75 0 0 1-.743-.648L7 12a.75.75 0 0 1 .75-.75h3.5v-3.5a.75.75 0 0 1 .648-.743Z"/></svg>`,
+  },
+  play: async (context: StoryContext) => {
+    const textField = within(context.canvasElement).getByTestId<TextField>('test-text-field');
+    const errorElement  = textField.shadowRoot.querySelector<HTMLElement>('.error');
+    await expect(errorElement).toBeTruthy();
+    await expect(errorElement).toHaveTextContent(Error.args.error);
+
   }
 };
 

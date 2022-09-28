@@ -117,7 +117,7 @@ function loadCustomElementsRemote(): any {
 }
 
 function loadCustomElementsModuleFor(elementName: string, customElements: any) {
-    return customElements.modules.find((module: any) => module.declarations.find((d: any) => d.tagName === elementName && d.customElement));
+    return customElements.modules.find((module: any) => module.declarations.find((d: any) => (d.tagName === elementName && d.customElement) || d.name === elementName));
 }
 
 function loadCustomElementsModuleForRemote(elementName: string) {
