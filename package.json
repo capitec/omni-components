@@ -77,7 +77,6 @@
     "@storybook/theming": "^6.5.9",
     "@storybook/web-components": "^6.5.9",
     "@types/jest": "^27.0.0",
-    "@types/prismjs": "^1.26.0",
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.33.1",
     "@typescript-eslint/parser": "^5.33.1",
@@ -109,8 +108,7 @@
     "webpack": "^5.74.0"
   },
   "dependencies": {
-    "lit": "^2.3.1",
-    "prismjs": "1.27.0"
+    "lit": "^2.3.1"
   },
   "resolutions": {
     "@storybook/web-components/webpack": "^5"
