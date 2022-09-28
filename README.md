@@ -89,22 +89,6 @@ import '@capitec/omni-components/chip';
 
 </td></tr><tr><td>
 
-[omni-code](src/code/README.md)
-
-</td><td>Code</td><td>
-
-A control to syntax highlight and display source code.
-
-
-```js
-
-
-import '@capitec/omni-components/code';
-
-```
-
-</td></tr><tr><td>
-
 [omni-hyperlink](src/hyperlink/README.md)
 
 </td><td>Hyperlink</td><td>
