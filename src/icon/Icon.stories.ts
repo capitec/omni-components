@@ -18,9 +18,8 @@ export default {
       control: 'radio',
       options: sizeOptions,
     },
-    slot: {
-      control: 'text',
-      description: loadDefaultSlotForRemote('omni-icon').description
+    '[Default Slot]': {
+      control: 'text'
     }
   },
   parameters: {
@@ -31,7 +30,7 @@ export default {
 interface ArgTypes {
   size: typeof sizeOptions[number];
   icon: string;
-  slot: string;
+  '[Default Slot]': string;
 }
 
 export const Interactive = {
@@ -39,14 +38,14 @@ export const Interactive = {
     <!-- Icons loaded by content path instead of font-based or slotted content will not be able to be styled directly -->
 
     <omni-icon data-testid="test-icon" size="${ifNotEmpty(args.size)}" icon="${ifNotEmpty(args.icon)}">
-      ${unsafeHTML(args.slot)}
+      ${unsafeHTML(args['[Default Slot]'])}
     </omni-icon>
   `,
   name: 'Interactive',
   parameters: {},
   args: {
     size: 'default',
-    slot: raw`<svg
+    '[Default Slot]': raw`<svg
     version="1.1"
     viewBox="0 0 16 16"
     xmlns="http://www.w3.org/2000/svg"
@@ -72,14 +71,14 @@ export const Interactive = {
 export const SVG = {
   render: (args: ArgTypes) => html`
     <omni-icon data-testid="test-icon" size="${args.size}"> 
-      ${unsafeHTML(args.slot)} 
+      ${unsafeHTML(args['[Default Slot]'])} 
     </omni-icon>
   `,
   name: 'SVG',
   parameters: {},
   args: {
     size: 'large',
-    slot: `<svg
+    '[Default Slot]': `<svg
                 version="1.1"
                 viewBox="0 0 16 16"
                 xmlns="http://www.w3.org/2000/svg"

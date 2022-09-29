@@ -21,6 +21,7 @@ function loadCssProperties(element: string, customElements: any, cssDeclarations
     } while (superModule);
     for (const key in elementModule.declarations) {
         const declaration = elementModule.declarations[key];
+        const cssCategory = declaration.cssCategory;
         if (declaration.cssProperties && declaration.cssProperties.length > 0) {
             for (const cssKey in declaration.cssProperties) {
                 const cssProperty = declaration.cssProperties[cssKey];
@@ -29,7 +30,7 @@ function loadCssProperties(element: string, customElements: any, cssDeclarations
                         control: cssProperty.name.includes('color') || cssProperty.name.includes('colour') || cssProperty.name.includes('fill') ? 'color' : 'text',
                         description: cssProperty.description,
                         category: 'CSS Variables',
-                        subcategory: 'Component Variables',
+                        subcategory: cssCategory ?? 'Component Variables',
                         value: ''
                     };
                 } else {
@@ -136,7 +137,7 @@ function loadSlotForRemote(elementName: string, slotName: string) {
 }
 
 function loadSlotForModule(elementModule: any, slotName: string): { name: string; description: string } {
-    const declaration = elementModule.declarations.find((d: any) => d.slots && d.slots.length > 0 && d.slots.find((s: any) => s.name === ''));
+    const declaration = elementModule.declarations.find((d: any) => d.slots && d.slots.length > 0 && d.slots.find((s: any) => s.name === slotName));
     if (declaration) {
         const slot = declaration.slots.find((s: any) => s.name === slotName);
         if (slot) {
