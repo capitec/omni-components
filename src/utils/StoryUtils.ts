@@ -172,7 +172,7 @@ function assignToSlot(slotName: string, rawHtml: string) {
 
     const parser = new DOMParser();
 
-    const doc = parser.parseFromString(rawHtml, 'text/xml');
+    const doc = parser.parseFromString(`<main>${rawHtml}</main>`, 'text/xml');
     const errorNode = doc.querySelector('parsererror');
     if (errorNode) {
         // parsing failed
@@ -180,12 +180,20 @@ function assignToSlot(slotName: string, rawHtml: string) {
     }
 
     // parsing succeeded
-    const element = doc.documentElement;
-    element.removeAttribute('slot');
-    element.setAttribute('slot', slotName);
-
     const serializer = new XMLSerializer();
-    rawHtml = serializer.serializeToString(doc);
+    let newHtml = '';
+
+    for (let index = 0; index < doc.documentElement.childElementCount; index++) {
+        const element = doc.documentElement.children[index];
+        element.removeAttribute('slot');
+        element.setAttribute('slot', slotName);
+        if (newHtml) {
+            newHtml += '\r\n';
+        }
+        newHtml += serializer.serializeToString(element);
+    }
+
+    rawHtml = newHtml;
 
     return rawHtml;
 }
