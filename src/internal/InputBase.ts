@@ -11,6 +11,7 @@ import ComponentStyles from '../styles/ComponentStyles';
  * @slot prefix - Replaces the icon for the prefix slot.
  * @slot suffix - Replaces the icon for the suffix slot.
  * 
+ * @csscat Base Input Variables
  * @cssprop --omni-input-container-font-family - Input container font family.
  * @cssprop --omni-input-container-width - Input container width.
  * 

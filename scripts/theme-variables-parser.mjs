@@ -1,12 +1,13 @@
+import { writeFileSync } from 'fs';
 import { explainSync } from '@innofake/jsdoc-api-debuggable';
 import jsdocParse from 'jsdoc-parse';
-import { writeFileSync } from 'fs';
 
 try {
     const docsRaw = explainSync({ files: 'dist/styles/ComponentStyles.js' });
     const docs = jsdocParse(docsRaw);
     const defaultExport = docs.find(d => d.id === 'module.exports');
     var cssVars = defaultExport.customTags.filter(ct => ct.tag === 'cssprop');
+    var cssCat = defaultExport.customTags.find(ct => ct.tag === 'csscat');
 
     let themeVariables = {};
     cssVars.forEach(cssProp => {
@@ -17,7 +18,7 @@ try {
             control: propName.includes('color') || propName.includes('colour') || propName.includes('fill') ? 'color' : 'text',
             description: parts.length > 1 ? description : '',
             category: 'CSS Variables',
-            subcategory: 'Theme Variables',
+            subcategory: cssCat ? cssCat.value : 'Theme Variables',
             value: ''
         };
 
