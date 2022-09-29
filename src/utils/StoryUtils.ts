@@ -136,7 +136,7 @@ function loadSlotForRemote(elementName: string, slotName: string) {
 }
 
 function loadSlotForModule(elementModule: any, slotName: string): { name: string; description: string } {
-    const declaration = elementModule.declarations.find((d: any) => d.slots && d.slots.length > 0 && d.slots.find((s: any) => s.name === ''));
+    const declaration = elementModule.declarations.find((d: any) => d.slots && d.slots.length > 0 && d.slots.find((s: any) => s.name === slotName));
     if (declaration) {
         const slot = declaration.slots.find((s: any) => s.name === slotName);
         if (slot) {

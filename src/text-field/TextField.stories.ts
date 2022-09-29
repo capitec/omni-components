@@ -6,6 +6,7 @@ import { ifNotEmpty } from '../utils/Directives.js';
 import { assignToSlot, loadCssPropertiesRemote, raw } from '../utils/StoryUtils';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { TextField } from './TextField.js';
+import { LabelStory, BaseArgTypes, BaseArgTypeDefinitions, HintStory, ErrorStory, DisabledStory, ValueStory, PrefixStory, SuffixStory } from '../internal/InputStories.js';
 
 import './TextField.js';
 
@@ -13,10 +14,11 @@ export default {
   title: 'UI Components/Text Field',
   component: 'omni-text-field',
   argTypes: {
-    prefix: {
+    ...BaseArgTypeDefinitions,
+    post_prefix: {
       control: 'text',
     },
-    suffix: {
+    pre_suffix: {
       control: 'text',
     },
   },
@@ -28,15 +30,9 @@ export default {
   },
 } as Meta;
 
-interface ArgTypes {
-label: string;
-value: string;
-data: object;
-hint: string;
-error: string;
-disabled: boolean;
-
-suffix: string;
+interface ArgTypes extends BaseArgTypes{
+post_prefix: string;
+pre_suffix: string;
 prefix: string;
 }
 
@@ -69,71 +65,21 @@ export const Interactive = {
   }
 };
 
-export const Label = {
-  render: (args: ArgTypes) => html`
-  <omni-text-field data-testid="test-text-field" label="${ifNotEmpty(args.label)}"></omni-text-field>
- `,
- name: 'Label',
- args: {
-  label: 'The field Label',
-  },
-  play: async (context: StoryContext) => {
-    const textField = within(context.canvasElement).getByTestId<TextField>('test-text-field');
-    await expect(textField.shadowRoot.querySelector('label')).toHaveTextContent(Label.args.label);
-  }
-};
+export const Label = LabelStory<TextField, ArgTypes>('omni-text-field');
 
-export const Value = {
-  render: (args: ArgTypes) => html`
-  <omni-text-field data-testid="test-text-field" .value="${(args.value)}"></omni-text-field>
- `,
- name: 'Value',
- args: {
-  value: 'The field value',
-  },
-  play: async (context: StoryContext) => {
-    const textField = within(context.canvasElement).getByTestId<TextField>('test-text-field');
-    const inputEvent = jest.fn();
-    textField.addEventListener('input', inputEvent);
-  }
-};
+export const Hint = HintStory<TextField, ArgTypes>('omni-text-field');
 
-export const Hint = {
-  render: (args: ArgTypes) => html`
-  <omni-text-field data-testid="test-text-field" hint="${ifNotEmpty(args.hint)}" label="${ifNotEmpty(args.label)}"></omni-text-field>
- `,
- name: 'Hint',
- args: {
-  label: 'Hint Label',
-  hint: 'Hint Message' 
-  },
-  play: async (context: StoryContext) => {
-    const textField = within(context.canvasElement).getByTestId<TextField>('test-text-field');
-    const hintElement = textField.shadowRoot.querySelector<HTMLElement>('.hint');
-    await expect(hintElement).toBeTruthy();
-    await expect(hintElement).toHaveTextContent(Hint.args.hint);
+export const Error = ErrorStory<TextField, ArgTypes>('omni-text-field');
 
-  }
-};
+export const Value = ValueStory<TextField, ArgTypes>('omni-text-field');
+
+export const Prefix = PrefixStory<TextField, ArgTypes>('omni-text-field');
+
+export const Suffix = SuffixStory<TextField, ArgTypes>('omni-text-field');
 
 
-export const Error = {
-  render: (args: ArgTypes) => html`
-  <omni-text-field data-testid="test-text-field" label="${args.label}" error="${ifNotEmpty(args.error)}"></omni-text-field>
- `,
- name: 'Error',
- args: {
-  label: 'Error Label',
-  error: 'Error Message',
-  },
-  play: async (context: StoryContext) => {
-    const textField = within(context.canvasElement).getByTestId<TextField>('test-text-field');
-    const errorElement  = textField.shadowRoot.querySelector<HTMLElement>('.error');
-    await expect(errorElement).toBeTruthy();
-    await expect(errorElement).toHaveTextContent(Error.args.error);
+/*export const Disabled = DisabledStory<TextField, ArgTypes>('omni-text-field');*/
 
-  }
-};
 
 export const Disabled = {
   render: (args: ArgTypes) => html`
@@ -162,42 +108,6 @@ export const Disabled = {
     await expect(inputField).toHaveValue('');
 
     await expect(input).toBeCalledTimes(0);
-  }
-};
-
-export const PrefixSlot = {
-  render: (args: ArgTypes) => html`
-  <omni-text-field data-testid="test-text-field" label="${args.label}">${unsafeHTML(args.prefix)} </omni-text-field>
- `,
- name: 'Prefix Slot',
- args: {
-  label: '',
-  prefix: raw`<svg slot="prefix" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100%" height="100%"><path d="M12 2.25c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12 6.615 2.25 12 2.25Zm0 1.5a8.25 8.25 0 1 0 0 16.5 8.25 8.25 0 0 0 0-16.5ZM12 7a.75.75 0 0 1 .75.75v3.5h3.5a.75.75 0 0 1 .743.648L17 12a.75.75 0 0 1-.75.75h-3.5v3.5a.75.75 0 0 1-.648.743L12 17a.75.75 0 0 1-.75-.75v-3.5h-3.5a.75.75 0 0 1-.743-.648L7 12a.75.75 0 0 1 .75-.75h3.5v-3.5a.75.75 0 0 1 .648-.743Z"/></svg>`
-  },
-  play: async (context: StoryContext) => {
-    const textField = within(context.canvasElement).getByTestId<TextField>('test-text-field');
-    const errorElement  = textField.shadowRoot.querySelector<HTMLElement>('.error');
-    await expect(errorElement).toBeTruthy();
-    await expect(errorElement).toHaveTextContent(Error.args.error);
-
-  }
-};
-
-export const SuffixSlot = {
-  render: (args: ArgTypes) => html`
-  <omni-text-field data-testid="test-text-field" label="${args.label}">${unsafeHTML(args.suffix)} </omni-text-field>
- `,
- name: 'Suffix Slot',
- args: {
-  label: '',
-  suffix: raw`<svg slot="suffix" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100%" height="100%"><path d="M12 2.25c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12 6.615 2.25 12 2.25Zm0 1.5a8.25 8.25 0 1 0 0 16.5 8.25 8.25 0 0 0 0-16.5ZM12 7a.75.75 0 0 1 .75.75v3.5h3.5a.75.75 0 0 1 .743.648L17 12a.75.75 0 0 1-.75.75h-3.5v3.5a.75.75 0 0 1-.648.743L12 17a.75.75 0 0 1-.75-.75v-3.5h-3.5a.75.75 0 0 1-.743-.648L7 12a.75.75 0 0 1 .75-.75h3.5v-3.5a.75.75 0 0 1 .648-.743Z"/></svg>`,
-  },
-  play: async (context: StoryContext) => {
-    const textField = within(context.canvasElement).getByTestId<TextField>('test-text-field');
-    const errorElement  = textField.shadowRoot.querySelector<HTMLElement>('.error');
-    await expect(errorElement).toBeTruthy();
-    await expect(errorElement).toHaveTextContent(Error.args.error);
-
   }
 };
 

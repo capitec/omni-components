@@ -70,24 +70,20 @@ export class PasswordField extends InputBase {
                 
                 .icon
                  {    
-                    height: var(--omni-password-icon-height,24px);
-                    width: var(--omni-password-icon-width,24px);
-                    fill: var(--omni-password-icon-color,var(--omni-primary-color));
-                    /*
-                    position:absolute;
-                    right: var(--omni-password-input-icon-right, 10.5px);
-                    top: var(--omni-password-input-icon-top, 6px);*/
-                    cursor: pointer;
+                    height: var(--omni-input-slot-height,24px);
+                    width: var(--omni-input-slot-width,24px);
+                    fill: var(--omni-input-slot-color, var(--omni-primary-color));
+                    
                 }
 
-                
-                ::slotted([slot=hide_icon]),
-                ::slotted([slot=visible_icon])
-                {
-                    width: 100%;
-                    height: 100%;
-                    fill: var(--omni-password-icon-color,var(--omni-primary-color));
+                .pre-suffix {
+                    padding-inline-end: var(--omni-input-suffix-slot-padding-inline-end, 7px);
                 }
+                /*
+                .pre-suffix:has(.icon){
+                    padding-inline-end: var(--omni-input-suffix-slot-padding-inline-end, 7px);
+                }
+                */
 
                 /* Prevent default icon from displaying in password field on Edge browser */
                 input::-ms-reveal,
@@ -101,7 +97,7 @@ export class PasswordField extends InputBase {
     protected override renderPreSuffix() {
         return html`				
             <div class="icon" @click="${(e: MouseEvent) => this._iconClicked(e)}">
-                ${this.type === 'password' ? html`<span class="hide-icon"><slot name="hide-icon"><omni-eye-visible-icon></omni-eye-visible-icon></slot></span>` : html`<span class="visible-icon"><slot name="visible_icon"><omni-eye-hidden-icon></omni-eye-hidden-icon></slot></span>`}
+                ${this.type === 'password' ? html`<slot name="hide"><omni-eye-visible-icon></omni-eye-visible-icon></slot>` : html`<slot name="visible"><omni-eye-hidden-icon></omni-eye-hidden-icon></slot>`}
             </div>
         `;
     }
