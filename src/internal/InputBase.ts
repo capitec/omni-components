@@ -72,8 +72,6 @@ import ComponentStyles from '../styles/ComponentStyles.js';
  * @cssprop --omni-input-slot-width - Input field slot width.
  * @cssprop --omni-input-slot-color - Input field slot color.
  * 
- * @cssprop --omni-input-prefix-slot-padding-inline-start - Input prefix slot inline start padding.
- * @cssprop --omni-input-suffix-slot-padding-inline-end - Input suffix slot inline end padding.
  */
 export class InputBase extends LitElement {
 
@@ -365,31 +363,10 @@ export class InputBase extends LitElement {
                 }
 
                 /* SLOT STYLES */
-
-                .post-prefix {
-                    z-index: 10;
-                    display: inline-flex;
-                    flex: 0 0 auto;
-                    align-items: center;
-                    cursor: default;
-                    align-items: center;
-                    fill: var(--omni-input-slot-color, var(--omni-primary-color));
-                }
-
-                .pre-suffix {
-                    z-index: 10;
-                    display: inline-flex;
-                    align-items: center;
-                    cursor: default;
-                    align-items: center;
-                    fill: var(--omni-input-slot-color, var(--omni-primary-color));
-                }
-
-                /*Adding padding-inline-start only when post-prefix has children */
-                /*Adding padding-inline-end only when pre-suffix has children */
-                
                 .prefix,
-                .suffix {
+                .suffix,
+                .pre-suffix,
+                .post-prefix {
                     z-index: 10;
                     display: inline-flex;
                     flex: 0 0 auto;
@@ -404,14 +381,6 @@ export class InputBase extends LitElement {
                     fill: var(--omni-input-slot-color, var(--omni-primary-color));
                 }
                                 
-                ::slotted([slot=prefix]) {
-                    padding-inline-start: var(--omni-input-prefix-slot-padding-inline-start, 7px);
-                }
-
-                
-                ::slotted([slot=suffix]) {
-                    padding-inline-end: var(--omni-input-suffix-slot-padding-inline-end, 7px);
-                }
             `
         ];
     }
@@ -434,11 +403,11 @@ export class InputBase extends LitElement {
         return html`
             <label class=${classMap(touchZone)}>
                 ${this.renderBorder()}
-                ${this.renderPrefix()}
+                <span class="prefix">${this.renderPrefix()}</span>
                 <span class="post-prefix">${this.renderPostPrefix()}</span>                
                 ${this.renderInputContainer()}
                 <span class="pre-suffix">${this.renderPreSuffix()}</span>
-                ${this.renderSuffix()}
+                <span class="suffix">${this.renderSuffix()}</span>
             </label>
             ${this.renderHint()}
             ${this.renderError()}
@@ -453,9 +422,7 @@ export class InputBase extends LitElement {
 
     protected renderPrefix() {
         return html`
-        <span class="prefix">
-             <slot name="prefix"></slot>
-        </span>
+            <slot name="prefix"></slot>
         `;
     }
 
@@ -498,10 +465,8 @@ export class InputBase extends LitElement {
     }
 
     protected renderSuffix() {
-        return html`
-        <span class="suffix">
+        return html`     
             <slot name="suffix"></slot>
-        </span>
         `;
     }
 

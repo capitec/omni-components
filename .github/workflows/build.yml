@@ -3,6 +3,12 @@ name: Build
 on: 
   push:
     branches: [ main,develop ]
+    paths-ignore: 
+      - '*.md'
+      - '**/*.md'
+      - 'package.json'
+      - 'package-lock.json'
+
   release:
     types:
       - published
@@ -11,9 +17,9 @@ permissions: write-all
 
 env:
   DOCS_BASE_PATH: docs/Omni-Components
-  LOCAL_VERSION: 
+  LOCAL_VERSION:   
 jobs:
-  update-docs:
+  build-and-release:
     concurrency:
       group: ${{ github.ref }}
       cancel-in-progress: true
@@ -41,10 +47,10 @@ jobs:
         with:
             image_size: 100
             use_username: true
-            readme_path: contributors.md
+            readme_path: readme/contributors.md
             auto_detect_branch_protection: false
         env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            GITHUB_TOKEN: ${{ secrets.PROTECTED_TOKEN }}
 
       - name: Checkout 🛎️
         uses: actions/checkout@v3
@@ -54,6 +60,8 @@ jobs:
           token: ${{ secrets.PROTECTED_TOKEN }}
 
       - name: Ensure branch up to date 🌿 
+        # Only on branch pushes, not on tagged releases
+        if: ${{ startsWith(github.ref, 'refs/heads/') }}
         run: |
           git pull
 
@@ -71,12 +79,22 @@ jobs:
       - name: Build Project 🔧📝
         run: |
           npm run build
-          
-      - name: Bump patch version ☝
-        # Only on branch pushes, not on tagged releases
-        if: ${{ startsWith(github.ref, 'refs/heads/') }}
+
+      - name: Copy docs definition ⏩
         run: |
-          node scripts/unique-version.mjs
+          cp .oss-docs.json docs/.oss-docs.json
+          
+      - name: Bump patch version for beta ☝
+        # Develop branch only
+        if: github.ref == 'refs/heads/develop'
+        run: |
+          node scripts/unique-version.mjs --tag "beta"
+          
+      - name: Bump patch version for next ☝
+        # Main branch only
+        if: github.ref == 'refs/heads/main'
+        run: |
+          node scripts/unique-version.mjs --tag "next"
 
       - name: Auto Commit Changes 👩‍💻
         uses: stefanzweifel/git-auto-commit-action@v4
