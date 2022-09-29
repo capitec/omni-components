@@ -2,11 +2,17 @@ import { Description, Meta, Canvas, Story, Source } from '@storybook/addon-docs'
 import { CssPropsBlock } from "@innofake/storybook-addon-cssprops";
 import { html, css } from 'lit';
 import { loadThemeVariablesRemote, markdownCodeRemote, loadThemesListRemote, loadFileRemote } from '../src/utils/StoryUtils';
+import { customTheme, uploadTheme, updateTheme } from '../.storybook/preview.js';
+import { useState } from 'react';
+import CodeMirror from '@uiw/react-codemirror';
+import { githubDark } from '@uiw/codemirror-theme-github';
+import { css as cssLang } from '@codemirror/lang-css';
 
 import '../dist/label';
 import '../dist/button';
 import '../dist/switch';
 import '../dist/check';
+import '../dist/hyperlink';
 
 <Meta title="Theme Support" parameters={{ 
   cssprops: loadThemeVariablesRemote(),
@@ -49,6 +55,28 @@ import '../dist/check';
     margin: 6px;
   }
 
+  .hidden {
+    display: none;
+  }
+
+  .flow-text {    
+    display: flow-root;
+  }
+
+  .css-19nbuh3 {    
+	font-family: inherit;
+    margin: inherit;
+    -webkit-font-smoothing: inherit;
+    -moz-osx-font-smoothing: inherit;
+    -webkit-tap-highlight-color: inherit;
+    -webkit-overflow-scrolling: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit;
+    -webkit-text-decoration: inherit;
+    text-decoration: underline;
+}
+
   
 `}</style>
 
@@ -74,6 +102,10 @@ Currently provided theme variables are listed below and can be modified for a li
 
 </omni-label>
 
+<omni-label class="flow-text" type="default">There are multiple built-in themes available to test how theme variables can affect te various components. Use the theme dropdown to select a built-in theme or select 'No Theme' to view the components in their default state. The source for the built-in themes are available <a target="_self" href="#examples" >below</a>.</omni-label>
+  <br/>
+<omni-label class="flow-text" type="default">Alternatively, a custom theme can be authored or uploaded to have a live view of its effects on the components. <a target="_self" href="#custom-theme" >Try it now below</a> and select your current theme to be 'Custom Theme'.</omni-label>
+
 </div>
 
 <!-- This is to enable changing if themes as it only applies when stories are available -->
@@ -94,7 +126,52 @@ Currently provided theme variables are listed below and can be modified for a li
 
 <CssPropsBlock />
 
-<omni-label label="Example Themes Source" type="title"></omni-label>
+export const uploadThemeInternal = async (e) => {
+  await uploadTheme(e);
+  UploadedStylesUpdater.requestUpdate();
+}
+
+export const UploadedStylesUpdater = {
+  setValue: (...args) => console.log(args),
+  value: -999,
+  requestUpdate: () => UploadedStylesUpdater.setValue(UploadedStylesUpdater.value + 1)
+}
+
+export const UploadedStyles = () => {
+    const [value, setValue] = useState(2)
+    UploadedStylesUpdater.setValue = setValue;
+    UploadedStylesUpdater.value = value;
+    return (<div>
+    <CodeMirror
+    value={customTheme.style.innerHTML}
+    height="500px"
+    theme={githubDark}
+    extensions={[cssLang()]}
+    onChange={(value, viewUpdate) => {
+      updateTheme(value);
+      UploadedStylesUpdater.requestUpdate();
+    }}
+    />
+     </div>)
+}
+
+<omni-label id="examples" label="Example Themes Source" type="title"></omni-label>
+<br/>
+
+<div>
+  <omni-label id="custom-theme" label="Custom Theme" type="subtitle"></omni-label>
+  <br/>
+  <input className="hidden" id="cssValue" type="file" accept=".css" onInput={(e) => uploadThemeInternal(e)} />
+  <omni-button label="Upload Theme" type="secondary" onClick={(e) => document.getElementById('cssValue').click()} ></omni-button>
+<div>
+  <br/>
+  <br/>
+  <UploadedStyles />
+</div>
+</div>
+
+<br/>
+
 <div>{
   loadThemesListRemote().map(theme => {
     return (
@@ -109,5 +186,4 @@ Currently provided theme variables are listed below and can be modified for a li
             </div>)
   })
   }</div>
-
   

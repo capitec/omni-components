@@ -27,7 +27,10 @@ function loadCssProperties(element: string, customElements: any, cssDeclarations
                 const cssProperty = declaration.cssProperties[cssKey];
                 if (!cssDeclarations[cssProperty.name.replace('--', '')]) {
                     cssDeclarations[cssProperty.name.replace('--', '')] = {
-                        control: cssProperty.name.includes('color') || cssProperty.name.includes('colour') || cssProperty.name.includes('fill') ? 'color' : 'text',
+                        control:
+                            cssProperty.name.includes('color') || cssProperty.name.includes('colour') || cssProperty.name.includes('fill')
+                                ? 'color'
+                                : 'text',
                         description: cssProperty.description,
                         category: 'CSS Variables',
                         subcategory: cssCategory ?? 'Component Variables',
@@ -47,7 +50,7 @@ function loadThemeVariablesRemote() {
     let error = undefined;
     let output = '';
     const request = new XMLHttpRequest();
-    request.open('GET', 'theme-variables.json', false);  // `false` makes the request synchronous
+    request.open('GET', 'theme-variables.json', false); // `false` makes the request synchronous
     request.onload = () => {
         output = request.responseText;
     };
@@ -74,7 +77,7 @@ function loadCssPropertiesRemote(element: string, cssDeclarations: any = undefin
     let error = undefined;
     let output = '';
     const request = new XMLHttpRequest();
-    request.open('GET', 'custom-elements.json', false);  // `false` makes the request synchronous
+    request.open('GET', 'custom-elements.json', false); // `false` makes the request synchronous
     request.onload = () => {
         output = request.responseText;
     };
@@ -99,7 +102,7 @@ function loadCustomElementsRemote(): any {
     let error = undefined;
     let output = '';
     const request = new XMLHttpRequest();
-    request.open('GET', 'custom-elements.json', false);  // `false` makes the request synchronous
+    request.open('GET', 'custom-elements.json', false); // `false` makes the request synchronous
     request.onload = () => {
         output = request.responseText;
     };
@@ -185,7 +188,6 @@ function assignToSlot(slotName: string, rawHtml: string) {
     rawHtml = serializer.serializeToString(doc);
 
     return rawHtml;
-
 }
 
 function markdownCode(code: string, lang: string = '') {
@@ -197,7 +199,9 @@ function markdownCode(code: string, lang: string = '') {
 
 \`\`\`
 
-  `.replace('{lang}', lang).replace('{code}', code);
+  `
+        .replace('{lang}', lang)
+        .replace('{code}', code);
 
     return md;
 }
@@ -206,7 +210,7 @@ function markdownCodeRemote(src: string, lang: string = '') {
     let error = undefined;
     let output = '';
     const request = new XMLHttpRequest();
-    request.open('GET', src, false);  // `false` makes the request synchronous
+    request.open('GET', src, false); // `false` makes the request synchronous
     request.onload = () => {
         output = request.responseText;
     };
@@ -226,7 +230,7 @@ function loadFileRemote(src: string) {
     let error = undefined;
     let output = '';
     const request = new XMLHttpRequest();
-    request.open('GET', src, false);  // `false` makes the request synchronous
+    request.open('GET', src, false); // `false` makes the request synchronous
     request.onload = () => {
         output = request.responseText;
     };
@@ -245,7 +249,7 @@ function loadThemesListRemote() {
     let error = undefined;
     let output = '';
     const request = new XMLHttpRequest();
-    request.open('GET', 'themes-list.json', false);  // `false` makes the request synchronous
+    request.open('GET', 'themes-list.json', false); // `false` makes the request synchronous
     request.onload = () => {
         output = request.responseText;
     };
@@ -267,21 +271,19 @@ function formatMarkdownCodeElements(str: string, lang: string = 'js') {
     if (!str) {
         return str;
     }
-    return str.replaceAll(`${codeSnippet}`, `\r\n${codeSnippet}`)
-        .replaceAll(`${codeSnippet}${lang}`, `${codeSnippet}${lang}\r\n`);
+    return str.replaceAll(`${codeSnippet}`, `\r\n${codeSnippet}`).replaceAll(`${codeSnippet}${lang}`, `${codeSnippet}${lang}\r\n`);
 }
-
 
 function filterJsDocLinks(jsdoc: string) {
     if (!jsdoc) return jsdoc;
 
-    const renderLink = ((link: { tag: string; text: string; url: string; raw: string; }) => {
+    const renderLink = (link: { tag: string; text: string; url: string; raw: string }) => {
         if (!link.url.includes(':')) {
             // Local markdown links are not valid in the properties section of storybook
             return `**${link.text}**`;
         }
         return `[${link.text}](${link.url}`;
-    });
+    };
 
     const matches = Array.from(jsdoc.matchAll(/(?:\[(.*?)\])?{@(link|tutorial) (.*?)(?:(?:\|| +)(.*?))?}/gm));
 
@@ -314,7 +316,6 @@ function filterJsDocLinks(jsdoc: string) {
  * The `raw` tag returns a string that can be used directly as ```innerHTML``` or as ```unsafeHTML``` via lit.
  */
 const raw = (strings: TemplateStringsArray) => strings.join('\r\n');
-
 
 export {
     loadCustomElementsRemote,

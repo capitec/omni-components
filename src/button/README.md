@@ -2,14 +2,15 @@
 
 A control that allows an action to be executed.
 
-```js 
-import '@capitec/omni-components/button'; 
+```js
+
+import '@capitec/omni-components/button';
 ```
 
 ## Example
 
 ```html
-<omni-button 
+<omni-button
   label="Some Action"
   type="primary">
 </omni-button>

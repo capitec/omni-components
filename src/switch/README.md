@@ -2,8 +2,9 @@
 
 A control that allows a user to switch a value on or off.
 
-```js 
-import '@capitec/omni-components/switch'; 
+```js
+
+import '@capitec/omni-components/switch';
 ```
 
 ## Example
@@ -28,7 +29,7 @@ import '@capitec/omni-components/switch';
 | `error`    | `error`    |           | `string`      | An error message to guide users to correct a mistake. |
 | `hint`     | `hint`     |           | `string`      | A hint message to assist the user.               |
 | `label`    | `label`    |           | `string`      | Text label.                                      |
-| `override` |            |           |               | The element style template.                      |
+| `override` |            |           |               |                                                  |
 | `styles`   |            | readonly  | `CSSResult[]` |                                                  |
 
 ## Methods

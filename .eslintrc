@@ -1,32 +1,75 @@
 {
-    "root": true,
-    "parser": "@typescript-eslint/parser",
-    "env": {
-        "browser": true,
-        "node": true
-    },
-    "plugins": [
-        "@typescript-eslint",
-        "lit"
-    ],
-    "extends": [
-        "eslint:recommended",
-        "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:lit/recommended"
-    ],
-    "rules": {
-        "quotes": [
-            "error",
-            "single",
-            {
-                "allowTemplateLiterals": false
-            }
-        ],
-        "semi": [
+	"root": true,
+	"parser": "@typescript-eslint/parser",
+	"plugins": [
+		"@typescript-eslint",
+		"lit",
+		"import"
+	],
+	"extends": [
+		"eslint:recommended",
+		"plugin:@typescript-eslint/eslint-recommended",
+		"plugin:@typescript-eslint/recommended",
+		"plugin:lit/recommended"
+	],
+	"env": {
+		"browser": true,
+		"node": true
+	},
+	"rules": {
+		"eqeqeq": "error",
+		"indent": [
+			"error",
+			4,
+			{
+				"ignoredNodes": [
+					"ConditionalExpression",
+					"TemplateLiteral *"
+				]
+			}
+		],
+		"no-multiple-empty-lines": [
+			"error",
+			{
+				"max": 1
+			}
+		],
+		"quotes": [
+			"error",
+			"single",
+			{
+				"allowTemplateLiterals": true
+			}
+		],
+		"semi": [
 			"error",
 			"always"
 		],
-        "@typescript-eslint/no-inferrable-types": "off"
-    }
+		"space-before-blocks": "error",
+		"space-before-function-paren": [
+			"error",
+			{
+				"anonymous": "always",
+				"named": "never",
+				"asyncArrow": "always"
+			}
+		],
+		"@typescript-eslint/no-inferrable-types": "off",
+		"import/order": [
+			"error",
+			{
+				"groups": [
+					"builtin",
+					"external",
+					"internal",
+					"parent",
+					"sibling",
+					"index"
+				],
+				"alphabetize": {
+					"order": "asc"
+				}
+			}
+		]
+	}
 }
