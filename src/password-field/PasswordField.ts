@@ -1,6 +1,6 @@
 import { css, html } from 'lit';
-import { customElement } from 'lit/decorators';
-import { InputBase } from '../internal/InputBase';
+import { customElement } from 'lit/decorators.js';
+import { InputBase } from '../internal/InputBase.js';
 
 import '../icons/EyeHidden.icon';
 import '../icons/EyeVisible.icon';

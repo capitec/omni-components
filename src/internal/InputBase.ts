@@ -1,9 +1,9 @@
 import { css, CSSResultGroup, html, LitElement, nothing, TemplateResult } from 'lit';
 export { ifDefined } from 'lit/directives/if-defined.js';
 import { property, state, query } from 'lit/decorators.js';
-import { ClassInfo, classMap } from 'lit/directives/class-map';
-import { live } from 'lit/directives/live';
-import ComponentStyles from '../styles/ComponentStyles';
+import { ClassInfo, classMap } from 'lit/directives/class-map.js';
+import { live } from 'lit/directives/live.js';
+import ComponentStyles from '../styles/ComponentStyles.js';
 
 /**
  * Base class used by input controls to share common properties styles and functionality
