@@ -72,6 +72,8 @@ export default css`
         --omni-border-radius: var(--omni-theme-border-radius, 4px);
         --omni-border-width: var(--omni-theme-border-width, 2px);
 
+        --omni-icon-size: 24px;
+
         /*
         --omni-cursor: var(--omni-theme-cursor, default);
         --omni-cursor-target: var(--omni-theme-target-cursor, pointer);

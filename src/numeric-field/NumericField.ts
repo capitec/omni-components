@@ -1,18 +1,20 @@
-import { css, html } from 'lit';
-import { customElement } from 'lit/decorators.js';
-import { InputBase } from '../internal/InputBase';
+import { css, html, nothing, TemplateResult } from 'lit';
+import { customElement, query } from 'lit/decorators.js';
+import { live } from 'lit/directives/live.js'; 
+import { InputBase } from '../core/OmniInputElement.js';
 
 /**
  * An input control that allows a user to enter a single line of numbers.
  * 
  * ```js
+ * 
  * import '@capitec/omni-components/numeric-field';
  * ```
  * @example
  * 
  * ```html
  * <omni-numeric-field
- *   label="Enter a value"
+ *   label="Enter a numeric value"
  *   value="12345"
  *   data="{'id': 12345, 'name': 'Test'}"
  *   hint="Required"
@@ -46,35 +48,42 @@ import { InputBase } from '../internal/InputBase';
 @customElement('omni-numeric-field')
 export class NumericField extends InputBase {
 
-    constructor() {
-        super();
-        super.type = 'number';
+    @query('#inputField')
+    private _inputElement: HTMLInputElement;
+
+    override connectedCallback() {
+        super.connectedCallback();
+        this.addEventListener('input', this._keyInput.bind(this));
     }
 
+    _keyInput() {
+        const input = this._inputElement;
+        this.value = input.value;
+    }
     
-	_onAddClick() {
-		// Ignore the click event if the item is disabled.
-		if (this.disabled) {
-			return;
-		}
-        if (!this.value || this.value === 'NaN' || this.value === '' || this.value === '0') {
-			this.value = '1';
-        } else {
-            this.value = `${parseInt(this.value) + 1}`;
+    _onAddClick() {
+        // Ignore the click event if the item is disabled.
+        if (this.disabled) {
+            return;
         }
-	}
+        if (!this.value || this.value === 'NaN' || this.value === '' || this.value === '0') {
+            this.value = '1';
+        } else {
+            this.value = `${parseInt(this.value as string) + 1}`;
+        }
+    }
 
     _onMinusClick() {
-		// Ignore the click event if the item is disabled.
-		if (this.disabled) {
-			return;
-		}        
+        // Ignore the click event if the item is disabled.
+        if (this.disabled) {
+            return;
+        }        
         if (!this.value || this.value === 'NaN' || this.value === '' || this.value === '0') {
-			this.value = '0';
+            this.value = '0';
         } else {
-            this.value = `${parseInt(this.value) - 1}`;
+            this.value = `${parseInt(this.value as string) - 1}`;
         } 
-	}
+    }
 
     static override get styles() {
         return [
@@ -92,11 +101,14 @@ export class NumericField extends InputBase {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                /*text-align: center;*/
             }
 
             .sign:hover {
-                background-color: var(--omni-numeric-input-plus-minus-focussed-hover,purple);
+                background-color: var(--omni-numeric-input-plus-minus-focussed-hover,rgba(0,157,224,0.1));
+            }
+
+            ::slotted([slot=plus_icon]):hover {
+                background-color: var(--omni-numeric-input-plus-minus-focussed-hover,rgba(0,157,224,0.1));
             }
 
             .divider {
@@ -113,23 +125,61 @@ export class NumericField extends InputBase {
 
             input[type=number] {
                 -moz-appearance:textfield; /* Firefox */
-            }         
+            }
+            
+            .field {
+                flex: 1 1 auto;
+
+                border: none;
+                background: none;
+                box-shadow: none;
+                outline: 0;
+                padding: 0;
+                margin: 0;
+
+                text-align: var(--omni-numeric-field-text-align, left);
+
+                color: var(--omni-numeric-field-font-color, var(--omni-font-color));
+                font-family: var(--omni-numeric-field-font-family, var(--omni-font-family));
+                font-size: var(--omni-numeric-field-font-size, var(--omni-font-size));
+                font-weight: var(--omni-numeric-field-font-weight, var(--omni-font-weight));
+                height: var(--omni-numeric-field-height, 100%);
+                padding: var(--omni-numeric-field-padding, 10px);
+            }
+
+            .control {
+                z-index: 10;
+                display: inline-flex;
+                flex: 0 0 auto;
+                align-items: center;
+                cursor: default;
+            }
             `
         ];
     }
 
-    protected override renderPreSuffix() {
-        return html`				
-			<div class="quantity">
-                <slot name="plus_icon"><div class="sign" @click="${this._onAddClick}">+</div></slot>
-				<div class="divider"></div>
-				<slot name="minus_icon"><div class="sign" @click="${this._onMinusClick}">-</div></slot>
+    protected override renderControl() {
+        return html`
+        <span class="control">				
+            <div class="quantity">
+                <div class="sign" @click="${this._onAddClick}"><slot name="increase">+</slot></div>
+                <div class="divider"></div>
+                <div class="sign" @click="${this._onMinusClick}"><slot name="decrease">-</slot></div>
             </div>
-        `;
+        </span>
+    `;
     }
 
-
-
-
+    protected override renderInput() {
+        return html`
+        <input
+            class="field"
+            id="inputField"
+            type="number"
+            .value=${live(this.value as string)}
+            ?readOnly=${this.disabled}
+            tabindex="${this.disabled ? -1 : 0}" />
+    `;
+    }
 
 }

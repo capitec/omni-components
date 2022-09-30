@@ -1,6 +1,7 @@
 import { css, html } from 'lit';
-import { customElement } from 'lit/decorators.js';
-import { InputBase } from '../internal/InputBase.js';
+import { customElement, property, query } from 'lit/decorators.js';
+import { live } from 'lit/directives/live.js';
+import { InputBase } from '../core/OmniInputElement.js';
 
 import '../icons/EyeHidden.icon';
 import '../icons/EyeVisible.icon';
@@ -9,6 +10,7 @@ import '../icons/EyeVisible.icon';
  * A password input control.
  * 
  * ```js
+ * 
  * import '@capitec/omni-components/password-field';
  * ```
  * 
@@ -27,8 +29,8 @@ import '../icons/EyeVisible.icon';
  * 
  * @element omni-password-field
  * 
- * @slot hide_icon - Replaces the icon for the password value hidden state.
- * @slot visible_icon - Replaces the icon for the checked value visible state.
+ * @slot hide - Replaces the icon for the password value hidden state.
+ * @slot show - Replaces the icon for the checked value visible state.
  * 
  * @cssprop --omni-password-icon-height - Password icon height.
  * @cssprop --omni-password-icon-width - Password icon width.
@@ -39,6 +41,19 @@ import '../icons/EyeVisible.icon';
  */
 @customElement('omni-password-field')
 export class PasswordField extends InputBase {
+
+    @query('#inputField')
+    private _inputElement: HTMLInputElement;
+
+    override connectedCallback() {
+        super.connectedCallback();
+        this.addEventListener('input', this._keyInput.bind(this));
+    }
+
+    _keyInput() {
+        const input = this._inputElement;
+        this.value = input.value;
+    }
 
     constructor() {
         super();
@@ -66,39 +81,79 @@ export class PasswordField extends InputBase {
     static override get styles() {
         return [
             super.styles,
-            css`
-                
-                .icon
+            css`              
+                .control-box
                  {    
-                    height: var(--omni-input-slot-height,24px);
-                    width: var(--omni-input-slot-width,24px);
-                    fill: var(--omni-input-slot-color, var(--omni-primary-color));
-                    
+                    z-index: 10;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+
+                    padding-right: var(--omni-password-field-icon-padding-right, 10px);
+                    padding-left: var(--omni-password-field-icon-padding-left, 10px);
+                    padding-top: var(--omni-password-field-icon-padding-top, 0px);
+                    padding-bottom: var(--omni-password-field-icon-padding-bottom, 0px);                       
                 }
 
-                .pre-suffix {
-                    padding-inline-end: var(--omni-input-suffix-slot-padding-inline-end, 7px);
-                }
-                /*
-                .pre-suffix:has(.icon){
-                    padding-inline-end: var(--omni-input-suffix-slot-padding-inline-end, 7px);
-                }
-                */
+                .hide-icon,
+                .show-icon {
+                    height: var(--omni-password-field-icon-height,var(--omni-icon-size));
+                    width: var(--omni-password-field-icon-width,var(--omni-icon-size));
+                    fill: var(--omni-password-field-icon-color, var(--omni-primary-color));  
+                } 
 
                 /* Prevent default icon from displaying in password field on Edge browser */
                 input::-ms-reveal,
                 input::-ms-clear {
                   display: none;
                 }
+
+                .field {
+                    flex: 1 1 auto;
+    
+                    border: none;
+                    background: none;
+                    box-shadow: none;
+                    outline: 0;
+                    padding: 0;
+                    margin: 0;
+    
+                    text-align: var(--omni-password-field-text-align, left);
+    
+                    color: var(--omni-password-field-font-color, var(--omni-font-color));
+                    font-family: var(--omni-password-field-font-family, var(--omni-font-family));
+                    font-size: var(--omni-password-field-font-size, var(--omni-font-size));
+                    font-weight: var(--omni-password-field-font-weight, var(--omni-font-weight));
+                    height: var(--omni-password-field-height, 100%);
+                    padding: var(--omni-password-field-padding, 10px);
+                }
             `
         ];
     }
 
-    protected override renderPreSuffix() {
+    protected override renderControl() {
         return html`				
-            <div class="icon" @click="${(e: MouseEvent) => this._iconClicked(e)}">
-                ${this.type === 'password' ? html`<slot name="hide"><omni-eye-visible-icon></omni-eye-visible-icon></slot>` : html`<slot name="visible"><omni-eye-hidden-icon></omni-eye-hidden-icon></slot>`}
+            <div class="control-box" @click="${(e: MouseEvent) => this._iconClicked(e)}">
+                ${this.type === 'password' ? html`
+                    <slot name="hide"><omni-eye-visible-icon></omni-eye-visible-icon></slot>
+                ` : html`
+                    <slot name="show"><omni-eye-hidden-icon></omni-eye-hidden-icon></slot>
+                `}
             </div>
         `;
     }
+
+    protected override renderInput() {
+        return html`
+            <input
+                class="field"
+                id="inputField"
+                .type="${this.type}"
+                .value=${live(this.value as string)}
+                ?readOnly=${this.disabled}
+                tabindex="${this.disabled ? -1 : 0}" />
+        `;
+    }
+
 }

@@ -19,12 +19,11 @@ export default {
             options: sizeOptions
         },
         slot: {
-            control: 'text',
-            description: loadDefaultSlotForRemote('omni-icon').description
+            control: 'text'
         }
     },
     '[Default Slot]': {
-      control: 'text'
+        control: 'text'
     }
 } as Meta;
 
@@ -42,11 +41,11 @@ export const Interactive = {
       ${unsafeHTML(args['[Default Slot]'])}
     </omni-icon>
   `,
-  name: 'Interactive',
-  parameters: {},
-  args: {
-    size: 'default',
-    '[Default Slot]': raw`<svg
+    name: 'Interactive',
+    parameters: {},
+    args: {
+        size: 'default',
+        '[Default Slot]': raw`<svg
     version="1.1"
     viewBox="0 0 16 16"
     xmlns="http://www.w3.org/2000/svg"
@@ -68,16 +67,16 @@ export const Interactive = {
 };
 
 export const SVG = {
-  render: (args: ArgTypes) => html`
+    render: (args: ArgTypes) => html`
     <omni-icon data-testid="test-icon" size="${args.size}"> 
       ${unsafeHTML(args['[Default Slot]'])} 
     </omni-icon>
   `,
-  name: 'SVG',
-  parameters: {},
-  args: {
-    size: 'large',
-    '[Default Slot]': `<svg
+    name: 'SVG',
+    parameters: {},
+    args: {
+        size: 'large',
+        '[Default Slot]': `<svg
                 version="1.1"
                 viewBox="0 0 16 16"
                 xmlns="http://www.w3.org/2000/svg"

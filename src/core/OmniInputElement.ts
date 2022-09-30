@@ -2,7 +2,7 @@ import { css, CSSResultGroup, html, LitElement, nothing, TemplateResult } from '
 export { ifDefined } from 'lit/directives/if-defined.js';
 import { property, state, query } from 'lit/decorators.js';
 import { ClassInfo, classMap } from 'lit/directives/class-map.js';
-import { live } from 'lit/directives/live.js';
+import { live } from 'lit/directives/live.js'; //Will have to be removed as this wont be a concern of tha container
 import ComponentStyles from '../styles/ComponentStyles.js';
 
 /**
@@ -29,14 +29,6 @@ import ComponentStyles from '../styles/ComponentStyles.js';
  * @cssprop --omni-input-label-font-size - Input label font size.
  * @cssprop --omni-input-label-font-weight - Input label font weight.
  * @cssprop --omni-input-label-left - Input label left margin.
- * 
- * @cssprop --omni-input-field-text-align - Input field text align.
- * @cssprop --omni-input-field-font-color - Input field font color.
- * @cssprop --omni-input-field-font-family - Input field font family.
- * @cssprop --omni-input-field-font-size - Input field font size.
- * @cssprop --omni-input-field-font-weight - Input field font weight.
- * @cssprop --omni-input-field-height - Input field height.
- * @cssprop --omni-input-field-padding - Input field padding.
  * 
  * @cssprop --omni-input-focussed-border-width - Input focussed border width.
  * @cssprop --omni-input-focussed-border-color - Input focussed border color.
@@ -87,10 +79,10 @@ export class InputBase extends LitElement {
     @property({ type: String, reflect: true }) label: string;
 
     /**
-     * The value entered into the text-field.
+     * The value entered into the input.
      * @attr
      */
-    @property({ reflect: true }) value: string = null;
+    @property({ reflect: true }) value: string | number = null;
 
     /**
      * Data associated with the component.
@@ -116,20 +108,16 @@ export class InputBase extends LitElement {
      */
     @property({ type: Boolean, reflect: true }) disabled = false;
 
-    @query('#inputField')
-    private _inputElement: HTMLInputElement;
+    @query('.input-container')
+    private _inputContainer : HTMLInputElement;
+
+    @query('.label')
+    private _labelElement : HTMLDivElement;
 
     override connectedCallback() {
         super.connectedCallback();
-        this.addEventListener('input', this._keyInput.bind(this));
         this.addEventListener('focus', this._focusGained.bind(this));
         this.addEventListener('focusout', this._focusLost.bind(this));
-    }
-
-
-    _keyInput() {
-        const input = this._inputElement;
-        this.value = input.value;
     }
 
     _focusGained() {
@@ -138,13 +126,15 @@ export class InputBase extends LitElement {
             return;
         }
 
-        if(this._inputElement){
-            const inputParentOffset = this._inputElement.parentElement.offsetLeft;
+        const inputParentOffset = this._inputContainer.offsetLeft;
 
-            if(!this.value) {
-                this._inputElement.parentElement.querySelector('div').style.transform = `translateX(${inputParentOffset * -1}px)  translateY(-37.5%) scale(75%)`;
-            }     
-        }
+        if(!this.value) {
+
+            if(this._labelElement) {
+                this._labelElement.style.transform = `translateX(${inputParentOffset * -1}px)  translateY(-37.5%) scale(75%)`;
+            }
+        }     
+
     }
 
     _focusLost() {
@@ -154,11 +144,10 @@ export class InputBase extends LitElement {
         }
 
         if(!this.value) {
-            this._inputElement.parentElement.querySelector('div').style.transform = '';
+            this._labelElement.style.transform = '';
         }
      
     }
-
 
     static override get styles(): CSSResultGroup {
         return [
@@ -190,8 +179,9 @@ export class InputBase extends LitElement {
 
                     display: flex;
                     flex-direction: row;
-                    align-items: stretch;
-                    justify-content: center;                 
+                    align-items: center;
+                    justify-content: center;          
+                    background-color: var(--omni-input-field-background-color, var(--omni-background-color));       
                 }
 
                 .border {
@@ -204,8 +194,7 @@ export class InputBase extends LitElement {
                     border-width: var(--omni-input-border-width, 1px);
                     border-radius: var(--omni-input-border-radius, 4px);
                     border-style: solid;
-                    border-color: var(--omni-input-border-color, var(--omni-primary-color));
-                    background-color: var(--omni-input-field-background-color, var(--omni-background-color));
+                    border-color: var(--omni-input-border-color, var(--omni-primary-color));               
                 }
 
                 /* INPUT CONTAINER STYLES */
@@ -221,7 +210,7 @@ export class InputBase extends LitElement {
                 /* LABEL STYLES */
 
                 .label {
-                    z-index: 10;
+                    /*z-index: 10;*/
                     position: absolute;
                     flex: 1 1 auto;
 					transform-origin: top var(--omni-input-label-text-align, left);
@@ -244,28 +233,6 @@ export class InputBase extends LitElement {
 
                 }
 
-                /* INPUT FIELD STYLES */
-                
-                .field {
-                    flex: 1 1 auto;
-
-                    border: none;
-                    background: none;
-                    box-shadow: none;
-                    outline: 0;
-                    padding: 0;
-                    margin: 0;
-
-                    text-align: var(--omni-input-field-text-align, left);
-
-                    color: var(--omni-input-field-font-color, var(--omni-font-color));
-                    font-family: var(--omni-input-field-font-family, var(--omni-font-family));
-                    font-size: var(--omni-input-field-font-size, var(--omni-font-size));
-                    font-weight: var(--omni-input-field-font-weight, var(--omni-font-weight));
-                    height: var(--omni-input-field-height, 100%);
-                    padding: var(--omni-input-field-padding, 10px);
-                }
-
                 .touch-zone > .label > span {
 					position: relative;
 				}
@@ -273,13 +240,13 @@ export class InputBase extends LitElement {
                 /* FOCUS STYLES */
 
                 :host([value]:not([value=''])) .touch-zone > .input-container > .label,         
-				.field:focus + .label {
+				:focus + .label {
 					top: 0px;
 					transform: translateY(-37.5%) scale(75%);
 				}
 
                 :host([value]) .touch-zone > .input-container > .label::before,
-                .field:focus + .label::before {
+                :focus + .label::before {
                     content: "";
 					height: 100%;
 					background-color: var(--omni-label-focus-background-color, white);
@@ -314,7 +281,7 @@ export class InputBase extends LitElement {
                 }
 
                 .label.disabled {
-                    color: var(--omni-input-label-disabled-color, var(--omni-disabled-border-color));
+                    /*color: var(--omni-input-label-disabled-color, var(--omni-disabled-border-color));*/
                     pointer-events: none;
                 }
 
@@ -322,6 +289,11 @@ export class InputBase extends LitElement {
                     border-color: var(--omni-input-disabled-border-color, var(--omni-disabled-border-color));
                     background-color: var(--omni-input-disabled-background-color, var(--omni-disabled-background-color));
                 }
+
+                :host([value]) .touch-zone.disabled > .input-container > .label::before {
+					background-color: var(--omni-label-focus-background-color, var(--omni-disabled-background-color));
+
+				}
 
             
                 /* HINT LABEL STYLES */
@@ -363,118 +335,58 @@ export class InputBase extends LitElement {
                 }
 
                 /* SLOT STYLES */
+                /*
                 .prefix,
-                .suffix,
-                .pre-suffix,
-                .post-prefix {
+                .suffix {
                     z-index: 10;
                     display: inline-flex;
                     flex: 0 0 auto;
                     align-items: center;
                     cursor: default;
-                }
+                }*/
 
-                ::slotted([slot=prefix]),::slotted([slot=suffix]) {
-                    align-items: center;
-                    height: var(--omni-input-slot-height,24px);
-                    min-width: var(--omni-input-slot-width,24px);
-                    fill: var(--omni-input-slot-color, var(--omni-primary-color));
-                }
-                                
+                              
             `
         ];
     }
 
     protected override render() {
-        return html`
-        <div class="container">
-            ${this.renderTouchZone()}
-        </div>
-    `;
-    }
 
-    protected renderTouchZone() {
         const touchZone: ClassInfo = {
             'touch-zone': true,
             error: this.error,
             disabled: this.disabled
         };
 
-        return html`
-            <label class=${classMap(touchZone)}>
-                ${this.renderBorder()}
-                <span class="prefix">${this.renderPrefix()}</span>
-                <span class="post-prefix">${this.renderPostPrefix()}</span>                
-                ${this.renderInputContainer()}
-                <span class="pre-suffix">${this.renderPreSuffix()}</span>
-                <span class="suffix">${this.renderSuffix()}</span>
-            </label>
-            ${this.renderHint()}
-            ${this.renderError()}
-        `;
-    }
-
-    protected renderBorder() {
-        return html`
-        <div class="border"></div>
-        `;
-    }
-
-    protected renderPrefix() {
-        return html`
-            <slot name="prefix"></slot>
-        `;
-    }
-
-    protected renderPostPrefix(): typeof nothing | TemplateResult {
-        return nothing;
-    }
-
-    protected renderInputContainer() {
-        return html`
-            <div class="input-container">
-                ${this.renderInput()}
-                ${this.renderLabel()}
-            </div>
-        `;
-    }
-
-    protected renderInput() {
-        return html`
-            <input
-                class="field"
-                id="inputField"
-                type=${this.type}
-                .value=${live(this.value)}
-                ?readOnly=${this.disabled}
-                tabindex="${this.disabled ? -1 : 0}" />
-        `;
-    }
-
-    protected renderLabel() {
         const labelClass: ClassInfo = {
             label: true,
             error: this.error,
             disabled: this.disabled
         };
-        return html`${this.label ? html`<div class=${classMap(labelClass)}><span>${this.label}</span></div>` : nothing}`;
-    }
 
-    protected renderPreSuffix(): typeof nothing | TemplateResult {
-        return nothing;
-    }
-
-    protected renderSuffix() {
-        return html`     
-            <slot name="suffix"></slot>
+        return html`
+            <div class="container">
+                <label class=${classMap(touchZone)}>
+                    <div class="border"></div>
+                    <slot name="prefix"></slot>
+                    <div class="input-container">
+                        ${this.renderInput()}
+                        ${this.label ? html`<div class=${classMap(labelClass)}><span>${this.label}</span></div>` : nothing}
+                    </div>
+                    <slot name="suffix"></slot>
+                    ${this.renderControl()}
+                </label>
+                ${this.hint && !this.error ? html`<div class="hint-label">${this.hint}</div>` : nothing}
+                ${this.error ? html`<div class="error-label">${this.error}</div>` : nothing}
+            </div>
         `;
     }
 
-    protected renderHint() {
-        return this.hint && !this.error ? html`<div class="hint-label">${this.hint}</div>` : nothing;
+    protected renderInput(): typeof nothing | TemplateResult {
+        return nothing;
     }
 
-    protected renderError() {
-        return this.error ? html`<div class="error-label">${this.error}</div>` : nothing;
+    protected renderControl(): typeof nothing | TemplateResult {
+        return nothing;
     }
 }
