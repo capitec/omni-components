@@ -1,7 +1,7 @@
-import { css, html, LitElement, nothing, TemplateResult } from 'lit';
+import { css, html, nothing, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
-import ComponentStyles from '../styles/ComponentStyles';
+import { OmniElement } from '../core/OmniElement.js';
 
 /**
  * A control that allows an action to be executed.
@@ -68,7 +68,7 @@ import ComponentStyles from '../styles/ComponentStyles';
  * @cssprop --omni-button-slot-margin-top - Slot margin top (When positioned bottom of label).
  */
 @customElement('omni-button')
-export class Button extends LitElement {
+export class Button extends OmniElement {
     /**
      * Display type.
      * @attr
@@ -95,7 +95,7 @@ export class Button extends LitElement {
 
     static override get styles() {
         return [
-            ComponentStyles,
+            super.styles,
             css`
                 :host {
                     box-sizing: border-box;

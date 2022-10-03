@@ -1,7 +1,7 @@
-import { html, css, LitElement, TemplateResult, nothing } from 'lit';
+import { html, css, TemplateResult, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
-import ComponentStyles from '../styles/ComponentStyles';
+import { OmniElement } from '../core/OmniElement.js';
 
 import '../icons/Indeterminate.icon.js';
 import '../icons/Check.icon.js';
@@ -74,7 +74,7 @@ import '../icons/Check.icon.js';
  *
  */
 @customElement('omni-check')
-export class Check extends LitElement {
+export class Check extends OmniElement {
     /**
      * Text label.
      * @attr
@@ -171,7 +171,7 @@ export class Check extends LitElement {
 
     static override get styles() {
         return [
-            ComponentStyles,
+            super.styles,
             css`
                 :host {
                     outline: none;

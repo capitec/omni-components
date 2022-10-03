@@ -1,6 +1,6 @@
-import { html, css, LitElement, TemplateResult } from 'lit';
+import { html, css, TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import ComponentStyles from '../styles/ComponentStyles';
+import { OmniElement } from '../core/OmniElement.js';
 
 /**
  * A check icon component.
@@ -19,10 +19,10 @@ import ComponentStyles from '../styles/ComponentStyles';
  *
  */
 @customElement('omni-check-icon')
-export class CheckIcon extends LitElement {
+export class CheckIcon extends OmniElement {
     static override get styles() {
         return [
-            ComponentStyles,
+            super.styles,
             css`
                 :host {
                     color: inherit;

@@ -16,7 +16,7 @@ function loadCssProperties(element: string, customElements: any, cssDeclarations
             superModule = undefined;
         }
         if (superModule) {
-            elementModule.declarations = [...elementModule.declarations, ...superModule.declarations];
+            elementModule.declarations = [...superModule.declarations, ...elementModule.declarations ];
         }
     } while (superModule);
     for (const key in elementModule.declarations) {
@@ -47,31 +47,13 @@ function loadCssProperties(element: string, customElements: any, cssDeclarations
 }
 
 function loadThemeVariablesRemote() {
-    let error = undefined;
-    let output = '';
-    const request = new XMLHttpRequest();
-    request.open('GET', 'theme-variables.json', false); // `false` makes the request synchronous
-    request.onload = () => {
-        output = request.responseText;
-    };
-    request.onerror = () => {
-        error = request.status;
-    };
-    request.send(null);
-
-    if (error) {
-        console.warn(error);
-        return {};
-    }
-
-    const themeVariables = JSON.parse(output);
+    const themeVariables = loadCssPropertiesRemote('OmniElement');
     return themeVariables;
 }
 
 function loadCssPropertiesRemote(element: string, cssDeclarations: any = undefined): any {
     if (!cssDeclarations) {
-        const defaultVariables = loadThemeVariablesRemote();
-        cssDeclarations = { ...defaultVariables };
+        cssDeclarations = {};
     }
 
     let error = undefined;

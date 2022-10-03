@@ -41,22 +41,6 @@
 # ➜ UI Components
 <table><thead><tr><th>Tag Name</th><th>Class</th><th>Description</th></tr></thead><tbody><tr><td>
 
-[omni-button](src/button/README.md)
-
-</td><td>Button</td><td>
-
-A control that allows an action to be executed.
-
-
-```js
-
-
-import '@capitec/omni-components/button';
-
-```
-
-</td></tr><tr><td>
-
 [omni-check](src/check/README.md)
 
 </td><td>Check</td><td>
@@ -121,6 +105,22 @@ import '@capitec/omni-components/icon';
 
 </td></tr><tr><td>
 
+[omni-button](src/button/README.md)
+
+</td><td>Button</td><td>
+
+A control that allows an action to be executed.
+
+
+```js
+
+
+import '@capitec/omni-components/button';
+
+```
+
+</td></tr><tr><td>
+
 [omni-check-icon](src/icons/README.md)
 
 </td><td>CheckIcon</td><td>
@@ -151,6 +151,36 @@ import '@capitec/omni-components/icons/Close.icon.js';
 
 </td></tr><tr><td>
 
+[omni-eye-hidden-icon](src/icons/README.md)
+
+</td><td>EyeHiddenIcon</td><td>
+
+A hidden eye icon component
+
+
+```js
+
+import '@capitec/omni-components/icons/EyeHidden.icon.js';
+
+```
+
+</td></tr><tr><td>
+
+[omni-eye-visible-icon](src/icons/README.md)
+
+</td><td>EyeVisibleIcon</td><td>
+
+A visible eye icon component
+
+
+```js
+
+import '@capitec/omni-components/icons/EyeVisible.icon.js';
+
+```
+
+</td></tr><tr><td>
+
 [omni-indeterminate-icon](src/icons/README.md)
 
 </td><td>IndeterminateIcon</td><td>
@@ -161,6 +191,66 @@ An indeterminate icon component.
 ```js
 
 import '@capitec/omni-components/icons/Indeterminate.icon.js';
+
+```
+
+</td></tr><tr><td>
+
+[omni-loading-icon](src/icons/README.md)
+
+</td><td>LoadingIcon</td><td>
+
+A loading icon component.
+
+
+```js
+
+import '@capitec/omni-components/icons/Loading.icon.js';
+
+```
+
+</td></tr><tr><td>
+
+[omni-lock-closed-icon](src/icons/README.md)
+
+</td><td>LockClosedIcon</td><td>
+
+A closed lock icon component
+
+
+```js
+
+import '@capitec/omni-components/icons/LockClosed.icon.js';
+
+```
+
+</td></tr><tr><td>
+
+[omni-lock-open-icon](src/icons/README.md)
+
+</td><td>LockOpenIcon</td><td>
+
+A open lock icon component
+
+
+```js
+
+import '@capitec/omni-components/icons/LockOpen.icon.js';
+
+```
+
+</td></tr><tr><td>
+
+[omni-items](src/items/README.md)
+
+</td><td>Items</td><td>
+
+
+
+```js
+
+
+import '@capitec/omni-components/items';
 
 ```
 
@@ -182,6 +272,38 @@ import '@capitec/omni-components/label';
 
 </td></tr><tr><td>
 
+[omni-numeric-field](src/numeric-field/README.md)
+
+</td><td>NumericField</td><td>
+
+An input control that allows a user to enter a single line of numbers.
+
+
+```js
+
+
+import '@capitec/omni-components/numeric-field';
+
+```
+
+</td></tr><tr><td>
+
+[omni-password-field](src/password-field/README.md)
+
+</td><td>PasswordField</td><td>
+
+A password input control.
+
+
+```js
+
+
+import '@capitec/omni-components/password-field';
+
+```
+
+</td></tr><tr><td>
+
 [omni-radio](src/radio/README.md)
 
 </td><td>Radio</td><td>
@@ -198,6 +320,22 @@ import '@capitec/omni-components/radio';
 
 </td></tr><tr><td>
 
+[omni-render-element](src/render-element/README.md)
+
+</td><td>RenderElement</td><td>
+
+An element that renders content from a provided function/promise.
+
+
+```js
+
+
+import '@capitec/omni-components/render-element';
+
+```
+
+</td></tr><tr><td>
+
 [omni-switch](src/switch/README.md)
 
 </td><td>Switch</td><td>
@@ -209,6 +347,22 @@ A control that allows a user to switch a value on or off.
 
 
 import '@capitec/omni-components/switch';
+
+```
+
+</td></tr><tr><td>
+
+[omni-text-field](src/text-field/README.md)
+
+</td><td>TextField</td><td>
+
+A text input control.
+
+
+```js
+
+
+import '@capitec/omni-components/text-field';
 
 ```
 

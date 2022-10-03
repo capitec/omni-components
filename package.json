@@ -1,7 +1,7 @@
 {
   "name": "@capitec/omni-components",
   "version": "0.1.14",
-  "description": "Omni Components come with minimal dependencies to reduce the bloat in your project. All web components base off Lit (https://lit.dev) and are each available as fully standalone imports or at a group level import.",
+  "description": "Omni Components come with minimal dependencies to reduce the bloat in your project. All web components base off **OmniElement** (Which itself is based off [**LitElement**](https://lit.dev)) and are each available as fully standalone imports.",
   "scripts": {
     "clean": "npx rimraf dist docs",
     "lint": "eslint . --ext .ts --fix",
@@ -12,14 +12,14 @@
     "bundle": "npm run clean && npm run compile:esm",
     "compile:esm": "node scripts/build.mjs --bundle",
     "prepare": "(node -e \"if (! require('fs').existsSync('./dist')) {process.exit(1)} \" || (echo \"Dist does not exist. Attempting compile\" && npm run compile:ts))",
-    "docs": "npx rimraf docs && npm run docs:custom-elements && npm run docs:readme && npm run docs:generate && npm run docs:theme-variables && npm run docs:storybook",
+    "docs": "npx rimraf docs && npm run docs:custom-elements && npm run docs:readme && npm run docs:generate && npm run docs:theme-list && npm run docs:storybook",
     "docs:generate": "npm run docs:elements && readme generate -c \"readme/blueprint.json\" -i \"readme/blueprint.md\"",
     "docs:custom-elements": "npx cem analyze --litelement --globs src/**",
     "docs:storybook": "npx build-storybook --output-dir=docs",
-    "docs:theme-variables": "node scripts/theme-variables-parser.mjs && node scripts/themes-list.mjs",
+    "docs:theme-list": "node scripts/themes-list.mjs",
     "docs:readme": "npx web-component-analyzer ./src/**/*.{js,ts} --outFiles {dir}/README.md",
     "docs:elements": "node scripts/elements-list.mjs",
-    "storybook": "npm run clean && tsc && npm run docs:custom-elements && npm run docs:theme-variables && concurrently -k -r \"tsc --build --watch --preserveWatchOutput\" \"npx start-storybook --no-manager-cache --port=6006\"",
+    "storybook": "npm run clean && tsc && npm run docs:custom-elements && npm run docs:theme-list && concurrently -k -r \"tsc --build --watch --preserveWatchOutput\" \"npx start-storybook --no-manager-cache --port=6006\"",
     "test": "concurrently -k -r -s first \"npm run storybook\" \"npx wait-on tcp:6006 && test-storybook --verbose --coverage\"",
     "format": "prettier --config .prettierrc 'src/**/*.ts' --write",
     "format:check": "prettier --config .prettierrc 'src/**/*.ts' --check"
@@ -102,7 +102,7 @@
     "react-textarea-autosize": "^8.3.4",
     "rimraf": "^3.0.2",
     "typescript": "^4.7.4",
-    "uuid": "8.3.2",
+    "uuid": "^8.3.2",
     "wait-on": "^6.0.1",
     "web-component-analyzer": "^1.1.6",
     "webpack": "^5.74.0"

@@ -108,11 +108,11 @@ Here's a *non-exhaustive* list of requirements that are key to contributing to t
 * **Do** follow our [naming conventions](#naming-conventions).
 
 #### Components
-* **Do** base off [LitElement](https://lit.dev/).
+* **Do** base off [OmniElement]((https://github.com/capitec/omni-components/blob/develop/src/core/OmniElement.ts)).
 * **Do** implement "mobile first" templates, leveraging [Responsive Design](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design) layout and styling principles. 📱
-* **Do** utilize LitElement's [decorators](https://lit.dev/docs/components/decorators/), required for element and property names.
+* **Do** utilize [LitElement's](https://lit.dev/) [decorators](https://lit.dev/docs/components/decorators/), required for element and property names.
 * **Do** ensure sufficient [JSDoc](https://jsdoc.app/) as well as general code comments are added.
-* **Do** use and extend existing shared CSS component and theme custom properties. (See [`src/styles/ComponentStyles.ts`](https://github.com/capitec/omni-components/blob/develop/src/styles/ComponentStyles.ts))
+* **Do** use and extend existing shared CSS component and theme custom properties. (See [`src/core/OmniElement.ts`](https://github.com/capitec/omni-components/blob/develop/src/core/OmniElement.ts))
 * **Do** set suitable CSS custom property defaults, **avoid** hard-coding CSS property values directly within components, unless deemed required.
 * **Do** adhere to and leverage existing DOM standards when making use of [`<input>`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement) element.
 * **Do** implement suitable DOM [accessibility](https://developer.mozilla.org/en-US/docs/Web/Accessibility) features.
