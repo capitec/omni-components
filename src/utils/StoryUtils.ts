@@ -6,17 +6,23 @@ function loadCssProperties(element: string, customElements: any, cssDeclarations
         cssDeclarations = {};
     }
 
-    const elementModule = customElements.modules.find((module: { exports: any[]; }) => module.exports.find((e: { name: string; }) => e.name === element));
+    const elementModule = customElements.modules.find((module: { exports: any[] }) =>
+        module.exports.find((e: { name: string }) => e.name === element)
+    );
 
     let superModule = elementModule;
     do {
-        if (superModule.declarations.find((sd: any ) => sd.superclass)) {
-            superModule = customElements.modules.find((module: { exports: any[]; }) => module.exports.find((e: { name: string; }) => e.name === superModule.declarations.find((sd: any ) => sd.superclass).superclass.name));
+        if (superModule.declarations.find((sd: any) => sd.superclass)) {
+            superModule = customElements.modules.find((module: { exports: any[] }) =>
+                module.exports.find(
+                    (e: { name: string }) => e.name === superModule.declarations.find((sd: any) => sd.superclass).superclass.name
+                )
+            );
         } else {
             superModule = undefined;
         }
         if (superModule) {
-            elementModule.declarations = [...superModule.declarations, ...elementModule.declarations ];
+            elementModule.declarations = [...superModule.declarations, ...elementModule.declarations];
         }
     } while (superModule);
     for (const key in elementModule.declarations) {
@@ -103,7 +109,9 @@ function loadCustomElementsRemote(): any {
 }
 
 function loadCustomElementsModuleFor(elementName: string, customElements: any) {
-    return customElements.modules.find((module: any) => module.declarations.find((d: any) => (d.tagName === elementName && d.customElement) || d.name === elementName));
+    return customElements.modules.find((module: any) =>
+        module.declarations.find((d: any) => (d.tagName === elementName && d.customElement) || d.name === elementName)
+    );
 }
 
 function loadCustomElementsModuleForRemote(elementName: string) {
@@ -122,7 +130,9 @@ function loadSlotForRemote(elementName: string, slotName: string) {
 }
 
 function loadSlotForModule(elementModule: any, slotName: string): { name: string; description: string } {
-    const declaration = elementModule.declarations.find((d: any) => d.slots && d.slots.length > 0 && d.slots.find((s: any) => s.name === slotName));
+    const declaration = elementModule.declarations.find(
+        (d: any) => d.slots && d.slots.length > 0 && d.slots.find((s: any) => s.name === slotName)
+    );
     if (declaration) {
         const slot = declaration.slots.find((s: any) => s.name === slotName);
         if (slot) {
@@ -305,7 +315,20 @@ function filterJsDocLinks(jsdoc: string) {
  *
  * The `raw` tag returns a string that can be used directly as ```innerHTML``` or as ```unsafeHTML``` via lit.
  */
-const raw = (strings: TemplateStringsArray) => strings.join('\r\n');
+const raw = (strings: TemplateStringsArray, ...values: unknown[]) => asRenderString(strings, values);
+
+const asRenderString = (strings: TemplateStringsArray, values: unknown[]) => {
+    const v: any = [...values, ''].map((e) => {
+        switch (typeof e) {
+        case 'object': {
+            return asRenderString((e as any).strings, (e as any).values);
+        }
+        default:
+            return e;
+        }
+    });
+    return strings.reduce((acc, s, i) => acc + s + v[i], '');
+};
 
 export {
     loadCustomElementsRemote,
