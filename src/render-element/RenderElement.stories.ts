@@ -69,7 +69,20 @@ export const AsLit = {
     parameters: {
         docs: {
             source: {
-                code: '<omni-render-element .data="${this.someData}" .renderer="${this.renderData}"></omni-render-element>',
+                code: `
+                
+<!-- Bound function used (<script> tags only for syntax highlighting) -->
+<script>
+async function renderAsLit(data: object) {
+    await new Promise<void>((r) => setTimeout(() => r(), 3000));
+    return html\`<span>\${JSON.stringify(data)}</span>\`;
+}
+</script>
+
+...
+                
+<omni-render-element .data="\${this.someData}" .renderer="\${this.renderAsLit}"></omni-render-element>
+`,
                 language: 'html'
             }
         }
