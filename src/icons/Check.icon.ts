@@ -21,19 +21,6 @@ import DOMTreeElement from '../core/DOMTreeElement.js';
  */
 @customElement('omni-check-icon')
 export class CheckIcon extends DOMTreeElement {
-
-    override connectedCallback() {
-        super.connectedCallback();
-        
-        // Necessary to update inline style
-        this.style.getPropertyValue('display');
-    }
-
-    override get style(): CSSStyleDeclaration {
-        super.style.display = 'flex';
-        return super.style;
-    }
-
     override render(): TemplateResult {
         return html`
             <svg version="1.1" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
