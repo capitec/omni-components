@@ -1,0 +1,71 @@
+<!-- Iconography.stories.mdx -->
+
+import { Canvas, Meta, Title, IconGallery, IconItem, Story, Source } from '@storybook/addon-docs';
+import { html, css } from 'lit';
+
+import '../dist/icons/Check.icon.js';
+import '../dist/icons/Close.icon.js';
+import '../dist/icons/EyeHidden.icon.js';
+import '../dist/icons/EyeVisible.icon.js';
+import '../dist/icons/Indeterminate.icon.js';
+import '../dist/icons/Loading.icon.js';
+import '../dist/icons/LockClosed.icon.js';
+import '../dist/icons/LockOpen.icon.js';
+
+<Meta title="UI Components/Iconography" />
+
+# Iconography
+
+<IconGallery>
+  <IconItem name="omni-check-icon">
+    <omni-check-icon />
+  </IconItem>
+  <IconItem name="omni-close-icon">
+    <omni-close-icon />
+  </IconItem>
+  <IconItem name="omni-eye-hidden-icon">
+    <omni-eye-hidden-icon />
+  </IconItem>
+  <IconItem name="omni-eye-visible-icon">
+    <omni-eye-visible-icon />
+  </IconItem>
+  <IconItem name="omni-indeterminate-icon">
+    <omni-indeterminate-icon />
+  </IconItem>
+  <IconItem name="omni-loading-icon">
+    <omni-loading-icon />
+  </IconItem>
+  <IconItem name="omni-lock-closed-icon">
+    <omni-lock-closed-icon />
+  </IconItem>
+  <IconItem name="omni-lock-open-icon">
+    <omni-lock-open-icon />
+  </IconItem>
+
+</IconGallery>
+
+
+<!-- This is to enable changing if themes as it only applies when stories are available -->
+
+## Usage
+
+<Source
+    language="js"
+    code={`
+import '@capitec/omni-components/icons/Check.icon.js';
+import '@capitec/omni-components/icons/Loading.icon.js';
+    `}
+    format={false}
+    dark
+/>
+
+<Canvas>
+<Story name="Iconography" >{
+  html`
+        <div style="max-width: 30px;">
+          <omni-check-icon></omni-check-icon>
+          <omni-loading-icon></omni-loading-icon>
+        </div>
+      `
+}</Story>
+</Canvas>

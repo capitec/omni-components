@@ -151,7 +151,7 @@ export const parameters = {
     },
     options: {
         storySort: {
-            order: ['Welcome', '*', 'Contributing', 'UI Components'],
+            order: ['Welcome', '*', 'Contributing', 'UI Components', [ '*', 'Iconography' ] ],
         }
     },
     viewMode: 'docs',
