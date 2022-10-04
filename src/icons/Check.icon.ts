@@ -1,11 +1,12 @@
-import { html, css, TemplateResult } from 'lit';
+import { html, TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import { OmniElement } from '../core/OmniElement.js';
+import DOMTreeElement from '../core/DOMTreeElement.js';
 
 /**
  * A check icon component.
  *
  * ```js
+ *
  * import '@capitec/omni-components/icons/Check.icon.js';
  * ```
  *
@@ -19,22 +20,18 @@ import { OmniElement } from '../core/OmniElement.js';
  *
  */
 @customElement('omni-check-icon')
-export class CheckIcon extends OmniElement {
-    static override get styles() {
-        return [
-            super.styles,
-            css`
-                :host {
-                    color: inherit;
-                    fill: inherit;
-                    background-color: inherit;
-                    background: inherit;
+export class CheckIcon extends DOMTreeElement {
 
-                    width: var(--omni-icon-size, 16px);
-                    height: var(--omni-icon-size, 16px);
-                }
-            `
-        ];
+    override connectedCallback() {
+        super.connectedCallback();
+        
+        // Necessary to update inline style
+        this.style.getPropertyValue('display');
+    }
+
+    override get style(): CSSStyleDeclaration {
+        super.style.display = 'flex';
+        return super.style;
     }
 
     override render(): TemplateResult {

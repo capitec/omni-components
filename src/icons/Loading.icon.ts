@@ -6,6 +6,7 @@ import OmniElement from '../core/OmniElement.js';
  * A loading icon component.
  *
  * ```js
+ * 
  * import '@capitec/omni-components/icons/Loading.icon.js';
  * ```
  *

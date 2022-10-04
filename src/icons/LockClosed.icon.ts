@@ -1,4 +1,4 @@
-import { html, css, LitElement, TemplateResult } from 'lit';
+import { html, TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import DOMTreeElement from '../core/DOMTreeElement';
 
@@ -6,6 +6,7 @@ import DOMTreeElement from '../core/DOMTreeElement';
  * A closed lock icon component
  *
  * ```js
+ * 
  * import '@capitec/omni-components/icons/LockClosed.icon.js';
  * ```
  *

@@ -1,4 +1,4 @@
-import { html, css, TemplateResult } from 'lit';
+import { html, TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import DOMTreeElement from '../core/DOMTreeElement.js';
 
@@ -6,6 +6,7 @@ import DOMTreeElement from '../core/DOMTreeElement.js';
  * An indeterminate icon component.
  *
  * ```js
+ * 
  * import '@capitec/omni-components/icons/Indeterminate.icon.js';
  * ```
  *
