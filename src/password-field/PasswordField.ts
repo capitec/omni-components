@@ -93,11 +93,17 @@ export class PasswordField extends InputBase {
                     padding-bottom: var(--omni-password-field-icon-padding-bottom, 0px);
                 }
 
-                .hide-icon,
-                .show-icon {
-                    height: var(--omni-password-field-icon-height, var(--omni-icon-size));
-                    width: var(--omni-password-field-icon-width, var(--omni-icon-size));
+                .hide,
+                .show {
                     fill: var(--omni-password-field-icon-color, var(--omni-primary-color));
+                }
+                
+                .hide,
+                .show,
+                ::slotted([slot=hide]),
+                ::slotted([slot=show]) {
+                    height: var(--omni-password-field-icon-height, 24px);
+                    width: var(--omni-password-field-icon-width, 24px);
                 }
 
                 /* Prevent default icon from displaying in password field on Edge browser */
@@ -133,8 +139,8 @@ export class PasswordField extends InputBase {
         return html`
             <div class="control-box" @click="${(e: MouseEvent) => this._iconClicked(e)}">
                 ${this.type === 'password'
-                    ? html` <slot name="hide"><omni-eye-visible-icon></omni-eye-visible-icon></slot> `
-                    : html` <slot name="show"><omni-eye-hidden-icon></omni-eye-hidden-icon></slot> `}
+                    ? html` <slot name="hide"><omni-eye-visible-icon class="hide"></omni-eye-visible-icon></slot> `
+                    : html` <slot name="show"><omni-eye-hidden-icon class="show"></omni-eye-hidden-icon></slot> `}
             </div>
         `;
     }
