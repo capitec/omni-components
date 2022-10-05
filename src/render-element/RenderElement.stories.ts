@@ -5,14 +5,17 @@ import { userEvent, within } from '@storybook/testing-library';
 import { Meta, StoryContext } from '@storybook/web-components';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { assignToSlot, querySelectorAsync } from '../utils/StoryUtils.js';
+import { assignToSlot, loadCssPropertiesRemote, querySelectorAsync } from '../utils/StoryUtils.js';
 import { RenderElement, RenderFunction } from './RenderElement.js';
 
 import './RenderElement';
 
 export default {
     title: 'UI Components/RenderElement',
-    component: 'omni-render-element'
+    component: 'omni-render-element',
+    parameters: {
+        cssprops: loadCssPropertiesRemote('omni-render-element')
+    }
 } as Meta;
 
 interface ArgTypes {

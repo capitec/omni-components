@@ -1,4 +1,4 @@
-import { html, TemplateResult, nothing } from 'lit';
+import { html, TemplateResult, nothing, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import OmniElement from '../core/OmniElement.js';
@@ -21,6 +21,8 @@ import '../icons/Loading.icon';
  * ```
  *
  * @element omni-render-element
+ * 
+ * @cssprop --omni-render-element-loading-indicator-width - Loading Indicator width
  */
 @customElement('omni-render-element')
 export class RenderElement extends OmniElement {
@@ -37,6 +39,26 @@ export class RenderElement extends OmniElement {
 
     override connectedCallback(): void {
         super.connectedCallback();
+    }
+
+    static override get styles() {
+        return [
+            super.styles,
+            css`
+                .loading {
+                    width: var(--omni-render-element-loading-indicator-width, 50px);
+                }
+            `
+        ];
+    }
+
+    protected override renderLoading() {
+        return html`<slot name="loading_indicator"><omni-loading-icon class="loading"></omni-loading-icon></slot>`;
+    }
+
+    protected override async renderAsync() {
+        this._clearElements();
+        return await this._internalRenderer();
     }
 
     private _setChildInstance(result: HTMLElement) {
@@ -84,15 +106,6 @@ export class RenderElement extends OmniElement {
                 el.removeChild(curChild);
             }
         }
-    }
-
-    protected override renderLoading() {
-        return html`<slot name="loading_indicator"><omni-loading-icon></omni-loading-icon></slot>`;
-    }
-
-    protected override async renderAsync() {
-        this._clearElements();
-        return await this._internalRenderer();
     }
 }
 
