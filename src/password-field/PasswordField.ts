@@ -1,7 +1,7 @@
 import { css, html } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 import { live } from 'lit/directives/live.js';
-import { InputBase } from '../core/OmniInputElement.js';
+import { OmniInputElement } from '../core/OmniInputElement.js';
 
 import '../icons/EyeHidden.icon';
 import '../icons/EyeVisible.icon';
@@ -40,7 +40,7 @@ import '../icons/EyeVisible.icon';
  * 
  */
 @customElement('omni-password-field')
-export class PasswordField extends InputBase {
+export class PasswordField extends OmniInputElement {
 
     @query('#inputField')
     private _inputElement: HTMLInputElement;
@@ -84,7 +84,7 @@ export class PasswordField extends InputBase {
             css`              
                 .control-box
                  {    
-                    z-index: 10;
+                    /*z-index: 10;*/
                     display: flex;
                     align-items: center;
                     justify-content: center;

@@ -1,7 +1,10 @@
 import { css, html, nothing, TemplateResult } from 'lit';
 import { customElement, query } from 'lit/decorators.js';
 import { live } from 'lit/directives/live.js'; 
-import { InputBase } from '../core/OmniInputElement.js';
+import { OmniInputElement } from '../core/OmniInputElement.js';
+
+import '../icons/Plus.icon';
+import '../icons/Minus.icon';
 
 /**
  * An input control that allows a user to enter a single line of numbers.
@@ -46,7 +49,7 @@ import { InputBase } from '../core/OmniInputElement.js';
  * 
  */
 @customElement('omni-numeric-field')
-export class NumericField extends InputBase {
+export class NumericField extends OmniInputElement {
 
     @query('#inputField')
     private _inputElement: HTMLInputElement;
@@ -95,14 +98,14 @@ export class NumericField extends InputBase {
                 cursor: pointer;
             }
 
-            .sign {
-                font-size: var(--omni-numeric-field-plus-minus-sign-font-size, 22px);
-                width: var(--omni-numeric-field-plus-minus-sign-width, 48px);
-                display: flex;
-                justify-content: center;
-                align-items: center;
+
+            .plus-icon,
+            .minus-icon {
+                width: 100%;
+                height: 36px;
             }
 
+            /*
             .sign:hover {
                 background-color: var(--omni-numeric-input-plus-minus-focussed-hover,rgba(0,157,224,0.1));
             }
@@ -110,6 +113,7 @@ export class NumericField extends InputBase {
             ::slotted([slot=plus_icon]):hover {
                 background-color: var(--omni-numeric-input-plus-minus-focussed-hover,rgba(0,157,224,0.1));
             }
+            */
 
             .divider {
                 background-color: black;
@@ -148,11 +152,11 @@ export class NumericField extends InputBase {
             }
 
             .control {
-                z-index: 10;
                 display: inline-flex;
                 flex: 0 0 auto;
                 align-items: center;
                 cursor: default;
+                z-index: 10;
             }
             `
         ];
@@ -162,9 +166,9 @@ export class NumericField extends InputBase {
         return html`
         <span class="control">				
             <div class="quantity">
-                <div class="sign" @click="${this._onAddClick}"><slot name="increase">+</slot></div>
+                <div @click="${this._onAddClick}"><slot name="increase"><omni-plus-icon class="plus-icon"></omni-plus-icon></slot></div>
                 <div class="divider"></div>
-                <div class="sign" @click="${this._onMinusClick}"><slot name="decrease">-</slot></div>
+                <div @click="${this._onMinusClick}"><slot name="decrease"><omni-minus-icon class="minus-icon"></omni-minus-icon></slot></div>
             </div>
         </span>
     `;

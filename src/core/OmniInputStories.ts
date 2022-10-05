@@ -7,6 +7,7 @@ import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import { raw } from '../utils/StoryUtils';
+import { OmniInputElement } from './OmniInputElement.js';
 
 export const BaseArgTypeDefinitions = {
     suffix: {
@@ -82,13 +83,13 @@ export const ErrorStory = <T extends HTMLElement, U extends BaseArgTypes>(tagNam
     return Error;
 };
 
-export const ValueStory = <T extends HTMLElement, U extends BaseArgTypes>(tagName: string) => {
+export const ValueStory = <T extends HTMLElement, U extends BaseArgTypes>(tagName: string, inputValue: string | number | string[] = 'The input value') => {
     const Value = {
         render: (args: U) => html`${unsafeHTML(`<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}" value="${args.value}"></${tagName}>`)}`,
         name: 'Value',
         args: {
             label: 'Value',
-            value: 'The input value',
+            value: inputValue,
         },
         play: async (context: StoryContext) => {
             const input = within(context.canvasElement).getByTestId<T>('test-field');
@@ -163,10 +164,10 @@ export const DisabledStory = <T extends HTMLElement, U extends BaseArgTypes>(tag
             const inputTest = jest.fn();
             input.addEventListener('input', inputTest);
   
-            const inputField = input.shadowRoot.getElementById('inputField');
+            const inputField = input.shadowRoot.getElementById('inputField') as OmniInputElement;
   
-            await userEvent.type(inputField, 'Value{space}Update');
-            await expect(inputField).toHaveValue('');
+            await userEvent.type(inputField, 'Value{space}Update{space}3');
+            await expect(inputField.value).toBeFalsy();
   
             await expect(inputTest).toBeCalledTimes(0);
         }
