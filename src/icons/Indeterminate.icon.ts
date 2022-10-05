@@ -6,7 +6,7 @@ import DOMTreeElement from '../core/DOMTreeElement.js';
  * An indeterminate icon component.
  *
  * ```js
- * 
+ *
  * import '@capitec/omni-components/icons/Indeterminate.icon.js';
  * ```
  *

@@ -3,12 +3,12 @@ import { property } from 'lit/decorators.js';
 import { until } from 'lit/directives/until.js';
 
 /**
- * 
+ *
  * Base element class that manages element properties and attributes, and
  * renders a lit template with asynchronous rendering support and themed styles.
- * 
+ *
  * @slot loading_indicator - Used to define content that is displayed while async rendering is awaiting, or when renderLoading() is implicitly called
- * 
+ *
  * @csscat Theme Variables
  *
  * @cssprop --omni-theme-primary-color - Theme primary color.

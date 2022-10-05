@@ -6,7 +6,7 @@ import DOMTreeElement from '../core/DOMTreeElement.js';
  * A visible eye icon component
  *
  * ```js
- * 
+ *
  * import '@capitec/omni-components/icons/EyeVisible.icon.js';
  * ```
  *

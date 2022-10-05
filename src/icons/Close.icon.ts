@@ -6,7 +6,7 @@ import DOMTreeElement from '../core/DOMTreeElement.js';
  * A Close icon component.
  *
  * ```js
- * 
+ *
  * import '@capitec/omni-components/icons/Close.icon.js';
  * ```
  *

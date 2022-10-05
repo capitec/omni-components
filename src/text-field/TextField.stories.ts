@@ -34,8 +34,19 @@ export default {
 
 export const Interactive = {
     render: (args: BaseArgTypes) => html`
-    <omni-text-field data-testid="test-text-field" label="${ifNotEmpty(args.label)}" .value="${(args.value)}" .data="${args.data}" hint="${ifNotEmpty(args.hint)}" error="${ifNotEmpty(args.error)}" ?disabled="${args.disabled}">${(args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix',args.prefix))}` : nothing)}${(args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix',args.suffix))}` : nothing)}${args.prefix || args.suffix ? '\r\n' : nothing}</omni-text-field>
-  `,
+        <omni-text-field
+            data-testid="test-text-field"
+            label="${ifNotEmpty(args.label)}"
+            .value="${args.value}"
+            .data="${args.data}"
+            hint="${ifNotEmpty(args.hint)}"
+            error="${ifNotEmpty(args.error)}"
+            ?disabled="${args.disabled}"
+            >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${args.suffix
+                ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}`
+                : nothing}${args.prefix || args.suffix ? '\r\n' : nothing}</omni-text-field
+        >
+    `,
     name: 'Interactive',
     parameters: {},
     args: {
@@ -76,4 +87,3 @@ export const Prefix = PrefixStory<TextField, BaseArgTypes>('omni-text-field');
 export const Suffix = SuffixStory<TextField, BaseArgTypes>('omni-text-field');
 
 export const Disabled = DisabledStory<TextField, BaseArgTypes>('omni-text-field');
-

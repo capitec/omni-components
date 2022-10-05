@@ -76,4 +76,3 @@
 // export const Suffix = SuffixStory<TextBox, BaseArgTypes>('omni-text-box');
 
 // export const Disabled = DisabledStory<TextBox, BaseArgTypes>('omni-text-box');
-

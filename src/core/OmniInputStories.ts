@@ -18,15 +18,15 @@ export const BaseArgTypeDefinitions = {
 };
 
 export interface BaseArgTypes {
-  label: string;
-  value: string;
-  data: object;
-  hint: string;
-  error: string;
-  disabled: boolean;
+    label: string;
+    value: string;
+    data: object;
+    hint: string;
+    error: string;
+    disabled: boolean;
 
-  suffix: string;
-  prefix: string;
+    suffix: string;
+    prefix: string;
 }
 
 export const LabelStory = <T extends HTMLElement, U extends BaseArgTypes>(tagName: string) => {
@@ -34,7 +34,7 @@ export const LabelStory = <T extends HTMLElement, U extends BaseArgTypes>(tagNam
         render: (args: U) => html`${unsafeHTML(`<${tagName}  data-testid="test-field" label="${ifNotEmpty(args.label)}"></${tagName}>`)}`,
         name: 'Label',
         args: {
-            label: 'The Label',
+            label: 'The Label'
         },
         play: async (context: StoryContext) => {
             const input = within(context.canvasElement).getByTestId<T>('test-field');
@@ -47,7 +47,10 @@ export const LabelStory = <T extends HTMLElement, U extends BaseArgTypes>(tagNam
 
 export const HintStory = <T extends HTMLElement, U extends BaseArgTypes>(tagName: string) => {
     const Hint = {
-        render: (args: U) => html`${unsafeHTML(`<${tagName}  data-testid="test-field" label="${ifNotEmpty(args.label)}" hint="${args.hint}"></${tagName}>`)}`,
+        render: (args: U) =>
+            html`${unsafeHTML(
+                `<${tagName}  data-testid="test-field" label="${ifNotEmpty(args.label)}" hint="${args.hint}"></${tagName}>`
+            )}`,
         name: 'Hint',
         args: {
             label: 'Hint',
@@ -58,7 +61,6 @@ export const HintStory = <T extends HTMLElement, U extends BaseArgTypes>(tagName
             const hintElement = input.shadowRoot.querySelector<HTMLElement>('.hint-label');
             await expect(hintElement).toBeTruthy();
             await expect(hintElement).toHaveTextContent(Hint.args.hint);
-  
         }
     };
     return Hint;
@@ -66,7 +68,10 @@ export const HintStory = <T extends HTMLElement, U extends BaseArgTypes>(tagName
 
 export const ErrorStory = <T extends HTMLElement, U extends BaseArgTypes>(tagName: string) => {
     const Error = {
-        render: (args: U) => html`${unsafeHTML(`<${tagName} data-testid="test-field" label="${args.label}" error="${ifNotEmpty(args.error)}"></${tagName}>`)}`,
+        render: (args: U) =>
+            html`${unsafeHTML(
+                `<${tagName} data-testid="test-field" label="${args.label}" error="${ifNotEmpty(args.error)}"></${tagName}>`
+            )}`,
         name: 'Error',
         args: {
             label: 'Error',
@@ -74,9 +79,9 @@ export const ErrorStory = <T extends HTMLElement, U extends BaseArgTypes>(tagNam
         },
         play: async (context: StoryContext) => {
             const input = within(context.canvasElement).getByTestId<T>('test-field');
-            const errorElement  = input.shadowRoot.querySelector<HTMLElement>('.error-label');
+            const errorElement = input.shadowRoot.querySelector<HTMLElement>('.error-label');
             await expect(errorElement).toBeTruthy();
-            await expect(errorElement).toHaveTextContent(Error.args.error);  
+            await expect(errorElement).toHaveTextContent(Error.args.error);
         }
     };
     return Error;
@@ -84,15 +89,18 @@ export const ErrorStory = <T extends HTMLElement, U extends BaseArgTypes>(tagNam
 
 export const ValueStory = <T extends HTMLElement, U extends BaseArgTypes>(tagName: string) => {
     const Value = {
-        render: (args: U) => html`${unsafeHTML(`<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}" value="${args.value}"></${tagName}>`)}`,
+        render: (args: U) =>
+            html`${unsafeHTML(
+                `<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}" value="${args.value}"></${tagName}>`
+            )}`,
         name: 'Value',
         args: {
             label: 'Value',
-            value: 'The input value',
+            value: 'The input value'
         },
         play: async (context: StoryContext) => {
             const input = within(context.canvasElement).getByTestId<T>('test-field');
-            
+
             const inputField = input.shadowRoot.getElementById('inputField');
             await expect(inputField).toHaveValue(Value.args.value);
         }
@@ -102,7 +110,8 @@ export const ValueStory = <T extends HTMLElement, U extends BaseArgTypes>(tagNam
 
 export const PrefixStory = <T extends HTMLElement, U extends BaseArgTypes>(tagName: string) => {
     const Prefix = {
-        render: (args: U) => html`${unsafeHTML(`<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}">${args.prefix}</${tagName}>`)}`,
+        render: (args: U) =>
+            html`${unsafeHTML(`<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}">${args.prefix}</${tagName}>`)}`,
         name: 'Prefix',
         args: {
             label: 'Prefix',
@@ -113,7 +122,7 @@ export const PrefixStory = <T extends HTMLElement, U extends BaseArgTypes>(tagNa
 
             const slotElement = input.shadowRoot.querySelector<HTMLSlotElement>('slot[name=prefix]');
             await expect(slotElement).toBeTruthy();
-    
+
             const foundSlottedSvgElement = slotElement.assignedElements().find((e) => e.tagName.toLocaleLowerCase() === 'svg');
             await expect(foundSlottedSvgElement).toBeTruthy();
         }
@@ -123,7 +132,8 @@ export const PrefixStory = <T extends HTMLElement, U extends BaseArgTypes>(tagNa
 
 export const SuffixStory = <T extends HTMLElement, U extends BaseArgTypes>(tagName: string) => {
     const Suffix = {
-        render: (args: U) => html`${unsafeHTML(`<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}">${args.suffix}</${tagName}>`)}`,
+        render: (args: U) =>
+            html`${unsafeHTML(`<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}">${args.suffix}</${tagName}>`)}`,
         name: 'Suffix',
         args: {
             label: 'Suffix',
@@ -134,10 +144,9 @@ export const SuffixStory = <T extends HTMLElement, U extends BaseArgTypes>(tagNa
 
             const slotElement = input.shadowRoot.querySelector<HTMLSlotElement>('slot[name=suffix]');
             await expect(slotElement).toBeTruthy();
-    
+
             const foundSlottedSvgElement = slotElement.assignedElements().find((e) => e.tagName.toLocaleLowerCase() === 'svg');
             await expect(foundSlottedSvgElement).toBeTruthy();
-
         }
     };
     return Suffix;
@@ -145,7 +154,8 @@ export const SuffixStory = <T extends HTMLElement, U extends BaseArgTypes>(tagNa
 
 export const DisabledStory = <T extends HTMLElement, U extends BaseArgTypes>(tagName: string) => {
     const Disabled = {
-        render: (args: U) => html`${unsafeHTML(`<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}" disabled></${tagName}>`)}`,
+        render: (args: U) =>
+            html`${unsafeHTML(`<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}" disabled></${tagName}>`)}`,
         name: 'Disabled',
         args: {
             label: 'Disabled',
@@ -153,24 +163,23 @@ export const DisabledStory = <T extends HTMLElement, U extends BaseArgTypes>(tag
         },
         play: async (context: StoryContext) => {
             const input = within(context.canvasElement).getByTestId<T>('test-field');
-  
+
             //Disabled class test.
             const disabledAttribute = input.attributes.getNamedItem('disabled');
             /*const disabledClass = input.classList.contains('disabled');*/
-            await expect (disabledAttribute).toBeTruthy();
-  
+            await expect(disabledAttribute).toBeTruthy();
+
             //Input event test.
             const inputTest = jest.fn();
             input.addEventListener('input', inputTest);
-  
+
             const inputField = input.shadowRoot.getElementById('inputField');
-  
+
             await userEvent.type(inputField, 'Value{space}Update');
             await expect(inputField).toHaveValue('');
-  
+
             await expect(inputTest).toBeCalledTimes(0);
         }
     };
     return Disabled;
 };
-

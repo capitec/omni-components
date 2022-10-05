@@ -6,7 +6,7 @@ import DOMTreeElement from '../core/DOMTreeElement';
  * A closed lock icon component
  *
  * ```js
- * 
+ *
  * import '@capitec/omni-components/icons/LockClosed.icon.js';
  * ```
  *
