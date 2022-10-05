@@ -330,6 +330,31 @@ const asRenderString = (strings: TemplateStringsArray, values: unknown[]) => {
     return strings.reduce((acc, s, i) => acc + s + v[i], '');
 };
 
+function querySelectorAsync(parent: Element | ShadowRoot, selector: any, checkFrequencyMs: number = 500, timeoutMs: number = 15000) {
+    return new Promise((resolve, reject) => {
+        let element = parent.querySelector(selector);
+        if (element) {
+            return resolve(element);
+        }
+
+        const startTimeInMs = Date.now();
+        (function loopSearch() {
+            element = parent.querySelector(selector);
+            if (element) {
+                resolve(element);
+            } else {
+                setTimeout(function () {
+                    if (timeoutMs && Date.now() - startTimeInMs > timeoutMs) {
+                        reject(new Error(`Timed out waiting for query (${selector}) in ${timeoutMs} ms`));
+                    } else {
+                        loopSearch();
+                    }
+                }, checkFrequencyMs);
+            }
+        })();
+    });
+}
+
 export {
     loadCustomElementsRemote,
     loadCustomElementsModuleFor,
@@ -350,5 +375,6 @@ export {
     filterJsDocLinks,
     formatMarkdownCodeElements,
     assignToSlot,
-    raw
+    raw,
+    querySelectorAsync
 };
