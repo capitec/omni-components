@@ -37,7 +37,6 @@ export class RenderElement extends OmniElement {
 
     override connectedCallback(): void {
         super.connectedCallback();
-
     }
 
     private _setChildInstance(result: HTMLElement) {
@@ -98,4 +97,4 @@ export class RenderElement extends OmniElement {
 }
 
 export type RenderResult = TemplateResult | typeof nothing | HTMLElement | string;
-export type RenderFunction = (data: object) => RenderResult | Promise<RenderResult>;
+export type RenderFunction = (...data: unknown[]) => RenderResult | Promise<RenderResult>;
