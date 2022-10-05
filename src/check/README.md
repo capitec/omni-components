@@ -2,8 +2,9 @@
 
 A control that allows a user to check a value on or off.
 
-```js 
-import '@capitec/omni-components/check'; 
+```js
+
+import '@capitec/omni-components/check';
 ```
 
 ## Example
@@ -30,7 +31,7 @@ import '@capitec/omni-components/check';
 | `hint`          | `hint`          |           | `string`      | A hint message to assist the user.               |
 | `indeterminate` | `indeterminate` |           | `boolean`     | Indicator if the component is in and indeterminate state. |
 | `label`         | `label`         |           | `string`      | Text label.                                      |
-| `override`      |                 |           |               | The element style template.                      |
+| `override`      |                 |           |               |                                                  |
 | `styles`        |                 | readonly  | `CSSResult[]` |                                                  |
 
 ## Methods

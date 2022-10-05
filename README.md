@@ -1,4 +1,4 @@
-<!-- ⚠️ This README has been generated from the file(s) "blueprint.md" ⚠️-->
+<!-- ⚠️ This README has been generated from the file(s) "readme/blueprint.md" ⚠️-->
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#welcome-to-omni-components-)
 
 # ➜ Welcome to Omni Components 
@@ -14,13 +14,23 @@
 
 <br />
 
-<p align="center">0.1.5</p>
 
 <p align="center">
 		<a href="https://npmcharts.com/compare/@capitec/omni-components?minimal=true"><img alt="Downloads per month" src="https://img.shields.io/npm/dm/@capitec/omni-components.svg" height="20"/></a>
 <a href="https://www.npmjs.com/package/@capitec/omni-components"><img alt="NPM Version" src="https://img.shields.io/npm/v/@capitec/omni-components.svg" height="20"/></a>
 <a href="https://github.com/capitec/omni-components/actions/workflows/build.yml"><img alt="Build" src="https://github.com/capitec/omni-components/actions/workflows/build.yml/badge.svg" height="20"/></a>
+<a href="https://capitec.github.io/open-source/?repo=Omni-Components"><img alt="Docs" src="https://img.shields.io/badge/%20-Docs-blue" height="20"/></a>
 	</p>
+
+
+&nbsp;
+
+
+<p align="center">
+  <b>View our <a href="https://capitec.github.io/open-source/?repo=Omni-Components">full documentation</a> for more on component usage and live previews.</b></br>
+  <sub><sub>
+</p>
+
 
 
 &nbsp;
@@ -50,8 +60,9 @@ A control that allows an action to be executed.
 
 
 ```js
- 
-import '@capitec/omni-components/button'; 
+
+
+import '@capitec/omni-components/button';
 
 ```
 
@@ -65,8 +76,9 @@ A control that allows a user to check a value on or off.
 
 
 ```js
- 
-import '@capitec/omni-components/check'; 
+
+
+import '@capitec/omni-components/check';
 
 ```
 
@@ -80,23 +92,9 @@ A control that can be used for input, setting attributes, or performing actions.
 
 
 ```js
- 
-import '@capitec/omni-components/chip'; 
-
-```
-
-</td></tr><tr><td>
-
-[omni-code](src/code/README.md)
-
-</td><td>Code</td><td>
-
-A control to syntax highlight and display source code.
 
 
-```js
- 
-import '@capitec/omni-components/code'; 
+import '@capitec/omni-components/chip';
 
 ```
 
@@ -110,8 +108,9 @@ A link control that allows a user to indicate an action to be executed. Typicall
 
 
 ```js
- 
-import '@capitec/omni-components/hyperlink'; 
+
+
+import '@capitec/omni-components/hyperlink';
 
 ```
 
@@ -125,8 +124,9 @@ Component that displays an icon
 
 
 ```js
- 
-import '@capitec/omni-components/icon'; 
+
+
+import '@capitec/omni-components/icon';
 
 ```
 
@@ -136,12 +136,12 @@ import '@capitec/omni-components/icon';
 
 </td><td>CheckIcon</td><td>
 
-A check icon component
+A check icon component.
 
 
 ```js
- 
-import '@capitec/omni-components/icons/Check.icon.js'; 
+
+import '@capitec/omni-components/icons/Check.icon.js';
 
 ```
 
@@ -151,12 +151,12 @@ import '@capitec/omni-components/icons/Check.icon.js';
 
 </td><td>CloseIcon</td><td>
 
-A Close icon component
+A Close icon component.
 
 
 ```js
- 
-import '@capitec/omni-components/icons/Close.icon.js'; 
+
+import '@capitec/omni-components/icons/Close.icon.js';
 
 ```
 
@@ -166,12 +166,12 @@ import '@capitec/omni-components/icons/Close.icon.js';
 
 </td><td>IndeterminateIcon</td><td>
 
-An indeterminate icon component
+An indeterminate icon component.
 
 
 ```js
- 
-import '@capitec/omni-components/icons/Indeterminate.icon.js'; 
+
+import '@capitec/omni-components/icons/Indeterminate.icon.js';
 
 ```
 
@@ -181,12 +181,13 @@ import '@capitec/omni-components/icons/Indeterminate.icon.js';
 
 </td><td>Label</td><td>
 
-A simple label component that renders a styled text string.
+A simple label component that renders styled text.
 
 
 ```js
- 
-import '@capitec/omni-components/label'; 
+
+
+import '@capitec/omni-components/label';
 
 ```
 
@@ -196,12 +197,13 @@ import '@capitec/omni-components/label';
 
 </td><td>Radio</td><td>
 
-A control that allows a user to select a single value from a small group of values.
+A control that allows a user to select a single value from a group of values.
 
 
 ```js
- 
-import '@capitec/omni-components/radio'; 
+
+
+import '@capitec/omni-components/radio';
 
 ```
 
@@ -215,8 +217,9 @@ A control that allows a user to switch a value on or off.
 
 
 ```js
- 
-import '@capitec/omni-components/switch'; 
+
+
+import '@capitec/omni-components/switch';
 
 ```
 

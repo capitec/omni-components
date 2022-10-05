@@ -2,6 +2,9 @@ var webpack = require('webpack');
 
 module.exports = {
 	framework: "@storybook/web-components",
+	core: {
+	  builder: 'webpack5',
+	},
 	stories: [
 		"../stories/*.stories.@(mdx)",
 		"../dist/**/*.stories.@(js)",

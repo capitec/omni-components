@@ -1,9 +1,9 @@
 # omni-check-icon
 
-A check icon component
+A check icon component.
 
-```js 
-import '@capitec/omni-components/icons/Check.icon.js'; 
+```js
+import '@capitec/omni-components/icons/Check.icon.js';
 ```
 
 ## Example
@@ -14,18 +14,18 @@ import '@capitec/omni-components/icons/Check.icon.js';
 
 ## Properties
 
-| Property   | Modifiers | Type          | Description                 |
-|------------|-----------|---------------|-----------------------------|
-| `override` |           |               | The element style template. |
-| `styles`   | readonly  | `CSSResult[]` |                             |
+| Property   | Modifiers | Type          |
+|------------|-----------|---------------|
+| `override` |           |               |
+| `styles`   | readonly  | `CSSResult[]` |
 
 
 # omni-close-icon
 
-A Close icon component
+A Close icon component.
 
-```js 
-import '@capitec/omni-components/icons/Close.icon.js'; 
+```js
+import '@capitec/omni-components/icons/Close.icon.js';
 ```
 
 ## Example
@@ -36,18 +36,18 @@ import '@capitec/omni-components/icons/Close.icon.js';
 
 ## Properties
 
-| Property   | Modifiers | Type          | Description                 |
-|------------|-----------|---------------|-----------------------------|
-| `override` |           |               | The element style template. |
-| `styles`   | readonly  | `CSSResult[]` |                             |
+| Property   | Modifiers | Type          |
+|------------|-----------|---------------|
+| `override` |           |               |
+| `styles`   | readonly  | `CSSResult[]` |
 
 
 # omni-indeterminate-icon
 
-An indeterminate icon component
+An indeterminate icon component.
 
-```js 
-import '@capitec/omni-components/icons/Indeterminate.icon.js'; 
+```js
+import '@capitec/omni-components/icons/Indeterminate.icon.js';
 ```
 
 ## Example
@@ -58,7 +58,7 @@ import '@capitec/omni-components/icons/Indeterminate.icon.js';
 
 ## Properties
 
-| Property   | Modifiers | Type          | Description                 |
-|------------|-----------|---------------|-----------------------------|
-| `override` |           |               | The element style template. |
-| `styles`   | readonly  | `CSSResult[]` |                             |
+| Property   | Modifiers | Type          |
+|------------|-----------|---------------|
+| `override` |           |               |
+| `styles`   | readonly  | `CSSResult[]` |

@@ -2,8 +2,9 @@
 
 Component that displays an icon
 
-```js 
-import '@capitec/omni-components/icon'; 
+```js
+
+import '@capitec/omni-components/icon';
 ```
 
 ## Examples
@@ -27,7 +28,7 @@ import '@capitec/omni-components/icon';
 | Property   | Attribute | Modifiers | Type                                             | Default   | Description                                      |
 |------------|-----------|-----------|--------------------------------------------------|-----------|--------------------------------------------------|
 | `icon`     | `icon`    |           | `string`                                         |           | The name of the icon to display. Takes preference over the slotted icon. |
-| `override` |           |           |                                                  |           | The element style template.                      |
+| `override` |           |           |                                                  |           |                                                  |
 | `size`     | `size`    |           | `"default" \| "extra-small" \| "small" \| "medium" \| "large"` | "default" | The size to display the icon at                  |
 | `styles`   |           | readonly  | `CSSResult[]`                                    |           |                                                  |
 

@@ -2,14 +2,15 @@
 
 A control that can be used for input, setting attributes, or performing actions.
 
-```js 
-import '@capitec/omni-components/chip'; 
+```js
+
+import '@capitec/omni-components/chip';
 ```
 
 ## Example
 
 ```html
-<omni-chip 
+<omni-chip
   label="Chip title"
   closable>
 </omni-chip>

@@ -1,0 +1,64 @@
+name: Bug Report
+description: File a bug report
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+  - type: input
+    id: version
+    attributes:
+      label: Components Version
+      description: With which version of the components have you picked up this bug?
+      placeholder: ex. 1.0.0
+    validations:
+      required: true
+  - type: dropdown
+    id: types
+    attributes:
+      label: Which package type are you using?
+      multiple: false
+      options:
+        - Unbundled
+        - Bundled for ESM
+    validations:
+      required: true
+  - type: dropdown
+    id: failures
+    attributes:
+      label: What type of bug is this?
+      multiple: false
+      options:
+        - Rendering Error
+        - Behaviour Error
+        - Documentation Failure/Discrepancy
+    validations:
+      required: true
+  - type: input
+    id: repro
+    attributes:
+      label: Test Case/Reproduction 
+      description: Please provide a link to a minimal reproduction that demonstrates the issue.
+      placeholder: ex. https://codepen.io/pen , https://gist.github.com/ , etc.
+    validations:
+      required: false
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Please provide a description of the bug. If applicable, add screenshots to help explain your problem.
+      placeholder: A clear and concise description of what the bug is.
+    validations:
+      required: true
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/capitec/omni-components/blob/develop/CODE_OF_CONDUCT.md)
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true
+        - label: 'I have [searched for existing issues](https://github.com/capitec/omni-components/issues) and to the best of my knowledge this is not a duplicate'
+          required: true

@@ -19,7 +19,7 @@ env:
   DOCS_BASE_PATH: docs/Omni-Components
   LOCAL_VERSION:   
 jobs:
-  update-docs:
+  build-and-release:
     concurrency:
       group: ${{ github.ref }}
       cancel-in-progress: true
@@ -47,7 +47,7 @@ jobs:
         with:
             image_size: 100
             use_username: true
-            readme_path: contributors.md
+            readme_path: readme/contributors.md
             auto_detect_branch_protection: false
         env:
             GITHUB_TOKEN: ${{ secrets.PROTECTED_TOKEN }}
@@ -79,6 +79,10 @@ jobs:
       - name: Build Project 🔧📝
         run: |
           npm run build
+
+      - name: Copy docs definition ⏩
+        run: |
+          cp .oss-docs.json docs/.oss-docs.json
           
       - name: Bump patch version for beta ☝
         # Develop branch only
