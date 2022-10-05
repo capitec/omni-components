@@ -27,10 +27,13 @@ import '../icons/Minus.icon';
  * ```
  *
  * @element omni-numeric-field
- *
- * @cssprop --omni-numeric-input-quantity-right - Numeric input quantity div right.
- * @cssprop --omni-numeric-input-quantity-top - Numeric input quantity div top.
- *
+ * 
+ * @slot increase - Slot for the increase icon.
+ * @slot decrease - Slot for the decrease icon.
+ * 
+ * @cssprop --omni-numeric-input-quantity-right - Numeric input quantity div right. 
+ * @cssprop --omni-numeric-input-quantity-top - Numeric input quantity div top. 
+ * 
  * @cssprop --omni-numeric-field-plus-line-height - Numeric input stepper plus icon line height.
  * @cssprop --omni-numeric-field-minus-line-height - Numeric input stepper minus icon line height.
  *
@@ -95,25 +98,16 @@ export class NumericField extends OmniInputElement {
             .quantity {
                 display: flex;
                 height: 100%;
-                cursor: pointer;
             }
 
 
             .plus-icon,
-            .minus-icon {
-                width: 100%;
-                height: 36px;
+            .minus-icon,
+            ::slotted([slot=increase]),
+            ::slotted([slot=decrease]) {
+                width: 36px;
+                cursor: pointer;
             }
-
-            /*
-            .sign:hover {
-                background-color: var(--omni-numeric-input-plus-minus-focussed-hover,rgba(0,157,224,0.1));
-            }
-
-            ::slotted([slot=plus_icon]):hover {
-                background-color: var(--omni-numeric-input-plus-minus-focussed-hover,rgba(0,157,224,0.1));
-            }
-            */
 
             .divider {
                 background-color: black;
@@ -156,7 +150,6 @@ export class NumericField extends OmniInputElement {
                 flex: 0 0 auto;
                 align-items: center;
                 cursor: default;
-                z-index: 10;
             }
             `
         ];

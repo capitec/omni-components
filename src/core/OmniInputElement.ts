@@ -14,6 +14,8 @@ import { OmniElement } from '../core/OmniElement.js';
  * @cssprop --omni-input-container-width - Input container width.
  * @cssprop --omni-input-container-font-family - Input container font family.
  * 
+ * @cssprop --omni-input-field-background-color - Input layout background color.
+ * 
  * @cssprop --omni-input-border-top - Input border top.
  * @cssprop --omni-input-border-bottom - Input border bottom.
  * @cssprop --omni-input-border-left - Input border left.
@@ -21,8 +23,7 @@ import { OmniElement } from '../core/OmniElement.js';
  * @cssprop --omni-input-border-width - Input border width.
  * @cssprop --omni-input-border-radius - Input border radius.
  * @cssprop --omni-input-border-color - Input border color.
- * @cssprop --omni-input-background-color - Input background color.
- *
+ * 
  * @cssprop --omni-input-label-text-align - Input label text align.
  * @cssprop --omni-input-label-color - Input label color.
  * @cssprop --omni-input-label-font-size - Input label font size.
@@ -167,7 +168,7 @@ export class OmniInputElement extends OmniElement {
 
                 /* TOUCH ZONE STYLES */
 
-                .touch-zone {
+                .layout {
                     position: relative;
 
                     display: flex;
@@ -187,7 +188,8 @@ export class OmniInputElement extends OmniElement {
                     border-width: var(--omni-input-border-width, 1px);
                     border-radius: var(--omni-input-border-radius, 4px);
                     border-style: solid;
-                    border-color: var(--omni-input-border-color, var(--omni-primary-color));
+                    border-color: var(--omni-input-border-color, var(--omni-primary-color));   
+                    pointer-events: none;            
                 }
 
                 /* INPUT CONTAINER STYLES */
@@ -223,19 +225,19 @@ export class OmniInputElement extends OmniElement {
                     left: var(--omni-input-label-left, 10px);
                 }
 
-                .touch-zone > .label > span {
-                    position: relative;
-                }
+                .layout > .label > span {
+					position: relative;
+				}
 
                 /* FOCUS STYLES */
 
-                :host([value]:not([value=''])) .touch-zone > .input-container > .label,
-                :focus + .label {
-                    top: 0px;
-                    transform: translateY(-37.5%) scale(75%);
-                }
+                :host([value]:not([value=''])) .layout > .input-container > .label,         
+				:focus + .label {
+					top: 0px;
+					transform: translateY(-37.5%) scale(75%);
+				}
 
-                :host([value]) .touch-zone > .input-container > .label::before,
+                :host([value]) .layout > .input-container > .label::before,
                 :focus + .label::before {
                     content: '';
                     height: 100%;
@@ -248,7 +250,7 @@ export class OmniInputElement extends OmniElement {
                     z-index: -1;
                 }
 
-                .touch-zone:focus-within > .border {
+                .layout:focus-within > .border {
                     border-style: solid;
                     border-width: var(--omni-input-focussed-border-width, 2px);
                     border-color: var(--omni-input-focussed-border-color, var(--omni-primary-color));
@@ -260,13 +262,13 @@ export class OmniInputElement extends OmniElement {
                     color: var(--omni-input-error-label-color, var(--omni-error-font-color));
                 }
 
-                .touch-zone.error > .border {
+                .layout.error > .border {
                     border-color: var(--omni-input-error-border-color, var(--omni-error-border-color));
                 }
 
                 /* DISABLED STYLES */
 
-                .touch-zone.disabled {
+                .layout.disabled {
                     pointer-events: none;
                 }
 
@@ -275,14 +277,15 @@ export class OmniInputElement extends OmniElement {
                     pointer-events: none;
                 }
 
-                .touch-zone.disabled > .border {
+                .layout.disabled > .border {
                     border-color: var(--omni-input-disabled-border-color, var(--omni-disabled-border-color));
                     background-color: var(--omni-input-disabled-background-color, var(--omni-disabled-background-color));
                 }
 
-                :host([value]) .touch-zone.disabled > .input-container > .label::before {
-                    background-color: var(--omni-label-focus-background-color, var(--omni-disabled-background-color));
-                }
+                :host([value]) .layout.disabled > .input-container > .label::before {
+					background-color: var(--omni-label-focus-background-color, var(--omni-disabled-background-color));
+
+				}
 
                 /* HINT LABEL STYLES */
 
@@ -310,16 +313,16 @@ export class OmniInputElement extends OmniElement {
 
                 /* HOVER STYLES */
 
-                .touch-zone:hover > .border {
-                    box-shadow: inset 0px 0px 0px 1px var(--omni-input-hover-color, var(--omni-primary-color));
+               .layout:hover > .border {
+                    box-shadow:inset 0px 0px 0px 1px var(--omni-input-hover-color, var(--omni-primary-color));
                 }
 
-                .touch-zone.disabled:hover > .border {
-                    box-shadow: inset 0px 0px 0px 1px var(--omni-input-disabled-hover-color, var(--omni-disabled-border-color));
+               .layout.disabled:hover > .border {
+                    box-shadow:inset 0px 0px 0px 1px var(--omni-input-disabled-hover-color,var(--omni-disabled-border-color));
                 }
 
-                .touch-zone.error:hover > .border {
-                    box-shadow: inset 0px 0px 0px 1px var(--omni-input-error-hover-color, var(--omni-error-border-color));
+                .layout.error:hover > .border {
+                    box-shadow:inset 0px 0px 0px 1px var(--omni-input-error-hover-color,var(--omni-error-border-color));
                 }
 
                                             
@@ -328,8 +331,9 @@ export class OmniInputElement extends OmniElement {
     }
 
     protected override render() {
-        const touchZone: ClassInfo = {
-            'touch-zone': true,
+
+        const layout: ClassInfo = {
+            layout: true,
             error: this.error,
             disabled: this.disabled
         };
@@ -342,7 +346,7 @@ export class OmniInputElement extends OmniElement {
 
         return html`
             <div class="container">
-                <label class=${classMap(touchZone)}>
+                <div class=${classMap(layout)}>
                     <div class="border"></div>
                     <slot name="prefix"></slot>
                     <div class="input-container">
@@ -351,7 +355,7 @@ export class OmniInputElement extends OmniElement {
                     </div>
                     <slot name="suffix"></slot>
                     ${this.renderControl()}
-                </label>
+                </div>
                 ${this.hint && !this.error ? html`<div class="hint-label">${this.hint}</div>` : nothing}
                 ${this.error ? html`<div class="error-label">${this.error}</div>` : nothing}
             </div>
