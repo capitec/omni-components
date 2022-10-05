@@ -7,6 +7,16 @@
 {{ template:badges }}
 
 &nbsp;
+
+
+<p align="center">
+  <b>View our <a href="https://capitec.github.io/open-source/?repo=Omni-Components">full documentation</a> for more on component usage and live previews.</b></br>
+  <sub><sub>
+</p>
+
+
+
+&nbsp;
 {{ template:toc }}
 &nbsp;
 

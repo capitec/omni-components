@@ -19,7 +19,18 @@
 		<a href="https://npmcharts.com/compare/@capitec/omni-components?minimal=true"><img alt="Downloads per month" src="https://img.shields.io/npm/dm/@capitec/omni-components.svg" height="20"/></a>
 <a href="https://www.npmjs.com/package/@capitec/omni-components"><img alt="NPM Version" src="https://img.shields.io/npm/v/@capitec/omni-components.svg" height="20"/></a>
 <a href="https://github.com/capitec/omni-components/actions/workflows/build.yml"><img alt="Build" src="https://github.com/capitec/omni-components/actions/workflows/build.yml/badge.svg" height="20"/></a>
+<a href="https://capitec.github.io/open-source/?repo=Omni-Components"><img alt="Docs" src="https://img.shields.io/badge/%20-Docs-blue" height="20"/></a>
 	</p>
+
+
+&nbsp;
+
+
+<p align="center">
+  <b>View our <a href="https://capitec.github.io/open-source/?repo=Omni-Components">full documentation</a> for more on component usage and live previews.</b></br>
+  <sub><sub>
+</p>
+
 
 
 &nbsp;
