@@ -2,7 +2,6 @@ import { css, CSSResultGroup, html, nothing, TemplateResult } from 'lit';
 export { ifDefined } from 'lit/directives/if-defined.js';
 import { property, state, query } from 'lit/decorators.js';
 import { ClassInfo, classMap } from 'lit/directives/class-map.js';
-import { live } from 'lit/directives/live.js';
 import { OmniElement } from '../core/OmniElement.js';
 
 /**
@@ -12,9 +11,9 @@ import { OmniElement } from '../core/OmniElement.js';
  * @slot suffix - Replaces the icon for the suffix slot.
  *
  * @csscat Base Input Variables
- * @cssprop --omni-input-container-font-family - Input container font family.
  * @cssprop --omni-input-container-width - Input container width.
- *
+ * @cssprop --omni-input-container-font-family - Input container font family.
+ * 
  * @cssprop --omni-input-border-top - Input border top.
  * @cssprop --omni-input-border-bottom - Input border bottom.
  * @cssprop --omni-input-border-left - Input border left.
@@ -65,7 +64,7 @@ import { OmniElement } from '../core/OmniElement.js';
  * @cssprop --omni-input-slot-color - Input field slot color.
  *
  */
-export class InputBase extends OmniElement {
+export class OmniInputElement extends OmniElement {
     /**
      * @ignore
      */
@@ -323,16 +322,7 @@ export class InputBase extends OmniElement {
                     box-shadow: inset 0px 0px 0px 1px var(--omni-input-error-hover-color, var(--omni-error-border-color));
                 }
 
-                /* SLOT STYLES */
-                /*
-                .prefix,
-                .suffix {
-                    z-index: 10;
-                    display: inline-flex;
-                    flex: 0 0 auto;
-                    align-items: center;
-                    cursor: default;
-                }*/
+                                            
             `
         ];
     }
