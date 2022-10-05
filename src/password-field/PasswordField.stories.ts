@@ -120,31 +120,10 @@ export const CustomIconSlot = {
     },
     play: async (context: StoryContext) => {
         const passwordField = within(context.canvasElement).getByTestId<PasswordField>('test-password-field');
-        const slotElement = passwordField.shadowRoot.querySelector<HTMLSlotElement>('slot[name=show]');
+        const slotElement = passwordField.shadowRoot.querySelector<HTMLSlotElement>('slot[name=hide]');
         await expect(slotElement).toBeTruthy();
 
-        const foundSlottedSvgElement = slotElement.assignedElements().find((e) => e.tagName.toLocaleLowerCase() === 'svg');
-        await expect(foundSlottedSvgElement).toBeTruthy();
-    }
-};
-
-export const CustomSlotTest = {
-    render: (args: ArgTypes) => html`
-        <omni-password-field data-testid="test-password-field" label="${ifNotEmpty(args.label)}" ?disabled="${args.disabled}">
-            ${unsafeHTML(args.show)}
-        </omni-password-field>
-    `,
-    name: 'Custom Slot Div Test',
-    args: {
-        label: ' Div Slot',
-        show: raw`<omni-check-icon slot="show"></omni-check-icon>`
-    },
-    play: async (context: StoryContext) => {
-        const passwordField = within(context.canvasElement).getByTestId<PasswordField>('test-password-field');
-        const slotElement = passwordField.shadowRoot.querySelector<HTMLSlotElement>('slot[name=show]');
-        await expect(slotElement).toBeTruthy();
-
-        const foundSlottedSvgElement = slotElement.assignedElements().find((e) => e.tagName.toLocaleLowerCase() === 'svg');
+        const foundSlottedSvgElement = slotElement.assignedElements().find((e) => e.tagName.toLocaleLowerCase() === 'omni-lock-closed-icon');
         await expect(foundSlottedSvgElement).toBeTruthy();
     }
 };
