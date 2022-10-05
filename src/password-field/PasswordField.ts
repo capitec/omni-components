@@ -84,7 +84,6 @@ export class PasswordField extends OmniInputElement {
             css`              
                 .control-box
                  {    
-                    /*z-index: 10;*/
                     display: flex;
                     align-items: center;
                     justify-content: center;
