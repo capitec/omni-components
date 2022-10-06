@@ -15,7 +15,7 @@ import {
     SuffixStory
 } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import { assignToSlot, loadCssPropertiesRemote } from '../utils/StoryUtils.js';
+import { assignToSlot, loadCssPropertiesRemote } from '../utils/StoryUtils';
 import { PasswordField } from './PasswordField.js';
 
 import './PasswordField.js';
@@ -80,16 +80,24 @@ export const Interactive = {
     },
     play: async (context: StoryContext) => {
         const passwordField = within(context.canvasElement).getByTestId<PasswordField>('test-password-field');
-        const input = jest.fn();
-        passwordField.addEventListener('input', input);
+        const interactions = jest.fn();
+        passwordField.addEventListener('input', interactions);
+        passwordField.addEventListener('click', interactions);
 
         const inputField = passwordField.shadowRoot.getElementById('inputField');
+
+        const showSlotElement = passwordField.shadowRoot.querySelector<HTMLSlotElement>('slot[name=show]');
+        await expect(showSlotElement).toBeTruthy();
+        await userEvent.click(showSlotElement);
+        const hideSlotElement = passwordField.shadowRoot.querySelector<HTMLSlotElement>('slot[name=hide]');
+        await expect(hideSlotElement).toBeTruthy();
+        await userEvent.click(hideSlotElement);
 
         await userEvent.type(inputField, 'Value{space}Update');
         const value = 'Value Update';
         await expect(inputField).toHaveValue(value);
 
-        await expect(input).toBeCalledTimes(value.length);
+        await expect(interactions).toBeCalledTimes(value.length + 1);
     }
 };
 
@@ -120,12 +128,10 @@ export const CustomIconSlot = {
     },
     play: async (context: StoryContext) => {
         const passwordField = within(context.canvasElement).getByTestId<PasswordField>('test-password-field');
-        const slotElement = passwordField.shadowRoot.querySelector<HTMLSlotElement>('slot[name=hide]');
+        const slotElement = passwordField.shadowRoot.querySelector<HTMLSlotElement>('slot[name=show]');
         await expect(slotElement).toBeTruthy();
 
-        const foundSlottedSvgElement = slotElement
-            .assignedElements()
-            .find((e) => e.tagName.toLocaleLowerCase() === 'omni-lock-closed-icon');
+        const foundSlottedSvgElement = slotElement.assignedElements().find((e) => e.tagName.toLocaleLowerCase() === 'omni-lock-open-icon');
         await expect(foundSlottedSvgElement).toBeTruthy();
     }
 };

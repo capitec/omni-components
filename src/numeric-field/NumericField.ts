@@ -1,7 +1,7 @@
 import { css, html } from 'lit';
 import { customElement, query } from 'lit/decorators.js';
 import { live } from 'lit/directives/live.js';
-import { OmniInputElement } from '../core/OmniInputElement.js';
+import { OmniFormElement } from '../core/OmniFormElement.js';
 
 import '../icons/Plus.icon';
 import '../icons/Minus.icon';
@@ -31,28 +31,21 @@ import '../icons/Minus.icon';
  * @slot increase - Slot for the increase icon.
  * @slot decrease - Slot for the decrease icon.
  *
- * @cssprop --omni-numeric-input-quantity-right - Numeric input quantity div right.
- * @cssprop --omni-numeric-input-quantity-top - Numeric input quantity div top.
+ * @cssprop --omni-numeric-input-quantity-height - Numeric input quantity container height.
+ * @cssprop --omni-numeric-input-slot-width - Numeric input slot width.
+ * @cssprop --omni-numeric-input-divider-width - Numeric input control divider width.
  *
- * @cssprop --omni-numeric-field-plus-line-height - Numeric input stepper plus icon line height.
- * @cssprop --omni-numeric-field-minus-line-height - Numeric input stepper minus icon line height.
- *
- * @cssprop --omni-numeric-field-plus-minus-sign-font-size - Numeric input plus and minus sign font size.
- * @cssprop --omni-numeric-field-plus-minus-sign-height - Numeric input plus and minus sign height.
- * @cssprop --omni-numeric-field-plus-minus-sign-height - Numeric input plus and minus sign width.
- * @cssprop --omni-numeric-field-plus-minus-sign-padding-top - Numeric input plus and minus top padding.
- *
- * @cssprop --omni-numeric-input-plus-minus-focussed-hover - Numeric input plus and minus focussed hover.
- *
- * @cssprop --omni-numeric-input-plus-minus-focussed-color - Numeric input plus and minus icon focussed color.
- *
- * @cssprop --omni-numeric-input-divider-height - Numeric input divider height.
- * @cssprop --omni-numeric-input-divider-margin-top - Numeric input divider top margin.
- * @cssprop --omni-numeric-input-divider-width - Numeric input divider width.
+ * @cssprop --omni-numeric-field-text-align - Numeric input field text align.
+ * @cssprop --omni-numeric-field-font-color - Numeric input field font color.
+ * @cssprop --omni-numeric-field-font-family - Numeric input field font family.
+ * @cssprop --omni-numeric-field-font-size - Numeric input field font size.
+ * @cssprop --omni-numeric-field-font-weight - Numeric input field font weight.
+ * @cssprop --omni-numeric-field-height - Numeric input field height.
+ * @cssprop --omni-numeric-field-padding - Numeric input field padding.
  *
  */
 @customElement('omni-numeric-field')
-export class NumericField extends OmniInputElement {
+export class NumericField extends OmniFormElement {
     @query('#inputField')
     private _inputElement: HTMLInputElement;
 
@@ -96,31 +89,21 @@ export class NumericField extends OmniInputElement {
             css`
                 .quantity {
                     display: flex;
-                    height: 100%;
+                    height: var(--omni-numeric-input-quantity-height, 100%);
                 }
 
                 .plus-icon,
                 .minus-icon,
                 ::slotted([slot='increase']),
                 ::slotted([slot='decrease']) {
-                    width: 36px;
+                    width: var(--omni-numeric-input-slot-width, 36px);
+                    height: var(--omni-numeric-input-slot-height, 36px);
                     cursor: pointer;
                 }
 
                 .divider {
-                    background-color: black;
+                    background-color: var(--omni-numeric-input-divider-color, var(--omni-primary-color));
                     width: var(--omni-numeric-input-divider-width, 1px);
-                }
-
-                input::-webkit-outer-spin-button,
-                input::-webkit-inner-spin-button {
-                    /* display: none; <- Crashes Chrome on hover */
-                    -webkit-appearance: none;
-                    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
-                }
-
-                input[type='number'] {
-                    -moz-appearance: textfield; /* Firefox */
                 }
 
                 .field {
@@ -149,6 +132,18 @@ export class NumericField extends OmniInputElement {
                     align-items: center;
                     cursor: default;
                 }
+
+                /* Used to not display default stepper */
+                input::-webkit-outer-spin-button,
+                input::-webkit-inner-spin-button {
+                    /* display: none; <- Crashes Chrome on hover */
+                    -webkit-appearance: none;
+                    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+                }
+
+                input[type='number'] {
+                    -moz-appearance: textfield; /* Firefox */
+                }
             `
         ];
     }
@@ -169,7 +164,7 @@ export class NumericField extends OmniInputElement {
         `;
     }
 
-    protected override renderInput() {
+    protected override renderContent() {
         return html`
             <input
                 class="field"

@@ -1,7 +1,7 @@
 import { html, css } from 'lit';
 import { customElement, query } from 'lit/decorators.js';
 import { live } from 'lit/directives/live.js';
-import { OmniInputElement } from '../core/OmniInputElement.js';
+import { OmniFormElement } from '../core/OmniFormElement.js';
 
 /**
  * A text input control.
@@ -25,9 +25,16 @@ import { OmniInputElement } from '../core/OmniInputElement.js';
  *
  * @element omni-text-field
  *
+ * @cssprop --omni-text-field-text-align - Text field text align.
+ * @cssprop --omni-text-field-font-family - Text field font family.
+ * @cssprop --omni-text-field-font-size - Text field font size.
+ * @cssprop --omni-text-field-font-weight - Text field font weight.
+ * @cssprop --omni-text-field-height - Text field height.
+ * @cssprop --omni-text-field-padding - Text field width.
+ *
  */
 @customElement('omni-text-field')
-export class TextField extends OmniInputElement {
+export class TextField extends OmniFormElement {
     @query('#inputField')
     private _inputElement: HTMLInputElement;
 
@@ -68,7 +75,7 @@ export class TextField extends OmniInputElement {
         ];
     }
 
-    protected override renderInput() {
+    protected override renderContent() {
         return html`
             <input
                 class="field"
