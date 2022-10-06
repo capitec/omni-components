@@ -6,7 +6,7 @@ import OmniElement from '../core/OmniElement.js';
 import '../icons/Loading.icon';
 
 /**
- * An element that defers content rendering to a provided function/promise. 
+ * An element that defers content rendering to a provided function/promise.
  *
  * ```js
  *

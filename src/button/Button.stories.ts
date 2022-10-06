@@ -4,7 +4,7 @@ import { Meta, StoryContext } from '@storybook/web-components';
 import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import { loadCssPropertiesRemote, loadDefaultSlotForRemote, raw } from '../utils/StoryUtils.js';
+import { loadCssPropertiesRemote, raw } from '../utils/StoryUtils.js';
 import { Button } from './Button.js';
 
 import './Button.js';

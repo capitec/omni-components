@@ -15,7 +15,7 @@ import {
     SuffixStory
 } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import { assignToSlot, loadCssPropertiesRemote, raw } from '../utils/StoryUtils.js';
+import { assignToSlot, loadCssPropertiesRemote } from '../utils/StoryUtils.js';
 import { PasswordField } from './PasswordField.js';
 
 import './PasswordField.js';

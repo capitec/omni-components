@@ -4,7 +4,7 @@ import { Meta, StoryContext } from '@storybook/web-components';
 import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import { loadCssPropertiesRemote, loadDefaultSlotForRemote, raw } from '../utils/StoryUtils';
+import { raw } from '../utils/StoryUtils';
 import { Icon } from './Icon.js';
 import './Icon.js';
 
