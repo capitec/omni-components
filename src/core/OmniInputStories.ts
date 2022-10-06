@@ -170,7 +170,6 @@ export const DisabledStory = <T extends HTMLElement, U extends BaseArgTypes>(tag
 
             //Disabled class test.
             const disabledAttribute = input.attributes.getNamedItem('disabled');
-            /*const disabledClass = input.classList.contains('disabled');*/
             await expect(disabledAttribute).toBeTruthy();
 
             //Input event test.

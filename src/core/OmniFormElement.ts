@@ -33,6 +33,7 @@ import ComponentStyles from '../styles/ComponentStyles.js';
  *
  * @cssprop --omni-form-focussed-border-width - Form focussed border width.
  * @cssprop --omni-form-focussed-border-color - Form focussed border color.
+ * @cssprop --omni-form-focussed-label-color - Form focussed label color.
  *
  * @cssprop --omni-form-error-label-color - Form error label color.
  * @cssprop --omni-form-error-border-color - Form error border color.
@@ -101,7 +102,7 @@ export class OmniFormElement extends LitElement {
     @property({ type: Boolean, reflect: true }) disabled = false;
 
     @query('.form-container')
-    private _formContainer: HTMLElement; /* Rename to content container*/
+    private _formContainer: HTMLElement;
 
     @query('.label')
     private _labelElement: HTMLElement;
@@ -119,10 +120,8 @@ export class OmniFormElement extends LitElement {
 
         const formParentOffset = this._formContainer.offsetLeft;
 
-        if (!this.value) {
-            if (this._labelElement) {
-                this._labelElement.style.transform = `translateX(${formParentOffset * -1}px)  translateY(-37.5%) scale(75%)`;
-            }
+        if (!this.value && this._labelElement) {
+            this._labelElement.style.transform = `translateX(${formParentOffset * -1}px)  translateY(-37.5%) scale(75%)`;
         }
     }
 
@@ -131,7 +130,7 @@ export class OmniFormElement extends LitElement {
             return;
         }
 
-        if (!this.value) {
+        if (!this.value && this._labelElement) {
             this._labelElement.style.transform = '';
         }
     }
@@ -227,6 +226,7 @@ export class OmniFormElement extends LitElement {
                 :focus + .label {
                     top: 0px;
                     transform: translateY(-37.5%) scale(75%);
+                    color: var(--omni-form-focussed-label-color, var(--omni-primary-color));
                 }
 
                 :host([value]) .layout > .form-container > .label::before,
@@ -337,7 +337,6 @@ export class OmniFormElement extends LitElement {
             <div class="container">
                 <div class=${classMap(layout)}>
                     <div class="border"></div>
-                    <!--Remove in future -->
                     <slot name="prefix"></slot>
                     <div class="form-container"> ${this.renderContent()} ${this.renderLabel()} </div>
                     <slot name="suffix"></slot>
