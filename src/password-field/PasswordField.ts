@@ -8,14 +8,14 @@ import '../icons/EyeVisible.icon';
 
 /**
  * A password input control.
- * 
+ *
  * ```js
- * 
+ *
  * import '@capitec/omni-components/password-field';
  * ```
- * 
+ *
  * @example
- * 
+ *
  * ```html
  * <omni-password-field
  *   label="Enter a value"
@@ -25,32 +25,31 @@ import '../icons/EyeVisible.icon';
  *   error="Field level error message"
  *   disabled>
  * </omni-password-field>
- * ``` 
- * 
+ * ```
+ *
  * @element omni-password-field
- * 
+ *
  * @slot hide - Replaces the icon for the password value hidden state.
  * @slot show - Replaces the icon for the checked value visible state.
- * 
+ *
  * @cssprop --omni-password-field-control-padding-right - Password field control padding right.
  * @cssprop --omni-password-field-control-padding-left - Password field control padding left.
  * @cssprop --omni-password-field-control-padding-top - Password field control padding top.
  * @cssprop --omni-password-field-control-padding-bottom - Password field control padding bottom.
- * 
+ *
  * @cssprop --omni-password-field-icon-color - Password field slot icon color.
  * @cssprop --omni-password-field-icon-width - Password field slot width.
- * 
+ *
  * @cssprop --omni-password-field-text-align - Password field text align.
  * @cssprop --omni-password-field-font-family - Password field font family.
  * @cssprop --omni-password-field-font-size - Password field font size.
  * @cssprop --omni-password-field-font-weight - Password field font weight.
  * @cssprop --omni-password-field-height - Password field height.
  * @cssprop --omni-password-field-padding - Password field width.
- * 
+ *
  */
 @customElement('omni-password-field')
 export class PasswordField extends OmniFormElement {
-
     /**
      * @ignore
      */
@@ -70,7 +69,6 @@ export class PasswordField extends OmniFormElement {
     }
 
     _iconClicked(e: MouseEvent) {
-
         if (this.disabled) {
             return e.stopImmediatePropagation();
         }
@@ -87,9 +85,8 @@ export class PasswordField extends OmniFormElement {
     static override get styles() {
         return [
             super.styles,
-            css`              
-                .control-box
-                 {    
+            css`
+                .control-box {
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -98,41 +95,39 @@ export class PasswordField extends OmniFormElement {
                     padding-right: var(--omni-password-field-control-padding-right, 10px);
                     padding-left: var(--omni-password-field-control-padding-left, 10px);
                     padding-top: var(--omni-password-field-control-padding-top, 0px);
-                    padding-bottom: var(--omni-password-field-control-padding-bottom, 0px);                       
+                    padding-bottom: var(--omni-password-field-control-padding-bottom, 0px);
                 }
 
-                
                 .hide-icon,
                 .show-icon {
-                    fill: var(--omni-password-field-icon-color, var(--omni-primary-color));  
+                    fill: var(--omni-password-field-icon-color, var(--omni-primary-color));
                 }
 
                 .hide-icon,
                 .show-icon,
-                ::slotted([slot=show]),
-                ::slotted([slot=hide]) {
-                    width: var(--omni-password-field-icon-width,var(--omni-icon-size));
-                    
-                } 
+                ::slotted([slot='show']),
+                ::slotted([slot='hide']) {
+                    width: var(--omni-password-field-icon-width, var(--omni-icon-size));
+                }
 
                 /* Prevent default icon from displaying in password field on Edge browser */
                 input::-ms-reveal,
                 input::-ms-clear {
-                  display: none;
+                    display: none;
                 }
 
                 .field {
                     flex: 1 1 auto;
-    
+
                     border: none;
                     background: none;
                     box-shadow: none;
                     outline: 0;
                     padding: 0;
                     margin: 0;
-    
+
                     text-align: var(--omni-password-field-text-align, left);
-    
+
                     color: var(--omni-password-field-font-color, var(--omni-font-color));
                     font-family: var(--omni-password-field-font-family, var(--omni-font-family));
                     font-size: var(--omni-password-field-font-size, var(--omni-font-size));
@@ -145,13 +140,11 @@ export class PasswordField extends OmniFormElement {
     }
 
     protected override renderControl() {
-        return html`				
+        return html`
             <div class="control-box" @click="${(e: MouseEvent) => this._iconClicked(e)}">
-                ${this.type === 'password' ? html`
-                    <slot name="show"><omni-eye-visible-icon class="show-icon"></omni-eye-visible-icon></slot>
-                ` : html`
-                    <slot name="hide"><omni-eye-hidden-icon class=".hide-icon"></omni-eye-hidden-icon></slot>
-                `}
+                ${this.type === 'password'
+                    ? html` <slot name="show"><omni-eye-visible-icon class="show-icon"></omni-eye-visible-icon></slot> `
+                    : html` <slot name="hide"><omni-eye-hidden-icon class=".hide-icon"></omni-eye-hidden-icon></slot> `}
             </div>
         `;
     }
@@ -167,5 +160,4 @@ export class PasswordField extends OmniFormElement {
                 tabindex="${this.disabled ? -1 : 0}" />
         `;
     }
-
 }

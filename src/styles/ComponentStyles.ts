@@ -1,8 +1,8 @@
 import { css } from 'lit';
 
-/** 
+/**
  * @csscat Theme Variables
- * 
+ *
  * @cssprop --omni-theme-primary-color - Theme primary color.
  * @cssprop --omni-theme-primary-hover-color - Theme primary hover color.
  * @cssprop --omni-theme-primary-active-color - Theme primary active color.

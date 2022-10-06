@@ -29,7 +29,7 @@ export default {
             control: false
         },
         '[Default Slot]': {
-          control: 'text'
+            control: 'text'
         }
     },
     parameters: {
@@ -45,7 +45,7 @@ interface Args {
     label: string;
     slotPosition: typeof slotPositionOptions[number];
     disabled: boolean;
-    '[Default Slot]': string
+    '[Default Slot]': string;
 }
 
 export const Interactive = {

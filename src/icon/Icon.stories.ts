@@ -28,19 +28,19 @@ export default {
 } as Meta;
 
 interface ArgTypes {
-  size: typeof sizeOptions[number];
-  icon: string;
-  '[Default Slot]': string;
+    size: typeof sizeOptions[number];
+    icon: string;
+    '[Default Slot]': string;
 }
 
 export const Interactive = {
     render: (args: ArgTypes) => html`
         <!-- Icons loaded by content path instead of font-based or slotted content will not be able to be styled directly -->
 
-    <omni-icon data-testid="test-icon" size="${ifNotEmpty(args.size)}" icon="${ifNotEmpty(args.icon)}">
-      ${unsafeHTML(args['[Default Slot]'])}
-    </omni-icon>
-  `,
+        <omni-icon data-testid="test-icon" size="${ifNotEmpty(args.size)}" icon="${ifNotEmpty(args.icon)}">
+            ${unsafeHTML(args['[Default Slot]'])}
+        </omni-icon>
+    `,
     name: 'Interactive',
     parameters: {},
     args: {
@@ -68,10 +68,8 @@ export const Interactive = {
 
 export const SVG = {
     render: (args: ArgTypes) => html`
-    <omni-icon data-testid="test-icon" size="${args.size}"> 
-      ${unsafeHTML(args['[Default Slot]'])} 
-    </omni-icon>
-  `,
+        <omni-icon data-testid="test-icon" size="${args.size}"> ${unsafeHTML(args['[Default Slot]'])} </omni-icon>
+    `,
     name: 'SVG',
     parameters: {},
     args: {
