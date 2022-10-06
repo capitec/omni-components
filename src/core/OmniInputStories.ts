@@ -7,7 +7,7 @@ import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import { raw } from '../utils/StoryUtils';
-import { OmniInputElement } from './OmniInputElement.js';
+import { OmniFormElement } from './OmniFormElement.js';
 
 export const BaseArgTypeDefinitions = {
     suffix: {
@@ -164,7 +164,7 @@ export const DisabledStory = <T extends HTMLElement, U extends BaseArgTypes>(tag
             const inputTest = jest.fn();
             input.addEventListener('input', inputTest);
   
-            const inputField = input.shadowRoot.getElementById('inputField') as OmniInputElement;
+            const inputField = input.shadowRoot.getElementById('inputField') as OmniFormElement;
   
             await userEvent.type(inputField, 'Value{space}Update{space}3');
             await expect(inputField.value).toBeFalsy();
