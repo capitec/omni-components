@@ -41,7 +41,6 @@ import '../icons/EyeVisible.icon';
  */
 @customElement('omni-password-field')
 export class PasswordField extends OmniInputElement {
-
     @query('#inputField')
     private _inputElement: HTMLInputElement;
 
@@ -80,9 +79,8 @@ export class PasswordField extends OmniInputElement {
     static override get styles() {
         return [
             super.styles,
-            css`              
-                .control-box
-                 {    
+            css`
+                .control-box {
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -98,11 +96,11 @@ export class PasswordField extends OmniInputElement {
                 .show {
                     fill: var(--omni-password-field-icon-color, var(--omni-primary-color));
                 }
-                
+
                 .hide,
                 .show,
-                ::slotted([slot=hide]),
-                ::slotted([slot=show]) {
+                ::slotted([slot='hide']),
+                ::slotted([slot='show']) {
                     height: var(--omni-password-field-icon-height, 24px);
                     width: var(--omni-password-field-icon-width, 24px);
                 }

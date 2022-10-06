@@ -1,6 +1,6 @@
 import { html, css } from 'lit';
 import { customElement, query } from 'lit/decorators.js';
-import { live } from 'lit/directives/live.js'; 
+import { live } from 'lit/directives/live.js';
 import { OmniInputElement } from '../core/OmniInputElement.js';
 
 /**
@@ -28,7 +28,6 @@ import { OmniInputElement } from '../core/OmniInputElement.js';
  */
 @customElement('omni-text-field')
 export class TextField extends OmniInputElement {
-
     @query('#inputField')
     private _inputElement: HTMLInputElement;
 

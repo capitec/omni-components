@@ -88,7 +88,10 @@ export const ErrorStory = <T extends HTMLElement, U extends BaseArgTypes>(tagNam
     return Error;
 };
 
-export const ValueStory = <T extends HTMLElement, U extends BaseArgTypes>(tagName: string, inputValue: string | number | string[] = 'The input value') => {
+export const ValueStory = <T extends HTMLElement, U extends BaseArgTypes>(
+    tagName: string,
+    inputValue: string | number | string[] = 'The input value'
+) => {
     const Value = {
         render: (args: U) =>
             html`${unsafeHTML(
@@ -97,7 +100,7 @@ export const ValueStory = <T extends HTMLElement, U extends BaseArgTypes>(tagNam
         name: 'Value',
         args: {
             label: 'Value',
-            value: inputValue,
+            value: inputValue
         },
         play: async (context: StoryContext) => {
             const input = within(context.canvasElement).getByTestId<T>('test-field');
@@ -173,12 +176,12 @@ export const DisabledStory = <T extends HTMLElement, U extends BaseArgTypes>(tag
             //Input event test.
             const inputTest = jest.fn();
             input.addEventListener('input', inputTest);
-  
+
             const inputField = input.shadowRoot.getElementById('inputField') as OmniInputElement;
-  
+
             await userEvent.type(inputField, 'Value{space}Update{space}3');
             await expect(inputField.value).toBeFalsy();
-  
+
             await expect(inputTest).toBeCalledTimes(0);
         }
     };

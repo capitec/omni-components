@@ -13,9 +13,9 @@ import { OmniElement } from '../core/OmniElement.js';
  * @csscat Base Input Variables
  * @cssprop --omni-input-container-width - Input container width.
  * @cssprop --omni-input-container-font-family - Input container font family.
- * 
+ *
  * @cssprop --omni-input-field-background-color - Input layout background color.
- * 
+ *
  * @cssprop --omni-input-border-top - Input border top.
  * @cssprop --omni-input-border-bottom - Input border bottom.
  * @cssprop --omni-input-border-left - Input border left.
@@ -23,7 +23,7 @@ import { OmniElement } from '../core/OmniElement.js';
  * @cssprop --omni-input-border-width - Input border width.
  * @cssprop --omni-input-border-radius - Input border radius.
  * @cssprop --omni-input-border-color - Input border color.
- * 
+ *
  * @cssprop --omni-input-label-text-align - Input label text align.
  * @cssprop --omni-input-label-color - Input label color.
  * @cssprop --omni-input-label-font-size - Input label font size.
@@ -188,8 +188,8 @@ export class OmniInputElement extends OmniElement {
                     border-width: var(--omni-input-border-width, 1px);
                     border-radius: var(--omni-input-border-radius, 4px);
                     border-style: solid;
-                    border-color: var(--omni-input-border-color, var(--omni-primary-color));   
-                    pointer-events: none;            
+                    border-color: var(--omni-input-border-color, var(--omni-primary-color));
+                    pointer-events: none;
                 }
 
                 /* INPUT CONTAINER STYLES */
@@ -226,16 +226,16 @@ export class OmniInputElement extends OmniElement {
                 }
 
                 .layout > .label > span {
-					position: relative;
-				}
+                    position: relative;
+                }
 
                 /* FOCUS STYLES */
 
-                :host([value]:not([value=''])) .layout > .input-container > .label,         
-				:focus + .label {
-					top: 0px;
-					transform: translateY(-37.5%) scale(75%);
-				}
+                :host([value]:not([value=''])) .layout > .input-container > .label,
+                :focus + .label {
+                    top: 0px;
+                    transform: translateY(-37.5%) scale(75%);
+                }
 
                 :host([value]) .layout > .input-container > .label::before,
                 :focus + .label::before {
@@ -283,9 +283,8 @@ export class OmniInputElement extends OmniElement {
                 }
 
                 :host([value]) .layout.disabled > .input-container > .label::before {
-					background-color: var(--omni-label-focus-background-color, var(--omni-disabled-background-color));
-
-				}
+                    background-color: var(--omni-label-focus-background-color, var(--omni-disabled-background-color));
+                }
 
                 /* HINT LABEL STYLES */
 
@@ -313,25 +312,22 @@ export class OmniInputElement extends OmniElement {
 
                 /* HOVER STYLES */
 
-               .layout:hover > .border {
-                    box-shadow:inset 0px 0px 0px 1px var(--omni-input-hover-color, var(--omni-primary-color));
+                .layout:hover > .border {
+                    box-shadow: inset 0px 0px 0px 1px var(--omni-input-hover-color, var(--omni-primary-color));
                 }
 
-               .layout.disabled:hover > .border {
-                    box-shadow:inset 0px 0px 0px 1px var(--omni-input-disabled-hover-color,var(--omni-disabled-border-color));
+                .layout.disabled:hover > .border {
+                    box-shadow: inset 0px 0px 0px 1px var(--omni-input-disabled-hover-color, var(--omni-disabled-border-color));
                 }
 
                 .layout.error:hover > .border {
-                    box-shadow:inset 0px 0px 0px 1px var(--omni-input-error-hover-color,var(--omni-error-border-color));
+                    box-shadow: inset 0px 0px 0px 1px var(--omni-input-error-hover-color, var(--omni-error-border-color));
                 }
-
-                                            
             `
         ];
     }
 
     protected override render() {
-
         const layout: ClassInfo = {
             layout: true,
             error: this.error,

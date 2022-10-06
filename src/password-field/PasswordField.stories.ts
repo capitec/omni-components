@@ -123,7 +123,9 @@ export const CustomIconSlot = {
         const slotElement = passwordField.shadowRoot.querySelector<HTMLSlotElement>('slot[name=hide]');
         await expect(slotElement).toBeTruthy();
 
-        const foundSlottedSvgElement = slotElement.assignedElements().find((e) => e.tagName.toLocaleLowerCase() === 'omni-lock-closed-icon');
+        const foundSlottedSvgElement = slotElement
+            .assignedElements()
+            .find((e) => e.tagName.toLocaleLowerCase() === 'omni-lock-closed-icon');
         await expect(foundSlottedSvgElement).toBeTruthy();
     }
 };

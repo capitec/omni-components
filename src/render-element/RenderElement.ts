@@ -6,7 +6,7 @@ import OmniElement from '../core/OmniElement.js';
 import '../icons/Loading.icon';
 
 /**
- * An element that renders content from a provided function/promise.
+ * An element that defers content rendering to a provided function/promise. 
  *
  * ```js
  *
@@ -21,7 +21,7 @@ import '../icons/Loading.icon';
  * ```
  *
  * @element omni-render-element
- * 
+ *
  * @cssprop --omni-render-element-loading-indicator-width - Loading Indicator width
  */
 @customElement('omni-render-element')

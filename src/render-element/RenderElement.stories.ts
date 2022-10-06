@@ -33,7 +33,7 @@ async function renderAsElement(data: object) {
     await new Promise<void>((r) => setTimeout(() => r(), 3000));
     const span = document.createElement('span');
     span.appendChild(document.createTextNode(JSON.stringify(data)));
-    span.addEventListener('click', (ev: MouseEvent) => clicked ? clicked() : alert('Clicked'));
+    span.addEventListener('click', (ev: MouseEvent) => (clicked ? clicked() : alert('Clicked')));
     return span;
 }
 
@@ -44,7 +44,11 @@ async function renderAsString(data: object) {
 
 export const Interactive = {
     render: (args: ArgTypes) => html`
-        <omni-render-element data-testid="test-render" .data="${args.data}" .renderer="${args.renderer}">${args.loading_indicator ? html`${'\r\n'}${unsafeHTML(assignToSlot('loading_indicator',args.loading_indicator))}${'\r\n'}` : nothing}</omni-render-element>
+        <omni-render-element data-testid="test-render" .data="${args.data}" .renderer="${args.renderer}"
+            >${args.loading_indicator
+                ? html`${'\r\n'}${unsafeHTML(assignToSlot('loading_indicator', args.loading_indicator))}${'\r\n'}`
+                : nothing}</omni-render-element
+        >
     `,
     argTypes: {
         renderer: {
@@ -78,7 +82,7 @@ export const Interactive = {
         data.hello = 'everyone';
         renderElement.data = { ...data };
 
-        const loading = await querySelectorAsync(renderElement.renderRoot,'omni-loading-icon');
+        const loading = await querySelectorAsync(renderElement.renderRoot, 'omni-loading-icon');
         await expect(loading).toBeTruthy();
 
         const span2 = await querySelectorAsync(renderElement.renderRoot, 'span');
@@ -126,9 +130,7 @@ export const AsHTMLElement = {
             renderEl.data = args.data;
         };
         addValues();
-        return html`
-            <omni-render-element id="renderElI" data-testid="test-render"></omni-render-element>
-        `;
+        return html` <omni-render-element id="renderElI" data-testid="test-render"></omni-render-element> `;
     },
     name: 'As HTML Element',
     parameters: {
@@ -178,16 +180,16 @@ export const AsHTMLElement = {
             await new Promise<void>((r) => setTimeout(() => r(), 10000));
         }
 
-        const span1 = await querySelectorAsync(renderElement.renderRoot,'span') as HTMLSpanElement;
+        const span1 = (await querySelectorAsync(renderElement.renderRoot, 'span')) as HTMLSpanElement;
         await expect(span1).toHaveTextContent(JSON.stringify(data));
-        
+
         data.hello = 'everyone';
         renderElement.data = { ...data };
-        
+
         const load = await querySelectorAsync(renderElement.renderRoot, 'omni-loading-icon');
         await expect(load).toBeTruthy();
 
-        const span2 = await querySelectorAsync(renderElement.renderRoot,'span') as HTMLSpanElement;
+        const span2 = (await querySelectorAsync(renderElement.renderRoot, 'span')) as HTMLSpanElement;
         await expect(span2).toHaveTextContent(JSON.stringify(data));
         await userEvent.click(span2);
         await userEvent.click(span2);
@@ -262,7 +264,7 @@ export const AsString = {
         data.hello = 'everyone';
         renderElement.data = { ...data };
 
-        const loading = await querySelectorAsync(renderElement.renderRoot,'omni-loading-icon');
+        const loading = await querySelectorAsync(renderElement.renderRoot, 'omni-loading-icon');
         await expect(loading).toBeTruthy();
 
         const span2 = await querySelectorAsync(renderElement.renderRoot, 'span');

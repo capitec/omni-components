@@ -320,11 +320,11 @@ const raw = (strings: TemplateStringsArray, ...values: unknown[]) => asRenderStr
 const asRenderString = (strings: TemplateStringsArray, values: unknown[]) => {
     const v: any = [...values, ''].map((e) => {
         switch (typeof e) {
-        case 'object': {
-            return asRenderString((e as any).strings, (e as any).values);
-        }
-        default:
-            return e;
+            case 'object': {
+                return asRenderString((e as any).strings, (e as any).values);
+            }
+            default:
+                return e;
         }
     });
     return strings.reduce((acc, s, i) => acc + s + v[i], '');

@@ -1,6 +1,6 @@
 import { css, html, nothing, TemplateResult } from 'lit';
 import { customElement, query } from 'lit/decorators.js';
-import { live } from 'lit/directives/live.js'; 
+import { live } from 'lit/directives/live.js';
 import { OmniInputElement } from '../core/OmniInputElement.js';
 
 import '../icons/Plus.icon';
@@ -27,13 +27,13 @@ import '../icons/Minus.icon';
  * ```
  *
  * @element omni-numeric-field
- * 
+ *
  * @slot increase - Slot for the increase icon.
  * @slot decrease - Slot for the decrease icon.
- * 
- * @cssprop --omni-numeric-input-quantity-right - Numeric input quantity div right. 
- * @cssprop --omni-numeric-input-quantity-top - Numeric input quantity div top. 
- * 
+ *
+ * @cssprop --omni-numeric-input-quantity-right - Numeric input quantity div right.
+ * @cssprop --omni-numeric-input-quantity-top - Numeric input quantity div top.
+ *
  * @cssprop --omni-numeric-field-plus-line-height - Numeric input stepper plus icon line height.
  * @cssprop --omni-numeric-field-minus-line-height - Numeric input stepper minus icon line height.
  *
@@ -53,7 +53,6 @@ import '../icons/Minus.icon';
  */
 @customElement('omni-numeric-field')
 export class NumericField extends OmniInputElement {
-
     @query('#inputField')
     private _inputElement: HTMLInputElement;
 
@@ -95,76 +94,79 @@ export class NumericField extends OmniInputElement {
         return [
             super.styles,
             css`
-            .quantity {
-                display: flex;
-                height: 100%;
-            }
+                .quantity {
+                    display: flex;
+                    height: 100%;
+                }
 
+                .plus-icon,
+                .minus-icon,
+                ::slotted([slot='increase']),
+                ::slotted([slot='decrease']) {
+                    width: 36px;
+                    cursor: pointer;
+                }
 
-            .plus-icon,
-            .minus-icon,
-            ::slotted([slot=increase]),
-            ::slotted([slot=decrease]) {
-                width: 36px;
-                cursor: pointer;
-            }
+                .divider {
+                    background-color: black;
+                    width: var(--omni-numeric-input-divider-width, 1px);
+                }
 
-            .divider {
-                background-color: black;
-                width: var(--omni-numeric-input-divider-width, 1px);
-            }
+                input::-webkit-outer-spin-button,
+                input::-webkit-inner-spin-button {
+                    /* display: none; <- Crashes Chrome on hover */
+                    -webkit-appearance: none;
+                    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+                }
 
-            input::-webkit-outer-spin-button,
-            input::-webkit-inner-spin-button {
-                /* display: none; <- Crashes Chrome on hover */
-                -webkit-appearance: none;
-                margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
-            }
+                input[type='number'] {
+                    -moz-appearance: textfield; /* Firefox */
+                }
 
-            input[type=number] {
-                -moz-appearance:textfield; /* Firefox */
-            }
-            
-            .field {
-                flex: 1 1 auto;
+                .field {
+                    flex: 1 1 auto;
 
-                border: none;
-                background: none;
-                box-shadow: none;
-                outline: 0;
-                padding: 0;
-                margin: 0;
+                    border: none;
+                    background: none;
+                    box-shadow: none;
+                    outline: 0;
+                    padding: 0;
+                    margin: 0;
 
-                text-align: var(--omni-numeric-field-text-align, left);
+                    text-align: var(--omni-numeric-field-text-align, left);
 
-                color: var(--omni-numeric-field-font-color, var(--omni-font-color));
-                font-family: var(--omni-numeric-field-font-family, var(--omni-font-family));
-                font-size: var(--omni-numeric-field-font-size, var(--omni-font-size));
-                font-weight: var(--omni-numeric-field-font-weight, var(--omni-font-weight));
-                height: var(--omni-numeric-field-height, 100%);
-                padding: var(--omni-numeric-field-padding, 10px);
-            }
+                    color: var(--omni-numeric-field-font-color, var(--omni-font-color));
+                    font-family: var(--omni-numeric-field-font-family, var(--omni-font-family));
+                    font-size: var(--omni-numeric-field-font-size, var(--omni-font-size));
+                    font-weight: var(--omni-numeric-field-font-weight, var(--omni-font-weight));
+                    height: var(--omni-numeric-field-height, 100%);
+                    padding: var(--omni-numeric-field-padding, 10px);
+                }
 
-            .control {
-                display: inline-flex;
-                flex: 0 0 auto;
-                align-items: center;
-                cursor: default;
-            }
+                .control {
+                    display: inline-flex;
+                    flex: 0 0 auto;
+                    align-items: center;
+                    cursor: default;
+                }
             `
         ];
     }
 
     protected override renderControl() {
         return html`
-        <span class="control">				
-            <div class="quantity">
-                <div @click="${this._onAddClick}"><slot name="increase"><omni-plus-icon class="plus-icon"></omni-plus-icon></slot></div>
-                <div class="divider"></div>
-                <div @click="${this._onMinusClick}"><slot name="decrease"><omni-minus-icon class="minus-icon"></omni-minus-icon></slot></div>
-            </div>
-        </span>
-    `;
+            <span class="control">
+                <div class="quantity">
+                    <div @click="${this._onAddClick}"
+                        ><slot name="increase"><omni-plus-icon class="plus-icon"></omni-plus-icon></slot
+                    ></div>
+                    <div class="divider"></div>
+                    <div @click="${this._onMinusClick}"
+                        ><slot name="decrease"><omni-minus-icon class="minus-icon"></omni-minus-icon></slot
+                    ></div>
+                </div>
+            </span>
+        `;
     }
 
     protected override renderInput() {
