@@ -1,5 +1,5 @@
 import { css, html } from 'lit';
-import { customElement, property, query, state } from 'lit/decorators.js';
+import { customElement, query, state } from 'lit/decorators.js';
 import { live } from 'lit/directives/live.js';
 import { OmniFormElement } from '../core/OmniFormElement.js';
 

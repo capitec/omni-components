@@ -1,5 +1,5 @@
 import { expect, jest } from '@storybook/jest';
-import { userEvent, within, fireEvent } from '@storybook/testing-library';
+import { userEvent, within } from '@storybook/testing-library';
 import { Meta, StoryContext } from '@storybook/web-components';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
