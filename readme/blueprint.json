@@ -11,6 +11,11 @@
             "alt": "Build",
             "img": "https://github.com/capitec/omni-components/actions/workflows/build.yml/badge.svg",
             "url": "https://github.com/capitec/omni-components/actions/workflows/build.yml"
+        },
+        {
+            "alt": "Docs",
+            "img": "https://img.shields.io/badge/%20-Docs-blue",
+            "url": "https://capitec.github.io/open-source/?repo=Omni-Components"
         }
     ],
     "line": "aqua",
