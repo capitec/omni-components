@@ -10,7 +10,13 @@ import '@capitec/omni-components/switch';
 ## Example
 
 ```html
-<omni-switch  label="My Switch Value"  data="{'id': 12345, 'name': 'Test'}"  hint="Required"  error="Field level error message"  checked></omni-switch>
+<omni-switch
+  label="My Switch Value"
+  data="{'id': 12345, 'name': 'Test'}"
+  hint="Required"
+  error="Field level error message"
+  checked>
+</omni-switch>
 ```
 
 ## Properties

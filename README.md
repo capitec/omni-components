@@ -62,7 +62,7 @@ A control that allows a user to check a value on or off.
 ```js
 
 
-import '@capitec/omni-components/check';
+import '@capitec/omni-components/button';
 
 ```
 
@@ -78,7 +78,7 @@ A control that can be used for input, setting attributes, or performing actions.
 ```js
 
 
-import '@capitec/omni-components/chip';
+import '@capitec/omni-components/check';
 
 ```
 
@@ -94,23 +94,7 @@ A link control that allows a user to indicate an action to be executed. Typicall
 ```js
 
 
-import '@capitec/omni-components/hyperlink';
-
-```
-
-</td></tr><tr><td>
-
-[omni-icon](src/icon/README.md)
-
-</td><td>Icon</td><td>
-
-Component that displays an icon
-
-
-```js
-
-
-import '@capitec/omni-components/icon';
+import '@capitec/omni-components/chip';
 
 ```
 
@@ -126,7 +110,7 @@ A control that allows an action to be executed.
 ```js
 
 
-import '@capitec/omni-components/button';
+import '@capitec/omni-components/hyperlink';
 
 ```
 
@@ -141,7 +125,8 @@ A check icon component.
 
 ```js
 
-import '@capitec/omni-components/icons/Check.icon.js';
+
+import '@capitec/omni-components/icon';
 
 ```
 
@@ -153,10 +138,12 @@ import '@capitec/omni-components/icons/Check.icon.js';
 
 A Close icon component.
 
+A check icon component.
+
 
 ```js
 
-import '@capitec/omni-components/icons/Close.icon.js';
+import '@capitec/omni-components/icons/Check.icon.js';
 
 ```
 
@@ -168,25 +155,12 @@ import '@capitec/omni-components/icons/Close.icon.js';
 
 A hidden eye icon component
 
-
-```js
-
-import '@capitec/omni-components/icons/EyeHidden.icon.js';
-
-```
-
-</td></tr><tr><td>
-
-[omni-eye-visible-icon](src/icons/README.md)
-
-</td><td>EyeVisibleIcon</td><td>
-
-A visible eye icon component
+A Close icon component.
 
 
 ```js
 
-import '@capitec/omni-components/icons/EyeVisible.icon.js';
+import '@capitec/omni-components/icons/Close.icon.js';
 
 ```
 
@@ -202,66 +176,6 @@ An indeterminate icon component.
 ```js
 
 import '@capitec/omni-components/icons/Indeterminate.icon.js';
-
-```
-
-</td></tr><tr><td>
-
-[omni-loading-icon](src/icons/README.md)
-
-</td><td>LoadingIcon</td><td>
-
-A loading icon component.
-
-
-```js
-
-import '@capitec/omni-components/icons/Loading.icon.js';
-
-```
-
-</td></tr><tr><td>
-
-[omni-lock-closed-icon](src/icons/README.md)
-
-</td><td>LockClosedIcon</td><td>
-
-A closed lock icon component
-
-
-```js
-
-import '@capitec/omni-components/icons/LockClosed.icon.js';
-
-```
-
-</td></tr><tr><td>
-
-[omni-lock-open-icon](src/icons/README.md)
-
-</td><td>LockOpenIcon</td><td>
-
-A open lock icon component
-
-
-```js
-
-import '@capitec/omni-components/icons/LockOpen.icon.js';
-
-```
-
-</td></tr><tr><td>
-
-[omni-items](src/items/README.md)
-
-</td><td>Items</td><td>
-
-
-
-```js
-
-
-import '@capitec/omni-components/items';
 
 ```
 
@@ -283,38 +197,6 @@ import '@capitec/omni-components/label';
 
 </td></tr><tr><td>
 
-[omni-numeric-field](src/numeric-field/README.md)
-
-</td><td>NumericField</td><td>
-
-An input control that allows a user to enter a single line of numbers.
-
-
-```js
-
-
-import '@capitec/omni-components/numeric-field';
-
-```
-
-</td></tr><tr><td>
-
-[omni-password-field](src/password-field/README.md)
-
-</td><td>PasswordField</td><td>
-
-A password input control.
-
-
-```js
-
-
-import '@capitec/omni-components/password-field';
-
-```
-
-</td></tr><tr><td>
-
 [omni-radio](src/radio/README.md)
 
 </td><td>Radio</td><td>
@@ -326,22 +208,6 @@ A control that allows a user to select a single value from a group of values.
 
 
 import '@capitec/omni-components/radio';
-
-```
-
-</td></tr><tr><td>
-
-[omni-render-element](src/render-element/README.md)
-
-</td><td>RenderElement</td><td>
-
-An element that renders content from a provided function/promise.
-
-
-```js
-
-
-import '@capitec/omni-components/render-element';
 
 ```
 
@@ -373,7 +239,7 @@ A text input control.
 ```js
 
 
-import '@capitec/omni-components/text-field';
+import '@capitec/omni-components/switch';
 
 ```
 
