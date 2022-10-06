@@ -54,7 +54,7 @@ export class PasswordField extends OmniFormElement {
     /**
      * @ignore
      */
-    @state() protected type: 'password' | 'text' = 'password'; /* Move to relevant fields*/
+    @state() protected type: 'password' | 'text' = 'password';
 
     @query('#inputField')
     private _inputElement: HTMLInputElement;
@@ -148,9 +148,9 @@ export class PasswordField extends OmniFormElement {
         return html`				
             <div class="control-box" @click="${(e: MouseEvent) => this._iconClicked(e)}">
                 ${this.type === 'password' ? html`
-                    <slot name="hide"><omni-eye-visible-icon class="hide-icon"></omni-eye-visible-icon></slot>
+                    <slot name="show"><omni-eye-visible-icon class="show-icon"></omni-eye-visible-icon></slot>
                 ` : html`
-                    <slot name="show"><omni-eye-hidden-icon class=".show-icon"></omni-eye-hidden-icon></slot>
+                    <slot name="hide"><omni-eye-hidden-icon class=".hide-icon"></omni-eye-hidden-icon></slot>
                 `}
             </div>
         `;

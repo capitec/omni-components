@@ -16,9 +16,12 @@ import {
 } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import { assignToSlot, loadCssPropertiesRemote } from '../utils/StoryUtils';
-import { NumericField } from './NumericField';
+import { NumericField } from './NumericField.js';
 
-import './NumericField';
+import '../icons/LockOpen.icon';
+import '../icons/LockClosed.icon';
+
+import './NumericField.js';
 
 export default {
     title: 'UI Components/Numeric Field',
@@ -65,16 +68,29 @@ export const Interactive = {
     },
     play: async (context: StoryContext) => {
         const numericField = within(context.canvasElement).getByTestId<NumericField>('test-numeric-field');
-        const inputEvent = jest.fn();
-        numericField.addEventListener('input', inputEvent);
+        const interaction = jest.fn();
+        numericField.addEventListener('input', interaction);
+        numericField.addEventListener('click', interaction);
+
+        const increaseSlotElement = numericField.shadowRoot.querySelector<HTMLSlotElement>('slot[name=increase]');
+        const decreaseSlotElement = numericField.shadowRoot.querySelector<HTMLSlotElement>('slot[name=decrease]');
   
+        await expect(increaseSlotElement).toBeTruthy();
+        await expect(decreaseSlotElement).toBeTruthy();
+
+        await userEvent.click(decreaseSlotElement);
+        await userEvent.click(increaseSlotElement);
+        await userEvent.click(decreaseSlotElement);
+        await userEvent.click(increaseSlotElement);
+        await userEvent.click(increaseSlotElement);
+
         const inputField = numericField.shadowRoot.getElementById('inputField');
         const value = '12345';
         await userEvent.type(inputField, value);
 
-        await expect(inputField).toHaveValue(parseInt(value));
+        await expect(inputField).toHaveValue(212345);
   
-        await expect(inputEvent).toBeCalledTimes(value.length);
+        await expect(interaction).toBeCalledTimes(11);
     }
 };
 
@@ -91,3 +107,28 @@ export const Prefix = PrefixStory<NumericField, BaseArgTypes>('omni-numeric-fiel
 export const Suffix = SuffixStory<NumericField, BaseArgTypes>('omni-numeric-field');
 
 export const Disabled = DisabledStory<NumericField, BaseArgTypes>('omni-numeric-field');
+
+export const CustomIconSlot = {
+    render: (args: ArgTypes) => html`
+        <omni-numeric-field data-testid="test-password-field" label="${ifNotEmpty(args.label)}" ?disabled="${args.disabled}">
+            <omni-lock-open-icon slot="increase"></omni-lock-open-icon>
+            <omni-lock-closed-icon slot="decrease"></omni-lock-closed-icon>
+        </omni-numeric-field>
+    `,
+    name: 'Custom Icon Slot',
+    args: {
+        label: 'Custom Icon Slot'
+    },
+    play: async (context: StoryContext) => {
+        const passwordField = within(context.canvasElement).getByTestId<NumericField>('test-password-field');
+        const increaseElement = passwordField.shadowRoot.querySelector<HTMLSlotElement>('slot[name=increase]');
+        const decreaseElement = passwordField.shadowRoot.querySelector<HTMLSlotElement>('slot[name=decrease]');
+        await expect(increaseElement).toBeTruthy();
+        await expect(decreaseElement).toBeTruthy();
+
+        const foundSlottedIncreaseElement = increaseElement.assignedElements().find((e) => e.tagName.toLocaleLowerCase() === 'omni-lock-open-icon');
+        const foundSlottedDecreaseElement = decreaseElement.assignedElements().find((e) => e.tagName.toLocaleLowerCase() === 'omni-lock-closed-icon');
+        await expect(foundSlottedIncreaseElement).toBeTruthy();
+        await expect(foundSlottedDecreaseElement).toBeTruthy();
+    }
+};
