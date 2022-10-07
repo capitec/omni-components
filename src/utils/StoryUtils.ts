@@ -9,8 +9,25 @@ function loadCssProperties(element: string, customElements: any, cssDeclarations
     const elementModule = customElements.modules.find((module: { exports: any[] }) =>
         module.exports.find((e: { name: string }) => e.name === element)
     );
+
+    let superModule = elementModule;
+    do {
+        if (superModule.declarations.find((sd: any) => sd.superclass)) {
+            superModule = customElements.modules.find((module: { exports: any[] }) =>
+                module.exports.find(
+                    (e: { name: string }) => e.name === superModule.declarations.find((sd: any) => sd.superclass).superclass.name
+                )
+            );
+        } else {
+            superModule = undefined;
+        }
+        if (superModule) {
+            elementModule.declarations = [...elementModule.declarations, ...superModule.declarations];
+        }
+    } while (superModule);
     for (const key in elementModule.declarations) {
         const declaration = elementModule.declarations[key];
+        const cssCategory = declaration.cssCategory;
         if (declaration.cssProperties && declaration.cssProperties.length > 0) {
             for (const cssKey in declaration.cssProperties) {
                 const cssProperty = declaration.cssProperties[cssKey];
@@ -22,7 +39,7 @@ function loadCssProperties(element: string, customElements: any, cssDeclarations
                                 : 'text',
                         description: cssProperty.description,
                         category: 'CSS Variables',
-                        subcategory: 'Component Variables',
+                        subcategory: cssCategory ?? 'Component Variables',
                         value: ''
                     };
                 } else {
@@ -110,7 +127,9 @@ function loadCustomElementsRemote(): any {
 }
 
 function loadCustomElementsModuleFor(elementName: string, customElements: any) {
-    return customElements.modules.find((module: any) => module.declarations.find((d: any) => d.tagName === elementName && d.customElement));
+    return customElements.modules.find((module: any) =>
+        module.declarations.find((d: any) => (d.tagName === elementName && d.customElement) || d.name === elementName)
+    );
 }
 
 function loadCustomElementsModuleForRemote(elementName: string) {
@@ -130,7 +149,7 @@ function loadSlotForRemote(elementName: string, slotName: string) {
 
 function loadSlotForModule(elementModule: any, slotName: string): { name: string; description: string } {
     const declaration = elementModule.declarations.find(
-        (d: any) => d.slots && d.slots.length > 0 && d.slots.find((s: any) => s.name === '')
+        (d: any) => d.slots && d.slots.length > 0 && d.slots.find((s: any) => s.name === slotName)
     );
     if (declaration) {
         const slot = declaration.slots.find((s: any) => s.name === slotName);
@@ -163,7 +182,7 @@ function assignToSlot(slotName: string, rawHtml: string) {
 
     const parser = new DOMParser();
 
-    const doc = parser.parseFromString(rawHtml, 'text/xml');
+    const doc = parser.parseFromString(`<main>${rawHtml}</main>`, 'text/xml');
     const errorNode = doc.querySelector('parsererror');
     if (errorNode) {
         // parsing failed
@@ -171,12 +190,20 @@ function assignToSlot(slotName: string, rawHtml: string) {
     }
 
     // parsing succeeded
-    const element = doc.documentElement;
-    element.removeAttribute('slot');
-    element.setAttribute('slot', slotName);
-
     const serializer = new XMLSerializer();
-    rawHtml = serializer.serializeToString(doc);
+    let newHtml = '';
+
+    for (let index = 0; index < doc.documentElement.childElementCount; index++) {
+        const element = doc.documentElement.children[index];
+        element.removeAttribute('slot');
+        element.setAttribute('slot', slotName);
+        if (newHtml) {
+            newHtml += '\r\n';
+        }
+        newHtml += serializer.serializeToString(element);
+    }
+
+    rawHtml = newHtml;
 
     return rawHtml;
 }

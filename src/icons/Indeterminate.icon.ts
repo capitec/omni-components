@@ -29,6 +29,9 @@ export class IndeterminateIcon extends LitElement {
                     fill: inherit;
                     background-color: inherit;
                     background: inherit;
+
+                    width: var(--omni-icon-size, 16px);
+                    height: var(--omni-icon-size, 16px);
                 }
             `
         ];
