@@ -52,22 +52,6 @@
 # ➜ UI Components
 <table><thead><tr><th>Tag Name</th><th>Class</th><th>Description</th></tr></thead><tbody><tr><td>
 
-[omni-button](src/button/README.md)
-
-</td><td>Button</td><td>
-
-A control that allows an action to be executed.
-
-
-```js
-
-
-import '@capitec/omni-components/button';
-
-```
-
-</td></tr><tr><td>
-
 [omni-check](src/check/README.md)
 
 </td><td>Check</td><td>
@@ -78,7 +62,7 @@ A control that allows a user to check a value on or off.
 ```js
 
 
-import '@capitec/omni-components/check';
+import '@capitec/omni-components/button';
 
 ```
 
@@ -94,7 +78,7 @@ A control that can be used for input, setting attributes, or performing actions.
 ```js
 
 
-import '@capitec/omni-components/chip';
+import '@capitec/omni-components/check';
 
 ```
 
@@ -110,23 +94,23 @@ A link control that allows a user to indicate an action to be executed. Typicall
 ```js
 
 
-import '@capitec/omni-components/hyperlink';
+import '@capitec/omni-components/chip';
 
 ```
 
 </td></tr><tr><td>
 
-[omni-icon](src/icon/README.md)
+[omni-button](src/button/README.md)
 
-</td><td>Icon</td><td>
+</td><td>Button</td><td>
 
-Component that displays an icon
+A control that allows an action to be executed.
 
 
 ```js
 
 
-import '@capitec/omni-components/icon';
+import '@capitec/omni-components/hyperlink';
 
 ```
 
@@ -141,7 +125,8 @@ A check icon component.
 
 ```js
 
-import '@capitec/omni-components/icons/Check.icon.js';
+
+import '@capitec/omni-components/icon';
 
 ```
 
@@ -150,6 +135,25 @@ import '@capitec/omni-components/icons/Check.icon.js';
 [omni-close-icon](src/icons/README.md)
 
 </td><td>CloseIcon</td><td>
+
+A Close icon component.
+
+A check icon component.
+
+
+```js
+
+import '@capitec/omni-components/icons/Check.icon.js';
+
+```
+
+</td></tr><tr><td>
+
+[omni-eye-hidden-icon](src/icons/README.md)
+
+</td><td>EyeHiddenIcon</td><td>
+
+A hidden eye icon component
 
 A Close icon component.
 
@@ -336,6 +340,22 @@ import '@capitec/omni-components/radio';
 </td><td>Switch</td><td>
 
 A control that allows a user to switch a value on or off.
+
+
+```js
+
+
+import '@capitec/omni-components/switch';
+
+```
+
+</td></tr><tr><td>
+
+[omni-text-field](src/text-field/README.md)
+
+</td><td>TextField</td><td>
+
+A text input control.
 
 
 ```js

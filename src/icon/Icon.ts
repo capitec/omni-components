@@ -1,6 +1,6 @@
-import { html, css, LitElement, TemplateResult } from 'lit';
+import { html, css, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import ComponentStyles from '../styles/ComponentStyles';
+import { OmniElement } from '../core/OmniElement.js';
 
 /**
  * Component that displays an icon
@@ -44,7 +44,7 @@ import ComponentStyles from '../styles/ComponentStyles';
  *
  */
 @customElement('omni-icon')
-export class Icon extends LitElement {
+export class Icon extends OmniElement {
     /**
      * The size to display the icon at
      * @attr [size="default"]
@@ -59,7 +59,7 @@ export class Icon extends LitElement {
 
     static override get styles() {
         return [
-            ComponentStyles,
+            super.styles,
             css`
                 :host {
                     width: fit-content;

@@ -1,6 +1,6 @@
-import { html, css, LitElement, TemplateResult } from 'lit';
+import { html, css, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import ComponentStyles from '../styles/ComponentStyles';
+import { OmniElement } from '../core/OmniElement.js';
 
 /**
  * A simple label component that renders styled text.
@@ -43,7 +43,7 @@ import ComponentStyles from '../styles/ComponentStyles';
  * @cssprop --omni-label-default-font-weight - Default label font weight.
  */
 @customElement('omni-label')
-export class Label extends LitElement {
+export class Label extends OmniElement {
     /**
      * Text label.
      * @attr
@@ -58,7 +58,7 @@ export class Label extends LitElement {
 
     static override get styles() {
         return [
-            ComponentStyles,
+            super.styles,
             css`
                 :host {
                     color: var(--omni-label-font-color, var(--omni-font-color));

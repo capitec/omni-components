@@ -25,7 +25,8 @@
 				"ignoredNodes": [
 					"ConditionalExpression",
 					"TemplateLiteral *"
-				]
+				],
+                "SwitchCase": 1
 			}
 		],
 		"no-multiple-empty-lines": [

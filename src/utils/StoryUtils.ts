@@ -22,7 +22,7 @@ function loadCssProperties(element: string, customElements: any, cssDeclarations
             superModule = undefined;
         }
         if (superModule) {
-            elementModule.declarations = [...elementModule.declarations, ...superModule.declarations];
+            elementModule.declarations = [...superModule.declarations, ...elementModule.declarations];
         }
     } while (superModule);
     for (const key in elementModule.declarations) {
@@ -53,31 +53,13 @@ function loadCssProperties(element: string, customElements: any, cssDeclarations
 }
 
 function loadThemeVariablesRemote() {
-    let error = undefined;
-    let output = '';
-    const request = new XMLHttpRequest();
-    request.open('GET', 'theme-variables.json', false); // `false` makes the request synchronous
-    request.onload = () => {
-        output = request.responseText;
-    };
-    request.onerror = () => {
-        error = request.status;
-    };
-    request.send(null);
-
-    if (error) {
-        console.warn(error);
-        return {};
-    }
-
-    const themeVariables = JSON.parse(output);
+    const themeVariables = loadCssPropertiesRemote('OmniElement');
     return themeVariables;
 }
 
 function loadCssPropertiesRemote(element: string, cssDeclarations: any = undefined): any {
     if (!cssDeclarations) {
-        const defaultVariables = loadThemeVariablesRemote();
-        cssDeclarations = { ...defaultVariables };
+        cssDeclarations = {};
     }
 
     let error = undefined;
@@ -333,7 +315,45 @@ function filterJsDocLinks(jsdoc: string) {
  *
  * The `raw` tag returns a string that can be used directly as ```innerHTML``` or as ```unsafeHTML``` via lit.
  */
-const raw = (strings: TemplateStringsArray) => strings.join('\r\n');
+const raw = (strings: TemplateStringsArray, ...values: unknown[]) => asRenderString(strings, values);
+
+const asRenderString = (strings: TemplateStringsArray, values: unknown[]) => {
+    const v: any = [...values, ''].map((e) => {
+        switch (typeof e) {
+            case 'object': {
+                return asRenderString((e as any).strings, (e as any).values);
+            }
+            default:
+                return e;
+        }
+    });
+    return strings.reduce((acc, s, i) => acc + s + v[i], '');
+};
+
+function querySelectorAsync(parent: Element | ShadowRoot, selector: any, checkFrequencyMs: number = 500, timeoutMs: number = 15000) {
+    return new Promise((resolve, reject) => {
+        let element = parent.querySelector(selector);
+        if (element) {
+            return resolve(element);
+        }
+
+        const startTimeInMs = Date.now();
+        (function loopSearch() {
+            element = parent.querySelector(selector);
+            if (element) {
+                resolve(element);
+            } else {
+                setTimeout(function () {
+                    if (timeoutMs && Date.now() - startTimeInMs > timeoutMs) {
+                        reject(new Error(`Timed out waiting for query (${selector}) in ${timeoutMs} ms`));
+                    } else {
+                        loopSearch();
+                    }
+                }, checkFrequencyMs);
+            }
+        })();
+    });
+}
 
 export {
     loadCustomElementsRemote,
@@ -355,5 +375,6 @@ export {
     filterJsDocLinks,
     formatMarkdownCodeElements,
     assignToSlot,
-    raw
+    raw,
+    querySelectorAsync
 };

@@ -1,7 +1,7 @@
-import { css, html, LitElement, nothing, TemplateResult } from 'lit';
+import { css, html, nothing, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
-import ComponentStyles from '../styles/ComponentStyles';
+import { OmniElement } from '../core/OmniElement.js';
 
 import '../icons/Close.icon.js';
 
@@ -56,7 +56,7 @@ import '../icons/Close.icon.js';
  *
  */
 @customElement('omni-chip')
-export class Chip extends LitElement {
+export class Chip extends OmniElement {
     /**
      * Text label.
      * @attr
@@ -93,7 +93,7 @@ export class Chip extends LitElement {
 
     static override get styles() {
         return [
-            ComponentStyles,
+            super.styles,
             css`
                 :host {
                     box-sizing: border-box;

@@ -1,6 +1,6 @@
-import { html, css, LitElement, TemplateResult } from 'lit';
+import { html, TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import ComponentStyles from '../styles/ComponentStyles';
+import DOMTreeElement from '../core/DOMTreeElement';
 
 /**
  * A plus icon component
@@ -19,72 +19,7 @@ import ComponentStyles from '../styles/ComponentStyles';
  *
  */
 @customElement('omni-plus-icon')
-export class PlusIcon extends LitElement {
-    // --------------
-    // INITIALISATION
-    // --------------
-
-    /**
-     * @hideconstructor
-     */
-    constructor() {
-        super();
-    }
-
-    // ------------------
-    // LIFECYCLE HANDLERS
-    // ------------------
-
-    // n/a
-
-    // ----------------
-    // PUBLIC FUNCTIONS
-    // ----------------
-
-    // n/a
-
-    // --------------
-    // EVENT HANDLERS
-    // --------------
-
-    // n/a
-
-    // ---------------
-    // PRIVATE METHODS
-    // ---------------
-
-    // n/a
-
-    // -------------------
-    // RENDERING TEMPLATES
-    // -------------------
-
-    /**
-     * The element style template.
-     *
-     */
-    static override get styles() {
-        return [
-            ComponentStyles,
-            css`
-                :host {
-                    color: inherit;
-                    fill: inherit;
-                    background-color: inherit;
-                    background: inherit;
-
-                    width: var(--omni-icon-size, 16px);
-                    height: var(--omni-icon-size, 16px);
-                }
-            `
-        ];
-    }
-
-    /**
-     * Apply changes to the element DOM when a property value changes.
-     *
-     * @returns {TemplateResult} The updated DOM template.
-     */
+export class PlusIcon extends DOMTreeElement {
     override render(): TemplateResult {
         return html` <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="100%" height="100%">
             <path
