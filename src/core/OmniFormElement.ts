@@ -1,8 +1,8 @@
-import { css, CSSResultGroup, html, LitElement, nothing, TemplateResult } from 'lit';
+import { css, CSSResultGroup, html, nothing, TemplateResult } from 'lit';
 export { ifDefined } from 'lit/directives/if-defined.js';
 import { property, query } from 'lit/decorators.js';
 import { ClassInfo, classMap } from 'lit/directives/class-map.js';
-import ComponentStyles from '../styles/ComponentStyles.js';
+import OmniElement from './OmniElement.js';
 
 /**
  * Base class used by form components to share common properties, styles and functionality.
@@ -65,7 +65,7 @@ import ComponentStyles from '../styles/ComponentStyles.js';
  * @cssprop --omni-form-error-hover-color - Form error hover color.
  *
  */
-export class OmniFormElement extends LitElement {
+export class OmniFormElement extends OmniElement {
     /**
      * Text label.
      * @attr
@@ -139,7 +139,7 @@ export class OmniFormElement extends LitElement {
     static override get styles(): CSSResultGroup {
         return [
             css`
-                ${ComponentStyles}
+                ${super.styles}
 
                 :host {
                     display: inline-flex;

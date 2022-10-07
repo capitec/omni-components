@@ -1,7 +1,7 @@
-import { html, css, LitElement, TemplateResult, nothing } from 'lit';
+import { html, css, TemplateResult, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
-import ComponentStyles from '../styles/ComponentStyles';
+import { OmniElement } from '../core/OmniElement.js';
 
 /**
  * A control that allows a user to switch a value on or off.
@@ -65,7 +65,7 @@ import ComponentStyles from '../styles/ComponentStyles';
  *
  */
 @customElement('omni-switch')
-export class Switch extends LitElement {
+export class Switch extends OmniElement {
     /**
      * Text label.
      * @attr
@@ -154,7 +154,7 @@ export class Switch extends LitElement {
 
     static override get styles() {
         return [
-            ComponentStyles,
+            super.styles,
             css`
                 /* CONTAINER STYLES */
                 .container {

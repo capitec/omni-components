@@ -1,6 +1,6 @@
-import { html, css, LitElement, TemplateResult } from 'lit';
+import { html, css, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import ComponentStyles from '../styles/ComponentStyles';
+import { OmniElement } from '../core/OmniElement.js';
 
 /**
  * A link control that allows a user to indicate an action to be executed. Typically used for navigational purposes.
@@ -45,7 +45,7 @@ import ComponentStyles from '../styles/ComponentStyles';
  *
  */
 @customElement('omni-hyperlink')
-export class Hyperlink extends LitElement {
+export class Hyperlink extends OmniElement {
     /**
      * Text label.
      * @attr
@@ -95,7 +95,7 @@ export class Hyperlink extends LitElement {
 
     static override get styles() {
         return [
-            ComponentStyles,
+            super.styles,
             css`
                 :host {
                     display: inline-block;

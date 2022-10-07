@@ -10,28 +10,28 @@ import '@capitec/omni-components/button';
 ## Example
 
 ```html
-<omni-button
-  label="Some Action"
-  type="primary">
-</omni-button>
+<omni-button  label="Some Action"  type="primary"></omni-button>
 ```
 
 ## Properties
 
-| Property       | Attribute       | Modifiers | Type                                             | Default     | Description                             |
-|----------------|-----------------|-----------|--------------------------------------------------|-------------|-----------------------------------------|
-| `disabled`     | `disabled`      |           | `boolean`                                        |             | Indicator if the component is disabled. |
-| `label`        | `label`         |           | `string`                                         |             | Text label.                             |
-| `override`     |                 |           |                                                  |             |                                         |
-| `slotPosition` | `slot-position` |           | `"left" \| "top" \| "right" \| "bottom"`         | "left"      | Position of slotted content.            |
-| `styles`       |                 | readonly  | `CSSResult[]`                                    |             |                                         |
-| `type`         | `type`          |           | `"primary" \| "secondary" \| "clear" \| "white"` | "secondary" | Display type.                           |
+| Property       | Attribute       | Modifiers | Type                                             | Default     | Description                                      |
+|----------------|-----------------|-----------|--------------------------------------------------|-------------|--------------------------------------------------|
+| `dir`          |                 |           | `string`                                         |             |                                                  |
+| `disabled`     | `disabled`      |           | `boolean`                                        |             | Indicator if the component is disabled.          |
+| `label`        | `label`         |           | `string`                                         |             | Text label.                                      |
+| `lang`         |                 |           | `string`                                         |             |                                                  |
+| `override`     | `override`      |           |                                                  |             | Used to set the base direction of text for display |
+| `slotPosition` | `slot-position` |           | `"left" \| "top" \| "right" \| "bottom"`         | "left"      | Position of slotted content.                     |
+| `styles`       |                 | readonly  | `CSSResultGroup[]`                               |             |                                                  |
+| `type`         | `type`          |           | `"primary" \| "secondary" \| "clear" \| "white"` | "secondary" | Display type.                                    |
 
 ## Slots
 
-| Name | Description                                      |
-|------|--------------------------------------------------|
-|      | Content to render inside button, can be positioned using {@link slotPosition} property. |
+| Name                | Description                                      |
+|---------------------|--------------------------------------------------|
+|                     | Content to render inside button, can be positioned using {@link slotPosition} property. |
+| `loading_indicator` | Used to define content that is displayed while async rendering is awaiting, or when renderLoading() is implicitly called |
 
 ## CSS Custom Properties
 
@@ -79,3 +79,26 @@ import '@capitec/omni-components/button';
 | `--omni-button-white-border-width`               | White "type" border width.                       |
 | `--omni-button-white-color`                      | White "type" color.                              |
 | `--omni-button-white-hover-background-color`     | White "type" hover background color.             |
+| `--omni-theme-accent-active-color`               | Theme accent active color.                       |
+| `--omni-theme-accent-color`                      | Theme accent color.                              |
+| `--omni-theme-accent-hover-color`                | Theme accent hover color.                        |
+| `--omni-theme-background-active-color`           | Theme background active color.                   |
+| `--omni-theme-background-color`                  | Theme background color.                          |
+| `--omni-theme-background-hover-color`            | Theme background hover color.                    |
+| `--omni-theme-border-radius`                     | Theme border radius.                             |
+| `--omni-theme-border-width`                      | Theme border width.                              |
+| `--omni-theme-box-shadow`                        | Theme box shadow.                                |
+| `--omni-theme-box-shadow-color`                  | Theme inactive color.                            |
+| `--omni-theme-disabled-background-color`         | Theme disabled background color.                 |
+| `--omni-theme-disabled-border-color`             | Theme disabled border color.                     |
+| `--omni-theme-error-border-color`                | Theme error border color.                        |
+| `--omni-theme-error-font-color`                  | Theme disabled background color.                 |
+| `--omni-theme-font-color`                        | Theme font color.                                |
+| `--omni-theme-font-family`                       | Theme font family.                               |
+| `--omni-theme-font-size`                         | Theme font size.                                 |
+| `--omni-theme-font-weight`                       | Theme font weight.                               |
+| `--omni-theme-hint-font-color`                   | Theme hint font color.                           |
+| `--omni-theme-inactive-color`                    | Theme inactive color.                            |
+| `--omni-theme-primary-active-color`              | Theme primary active color.                      |
+| `--omni-theme-primary-color`                     | Theme primary color.                             |
+| `--omni-theme-primary-hover-color`               | Theme primary hover color.                       |

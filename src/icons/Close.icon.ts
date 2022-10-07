@@ -1,11 +1,12 @@
-import { html, css, LitElement, TemplateResult } from 'lit';
+import { html, TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import ComponentStyles from '../styles/ComponentStyles';
+import DOMTreeElement from '../core/DOMTreeElement.js';
 
 /**
  * A Close icon component.
  *
  * ```js
+ *
  * import '@capitec/omni-components/icons/Close.icon.js';
  * ```
  *
@@ -19,24 +20,7 @@ import ComponentStyles from '../styles/ComponentStyles';
  *
  */
 @customElement('omni-close-icon')
-export class CloseIcon extends LitElement {
-    static override get styles() {
-        return [
-            ComponentStyles,
-            css`
-                :host {
-                    color: inherit;
-                    fill: inherit;
-                    background-color: inherit;
-                    background: inherit;
-
-                    width: var(--omni-icon-size, 16px);
-                    height: var(--omni-icon-size, 16px);
-                }
-            `
-        ];
-    }
-
+export class CloseIcon extends DOMTreeElement {
     override render(): TemplateResult {
         return html`
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100%" height="100%">
