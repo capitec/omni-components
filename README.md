@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-  <b>Omni Components come with minimal dependencies to reduce the bloat in your project. All web components base off Lit (https://lit.dev) and are each available as fully standalone imports or at a group level import.</b></br>
+  <b>Omni Components come with minimal dependencies to reduce the bloat in your project. All web components base off <strong>OmniElement</strong> (Which itself is based off <a href="https://lit.dev"><strong>LitElement</strong></a>) and are each available as fully standalone imports.</b></br>
   <sub><sub>
 </p>
 
@@ -52,6 +52,22 @@
 # ➜ UI Components
 <table><thead><tr><th>Tag Name</th><th>Class</th><th>Description</th></tr></thead><tbody><tr><td>
 
+[omni-button](src/button/README.md)
+
+</td><td>Button</td><td>
+
+A control that allows an action to be executed.
+
+
+```js
+
+
+import '@capitec/omni-components/button';
+
+```
+
+</td></tr><tr><td>
+
 [omni-check](src/check/README.md)
 
 </td><td>Check</td><td>
@@ -62,7 +78,7 @@ A control that allows a user to check a value on or off.
 ```js
 
 
-import '@capitec/omni-components/button';
+import '@capitec/omni-components/check';
 
 ```
 
@@ -78,7 +94,7 @@ A control that can be used for input, setting attributes, or performing actions.
 ```js
 
 
-import '@capitec/omni-components/check';
+import '@capitec/omni-components/chip';
 
 ```
 
@@ -94,23 +110,23 @@ A link control that allows a user to indicate an action to be executed. Typicall
 ```js
 
 
-import '@capitec/omni-components/chip';
+import '@capitec/omni-components/hyperlink';
 
 ```
 
 </td></tr><tr><td>
 
-[omni-button](src/button/README.md)
+[omni-icon](src/icon/README.md)
 
-</td><td>Button</td><td>
+</td><td>Icon</td><td>
 
-A control that allows an action to be executed.
+Component that displays an icon
 
 
 ```js
 
 
-import '@capitec/omni-components/hyperlink';
+import '@capitec/omni-components/icon';
 
 ```
 
@@ -126,7 +142,7 @@ A check icon component.
 ```js
 
 
-import '@capitec/omni-components/icon';
+import '@capitec/omni-components/icons/Check.icon.js';
 
 ```
 
@@ -138,27 +154,9 @@ import '@capitec/omni-components/icon';
 
 A Close icon component.
 
-A check icon component.
-
 
 ```js
 
-import '@capitec/omni-components/icons/Check.icon.js';
-
-```
-
-</td></tr><tr><td>
-
-[omni-eye-hidden-icon](src/icons/README.md)
-
-</td><td>EyeHiddenIcon</td><td>
-
-A hidden eye icon component
-
-A Close icon component.
-
-
-```js
 
 import '@capitec/omni-components/icons/Close.icon.js';
 
@@ -175,6 +173,7 @@ A hidden eye icon component
 
 ```js
 
+
 import '@capitec/omni-components/icons/EyeHidden.icon.js';
 
 ```
@@ -189,6 +188,7 @@ A visible eye icon component
 
 
 ```js
+
 
 import '@capitec/omni-components/icons/EyeVisible.icon.js';
 
@@ -205,7 +205,24 @@ An indeterminate icon component.
 
 ```js
 
+
 import '@capitec/omni-components/icons/Indeterminate.icon.js';
+
+```
+
+</td></tr><tr><td>
+
+[omni-loading-icon](src/icons/README.md)
+
+</td><td>LoadingIcon</td><td>
+
+A loading icon component.
+
+
+```js
+
+
+import '@capitec/omni-components/icons/Loading.icon.js';
 
 ```
 
@@ -219,6 +236,7 @@ A closed lock icon component
 
 
 ```js
+
 
 import '@capitec/omni-components/icons/LockClosed.icon.js';
 
@@ -234,6 +252,7 @@ A open lock icon component
 
 
 ```js
+
 
 import '@capitec/omni-components/icons/LockOpen.icon.js';
 
@@ -335,27 +354,27 @@ import '@capitec/omni-components/radio';
 
 </td></tr><tr><td>
 
-[omni-switch](src/switch/README.md)
+[omni-render-element](src/render-element/README.md)
 
-</td><td>Switch</td><td>
+</td><td>RenderElement</td><td>
 
-A control that allows a user to switch a value on or off.
+An element that defers content rendering to a provided function/promise.
 
 
 ```js
 
 
-import '@capitec/omni-components/switch';
+import '@capitec/omni-components/render-element';
 
 ```
 
 </td></tr><tr><td>
 
-[omni-text-field](src/text-field/README.md)
+[omni-switch](src/switch/README.md)
 
-</td><td>TextField</td><td>
+</td><td>Switch</td><td>
 
-A text input control.
+A control that allows a user to switch a value on or off.
 
 
 ```js
