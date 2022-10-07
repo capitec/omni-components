@@ -5,7 +5,7 @@ import { ClassInfo, classMap } from 'lit/directives/class-map.js';
 import OmniElement from './OmniElement.js';
 
 /**
- * Base class used by components to share common properties styles and functionality
+ * Base class used by form components to share common properties, styles and functionality.
  *
  * @slot prefix - Replaces the icon for the prefix slot.
  * @slot suffix - Replaces the icon for the suffix slot.
@@ -22,6 +22,7 @@ import OmniElement from './OmniElement.js';
  * @cssprop --omni-form-border-right - Form border right.
  * @cssprop --omni-form-border-width - Form border width.
  * @cssprop --omni-form-border-radius - Form border radius.
+ * @cssprop --omni-form-border-style - Form border style.
  * @cssprop --omni-form-border-color - Form border color.
  *
  * @cssprop --omni-form-label-transform-origin - Form label text align
@@ -41,7 +42,7 @@ import OmniElement from './OmniElement.js';
  * @cssprop --omni-form-label-disabled-color - Form label disabled color.
  * @cssprop --omni-form-disabled-border-color - Form disabled border color.
  * @cssprop --omni-form-disabled-background-color - Form disabled background color.
- * @cssprop --omni-label-disabled-focus-background-color - Form label disabled focus background color.
+ * @cssprop --omni-form-disabled-focussed-label-background-color - Form disabled label focussed background color.
  *
  * @cssprop --omni-form-hint-label-font-color - Form hint label font color.
  * @cssprop --omni-form-hint-label-font-family - Form hint label font family.
@@ -72,7 +73,7 @@ export class OmniFormElement extends OmniElement {
     @property({ type: String, reflect: true }) label: string;
 
     /**
-     * The value entered into the form.
+     * The value entered into the form component.
      * @attr
      */
     @property({ reflect: true }) value: string | number = null;
@@ -102,7 +103,7 @@ export class OmniFormElement extends OmniElement {
     @property({ type: Boolean, reflect: true }) disabled = false;
 
     @query('.form-container')
-    private _formContainer: HTMLElement;
+    private _formContainerElement: HTMLElement;
 
     @query('.label')
     private _labelElement: HTMLElement;
@@ -118,7 +119,7 @@ export class OmniFormElement extends OmniElement {
             return;
         }
 
-        const formParentOffset = this._formContainer.offsetLeft;
+        const formParentOffset = this._formContainerElement.offsetLeft;
 
         if (!this.value && this._labelElement) {
             this._labelElement.style.transform = `translateX(${formParentOffset * -1}px)  translateY(-37.5%) scale(75%)`;
@@ -179,7 +180,7 @@ export class OmniFormElement extends OmniElement {
 
                     border-width: var(--omni-form-border-width, 1px);
                     border-radius: var(--omni-form-border-radius, 4px);
-                    border-style: solid;
+                    border-style: var(--omni-form-border-style, solid);
                     border-color: var(--omni-form-border-color, var(--omni-primary-color));
                     pointer-events: none;
                 }
@@ -274,7 +275,7 @@ export class OmniFormElement extends OmniElement {
                 }
 
                 :host([value]) .layout.disabled > .form-container > .label::before {
-                    background-color: var(--omni-label-disabled-focus-background-color, var(--omni-disabled-background-color));
+                    background-color: var(--omni-form-disabled-focussed-label-background-color, var(--omni-disabled-background-color));
                 }
 
                 /* HINT LABEL STYLES */

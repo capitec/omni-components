@@ -166,6 +166,36 @@ import '@capitec/omni-components/icons/Close.icon.js';
 
 </td></tr><tr><td>
 
+[omni-eye-hidden-icon](src/icons/README.md)
+
+</td><td>EyeHiddenIcon</td><td>
+
+A hidden eye icon component
+
+
+```js
+
+import '@capitec/omni-components/icons/EyeHidden.icon.js';
+
+```
+
+</td></tr><tr><td>
+
+[omni-eye-visible-icon](src/icons/README.md)
+
+</td><td>EyeVisibleIcon</td><td>
+
+A visible eye icon component
+
+
+```js
+
+import '@capitec/omni-components/icons/EyeVisible.icon.js';
+
+```
+
+</td></tr><tr><td>
+
 [omni-indeterminate-icon](src/icons/README.md)
 
 </td><td>IndeterminateIcon</td><td>
@@ -176,6 +206,66 @@ An indeterminate icon component.
 ```js
 
 import '@capitec/omni-components/icons/Indeterminate.icon.js';
+
+```
+
+</td></tr><tr><td>
+
+[omni-lock-closed-icon](src/icons/README.md)
+
+</td><td>LockClosedIcon</td><td>
+
+A closed lock icon component
+
+
+```js
+
+import '@capitec/omni-components/icons/LockClosed.icon.js';
+
+```
+
+</td></tr><tr><td>
+
+[omni-lock-open-icon](src/icons/README.md)
+
+</td><td>LockOpenIcon</td><td>
+
+A open lock icon component
+
+
+```js
+
+import '@capitec/omni-components/icons/LockOpen.icon.js';
+
+```
+
+</td></tr><tr><td>
+
+[omni-minus-icon](src/icons/README.md)
+
+</td><td>MinusIcon</td><td>
+
+A minus icon component
+
+
+```js
+
+import '@capitec/omni-components/icons/Minus.icon.js';
+
+```
+
+</td></tr><tr><td>
+
+[omni-plus-icon](src/icons/README.md)
+
+</td><td>PlusIcon</td><td>
+
+A plus icon component
+
+
+```js
+
+import '@capitec/omni-components/icons/Plus.icon.js';
 
 ```
 
@@ -192,6 +282,38 @@ A simple label component that renders styled text.
 
 
 import '@capitec/omni-components/label';
+
+```
+
+</td></tr><tr><td>
+
+[omni-numeric-field](src/numeric-field/README.md)
+
+</td><td>NumericField</td><td>
+
+An input control that allows a user to enter a single line of numbers.
+
+
+```js
+
+
+import '@capitec/omni-components/numeric-field';
+
+```
+
+</td></tr><tr><td>
+
+[omni-password-field](src/password-field/README.md)
+
+</td><td>PasswordField</td><td>
+
+A password input control.
+
+
+```js
+
+
+import '@capitec/omni-components/password-field';
 
 ```
 
@@ -240,6 +362,22 @@ A text input control.
 
 
 import '@capitec/omni-components/switch';
+
+```
+
+</td></tr><tr><td>
+
+[omni-text-field](src/text-field/README.md)
+
+</td><td>TextField</td><td>
+
+A text input control.
+
+
+```js
+
+
+import '@capitec/omni-components/text-field';
 
 ```
 
