@@ -20,7 +20,7 @@
 &nbsp;
 # Getting Started
 
-Install Omni Components locally with the following command.
+Install Omni Components locally:
 
 ```bash
 
