@@ -50,7 +50,6 @@
 
 Install Omni Components locally:
 
-
 ```bash
 
 npm install @capitec/omni-components
@@ -154,6 +153,22 @@ A link control that allows a user to indicate an action to be executed. Typicall
 
 
 import '@capitec/omni-components/hyperlink';
+
+```
+
+</td></tr><tr><td>
+
+[omni-icon](src/icon/README.md)
+
+</td><td>
+
+Component that displays an icon
+
+
+```js
+
+
+import '@capitec/omni-components/icon';
 
 ```
 
@@ -312,22 +327,6 @@ A plus icon component
 ```js
 
 import '@capitec/omni-components/icons/Plus.icon.js';
-
-```
-
-</td></tr><tr><td>
-
-[omni-icon](src/icon/README.md)
-
-</td><td>
-
-Component that displays an icon
-
-
-```js
-
-
-import '@capitec/omni-components/icon';
 
 ```
 
