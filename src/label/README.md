@@ -10,10 +10,7 @@ import '@capitec/omni-components/label';
 ## Example
 
 ```html
-<omni-label
-  label="Hello World"
-  type="strong">
-</omni-label>
+<omni-label  label="Hello World"  type="strong"></omni-label>
 ```
 
 ## Properties

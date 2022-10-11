@@ -1,8 +1,4 @@
 <!-- ⚠️ This README has been generated from the file(s) "readme/blueprint.md" ⚠️-->
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#welcome-to-omni-components-)
-
-# ➜ Welcome to Omni Components 
-<h1 align="center">@capitec/omni-components</h1>
 <p align="center">
   <img src="https://avatars.githubusercontent.com/u/109590421" alt="Logo" width="150" height="auto" />
 </p>
@@ -19,6 +15,7 @@
 		<a href="https://npmcharts.com/compare/@capitec/omni-components?minimal=true"><img alt="Downloads per month" src="https://img.shields.io/npm/dm/@capitec/omni-components.svg" height="20"/></a>
 <a href="https://www.npmjs.com/package/@capitec/omni-components"><img alt="NPM Version" src="https://img.shields.io/npm/v/@capitec/omni-components.svg" height="20"/></a>
 <a href="https://github.com/capitec/omni-components/actions/workflows/build.yml"><img alt="Build" src="https://github.com/capitec/omni-components/actions/workflows/build.yml/badge.svg" height="20"/></a>
+<a href="https://github.com/capitec/omni-components/blob/develop/LICENSE"><img alt="License" src="https://img.shields.io/github/license/capitec/omni-components" height="20"/></a>
 <a href="https://capitec.github.io/open-source/?repo=Omni-Components"><img alt="Docs" src="https://img.shields.io/badge/%20-Docs-blue" height="20"/></a>
 	</p>
 
@@ -35,26 +32,72 @@
 
 &nbsp;
 
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#table-of-contents)
+[](#table-of-contents)
 
-## ⭑ Table of Contents
+## Table of Contents
 
-* [➜ Welcome to Omni Components ](#-welcome-to-omni-components-)
-* [➜ UI Components](#-ui-components)
-* [➜ Contributing and Usage](#-contributing-and-usage)
-	* [⭑ Contributors](#-contributors)
-	* [⭑ License](#-license)
+* [Getting Started](#getting-started)
+* [UI Components](#ui-components)
+* [Contributing and Usage](#contributing-and-usage)
+	* [Setup](#setup)
+	* [Contributors](#contributors)
+	* [License](#license)
+&nbsp;
+
+[](#getting-started)
+
+# Getting Started
+
+Install Omni Components locally:
+
+
+```bash
+
+npm install @capitec/omni-components
+```
+
+Then import the components you require and start to use them in your project.
+
+The following example shows how to import and use the ``<omni-button>`` as well as a slotted ``<omni-icon>`` with [Google Material Icons](https://fonts.google.com/icons).
+
+> Import the required components
+```js
+
+import '@capitec/omni-components/button';
+import '@capitec/omni-components/icon';
+```
+> or
+```html
+
+<script type="module" src="/node_modules/omni-components/dist/button/button.js" ></script>
+<script type="module" src="/node_modules/omni-components/dist/icon/icon.js" ></script>
+```
+> Use the components in your project
+```html
+
+<!-- Add Material to your project, e.g. Adding below link in <head>-->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<!-- ------------------------------------------------------------- -->
+
+<omni-button type="primary" label="Button" slot-position="left">
+  <omni-icon icon="@material/thumb_up"></omni-icon>
+</omni-button>
+```
+[![Getting Started - CodePen Example](readme/CodePenExample.PNG)](https://codepen.io/capitec-oss/pen/eYrLaGZ)
+
+For a more detailed installation guide, see [`INSTALLATION.md`](./INSTALLATION.md) as well as our [full documentation](https://capitec.github.io/open-source/?repo=Omni-Components).
+
 &nbsp;
 
 
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#ui-components)
+[](#ui-components)
 
-# ➜ UI Components
-<table><thead><tr><th>Tag Name</th><th>Class</th><th>Description</th></tr></thead><tbody><tr><td>
+# UI Components
+<table style="max-width: 800px;"><thead><tr><th style="width: 100px;">Tag Name</th><th style="width: 600px;">Description</th></tr></thead><tbody><tr><td>
 
 [omni-button](src/button/README.md)
 
-</td><td>Button</td><td>
+</td><td>
 
 A control that allows an action to be executed.
 
@@ -70,7 +113,7 @@ import '@capitec/omni-components/button';
 
 [omni-check](src/check/README.md)
 
-</td><td>Check</td><td>
+</td><td>
 
 A control that allows a user to check a value on or off.
 
@@ -86,7 +129,7 @@ import '@capitec/omni-components/check';
 
 [omni-chip](src/chip/README.md)
 
-</td><td>Chip</td><td>
+</td><td>
 
 A control that can be used for input, setting attributes, or performing actions.
 
@@ -102,7 +145,7 @@ import '@capitec/omni-components/chip';
 
 [omni-hyperlink](src/hyperlink/README.md)
 
-</td><td>Hyperlink</td><td>
+</td><td>
 
 A link control that allows a user to indicate an action to be executed. Typically used for navigational purposes.
 
@@ -116,25 +159,9 @@ import '@capitec/omni-components/hyperlink';
 
 </td></tr><tr><td>
 
-[omni-icon](src/icon/README.md)
-
-</td><td>Icon</td><td>
-
-Component that displays an icon
-
-
-```js
-
-
-import '@capitec/omni-components/icon';
-
-```
-
-</td></tr><tr><td>
-
 [omni-check-icon](src/icons/README.md)
 
-</td><td>CheckIcon</td><td>
+</td><td>
 
 A check icon component.
 
@@ -150,7 +177,7 @@ import '@capitec/omni-components/icons/Check.icon.js';
 
 [omni-close-icon](src/icons/README.md)
 
-</td><td>CloseIcon</td><td>
+</td><td>
 
 A Close icon component.
 
@@ -166,7 +193,7 @@ import '@capitec/omni-components/icons/Close.icon.js';
 
 [omni-eye-hidden-icon](src/icons/README.md)
 
-</td><td>EyeHiddenIcon</td><td>
+</td><td>
 
 A hidden eye icon component
 
@@ -182,7 +209,7 @@ import '@capitec/omni-components/icons/EyeHidden.icon.js';
 
 [omni-eye-visible-icon](src/icons/README.md)
 
-</td><td>EyeVisibleIcon</td><td>
+</td><td>
 
 A visible eye icon component
 
@@ -198,7 +225,7 @@ import '@capitec/omni-components/icons/EyeVisible.icon.js';
 
 [omni-indeterminate-icon](src/icons/README.md)
 
-</td><td>IndeterminateIcon</td><td>
+</td><td>
 
 An indeterminate icon component.
 
@@ -214,7 +241,7 @@ import '@capitec/omni-components/icons/Indeterminate.icon.js';
 
 [omni-loading-icon](src/icons/README.md)
 
-</td><td>LoadingIcon</td><td>
+</td><td>
 
 A loading icon component.
 
@@ -230,7 +257,7 @@ import '@capitec/omni-components/icons/Loading.icon.js';
 
 [omni-lock-closed-icon](src/icons/README.md)
 
-</td><td>LockClosedIcon</td><td>
+</td><td>
 
 A closed lock icon component
 
@@ -246,7 +273,7 @@ import '@capitec/omni-components/icons/LockClosed.icon.js';
 
 [omni-lock-open-icon](src/icons/README.md)
 
-</td><td>LockOpenIcon</td><td>
+</td><td>
 
 A open lock icon component
 
@@ -262,7 +289,7 @@ import '@capitec/omni-components/icons/LockOpen.icon.js';
 
 [omni-minus-icon](src/icons/README.md)
 
-</td><td>MinusIcon</td><td>
+</td><td>
 
 A minus icon component
 
@@ -277,7 +304,7 @@ import '@capitec/omni-components/icons/Minus.icon.js';
 
 [omni-plus-icon](src/icons/README.md)
 
-</td><td>PlusIcon</td><td>
+</td><td>
 
 A plus icon component
 
@@ -290,9 +317,25 @@ import '@capitec/omni-components/icons/Plus.icon.js';
 
 </td></tr><tr><td>
 
+[omni-icon](src/icon/README.md)
+
+</td><td>
+
+Component that displays an icon
+
+
+```js
+
+
+import '@capitec/omni-components/icon';
+
+```
+
+</td></tr><tr><td>
+
 [omni-label](src/label/README.md)
 
-</td><td>Label</td><td>
+</td><td>
 
 A simple label component that renders styled text.
 
@@ -308,7 +351,7 @@ import '@capitec/omni-components/label';
 
 [omni-numeric-field](src/numeric-field/README.md)
 
-</td><td>NumericField</td><td>
+</td><td>
 
 An input control that allows a user to enter a single line of numbers.
 
@@ -324,7 +367,7 @@ import '@capitec/omni-components/numeric-field';
 
 [omni-password-field](src/password-field/README.md)
 
-</td><td>PasswordField</td><td>
+</td><td>
 
 A password input control.
 
@@ -340,7 +383,7 @@ import '@capitec/omni-components/password-field';
 
 [omni-radio](src/radio/README.md)
 
-</td><td>Radio</td><td>
+</td><td>
 
 A control that allows a user to select a single value from a group of values.
 
@@ -356,7 +399,7 @@ import '@capitec/omni-components/radio';
 
 [omni-render-element](src/render-element/README.md)
 
-</td><td>RenderElement</td><td>
+</td><td>
 
 An element that defers content rendering to a provided function/promise.
 
@@ -372,7 +415,7 @@ import '@capitec/omni-components/render-element';
 
 [omni-switch](src/switch/README.md)
 
-</td><td>Switch</td><td>
+</td><td>
 
 A control that allows a user to switch a value on or off.
 
@@ -388,7 +431,7 @@ import '@capitec/omni-components/switch';
 
 [omni-text-field](src/text-field/README.md)
 
-</td><td>TextField</td><td>
+</td><td>
 
 A text input control.
 
@@ -406,14 +449,24 @@ import '@capitec/omni-components/text-field';
 
 &nbsp;
 
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#contributing-and-usage)
+[](#contributing-and-usage)
 
-# ➜ Contributing and Usage
+# Contributing and Usage
+
+[](#setup)
+
+## Setup
+
+1. [Fork](https://github.com/capitec/omni-components/fork) the repository and create a branch from `develop`.
+2. Clone the forked repo, checkout your branch, and run `npm ci` inside the repository root.
+3. Start up the dev server with `npm run storybook` (or by launching debugging in VS Code).
+
+For more on contribution guidelines, see [`CONTRIBUTING.md`](./CONTRIBUTING.md).
 
 
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#contributors)
+[](#contributors)
 
-## ⭑ Contributors
+## Contributors
 
 <!-- readme: contributors -start -->
 <table>
@@ -449,10 +502,8 @@ import '@capitec/omni-components/text-field';
 </table>
 <!-- readme: contributors -end -->
 
+[](#license)
 
-
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)](#license)
-
-## ⭑ License
+## License
 	
 Licensed under [MIT](https://opensource.org/licenses/MIT).

@@ -1,6 +1,6 @@
+import { execSync } from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
-import { execSync } from 'child_process';
 const codeSnippet = '```';
 
 if (!fs.existsSync('custom-elements.json')) {
@@ -13,36 +13,35 @@ function fixCodeElements(str) {
         return '';
     }
     return str.replaceAll(`${codeSnippet}`, `\r\n${codeSnippet}`)
-       .replaceAll(`${codeSnippet}js`,`${codeSnippet}js\r\n`);
+        .replaceAll(`${codeSnippet}js`, `${codeSnippet}js\r\n`);
 }
 
 function filterLinks(jsdoc) {
     if (!jsdoc) return jsdoc;
-  
+
     // const renderLink = ((link) => `<a href="${link.url}">${link.text}</a>`);
     const renderLink = ((link) => `[${link.text}](${(link.url.includes(':') ? '' : '#')}${(link.url.includes(':') ? `${link.url}` : `${link.url.toLowerCase()}`)})`);
-  
+
     const matches = Array.from(jsdoc.matchAll(/(?:\[(.*?)\])?{@(link|tutorial) (.*?)(?:(?:\|| +)(.*?))?}/gm));
-  
+
     if (!matches) return jsdoc;
-  
+
     for (const match of matches) {
-      const tag = match[2].trim();
-      const url = match[3].trim();
-      let text = url;
-  
-      if (match[4]) {
-        text = match[4].trim();
-      } else if (match[1]) {
-        text = match[1].trim();
-      }
-  
-      jsdoc = jsdoc.replace(match[0], renderLink({ tag, url, text, raw: match[0] }));
+        const tag = match[2].trim();
+        const url = match[3].trim();
+        let text = url;
+
+        if (match[4]) {
+            text = match[4].trim();
+        } else if (match[1]) {
+            text = match[1].trim();
+        }
+
+        jsdoc = jsdoc.replace(match[0], renderLink({ tag, url, text, raw: match[0] }));
     }
-  
+
     return jsdoc;
 }
-
 
 const manifestRaw = fs.readFileSync('custom-elements.json', 'utf-8');
 const manifest = JSON.parse(manifestRaw);
@@ -51,12 +50,11 @@ let markdown = '';
 markdown += '# UI Components';
 
 markdown += '\r\n';
-markdown += '<table>';
+markdown += '<table style="max-width: 800px;">';
 markdown += '<thead>';
 markdown += '<tr>';
-markdown += '<th>Tag Name</th>';
-markdown += '<th>Class</th>';
-markdown += '<th>Description</th>';
+markdown += '<th style="width: 100px;">Tag Name</th>';
+markdown += '<th style="width: 600px;">Description</th>';
 markdown += '</tr>';
 markdown += '</thead>';
 markdown += '<tbody>';
@@ -78,9 +76,6 @@ manifest.modules.forEach(module => {
         markdown += `[${tagDeclaration.tagName}](${dir}/README.md)`;
         markdown += '\r\n';
         markdown += '\r\n';
-        markdown += '</td>';
-        markdown += '<td>';
-        markdown += tagDeclaration.name;
         markdown += '</td>';
         markdown += '<td>';
         markdown += '\r\n';
