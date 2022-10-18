@@ -33,6 +33,9 @@ import '../icons/Minus.icon';
  *
  * @cssprop --omni-numeric-input-quantity-height - Numeric input quantity container height.
  * @cssprop --omni-numeric-input-slot-width - Numeric input slot width.
+ * @cssprop --omni-numeric-input-slot-height -  Numeric input slot height.
+ * 
+ * @cssprop --omni-numeric-input-divider-color - Numeric input control divider color.
  * @cssprop --omni-numeric-input-divider-width - Numeric input control divider width.
  *
  * @cssprop --omni-numeric-field-text-align - Numeric input field text align.
@@ -42,6 +45,8 @@ import '../icons/Minus.icon';
  * @cssprop --omni-numeric-field-font-weight - Numeric input field font weight.
  * @cssprop --omni-numeric-field-height - Numeric input field height.
  * @cssprop --omni-numeric-field-padding - Numeric input field padding.
+ * 
+ * @cssprop --omni-numeric-control-hover - Numeric input control hover color.
  *
  */
 @customElement('omni-numeric-field')
@@ -133,6 +138,13 @@ export class NumericField extends OmniFormElement {
                     cursor: default;
                 }
 
+                /*hover for numeric control*/
+                .increase-container:hover,
+                .decrease-container:hover { 
+                    background-color: var(--omni-numeric-control-hover, var(--omni-accent-hover-color));
+                }
+
+
                 /* Used to not display default stepper */
                 input::-webkit-outer-spin-button,
                 input::-webkit-inner-spin-button {
@@ -152,11 +164,11 @@ export class NumericField extends OmniFormElement {
         return html`
             <span class="control">
                 <div class="quantity">
-                    <div @click="${this._onAddClick}"
+                    <div class="increase-container" @click="${this._onAddClick}"
                         ><slot name="increase"><omni-plus-icon class="plus-icon"></omni-plus-icon></slot
                     ></div>
                     <div class="divider"></div>
-                    <div @click="${this._onMinusClick}"
+                    <div class="decrease-container" @click="${this._onMinusClick}"
                         ><slot name="decrease"><omni-minus-icon class="minus-icon"></omni-minus-icon></slot
                     ></div>
                 </div>

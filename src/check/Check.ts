@@ -46,11 +46,13 @@ import '../icons/Check.icon.js';
  * @cssprop --omni-check-hint-label-font-family - Hint font family.
  * @cssprop --omni-check-hint-label-font-size - Hint font size.
  * @cssprop --omni-check-hint-label-font-weight - Hint font weight.
+ * @cssprop --omni-check-hint-label-padding-top - Hint top padding.
  *
  * @cssprop --omni-check-error-label-font-color - Error font color.
  * @cssprop --omni-check-error-label-font-family - Error font family.
  * @cssprop --omni-check-error-label-font-size - Error font size.
  * @cssprop --omni-check-error-label-font-weight - Error font weight.
+ * @cssprop --omni-check-error-label-padding-top - Error top padding.
  *
  * @cssprop --omni-check-width - Width.
  * @cssprop --omni-check-height - Height.
@@ -203,7 +205,7 @@ export class Check extends OmniElement {
                     font-size: var(--omni-check-hint-label-font-size, 0.86em);
                     font-weight: var(--omni-check-hint-label-font-weight, 300);
 
-                    padding-top: 4px;
+                    padding-top: var(--omni-check-hint-label-padding-top, 4px);
                 }
 
                 .container > .label > .error {
@@ -212,7 +214,7 @@ export class Check extends OmniElement {
                     font-size: var(--omni-check-error-label-font-size, 0.86em);
                     font-weight: var(--omni-check-error-label-font-weight, 300);
 
-                    padding-top: 4px;
+                    padding-top: var(--omni-check-error-label-padding-top, 4px);
                 }
 
                 /* CHECK BOX STYLES */
