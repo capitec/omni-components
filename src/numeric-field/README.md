@@ -84,7 +84,7 @@ import '@capitec/omni-components/numeric-field';
 | `--omni-form-focussed-border-color`              | Form focussed border color.                    |
 | `--omni-form-focussed-border-width`              | Form focussed border width.                    |
 | `--omni-form-focussed-label-color`               | Form focussed label color.                     |
-| `--omni-form-hint-label-border`                  | width -                                        |
+| `--omni-form-hint-label-border-width`            | Form hint label border width.                  |
 | `--omni-form-hint-label-font-color`              | Form hint label font color.                    |
 | `--omni-form-hint-label-font-family`             | Form hint label font family.                   |
 | `--omni-form-hint-label-font-size`               | Form hint label font size.                     |
@@ -99,6 +99,7 @@ import '@capitec/omni-components/numeric-field';
 | `--omni-form-label-left`                         | Form label left margin.                        |
 | `--omni-form-label-text-align`                   | Form label text align.                         |
 | `--omni-form-label-transform-origin`             | Form label text align                          |
+| `--omni-numeric-control-hover`                   | Numeric input control hover color.             |
 | `--omni-numeric-field-font-color`                | Numeric input field font color.                |
 | `--omni-numeric-field-font-family`               | Numeric input field font family.               |
 | `--omni-numeric-field-font-size`                 | Numeric input field font size.                 |
@@ -106,8 +107,10 @@ import '@capitec/omni-components/numeric-field';
 | `--omni-numeric-field-height`                    | Numeric input field height.                    |
 | `--omni-numeric-field-padding`                   | Numeric input field padding.                   |
 | `--omni-numeric-field-text-align`                | Numeric input field text align.                |
+| `--omni-numeric-input-divider-color`             | Numeric input control divider color.           |
 | `--omni-numeric-input-divider-width`             | Numeric input control divider width.           |
 | `--omni-numeric-input-quantity-height`           | Numeric input quantity container height.       |
+| `--omni-numeric-input-slot-height`               | Numeric input slot height.                     |
 | `--omni-numeric-input-slot-width`                | Numeric input slot width.                      |
 | `--omni-theme-accent-active-color`               | Theme accent active color.                     |
 | `--omni-theme-accent-color`                      | Theme accent color.                            |

@@ -84,7 +84,7 @@ import '@capitec/omni-components/password-field';
 | `--omni-form-focussed-border-color`              | Form focussed border color.                    |
 | `--omni-form-focussed-border-width`              | Form focussed border width.                    |
 | `--omni-form-focussed-label-color`               | Form focussed label color.                     |
-| `--omni-form-hint-label-border`                  | width -                                        |
+| `--omni-form-hint-label-border-width`            | Form hint label border width.                  |
 | `--omni-form-hint-label-font-color`              | Form hint label font color.                    |
 | `--omni-form-hint-label-font-family`             | Form hint label font family.                   |
 | `--omni-form-hint-label-font-size`               | Form hint label font size.                     |
@@ -103,6 +103,7 @@ import '@capitec/omni-components/password-field';
 | `--omni-password-field-control-padding-left`     | Password field control padding left.           |
 | `--omni-password-field-control-padding-right`    | Password field control padding right.          |
 | `--omni-password-field-control-padding-top`      | Password field control padding top.            |
+| `--omni-password-field-font-color`               | Password field font color.                     |
 | `--omni-password-field-font-family`              | Password field font family.                    |
 | `--omni-password-field-font-size`                | Password field font size.                      |
 | `--omni-password-field-font-weight`              | Password field font weight.                    |

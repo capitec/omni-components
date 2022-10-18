@@ -71,11 +71,13 @@ import '@capitec/omni-components/check';
 | `--omni-check-error-label-font-family`        | Error font family.               |
 | `--omni-check-error-label-font-size`          | Error font size.                 |
 | `--omni-check-error-label-font-weight`        | Error font weight.               |
+| `--omni-check-error-label-padding-top`        | Error top padding.               |
 | `--omni-check-height`                         | Height.                          |
 | `--omni-check-hint-label-font-color`          | Hint font color.                 |
 | `--omni-check-hint-label-font-family`         | Hint font family.                |
 | `--omni-check-hint-label-font-size`           | Hint font size.                  |
 | `--omni-check-hint-label-font-weight`         | Hint font weight.                |
+| `--omni-check-hint-label-padding-top`         | Hint top padding.                |
 | `--omni-check-hover-background-color`         | Hover background color.          |
 | `--omni-check-hover-box-shadow`               | Hover box shadow.                |
 | `--omni-check-indeterminate-background-color` | Indeterminate Background color.  |

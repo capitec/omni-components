@@ -48,14 +48,15 @@ import '@capitec/omni-components/chip';
 |-----------------------------------------------|--------------------------------------|
 | `--omni-chip-background-color`                | Component background color.          |
 | `--omni-chip-border-radius`                   | Component border radius.             |
+| `--omni-chip-close-icon-color`                | Component close icon color.          |
+| `--omni-chip-close-icon-width`                | Component close icon width.          |
 | `--omni-chip-disabled-background-color`       | Component disabled background color. |
 | `--omni-chip-disabled-border-color`           | Component disabled border color.     |
 | `--omni-chip-disabled-hover-background-color` | Component icon left padding.         |
 | `--omni-chip-height`                          | Component height.                    |
-| `--omni-chip-icon-color`                      | Component close icon color.          |
-| `--omni-chip-icon-height`                     | Component close icon height.         |
-| `--omni-chip-icon-padding-left`               | Component close icon left padding.   |
-| `--omni-chip-icon-width`                      | Component close icon width.          |
+| `--omni-chip-hover-border`                    | Component hover border.              |
+| `--omni-chip-hover-shadow`                    | Component hover shadow.              |
+| `--omni-chip-icon-width`                      | Component slotted icon width.        |
 | `--omni-chip-label-color`                     | Component label color.               |
 | `--omni-chip-label-font-family`               | Component label font family.         |
 | `--omni-chip-label-font-size`                 | Component label font size.           |

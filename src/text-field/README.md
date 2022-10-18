@@ -81,7 +81,7 @@ import '@capitec/omni-components/text-field';
 | `--omni-form-focussed-border-color`              | Form focussed border color.                    |
 | `--omni-form-focussed-border-width`              | Form focussed border width.                    |
 | `--omni-form-focussed-label-color`               | Form focussed label color.                     |
-| `--omni-form-hint-label-border`                  | width -                                        |
+| `--omni-form-hint-label-border-width`            | Form hint label border width.                  |
 | `--omni-form-hint-label-font-color`              | Form hint label font color.                    |
 | `--omni-form-hint-label-font-family`             | Form hint label font family.                   |
 | `--omni-form-hint-label-font-size`               | Form hint label font size.                     |
@@ -96,6 +96,7 @@ import '@capitec/omni-components/text-field';
 | `--omni-form-label-left`                         | Form label left margin.                        |
 | `--omni-form-label-text-align`                   | Form label text align.                         |
 | `--omni-form-label-transform-origin`             | Form label text align                          |
+| `--omni-text-field-font-color`                   | Text field font color.                         |
 | `--omni-text-field-font-family`                  | Text field font family.                        |
 | `--omni-text-field-font-size`                    | Text field font size.                          |
 | `--omni-text-field-font-weight`                  | Text field font weight.                        |
