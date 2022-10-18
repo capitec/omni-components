@@ -50,7 +50,7 @@ import OmniElement from './OmniElement.js';
  * @cssprop --omni-form-hint-label-font-weight - Form hint label font weight.
  * @cssprop --omni-form-hint-label-padding-top - Form hint label top padding.
  * @cssprop --omni-form-hint-label-padding-left - Form hint label left padding.
- * @cssprop --omni-form-hint-label-border-width -
+ * @cssprop --omni-form-hint-label-border-width - Form hint label border width.
  *
  * @cssprop --omni-form-error-label-font-color - Form error label font color.
  * @cssprop --omni-form-error-label-font-family - Form error label font family.
@@ -122,7 +122,7 @@ export class OmniFormElement extends OmniElement {
         const formParentOffset = this._formContainerElement.offsetLeft;
 
         if (!this.value && this._labelElement) {
-            this._labelElement.style.transform = `translateX(${formParentOffset * -1}px)  translateY(-37.5%) scale(75%)`;
+            this._labelElement.style.transform = `translateX(${formParentOffset * -1}px)  translateY(-37.5%) scale(95%)`;
         }
     }
 
@@ -226,7 +226,7 @@ export class OmniFormElement extends OmniElement {
                 :host([value]:not([value=''])) .layout > .form-container > .label,
                 :focus + .label {
                     top: 0px;
-                    transform: translateY(-37.5%) scale(75%);
+                    transform: translateY(-37.5%) scale(95%);
                     color: var(--omni-form-focussed-label-color, var(--omni-primary-color));
                 }
 
@@ -237,7 +237,7 @@ export class OmniFormElement extends OmniElement {
                     position: absolute;
                     left: var(--omni-label-focus-left, -3px);
                     right: var(--omni-label-focus-right, -3px);
-                    top: 50%;
+                    top: 39%;
                     height: 50%;
                     z-index: -1;
                 }

@@ -1,15 +1,15 @@
 :root {
 
     --omni-theme-primary-color: #00E070;
-    --omni-theme-primary-hover-color: #00D868;
+    --omni-theme-primary-hover-color: #00D8681a;
     --omni-theme-primary-active-color: #00D161;
 
     --omni-theme-accent-color: #7FEC88;
-    --omni-theme-accent-hover-color: #77E480;
+    --omni-theme-accent-hover-color: #77E4801a;
     --omni-theme-accent-active-color: #70DD79;
 
     --omni-theme-background-color: #FFFFFF;
-    --omni-theme-background-hover-color: #F7F7F7;
+    --omni-theme-background-hover-color: #F7F7F71a;
     --omni-theme-background-active-color: #F0F0F0;
 
     --omni-theme-font-color: rgb(0, 58, 14);

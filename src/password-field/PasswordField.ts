@@ -41,6 +41,7 @@ import '../icons/EyeVisible.icon';
  * @cssprop --omni-password-field-icon-width - Password field slot width.
  *
  * @cssprop --omni-password-field-text-align - Password field text align.
+ * @cssprop --omni-password-field-font-color - Password field font color.
  * @cssprop --omni-password-field-font-family - Password field font family.
  * @cssprop --omni-password-field-font-size - Password field font size.
  * @cssprop --omni-password-field-font-weight - Password field font weight.
@@ -107,7 +108,7 @@ export class PasswordField extends OmniFormElement {
                 .show-icon,
                 ::slotted([slot='show']),
                 ::slotted([slot='hide']) {
-                    width: var(--omni-password-field-icon-width, var(--omni-icon-size));
+                    width: var(--omni-password-field-icon-width, 24px);
                 }
 
                 /* Prevent default icon from displaying in password field on Edge browser */
@@ -144,7 +145,7 @@ export class PasswordField extends OmniFormElement {
             <div class="control-box" @click="${(e: MouseEvent) => this._iconClicked(e)}">
                 ${this.type === 'password'
                     ? html` <slot name="show"><omni-eye-visible-icon class="show-icon"></omni-eye-visible-icon></slot> `
-                    : html` <slot name="hide"><omni-eye-hidden-icon class=".hide-icon"></omni-eye-hidden-icon></slot> `}
+                    : html` <slot name="hide"><omni-eye-hidden-icon class="hide-icon"></omni-eye-hidden-icon></slot> `}
             </div>
         `;
     }

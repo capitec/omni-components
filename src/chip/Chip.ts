@@ -37,6 +37,9 @@ import '../icons/Close.icon.js';
  * @cssprop --omni-chip-background-color - Component background color.
  * @cssprop --omni-chip-padding - Component padding.
  *
+ * @cssprop --omni-chip-hover-border - Component hover border.
+ * @cssprop --omni-chip-hover-shadow - Component hover shadow.
+ *
  * @cssprop --omni-chip-label-padding-left - Component label left padding.
  * @cssprop --omni-chip-label-padding-right - Component label right padding.
  * @cssprop --omni-chip-label-color - Component label color.
@@ -49,10 +52,10 @@ import '../icons/Close.icon.js';
  * @cssprop --omni-chip-disabled-background-color - Component disabled background color.
  * @cssprop --omni-chip-disabled-hover-background-color - Component icon left padding.
  *
- * @cssprop --omni-chip-icon-padding-left - Component close icon left padding.
- * @cssprop --omni-chip-icon-height - Component close icon height.
- * @cssprop --omni-chip-icon-width - Component close icon width.
- * @cssprop --omni-chip-icon-color - Component close icon color.
+ * @cssprop --omni-chip-icon-width - Component slotted icon width.
+ *
+ * @cssprop --omni-chip-close-icon-width - Component close icon width.
+ * @cssprop --omni-chip-close-icon-color - Component close icon color.
  *
  */
 @customElement('omni-chip')
@@ -119,8 +122,8 @@ export class Chip extends OmniElement {
                 }
 
                 .chip:hover {
-                    border: var(--theme-chip-hover-border, 1px solid var(--omni-primary-color));
-                    box-shadow: var(--theme-chip-hover-shadow, 0 2px 4px 0 rgba(0, 0, 0, 0.25), 0 1px 3px 0 rgba(0, 0, 0, 0.15));
+                    border: var(--omni-chip-hover-border, 1px solid var(--omni-primary-color));
+                    box-shadow: var(--omni-chip-hover-shadow, 0 2px 4px 0 rgba(0, 0, 0, 0.25), 0 1px 3px 0 rgba(0, 0, 0, 0.15));
                 }
 
                 .label {
@@ -134,17 +137,15 @@ export class Chip extends OmniElement {
                     line-height: var(--omni-chip-label-line-height, 20px);
                 }
 
-                .icon,
-                ::slotted(*) {
-                    display: grid;
-                    justify-content: center;
-                    padding-left: var(--omni-chip-icon-padding-left, 0px);
-                    height: var(--omni-chip-icon-height, 24px);
+                ::slotted([slot='chip_icon']) {
                     width: var(--omni-chip-icon-width, 24px);
-                    fill: var(--omni-chip-icon-color, var(--omni-primary-color));
                 }
 
-                /* disabled */
+                .close-icon,
+                ::slotted([slot='close_icon']) {
+                    width: var(--omni-chip-close-icon-width, 24px);
+                    fill: var(--omni-chip-close-icon-color, var(--omni-primary-color));
+                }
 
                 .chip.disabled {
                     cursor: default;
@@ -182,7 +183,7 @@ export class Chip extends OmniElement {
                 <slot name="chip_icon"></slot>
                 <div id="label" class="label">${this.label}</div>
                 <div id="closeButton" class="icon" @click="${(e: MouseEvent) => this._removeClicked(e)}">
-                    ${this.closable ? html`<slot name="close_icon"><omni-close-icon></omni-close-icon></slot>` : nothing}
+                    ${this.closable ? html`<slot name="close_icon"><omni-close-icon class="close-icon"></omni-close-icon></slot>` : nothing}
                 </div>
             </button>
         `;

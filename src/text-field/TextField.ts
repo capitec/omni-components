@@ -26,6 +26,7 @@ import { OmniFormElement } from '../core/OmniFormElement.js';
  * @element omni-text-field
  *
  * @cssprop --omni-text-field-text-align - Text field text align.
+ * @cssprop --omni-text-field-font-color - Text field font color.
  * @cssprop --omni-text-field-font-family - Text field font family.
  * @cssprop --omni-text-field-font-size - Text field font size.
  * @cssprop --omni-text-field-font-weight - Text field font weight.
