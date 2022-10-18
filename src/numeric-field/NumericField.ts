@@ -34,7 +34,7 @@ import '../icons/Minus.icon';
  * @cssprop --omni-numeric-input-quantity-height - Numeric input quantity container height.
  * @cssprop --omni-numeric-input-slot-width - Numeric input slot width.
  * @cssprop --omni-numeric-input-slot-height -  Numeric input slot height.
- * 
+ *
  * @cssprop --omni-numeric-input-divider-color - Numeric input control divider color.
  * @cssprop --omni-numeric-input-divider-width - Numeric input control divider width.
  *
@@ -45,7 +45,7 @@ import '../icons/Minus.icon';
  * @cssprop --omni-numeric-field-font-weight - Numeric input field font weight.
  * @cssprop --omni-numeric-field-height - Numeric input field height.
  * @cssprop --omni-numeric-field-padding - Numeric input field padding.
- * 
+ *
  * @cssprop --omni-numeric-control-hover - Numeric input control hover color.
  *
  */
@@ -138,12 +138,10 @@ export class NumericField extends OmniFormElement {
                     cursor: default;
                 }
 
-                /*hover for numeric control*/
                 .increase-container:hover,
-                .decrease-container:hover { 
+                .decrease-container:hover {
                     background-color: var(--omni-numeric-control-hover, var(--omni-accent-hover-color));
                 }
-
 
                 /* Used to not display default stepper */
                 input::-webkit-outer-spin-button,

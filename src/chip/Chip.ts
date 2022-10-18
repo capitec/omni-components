@@ -36,7 +36,7 @@ import '../icons/Close.icon.js';
  * @cssprop --omni-chip-border-radius - Component border radius.
  * @cssprop --omni-chip-background-color - Component background color.
  * @cssprop --omni-chip-padding - Component padding.
- * 
+ *
  * @cssprop --omni-chip-hover-border - Component hover border.
  * @cssprop --omni-chip-hover-shadow - Component hover shadow.
  *
@@ -53,7 +53,7 @@ import '../icons/Close.icon.js';
  * @cssprop --omni-chip-disabled-hover-background-color - Component icon left padding.
  *
  * @cssprop --omni-chip-icon-width - Component slotted icon width.
- * 
+ *
  * @cssprop --omni-chip-close-icon-width - Component close icon width.
  * @cssprop --omni-chip-close-icon-color - Component close icon color.
  *
@@ -141,14 +141,11 @@ export class Chip extends OmniElement {
                     width: var(--omni-chip-icon-width, 24px);
                 }
 
-                
                 .close-icon,
-                ::slotted([slot='close_icon'])  {
+                ::slotted([slot='close_icon']) {
                     width: var(--omni-chip-close-icon-width, 24px);
                     fill: var(--omni-chip-close-icon-color, var(--omni-primary-color));
                 }
-
-                /* disabled */
 
                 .chip.disabled {
                     cursor: default;
