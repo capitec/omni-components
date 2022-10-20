@@ -7,7 +7,7 @@ import '../icons/Plus.icon';
 import '../icons/Minus.icon';
 
 /**
- * An input control that allows a user to enter a single line of numbers.
+ * An input control that allows a user to enter a single line of numbers with a stepper control.
  *
  * ```js
  *
