@@ -348,11 +348,27 @@ import '@capitec/omni-components/label';
 
 </td></tr><tr><td>
 
-[omni-numeric-field](src/numeric-field/README.md)
+[omni-number-field](src/number-field/README.md)
 
 </td><td>
 
 An input control that allows a user to enter a single line of numbers.
+
+
+```js
+
+
+import '@capitec/omni-components/number-field';
+
+```
+
+</td></tr><tr><td>
+
+[omni-numeric-field](src/numeric-field/README.md)
+
+</td><td>
+
+An input control that allows a user to enter a single line of numbers with a stepper control.
 
 
 ```js
