@@ -1,23 +1,23 @@
-# omni-numeric-field
+# omni-number-field
 
-An input control that allows a user to enter a single line of numbers with a stepper control.
+An input control that allows a user to enter a single line of numbers.
 
 ```js
 
-import '@capitec/omni-components/numeric-field';
+import '@capitec/omni-components/number-field';
 ```
 
 ## Example
 
 ```html
-<omni-numeric-field
-  label="Enter a numeric value"
-  value="12345"
+<omni-number-field
+  label="Enter a value"
+  value=12345
   data="{'id': 12345, 'name': 'Test'}"
   hint="Required"
   error="Field level error message"
   disabled>
-</omni-numeric-field>
+</omni-number-field>
 ```
 
 ## Properties
@@ -40,14 +40,11 @@ import '@capitec/omni-components/numeric-field';
 | Method          | Type                    |
 |-----------------|-------------------------|
 | `renderContent` | `(): TemplateResult<1>` |
-| `renderControl` | `(): TemplateResult<1>` |
 
 ## Slots
 
 | Name                | Description                                      |
 |---------------------|--------------------------------------------------|
-| `decrease`          | Slot for the decrease icon.                      |
-| `increase`          | Slot for the increase icon.                      |
 | `loading_indicator` | Used to define content that is displayed while async rendering is awaiting, or when renderLoading() is implicitly called |
 | `prefix`            | Replaces the icon for the prefix slot.           |
 | `suffix`            | Replaces the icon for the suffix slot.           |
@@ -99,19 +96,13 @@ import '@capitec/omni-components/numeric-field';
 | `--omni-form-label-left`                         | Form label left margin.                        |
 | `--omni-form-label-text-align`                   | Form label text align.                         |
 | `--omni-form-label-transform-origin`             | Form label text align                          |
-| `--omni-numeric-control-hover`                   | Numeric input control hover color.             |
-| `--omni-numeric-field-font-color`                | Numeric input field font color.                |
-| `--omni-numeric-field-font-family`               | Numeric input field font family.               |
-| `--omni-numeric-field-font-size`                 | Numeric input field font size.                 |
-| `--omni-numeric-field-font-weight`               | Numeric input field font weight.               |
-| `--omni-numeric-field-height`                    | Numeric input field height.                    |
-| `--omni-numeric-field-padding`                   | Numeric input field padding.                   |
-| `--omni-numeric-field-text-align`                | Numeric input field text align.                |
-| `--omni-numeric-input-divider-color`             | Numeric input control divider color.           |
-| `--omni-numeric-input-divider-width`             | Numeric input control divider width.           |
-| `--omni-numeric-input-quantity-height`           | Numeric input quantity container height.       |
-| `--omni-numeric-input-slot-height`               | Numeric input slot height.                     |
-| `--omni-numeric-input-slot-width`                | Numeric input slot width.                      |
+| `--omni-number-field-font-color`                 | Number field font color.                       |
+| `--omni-number-field-font-family`                | Number field font family.                      |
+| `--omni-number-field-font-size`                  | Number field font size.                        |
+| `--omni-number-field-font-weight`                | Number field font weight.                      |
+| `--omni-number-field-height`                     | Number field height.                           |
+| `--omni-number-field-padding`                    | Number field width.                            |
+| `--omni-number-field-text-align`                 | Number field text align.                       |
 | `--omni-theme-accent-active-color`               | Theme accent active color.                     |
 | `--omni-theme-accent-color`                      | Theme accent color.                            |
 | `--omni-theme-accent-hover-color`                | Theme accent hover color.                      |
