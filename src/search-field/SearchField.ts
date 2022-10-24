@@ -4,6 +4,7 @@ import { live } from 'lit/directives/live.js';
 import { OmniFormElement } from '../core/OmniFormElement.js';
 
 import '../icons/Clear.icon';
+import '../icons/Search.icon';
 
 /**
  * A search input control.
@@ -102,13 +103,25 @@ export class SearchField extends OmniFormElement {
                 }
 
                 .clear-icon {
-                    fill: var(--omni-search-field-icon-color, var(--omni-primary-color));
+                    fill: var(--omni-search-field-clear-icon-color, var(--omni-primary-color));
                 }
 
                 .clear-icon,
                 ::slotted([slot='clear']){
                     width: var(--omni-search-field-clear-icon-width, 20px);
                 }
+
+                .search-icon {
+                    fill: var(--omni-search-field-search-icon-color, var(--omni-primary-color));
+                                
+                }
+
+                .search-icon,
+                ::slotted([slot='prefix']){
+                    width: var(--omni-search-field-search-icon-width, 20px);
+                    padding-left: var(--omni-search-field-search-icon-left-padding, 10px);
+                }
+
 
                 input:empty .label {
                     transform: '';
@@ -124,6 +137,10 @@ export class SearchField extends OmniFormElement {
                 .
             `
         ];
+    }
+
+    protected override renderPrefix() {
+        return html `<omni-search-icon class="search-icon"></omni-search-icon>`;
     }
 
     protected override renderControl() {
