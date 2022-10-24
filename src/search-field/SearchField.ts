@@ -113,15 +113,8 @@ export class SearchField extends OmniFormElement {
 
                 .search-icon {
                     fill: var(--omni-search-field-search-icon-color, var(--omni-primary-color));
-                                
+                    width: var(--omni-search-field-search-icon-width, 20px);                       
                 }
-
-                .search-icon,
-                ::slotted([slot='prefix']){
-                    width: var(--omni-search-field-search-icon-width, 20px);
-                    padding-left: var(--omni-search-field-search-icon-left-padding, 10px);
-                }
-
 
                 input:empty .label {
                     transform: '';
