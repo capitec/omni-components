@@ -371,13 +371,13 @@ export type ComponentStoryFormat<T> = {
     name?: string;
     args?: Partial<T>;
     play?: PlayFunction<T>;
-    source?: () => string
+    source?: () => string;
 };
 
 export type CSFIdentifier = {
     title: string;
     component: string;
-}
+};
 
 export {
     loadCustomElementsRemote,
