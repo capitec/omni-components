@@ -18,7 +18,7 @@
     "docs:ssg": "echo \"Run docs generation to 'docs' folder here\"",
     "docs:readme": "npx web-component-analyzer ./src/**/*.{js,ts} --outFiles {dir}/README.md",
     "docs:elements": "node scripts/elements-list.mjs",
-    "serve": "npm run clean && tsc && npm run docs:custom-elements && concurrently -k -r \"tsc --build --watch --preserveWatchOutput\"",
+    "serve": "npm run clean && eleventy --serve",
     "test": "concurrently -k -r -s first \"npm run serve\" \"npx wait-on tcp:6006\"",
     "format": "prettier --config .prettierrc \"src/**/*.ts\" --write",
     "format:check": "prettier --config .prettierrc \"src/**/*.ts\" --check"
