@@ -2,6 +2,7 @@
   "name": "@capitec/omni-components",
   "version": "0.2.3",
   "description": "Omni Components come with minimal dependencies to reduce the bloat in your project. All web components base off <strong>OmniElement</strong> (Which itself is based off <a href=\"https://lit.dev\"><strong>LitElement</strong></a>) and are each available as fully standalone imports.",
+  "type": "module",
   "scripts": {
     "clean": "npx rimraf dist docs",
     "lint": "eslint . --ext .ts --fix",
@@ -18,7 +19,7 @@
     "docs:ssg": "echo \"Run docs generation to 'docs' folder here\"",
     "docs:readme": "npx web-component-analyzer ./src/**/*.{js,ts} --outFiles {dir}/README.md",
     "docs:elements": "node scripts/elements-list.mjs",
-    "serve": "npm run clean && eleventy --serve",
+    "serve": "npm run clean && eleventy --serve --config=.eleventy.cjs",
     "test": "concurrently -k -r -s first \"npm run serve\" \"npx wait-on tcp:6006\"",
     "format": "prettier --config .prettierrc \"src/**/*.ts\" --write",
     "format:check": "prettier --config .prettierrc \"src/**/*.ts\" --check"

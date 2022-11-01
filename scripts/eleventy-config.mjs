@@ -46,7 +46,7 @@ export default async config => {
     config.setBrowserSyncConfig({
         logLevel: 'debug',
         server: {
-            baseDir: 'public',
+            baseDir: 'docs',
             routes: {
                 '/dist': './dist',
                 '/src': './src'
@@ -57,8 +57,8 @@ export default async config => {
     return {
         dir: {
             includes: 'includes',
-            input: 'docs',
-            output: 'public',
+            input: 'eleventy',
+            output: 'docs',
         },
     };
 };
