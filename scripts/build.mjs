@@ -1,5 +1,5 @@
-import chalk from 'chalk';
 import { execSync } from 'child_process';
+import chalk from 'chalk';
 import commandLineArgs from 'command-line-args';
 import esbuild from 'esbuild';
 import fs from 'fs-extra';
@@ -39,7 +39,10 @@ fs.mkdirSync(tsdir, { recursive: true });
     }
 
     console.log(`Building for ${format.toUpperCase()} ${target.toUpperCase()}...`);
-    const entryPoints = await globby('./src/**/!(*.(style|test|stories)).(ts|js)');
+    const entryPoints = (await globby('./src/**/!(*.(style|test|stories)).(ts|js)'))
+        .filter(value =>
+            !value.startsWith('./src/utils') &&
+            !value.includes('OmniInputStories'));
     if (verbose) {
         console.log(chalk.bgYellow('Targeting the following entrypoints: \n'));
         entryPoints.forEach(e => console.log(chalk.bgYellow(`\t- ${e}`)));
@@ -61,7 +64,7 @@ fs.mkdirSync(tsdir, { recursive: true });
             // We don't bundle certain dependencies in the unbundled build. This ensures we ship bare module specifiers,
             // allowing end users to better optimize when using a bundler. (Only packages that ship ESM can be external.)
             //
-            external: bundle ? [] : ['lit'],
+            external: bundle ? [ /*'graceful-fs','jest-message-util', 'jest-util'*/] : ['lit'/*, 'graceful-fs', 'jest-message-util', 'jest-util'*/],
             splitting: true,
             plugins: [],
             logLevel: verbose ? 'debug' : 'info',
@@ -77,7 +80,6 @@ fs.mkdirSync(tsdir, { recursive: true });
         });
 
     console.log(chalk.green(`The build has been generated at ${outdir} \n`));
-
 
     // Cleanup on exit
     process.on('SIGTERM', () => buildResult.rebuild.dispose());
