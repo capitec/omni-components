@@ -68,7 +68,7 @@ For a more detailed installation guide, see [`INSTALLATION.md`](./INSTALLATION.m
 
 1. [Fork](https://github.com/capitec/omni-components/fork) the repository and create a branch from `develop`.
 2. Clone the forked repo, checkout your branch, and run `npm ci` inside the repository root.
-3. Start up the dev server with `npm run storybook` (or by launching debugging in VS Code).
+3. Start up the dev server with `npm run serve` (or by launching debugging in VS Code).
 
 For more on contribution guidelines, see [`CONTRIBUTING.md`](./CONTRIBUTING.md).
 

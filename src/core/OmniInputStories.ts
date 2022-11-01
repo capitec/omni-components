@@ -1,12 +1,12 @@
 /* eslint-disable lit/binding-positions */
 /* eslint-disable lit/no-invalid-html */
-import { expect, jest } from '@storybook/jest';
-import { userEvent, within } from '@storybook/testing-library';
-import { StoryContext } from '@storybook/web-components';
+import { within } from '@testing-library/dom';
+import userEvent from '@testing-library/user-event';
+import * as jest from 'jest-mock';
 import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import { raw } from '../utils/StoryUtils';
+import { ComponentStoryFormat, raw } from '../utils/StoryUtils';
 import { OmniFormElement } from './OmniFormElement.js';
 
 export const BaseArgTypeDefinitions = {
@@ -31,13 +31,13 @@ export interface BaseArgTypes {
 }
 
 export const LabelStory = <T extends HTMLElement, U extends BaseArgTypes>(tagName: string) => {
-    const Label = {
+    const Label: ComponentStoryFormat<U> = {
         render: (args: U) => html`${unsafeHTML(`<${tagName}  data-testid="test-field" label="${ifNotEmpty(args.label)}"></${tagName}>`)}`,
         name: 'Label',
         args: {
             label: 'The Label'
-        },
-        play: async (context: StoryContext) => {
+        } as U,
+        play: async (context) => {
             const input = within(context.canvasElement).getByTestId<T>('test-field');
             console.log(input);
             await expect(input.shadowRoot.querySelector<HTMLElement>('.label > span')).toHaveTextContent(Label.args.label);
@@ -47,7 +47,7 @@ export const LabelStory = <T extends HTMLElement, U extends BaseArgTypes>(tagNam
 };
 
 export const HintStory = <T extends HTMLElement, U extends BaseArgTypes>(tagName: string) => {
-    const Hint = {
+    const Hint: ComponentStoryFormat<U> = {
         render: (args: U) =>
             html`${unsafeHTML(
                 `<${tagName}  data-testid="test-field" label="${ifNotEmpty(args.label)}" hint="${args.hint}"></${tagName}>`
@@ -56,8 +56,8 @@ export const HintStory = <T extends HTMLElement, U extends BaseArgTypes>(tagName
         args: {
             label: 'Hint',
             hint: 'The Hint label'
-        },
-        play: async (context: StoryContext) => {
+        } as U,
+        play: async (context) => {
             const input = within(context.canvasElement).getByTestId<T>('test-field');
             const hintElement = input.shadowRoot.querySelector<HTMLElement>('.hint-label');
             await expect(hintElement).toBeTruthy();
@@ -68,7 +68,7 @@ export const HintStory = <T extends HTMLElement, U extends BaseArgTypes>(tagName
 };
 
 export const ErrorStory = <T extends HTMLElement, U extends BaseArgTypes>(tagName: string) => {
-    const Error = {
+    const Error: ComponentStoryFormat<U> = {
         render: (args: U) =>
             html`${unsafeHTML(
                 `<${tagName} data-testid="test-field" label="${args.label}" error="${ifNotEmpty(args.error)}"></${tagName}>`
@@ -77,8 +77,8 @@ export const ErrorStory = <T extends HTMLElement, U extends BaseArgTypes>(tagNam
         args: {
             label: 'Error',
             error: 'The Error label'
-        },
-        play: async (context: StoryContext) => {
+        } as U,
+        play: async (context) => {
             const input = within(context.canvasElement).getByTestId<T>('test-field');
             const errorElement = input.shadowRoot.querySelector<HTMLElement>('.error-label');
             await expect(errorElement).toBeTruthy();
@@ -92,7 +92,7 @@ export const ValueStory = <T extends HTMLElement, U extends BaseArgTypes>(
     tagName: string,
     inputValue: string | number | string[] = 'The input value'
 ) => {
-    const Value = {
+    const Value: ComponentStoryFormat<U> = {
         render: (args: U) =>
             html`${unsafeHTML(
                 `<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}" value="${args.value}"></${tagName}>`
@@ -101,8 +101,8 @@ export const ValueStory = <T extends HTMLElement, U extends BaseArgTypes>(
         args: {
             label: 'Value',
             value: inputValue
-        },
-        play: async (context: StoryContext) => {
+        } as U,
+        play: async (context) => {
             const input = within(context.canvasElement).getByTestId<T>('test-field');
 
             const inputField = input.shadowRoot.getElementById('inputField');
@@ -113,15 +113,15 @@ export const ValueStory = <T extends HTMLElement, U extends BaseArgTypes>(
 };
 
 export const PrefixStory = <T extends HTMLElement, U extends BaseArgTypes>(tagName: string) => {
-    const Prefix = {
+    const Prefix: ComponentStoryFormat<U> = {
         render: (args: U) =>
             html`${unsafeHTML(`<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}">${args.prefix}</${tagName}>`)}`,
         name: 'Prefix',
         args: {
             label: 'Prefix',
             prefix: raw`<svg slot="prefix" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px"><path d="M12 2.25c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12 6.615 2.25 12 2.25Zm0 1.5a8.25 8.25 0 1 0 0 16.5 8.25 8.25 0 0 0 0-16.5ZM12 7a.75.75 0 0 1 .75.75v3.5h3.5a.75.75 0 0 1 .743.648L17 12a.75.75 0 0 1-.75.75h-3.5v3.5a.75.75 0 0 1-.648.743L12 17a.75.75 0 0 1-.75-.75v-3.5h-3.5a.75.75 0 0 1-.743-.648L7 12a.75.75 0 0 1 .75-.75h3.5v-3.5a.75.75 0 0 1 .648-.743Z"/></svg>`
-        },
-        play: async (context: StoryContext) => {
+        } as U,
+        play: async (context) => {
             const input = within(context.canvasElement).getByTestId<T>('test-field');
 
             const slotElement = input.shadowRoot.querySelector<HTMLSlotElement>('slot[name=prefix]');
@@ -135,15 +135,15 @@ export const PrefixStory = <T extends HTMLElement, U extends BaseArgTypes>(tagNa
 };
 
 export const SuffixStory = <T extends HTMLElement, U extends BaseArgTypes>(tagName: string) => {
-    const Suffix = {
+    const Suffix: ComponentStoryFormat<U> = {
         render: (args: U) =>
             html`${unsafeHTML(`<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}">${args.suffix}</${tagName}>`)}`,
         name: 'Suffix',
         args: {
             label: 'Suffix',
             suffix: raw`<svg slot="suffix" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px"><path d="M12 2.25c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12 6.615 2.25 12 2.25Zm0 1.5a8.25 8.25 0 1 0 0 16.5 8.25 8.25 0 0 0 0-16.5ZM12 7a.75.75 0 0 1 .75.75v3.5h3.5a.75.75 0 0 1 .743.648L17 12a.75.75 0 0 1-.75.75h-3.5v3.5a.75.75 0 0 1-.648.743L12 17a.75.75 0 0 1-.75-.75v-3.5h-3.5a.75.75 0 0 1-.743-.648L7 12a.75.75 0 0 1 .75-.75h3.5v-3.5a.75.75 0 0 1 .648-.743Z"/></svg>`
-        },
-        play: async (context: StoryContext) => {
+        } as U,
+        play: async (context) => {
             const input = within(context.canvasElement).getByTestId<T>('test-field');
 
             const slotElement = input.shadowRoot.querySelector<HTMLSlotElement>('slot[name=suffix]');
@@ -157,15 +157,15 @@ export const SuffixStory = <T extends HTMLElement, U extends BaseArgTypes>(tagNa
 };
 
 export const DisabledStory = <T extends HTMLElement, U extends BaseArgTypes>(tagName: string) => {
-    const Disabled = {
+    const Disabled: ComponentStoryFormat<U> = {
         render: (args: U) =>
             html`${unsafeHTML(`<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}" disabled></${tagName}>`)}`,
         name: 'Disabled',
         args: {
             label: 'Disabled',
             disabled: true
-        },
-        play: async (context: StoryContext) => {
+        } as U,
+        play: async (context) => {
             const input = within(context.canvasElement).getByTestId<T>('test-field');
 
             //Disabled class test.

@@ -94,22 +94,6 @@ For a more detailed installation guide, see [`INSTALLATION.md`](./INSTALLATION.m
 # UI Components
 <table style="max-width: 800px;"><thead><tr><th style="width: 100px;">Tag Name</th><th style="width: 600px;">Description</th></tr></thead><tbody><tr><td>
 
-[omni-button](src/button/README.md)
-
-</td><td>
-
-A control that allows an action to be executed.
-
-
-```js
-
-
-import '@capitec/omni-components/button';
-
-```
-
-</td></tr><tr><td>
-
 [omni-check](src/check/README.md)
 
 </td><td>
@@ -121,6 +105,22 @@ A control that allows a user to check a value on or off.
 
 
 import '@capitec/omni-components/check';
+
+```
+
+</td></tr><tr><td>
+
+[omni-button](src/button/README.md)
+
+</td><td>
+
+A control that allows an action to be executed.
+
+
+```js
+
+
+import '@capitec/omni-components/button';
 
 ```
 
@@ -474,7 +474,7 @@ import '@capitec/omni-components/text-field';
 
 1. [Fork](https://github.com/capitec/omni-components/fork) the repository and create a branch from `develop`.
 2. Clone the forked repo, checkout your branch, and run `npm ci` inside the repository root.
-3. Start up the dev server with `npm run storybook` (or by launching debugging in VS Code).
+3. Start up the dev server with `npm run serve` (or by launching debugging in VS Code).
 
 For more on contribution guidelines, see [`CONTRIBUTING.md`](./CONTRIBUTING.md).
 

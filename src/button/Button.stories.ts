@@ -1,10 +1,11 @@
-import { expect, jest } from '@storybook/jest';
-import { userEvent, within } from '@storybook/testing-library';
-import { Meta, StoryContext } from '@storybook/web-components';
+import { within } from '@testing-library/dom';
+import userEvent from '@testing-library/user-event';
+import expect from 'expect';
+import * as jest from 'jest-mock';
 import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import { loadCssPropertiesRemote, raw } from '../utils/StoryUtils.js';
+import { loadCssPropertiesRemote, raw, CSFIdentifier, ComponentStoryFormat } from '../utils/StoryUtils.js';
 import { Button } from './Button.js';
 
 import './Button.js';
@@ -38,7 +39,7 @@ export default {
         },
         cssprops: loadCssPropertiesRemote('omni-button')
     }
-} as Meta;
+} as CSFIdentifier;
 
 interface Args {
     type: typeof buttonOptions[number];
@@ -67,7 +68,7 @@ export const Interactive = {
         disabled: false,
         '[Default Slot]': raw`<omni-icon icon="@material/thumb_up"></omni-icon>`
     },
-    play: async (context: StoryContext) => {
+    play: async (context) => {
         const button = within(context.canvasElement).getByTestId<Button>('test-button');
         const click = jest.fn();
         button.addEventListener('click', () => click());
@@ -75,7 +76,7 @@ export const Interactive = {
         await userEvent.click(button);
         await expect(click).toBeCalledTimes(2);
     }
-};
+} as ComponentStoryFormat<Args>;
 
 export const Type = {
     render: (args: Args) => html` <omni-button type="${args.type}" label="${args.label}" data-testid="test-button"></omni-button> `,
@@ -84,13 +85,13 @@ export const Type = {
         type: 'primary',
         label: 'Click'
     },
-    play: async (context: StoryContext) => {
+    play: async (context) => {
         const button = within(context.canvasElement).getByTestId<Button>('test-button');
         const buttonElement = button.shadowRoot.getElementById('button');
         const foundPrimaryClass = buttonElement.classList.contains('primary');
         await expect(foundPrimaryClass).toBeTruthy();
     }
-};
+} as ComponentStoryFormat<Args>;
 
 export const Label = {
     render: (args: Args) => html` <omni-button label="${args.label}" data-testid="test-button"></omni-button> `,
@@ -98,13 +99,13 @@ export const Label = {
     args: {
         label: 'Click'
     },
-    play: async (context: StoryContext) => {
+    play: async (context) => {
         const button = within(context.canvasElement).getByTestId<Button>('test-button');
         const labelElement = button.shadowRoot.getElementById('label');
         const labelMatches = labelElement.innerText === Label.args.label;
         await expect(labelMatches).toBeTruthy();
     }
-};
+} as ComponentStoryFormat<Args>;
 
 export const Slot = {
     render: () => html`
@@ -114,13 +115,13 @@ export const Slot = {
     `,
     name: 'Slot',
     args: {},
-    play: async (context: StoryContext) => {
+    play: async (context) => {
         const button = within(context.canvasElement).getByTestId<Button>('test-button');
         const slotElement = button.shadowRoot.querySelector('slot');
         const foundSlottedOmniIconElement = slotElement.assignedElements().find((e) => e.tagName.toLowerCase() === 'omni-icon');
         await expect(foundSlottedOmniIconElement).toBeTruthy();
     }
-};
+} as ComponentStoryFormat<Args>;
 
 export const Disabled = {
     render: (args: Args) => html` <omni-button disabled label="${args.label}" data-testid="test-button"></omni-button> `,
@@ -128,7 +129,7 @@ export const Disabled = {
     args: {
         label: 'Disabled'
     },
-    play: async (context: StoryContext) => {
+    play: async (context) => {
         const button = within(context.canvasElement).getByTestId<Button>('test-button'); // Test for disabled CSS.
 
         const buttonElement = button.shadowRoot.getElementById('button');
@@ -141,4 +142,4 @@ export const Disabled = {
         await userEvent.click(button);
         await expect(click).toBeCalledTimes(0);
     }
-};
+} as ComponentStoryFormat<Args>;

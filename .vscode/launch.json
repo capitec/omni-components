@@ -5,10 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Storybook Debug",
+            "name": "Serve Debug",
             "type": "node-terminal",
             "request": "launch",
-            "command": "npm run storybook",
+            "command": "npm run serve",
             "internalConsoleOptions": "openOnFirstSessionStart",
             "serverReadyAction": {
                 "pattern": "Local:.+(https?://[^:]+:[0-9]+)",

@@ -1,6 +1,6 @@
-import { expect, jest } from '@storybook/jest';
-import { userEvent, within } from '@storybook/testing-library';
-import { Meta, StoryContext } from '@storybook/web-components';
+import { within } from '@testing-library/dom';
+import userEvent from '@testing-library/user-event';
+import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import {
@@ -15,7 +15,8 @@ import {
     SuffixStory
 } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import { assignToSlot, loadCssPropertiesRemote } from '../utils/StoryUtils';
+import expect from '../utils/ExpectDOM';
+import { assignToSlot, ComponentStoryFormat, CSFIdentifier, loadCssPropertiesRemote } from '../utils/StoryUtils';
 import { NumericField } from './NumericField.js';
 
 import '../icons/LockOpen.icon';
@@ -41,15 +42,15 @@ export default {
             handles: ['input']
         }
     }
-} as Meta;
+} as CSFIdentifier;
 
-interface ArgTypes extends BaseArgTypes {
+interface Args extends BaseArgTypes {
     increase: string;
     decrease: string;
 }
 
-export const Interactive = {
-    render: (args: ArgTypes) => html`
+export const Interactive: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
         <omni-numeric-field
             data-testid="test-numeric-field"
             label="${ifNotEmpty(args.label)}"
@@ -66,7 +67,6 @@ export const Interactive = {
         >
     `,
     name: 'Interactive',
-    parameters: {},
     args: {
         label: 'Label',
         value: '',
@@ -79,7 +79,7 @@ export const Interactive = {
         increase: '',
         decrease: ''
     },
-    play: async (context: StoryContext) => {
+    play: async (context) => {
         const numericField = within(context.canvasElement).getByTestId<NumericField>('test-numeric-field');
         const interaction = jest.fn();
         numericField.addEventListener('input', interaction);
@@ -121,8 +121,8 @@ export const Suffix = SuffixStory<NumericField, BaseArgTypes>('omni-numeric-fiel
 
 export const Disabled = DisabledStory<NumericField, BaseArgTypes>('omni-numeric-field');
 
-export const CustomIconSlot = {
-    render: (args: ArgTypes) => html`
+export const CustomIconSlot: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
         <omni-numeric-field data-testid="test-password-field" label="${ifNotEmpty(args.label)}" ?disabled="${args.disabled}">
             <omni-lock-open-icon slot="increase"></omni-lock-open-icon>
             <omni-lock-closed-icon slot="decrease"></omni-lock-closed-icon>
@@ -132,7 +132,7 @@ export const CustomIconSlot = {
     args: {
         label: 'Custom Icon Slot'
     },
-    play: async (context: StoryContext) => {
+    play: async (context) => {
         const passwordField = within(context.canvasElement).getByTestId<NumericField>('test-password-field');
         const increaseElement = passwordField.shadowRoot.querySelector<HTMLSlotElement>('slot[name=increase]');
         const decreaseElement = passwordField.shadowRoot.querySelector<HTMLSlotElement>('slot[name=decrease]');

@@ -1,6 +1,6 @@
-import { expect, jest } from '@storybook/jest';
-import { userEvent, within } from '@storybook/testing-library';
-import { Meta, StoryContext } from '@storybook/web-components';
+import { within } from '@testing-library/dom';
+import userEvent from '@testing-library/user-event';
+import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import {
@@ -15,7 +15,8 @@ import {
     SuffixStory
 } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import { assignToSlot, loadCssPropertiesRemote } from '../utils/StoryUtils';
+import expect from '../utils/ExpectDOM';
+import { assignToSlot, ComponentStoryFormat, CSFIdentifier, loadCssPropertiesRemote } from '../utils/StoryUtils';
 import { NumberField } from './NumberField.js';
 
 import './NumberField.js';
@@ -30,9 +31,9 @@ export default {
             handles: ['input']
         }
     }
-} as Meta;
+} as CSFIdentifier;
 
-export const Interactive = {
+export const Interactive: ComponentStoryFormat<BaseArgTypes> = {
     render: (args: BaseArgTypes) => html`
         <omni-number-field
             data-testid="test-number-field"
@@ -48,7 +49,6 @@ export const Interactive = {
         </omni-number-field>
     `,
     name: 'Interactive',
-    parameters: {},
     args: {
         label: 'Label',
         value: '',
@@ -59,7 +59,7 @@ export const Interactive = {
         prefix: '',
         suffix: ''
     },
-    play: async (context: StoryContext) => {
+    play: async (context) => {
         const numberField = within(context.canvasElement).getByTestId<NumberField>('test-number-field');
         const input = jest.fn();
         numberField.addEventListener('input', input);

@@ -1,10 +1,11 @@
-import { expect, jest } from '@storybook/jest';
-import { userEvent, within, fireEvent } from '@storybook/testing-library';
-import { Meta, StoryContext } from '@storybook/web-components';
+import { within, fireEvent } from '@testing-library/dom';
+import userEvent from '@testing-library/user-event';
+import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import { assignToSlot, loadCssPropertiesRemote, raw } from '../utils/StoryUtils';
+import expect from '../utils/ExpectDOM';
+import { assignToSlot, ComponentStoryFormat, CSFIdentifier, loadCssPropertiesRemote, raw } from '../utils/StoryUtils';
 import { Check } from './Check.js';
 import './Check.js';
 
@@ -25,9 +26,9 @@ export default {
         },
         cssprops: loadCssPropertiesRemote('omni-check')
     }
-} as Meta;
+} as CSFIdentifier;
 
-interface ArgTypes {
+interface Args {
     label: string;
     data: object;
     hint: string;
@@ -40,8 +41,8 @@ interface ArgTypes {
     indeterminate_icon: string;
 }
 
-export const Interactive = {
-    render: (args: ArgTypes) => html`
+export const Interactive: ComponentStoryFormat<Args> = {
+    render: (args) => html`
         <omni-check
             data-testid="test-check"
             label="${ifNotEmpty(args.label)}"
@@ -59,7 +60,6 @@ export const Interactive = {
         >
     `,
     name: 'Interactive',
-    parameters: {},
     args: {
         label: '',
         data: {},
@@ -71,7 +71,7 @@ export const Interactive = {
         check_icon: '',
         indeterminate_icon: ''
     },
-    play: async (context: StoryContext) => {
+    play: async (context) => {
         const check = within(context.canvasElement).getByTestId<Check>('test-check');
         const valueChange = jest.fn();
         check.addEventListener('value-change', valueChange);
@@ -87,12 +87,12 @@ export const Interactive = {
     }
 };
 
-export const Label = {
-    render: (args: ArgTypes) => html` <omni-check data-testid="test-check" label="${args.label}"></omni-check> `,
+export const Label: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html` <omni-check data-testid="test-check" label="${args.label}"></omni-check> `,
     args: {
         label: 'Label'
     },
-    play: async (context: StoryContext) => {
+    play: async (context) => {
         const check = within(context.canvasElement).getByTestId<Check>('test-check');
         const labelElement = check.shadowRoot.querySelector('label');
         await expect(labelElement).toBeTruthy();
@@ -100,13 +100,13 @@ export const Label = {
     }
 };
 
-export const Hint = {
-    render: (args: ArgTypes) => html` <omni-check data-testid="test-check" label="${args.label}" hint="${args.hint}"></omni-check> `,
+export const Hint: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html` <omni-check data-testid="test-check" label="${args.label}" hint="${args.hint}"></omni-check> `,
     args: {
         label: 'Hint',
         hint: 'This is a hint'
     },
-    play: async (context: StoryContext) => {
+    play: async (context) => {
         const check = within(context.canvasElement).getByTestId<Check>('test-check');
         const hintElement = check.shadowRoot.querySelector<HTMLElement>('.hint');
         await expect(hintElement).toBeTruthy();
@@ -114,14 +114,14 @@ export const Hint = {
     }
 };
 
-export const ErrorLabel = {
+export const ErrorLabel: ComponentStoryFormat<Args> = {
     name: 'Error', // Explicitly named as error, the exported name cannot be 'Error' as that is reserved
-    render: (args: ArgTypes) => html` <omni-check data-testid="test-check" label="${args.label}" error="${args.error}"></omni-check> `,
+    render: (args: Args) => html` <omni-check data-testid="test-check" label="${args.label}" error="${args.error}"></omni-check> `,
     args: {
         label: 'Error',
         error: 'This is an error state'
     },
-    play: async (context: StoryContext) => {
+    play: async (context) => {
         const check = within(context.canvasElement).getByTestId<Check>('test-check');
         const errorElement = check.shadowRoot.querySelector<HTMLElement>('.error');
         await expect(errorElement).toBeTruthy();
@@ -129,43 +129,43 @@ export const ErrorLabel = {
     }
 };
 
-export const Checked = {
-    render: (args: ArgTypes) => html` <omni-check data-testid="test-check" label="${args.label}" ?checked="${args.checked}"></omni-check> `,
+export const Checked: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html` <omni-check data-testid="test-check" label="${args.label}" ?checked="${args.checked}"></omni-check> `,
     args: {
         label: 'Checked',
         checked: true
     },
-    play: async (context: StoryContext) => {
+    play: async (context) => {
         const check = within(context.canvasElement).getByTestId<Check>('test-check');
         const checkedElement = check.shadowRoot.querySelector<HTMLElement>('.checked');
         await expect(checkedElement).toBeTruthy();
     }
 };
 
-export const Indeterminate = {
-    render: (args: ArgTypes) => html`
+export const Indeterminate: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
         <omni-check data-testid="test-check" label="${args.label}" ?indeterminate="${args.indeterminate}"></omni-check>
     `,
     args: {
         label: 'Indeterminate',
         indeterminate: true
     },
-    play: async (context: StoryContext) => {
+    play: async (context) => {
         const check = within(context.canvasElement).getByTestId<Check>('test-check');
         const indeterminateElement = check.shadowRoot.querySelector<HTMLElement>('.indeterminate');
         await expect(indeterminateElement).toBeTruthy();
     }
 };
 
-export const Disabled = {
-    render: (args: ArgTypes) => html`
+export const Disabled: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
         <omni-check data-testid="test-check" label="${args.label}" ?disabled="${args.disabled}"></omni-check>
     `,
     args: {
         label: 'Disabled',
         disabled: true
     },
-    play: async (context: StoryContext) => {
+    play: async (context) => {
         const check = within(context.canvasElement).getByTestId<Check>('test-check');
         const valueChange = jest.fn();
         check.addEventListener('value-change', valueChange);
@@ -183,8 +183,8 @@ export const Disabled = {
     }
 };
 
-export const CustomCheckIcon = {
-    render: (args: ArgTypes) => html`
+export const CustomCheckIcon: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
         <omni-check data-testid="test-check" label="${args.label}" ?checked="${args.checked}"> ${unsafeHTML(args.check_icon)} </omni-check>
     `,
     args: {
@@ -197,7 +197,7 @@ export const CustomCheckIcon = {
                         transform="translate(843.77 509.04) scale(.48018)" />
                     </svg>`
     },
-    play: async (context: StoryContext) => {
+    play: async (context) => {
         const check = within(context.canvasElement).getByTestId<Check>('test-check');
         const slotElement = check.shadowRoot.querySelector<HTMLSlotElement>('slot[name=check_icon]');
         await expect(slotElement).toBeTruthy();
@@ -207,8 +207,8 @@ export const CustomCheckIcon = {
     }
 };
 
-export const CustomIndeterminateIcon = {
-    render: (args: ArgTypes) => html`
+export const CustomIndeterminateIcon: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
         <omni-check data-testid="test-check" label="${args.label}" ?indeterminate="${args.indeterminate}">
             ${unsafeHTML(args.indeterminate_icon)}
         </omni-check>
@@ -234,7 +234,7 @@ export const CustomIndeterminateIcon = {
 			</svg>
 		`
     },
-    play: async (context: StoryContext) => {
+    play: async (context) => {
         const check = within(context.canvasElement).getByTestId<Check>('test-check');
         const slotElement = check.shadowRoot.querySelector<HTMLSlotElement>('slot[name=indeterminate_icon]');
         await expect(slotElement).toBeTruthy();

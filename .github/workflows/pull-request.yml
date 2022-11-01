@@ -69,7 +69,7 @@ jobs:
       - name: Compile Code
         run: npm run compile
 
-      - name: Run Storybook Tests
+      - name: Run Tests
         run: npm run test
         env:
           CI: true

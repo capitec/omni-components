@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { expect, jest } from '@storybook/jest';
-import { userEvent, within } from '@storybook/testing-library';
-import { Meta, StoryContext } from '@storybook/web-components';
+import { within } from '@testing-library/dom';
+import userEvent from '@testing-library/user-event';
+import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { assignToSlot, loadCssPropertiesRemote, querySelectorAsync } from '../utils/StoryUtils.js';
+import expect from '../utils/ExpectDOM';
+import { assignToSlot, ComponentStoryFormat, CSFIdentifier, loadCssPropertiesRemote, querySelectorAsync } from '../utils/StoryUtils.js';
 import { RenderElement, RenderFunction } from './RenderElement.js';
 
 import './RenderElement';
@@ -16,9 +17,9 @@ export default {
     parameters: {
         cssprops: loadCssPropertiesRemote('omni-render-element')
     }
-} as Meta;
+} as CSFIdentifier;
 
-interface ArgTypes {
+interface Args {
     renderer: RenderFunction;
     data: object;
     loading_indicator: string;
@@ -42,19 +43,14 @@ async function renderAsString(data: object) {
     return `<span>${JSON.stringify(data)}</span>`;
 }
 
-export const Interactive = {
-    render: (args: ArgTypes) => html`
+export const Interactive: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
         <omni-render-element data-testid="test-render" .data="${args.data}" .renderer="${args.renderer}"
             >${args.loading_indicator
                 ? html`${'\r\n'}${unsafeHTML(assignToSlot('loading_indicator', args.loading_indicator))}${'\r\n'}`
                 : nothing}</omni-render-element
         >
     `,
-    argTypes: {
-        renderer: {
-            control: false
-        }
-    },
     args: {
         data: {
             hello: 'world',
@@ -62,8 +58,8 @@ export const Interactive = {
         },
         renderer: renderAsLit,
         loading_indicator: ''
-    } as ArgTypes,
-    play: async (context: StoryContext) => {
+    } as Args,
+    play: async (context) => {
         const renderElement = within(context.canvasElement).getByTestId<RenderElement>('test-render');
         const data = JSON.parse(JSON.stringify(context.args.data));
 
@@ -92,10 +88,7 @@ export const Interactive = {
 
 export const AsLit = {
     ...Interactive,
-    parameters: {
-        docs: {
-            source: {
-                code: `
+    source: () => `
                 
 <!-- Bound function used (<script> tags only for syntax highlighting) -->
 <script>
@@ -109,16 +102,12 @@ async function renderAsLit(data: object) {
                 
 <omni-render-element .data="\${this.someData}" .renderer="\${this.renderAsLit}"></omni-render-element>
 `,
-                language: 'html'
-            }
-        }
-    },
     name: 'As Lit'
 };
 
 let clicked = () => alert('Clicked');
-export const AsHTMLElement = {
-    render: (args: ArgTypes) => {
+export const AsHTMLElement: ComponentStoryFormat<Args> = {
+    render: (args: Args) => {
         const addValues = async () => {
             let renderEl: RenderElement = undefined;
             while (!renderEl) {
@@ -133,10 +122,7 @@ export const AsHTMLElement = {
         return html` <omni-render-element id="renderElI" data-testid="test-render"></omni-render-element> `;
     },
     name: 'As HTML Element',
-    parameters: {
-        docs: {
-            source: {
-                code: `
+    source: () => `
 <omni-render-element id="renderElI"></omni-render-element>
 <script defer>
     async function renderAsElement(data) {
@@ -155,18 +141,14 @@ export const AsHTMLElement = {
             'other-data': false
     };
 </script>`,
-                language: 'html'
-            }
-        }
-    },
     args: {
         data: {
             hello: 'world',
             'other-data': false
         },
         renderer: renderAsElement
-    } as ArgTypes,
-    play: async (context: StoryContext) => {
+    } as Args,
+    play: async (context) => {
         const renderElement = within(context.canvasElement).getByTestId<RenderElement>('test-render');
         const data = JSON.parse(JSON.stringify(context.args.data));
         clicked = jest.fn();
@@ -199,8 +181,8 @@ export const AsHTMLElement = {
     }
 };
 
-export const AsString = {
-    render: (args: ArgTypes) => {
+export const AsString: ComponentStoryFormat<Args> = {
+    render: (args: Args) => {
         const addValues = async () => {
             let renderEl: RenderElement = undefined;
             while (!renderEl) {
@@ -215,10 +197,7 @@ export const AsString = {
         return html` <omni-render-element id="renderElS" data-testid="test-render"> </omni-render-element> `;
     },
     name: 'As String',
-    parameters: {
-        docs: {
-            source: {
-                code: `
+    source: () => `
 <omni-render-element id="renderElS"></omni-render-element>
 <script defer>
     async function renderAsString(data) {
@@ -234,18 +213,14 @@ export const AsString = {
             'other-data': false
     };
 </script>`,
-                language: 'html'
-            }
-        }
-    },
     args: {
         data: {
             hello: 'world',
             'other-data': false
         },
         renderer: renderAsString
-    } as ArgTypes,
-    play: async (context: StoryContext) => {
+    } as Args,
+    play: async (context) => {
         const renderElement = within(context.canvasElement).getByTestId<RenderElement>('test-render');
         const data = JSON.parse(JSON.stringify(context.args.data));
 

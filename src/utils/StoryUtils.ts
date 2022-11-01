@@ -279,7 +279,7 @@ function filterJsDocLinks(jsdoc: string) {
 
     const renderLink = (link: { tag: string; text: string; url: string; raw: string }) => {
         if (!link.url.includes(':')) {
-            // Local markdown links are not valid in the properties section of storybook
+            // Local markdown links are not valid
             return `**${link.text}**`;
         }
         return `[${link.text}](${link.url}`;
@@ -327,6 +327,9 @@ const asRenderString = (strings: TemplateStringsArray, values: unknown[]) => {
                 return e;
         }
     });
+    if (strings.length === 0 && values.length > 0) {
+        return values[0] as string;
+    }
     return strings.reduce((acc, s, i) => acc + s + v[i], '');
 };
 
@@ -353,6 +356,27 @@ function querySelectorAsync(parent: Element | ShadowRoot, selector: any, checkFr
             }
         })();
     });
+}
+
+export type PlayFunctionContext<T> = {
+    args: T;
+    story: ComponentStoryFormat<T>;
+    canvasElement: HTMLElement;
+};
+
+export type PlayFunction<T> = (context: PlayFunctionContext<T>) => Promise<void> | void;
+
+export type ComponentStoryFormat<T> = {
+    render?: (args: T) => any;
+    name?: string;
+    args?: Partial<T>;
+    play?: PlayFunction<T>;
+    source?: () => string
+};
+
+export type CSFIdentifier = {
+    title: string;
+    component: string;
 }
 
 export {

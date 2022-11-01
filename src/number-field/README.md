@@ -10,14 +10,7 @@ import '@capitec/omni-components/number-field';
 ## Example
 
 ```html
-<omni-number-field
-  label="Enter a value"
-  value=12345
-  data="{'id': 12345, 'name': 'Test'}"
-  hint="Required"
-  error="Field level error message"
-  disabled>
-</omni-number-field>
+<omni-number-field  label="Enter a value"  value=12345  data="{'id': 12345, 'name': 'Test'}"  hint="Required"  error="Field level error message"  disabled></omni-number-field>
 ```
 
 ## Properties

@@ -1,6 +1,6 @@
-import { expect, jest } from '@storybook/jest';
-import { userEvent, within } from '@storybook/testing-library';
-import { Meta, StoryContext } from '@storybook/web-components';
+import { within } from '@testing-library/dom';
+import userEvent from '@testing-library/user-event';
+import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import {
@@ -15,7 +15,8 @@ import {
     SuffixStory
 } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import { assignToSlot, loadCssPropertiesRemote } from '../utils/StoryUtils';
+import expect from '../utils/ExpectDOM';
+import { assignToSlot, ComponentStoryFormat, CSFIdentifier, loadCssPropertiesRemote } from '../utils/StoryUtils';
 import { PasswordField } from './PasswordField.js';
 
 import './PasswordField.js';
@@ -41,15 +42,15 @@ export default {
             handles: ['input']
         }
     }
-} as Meta;
+} as CSFIdentifier;
 
-interface ArgTypes extends BaseArgTypes {
+interface Args extends BaseArgTypes {
     hide: string;
     show: string;
 }
 
-export const Interactive = {
-    render: (args: ArgTypes) => html`
+export const Interactive: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
         <omni-password-field
             data-testid="test-password-field"
             label="${ifNotEmpty(args.label)}"
@@ -65,7 +66,6 @@ export const Interactive = {
         >
     `,
     name: 'Interactive',
-    parameters: {},
     args: {
         label: 'Label',
         value: '',
@@ -78,7 +78,7 @@ export const Interactive = {
         hide: '',
         show: ''
     },
-    play: async (context: StoryContext) => {
+    play: async (context) => {
         const passwordField = within(context.canvasElement).getByTestId<PasswordField>('test-password-field');
         const interactions = jest.fn();
         passwordField.addEventListener('input', interactions);
@@ -115,8 +115,8 @@ export const Suffix = SuffixStory<PasswordField, BaseArgTypes>('omni-password-fi
 
 export const Disabled = DisabledStory<PasswordField, BaseArgTypes>('omni-password-field');
 
-export const CustomIconSlot = {
-    render: (args: ArgTypes) => html`
+export const CustomIconSlot: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
         <omni-password-field data-testid="test-password-field" label="${ifNotEmpty(args.label)}" ?disabled="${args.disabled}">
             <omni-lock-open-icon slot="show"></omni-lock-open-icon>
             <omni-lock-closed-icon slot="hide"></omni-lock-closed-icon>
@@ -126,7 +126,7 @@ export const CustomIconSlot = {
     args: {
         label: 'Custom Icon Slot'
     },
-    play: async (context: StoryContext) => {
+    play: async (context) => {
         const passwordField = within(context.canvasElement).getByTestId<PasswordField>('test-password-field');
         const slotElement = passwordField.shadowRoot.querySelector<HTMLSlotElement>('slot[name=show]');
         await expect(slotElement).toBeTruthy();
