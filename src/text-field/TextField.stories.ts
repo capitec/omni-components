@@ -60,7 +60,9 @@ export const Interactive: ComponentStoryFormat<BaseArgTypes> = {
 
         const inputField = textField.shadowRoot.getElementById('inputField');
 
-        await userEvent.type(inputField, 'Value{space}Update');
+        await userEvent.type(inputField, 'Value{space}Update', {
+            pointerEventsCheck: 0
+        });
         const value = 'Value Update';
         await expect(inputField).toHaveValue(value);
 

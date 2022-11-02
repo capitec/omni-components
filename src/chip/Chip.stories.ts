@@ -54,8 +54,12 @@ export const Interactive: ComponentStoryFormat<Args> = {
         const click = jest.fn();
 
         chip.addEventListener('click', click);
-        await userEvent.click(chip);
-        await userEvent.click(chip);
+        await userEvent.click(chip, {
+            pointerEventsCheck: 0
+        });
+        await userEvent.click(chip, {
+            pointerEventsCheck: 0
+        });
 
         await expect(click).toBeCalledTimes(2);
     }
@@ -89,8 +93,12 @@ export const Closable: ComponentStoryFormat<Args> = {
 
         const closeButton = chip.shadowRoot.getElementById('closeButton');
 
-        await userEvent.click(closeButton);
-        await userEvent.click(closeButton);
+        await userEvent.click(closeButton, {
+            pointerEventsCheck: 0
+        });
+        await userEvent.click(closeButton, {
+            pointerEventsCheck: 0
+        });
         await expect(remove).toBeCalledTimes(2);
     }
 };
@@ -112,8 +120,12 @@ export const Disabled: ComponentStoryFormat<Args> = {
 
         const click = jest.fn();
         chip.addEventListener('click', click);
-        await userEvent.click(chip);
-        await userEvent.click(chip);
+        await userEvent.click(chip, {
+            pointerEventsCheck: 0
+        });
+        await userEvent.click(chip, {
+            pointerEventsCheck: 0
+        });
 
         await expect(click).toBeCalledTimes(0);
     }

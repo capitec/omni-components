@@ -49,7 +49,9 @@ export const Interactive: ComponentStoryFormat<Args> = {
         switchElement.addEventListener('value-change', valueChange);
 
         const content = switchElement.shadowRoot.getElementById('content');
-        await userEvent.click(content);
+        await userEvent.click(content, {
+            pointerEventsCheck: 0
+        });
         await fireEvent.keyDown(content, {
             key: ' ',
             code: 'Space'
@@ -130,7 +132,9 @@ export const Disabled: ComponentStoryFormat<Args> = {
         await expect(disabledElement).toBeTruthy();
 
         const content = switchElement.shadowRoot.getElementById('content');
-        await userEvent.click(content);
+        await userEvent.click(content, {
+            pointerEventsCheck: 0
+        });
         await fireEvent.keyDown(content, {
             key: ' ',
             code: 'Space'

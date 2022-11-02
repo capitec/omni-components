@@ -317,23 +317,33 @@ function filterJsDocLinks(jsdoc: string) {
  */
 const raw = (strings: TemplateStringsArray, ...values: unknown[]) => asRenderString(strings, values);
 
-const asRenderString = (strings: TemplateStringsArray, values: unknown[]) => {
-    const v: any = [...values, ''].map((e) => {
-        switch (typeof e) {
-            case 'object': {
-                return asRenderString(
-                    (e as any).strings || [],
-                    (e as any).values || []
-                );
+const asRenderString = (strings: TemplateStringsArray, values: unknown[]): string => {
+    // eslint-disable-next-line no-useless-catch
+    try {
+        const v: any = [...values, ''].map((e) => {
+            switch (typeof e) {
+                case 'object': {
+                    return asRenderString((e as any).strings || [], (e as any).values || []);
+                }
+                default:
+                    return e;
             }
-            default:
-                return e;
+        });
+        if (strings.length === 0 && values.length > 0) {
+            if (typeof values[0] === 'object' && (values[0] as any).strings) {
+                return asRenderString((values[0] as any).strings || [], (values[0] as any).values || []);
+            }
+            return values[0] as string;
         }
-    });
-    if (strings.length === 0 && values.length > 0) {
-        return values[0] as string;
+        return strings.reduce((acc, s, i) => {
+            if (!v[i]) {
+                return acc + s;
+            }
+            return acc + s + v[i].toString();
+        }, '');
+    } catch (error) {
+        throw error;
     }
-    return strings.reduce((acc, s, i) => acc + s + v[i].toString(), '');
 };
 
 function querySelectorAsync(parent: Element | ShadowRoot, selector: any, checkFrequencyMs: number = 500, timeoutMs: number = 15000) {

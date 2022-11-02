@@ -27,7 +27,7 @@ const dynamicTests = async () => {
     for (let index = 0; index < stories.length; index++) {
         const storyImport = path.join(process.cwd(), stories[index]);
         const storyName = path.basename(path.dirname(stories[index]));
-        const storyPath = `http://localhost:6006/components/${storyName}/`;
+        const storyPath = `http://localhost:6006/components/${storyName.replaceAll('-','')}/`;
         let storyObj;
         try {
             storyObj = await import('file://' + storyImport);
@@ -54,7 +54,14 @@ const dynamicTests = async () => {
                     return;
                 }
 
-                await page.waitForSelector(`.${storyTest}`);
+                const fullPage = await page.content();
+                try {
+                    await page.waitForSelector(`.${storyTest}`, {
+                        state: 'attached'
+                    } );
+                } catch (error) {
+                    throw new Error(`${error.toString()} \r\n\r\n${fullPage}`);
+                }
 
                 const res = await page.evaluate(async ([storyTest]) => {
                     try {
@@ -90,24 +97,3 @@ const dynamicTests = async () => {
 };
 
 await dynamicTests();
-
-test('homepage has Playwright in title and get started link linking to the intro page', async ({
-    page,
-}) => {
-    await page.goto('https://playwright.dev/');
-
-    // Expect a title "to contain" a substring.
-    await expect(page).toHaveTitle(/Playwright/);
-
-    // create a locator
-    const getStarted = page.getByText('Get Started');
-
-    // Expect an attribute "to be strictly equal" to the value.
-    await expect(getStarted).toHaveAttribute('href', '/docs/intro');
-
-    // Click the get started link.
-    await getStarted.click();
-
-    // Expects the URL to contain intro.
-    await expect(page).toHaveURL(/.*intro/);
-});

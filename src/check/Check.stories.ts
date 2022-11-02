@@ -69,7 +69,9 @@ export const Interactive: ComponentStoryFormat<Args> = {
         const check = within(context.canvasElement).getByTestId<Check>('test-check');
         const valueChange = jest.fn();
         check.addEventListener('value-change', valueChange);
-        await userEvent.click(check);
+        await userEvent.click(check, {
+            pointerEventsCheck: 0
+        });
 
         const content = check.shadowRoot.getElementById('content');
 
@@ -168,7 +170,9 @@ export const Disabled: ComponentStoryFormat<Args> = {
         await expect(disabledElement).toBeTruthy();
 
         const content = check.shadowRoot.getElementById('content');
-        await userEvent.click(content);
+        await userEvent.click(content, {
+            pointerEventsCheck: 0
+        });
         await fireEvent.keyDown(content, {
             key: ' ',
             code: 'Space'

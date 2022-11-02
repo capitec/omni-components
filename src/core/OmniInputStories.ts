@@ -6,6 +6,7 @@ import * as jest from 'jest-mock';
 import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
+import expect from '../utils/ExpectDOM';
 import { ComponentStoryFormat, raw } from '../utils/StoryUtils.js';
 import { OmniFormElement } from './OmniFormElement.js';
 
@@ -178,7 +179,9 @@ export const DisabledStory = <T extends HTMLElement, U extends BaseArgTypes>(tag
 
             const inputField = input.shadowRoot.getElementById('inputField') as OmniFormElement;
 
-            await userEvent.type(inputField, 'Value{space}Update{space}3');
+            await userEvent.type(inputField, 'Value{space}Update{space}3', {
+                pointerEventsCheck: 0
+            });
             await expect(inputField.value).toBeFalsy();
 
             await expect(inputTest).toBeCalledTimes(0);

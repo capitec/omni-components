@@ -51,7 +51,9 @@ export const Interactive: ComponentStoryFormat<Args> = {
         const valueChange = jest.fn();
         radio.addEventListener('value-change', valueChange);
 
-        await userEvent.click(content);
+        await userEvent.click(content, {
+            pointerEventsCheck: 0
+        });
         await fireEvent.keyDown(content, {
             key: ' ',
             code: 'Space'
@@ -130,7 +132,9 @@ export const Disabled: ComponentStoryFormat<Args> = {
         await expect(disabledElement).toBeTruthy();
 
         const content = radio.shadowRoot.getElementById('content');
-        await userEvent.click(content);
+        await userEvent.click(content, {
+            pointerEventsCheck: 0
+        });
         await fireEvent.keyDown(content, {
             key: ' ',
             code: 'Space'

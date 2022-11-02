@@ -61,7 +61,9 @@ export const Interactive: ComponentStoryFormat<BaseArgTypes> = {
         const inputField = numberField.shadowRoot.getElementById('inputField');
 
         const value = '12345';
-        await userEvent.type(inputField, value);
+        await userEvent.type(inputField, value, {
+            pointerEventsCheck: 0
+        });
         await expect(inputField).toHaveValue(parseInt(value));
 
         await expect(input).toBeCalledTimes(value.length);

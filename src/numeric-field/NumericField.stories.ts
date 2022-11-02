@@ -85,15 +85,27 @@ export const Interactive: ComponentStoryFormat<Args> = {
         await expect(increaseSlotElement).toBeTruthy();
         await expect(decreaseSlotElement).toBeTruthy();
 
-        await userEvent.click(decreaseSlotElement);
-        await userEvent.click(increaseSlotElement);
-        await userEvent.click(decreaseSlotElement);
-        await userEvent.click(increaseSlotElement);
-        await userEvent.click(increaseSlotElement);
+        await userEvent.click(decreaseSlotElement, {
+            pointerEventsCheck: 0
+        });
+        await userEvent.click(increaseSlotElement, {
+            pointerEventsCheck: 0
+        });
+        await userEvent.click(decreaseSlotElement, {
+            pointerEventsCheck: 0
+        });
+        await userEvent.click(increaseSlotElement, {
+            pointerEventsCheck: 0
+        });
+        await userEvent.click(increaseSlotElement, {
+            pointerEventsCheck: 0
+        });
 
         const inputField = numericField.shadowRoot.getElementById('inputField');
         const value = '12345';
-        await userEvent.type(inputField, value);
+        await userEvent.type(inputField, value, {
+            pointerEventsCheck: 0
+        });
 
         await expect(inputField).toHaveValue(212345);
 

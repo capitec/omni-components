@@ -1,10 +1,10 @@
 import { within } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
-import expect from 'expect';
 import * as jest from 'jest-mock';
 import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
+import expect from '../utils/ExpectDOM.js';
 import { raw, CSFIdentifier, ComponentStoryFormat } from '../utils/StoryUtils.js';
 import { Button } from './Button.js';
 
@@ -66,8 +66,12 @@ export const Interactive = {
         const button = within(context.canvasElement).getByTestId<Button>('test-button');
         const click = jest.fn();
         button.addEventListener('click', () => click());
-        await userEvent.click(button);
-        await userEvent.click(button);
+        await userEvent.click(button, {
+            pointerEventsCheck: 0
+        });
+        await userEvent.click(button, {
+            pointerEventsCheck: 0
+        });
         await expect(click).toBeCalledTimes(2);
     }
 } as ComponentStoryFormat<Args>;
@@ -132,8 +136,12 @@ export const Disabled = {
 
         const click = jest.fn();
         button.addEventListener('click', () => click());
-        await userEvent.click(button);
-        await userEvent.click(button);
+        await userEvent.click(button, {
+            pointerEventsCheck: 0
+        });
+        await userEvent.click(button, {
+            pointerEventsCheck: 0
+        });
         await expect(click).toBeCalledTimes(0);
     }
 } as ComponentStoryFormat<Args>;

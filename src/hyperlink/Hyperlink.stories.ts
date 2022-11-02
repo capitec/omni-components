@@ -51,8 +51,12 @@ export const Interactive: ComponentStoryFormat<Args> = {
         const Hyperlink = canvas.getByTestId('test-hyperlink');
         const click = jest.fn();
         Hyperlink.addEventListener('click', () => click());
-        await userEvent.click(Hyperlink);
-        await userEvent.click(Hyperlink);
+        await userEvent.click(Hyperlink, {
+            pointerEventsCheck: 0
+        });
+        await userEvent.click(Hyperlink, {
+            pointerEventsCheck: 0
+        });
         await expect(click).toBeCalledTimes(2);
     }
 };
@@ -120,8 +124,12 @@ export const Disabled: ComponentStoryFormat<Args> = {
         const click = jest.fn();
         Hyperlink.addEventListener('click', () => click());
 
-        await userEvent.click(Hyperlink);
-        await userEvent.click(Hyperlink);
+        await userEvent.click(Hyperlink, {
+            pointerEventsCheck: 0
+        });
+        await userEvent.click(Hyperlink, {
+            pointerEventsCheck: 0
+        });
         await expect(click).toBeCalledTimes(0);
     }
 };

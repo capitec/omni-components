@@ -82,12 +82,18 @@ export const Interactive: ComponentStoryFormat<Args> = {
 
         const showSlotElement = passwordField.shadowRoot.querySelector<HTMLSlotElement>('slot[name=show]');
         await expect(showSlotElement).toBeTruthy();
-        await userEvent.click(showSlotElement);
+        await userEvent.click(showSlotElement, {
+            pointerEventsCheck: 0
+        });
         const hideSlotElement = passwordField.shadowRoot.querySelector<HTMLSlotElement>('slot[name=hide]');
         await expect(hideSlotElement).toBeTruthy();
-        await userEvent.click(hideSlotElement);
+        await userEvent.click(hideSlotElement, {
+            pointerEventsCheck: 0
+        });
 
-        await userEvent.type(inputField, 'Value{space}Update');
+        await userEvent.type(inputField, 'Value{space}Update', {
+            pointerEventsCheck: 0
+        });
         const value = 'Value Update';
         await expect(inputField).toHaveValue(value);
 

@@ -170,8 +170,12 @@ export const AsHTMLElement: ComponentStoryFormat<Args> = {
 
         const span2 = (await querySelectorAsync(renderElement.renderRoot, 'span')) as HTMLSpanElement;
         await expect(span2).toHaveTextContent(JSON.stringify(data));
-        await userEvent.click(span2);
-        await userEvent.click(span2);
+        await userEvent.click(span2, {
+            pointerEventsCheck: 0
+        });
+        await userEvent.click(span2, {
+            pointerEventsCheck: 0
+        });
         await expect(clicked).toBeCalledTimes(2);
 
         clicked = () => alert('Clicked');
