@@ -7,10 +7,10 @@ import { html, LitElement, PropertyValueMap } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import pretty from 'pretty';
-// import Prism from 'prismjs';
 import { asRenderString } from '../utils/StoryUtils';
 import { StoryController } from './StoryController';
-// import 'prismjs';
+// import "prismjs";
+// import Prism from "prismjs";
 
 // import 'prismjs/components/prism-javascript.js' // Language
 // import 'prismjs/themes/prism-twilight.css' // Theme
@@ -22,7 +22,6 @@ export class StoryRenderer extends LitElement {
 
   @query('.interactive-code')
       interactiveCode: HTMLDivElement;
-
   @query('.interactive-story')
       interactiveStory: HTMLDivElement;
 
@@ -48,8 +47,8 @@ export class StoryRenderer extends LitElement {
       if (!this.interactiveSrc) {
           this.interactiveSrc = this._transformSource(asRenderString(res.strings || [], res.values || []));
       }
-      const srcP = this.interactiveSrc;
-      //   const srcP = Prism.highlight(
+      const srcP = this.interactiveSrc;  
+      //   Prism.highlight(
       //       this.interactiveSrc,
       //       Prism.languages.html,
       //       'html'
@@ -59,13 +58,13 @@ export class StoryRenderer extends LitElement {
       // console.log(srcP);
 
       return html`
-      <div class="interactive-story">
+      <div class="interactive-story Interactive" .data=${this.controller.story.Interactive}>
         ${this.overrideInteractive
           ? unsafeHTML(this.interactiveSrc)
           : this.renderInteractiveStory()}
       </div>
-      <button  @click="${() => this._play(this.controller.story.Interactive, '.interactive-story')}" >Play</button>
-      <div class="interactive-story-result"></div>
+      <button  @click="${() => this._play(this.controller.story.Interactive, '.Interactive')}" >Play</button>
+      <div class="Interactive-result"></div>
       <div class="interactive-code">
         <pre class="language-html"><code>${unsafeHTML(srcP)}</code></pre>
       </div>
@@ -116,11 +115,13 @@ export class StoryRenderer extends LitElement {
         const srcP = src; // Prism.highlight(src, Prism.languages.html, 'html');
 
         return html`
-          <div>
+          <div class="${key}" .data=${this.controller.story[key]}>
             ${this.controller.story[key].render(
               this.controller.story[key].args
             )}
           </div>
+          <button  @click="${() => this._play(this.controller.story[key], `.${key}`)}" >Play</button>
+          <div class="${key+'-result'}"></div>
           <div>
             <pre class="language-html"><code>${unsafeHTML(srcP)}</code></pre>
           </div>
