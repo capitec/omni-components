@@ -20,7 +20,7 @@
     "docs:readme": "npx web-component-analyzer ./src/**/*.{js,ts} --outFiles {dir}/README.md",
     "docs:elements": "node scripts/elements-list.mjs",
     "serve": "npm run clean && eleventy --serve --config=.eleventy.cjs --port 6006",
-    "test": "concurrently -k -r -s first \"npm run serve\" \"npx wait-on tcp:6006\" \"cross-env PW_EXPERIMENTAL_TS_ESM=1 npx playwright test\"",
+    "test": "concurrently -k -r -s first \"npm run serve\" \"npx wait-on tcp:6006 && cross-env PW_EXPERIMENTAL_TS_ESM=1 npx playwright test\"",
     "format": "prettier --config .prettierrc \"src/**/*.ts\" --write",
     "format:check": "prettier --config .prettierrc \"src/**/*.ts\" --check"
   },
