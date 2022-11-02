@@ -1,0 +1,16 @@
+---
+title: Spike Omni 11ty
+layout: page.njk
+pagination:
+    data: components
+    size: 1
+    alias: component
+permalink: "components/{{ component.name | slug }}/"
+---
+{# <div>{{ customElements | dump }}</div> #}
+
+<story-renderer story-path="{{ component.path }}">
+
+    <!-- More code here -->
+
+</story-renderer>

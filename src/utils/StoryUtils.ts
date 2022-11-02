@@ -321,7 +321,10 @@ const asRenderString = (strings: TemplateStringsArray, values: unknown[]) => {
     const v: any = [...values, ''].map((e) => {
         switch (typeof e) {
             case 'object': {
-                return asRenderString((e as any).strings, (e as any).values);
+                return asRenderString(
+                    (e as any).strings || [],
+                    (e as any).values || []
+                );
             }
             default:
                 return e;
@@ -330,7 +333,7 @@ const asRenderString = (strings: TemplateStringsArray, values: unknown[]) => {
     if (strings.length === 0 && values.length > 0) {
         return values[0] as string;
     }
-    return strings.reduce((acc, s, i) => acc + s + v[i], '');
+    return strings.reduce((acc, s, i) => acc + s + v[i].toString(), '');
 };
 
 function querySelectorAsync(parent: Element | ShadowRoot, selector: any, checkFrequencyMs: number = 500, timeoutMs: number = 15000) {
@@ -396,6 +399,7 @@ export {
     markdownCode,
     // markdownCodeRemote,
     // loadThemesListRemote,
+    asRenderString,
     filterJsDocLinks,
     formatMarkdownCodeElements,
     assignToSlot,

@@ -1,6 +1,6 @@
-<!-- ---
-title: Omni 11ty Starter
+---
+title: Omni Components
 layout: page.njk
---- -->
+---
 
 ## Hello from Index !!

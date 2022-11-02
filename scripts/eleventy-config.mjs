@@ -31,10 +31,10 @@ export default async config => {
         return pce;
     });
 
-    config.addPassthroughCopy('./docs/assets/');
-    config.addPassthroughCopy('./docs/favicon.ico');
+    config.addPassthroughCopy('./eleventy/assets/');
+    config.addPassthroughCopy('./eleventy/favicon.ico');
 
-    config.addWatchTarget('./docs/assets/');
+    config.addWatchTarget('./eleventy/assets/');
     config.addWatchTarget('./src/');
 
     config.addShortcode('year', () => `${new Date().getFullYear()}`);
