@@ -15,14 +15,14 @@ import {
     SuffixStory
 } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import expect from '../utils/ExpectDOM';
-import { assignToSlot, ComponentStoryFormat, CSFIdentifier, loadCssPropertiesRemote } from '../utils/StoryUtils';
+import expect from '../utils/ExpectDOM.js';
+import { assignToSlot, ComponentStoryFormat, CSFIdentifier } from '../utils/StoryUtils.js';
 import { PasswordField } from './PasswordField.js';
 
 import './PasswordField.js';
-import '../icons/Check.icon';
-import '../icons/LockOpen.icon';
-import '../icons/LockClosed.icon';
+import '../icons/Check.icon.js';
+import '../icons/LockOpen.icon.js';
+import '../icons/LockClosed.icon.js';
 
 export default {
     title: 'UI Components/Password Field',
@@ -34,12 +34,6 @@ export default {
         },
         show: {
             control: 'text'
-        }
-    },
-    parameters: {
-        cssprops: loadCssPropertiesRemote('omni-password-field'),
-        actions: {
-            handles: ['input']
         }
     }
 } as CSFIdentifier;

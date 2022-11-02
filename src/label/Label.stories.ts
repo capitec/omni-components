@@ -1,8 +1,8 @@
 import { within } from '@testing-library/dom';
 import { html } from 'lit';
 import { ifNotEmpty } from '../utils/Directives.js';
-import expect from '../utils/ExpectDOM';
-import { ComponentStoryFormat, CSFIdentifier, loadCssPropertiesRemote } from '../utils/StoryUtils';
+import expect from '../utils/ExpectDOM.js';
+import { ComponentStoryFormat, CSFIdentifier } from '../utils/StoryUtils.js';
 import { Label } from './Label.js';
 import './Label.js';
 
@@ -18,9 +18,6 @@ export default {
                 options: labelOptions
             }
         }
-    },
-    parameters: {
-        cssprops: loadCssPropertiesRemote('omni-label')
     }
 } as CSFIdentifier;
 

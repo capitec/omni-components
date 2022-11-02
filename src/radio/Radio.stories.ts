@@ -3,22 +3,15 @@ import userEvent from '@testing-library/user-event';
 import * as jest from 'jest-mock';
 import { html } from 'lit';
 import { ifNotEmpty } from '../utils/Directives.js';
-import expect from '../utils/ExpectDOM';
-import { ComponentStoryFormat, CSFIdentifier, loadCssPropertiesRemote } from '../utils/StoryUtils';
+import expect from '../utils/ExpectDOM.js';
+import { ComponentStoryFormat, CSFIdentifier } from '../utils/StoryUtils.js';
 import { Radio } from './Radio.js';
 
 import './Radio.js';
 
 export default {
     title: 'UI Components/Radio',
-    component: 'omni-radio',
-    argTypes: {},
-    parameters: {
-        actions: {
-            handles: ['value-change']
-        },
-        cssprops: loadCssPropertiesRemote('omni-radio')
-    }
+    component: 'omni-radio'
 } as CSFIdentifier;
 
 interface Args {

@@ -6,7 +6,7 @@ import * as jest from 'jest-mock';
 import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import { ComponentStoryFormat, raw } from '../utils/StoryUtils';
+import { ComponentStoryFormat, raw } from '../utils/StoryUtils.js';
 import { OmniFormElement } from './OmniFormElement.js';
 
 export const BaseArgTypeDefinitions = {

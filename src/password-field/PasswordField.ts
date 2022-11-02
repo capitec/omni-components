@@ -3,8 +3,8 @@ import { customElement, query, state } from 'lit/decorators.js';
 import { live } from 'lit/directives/live.js';
 import { OmniFormElement } from '../core/OmniFormElement.js';
 
-import '../icons/EyeHidden.icon';
-import '../icons/EyeVisible.icon';
+import '../icons/EyeHidden.icon.js';
+import '../icons/EyeVisible.icon.js';
 
 /**
  * A password input control.

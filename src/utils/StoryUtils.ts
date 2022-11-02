@@ -52,61 +52,61 @@ function loadCssProperties(element: string, customElements: any, cssDeclarations
     return cssDeclarations;
 }
 
-function loadThemeVariablesRemote() {
-    const themeVariables = loadCssPropertiesRemote('OmniElement');
-    return themeVariables;
-}
+// function loadThemeVariablesRemote() {
+//     const themeVariables = loadCssPropertiesRemote('OmniElement');
+//     return themeVariables;
+// }
 
-function loadCssPropertiesRemote(element: string, cssDeclarations: any = undefined): any {
-    if (!cssDeclarations) {
-        cssDeclarations = {};
-    }
+// function loadCssPropertiesRemote(element: string, cssDeclarations: any = undefined): any {
+//     if (!cssDeclarations) {
+//         cssDeclarations = {};
+//     }
 
-    let error = undefined;
-    let output = '';
-    const request = new XMLHttpRequest();
-    request.open('GET', 'custom-elements.json', false); // `false` makes the request synchronous
-    request.onload = () => {
-        output = request.responseText;
-    };
-    request.onerror = () => {
-        error = request.status;
-    };
-    request.send(null);
+//     let error = undefined;
+//     let output = '';
+//     const request = new XMLHttpRequest();
+//     request.open('GET', 'custom-elements.json', false); // `false` makes the request synchronous
+//     request.onload = () => {
+//         output = request.responseText;
+//     };
+//     request.onerror = () => {
+//         error = request.status;
+//     };
+//     request.send(null);
 
-    if (error) {
-        return cssDeclarations;
-    }
+//     if (error) {
+//         return cssDeclarations;
+//     }
 
-    const customElements = JSON.parse(output);
+//     const customElements = JSON.parse(output);
 
-    cssDeclarations = loadCssProperties(element, customElements, cssDeclarations);
+//     cssDeclarations = loadCssProperties(element, customElements, cssDeclarations);
 
-    // console.log(element, cssDeclarations);
-    return cssDeclarations;
-}
+//     // console.log(element, cssDeclarations);
+//     return cssDeclarations;
+// }
 
-function loadCustomElementsRemote(): any {
-    let error = undefined;
-    let output = '';
-    const request = new XMLHttpRequest();
-    request.open('GET', 'custom-elements.json', false); // `false` makes the request synchronous
-    request.onload = () => {
-        output = request.responseText;
-    };
-    request.onerror = () => {
-        error = `${request.status} - ${request.statusText}`;
-    };
-    request.send(null);
+// function loadCustomElementsRemote(): any {
+//     let error = undefined;
+//     let output = '';
+//     const request = new XMLHttpRequest();
+//     request.open('GET', 'custom-elements.json', false); // `false` makes the request synchronous
+//     request.onload = () => {
+//         output = request.responseText;
+//     };
+//     request.onerror = () => {
+//         error = `${request.status} - ${request.statusText}`;
+//     };
+//     request.send(null);
 
-    if (error) {
-        throw new Error(error);
-    }
+//     if (error) {
+//         throw new Error(error);
+//     }
 
-    const customElements = JSON.parse(output);
+//     const customElements = JSON.parse(output);
 
-    return customElements;
-}
+//     return customElements;
+// }
 
 function loadCustomElementsModuleFor(elementName: string, customElements: any) {
     return customElements.modules.find((module: any) =>
@@ -114,20 +114,20 @@ function loadCustomElementsModuleFor(elementName: string, customElements: any) {
     );
 }
 
-function loadCustomElementsModuleForRemote(elementName: string) {
-    const customElements = loadCustomElementsRemote();
-    return loadCustomElementsModuleFor(elementName, customElements);
-}
+// function loadCustomElementsModuleForRemote(elementName: string) {
+//     const customElements = loadCustomElementsRemote();
+//     return loadCustomElementsModuleFor(elementName, customElements);
+// }
 
 function loadSlotFor(elementName: string, slotName: string, customElements: any) {
     const module = loadCustomElementsModuleFor(elementName, customElements);
     return loadSlotForModule(module, slotName);
 }
 
-function loadSlotForRemote(elementName: string, slotName: string) {
-    const module = loadCustomElementsModuleForRemote(elementName);
-    return loadSlotForModule(module, slotName);
-}
+// function loadSlotForRemote(elementName: string, slotName: string) {
+//     const module = loadCustomElementsModuleForRemote(elementName);
+//     return loadSlotForModule(module, slotName);
+// }
 
 function loadSlotForModule(elementModule: any, slotName: string): { name: string; description: string } {
     const declaration = elementModule.declarations.find(
@@ -150,10 +150,10 @@ function loadDefaultSlotFor(elementName: string, customElements: any) {
     return loadDefaultSlotForModule(module);
 }
 
-function loadDefaultSlotForRemote(elementName: string) {
-    const module = loadCustomElementsModuleForRemote(elementName);
-    return loadDefaultSlotForModule(module);
-}
+// function loadDefaultSlotForRemote(elementName: string) {
+//     const module = loadCustomElementsModuleForRemote(elementName);
+//     return loadDefaultSlotForModule(module);
+// }
 
 function loadDefaultSlotForModule(elementModule: any) {
     return loadSlotForModule(elementModule, '');
@@ -206,66 +206,66 @@ function markdownCode(code: string, lang: string = '') {
     return md;
 }
 
-function markdownCodeRemote(src: string, lang: string = '') {
-    let error = undefined;
-    let output = '';
-    const request = new XMLHttpRequest();
-    request.open('GET', src, false); // `false` makes the request synchronous
-    request.onload = () => {
-        output = request.responseText;
-    };
-    request.onerror = () => {
-        error = `${request.status} - ${request.statusText}`;
-    };
-    request.send(null);
+// function markdownCodeRemote(src: string, lang: string = '') {
+//     let error = undefined;
+//     let output = '';
+//     const request = new XMLHttpRequest();
+//     request.open('GET', src, false); // `false` makes the request synchronous
+//     request.onload = () => {
+//         output = request.responseText;
+//     };
+//     request.onerror = () => {
+//         error = `${request.status} - ${request.statusText}`;
+//     };
+//     request.send(null);
 
-    if (error) {
-        throw new Error(error);
-    }
+//     if (error) {
+//         throw new Error(error);
+//     }
 
-    return markdownCode(output, lang);
-}
+//     return markdownCode(output, lang);
+// }
 
-function loadFileRemote(src: string) {
-    let error = undefined;
-    let output = '';
-    const request = new XMLHttpRequest();
-    request.open('GET', src, false); // `false` makes the request synchronous
-    request.onload = () => {
-        output = request.responseText;
-    };
-    request.onerror = () => {
-        error = `${request.status} - ${request.statusText}`;
-    };
-    request.send(null);
+// function loadFileRemote(src: string) {
+//     let error = undefined;
+//     let output = '';
+//     const request = new XMLHttpRequest();
+//     request.open('GET', src, false); // `false` makes the request synchronous
+//     request.onload = () => {
+//         output = request.responseText;
+//     };
+//     request.onerror = () => {
+//         error = `${request.status} - ${request.statusText}`;
+//     };
+//     request.send(null);
 
-    if (error) {
-        throw new Error(error);
-    }
-    return output;
-}
+//     if (error) {
+//         throw new Error(error);
+//     }
+//     return output;
+// }
 
-function loadThemesListRemote() {
-    let error = undefined;
-    let output = '';
-    const request = new XMLHttpRequest();
-    request.open('GET', 'themes-list.json', false); // `false` makes the request synchronous
-    request.onload = () => {
-        output = request.responseText;
-    };
-    request.onerror = () => {
-        error = `${request.status} - ${request.statusText}`;
-    };
-    request.send(null);
+// function loadThemesListRemote() {
+//     let error = undefined;
+//     let output = '';
+//     const request = new XMLHttpRequest();
+//     request.open('GET', 'themes-list.json', false); // `false` makes the request synchronous
+//     request.onload = () => {
+//         output = request.responseText;
+//     };
+//     request.onerror = () => {
+//         error = `${request.status} - ${request.statusText}`;
+//     };
+//     request.send(null);
 
-    if (error) {
-        throw new Error(error);
-    }
+//     if (error) {
+//         throw new Error(error);
+//     }
 
-    const list = JSON.parse(output);
+//     const list = JSON.parse(output);
 
-    return list.themes;
-}
+//     return list.themes;
+// }
 
 function formatMarkdownCodeElements(str: string, lang: string = 'js') {
     if (!str) {
@@ -380,22 +380,22 @@ export type CSFIdentifier = {
 };
 
 export {
-    loadCustomElementsRemote,
+    // loadCustomElementsRemote,
     loadCustomElementsModuleFor,
-    loadCustomElementsModuleForRemote,
+    // loadCustomElementsModuleForRemote,
     loadSlotFor,
     loadSlotForModule,
-    loadSlotForRemote,
+    // loadSlotForRemote,
     loadDefaultSlotFor,
-    loadDefaultSlotForRemote,
+    // loadDefaultSlotForRemote,
     loadDefaultSlotForModule,
-    loadCssPropertiesRemote,
+    // loadCssPropertiesRemote,
     loadCssProperties,
-    loadThemeVariablesRemote,
-    loadFileRemote,
+    // loadThemeVariablesRemote,
+    // loadFileRemote,
     markdownCode,
-    markdownCodeRemote,
-    loadThemesListRemote,
+    // markdownCodeRemote,
+    // loadThemesListRemote,
     filterJsDocLinks,
     formatMarkdownCodeElements,
     assignToSlot,

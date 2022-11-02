@@ -3,8 +3,8 @@ import userEvent from '@testing-library/user-event';
 import * as jest from 'jest-mock';
 import { html } from 'lit';
 import { ifNotEmpty } from '../utils/Directives.js';
-import expect from '../utils/ExpectDOM';
-import { ComponentStoryFormat, CSFIdentifier, loadCssPropertiesRemote } from '../utils/StoryUtils';
+import expect from '../utils/ExpectDOM.js';
+import { ComponentStoryFormat, CSFIdentifier } from '../utils/StoryUtils.js';
 import './Hyperlink.js';
 
 const linkTarget = ['_self', '_blank', '_parent', '_top'] as const;
@@ -15,12 +15,6 @@ export default {
     argTypes: {
         size: { control: 'radio', options: ['default', 'small'] },
         target: { control: 'radio', options: linkTarget }
-    },
-    parameters: {
-        cssprops: loadCssPropertiesRemote('omni-hyperlink'),
-        actions: {
-            handles: ['click']
-        }
     }
 } as CSFIdentifier;
 

@@ -5,18 +5,15 @@ import userEvent from '@testing-library/user-event';
 import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import expect from '../utils/ExpectDOM';
-import { assignToSlot, ComponentStoryFormat, CSFIdentifier, loadCssPropertiesRemote, querySelectorAsync } from '../utils/StoryUtils.js';
+import expect from '../utils/ExpectDOM.js';
+import { assignToSlot, ComponentStoryFormat, CSFIdentifier, querySelectorAsync } from '../utils/StoryUtils.js';
 import { RenderElement, RenderFunction } from './RenderElement.js';
 
 import './RenderElement';
 
 export default {
     title: 'UI Components/RenderElement',
-    component: 'omni-render-element',
-    parameters: {
-        cssprops: loadCssPropertiesRemote('omni-render-element')
-    }
+    component: 'omni-render-element'
 } as CSFIdentifier;
 
 interface Args {

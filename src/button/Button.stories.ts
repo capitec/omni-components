@@ -5,7 +5,7 @@ import * as jest from 'jest-mock';
 import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import { loadCssPropertiesRemote, raw, CSFIdentifier, ComponentStoryFormat } from '../utils/StoryUtils.js';
+import { raw, CSFIdentifier, ComponentStoryFormat } from '../utils/StoryUtils.js';
 import { Button } from './Button.js';
 
 import './Button.js';
@@ -32,12 +32,6 @@ export default {
         '[Default Slot]': {
             control: 'text'
         }
-    },
-    parameters: {
-        actions: {
-            handles: ['value-change']
-        },
-        cssprops: loadCssPropertiesRemote('omni-button')
     }
 } as CSFIdentifier;
 

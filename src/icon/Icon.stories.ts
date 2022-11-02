@@ -3,7 +3,7 @@ import expect from 'expect';
 import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import { ComponentStoryFormat, CSFIdentifier, raw } from '../utils/StoryUtils';
+import { ComponentStoryFormat, CSFIdentifier, raw } from '../utils/StoryUtils.js';
 import { Icon } from './Icon.js';
 import './Icon.js';
 

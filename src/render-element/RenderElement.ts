@@ -3,7 +3,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import OmniElement from '../core/OmniElement.js';
 
-import '../icons/Loading.icon';
+import '../icons/Loading.icon.js';
 
 /**
  * An element that defers content rendering to a provided function/promise.

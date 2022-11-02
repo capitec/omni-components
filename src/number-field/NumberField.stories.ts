@@ -15,8 +15,8 @@ import {
     SuffixStory
 } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import expect from '../utils/ExpectDOM';
-import { assignToSlot, ComponentStoryFormat, CSFIdentifier, loadCssPropertiesRemote } from '../utils/StoryUtils';
+import expect from '../utils/ExpectDOM.js';
+import { assignToSlot, ComponentStoryFormat, CSFIdentifier } from '../utils/StoryUtils.js';
 import { NumberField } from './NumberField.js';
 
 import './NumberField.js';
@@ -24,13 +24,7 @@ import './NumberField.js';
 export default {
     title: 'UI Components/Number Field',
     component: 'omni-number-field',
-    argTypes: BaseArgTypeDefinitions,
-    parameters: {
-        cssprops: loadCssPropertiesRemote('omni-number-field'),
-        actions: {
-            handles: ['input']
-        }
-    }
+    argTypes: BaseArgTypeDefinitions
 } as CSFIdentifier;
 
 export const Interactive: ComponentStoryFormat<BaseArgTypes> = {

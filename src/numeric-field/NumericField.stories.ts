@@ -15,12 +15,12 @@ import {
     SuffixStory
 } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import expect from '../utils/ExpectDOM';
-import { assignToSlot, ComponentStoryFormat, CSFIdentifier, loadCssPropertiesRemote } from '../utils/StoryUtils';
+import expect from '../utils/ExpectDOM.js';
+import { assignToSlot, ComponentStoryFormat, CSFIdentifier } from '../utils/StoryUtils.js';
 import { NumericField } from './NumericField.js';
 
-import '../icons/LockOpen.icon';
-import '../icons/LockClosed.icon';
+import '../icons/LockOpen.icon.js';
+import '../icons/LockClosed.icon.js';
 
 import './NumericField.js';
 
@@ -34,12 +34,6 @@ export default {
         },
         decrease: {
             control: 'text'
-        }
-    },
-    parameters: {
-        cssprops: loadCssPropertiesRemote('omni-numeric-field'),
-        actions: {
-            handles: ['input']
         }
     }
 } as CSFIdentifier;

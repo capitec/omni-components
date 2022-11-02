@@ -4,8 +4,8 @@ import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import expect from '../utils/ExpectDOM';
-import { assignToSlot, ComponentStoryFormat, CSFIdentifier, loadCssPropertiesRemote, raw } from '../utils/StoryUtils.js';
+import expect from '../utils/ExpectDOM.js';
+import { assignToSlot, ComponentStoryFormat, CSFIdentifier, raw } from '../utils/StoryUtils.js';
 import { Chip } from './Chip.js';
 
 import './Chip.js';
@@ -21,12 +21,6 @@ export default {
         close_icon: {
             control: 'text'
         }
-    },
-    parameters: {
-        actions: {
-            handles: ['click', 'remove']
-        },
-        cssprops: loadCssPropertiesRemote('omni-chip')
     }
 } as CSFIdentifier;
 

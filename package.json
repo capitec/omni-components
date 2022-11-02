@@ -1,6 +1,7 @@
 {
   "name": "@capitec/omni-components",
   "version": "0.2.3",
+  "type": "module",
   "description": "Omni Components come with minimal dependencies to reduce the bloat in your project. All web components base off <strong>OmniElement</strong> (Which itself is based off <a href=\"https://lit.dev\"><strong>LitElement</strong></a>) and are each available as fully standalone imports.",
   "scripts": {
     "clean": "npx rimraf dist docs",
@@ -95,7 +96,8 @@
     "rimraf": "^3.0.2",
     "typescript": "^4.7.4",
     "wait-on": "^6.0.1",
-    "web-component-analyzer": "^1.1.6"
+    "web-component-analyzer": "^1.1.6",
+    "xhr2": "^0.2.1"
   },
   "dependencies": {
     "lit": "^2.3.1"

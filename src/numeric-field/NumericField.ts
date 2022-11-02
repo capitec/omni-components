@@ -3,8 +3,8 @@ import { customElement, query } from 'lit/decorators.js';
 import { live } from 'lit/directives/live.js';
 import { OmniFormElement } from '../core/OmniFormElement.js';
 
-import '../icons/Plus.icon';
-import '../icons/Minus.icon';
+import '../icons/Plus.icon.js';
+import '../icons/Minus.icon.js';
 
 /**
  * An input control that allows a user to enter a single line of numbers with a stepper control.

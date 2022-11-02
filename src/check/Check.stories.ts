@@ -4,8 +4,8 @@ import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import expect from '../utils/ExpectDOM';
-import { assignToSlot, ComponentStoryFormat, CSFIdentifier, loadCssPropertiesRemote, raw } from '../utils/StoryUtils';
+import expect from '../utils/ExpectDOM.js';
+import { assignToSlot, ComponentStoryFormat, CSFIdentifier, raw } from '../utils/StoryUtils.js';
 import { Check } from './Check.js';
 import './Check.js';
 
@@ -19,12 +19,6 @@ export default {
         check_icon: {
             control: 'text'
         }
-    },
-    parameters: {
-        actions: {
-            handles: ['value-change']
-        },
-        cssprops: loadCssPropertiesRemote('omni-check')
     }
 } as CSFIdentifier;
 
