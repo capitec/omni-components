@@ -91,7 +91,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
             pointerEventsCheck: 0
         });
 
-        await userEvent.type(inputField, 'Value{space}Update', {
+        await userEvent.type(inputField, 'Value Update', {
             pointerEventsCheck: 0
         });
         const value = 'Value Update';

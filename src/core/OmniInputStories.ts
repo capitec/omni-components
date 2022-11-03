@@ -179,7 +179,7 @@ export const DisabledStory = <T extends HTMLElement, U extends BaseArgTypes>(tag
 
             const inputField = input.shadowRoot.getElementById('inputField') as OmniFormElement;
 
-            await userEvent.type(inputField, 'Value{space}Update{space}3', {
+            await userEvent.type(inputField, 'Value Update 3', {
                 pointerEventsCheck: 0
             });
             await expect(inputField.value).toBeFalsy();
