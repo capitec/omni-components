@@ -5,6 +5,6 @@
         "runem.lit-plugin",
         "streetsidesoftware.code-spell-checker",
         "github.vscode-pull-request-github",
-        "unifiedjs.vscode-mdx"
+        "ronnidc.nunjucks"
     ]
 }
