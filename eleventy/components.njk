@@ -8,12 +8,7 @@ pagination:
 permalink: "components/{{ component.name | slug }}/"
 ---
 
+<div>{{ customElements | getTagName(component.name) }}</div> 
+<div>{{ customElements | getDescription(component.name) }}</div> 
 
-
-{# <div>{{ customElements | dump }}</div> #}
-
-<story-renderer story-path="{{ component.path }}">
-
-    <!-- More code here -->
-
-</story-renderer>
+<story-renderer path="{{ component.path }}" tag="{{ customElements | getTagName(component.name) }}"></story-renderer>

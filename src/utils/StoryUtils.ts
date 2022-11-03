@@ -108,6 +108,10 @@ function loadCssProperties(element: string, customElements: any, cssDeclarations
 //     return customElements;
 // }
 
+function loadCustomElementsModuleByFileFor(moduleName: string, customElements: any) {
+    return customElements.modules.find((module: any) => module.path.endsWith(`${moduleName}.ts`));
+}
+
 function loadCustomElementsModuleFor(elementName: string, customElements: any) {
     return customElements.modules.find((module: any) =>
         module.declarations.find((d: any) => (d.tagName === elementName && d.customElement) || d.name === elementName)
@@ -398,6 +402,7 @@ export type CSFIdentifier = {
 
 export {
     // loadCustomElementsRemote,
+    loadCustomElementsModuleByFileFor,
     loadCustomElementsModuleFor,
     // loadCustomElementsModuleForRemote,
     loadSlotFor,

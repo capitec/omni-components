@@ -11,7 +11,8 @@ import './CodeMirror.js';
 
 @customElement('story-renderer')
 export class StoryRenderer extends LitElement {
-    @property({ type: String, attribute: 'story-path', reflect: true }) storyPath: string;
+    @property({ type: String, reflect: true }) path: string;
+    @property({ type: String, reflect: true }) tag: string;
 
     @state() interactiveSrc: string;
 
@@ -21,7 +22,7 @@ export class StoryRenderer extends LitElement {
 
     override connectedCallback() {
         super.connectedCallback();
-        this.controller = new StoryController(this, this.storyPath);
+        this.controller = new StoryController(this, this.path);
     }
 
     protected override render() {
