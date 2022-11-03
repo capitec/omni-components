@@ -44,7 +44,7 @@ export default async config => {
     });
 
     config.setBrowserSyncConfig({
-        logLevel: 'debug',
+        logLevel: 'info',
         server: {
             baseDir: 'docs',
             routes: {
@@ -71,7 +71,9 @@ async function build() {
 
     await esbuild.build({
         logOverride: {
-            'unsupported-dynamic-import': 'silent'
+            'unsupported-dynamic-import': 'silent',
+            'unsupported-regexp': 'silent',
+            'unsupported-require-call': 'silent'
         },
         format: 'esm',
         target: 'es2017',
@@ -96,7 +98,7 @@ async function build() {
                 }
             })
         ],
-        logLevel: 'debug',
+        logLevel: 'info',
         minify: true,
         sourcemap: 'linked',
         sourcesContent: false
