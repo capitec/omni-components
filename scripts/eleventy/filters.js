@@ -1,4 +1,4 @@
-import { loadCustomElementsModuleByFileFor, formatMarkdownCodeElements } from '../../dist/utils/StoryUtils.js';
+import { loadCustomElementsModuleByFileFor, markdownCodeToHtml } from '../../dist/utils/StoryUtils.js';
 
 export function getTagName(value, componentName) {
     const component = loadCustomElementsModuleByFileFor(componentName, value);
@@ -9,5 +9,5 @@ export function getTagName(value, componentName) {
 export function getDescription(value, componentName) {
     const component = loadCustomElementsModuleByFileFor(componentName, value);
     const declaration = component.declarations.find(d => d.name === componentName);
-    return formatMarkdownCodeElements(declaration.description);
+    return markdownCodeToHtml(declaration.description);
 }

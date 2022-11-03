@@ -1,3 +1,9 @@
+import { html as langHtml } from '@codemirror/lang-html';
+import { javascript } from '@codemirror/lang-javascript';
+import { githubDark } from '@ddietr/codemirror-themes/github-dark.js';
+import { html } from 'lit';
+import { render } from 'lit-html';
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const codeSnippet = '```';
 
@@ -278,6 +284,66 @@ function formatMarkdownCodeElements(str: string, lang: string = 'js') {
     return str.replaceAll(`${codeSnippet}`, `\r\n${codeSnippet}`).replaceAll(`${codeSnippet}${lang}`, `${codeSnippet}${lang}\r\n`);
 }
 
+function markdownCodeToHtml(str: string, lang: string = 'js') {
+    if (!str) {
+        return str;
+    }
+    return str.replaceAll(`${codeSnippet}${lang}`, `<pre><code data-language="${lang}">`).replaceAll(`${codeSnippet}`, `</code></pre>`);
+}
+
+function enhanceCodeBlocks(parent: Element) {
+    if (!parent) {
+        parent = document.body;
+    }
+
+    const codeBlocks = parent.querySelectorAll('code');
+    codeBlocks.forEach((codeBlock) => {
+        let codeLines = codeBlock.innerHTML.split('\n');
+        let code = '';
+        for (let index = 0; index < codeLines.length; index++) {
+            const line = codeLines[index];
+            if (code || (line && line !== '\n')) {
+                if (!code) {
+                    code = line;
+                } else {
+                    code += `\n${line}`;
+                }
+            }
+        }
+        codeLines = code.split('\n');
+        code = '';
+        for (let index = codeLines.length - 1; index >= 0; index--) {
+            const line = codeLines[index];
+            if (code || (line && line !== '\n')) {
+                if (!code) {
+                    code = line;
+                } else {
+                    code += `\n${line}`;
+                }
+            }
+        }
+        const language = codeBlock.attributes.getNamedItem('data-language');
+        if (codeBlock.parentElement.tagName === `pre`) {
+            codeBlock = codeBlock.parentElement;
+        }
+        codeBlock.insertAdjacentHTML('beforebegin', '<div></div>');
+        const codeContainer = codeBlock.previousSibling as HTMLElement;
+
+        render(
+            html` <omni-code-mirror
+                .extensions="${() => [
+                    githubDark,
+                    language && (language.value === 'js' || language.value === 'javascript') ? javascript() : langHtml()
+                ]}"
+                .code="${code}"
+                read-only>
+            </omni-code-mirror>`,
+            codeContainer
+        );
+        codeBlock.parentElement.removeChild(codeBlock);
+    });
+}
+
 function filterJsDocLinks(jsdoc: string) {
     if (!jsdoc) return jsdoc;
 
@@ -366,10 +432,18 @@ function querySelectorAsync(parent: Element | ShadowRoot, selector: any, checkFr
                 setTimeout(function () {
                     if (timeoutMs && Date.now() - startTimeInMs > timeoutMs) {
                         try {
-                            reject(new Error(`Timed out waiting for query (${selector}) in ${timeoutMs} ms \n\n${parent.toString()} - ${parent.nodeName} - ${parent.nodeValue} \n${parent.parentElement ? parent.parentElement.innerHTML : parent.textContent} \n${parent.innerHTML}`));
+                            reject(
+                                new Error(
+                                    `Timed out waiting for query (${selector}) in ${timeoutMs} ms \n\n${parent.toString()} - ${
+                                        parent.nodeName
+                                    } - ${parent.nodeValue} \n${
+                                        parent.parentElement ? parent.parentElement.innerHTML : parent.textContent
+                                    } \n${parent.innerHTML}`
+                                )
+                            );
                         } catch (_) {
                             reject(new Error(`Timed out waiting for query (${selector}) in ${timeoutMs} ms \n${_.toString()}`));
-                        }                        
+                        }
                     } else {
                         loopSearch();
                     }
@@ -421,7 +495,9 @@ export {
     asRenderString,
     filterJsDocLinks,
     formatMarkdownCodeElements,
+    markdownCodeToHtml,
     assignToSlot,
+    enhanceCodeBlocks,
     raw,
     querySelectorAsync
 };

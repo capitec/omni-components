@@ -9,6 +9,11 @@ permalink: "components/{{ component.name | slug }}/"
 ---
 
 <div>{{ customElements | getTagName(component.name) }}</div> 
-<div>{{ customElements | getDescription(component.name) }}</div> 
+<div>{{ customElements | getDescription(component.name) | safe }}</div> 
 
 <story-renderer path="{{ component.path }}" tag="{{ customElements | getTagName(component.name) }}"></story-renderer>
+
+<script type="module" defer>
+    import { enhanceCodeBlocks } from '/dist/utils/StoryUtils.js';
+    enhanceCodeBlocks();
+</script>
