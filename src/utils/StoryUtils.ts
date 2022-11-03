@@ -346,7 +346,7 @@ const asRenderString = (strings: TemplateStringsArray, values: unknown[]): strin
     }
 };
 
-function querySelectorAsync(parent: Element | ShadowRoot, selector: any, checkFrequencyMs: number = 500, timeoutMs: number = 15000) {
+function querySelectorAsync(parent: Element | ShadowRoot, selector: any, checkFrequencyMs: number = 500, timeoutMs: number = 1) {
     return new Promise((resolve, reject) => {
         let element = parent.querySelector(selector);
         if (element) {
@@ -361,7 +361,11 @@ function querySelectorAsync(parent: Element | ShadowRoot, selector: any, checkFr
             } else {
                 setTimeout(function () {
                     if (timeoutMs && Date.now() - startTimeInMs > timeoutMs) {
-                        reject(new Error(`Timed out waiting for query (${selector}) in ${timeoutMs} ms`));
+                        try {
+                            reject(new Error(`Timed out waiting for query (${selector}) in ${timeoutMs} ms \n\n${parent.toString()} - ${parent.nodeName} - ${parent.nodeValue} \n${parent.parentElement ? parent.parentElement.innerHTML : parent.textContent} \n${parent.innerHTML}`));
+                        } catch (_) {
+                            reject(new Error(`Timed out waiting for query (${selector}) in ${timeoutMs} ms \n${_.toString()}`));
+                        }                        
                     } else {
                         loopSearch();
                     }

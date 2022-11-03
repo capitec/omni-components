@@ -60,10 +60,10 @@ export const Interactive: ComponentStoryFormat<Args> = {
         const renderElement = within(context.canvasElement).getByTestId<RenderElement>('test-render');
         const data = JSON.parse(JSON.stringify(context.args.data));
 
-        await expect(renderElement.renderRoot.querySelector('omni-loading-icon')).toBeTruthy();
+        // await expect(renderElement.renderRoot.querySelector('omni-loading-icon')).toBeTruthy();
 
         console.log(`Running as '${navigator.userAgent}'`);
-        if (navigator.userAgent === 'Storybook Test Runner') {
+        if (navigator.userAgent === 'Test Runner') {
             console.log('CICD Test - Not Visual');
         } else {
             await new Promise<void>((r) => setTimeout(() => r(), 10000));
@@ -80,6 +80,9 @@ export const Interactive: ComponentStoryFormat<Args> = {
 
         const span2 = await querySelectorAsync(renderElement.renderRoot, 'span');
         await expect(span2).toHaveTextContent(JSON.stringify(data));
+
+        // Cleanup
+        renderElement.data = context.args.data;
     }
 };
 
@@ -150,10 +153,10 @@ export const AsHTMLElement: ComponentStoryFormat<Args> = {
         const data = JSON.parse(JSON.stringify(context.args.data));
         clicked = jest.fn();
 
-        await expect(renderElement.renderRoot.querySelector('omni-loading-icon')).toBeTruthy();
+        // await expect(renderElement.renderRoot.querySelector('omni-loading-icon')).toBeTruthy();
 
         console.log(`Running as '${navigator.userAgent}'`);
-        if (navigator.userAgent === 'Storybook Test Runner') {
+        if (navigator.userAgent === 'Test Runner') {
             console.log('CICD Test - Not Visual');
         } else {
             await new Promise<void>((r) => setTimeout(() => r(), 10000));
@@ -179,6 +182,9 @@ export const AsHTMLElement: ComponentStoryFormat<Args> = {
         await expect(clicked).toBeCalledTimes(2);
 
         clicked = () => alert('Clicked');
+
+        // Cleanup
+        renderElement.data = context.args.data;
     }
 };
 
@@ -225,10 +231,10 @@ export const AsString: ComponentStoryFormat<Args> = {
         const renderElement = within(context.canvasElement).getByTestId<RenderElement>('test-render');
         const data = JSON.parse(JSON.stringify(context.args.data));
 
-        await expect(renderElement.renderRoot.querySelector('omni-loading-icon')).toBeTruthy();
+        // await expect(renderElement.renderRoot.querySelector('omni-loading-icon')).toBeTruthy();
 
         console.log(`Running as '${navigator.userAgent}'`);
-        if (navigator.userAgent === 'Storybook Test Runner') {
+        if (navigator.userAgent === 'Test Runner') {
             console.log('CICD Test - Not Visual');
         } else {
             await new Promise<void>((r) => setTimeout(() => r(), 10000));
@@ -245,5 +251,8 @@ export const AsString: ComponentStoryFormat<Args> = {
 
         const span2 = await querySelectorAsync(renderElement.renderRoot, 'span');
         await expect(span2).toHaveTextContent(JSON.stringify(data));
+
+        // Cleanup
+        renderElement.data = context.args.data;
     }
 };
