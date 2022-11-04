@@ -10,14 +10,29 @@
 
     <!-- Omni Components -->
     <script type="module" src="/dist/utils/StoryRenderer.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const menuButton = document.querySelector('.menu-button');
+            menuButton.addEventListener('click', (e) => {
+                const nav = document.querySelector('nav');
+                if (nav.classList.contains('menu-mobile')) {
+                    nav.classList.remove('menu-mobile');
+                    menuButton.innerText = 'open';
+                } else {
+                    nav.classList.add('menu-mobile');
+                    menuButton.innerText = 'close';
+                }
+            });
+        });
+    </script>
 </head>
 <body>
     <div dir="ltr">
         <div class="container">
             <header>
                 <div class="menu-button">open</div>
-                <div>center</div>
-                <div>right</div>
+                <div>logo</div>
+                <div>search + toggle</div>
             </header>
 
             {% include "nav.njk" %}
@@ -26,20 +41,6 @@
             <footer>
                 Footer
             </footer>
-
-            <script defer>
-                const menuButton = document.querySelector('.menu-button');
-                menuButton.addEventListener('click', (e) => {
-                    const nav = document.querySelector('nav');
-                    if (nav.classList.contains('menu-mobile')) {
-                        nav.classList.remove('menu-mobile');
-                        menuButton.innerText = 'open';
-                    } else {
-                        nav.classList.add('menu-mobile');
-                        menuButton.innerText = 'close';
-                    }
-                })
-            </script
         </div>
         
     </div>
