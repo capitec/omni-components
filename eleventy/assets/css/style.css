@@ -3,6 +3,10 @@
     margin: 0;
 }
 
+*, ::before, ::after {
+    box-sizing: border-box;
+}
+
 body {
     -webkit-font-smoothing: antialiased;
 }
@@ -11,7 +15,7 @@ body {
     padding-left: 260px;
 }
 
-header {
+.header {
     top: 0;
     left: 0;
     right: 0;
@@ -35,46 +39,100 @@ header {
 
 .menu-desktop {
     box-sizing: border-box;
-    height: 100vh;
+    height: calc(100vh - 60px);
     border-right: 1px solid red;
     background-color: orange;
     position: fixed;
     z-index: 5;
+    padding-top: 0;
     top: 60px;
-    /* spock = 0px */
     bottom: 0px;
     left: 0px;
     width: 260px;
+    overflow-y: auto;
 }
 
 .menu-mobile {
     box-sizing: border-box;
-    height: 100vh;
+    height: calc(100vh - 60px);
     border-right: 1px solid rgb(26, 27, 30);
     background-color: orange;
     position: fixed;
     z-index: 5;
     top: 60px;
-    /* spock = 0px */
     bottom: 0px;
     left: 0px;
     width: 260px;
 }
 
 main {
-    /* top: 60px; */
     scroll-margin-top: 60px;
     -webkit-flex: 1;
     -ms-flex: 1;
     flex: 1;
     padding-top: 60px;
-    /* spock does not have */
 }
 
-footer {
+.footer {
     display: flex;
-    background-color: darkkhaki
+    background-color: darkkhaki;
 }
+
+
+/* COMPONENTS */
+
+.component-meta {
+    position: relative;
+    z-index: 4;
+    background-color: lightyellow;
+    padding-left: 48px;
+    padding-right: 48px;
+}
+
+.component-tab-container {
+    position: relative;
+    z-index: 1;
+    background-color: lightcoral;
+    box-shadow: none;
+    padding-bottom: 80px;
+}
+
+.component-tab-root {
+    flex-direction: row;
+}
+
+.component-tab-wrapper {
+    border-bottom: 1px solid red;
+    padding-left: 48px;
+}
+
+.component-tab-list {
+    display: flex;
+    flex-flow: row wrap;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+    /* max-width: 1082px; */
+    margin-left: auto;
+    margin-right: auto;
+    border-bottom: 0px;
+}
+
+.component-tab-button.active {
+    background-color: blue;
+}
+
+.component-tab {
+    display: none;
+}
+
+
+
+
+
+
+
+
+
 
 
 /* Style the tab */
@@ -128,7 +186,8 @@ footer {
 
 
 @media screen and (max-width: 760px) {
-    header {
+    
+    .header {
         background-color: blueviolet;
     }
 
