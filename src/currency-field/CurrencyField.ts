@@ -66,15 +66,21 @@ export class CurrencyField extends OmniFormElement {
          try{
              return new Intl.NumberFormat(this.locale,{currency: this.currency});
          }catch(e) {         
-             console.log('invalid number format');
+             console.log('invalid locale or currency provided, falling back to default', e);
+             return new Intl.NumberFormat('en-US',{currency: 'USD'});
          }
-         return new Intl.NumberFormat('en-US',{currency: 'USD'});
      }
 
      // Get the currency symbol and sets the currency separator and cent separator depending on locale 
      _getCurrencySymbol() {
          // Get the currency parts providing a default value of 1000.00 to get the currency separator and cents separator.
-         const currencyPartsMap = new Intl.NumberFormat(this.locale,{ style: 'currency', currency: this.currency, currencyDisplay: 'narrowSymbol'}).formatToParts(1000.00).map(c => c.value);
+         let currencyPartsMap = [];
+         try {
+             currencyPartsMap = new Intl.NumberFormat(this.locale,{ style: 'currency', currency: this.currency, currencyDisplay: 'narrowSymbol'}).formatToParts(1000.00).map(c => c.value);
+         }catch(e) {
+             console.log('invalid locale or currency provided, fallback will be used', e);
+             currencyPartsMap = new Intl.NumberFormat('en-US',{ style: 'currency', currency: 'USD', currencyDisplay: 'narrowSymbol'}).formatToParts(1000.00).map(c => c.value);
+         }
          // Get the currency symbol
          const currencySymbol = currencyPartsMap[0];
 
@@ -154,7 +160,7 @@ export class CurrencyField extends OmniFormElement {
 
      }
 
-     async _keyDown(e: any) {
+     async _keyDown(e: KeyboardEvent) {
          const input = this._inputElement;
          const point = input.selectionStart;
 
