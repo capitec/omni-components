@@ -51,9 +51,8 @@ export const Interactive = {
             locale="${ifNotEmpty(args.locale)}"
             >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${args.suffix
                 ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}`
-                : nothing}${args.prefix || args.suffix ? '\r\n' : nothing}    
+                : nothing}${args.prefix || args.suffix ? '\r\n' : nothing}
         </omni-currency-field>
-    
     `,
     name: 'Interactive',
     parameters: {},
@@ -69,7 +68,7 @@ export const Interactive = {
         currency: '',
         locale: ''
     },
-    play: async (context: StoryContext)=> {
+    play: async (context: StoryContext) => {
         const currencyField = within(context.canvasElement).getByTestId<CurrencyField>('test-currency-field');
         const input = jest.fn();
         currencyField.addEventListener('input', input);
