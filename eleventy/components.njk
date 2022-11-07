@@ -20,10 +20,27 @@ permalink: "components/{{ component.name | slug }}/"
 
 <!-- Tab content -->
 <div id="docs" class="tabcontent" style="display: block;">
-    <div style="display: flex; position: relative;">
-        <story-renderer path="{{ component.path }}" tag="{{ customElements | getTagName(component.name) }}"></story-renderer>
+    <div style="display: flex; position: relative;flex-direction: column">
+        {% for story in component.stories %}
+        <story-renderer 
+            id="story-{{ story | lower }}"
+            path="{{ component.path }}" 
+            tag="{{ customElements | getTagName(component.name) }}" 
+            key="{{ story }}"
+            {% if story === 'Interactive' %}interactive{% endif %} 
+        >
+        </story-renderer>
+        {%- endfor %}
         <nav style="position: sticky; top: 84px; background-color: pink; flex: 0 0 240px;">
             <ul role="list">
+                {% for story in component.stories %}
+                <li>
+                <a 
+                    href="#story-{{ story | lower }}">
+                    {{ story }}
+                </a>
+                </li>
+                {%- endfor %}
                 <li>Item 1</li>
                 <li>Item 1</li>
                 <li>Item 1</li>

@@ -15,6 +15,8 @@ import './CodeMirror.js';
 export class StoryRenderer extends LitElement {
     @property({ type: String, reflect: true }) path: string;
     @property({ type: String, reflect: true }) tag: string;
+    @property({ type: String, reflect: true }) key: string;
+    @property({ type: Boolean, reflect: true }) interactive: boolean;
 
     @state() interactiveSrc: string;
 
@@ -32,26 +34,24 @@ export class StoryRenderer extends LitElement {
             return html`<div>Loading...</div>`;
         }
 
-        const res = this.controller.story.Interactive.render(this.controller.story.Interactive.args);
+        const story = this.controller.story[this.key];
+
+        const res = story.render(story.args);
 
         return html`
-            <div class="interactive-story Interactive" .data=${this.controller.story.Interactive}>
+            <omni-label label="${story.name ?? this.key}" type="title"></omni-label>
+            <div class="${this.key}${this.interactive ? ' interactive-story' : ''}" .data=${story}> 
                 ${this.overrideInteractive ? unsafeHTML(this.interactiveSrc) : res}
             </div>
-            <button ?disabled=${this.overrideInteractive} @click="${() => this._play(this.controller.story.Interactive, '.Interactive')}"
+            <button ?disabled=${this.overrideInteractive} @click="${() => this._play(story, '.${this.key}')}"
                 >Play</button
             >
-            <div class="Interactive-result"></div>
-
+            <div class="${this.key + '-result'}"></div>
             <div>
                 <omni-code-mirror
-
                     .transformSource="${(s: string) => this._transformSource(s)}"
-                    .extensions="${async () => [
-                        githubDark,
-                        langHtml(await loadCustomElementsCodeMirrorCompletionsRemote())
-                    ]}"
-                    .code="${ifNotEmpty(this.controller.story.Interactive.source ? this.controller.story.Interactive.source() : undefined)}"
+                    .extensions="${async () => [githubDark, langHtml(await loadCustomElementsCodeMirrorCompletionsRemote())]}"
+                    .code="${ifNotEmpty(story.source ? story.source() : undefined)}"
                     @codemirror-loaded="${(e: CustomEvent<CodeMirrorEditorEvent>) => {
                         const newSource = e.detail.source;
                         this.originalInteractiveSrc = newSource;
@@ -63,43 +63,11 @@ export class StoryRenderer extends LitElement {
                         this.overrideInteractive = this.interactiveSrc !== this.originalInteractiveSrc;
 
                         this.requestUpdate();
-                    }}">
-                    ${this.controller.story.Interactive.source ? nothing : res}
+                    }}"
+                    ?read-only="${!this.interactive}">
+                    ${story.source ? nothing : res}
                 </omni-code-mirror>
             </div>
-            ${this.renderOtherStories()}
-        `;
-    }
-
-    renderOtherStories() {
-        const exports = Object.keys(this.controller.story).filter((item) => {
-            if (item === 'default' || item === 'Interactive') {
-                return false;
-            }
-            return true;
-        });
-
-        return html`
-            ${exports.map((key) => {
-                const res = this.controller.story[key].render(this.controller.story[key].args);
-
-                return html`
-                    <div class="${key}" .data=${this.controller.story[key]}>
-                        ${this.controller.story[key].render(this.controller.story[key].args)}
-                    </div>
-                    <button @click="${() => this._play(this.controller.story[key], `.${key}`)}">Play</button>
-                    <div class="${key + '-result'}"></div>
-                    <div>
-                        <omni-code-mirror                        
-                            .code="${ifNotEmpty(this.controller.story[key].source ? this.controller.story[key].source() : undefined)}"
-                            .transformSource="${(s: string) => this._transformSource(s)}"
-                            .extensions="${() => [githubDark, langHtml()]}"
-                            read-only>
-                            ${this.controller.story[key].source ? nothing : res}
-                        </omni-code-mirror>
-                    </div>
-                `;
-            })}
         `;
     }
 
