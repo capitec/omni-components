@@ -27,6 +27,18 @@ import '../label/Label.js';
  *
  * @element omni-currency-field
  *
+ * @cssprop --omni-currency-field-text-align - Currency field text align.
+ * @cssprop --omni-currency-field-font-color - Currency field font color.
+ * @cssprop --omni-currency-field-font-family - Currency field font family.
+ * @cssprop --omni-currency-field-font-size - Currency field font size.
+ * @cssprop --omni-currency-field-font-weight - Currency field font weight.
+ * @cssprop --omni-currency-field-height - Currency field height.
+ * @cssprop --omni-currency-field-padding - Currency field padding.
+ *
+ * @cssprop --omni-currency-field-symbol-font-size - Currency field symbol font size.
+ * @cssprop --omni-currency-field-symbol-color - Currency field symbol font color.
+ * @cssprop --omni-currency-field-symbol-left-padding - Currency field symbol left padding.
+ *
  */
 @customElement('omni-currency-field')
 export class CurrencyField extends OmniFormElement {
@@ -266,7 +278,7 @@ export class CurrencyField extends OmniFormElement {
                 }
 
                 .currency-symbol {
-                    font-size: var(--omni-currency-field-symbol, var(--omni-font-size));
+                    font-size: var(--omni-currency-field-symbol-font-size, var(--omni-font-size));
                     color: var(--omni-currency-field-symbol-color, var(--omni-font-color));
                     padding-left: var(--omni-currency-field-symbol-left-padding, 10px);
                     user-select: all;
