@@ -1,36 +1,19 @@
 import { execSync } from 'child_process';
-import { readFile } from 'fs/promises';
 import brode from '@geut/esbuild-plugin-brode';
 import esbuild from 'esbuild';
 import { dTSPathAliasPlugin } from 'esbuild-plugin-d-ts-path-alias';
 import { nodeModulesPolyfillPlugin } from 'esbuild-plugins-node-modules-polyfill';
 import { globby } from 'globby';
 import * as filters from './eleventy/filters.js';
+import * as globalData from './eleventy/globalData.js';
 
 await build();
 
 export default async config => {
 
-    // Global data for components.
-    config.addGlobalData('components', async () => {
-        const stories = await globby('./dist/**/*.stories.js');
-        const response = [];
-
-        for (const story of stories) {
-            response.push({
-                path: story.replace('./', '/'),
-                name: story.match(/([A-Z])\w+/g)[0]
-            });
-        }
-
-        return response;
-    });
-
-    // Global data for custom elements.
-    config.addGlobalData('customElements', async () => {
-        const ce = await readFile('./custom-elements.json', 'utf-8');
-        return JSON.parse(ce);
-    });
+    for (const key in globalData) {
+        config.addGlobalData(key, globalData[key]);
+    }
 
     config.addPassthroughCopy('./eleventy/assets/');
     config.addPassthroughCopy('./eleventy/favicon.ico');
