@@ -198,10 +198,8 @@ export class CurrencyField extends OmniFormElement {
      }
 
      async _keyInput() {
-         //const lengthBeforeFormatValue = (this.value as string).length;
          const valueLength = this._inputElement.value.length;
-         const caratPosition = this._inputElement.selectionStart;
-         // console.log(`carat position keyinput event: ${caratPosition}`);
+         const caretPosition = this._inputElement.selectionStart;
          const inputValue = this._inputElement.value;
 
          if(inputValue.includes(this._currencyCentsSeparator)) {
@@ -227,10 +225,9 @@ export class CurrencyField extends OmniFormElement {
 
          if(valueLength < (this.value as string).length) {
              const difference = (this.value as string).length - valueLength;
-             //console.log(`formatted value longer than before difference is: ${(this.value as string).length - inputValueLength}`);
-             this._inputElement.setSelectionRange(caratPosition + difference,caratPosition + difference);
+             this._inputElement.setSelectionRange(caretPosition + difference, caretPosition + difference);
          } else {
-             this._inputElement.setSelectionRange(caratPosition,caratPosition);
+             this._inputElement.setSelectionRange(caretPosition, caretPosition);
          }
 
      }
