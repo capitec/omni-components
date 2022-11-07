@@ -32,16 +32,23 @@ export default {
     }
 } as Meta;
 
+interface ArgTypes extends BaseArgTypes {
+    currency: string;
+    locale: string;
+}
+
 export const Interactive = {
-    render: (args: BaseArgTypes) => html`
+    render: (args: ArgTypes) => html`
         <omni-currency-field
             data-testId="test-currency-field"
             label="${ifNotEmpty(args.label)}"
-            .value="${args.value}"
+            .value="${ifNotEmpty(args.value)}"
             .data="${args.data}"
             hint="${ifNotEmpty(args.hint)}"
             error="${ifNotEmpty(args.error)}"
             ?disabled="${args.disabled}"
+            currency="${ifNotEmpty(args.currency)}"
+            locale="${ifNotEmpty(args.locale)}"
             >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${args.suffix
                 ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}`
                 : nothing}${args.prefix || args.suffix ? '\r\n' : nothing}    
@@ -58,7 +65,9 @@ export const Interactive = {
         error: '',
         disabled: false,
         prefix: '',
-        suffix: ''
+        suffix: '',
+        currency: '',
+        locale: ''
     },
     play: async (context: StoryContext)=> {
         const currencyField = within(context.canvasElement).getByTestId<CurrencyField>('test-currency-field');
@@ -81,7 +90,7 @@ export const Hint = HintStory<CurrencyField, BaseArgTypes>('omni-currency-field'
 
 export const ErrorLabel = ErrorStory<CurrencyField, BaseArgTypes>('omni-currency-field');
 
-export const Value = ValueStory<CurrencyField, BaseArgTypes>('omni-currency-field', 1200);
+export const Value = ValueStory<CurrencyField, BaseArgTypes>('omni-currency-field', 100);
 
 export const Prefix = PrefixStory<CurrencyField, BaseArgTypes>('omni-currency-field');
 

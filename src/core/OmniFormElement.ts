@@ -132,6 +132,7 @@ export class OmniFormElement extends OmniElement {
         }
 
         if (!this.value && this._labelElement) {
+            console.log(`Value of this.value:`, this.value);
             this._labelElement.style.transform = '';
         }
     }
@@ -338,7 +339,7 @@ export class OmniFormElement extends OmniElement {
             <div class="container">
                 <div class=${classMap(layout)}>
                     <div class="border"></div>
-                    <slot name="prefix"></slot>
+                    <slot name="prefix">${this.renderPrefix()}</slot>
                     <div class="form-container"> ${this.renderContent()} ${this.renderLabel()} </div>
                     <slot name="suffix"></slot>
                     ${this.renderControl()}
@@ -346,6 +347,10 @@ export class OmniFormElement extends OmniElement {
                 ${this.renderHint()} ${this.renderError()}
             </div>
         `;
+    }
+
+    protected renderPrefix(): typeof nothing | TemplateResult {
+        return nothing;
     }
 
     protected renderContent(): typeof nothing | TemplateResult {
