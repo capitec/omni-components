@@ -68,12 +68,12 @@ export class CurrencyField extends OmniFormElement {
         this.addEventListener('input', this._keyInput.bind(this));
         this.addEventListener('blur', this._blur.bind(this));
         this.addEventListener('keydown', this._keyDown.bind(this));
-        this._currencyFormat = this._getCurrencyFormat();
-        this._currencySymbol = this._getCurrencySymbol();
+        this._currencyFormat = this._setCurrencyFormat();
+        this._currencySymbol = this._setCurrencySymbol();
     }
 
-    //Gets the currency format that will be used to format the input value.
-    _getCurrencyFormat() {
+    //Set the currency format that will be used to format the input value.
+    _setCurrencyFormat() {
         try {
             return new Intl.NumberFormat(this.locale, { currency: this.currency });
         } catch (e) {
@@ -82,9 +82,9 @@ export class CurrencyField extends OmniFormElement {
         }
     }
 
-    // Get the currency symbol and sets the currency separator and cent separator depending on locale
-    _getCurrencySymbol() {
-        // Get the currency parts providing a default value of 1000.00 to get the currency separator and cents separator.
+    // Set the currency symbol and sets the currency separator and cent separator depending on locale.
+    _setCurrencySymbol() {
+        // Get the currency parts providing a default value of 1000.0 to get the currency separator and cents separator.
         let currencyPartsMap = [];
         try {
             currencyPartsMap = new Intl.NumberFormat(this.locale, {
