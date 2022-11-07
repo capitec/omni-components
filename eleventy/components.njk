@@ -1,5 +1,5 @@
 ---
-title: Omni Components
+title: Omni Components - {{ component.name }}
 layout: page.njk
 pagination:
     data: components
@@ -8,12 +8,122 @@ pagination:
 permalink: "components/{{ component.name | slug }}/"
 ---
 
+<div>{{ component.name }}</div> 
 <div>{{ customElements | getTagName(component.name) }}</div> 
 <div>{{ customElements | getDescription(component.name) | safe }}</div> 
 
-<story-renderer path="{{ component.path }}" tag="{{ customElements | getTagName(component.name) }}"></story-renderer>
+<!-- Tab links -->
+<div class="tab">
+  <button class="tablinks active" onclick="openTab(event, 'docs')">Docs</button>
+  <button class="tablinks" onclick="openTab(event, 'props')">CSS Props</button>
+</div>
+
+<!-- Tab content -->
+<div id="docs" class="tabcontent" style="display: block;">
+    <div style="display: flex; position: relative;">
+        <story-renderer path="{{ component.path }}" tag="{{ customElements | getTagName(component.name) }}"></story-renderer>
+        <nav style="position: sticky; top: 84px; background-color: pink; flex: 0 0 240px;">
+            <ul role="list">
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+                <li>Item 1</li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<div id="props" class="tabcontent">
+  <h3>CSS Props</h3>
+  <p>Paris is the capital of France.</p>
+</div>
 
 <script type="module" defer>
     import { enhanceCodeBlocks } from '/dist/utils/StoryUtils.js';
     enhanceCodeBlocks();
 </script>
+<script>
+
+    function openTab(evt, cityName) {
+        // Declare all variables
+        var i, tabcontent, tablinks;
+
+        // Get all elements with class="tabcontent" and hide them
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        // Get all elements with class="tablinks" and remove the class "active"
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        // Show the current tab, and add an "active" class to the button that opened the tab
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+    
+</script>
+
+
