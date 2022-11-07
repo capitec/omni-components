@@ -22,7 +22,6 @@ import '../label/Label.js';
  *  error="Please enter the correct amount"
  *  locale="en-US"
  *  currency="ZAR"
- *  decimal=2
  *  disabled>
  * </omni-currency-field>
  * 
@@ -51,7 +50,6 @@ export class CurrencyField extends OmniFormElement {
      @state() private _currencySymbol: string;
      @state() private _currencyFormatSeparator: string;
      @state() private _currencyCentsSeparator: string;
-     @state() private _cents = '';
     
      override connectedCallback(): void {
          super.connectedCallback();
@@ -102,7 +100,6 @@ export class CurrencyField extends OmniFormElement {
      _getCurrencySymbol() {
          // Get the currency parts providing a default value of 1000.00 to get the currency separator and cents separator.
          const currencyPartsMap = new Intl.NumberFormat(this.locale,{ style: 'currency', currency: this.currency, currencyDisplay: 'narrowSymbol'}).formatToParts(1000.00).map(c => c.value);
-         //console.log(`currency parts`,currencyPartsMap);
          // Get the currency symbol
          const currencySymbol = currencyPartsMap[0];
 
@@ -137,44 +134,22 @@ export class CurrencyField extends OmniFormElement {
 
      _parseCents(value: string) {
          let cleanValue = '';
-
          for (let i = 0; i < value.length; i++) {
              const character = value.charAt(i);
              if(/\d/.test(character)) {
-                 console.log(character);
                  cleanValue += character;
              }
           
          }
          return cleanValue;
-
      }
 
-     //if 0 returned 
      _formatToCurrency(preFormattedValue: number) {
          if(!preFormattedValue) {
              return '';
          }
          return this._currencyFormat.format(preFormattedValue);
          
-     }
-
-     _formatWithCents(inputValue: string, event: any) {
-         if(this._cents.length >= 1 && this._cents.length <= 3 ) {
-             if(this._cents === this._currencyCentsSeparator && event.inputType.toLowerCase() === 'deletecontentbackward') {
-                 this._cents = '';
-             }
-           
-             if(inputValue === '') {
-                 this.value = inputValue;
-                 this._cents = '';
-             }else {
-                 this.value = this.value + `${this._cents}`;
-             }
-
-         }else if (inputValue !== '') {
-             this.value = this.value + `${this._cents}`;
-         }
      }
 
      async _keyDown(e: any) {
@@ -217,7 +192,7 @@ export class CurrencyField extends OmniFormElement {
         
      }
 
-     async _keyInput(e: any) {
+     async _keyInput() {
          //const lengthBeforeFormatValue = (this.value as string).length;
          const valueLength = this._inputElement.value.length;
          const caratPosition = this._inputElement.selectionStart;
