@@ -21,7 +21,7 @@ import '../label/Label.js';
  *  hint="Required"
  *  error="Please enter the correct amount"
  *  locale="en-US"
- *  currency="ZAR"
+ *  currency="USD"
  *  disabled>
  * </omni-currency-field>
  * 
@@ -60,33 +60,8 @@ export class CurrencyField extends OmniFormElement {
          this._currencySymbol = this._getCurrencySymbol();
 
      }
-     
-     _blur() {
-         const inputValue = this._inputElement.value;
 
-         if(inputValue.includes(this._currencyCentsSeparator)) {
-
-             // Split out the amount and cents parts of the input value
-             const amountPart = this._parseAmount(inputValue.substring(0, inputValue.indexOf(this._currencyCentsSeparator)));
-
-             let centsPart = this._parseCents(inputValue.substring(inputValue.indexOf(this._currencyCentsSeparator) + 1));
-             if(centsPart.length === 0) {
-                 centsPart = '00';
-             } else if(centsPart.length === 1) {
-                 centsPart += '0';
-             }
-
-             // Format amount and cents to currency string, ignoring cents if still partially completed eg: just '.' is valid.
-             this.value = this._formatToCurrency(amountPart) + this._currencyCentsSeparator + centsPart;
-  
-         }else {          
-             this.value = this._formatToCurrency(this._parseAmount(inputValue));
-         }
-
-         this.requestUpdate();
-
-     }
-
+     //Gets the currency format that will be used to format the input value.
      _getCurrencyFormat() {
          try{
              return new Intl.NumberFormat(this.locale,{currency: this.currency});
@@ -151,6 +126,33 @@ export class CurrencyField extends OmniFormElement {
          return this._currencyFormat.format(preFormattedValue);
          
      }
+         
+     //Called when the input element loses focus.
+     _blur() {
+         const inputValue = this._inputElement.value;
+
+         if(inputValue.includes(this._currencyCentsSeparator)) {
+
+             // Split out the amount and cents parts of the input value
+             const amountPart = this._parseAmount(inputValue.substring(0, inputValue.indexOf(this._currencyCentsSeparator)));
+
+             let centsPart = this._parseCents(inputValue.substring(inputValue.indexOf(this._currencyCentsSeparator) + 1));
+             if(centsPart.length === 0) {
+                 centsPart = '00';
+             } else if(centsPart.length === 1) {
+                 centsPart += '0';
+             }
+
+             // Format amount and cents to currency string, ignoring cents if still partially completed eg: just '.' is valid.
+             this.value = this._formatToCurrency(amountPart) + this._currencyCentsSeparator + centsPart;
+ 
+         }else {          
+             this.value = this._formatToCurrency(this._parseAmount(inputValue));
+         }
+
+         this.requestUpdate();
+
+     }
 
      async _keyDown(e: any) {
          const input = this._inputElement;
@@ -159,6 +161,7 @@ export class CurrencyField extends OmniFormElement {
          //If the pointer is positioned after a currency separator remove the separator and the preceding number.
          if(input.value.charAt(point - 1) === this._currencyFormatSeparator && e.key.toLowerCase() === 'backspace' ) {  
             
+             //If the value includes a cents separator parse the cents and append it to the value.
              if(input.value.includes(this._currencyCentsSeparator)) {
                  const centsPart = this._parseCents(input.value.substring(input.value.indexOf(this._currencyCentsSeparator) + 1));
                  this.value = this._formatToCurrency(this._parseAmount(input.value.substring(0, point - 2) + input.value.substring(point,input.value.indexOf(this._currencyCentsSeparator))))  + this._currencyCentsSeparator + centsPart;
@@ -166,25 +169,27 @@ export class CurrencyField extends OmniFormElement {
              }else{
                  this.value = this._formatToCurrency(this._parseAmount(input.value.substring(0, point - 2) + input.value.substring(point, input.value.length + 1)));
              }
-                        
+            
+             //Added so that the number before the separator is not removed.
              e.preventDefault();
 
              await this.updateComplete;
 
+             //
              if(input.value.length === (this.value as string).length) {
                  this._inputElement.setSelectionRange(point -1 ,point -1);
              }
 
          }
 
-         // If hitting backspace when the caret is after the cent separator remove the cents value completly
+         // If hitting backspace when the caret is after the cent separator remove the cents value completely.
          if(input.value.charAt(point - 1) === this._currencyCentsSeparator && e.key.toLowerCase() === 'backspace') {
              this.value = input.value.substring(0, input.value.indexOf(this._currencyCentsSeparator));
              e.preventDefault();
              return;
          }
 
-         // Copy currency field selection to clipboard.
+         // Copy currency field selection to clipboard if ctrl + c is pressed on the keyboard.
          if(e.ctrlKey && e.key.toLowerCase() === 'c') {
              navigator.clipboard.writeText(this.value as string);
              return;
