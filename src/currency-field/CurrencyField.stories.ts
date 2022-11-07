@@ -78,7 +78,8 @@ export const Interactive = {
 
         const value = '1200';
         await userEvent.type(inputField, value);
-        await expect(inputField).toHaveValue(parseFloat(value));
+        // Check the following value as input value is formatted to currency value;
+        await expect(inputField).toHaveValue('1,200');
 
         await expect(input).toBeCalledTimes(value.length);
     }
@@ -90,7 +91,7 @@ export const Hint = HintStory<CurrencyField, BaseArgTypes>('omni-currency-field'
 
 export const ErrorLabel = ErrorStory<CurrencyField, BaseArgTypes>('omni-currency-field');
 
-export const Value = ValueStory<CurrencyField, BaseArgTypes>('omni-currency-field', 100);
+export const Value = ValueStory<CurrencyField, BaseArgTypes>('omni-currency-field', '100');
 
 export const Prefix = PrefixStory<CurrencyField, BaseArgTypes>('omni-currency-field');
 
