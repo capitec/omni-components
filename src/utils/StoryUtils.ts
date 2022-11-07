@@ -1,27 +1,28 @@
-import { html as langHtml } from '@codemirror/lang-html';
+import { html as langHtml, TagSpec } from '@codemirror/lang-html';
 import { javascript } from '@codemirror/lang-javascript';
 import { githubDark } from '@ddietr/codemirror-themes/github-dark.js';
+import { Package, ClassDeclaration, CustomElementDeclaration, Declaration, CustomElement } from 'custom-elements-manifest/schema';
 import { html } from 'lit';
 import { render } from 'lit-html';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const codeSnippet = '```';
 
-function loadCssProperties(element: string, customElements: any, cssDeclarations: any = undefined): any {
+function loadCssProperties(element: string, customElements: Package, cssDeclarations: any = undefined): any {
     if (!cssDeclarations) {
         cssDeclarations = {};
     }
 
-    const elementModule = customElements.modules.find((module: { exports: any[] }) =>
+    const elementModule = customElements.modules.find((module) =>
         module.exports.find((e: { name: string }) => e.name === element)
     );
 
     let superModule = elementModule;
     do {
         if (superModule.declarations.find((sd: any) => sd.superclass)) {
-            superModule = customElements.modules.find((module: { exports: any[] }) =>
+            superModule = customElements.modules.find((module) =>
                 module.exports.find(
-                    (e: { name: string }) => e.name === superModule.declarations.find((sd: any) => sd.superclass).superclass.name
+                    (e) => e.name === (superModule.declarations.find((sd: Declaration) => (sd as ClassDeclaration).superclass) as ClassDeclaration).superclass.name
                 )
             );
         } else {
@@ -32,7 +33,9 @@ function loadCssProperties(element: string, customElements: any, cssDeclarations
         }
     } while (superModule);
     for (const key in elementModule.declarations) {
-        const declaration = elementModule.declarations[key];
+        const declaration = elementModule.declarations[key] as CustomElementDeclaration & CustomElement & {
+            cssCategory: string;
+        };
         const cssCategory = declaration.cssCategory;
         if (declaration.cssProperties && declaration.cssProperties.length > 0) {
             for (const cssKey in declaration.cssProperties) {
@@ -114,11 +117,11 @@ function loadCssProperties(element: string, customElements: any, cssDeclarations
 //     return customElements;
 // }
 
-function loadCustomElementsModuleByFileFor(moduleName: string, customElements: any) {
+function loadCustomElementsModuleByFileFor(moduleName: string, customElements: Package) {
     return customElements.modules.find((module: any) => module.path.endsWith(`${moduleName}.ts`));
 }
 
-function loadCustomElementsModuleFor(elementName: string, customElements: any) {
+function loadCustomElementsModuleFor(elementName: string, customElements: Package) {
     return customElements.modules.find((module: any) =>
         module.declarations.find((d: any) => (d.tagName === elementName && d.customElement) || d.name === elementName)
     );
@@ -129,7 +132,7 @@ function loadCustomElementsModuleFor(elementName: string, customElements: any) {
 //     return loadCustomElementsModuleFor(elementName, customElements);
 // }
 
-function loadSlotFor(elementName: string, slotName: string, customElements: any) {
+function loadSlotFor(elementName: string, slotName: string, customElements: Package) {
     const module = loadCustomElementsModuleFor(elementName, customElements);
     return loadSlotForModule(module, slotName);
 }
@@ -155,7 +158,7 @@ function loadSlotForModule(elementModule: any, slotName: string): { name: string
     return undefined;
 }
 
-function loadDefaultSlotFor(elementName: string, customElements: any) {
+function loadDefaultSlotFor(elementName: string, customElements: Package) {
     const module = loadCustomElementsModuleFor(elementName, customElements);
     return loadDefaultSlotForModule(module);
 }
@@ -344,6 +347,88 @@ function enhanceCodeBlocks(parent: Element) {
     });
 }
 
+let _completions: {
+    /**
+    Add additional tags that can be completed.
+    */
+    extraTags?: Record<string, TagSpec>;
+    /**
+    Add additional completable attributes to all tags.
+    */
+    extraGlobalAttributes?: Record<string, null | readonly string[]>;
+} = null;
+function loadCustomElementsCodeMirrorCompletions(customElements: Package) {
+    if (!_completions) {
+        const extraTags: Record<string, TagSpec> = {};
+        const extraGlobalAttributes: Record<string, null | string[]> = {};
+
+        customElements.modules.forEach((module) => {
+            const elementExport = module.exports.find((e) => e.kind === 'custom-element-definition');
+            if (elementExport) {
+                module.declarations.forEach((d) => {
+                    const declaration = d as CustomElement;
+                    if (declaration.slots) {
+                        declaration.slots.forEach(slot => {
+                            if (slot.name && slot.name !== '[Default Slot]') {
+                                if (!extraGlobalAttributes.slot) {
+                                    extraGlobalAttributes.slot = [];
+                                }
+                                if (!extraGlobalAttributes.slot.includes(slot.name)) {
+                                    extraGlobalAttributes.slot.push(slot.name);
+                                }
+                            }
+                        });
+                    }
+
+                    if (declaration.tagName) {
+                        const attrs: Record<string,string[]> = {};
+                        if (declaration.attributes) {
+                            declaration.attributes.forEach(attribute => {
+                                let attrValues: string[] = null;
+                                if (attribute.type.text !== 'string' && attribute.type.text !== 'boolean' && !attribute.type.text.includes('Promise')) {
+                                    const types = attribute.type.text.split(' | ');
+                                    attrValues = [];
+                                    for (const type in types) {
+                                        const typeValue = types[type];
+                                        attrValues.push(typeValue.substring(1,typeValue.length - 1));
+                                    }
+                                }
+                                attrs[attribute.name] = attrValues;
+                            });
+                        }
+
+                        if (!extraTags[declaration.tagName] && declaration.tagName.startsWith('omni-')) {
+                            extraTags[declaration.tagName] = {
+                                attrs: attrs
+                            };
+                        }
+                    }
+                });
+            }
+        });
+        
+        _completions = {
+            extraTags: extraTags,
+            extraGlobalAttributes: extraGlobalAttributes
+        };
+    }
+    return _completions;
+}
+
+async function loadCustomElementsCodeMirrorCompletionsRemote(path = '/custom-elements.json') {
+    if (!_completions) {
+        const customElements = await loadCustomElements(path);
+        return loadCustomElementsCodeMirrorCompletions(customElements);
+    }
+    return _completions;
+}
+
+async function loadCustomElements(path = '/custom-elements.json') {
+    const response = await fetch(path);
+    const customElements = await response.json();
+    return customElements as Package;
+}
+
 function filterJsDocLinks(jsdoc: string) {
     if (!jsdoc) return jsdoc;
 
@@ -476,8 +561,11 @@ export type CSFIdentifier = {
 
 export {
     // loadCustomElementsRemote,
+    loadCustomElements,
     loadCustomElementsModuleByFileFor,
     loadCustomElementsModuleFor,
+    loadCustomElementsCodeMirrorCompletions,
+    loadCustomElementsCodeMirrorCompletionsRemote,
     // loadCustomElementsModuleForRemote,
     loadSlotFor,
     loadSlotForModule,

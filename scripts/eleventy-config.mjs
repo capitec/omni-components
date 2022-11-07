@@ -113,4 +113,6 @@ async function build() {
         sourcemap: 'linked',
         sourcesContent: false
     });
+    
+    execSync('npx -p @innofake/merge-index merge-index --dir dist --out dist/omni-components.js');
 }

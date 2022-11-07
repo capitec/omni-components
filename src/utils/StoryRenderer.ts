@@ -1,11 +1,13 @@
 import { html as langHtml } from '@codemirror/lang-html';
 import { githubDark } from '@ddietr/codemirror-themes/github-dark.js';
-import { html, LitElement } from 'lit';
+import { html, LitElement, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import pretty from 'pretty';
 import { CodeMirrorSourceUpdateEvent, CodeMirrorEditorEvent } from './CodeMirror.js';
+import { ifNotEmpty } from './Directives.js';
 import { StoryController } from './StoryController.js';
+import { loadCustomElementsCodeMirrorCompletionsRemote } from './StoryUtils.js';
 
 import './CodeMirror.js';
 
@@ -43,21 +45,13 @@ export class StoryRenderer extends LitElement {
 
             <div>
                 <omni-code-mirror
+
                     .transformSource="${(s: string) => this._transformSource(s)}"
-                    .extensions="${() => [
+                    .extensions="${async () => [
                         githubDark,
-                        langHtml({
-                            extraTags: {
-                                // 'omni-button': {
-                                //     attrs: {
-                                //         label: null,
-                                //         type: ['primary','secondary','clear','white' ],
-                                //         'slot-position': ['top','bottom','left','right'],
-                                //     }
-                                // }
-                            }
-                        })
+                        langHtml(await loadCustomElementsCodeMirrorCompletionsRemote())
                     ]}"
+                    .code="${ifNotEmpty(this.controller.story.Interactive.source ? this.controller.story.Interactive.source() : undefined)}"
                     @codemirror-loaded="${(e: CustomEvent<CodeMirrorEditorEvent>) => {
                         const newSource = e.detail.source;
                         this.originalInteractiveSrc = newSource;
@@ -70,7 +64,7 @@ export class StoryRenderer extends LitElement {
 
                         this.requestUpdate();
                     }}">
-                    ${res}
+                    ${this.controller.story.Interactive.source ? nothing : res}
                 </omni-code-mirror>
             </div>
             ${this.renderOtherStories()}
@@ -96,11 +90,12 @@ export class StoryRenderer extends LitElement {
                     <button @click="${() => this._play(this.controller.story[key], `.${key}`)}">Play</button>
                     <div class="${key + '-result'}"></div>
                     <div>
-                        <omni-code-mirror
+                        <omni-code-mirror                        
+                            .code="${ifNotEmpty(this.controller.story[key].source ? this.controller.story[key].source() : undefined)}"
                             .transformSource="${(s: string) => this._transformSource(s)}"
                             .extensions="${() => [githubDark, langHtml()]}"
                             read-only>
-                            ${res}
+                            ${this.controller.story[key].source ? nothing : res}
                         </omni-code-mirror>
                     </div>
                 `;
