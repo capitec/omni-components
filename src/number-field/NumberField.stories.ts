@@ -1,5 +1,6 @@
 import { within } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
+import { setUIValueClean } from '@testing-library/user-event/dist/esm/document/UI.js';
 import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
@@ -55,10 +56,14 @@ export const Interactive: ComponentStoryFormat<BaseArgTypes> = {
     },
     play: async (context) => {
         const numberField = within(context.canvasElement).getByTestId<NumberField>('test-number-field');
+        numberField.value = '';
+
         const input = jest.fn();
         numberField.addEventListener('input', input);
 
-        const inputField = numberField.shadowRoot.getElementById('inputField');
+        const inputField = numberField.shadowRoot.getElementById('inputField') as HTMLInputElement;
+        // Required to clear userEvent Symbol that keeps hidden state of previously typed values via userEvent. If not cleared this cannot be run multiple times with the same results
+        setUIValueClean(inputField);
 
         const value = '12345';
         await userEvent.type(inputField, value, {

@@ -131,7 +131,7 @@ export abstract class OmniElement extends LitElement {
         `;
     }
 
-    protected override render(): TemplateResult {
+    protected override render(): TemplateResult | typeof nothing {
         return html`${until(this.renderAsync(), this.renderLoading())}`;
     }
 
