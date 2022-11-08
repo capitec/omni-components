@@ -11,8 +11,8 @@ permalink: "components/{{ component.name | slug }}/"
 <article>
     <div class="component-meta">
         <div class="component-name">{{ component.name }}</div> 
-        <div>{{ customElements | getTagName(component.name) }}</div> 
         <div>{{ customElements | getDescription(component.name) | safe }}</div> 
+        {# <div>{{ customElements | getTagName(component.name) }}</div>  #}
     </div>
     <div class="component-tab-container">
         <div class="component-tab-root">

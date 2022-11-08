@@ -86,6 +86,18 @@ header * {
     /* background-color: turquoise; */
 }
 
+.header-actions > .action {
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 8px;
+    border: 1px solid #e1e1e1;
+    display: flex;
+}
+
+.header-actions > .action:hover {
+    background-color: #f8f9fa;
+}
+
 /* MENU */
 
 .menu {
