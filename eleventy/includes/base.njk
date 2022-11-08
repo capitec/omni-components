@@ -17,11 +17,11 @@
             const menuButton = document.querySelector('.header-menu-button .material-icons');
             menuButton.addEventListener('click', (e) => {
                 const nav = document.querySelector('nav');
-                if (nav.classList.contains('menu-mobile')) {
-                    nav.classList.remove('menu-mobile');
+                if (nav.classList.contains('mobile')) {
+                    nav.classList.remove('mobile');
                     menuButton.innerText = 'menu';
                 } else {
-                    nav.classList.add('menu-mobile');
+                    nav.classList.add('mobile');
                     menuButton.innerText = 'close';
                 }
             });
@@ -61,8 +61,13 @@
                         menu
                     </span>
                 </div>
-                <div class="header-logo">Omni Components</div>
-                <div class="header-actions">search + toggle</div>
+                <div class="header-logo">
+                    <div class="header-container">
+                        <img src="/assets/images/logo.png" width="30" height: "30" alt="logo">
+                        <div style="padding-left: 10px; font-weight: bold">Omni Components</div>
+                    </div>
+                </div>
+                <div class="header-actions">actions</div>
             </header>
 
             {% include "nav.njk" %}
