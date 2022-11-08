@@ -7,22 +7,47 @@
     <title>{{ title }}</title>
     <link rel="stylesheet" href="{{ '/assets/css/style.css' | url }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-
-    <!-- Omni Components -->
+    <link href='https://fonts.googleapis.com/css?family=Hind Vadodara' rel='stylesheet'>
     <script type="module" src="/dist/utils/StoryRenderer.js"></script>
     <script type="module" src="/dist/omni-components.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const menuButton = document.querySelector('.menu-button');
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // Open / Close the menu
+            const menuButton = document.querySelector('.header-menu-button .material-icons');
             menuButton.addEventListener('click', (e) => {
                 const nav = document.querySelector('nav');
                 if (nav.classList.contains('menu-mobile')) {
                     nav.classList.remove('menu-mobile');
-                    menuButton.innerText = 'open';
+                    menuButton.innerText = 'menu';
                 } else {
                     nav.classList.add('menu-mobile');
                     menuButton.innerText = 'close';
                 }
+            });
+
+            // Scroll highlight
+            const storyRenderders = document.querySelectorAll('story-renderer');
+            const tocAnchors = document.querySelectorAll('.component-toc a');
+
+            window.addEventListener('scroll', () => {
+                
+                storyRenderders.forEach(sr => {
+                    let top = window.scrollY;
+                    let offset = sr.offsetTop + 65;
+                    let height = sr.offsetHeight;
+                    let id = sr.getAttribute('id');
+
+                    if (top > offset && top < offset + height) {
+
+                        console.log(id, top, offset, height);
+
+                        tocAnchors.forEach(a => {
+                            a.classList.remove('component-toc-active');
+                            document.querySelector('.component-toc a[href*=' + id + ']').classList.add('component-toc-active');
+                        })
+                    }
+                })
             });
         });
     </script>
@@ -30,18 +55,22 @@
 <body>
     <div dir="ltr">
         <div class="container">
-            <div class="header">
-                <div class="menu-button">open</div>
-                <div>logo</div>
-                <div>search + toggle</div>
-            </div>
+            <header>
+                <div class="header-menu-button">
+                    <span class="material-icons">
+                        menu
+                    </span>
+                </div>
+                <div class="header-logo">Omni Components</div>
+                <div class="header-actions">search + toggle</div>
+            </header>
 
             {% include "nav.njk" %}
             {{ content | safe }}
 
-            <div class="footer">
+            <footer>
                 Footer
-            </div>
+            </footer>
         </div>
         
     </div>

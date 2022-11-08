@@ -1,21 +1,19 @@
 {% set currentUrl %}{{ page.url }}{% endset %}
 
-<nav class="menu-desktop">
+<nav class="menu menu-desktop">
   <ul role="list">
-    <li>
+    <li class="menu-item">
       <a {% if currentUrl === '/' %}aria-current="page"{% endif %} href="/">Home</a>
     </li>
 
-{% for x in [1,2,3,4,5,6,7,8,9]%}
     {% for component in components %}
-    <li>
+    <li class="menu-item">
        <a 
         {% if currentUrl.includes(component.name | slug) %}aria-current="page"{% endif %} 
         href="/components/{{ component.name | slug }}">
           {{ component.name }}
       </a>
     </li>
-    {%- endfor %}
     {%- endfor %}
 
   </ul>
