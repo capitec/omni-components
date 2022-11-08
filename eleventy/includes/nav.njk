@@ -1,20 +1,19 @@
 {% set currentUrl %}{{ page.url }}{% endset %}
 
 <nav class="menu">
-  <ul role="list">
-    <li class="menu-item">
-      <a {% if currentUrl === '/' %}aria-current="page"{% endif %} href="/">Home</a>
-    </li>
+    <div class="menu-container">
+        <div class="menu-item-wrapper" style="border-left: 1px solid #00486d;">
+            <a class="menu-item" style="background: #209cee33; color: #00486d;" {% if currentUrl === '/' %}aria-current="page"{% endif %} href="/">Home</a>
+        </div>
 
-    {% for component in components %}
-    <li class="menu-item">
-       <a 
-        {% if currentUrl.includes(component.name | slug) %}aria-current="page"{% endif %} 
-        href="/components/{{ component.name | slug }}">
-          {{ component.name }}
-      </a>
-    </li>
+        {% for component in components %}
+        <div class="menu-item-wrapper">
+            <a class="menu-item"  style="width: 100%; display: block;"
+            {% if currentUrl.includes(component.name | slug) %}aria-current="page"{% endif %} 
+            href="/components/{{ component.name | slug }}">
+                {{ component.name }}
+            </a>
+        </div>
     {%- endfor %}
-
-  </ul>
+    </div>
 </nav>

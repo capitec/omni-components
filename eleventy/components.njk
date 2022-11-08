@@ -10,7 +10,7 @@ permalink: "components/{{ component.name | slug }}/"
 
 <article>
     <div class="component-meta">
-        <div>{{ component.name }}</div> 
+        <div class="component-name">{{ component.name }}</div> 
         <div>{{ customElements | getTagName(component.name) }}</div> 
         <div>{{ customElements | getDescription(component.name) | safe }}</div> 
     </div>
