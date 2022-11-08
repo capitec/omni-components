@@ -4,6 +4,14 @@ import { live } from 'lit/directives/live.js';
 import { OmniFormElement } from '../core/OmniFormElement.js';
 import '../label/Label.js';
 
+export const CURRENCY_SEPARATOR = {
+    AMOUNT: 1,
+    INVERSE_AMOUNT: 2,
+    CENTS: 3,
+    INVERSE_CENTS: 4,
+
+};
+
 /**
  * A currency input control.
  *
@@ -46,71 +54,75 @@ export class CurrencyField extends OmniFormElement {
     private _inputElement: HTMLInputElement;
 
     /**
-     * The currency to for on the input.
+     * The currency for the input.
      * @attr
      */
     @property({ type: String, reflect: true }) currency: string = 'USD';
 
     /**
-     * The locale to used for the input.
+     * The locale for the input.
      * @attr
      */
     @property({ type: String, reflect: true }) locale: string = navigator.language;
 
-    /*Internal state values set when component is loaded */
+    /* Internal state properties */
     @state() private _currencyFormat: Intl.NumberFormat;
     @state() private _currencySymbol: string;
     @state() private _currencyFormatSeparator: string;
     @state() private _currencyCentsSeparator: string;
+    @state() private _value: string = '';
 
     override connectedCallback(): void {
         super.connectedCallback();
         this.addEventListener('input', this._keyInput.bind(this));
         this.addEventListener('blur', this._blur.bind(this));
         this.addEventListener('keydown', this._keyDown.bind(this));
-        this._currencyFormat = this._setCurrencyFormat();
-        this._currencySymbol = this._setCurrencySymbol();
+        this._setSymbolAndSeparators();
+        this._setCurrencyFormat();
     }
 
-    //Set the currency format that will be used to format the input value.
+    // Set the currency format that will be used to format the input value.
     _setCurrencyFormat() {
         try {
-            return new Intl.NumberFormat(this.locale, { currency: this.currency });
+            this._currencyFormat =  new Intl.NumberFormat(this.locale, { currency: this.currency });
         } catch (e) {
-            console.log('invalid locale or currency provided, falling back to default', e);
-            return new Intl.NumberFormat('en-US', { currency: 'USD' });
+            console.error('invalid locale or currency provided, falling back to default', e);
+            this._currencyFormat =  new Intl.NumberFormat('en-US', { currency: 'USD' });
         }
     }
 
-    // Set the currency symbol and sets the currency separator and cent separator depending on locale.
-    _setCurrencySymbol() {
-        // Get the currency parts providing a default value of 1000.0 to get the currency separator and cents separator.
+    // Set the currency symbol and sets the currency format separator and cent separator depending on locale.
+    _setSymbolAndSeparators() {
+        /* 
+        * Set the currency parts providing a default value of 1000.0 to return an array to get the currency separator and cents separator.
+        * Results can be the following based on the locale provided.
+        * ["$", "1", ",", "000", ".", "00"]
+        * ["1", ".", "000", ",", "00", " ", "$"]
+        */
         let currencyPartsMap = [];
         try {
-            currencyPartsMap = new Intl.NumberFormat(this.locale, {
-                style: 'currency',
-                currency: this.currency,
-                currencyDisplay: 'narrowSymbol'
+            currencyPartsMap = new Intl.NumberFormat(this.locale, { style: 'currency', currency: this.currency
             })
                 .formatToParts(1000.0)
                 .map((c) => c.value);
         } catch (e) {
-            console.log('invalid locale or currency provided, fallback will be used', e);
-            currencyPartsMap = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', currencyDisplay: 'narrowSymbol' })
+            console.error('invalid locale or currency provided, fallback will be used', e);
+            currencyPartsMap = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' })
                 .formatToParts(1000.0)
                 .map((c) => c.value);
         }
-        // Get the currency symbol
+        // Get the currency symbol assuming it is the value at the first index of the array.
         const currencySymbol = currencyPartsMap[0];
 
+        // Check to see if value at first index of the array is a number Some locales will have the currency symbol at the last index. 
         if (parseInt(currencySymbol)) {
-            this._currencyFormatSeparator = currencyPartsMap[1];
-            this._currencyCentsSeparator = currencyPartsMap[3];
-            return currencyPartsMap.pop();
+            this._currencyFormatSeparator = currencyPartsMap[CURRENCY_SEPARATOR.AMOUNT];
+            this._currencyCentsSeparator = currencyPartsMap[CURRENCY_SEPARATOR.CENTS];
+            this._currencySymbol = currencyPartsMap[currencyPartsMap.length - 1];
         } else {
-            this._currencyFormatSeparator = currencyPartsMap[2];
-            this._currencyCentsSeparator = currencyPartsMap[4];
-            return currencySymbol;
+            this._currencyFormatSeparator = currencyPartsMap[CURRENCY_SEPARATOR.INVERSE_AMOUNT];
+            this._currencyCentsSeparator = currencyPartsMap[CURRENCY_SEPARATOR.INVERSE_CENTS];
+            this._currencySymbol = currencySymbol;
         }
     }
 
@@ -149,7 +161,18 @@ export class CurrencyField extends OmniFormElement {
         return this._currencyFormat.format(preFormattedValue);
     }
 
-    //Called when the input element loses focus.
+    // Format the internal value to a float.
+    _formatToFloat(formattedValue: string) {       
+        if(formattedValue.length > 0) {
+            const preFloatAllReplace = formattedValue.replaceAll(this._currencyFormatSeparator, '');
+            return parseFloat(preFloatAllReplace);
+        }else {
+            return '';
+        }
+
+    }
+
+    // Called when the input element loses focus.
     _blur() {
         const inputValue = this._inputElement.value;
 
@@ -165,59 +188,60 @@ export class CurrencyField extends OmniFormElement {
             }
 
             // Format amount and cents to currency string, ignoring cents if still partially completed eg: just '.' is valid.
-            this.value = this._formatToCurrency(amountPart) + this._currencyCentsSeparator + centsPart;
+            this._value = this._formatToCurrency(amountPart) + this._currencyCentsSeparator + centsPart;
         } else {
-            this.value = this._formatToCurrency(this._parseAmount(inputValue));
+            this._value = this._formatToCurrency(this._parseAmount(inputValue));
         }
-
+        this._formatToFloat(this._value);
         this.requestUpdate();
     }
 
     async _keyDown(e: KeyboardEvent) {
         const input = this._inputElement;
-        const point = input.selectionStart;
+        const caretPosition = input.selectionStart;
 
-        //If the pointer is positioned after a currency separator remove the separator and the preceding number.
-        if (input.value.charAt(point - 1) === this._currencyFormatSeparator && e.key.toLowerCase() === 'backspace') {
-            //If the value includes a cents separator parse the cents and append it to the value.
+        // If the pointer is positioned after a currency separator remove the separator and the preceding number.
+        if (input.value.charAt(caretPosition - 1) === this._currencyFormatSeparator && e.key.toLowerCase() === 'backspace') {
+            // If the value includes a cents separator parse the cents and append it to the value.
             if (input.value.includes(this._currencyCentsSeparator)) {
                 const centsPart = this._parseCents(input.value.substring(input.value.indexOf(this._currencyCentsSeparator) + 1));
-                this.value =
-                    this._formatToCurrency(
-                        this._parseAmount(
-                            input.value.substring(0, point - 2) +
-                                input.value.substring(point, input.value.indexOf(this._currencyCentsSeparator))
-                        )
-                    ) +
-                    this._currencyCentsSeparator +
-                    centsPart;
+                this._value =
+                this._formatToCurrency(
+                    this._parseAmount(
+                        input.value.substring(0, caretPosition - 2) +
+                            input.value.substring(caretPosition, input.value.indexOf(this._currencyCentsSeparator))
+                    )
+                ) +
+                this._currencyCentsSeparator +
+                centsPart;
             } else {
-                this.value = this._formatToCurrency(
-                    this._parseAmount(input.value.substring(0, point - 2) + input.value.substring(point, input.value.length + 1))
+                this._value = this._formatToCurrency(
+                    this._parseAmount(input.value.substring(0, caretPosition - 2) + input.value.substring(caretPosition, input.value.length + 1))
                 );
             }
 
             //Added so that the number before the separator is not removed.
             e.preventDefault();
+            this.value = this._formatToFloat(this._value);
 
             await this.updateComplete;
 
-            //
-            if (input.value.length === (this.value as string).length) {
-                this._inputElement.setSelectionRange(point - 1, point - 1);
+            // Set caret position after value is formatted.
+            if (input.value.length === this._value.length) {
+                this._inputElement.setSelectionRange(caretPosition - 1, caretPosition - 1);
             }
         }
 
         // If hitting backspace when the caret is after the cent separator remove the cents value completely.
-        if (input.value.charAt(point - 1) === this._currencyCentsSeparator && e.key.toLowerCase() === 'backspace') {
-            this.value = input.value.substring(0, input.value.indexOf(this._currencyCentsSeparator));
+        if (input.value.charAt(caretPosition - 1) === this._currencyCentsSeparator && e.key.toLowerCase() === 'backspace') {
+            this._value = input.value.substring(0, input.value.indexOf(this._currencyCentsSeparator));
             e.preventDefault();
             return;
         }
 
         // Copy currency field selection to clipboard if ctrl + c is pressed on the keyboard.
         if (e.ctrlKey && e.key.toLowerCase() === 'c') {
-            navigator.clipboard.writeText(this.value as string);
+            navigator.clipboard.writeText(this._value);
             return;
         }
     }
@@ -237,20 +261,23 @@ export class CurrencyField extends OmniFormElement {
                 centsPart = centsPart.substring(0, 2);
             }
             // Format amount and cents to currency string, ignoring cents if still partially completed eg: just '.' is valid.
-            this.value = this._formatToCurrency(amountPart) + this._currencyCentsSeparator + centsPart;
+            this._value = this._formatToCurrency(amountPart) + this._currencyCentsSeparator + centsPart;
         } else {
-            this.value = this._formatToCurrency(this._parseAmount(inputValue));
+            this._value = this._formatToCurrency(this._parseAmount(inputValue));
         }
 
         this.requestUpdate();
         await this.updateComplete;
 
-        if (valueLength < (this.value as string).length) {
-            const difference = (this.value as string).length - valueLength;
+        // Set caret position after value is formatted into currency
+        if (valueLength < this._value.length) {
+            const difference = this._value.length - valueLength;
             this._inputElement.setSelectionRange(caretPosition + difference, caretPosition + difference);
         } else {
             this._inputElement.setSelectionRange(caretPosition, caretPosition);
         }
+
+        this.value = this._formatToFloat(this._value);
     }
 
     static override get styles() {
@@ -264,7 +291,6 @@ export class CurrencyField extends OmniFormElement {
                     background: none;
                     box-shadow: none;
                     outline: 0;
-                    padding: 0;
                     margin: 0;
 
                     text-align: var(--omni-currency-field-text-align, left);
@@ -281,7 +307,7 @@ export class CurrencyField extends OmniFormElement {
                     font-size: var(--omni-currency-field-symbol-font-size, var(--omni-font-size));
                     color: var(--omni-currency-field-symbol-color, var(--omni-font-color));
                     padding-left: var(--omni-currency-field-symbol-left-padding, 10px);
-                    user-select: all;
+                    user-select: text;
                 }
             `
         ];
@@ -297,7 +323,8 @@ export class CurrencyField extends OmniFormElement {
                 class="field"
                 id="inputField"
                 type="text"
-                .value=${live(this.value as string)}
+                maxlength=21
+                .value=${live(this._value)}
                 ?readOnly=${this.disabled}
                 tabindex="${this.disabled ? -1 : 0}" />
         `;

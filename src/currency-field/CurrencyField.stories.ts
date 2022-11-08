@@ -65,8 +65,8 @@ export const Interactive = {
         disabled: false,
         prefix: '',
         suffix: '',
-        currency: '',
-        locale: ''
+        currency: 'USD',
+        locale: 'en-US'
     },
     play: async (context: StoryContext) => {
         const currencyField = within(context.canvasElement).getByTestId<CurrencyField>('test-currency-field');
