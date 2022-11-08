@@ -2,13 +2,13 @@
 
 <nav class="menu">
     <div class="menu-container">
-        <div class="menu-item-wrapper" style="border-left: 1px solid #00486d;">
-            <a class="menu-item" style="background: #209cee33; color: #00486d;" {% if currentUrl === '/' %}aria-current="page"{% endif %} href="/">Home</a>
+        <div class="menu-item {% if currentUrl === '/' %}selected{% endif %}">
+            <a class="menu-link {% if currentUrl === '/' %}selected{% endif %}" {% if currentUrl === '/' %}aria-current="page"{% endif %} href="/">Home</a>
         </div>
 
         {% for component in components %}
-        <div class="menu-item-wrapper">
-            <a class="menu-item"  style="width: 100%; display: block;"
+        <div class="menu-item {% if currentUrl.includes(component.name | slug) %}selected{% endif %}">
+            <a class="menu-link {% if currentUrl.includes(component.name | slug) %}selected{% endif %}"
             {% if currentUrl.includes(component.name | slug) %}aria-current="page"{% endif %} 
             href="/components/{{ component.name | slug }}">
                 {{ component.name }}

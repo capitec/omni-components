@@ -122,21 +122,34 @@ header * {
     flex-direction: column;
 }
 
-.menu-item-wrapper {
+.menu-item {
     margin: 0 24px;
     border-left: 1px solid #e1e1e1;
 }
 
-.menu-item {
+.menu-item.selected {
+    border-left: 1px solid #209CEE; /* #00486d; */
+}
+
+.menu-link {
     padding: 0 24px;
     width: 100%;
     display: block;
-}
-
-.menu-item {
     list-style-type: none;
     text-decoration: none;
     line-height: 2;
+    color: #000000cc;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.menu-link:hover {
+    background: #209cee1a; 
+}
+
+.menu-link.selected {
+    background: #209cee1a; 
+    color: #209CEE; /* #00486d; */
 }
 
 /* COMPONENTS */
