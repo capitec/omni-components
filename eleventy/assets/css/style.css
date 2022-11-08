@@ -1,6 +1,14 @@
 * {
     box-sizing: border-box;
     margin: 0;
+    font-family: 'Hind Vadodara';
+    cursor: default;
+}
+
+*,
+::before,
+::after {
+    box-sizing: border-box;
 }
 
 body {
@@ -18,130 +26,213 @@ header {
     height: 60px;
     z-index: 6;
     position: fixed;
-    background-color: aqua;
-    border-bottom: 1px solid red;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e1e1e1;
     display: flex;
     -webkit-box-align: center;
-    align-items: center;
+    align-items: stretch;
     -webkit-box-pack: justify;
     justify-content: space-between;
-    padding-right: var(--removed-scroll-width, 0px);
 }
 
-.menu-button {
+header * {
+    align-items: center;
+}
+
+.header-menu-button {
     display: none;
+    padding-left: 20px;
+    /* background-color: gold; */
+}
+
+.header-menu-button .material-icons {
     cursor: pointer;
 }
 
-.menu-desktop {
-    box-sizing: border-box;
-    height: 100vh;
-    border-right: 1px solid red;
-    background-color: orange;
-    position: fixed;
-    z-index: 5;
-    top: 60px;
-    /* spock = 0px */
-    bottom: 0px;
-    left: 0px;
-    width: 260px;
+.header-logo {
+    display: flex;
+    padding: 0 20px;
+    justify-content: flex-start;
+    /* background-color: pink; */
 }
 
-.menu-mobile {
+.header-logo .header-container {
+    display: flex; 
+    justify-content: flex-start; 
+    align-items: center;
+}
+
+.header-actions {
+    display: flex;
+    padding-right: 20px;
+    justify-content: flex-end;
+    /* background-color: turquoise; */
+}
+
+.menu {
     box-sizing: border-box;
-    height: 100vh;
-    border-right: 1px solid rgb(26, 27, 30);
-    background-color: orange;
+    height: calc(100vh - 60px);
+    border-right: 1px solid #e1e1e1;
+    background-color: #ffffff;
     position: fixed;
     z-index: 5;
+    padding-top: 0;
     top: 60px;
-    /* spock = 0px */
     bottom: 0px;
     left: 0px;
     width: 260px;
+    overflow-y: auto;
+}
+
+.menu .mobile {
+    box-sizing: border-box;
+    height: calc(100vh - 60px);
+    border-right: 1px solid #e1e1e1;
+    background-color: #ffffff;
+    position: fixed;
+    z-index: 5;
+    top: 60px;
+    bottom: 0px;
+    left: 0px;
+    width: 260px;
+    overflow-y: auto;
+}
+
+.menu .menu-item {
+    list-style-type: none;
 }
 
 main {
-    /* top: 60px; */
     scroll-margin-top: 60px;
     -webkit-flex: 1;
     -ms-flex: 1;
     flex: 1;
     padding-top: 60px;
-    /* spock does not have */
 }
 
 footer {
     display: flex;
-    background-color: darkkhaki
+    background-color: darkkhaki;
 }
 
 
-/* Style the tab */
-.tab {
-    overflow: hidden;
-    border: 1px solid #ccc;
-    background-color: #f1f1f1;
+/* COMPONENTS */
+
+.component-meta {
+    position: relative;
+    z-index: 4;
+    background-color: #f9f9f9;
+    padding-left: 48px;
+    padding-right: 48px;
 }
 
-/* Style the buttons that are used to open the tab content */
-.tab button {
-    background-color: inherit;
-    float: left;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    padding: 14px 16px;
-    transition: 0.3s;
+.component-tab-container {
+    position: relative;
+    z-index: 1;
+    background-color: #f9f9f9;
+    box-shadow: none;
+    /* padding-bottom: 80px; */
 }
 
-/* Change background color of buttons on hover */
-.tab button:hover {
-    background-color: #ddd;
+.component-tab-root {
+    flex-direction: row;
 }
 
-/* Create an active/current tablink class */
-.tab button.active {
-    background-color: #ccc;
+.component-tab-wrapper {
+    border-bottom: 1px solid #e1e1e1;
+    padding-left: 48px;
 }
 
-/* Style the tab content */
-.tabcontent {
+.component-tab-list {
+    display: flex;
+    flex-flow: row wrap;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+    /* max-width: 1082px; */
+    margin-left: auto;
+    margin-right: auto;
+    border-bottom: 0px;
+}
+
+.component-tab-button.active {
+    background-color: blue;
+}
+
+.component-tab {
     display: none;
-    padding: 6px 12px;
-    border: 1px solid #ccc;
-    border-top: none;
+    animation: fadeEffect 0.2s;
 }
 
-.tabcontent {
-    animation: fadeEffect 0.3s; /* Fading effect takes 1 second */
-  }
-  
-  /* Go from zero to full opacity */
-  @keyframes fadeEffect {
-    from {opacity: 0;}
-    to {opacity: 1;}
-  }
+/* Go from zero to full opacity */
+@keyframes fadeEffect {
+    from {
+        opacity: 0;
+    }
 
+    to {
+        opacity: 1;
+    }
+}
 
+.component-tab-content {
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    background-color: #ffffff;
+}
 
+.component-toc-wrapper {
+    flex: 0 0 260px;
+    margin-top: 24px;
+}
 
+.component-toc {
+    position: sticky;
+    top: 84px;
+    display: flex;
+    flex-direction: column;
+    background-color: pink;
+    flex: 0 0 240px;
+    overflow-y: auto;
+    max-height: calc(100vh - 65px);
+}
+
+.component-toc-active {
+    font-weight: bold;
+}
 
 @media screen and (max-width: 760px) {
-    header {
+
+    .header {
         background-color: blueviolet;
     }
 
-    .menu-button {
-        display: flex;
-        ;
+    .menu {
+        width: 100%;
+        border-right: 0;
     }
 
-    .menu-desktop {
+    .header-menu-button {
+        display: flex;
+        justify-content: flex-start;
+        flex : 1;
+    }
+
+    .header-logo {
+        flex: 2;
+        padding: 0;
+        justify-content: center;
+    }
+
+    .header-actions {
+        flex : 1;
+    }
+
+    .menu {
         display: none;
     }
 
-    .menu-mobile {
+    .mobile {
         display: block;
         width: 100%;
         right: 0px;
@@ -157,8 +248,6 @@ footer {
         padding-right: 0;
     }
 
-
-
     .tab {
         display: flex;
     }
@@ -168,8 +257,8 @@ footer {
     }
 }
 
-
-
-
-
-
+@media screen and (max-width: 1080px) {
+    .component-toc-wrapper {
+        display: none;
+    }
+}
