@@ -14,7 +14,7 @@ permalink: "components/{{ component.name | slug }}/"
         <div class="component-desc">{{ customElements | getDescription(component.name) | safe }}</div> 
         <div class="component-info">
             <div class="component-info-item">
-                <div>Import</div>
+                <div>Module</div>
                 <div class="component-info-item-code">
                     <pre><code class="language-js" id="component-import-code">{{ customElements | getImport(component.name)}}</code></pre>
                     <span class="material-icons" style="font-size: 16px; cursor: pointer; margin-left: 6px;" onclick="copyToClipboard('component-import-code');return false;">

@@ -212,6 +212,7 @@ header * {
 .component-info-item-code {
     align-items: center;
     display: flex;
+    overflow-y: auto;
 }
 
 .component-info-item-link {
@@ -375,6 +376,14 @@ header * {
     main {
         padding-left: 0;
         padding-right: 0;
+    }
+
+    .component-meta { 
+        padding: 24px;
+    }
+    
+    .component-tab-wrapper {
+        padding-left: 24px;
     }
 
     .component-info-item > div:first-child {
