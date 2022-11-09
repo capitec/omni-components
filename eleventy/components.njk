@@ -36,7 +36,7 @@ permalink: "components/{{ component.name | slug }}/"
                 <div>
                     <a href="https://www.npmjs.com/package/@capitec/omni-components" target="blank" class="component-info-item-link">
                         <img src="/assets/images/npm.svg" class="component-info-item-img">
-                        View on NPM
+                        @capitec/omni-components
                     </a>
                 </div>
             </div>
@@ -117,7 +117,7 @@ permalink: "components/{{ component.name | slug }}/"
         const range = document.createRange();
         range.selectNode(document.getElementById(id));
         window.getSelection().removeAllRanges();
-        window.getSelection().addRange(r);
+        window.getSelection().addRange(range);
         document.execCommand('copy');
         window.getSelection().removeAllRanges();
     }
