@@ -13,6 +13,7 @@ export async function components() {
         const moduleStories = ['Interactive',...module.exports.map(e => e.name).filter(s => s !== 'default' && s !== 'Interactive') ];
         response.push({
             path: story.replace('./', '/'),
+            srcPath: story.replace('.stories', '').replace('./dist', 'src').replace('js', 'ts'),
             name: name,
             stories: moduleStories
         });

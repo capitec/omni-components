@@ -1,4 +1,4 @@
-import { loadCustomElementsModuleByFileFor, markdownCodeToHtml } from '../../dist/utils/StoryUtils.js';
+import { loadCustomElementsModuleByFileFor } from '../../dist/utils/StoryUtils.js';
 
 export function getTagName(value, componentName) {
     const component = loadCustomElementsModuleByFileFor(componentName, value);
@@ -9,6 +9,13 @@ export function getTagName(value, componentName) {
 export function getDescription(value, componentName) {
     const component = loadCustomElementsModuleByFileFor(componentName, value);
     const declaration = component.declarations.find(d => d.name === componentName);
-    const html = markdownCodeToHtml(declaration.description); 
-    return html;
+    const description = declaration.description;
+    return description;
+}
+
+export function getImport(value, componentName) {
+    const component = loadCustomElementsModuleByFileFor(componentName, value);
+    const declaration = component.declarations.find(d => d.name === componentName);
+    const imp = declaration.import.replace(/```/gi, '').replace('js ', '').replace(/(\r\n|\n|\r)/gm, '');
+    return imp;
 }

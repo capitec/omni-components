@@ -10,16 +10,44 @@ permalink: "components/{{ component.name | slug }}/"
 
 <article>
     <div class="component-meta">
-        <div class="component-name">{{ component.name }}</div> 
-        <div>{{ customElements | getDescription(component.name) | safe }}</div> 
-        {# <div>{{ customElements | getTagName(component.name) }}</div>  #}
+        <div class="component-name">{{ component.name }}</div>
+        <div class="component-desc">{{ customElements | getDescription(component.name) | safe }}</div> 
+        <div class="component-info">
+            <div class="component-info-item">
+                <div>Import</div>
+                <div class="component-info-item-code">
+                    <pre><code class="language-js" id="component-import-code">{{ customElements | getImport(component.name)}}</code></pre>
+                    <span class="material-icons" style="font-size: 16px; cursor: pointer; margin-left: 6px;" onclick="copyToClipboard('component-import-code');return false;">
+                        content_copy
+                    </span>
+                </div>
+            </div>
+            <div class="component-info-item">
+                <div>Source</div>
+                <div>
+                    <a href="https://github.com/capitec/omni-components/tree/develop/{{ component.srcPath }}" target="blank" class="component-info-item-link">
+                        <img src="/assets/images/github.svg" class="component-info-item-img">
+                        View on GitHub
+                    </a>
+                </div>
+            </div>
+            <div class="component-info-item">
+                <div>Package</div>
+                <div>
+                    <a href="https://www.npmjs.com/package/@capitec/omni-components" target="blank" class="component-info-item-link">
+                        <img src="/assets/images/npm.svg" class="component-info-item-img">
+                        View on NPM
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="component-tab-container">
         <div class="component-tab-root">
             <div class="component-tab-wrapper">
                 <div class="component-tab-list" role="tablist">
-                    <div role="tab" class="component-tab-button active" onclick="openTab(event, 'docs')">Docs</div>
-                    <div role="tab" class="component-tab-button" onclick="openTab(event, 'props')">Props</div>
+                    <div role="tab" class="component-tab-button active" onclick="openTab(event, 'docs')">Documentation</div>
+                    <div role="tab" class="component-tab-button" onclick="openTab(event, 'props')">CSS Properties</div>
                 </div>
             </div>
             <div class="component-tab" id="docs" role="tabpanel" style="display: block;">
@@ -56,10 +84,10 @@ permalink: "components/{{ component.name | slug }}/"
 
 </article>
 
-<script type="module" defer>
+{# <script type="module" defer>
     import { enhanceCodeBlocks } from '/dist/utils/StoryUtils.js';
     enhanceCodeBlocks();
-</script>
+</script> #}
 <script>
 
     function openTab(evt, tabId) {
@@ -82,6 +110,16 @@ permalink: "components/{{ component.name | slug }}/"
         // Show the current tab, and add an "active" class to the button that opened the tab
         document.getElementById(tabId).style.display = "block";
         evt.currentTarget.className += " active";
+    }
+
+    function copyToClipboard(id)
+    {
+        const range = document.createRange();
+        range.selectNode(document.getElementById(id));
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(r);
+        document.execCommand('copy');
+        window.getSelection().removeAllRanges();
     }
     
 </script>
