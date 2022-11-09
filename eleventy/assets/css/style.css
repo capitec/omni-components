@@ -208,8 +208,29 @@ header * {
     border-bottom: 0px;
 }
 
+.component-tab-button {
+    cursor: pointer;
+    padding: 10xp 16px;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    background-color: #f9f9f9;
+    border-radius: 4px 4px 0 0;
+    border: 1px solid transparent;
+    border-bottom: 1px solid #e1e1e1;
+    font-size: 16px;
+    font-weight: 500;
+    height: 46px;
+    padding: 0 20px;
+    margin-bottom: -1px;
+}
+
 .component-tab-button.active {
-    background-color: blue;
+    background-color: #ffffff;
+    border: 1px solid #e1e1e1;
+    border-bottom: none;
 }
 
 .component-tab {

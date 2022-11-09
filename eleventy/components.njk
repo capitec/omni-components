@@ -18,8 +18,8 @@ permalink: "components/{{ component.name | slug }}/"
         <div class="component-tab-root">
             <div class="component-tab-wrapper">
                 <div class="component-tab-list" role="tablist">
-                    <button role="tab" class="component-tab-button active" onclick="openTab(event, 'docs')">Docs</button>
-                    <button role="tab" class="component-tab-button" onclick="openTab(event, 'props')">Props</button>
+                    <div role="tab" class="component-tab-button active" onclick="openTab(event, 'docs')">Docs</div>
+                    <div role="tab" class="component-tab-button" onclick="openTab(event, 'props')">Props</div>
                 </div>
             </div>
             <div class="component-tab" id="docs" role="tabpanel" style="display: block;">
@@ -63,6 +63,7 @@ permalink: "components/{{ component.name | slug }}/"
 <script>
 
     function openTab(evt, tabId) {
+
         // Declare all variables
         var i, tabcontent, tablinks;
 

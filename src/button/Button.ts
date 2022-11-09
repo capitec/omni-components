@@ -5,9 +5,8 @@ import { OmniElement } from '../core/OmniElement.js';
 
 /**
  * A control that allows an action to be executed.
- *
+ * 
  * ```js
- *
  * import '@capitec/omni-components/button';
  * ```
  *

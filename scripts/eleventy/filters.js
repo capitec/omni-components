@@ -9,5 +9,6 @@ export function getTagName(value, componentName) {
 export function getDescription(value, componentName) {
     const component = loadCustomElementsModuleByFileFor(componentName, value);
     const declaration = component.declarations.find(d => d.name === componentName);
-    return markdownCodeToHtml(declaration.description);
+    const html = markdownCodeToHtml(declaration.description); 
+    return html;
 }
