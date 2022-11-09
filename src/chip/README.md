@@ -1,16 +1,14 @@
 # omni-chip
 
-A control that can be used for input, setting attributes, or performing actions.
-
-```js
-
-import '@capitec/omni-components/chip';
-```
+Control that can be used for input, setting attributes, or performing actions.
 
 ## Example
 
 ```html
-<omni-chip  label="Chip title"  closable></omni-chip>
+<omni-chip
+  label="Chip title"
+  closable>
+</omni-chip>
 ```
 
 ## Properties

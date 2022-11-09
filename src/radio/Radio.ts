@@ -4,15 +4,14 @@ import { classMap } from 'lit/directives/class-map.js';
 import { OmniElement } from '../core/OmniElement.js';
 
 /**
- * A control that allows a user to select a single value from a group of values.
+ * Control to select a single value from a group of values.
  *
+ * @import
  * ```js
- *
  * import '@capitec/omni-components/radio';
  * ```
  *
  * @example
- *
  * ```html
  * <omni-radio
  *   label="My Toggle Value"

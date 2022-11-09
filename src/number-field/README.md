@@ -1,16 +1,18 @@
 # omni-number-field
 
-An input control that allows a user to enter a single line of numbers.
-
-```js
-
-import '@capitec/omni-components/number-field';
-```
+Input control to enter a single line of numbers.
 
 ## Example
 
 ```html
-<omni-number-field  label="Enter a value"  value=12345  data="{'id': 12345, 'name': 'Test'}"  hint="Required"  error="Field level error message"  disabled></omni-number-field>
+<omni-number-field
+  label="Enter a value"
+  value=12345
+  data="{'id': 12345, 'name': 'Test'}"
+  hint="Required"
+  error="Field level error message"
+  disabled>
+</omni-number-field>
 ```
 
 ## Properties

@@ -3,7 +3,6 @@ import { property } from 'lit/decorators.js';
 import { until } from 'lit/directives/until.js';
 
 /**
- *
  * Base element class that manages element properties and attributes, and
  * renders a lit template with asynchronous rendering support and themed styles.
  *

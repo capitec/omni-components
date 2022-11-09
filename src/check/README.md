@@ -1,16 +1,18 @@
 # omni-check
 
-A control that allows a user to check a value on or off.
-
-```js
-
-import '@capitec/omni-components/check';
-```
+Control that allows a selection to be made.
 
 ## Example
 
 ```html
-<omni-check  label="My Toggle Value"  .data="{'id': 12345, 'name': 'Test'}"  hint="Required"  error="Field level error message"  checked  disabled></omni-check>
+<omni-check
+  label="My Toggle Value"
+  .data="{'id': 12345, 'name': 'Test'}"
+  hint="Required"
+  error="Field level error message"
+  checked
+  disabled>
+</omni-check>
 ```
 
 ## Properties

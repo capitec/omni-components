@@ -3,15 +3,14 @@ import { customElement, property } from 'lit/decorators.js';
 import { OmniElement } from '../core/OmniElement.js';
 
 /**
- * Component that displays an icon
+ * Component that displays an icon.
  *
- * ```js
- *
+ * @import
+ * ```js 
  * import '@capitec/omni-components/icon';
  * ```
  *
  * @example
- *
  * ```html
  * <omni-icon
  *   size="default|extra-small|small|medium|large">
@@ -20,7 +19,6 @@ import { OmniElement } from '../core/OmniElement.js';
  * ```
  *
  * @example
- *
  * ```html
  * <omni-icon
  *   size="default|extra-small|small|medium|large"

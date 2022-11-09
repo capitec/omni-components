@@ -6,17 +6,15 @@ import OmniElement from '../core/OmniElement.js';
 import '../icons/Loading.icon.js';
 
 /**
- * An element that defers content rendering to a provided function/promise.
+ * Element that defers content rendering to a provided function / promise.
  *
+ * @import
  * ```js
- *
  * import '@capitec/omni-components/render-element';
  * ```
  *
  * @example
- *
  * ```html
- *
  * <omni-render-element></omni-render-element>
  * ```
  *

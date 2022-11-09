@@ -1,16 +1,14 @@
 # omni-label
 
-A simple label component that renders styled text.
-
-```js
-
-import '@capitec/omni-components/label';
-```
+Label component that renders styled text.
 
 ## Example
 
 ```html
-<omni-label  label="Hello World"  type="strong"></omni-label>
+<omni-label
+  label="Hello World"
+  type="strong">
+</omni-label>
 ```
 
 ## Properties

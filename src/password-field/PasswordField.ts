@@ -7,15 +7,14 @@ import '../icons/EyeHidden.icon.js';
 import '../icons/EyeVisible.icon.js';
 
 /**
- * A password input control.
+ * Password input control.
  *
+ * @import
  * ```js
- *
  * import '@capitec/omni-components/password-field';
  * ```
  *
  * @example
- *
  * ```html
  * <omni-password-field
  *   label="Enter a value"

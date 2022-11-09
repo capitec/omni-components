@@ -3,15 +3,14 @@ import { customElement } from 'lit/decorators.js';
 import DOMTreeElement from '../core/DOMTreeElement';
 
 /**
- * A open lock icon component
+ * Open lock icon component.
  *
+ * @import
  * ```js
- *
  * import '@capitec/omni-components/icons/LockOpen.icon.js';
  * ```
  *
  * @example
- *
  * ```html
  * <omni-lock-open-icon></omni-lock-open-icon>
  * ```

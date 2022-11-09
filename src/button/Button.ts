@@ -4,14 +4,14 @@ import { classMap } from 'lit/directives/class-map.js';
 import { OmniElement } from '../core/OmniElement.js';
 
 /**
- * A control that allows an action to be executed.
+ * Control that allows an action to be executed.
  * 
- * ```js
+ * @import
+ * ```js 
  * import '@capitec/omni-components/button';
  * ```
  *
- * @example
- *
+ * @example 
  * ```html
  * <omni-button
  *   label="Some Action"

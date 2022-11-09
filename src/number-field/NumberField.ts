@@ -4,14 +4,13 @@ import { live } from 'lit/directives/live.js';
 import { OmniFormElement } from '../core/OmniFormElement.js';
 
 /**
- * An input control that allows a user to enter a single line of numbers.
+ * Input control to enter a single line of numbers.
  *
+ * @import
  * ```js
- *
  * import '@capitec/omni-components/number-field';
  * ```
  * @example
- *
  * ```html
  * <omni-number-field
  *   label="Enter a value"

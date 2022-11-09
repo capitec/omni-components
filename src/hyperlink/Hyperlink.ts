@@ -3,15 +3,14 @@ import { customElement, property } from 'lit/decorators.js';
 import { OmniElement } from '../core/OmniElement.js';
 
 /**
- * A link control that allows a user to indicate an action to be executed. Typically used for navigational purposes.
+ * Control to indicate an action to be executed. Typically used for navigational purposes.
  *
- * ```js
- *
+ * @import
+ * ```js 
  * import '@capitec/omni-components/hyperlink';
  * ```
  *
- * @example
- *
+ * @example 
  * ```html
  * <omni-hyperlink
  *   href="https://example.com"

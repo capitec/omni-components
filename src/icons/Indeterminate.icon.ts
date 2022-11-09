@@ -3,15 +3,14 @@ import { customElement } from 'lit/decorators.js';
 import DOMTreeElement from '../core/DOMTreeElement.js';
 
 /**
- * An indeterminate icon component.
+ * Indeterminate icon component.
  *
+ * @import
  * ```js
- *
  * import '@capitec/omni-components/icons/Indeterminate.icon.js';
  * ```
  *
  * @example
- *
  * ```html
  * <omni-indeterminate-icon></omni-indeterminate-icon>
  * ```

@@ -3,15 +3,14 @@ import { customElement } from 'lit/decorators.js';
 import DOMTreeElement from '../core/DOMTreeElement.js';
 
 /**
- * A check icon component.
+ * Check icon component.
  *
+ * @import
  * ```js
- *
  * import '@capitec/omni-components/icons/Check.icon.js';
  * ```
  *
  * @example
- *
  * ```html
  * <omni-check-icon></omni-check-icon>
  * ```

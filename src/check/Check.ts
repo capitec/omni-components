@@ -7,15 +7,14 @@ import '../icons/Indeterminate.icon.js';
 import '../icons/Check.icon.js';
 
 /**
- * A control that allows a user to check a value on or off.
+ * Control that allows a selection to be made.
  *
- * ```js
- *
+ * @import
+ * ```js 
  * import '@capitec/omni-components/check';
  * ```
  *
- * @example
- *
+ * @example 
  * ```html
  * <omni-check
  *   label="My Toggle Value"

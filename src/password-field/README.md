@@ -1,16 +1,18 @@
 # omni-password-field
 
-A password input control.
-
-```js
-
-import '@capitec/omni-components/password-field';
-```
+Password input control.
 
 ## Example
 
 ```html
-<omni-password-field  label="Enter a value"  value="Hello World"  data="{'id': 12345, 'name': 'Test'}"  hint="Required"  error="Field level error message"  disabled></omni-password-field>
+<omni-password-field
+  label="Enter a value"
+  value="Hello World"
+  data="{'id': 12345, 'name': 'Test'}"
+  hint="Required"
+  error="Field level error message"
+  disabled>
+</omni-password-field>
 ```
 
 ## Properties

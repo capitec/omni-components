@@ -3,15 +3,14 @@ import { customElement } from 'lit/decorators.js';
 import DOMTreeElement from '../core/DOMTreeElement.js';
 
 /**
- * A hidden eye icon component
+ * Hidden eye icon component
  *
+ * @import
  * ```js
- *
  * import '@capitec/omni-components/icons/EyeHidden.icon.js';
  * ```
  *
  * @example
- *
  * ```html
  * <omni-eye-hidden-icon></omni-eye-hidden-icon>
  * ```

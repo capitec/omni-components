@@ -7,14 +7,14 @@ import '../icons/Plus.icon.js';
 import '../icons/Minus.icon.js';
 
 /**
- * An input control that allows a user to enter a single line of numbers with a stepper control.
+ * Input control to enter a single line of numbers with a stepper control.
  *
+ * @import
  * ```js
- *
  * import '@capitec/omni-components/numeric-field';
  * ```
+ * 
  * @example
- *
  * ```html
  * <omni-numeric-field
  *   label="Enter a numeric value"

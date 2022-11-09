@@ -1,16 +1,14 @@
 # omni-button
 
-A control that allows an action to be executed.
-
-```js
-
-import '@capitec/omni-components/button';
-```
+Control that allows an action to be executed.
 
 ## Example
 
 ```html
-<omni-button  label="Some Action"  type="primary"></omni-button>
+<omni-button
+  label="Some Action"
+  type="primary">
+</omni-button>
 ```
 
 ## Properties

@@ -1,16 +1,18 @@
 # omni-numeric-field
 
-An input control that allows a user to enter a single line of numbers with a stepper control.
-
-```js
-
-import '@capitec/omni-components/numeric-field';
-```
+Input control to enter a single line of numbers with a stepper control.
 
 ## Example
 
 ```html
-<omni-numeric-field  label="Enter a numeric value"  value="12345"  data="{'id': 12345, 'name': 'Test'}"  hint="Required"  error="Field level error message"  disabled></omni-numeric-field>
+<omni-numeric-field
+  label="Enter a numeric value"
+  value="12345"
+  data="{'id': 12345, 'name': 'Test'}"
+  hint="Required"
+  error="Field level error message"
+  disabled>
+</omni-numeric-field>
 ```
 
 ## Properties

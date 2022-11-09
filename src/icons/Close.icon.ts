@@ -3,15 +3,14 @@ import { customElement } from 'lit/decorators.js';
 import DOMTreeElement from '../core/DOMTreeElement.js';
 
 /**
- * A Close icon component.
+ * Close icon component.
  *
+ * @import
  * ```js
- *
  * import '@capitec/omni-components/icons/Close.icon.js';
  * ```
  *
  * @example
- *
  * ```html
  * <omni-close-icon></omni-close-icon>
  * ```

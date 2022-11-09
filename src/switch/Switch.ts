@@ -4,15 +4,14 @@ import { classMap } from 'lit/directives/class-map.js';
 import { OmniElement } from '../core/OmniElement.js';
 
 /**
- * A control that allows a user to switch a value on or off.
+ * Control to switch a value on or off.
  *
+ * @import
  * ```js
- *
  * import '@capitec/omni-components/switch';
  * ```
  *
  * @example
- *
  * ```html
  * <omni-switch
  *   label="My Switch Value"

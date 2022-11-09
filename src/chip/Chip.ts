@@ -6,15 +6,14 @@ import { OmniElement } from '../core/OmniElement.js';
 import '../icons/Close.icon.js';
 
 /**
- * A control that can be used for input, setting attributes, or performing actions.
+ * Control that can be used for input, setting attributes, or performing actions.
  *
- * ```js
- *
+ * @import
+ * ```js 
  * import '@capitec/omni-components/chip';
  * ```
  *
- * @example
- *
+ * @example 
  * ```html
  * <omni-chip
  *   label="Chip title"

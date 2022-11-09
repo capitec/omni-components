@@ -4,14 +4,14 @@ import { live } from 'lit/directives/live.js';
 import { OmniFormElement } from '../core/OmniFormElement.js';
 
 /**
- * A text input control.
+ * Control to input text.
  *
+ * @import
  * ```js
- *
  * import '@capitec/omni-components/text-field';
  * ```
+ * 
  * @example
- *
  * ```html
  * <omni-text-field
  *   label="Enter a value"

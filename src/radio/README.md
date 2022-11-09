@@ -1,16 +1,18 @@
 # omni-radio
 
-A control that allows a user to select a single value from a group of values.
-
-```js
-
-import '@capitec/omni-components/radio';
-```
+Control to select a single value from a group of values.
 
 ## Example
 
 ```html
-<omni-radio  label="My Toggle Value"  data="{'id': 12345, 'name': 'Test'}"  hint="Required"  error="Field level error message"  checked  disabled></omni-radio>
+<omni-radio
+  label="My Toggle Value"
+  data="{'id': 12345, 'name': 'Test'}"
+  hint="Required"
+  error="Field level error message"
+  checked
+  disabled>
+</omni-radio>
 ```
 
 ## Properties

@@ -3,14 +3,14 @@ import { customElement } from 'lit/decorators.js';
 import DOMTreeElement from '../core/DOMTreeElement';
 
 /**
- * A minus icon component
+ * Minus icon component.
  *
- * ```js
+ * @import
+ * ```js 
  * import '@capitec/omni-components/icons/Minus.icon.js';
  * ```
  *
  * @example
- *
  * ```html
  * <omni-minus-icon></omni-minus-icon>
  * ```

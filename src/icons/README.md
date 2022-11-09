@@ -1,11 +1,6 @@
 # omni-check-icon
 
-A check icon component.
-
-```js
-
-import '@capitec/omni-components/icons/Check.icon.js';
-```
+Check icon component.
 
 ## Example
 
@@ -28,12 +23,7 @@ import '@capitec/omni-components/icons/Check.icon.js';
 
 # omni-close-icon
 
-A Close icon component.
-
-```js
-
-import '@capitec/omni-components/icons/Close.icon.js';
-```
+Close icon component.
 
 ## Example
 
@@ -56,12 +46,7 @@ import '@capitec/omni-components/icons/Close.icon.js';
 
 # omni-eye-hidden-icon
 
-A hidden eye icon component
-
-```js
-
-import '@capitec/omni-components/icons/EyeHidden.icon.js';
-```
+Hidden eye icon component
 
 ## Example
 
@@ -84,12 +69,7 @@ import '@capitec/omni-components/icons/EyeHidden.icon.js';
 
 # omni-eye-visible-icon
 
-A visible eye icon component
-
-```js
-
-import '@capitec/omni-components/icons/EyeVisible.icon.js';
-```
+Visible eye icon component.
 
 ## Example
 
@@ -112,12 +92,7 @@ import '@capitec/omni-components/icons/EyeVisible.icon.js';
 
 # omni-indeterminate-icon
 
-An indeterminate icon component.
-
-```js
-
-import '@capitec/omni-components/icons/Indeterminate.icon.js';
-```
+Indeterminate icon component.
 
 ## Example
 
@@ -140,12 +115,7 @@ import '@capitec/omni-components/icons/Indeterminate.icon.js';
 
 # omni-loading-icon
 
-A loading icon component.
-
-```js
-
-import '@capitec/omni-components/icons/Loading.icon.js';
-```
+Loading icon component.
 
 ## Example
 
@@ -199,12 +169,7 @@ import '@capitec/omni-components/icons/Loading.icon.js';
 
 # omni-lock-closed-icon
 
-A closed lock icon component
-
-```js
-
-import '@capitec/omni-components/icons/LockClosed.icon.js';
-```
+Closed lock icon component.
 
 ## Example
 
@@ -227,12 +192,7 @@ import '@capitec/omni-components/icons/LockClosed.icon.js';
 
 # omni-lock-open-icon
 
-A open lock icon component
-
-```js
-
-import '@capitec/omni-components/icons/LockOpen.icon.js';
-```
+Open lock icon component.
 
 ## Example
 
@@ -255,11 +215,7 @@ import '@capitec/omni-components/icons/LockOpen.icon.js';
 
 # omni-minus-icon
 
-A minus icon component
-
-```js
-import '@capitec/omni-components/icons/Minus.icon.js';
-```
+Minus icon component.
 
 ## Example
 
@@ -282,11 +238,7 @@ import '@capitec/omni-components/icons/Minus.icon.js';
 
 # omni-plus-icon
 
-A plus icon component
-
-```js
-import '@capitec/omni-components/icons/Plus.icon.js';
-```
+Plus icon component.
 
 ## Example
 

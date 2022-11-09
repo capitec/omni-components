@@ -3,15 +3,14 @@ import { customElement, property } from 'lit/decorators.js';
 import { OmniElement } from '../core/OmniElement.js';
 
 /**
- * A simple label component that renders styled text.
+ * Label component that renders styled text.
  *
+ * @import
  * ```js
- *
  * import '@capitec/omni-components/label';
  * ```
  *
  * @example
- *
  * ```html
  * <omni-label
  *   label="Hello World"

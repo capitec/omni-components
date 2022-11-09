@@ -3,15 +3,14 @@ import { customElement } from 'lit/decorators.js';
 import OmniElement from '../core/OmniElement.js';
 
 /**
- * A loading icon component.
+ * Loading icon component.
  *
+ * @import
  * ```js
- *
  * import '@capitec/omni-components/icons/Loading.icon.js';
  * ```
  *
  * @example
- *
  * ```html
  * <omni-loading-icon></omni-loading-icon>
  * ```
