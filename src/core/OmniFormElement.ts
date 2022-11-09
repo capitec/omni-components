@@ -66,6 +66,8 @@ import OmniElement from './OmniElement.js';
  *
  */
 export class OmniFormElement extends OmniElement {
+    private _value: string | number = null;
+    
     /**
      * Text label.
      * @attr
@@ -76,7 +78,13 @@ export class OmniFormElement extends OmniElement {
      * The value entered into the form component.
      * @attr
      */
-    @property({ reflect: true }) value: string | number = null;
+    @property({ reflect: true })
+    public get value(): string | number {
+        return this._value;
+    }
+    public set value(value: string | number) {
+        this._value = value;
+    }
 
     /**
      * Data associated with the component.

@@ -75,12 +75,33 @@ export const Interactive = {
 
         const inputField = currencyField.shadowRoot.getElementById('inputField');
 
-        const value = '1200';
+        const value = '1200000.00';
         await userEvent.type(inputField, value);
         // Check the following value as input value is formatted to currency value;
-        await expect(inputField).toHaveValue('1,200');
-
+        await expect(inputField).toHaveValue('1,200,000.00');
         await expect(input).toBeCalledTimes(value.length);
+
+        // Backspacing to cover the removal of cents and cents separator
+        const backspace = '{backspace}{backspace}{backspace}';
+        await userEvent.type(inputField, backspace);
+        await expect(inputField).toHaveValue('1,200,000');
+
+        // Use left arrow key to position the caret after the currency separator.
+        const leftArrow = '{left}{left}{left}{backspace}';
+        await userEvent.type(inputField, leftArrow);
+        await expect(inputField).toHaveValue('120,000');
+
+        const rightArrow = '{right}{right}';
+        await userEvent.type(inputField, rightArrow);
+        // Set value of currency field to be empty before setting properties.
+        //const clearField = '{>ControlLeft>a/}{>ControlLeft>x/}';
+        const clearField = '{backspace>6/}';
+        await userEvent.type(inputField, clearField);
+        //await expect(inputField).toHaveValue('');
+
+        // Set locale for different currency format.
+        currencyField.locale = 'de-DE';        
+        
     }
 };
 
