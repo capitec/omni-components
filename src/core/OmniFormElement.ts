@@ -66,8 +66,7 @@ import OmniElement from './OmniElement.js';
  *
  */
 export class OmniFormElement extends OmniElement {
-    private _value: string | number = null;
-    
+
     /**
      * Text label.
      * @attr
@@ -134,7 +133,6 @@ export class OmniFormElement extends OmniElement {
         }
 
         if (!this.value && this._labelElement) {
-            console.log(`Value of this.value:`, this.value);
             this._labelElement.style.transform = '';
         }
     }
