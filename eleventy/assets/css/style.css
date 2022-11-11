@@ -164,6 +164,7 @@ header * {
 .menu-link.selected {
     background: #209cee1a;
     color: #209CEE;
+    margin-left: -2px;
     /* #00486d; */
 }
 
@@ -288,7 +289,7 @@ header * {
 .component-tab-button.active {
     background-color: #ffffff;
     border: 1px solid #e1e1e1;
-    border-bottom: none;
+    border-bottom: 1px solid transparent;
 }
 
 .component-tab {
