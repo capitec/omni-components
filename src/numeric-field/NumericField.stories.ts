@@ -101,7 +101,7 @@ export const Interactive = {
         const value = '12345';
         await userEvent.type(inputField, value);
 
-        await expect(inputField).toHaveValue(212345);
+        await expect(inputField).toHaveValue(12345);
 
         await expect(interaction).toBeCalledTimes(11);
     }

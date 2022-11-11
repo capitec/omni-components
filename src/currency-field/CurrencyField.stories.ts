@@ -42,7 +42,7 @@ export const Interactive = {
         <omni-currency-field
             data-testId="test-currency-field"
             label="${ifNotEmpty(args.label)}"
-            .value="${ifNotEmpty(args.value)}"
+            value="${ifNotEmpty(args.value)}"
             .data="${args.data}"
             hint="${ifNotEmpty(args.hint)}"
             error="${ifNotEmpty(args.error)}"
@@ -65,8 +65,8 @@ export const Interactive = {
         disabled: false,
         prefix: '',
         suffix: '',
-        currency: 'USD',
-        locale: 'en-US'
+        currency: '',
+        locale: ''
     },
     play: async (context: StoryContext) => {
         const currencyField = within(context.canvasElement).getByTestId<CurrencyField>('test-currency-field');

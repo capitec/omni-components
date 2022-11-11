@@ -8,12 +8,11 @@ export const CURRENCY_SEPARATOR = {
     AMOUNT: 1,
     INVERSE_AMOUNT: 2,
     CENTS: 3,
-    INVERSE_CENTS: 4,
-
+    INVERSE_CENTS: 4
 };
 
 /**
- * A currency input control.
+ * A currency input control that formats input based on currency and locale.
  *
  * ```js
  *
@@ -65,40 +64,17 @@ export class CurrencyField extends OmniFormElement {
      */
     @property({ type: String, reflect: true }) locale: string = navigator.language;
 
-    /**
-     * The value entered into the form component.
-     * @attr
-     */
-     @property({ reflect: true }) override get value(): string | number {     
-        if(!this._stringValue) {
-            return this._stringValue;
-        } 
-        return this._formatToFloat(this._stringValue);     
-    }
-
-     override set value(val: string | number) {
-         if(!val) {
-             this._stringValue = val as string;
-             return;
-         }
-         if(typeof val === 'string') {
-             this._stringValue = this._formatToCurrency(parseInt(val));
-         }else {
-             this._stringValue = this._formatToCurrency(val);
-         }
-     }
-
     /* Internal state properties */
     @state() private _currencyFormat: Intl.NumberFormat;
     @state() private _currencySymbol: string;
     @state() private _currencyFormatSeparator: string;
     @state() private _currencyCentsSeparator: string;
     @state() private _stringValue: string = '';
-
+    
     constructor() {
         super();
-        this._setSymbolAndSeparators();
         this._setCurrencyFormat();
+        this._setSymbolAndSeparators();
     }
 
     override connectedCallback(): void {
@@ -106,6 +82,23 @@ export class CurrencyField extends OmniFormElement {
         this.addEventListener('input', this._keyInput.bind(this));
         this.addEventListener('blur', this._blur.bind(this));
         this.addEventListener('keydown', this._keyDown.bind(this));
+    }
+
+    override attributeChangedCallback(name: string, _old: string | null, value: string | null): void {
+        super.attributeChangedCallback(name, _old, value);
+        
+        if(name === 'currency' || name === 'locale') {
+            this._setSymbolAndSeparators();
+            this._setCurrencyFormat();
+        }
+
+        if(name === 'value') {
+            if(typeof value === 'string') {
+                this._stringValue = this._formatToCurrency(parseFloat(value));
+            }else {
+                this._stringValue = this._formatToCurrency(value);
+            }
+        }
 
     }
 
@@ -129,13 +122,13 @@ export class CurrencyField extends OmniFormElement {
         */
         let currencyPartsMap = [];
         try {
-            currencyPartsMap = new Intl.NumberFormat(this.locale, { style: 'currency', currency: this.currency
+            currencyPartsMap = new Intl.NumberFormat(this.locale, { style: 'currency', currency: this.currency, currencyDisplay: 'narrowSymbol'
             })
                 .formatToParts(1000.0)
                 .map((c) => c.value);
         } catch (e) {
             console.error('invalid locale or currency provided, fallback will be used', e);
-            currencyPartsMap = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' })
+            currencyPartsMap = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', currencyDisplay: 'narrowSymbol'})
                 .formatToParts(1000.0)
                 .map((c) => c.value);
         }
@@ -250,7 +243,7 @@ export class CurrencyField extends OmniFormElement {
 
             //Added so that the number before the separator is not removed.
             e.preventDefault();
-            //this.value = this._formatToFloat(this._stringValue);
+            this.value = this._formatToFloat(this._stringValue);
 
             await this.updateComplete;
 
@@ -320,7 +313,8 @@ export class CurrencyField extends OmniFormElement {
             this._inputElement.setSelectionRange(caretPosition -1, caretPosition -1);
         }
 
-        //this.value = this._formatToFloat(this._stringValue);
+        // Set value prop to float value
+        this.value = this._formatToFloat(this._stringValue);
     }
 
     static override get styles() {
