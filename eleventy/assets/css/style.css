@@ -405,11 +405,7 @@ header * {
     }
 }
 
-/**
- * prism.js default theme for JavaScript, CSS and HTML
- * Based on dabblet (http://dabblet.com)
- * @author Lea Verou
- */
+/* PRISM */
 
 code[class*="language-"],
 pre[class*="language-"] {

@@ -47,7 +47,7 @@ permalink: "components/{{ component.name | slug }}/"
             <div class="component-tab-wrapper">
                 <div class="component-tab-list" role="tablist">
                     <div role="tab" class="component-tab-button active" onclick="openTab(event, 'docs')">Documentation</div>
-                    <div role="tab" class="component-tab-button" onclick="openTab(event, 'props')">CSS Properties</div>
+                    <div role="tab" class="component-tab-button" onclick="openTab(event, 'props')">Properties</div>
                 </div>
             </div>
             <div class="component-tab" id="docs" role="tabpanel" style="display: block;">
@@ -76,7 +76,7 @@ permalink: "components/{{ component.name | slug }}/"
                 </div>
             </div>
             <div class="component-tab" id="props" role="tabpanel">
-                Props
+                <div class="component-desc">{{ customElements | getAttributes(component.name) | dump }}</div> 
             </div>
         </div>
     </div>
