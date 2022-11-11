@@ -8,7 +8,13 @@ import { render } from 'lit-html';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const codeSnippet = '```';
 
-function loadCssProperties(element: string, customElements: Package, cssDeclarations: any = undefined): any {
+function loadCssProperties(element: string, customElements: Package, cssDeclarations: Record<string,{
+    control: 'color' | 'text',
+    description: string,
+    category: string,
+    subcategory: string,
+    value: string
+}> = undefined) {
     if (!cssDeclarations) {
         cssDeclarations = {};
     }
@@ -43,7 +49,7 @@ function loadCssProperties(element: string, customElements: Package, cssDeclarat
                 if (!cssDeclarations[cssProperty.name.replace('--', '')]) {
                     cssDeclarations[cssProperty.name.replace('--', '')] = {
                         control:
-                            cssProperty.name.includes('color') || cssProperty.name.includes('colour') || cssProperty.name.includes('fill')
+                            cssProperty.name.endsWith('color') || cssProperty.name.endsWith('colour') || cssProperty.name.endsWith('fill')
                                 ? 'color'
                                 : 'text',
                         description: cssProperty.description,

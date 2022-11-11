@@ -8,7 +8,7 @@ import pretty from 'pretty';
 import { CodeMirrorSourceUpdateEvent, CodeMirrorEditorEvent } from './CodeMirror.js';
 import { CodeMirror } from './CodeMirror.js';
 import { ifNotEmpty } from './Directives.js';
-import { LivePropertyEditor, PropertyChangeEvent } from './LivePropertyEditor.js';
+import { CSSVariable, LivePropertyEditor, PropertyChangeEvent } from './LivePropertyEditor.js';
 import { StoryController } from './StoryController.js';
 import { ComponentStoryFormat, loadCustomElementsCodeMirrorCompletionsRemote } from './StoryUtils.js';
 
@@ -34,9 +34,18 @@ export class StoryRenderer extends LitElement {
     private overrideInteractive: boolean;
     private controller: StoryController;
 
+    private customCss: HTMLStyleElement;
+
     override connectedCallback() {
         super.connectedCallback();
         this.controller = new StoryController(this, this.path);
+
+        this.customCss = document.head.querySelector('#custom-css-vars');
+        if (!this.customCss) {
+            this.customCss = document.createElement('style');
+            this.customCss.id = 'custom-css-vars';
+            document.head.appendChild(this.customCss);
+        }
     }
 
     protected override render() {
@@ -55,7 +64,13 @@ export class StoryRenderer extends LitElement {
             <div class="${this.key}${this.interactive ? ' interactive-story' : ''}" .data=${story}>
                 ${this.overrideInteractive ? unsafeHTML(this.interactiveSrc) : res}
             </div>
-            <button ?disabled=${this.overrideInteractive || JSON.stringify(story.originalArgs).replaceAll('\n', '').replaceAll('\\n', '').replaceAll('\t', '').replaceAll(' ', '') !== JSON.stringify(story.args).replaceAll('\n', '').replaceAll('\\n', '').replaceAll('\t', '').replaceAll(' ', '')} @click="${() => this._play(story, `.${this.key}`)}">Play</button>
+            <button
+                ?disabled=${this.overrideInteractive ||
+                JSON.stringify(story.originalArgs).replaceAll('\n', '').replaceAll('\\n', '').replaceAll('\t', '').replaceAll(' ', '') !==
+                    JSON.stringify(story.args).replaceAll('\n', '').replaceAll('\\n', '').replaceAll('\t', '').replaceAll(' ', '')}
+                @click="${() => this._play(story, `.${this.key}`)}"
+                >Play</button
+            >
             <div class="${this.key + '-result'}"></div>
             <div>
                 ${this.interactive
@@ -63,6 +78,14 @@ export class StoryRenderer extends LitElement {
                               @click="${async () => {
                                   story.args = JSON.parse(JSON.stringify(story.originalArgs));
                                   this.overrideInteractive = false;
+                                  const css = this.customCss.sheet;
+                                  for (let index = 0; index < css.cssRules.length; index++) {
+                                      const rule = css.cssRules[index] as CSSStyleRule;
+                                      if (rule.selectorText === ':root') {
+                                          css.deleteRule(index);
+                                          break;
+                                      }
+                                  }
 
                                   this.requestUpdate();
 
@@ -73,7 +96,7 @@ export class StoryRenderer extends LitElement {
                                   }
 
                                   if (this.propertyEditor) {
-                                    this.propertyEditor.resetSlots();
+                                      this.propertyEditor.resetSlots();
                                   }
                               }}"
                               ><omni-icon icon="@material/settings_backup_restore"></omni-icon
@@ -84,17 +107,71 @@ export class StoryRenderer extends LitElement {
                               .data="${{ ...story }}"
                               element="${this.tag}"
                               ignore-attributes="dir,lang"
+                              .cssValueReader="${(variable: CSSVariable) => {
+                                  const css = this.customCss.sheet;
+
+                                  if (variable.name) {
+                                      let rootCss: CSSStyleRule = undefined;
+                                      if (css.cssRules.length === 0) {
+                                          const index = css.insertRule(':root {}');
+                                          rootCss = css.cssRules.item(index) as CSSStyleRule;
+                                      } else {
+                                          for (let index = 0; index < css.cssRules.length; index++) {
+                                              const rule = css.cssRules[index] as CSSStyleRule;
+                                              if (rule.selectorText === ':root') {
+                                                  rootCss = rule;
+                                                  break;
+                                              }
+                                          }
+                                      }
+
+                                      if (rootCss) {
+                                          variable.value = rootCss.style.getPropertyValue(variable.name);
+                                      }
+                                  }
+                                  return variable;
+                              }}"
                               @property-change="${async (e: CustomEvent<PropertyChangeEvent>) => {
                                   const changed = e.detail;
-                                  if (!changed.oldValue || !changed.newValue || changed.oldValue.trim() !== changed.newValue.trim()) {
-                                    story.args[changed.property] = changed.newValue;
-  
-                                    this.requestUpdate();
-                                    await this.updateComplete;
-  
-                                    if (this.codeMirror && !story.source) {
-                                        await this.codeMirror.refresh(() => this._getSourceFromLit(story.render(story.args)));
-                                    }
+                                  if (
+                                      !changed.oldValue ||
+                                      !changed.newValue ||
+                                      changed.oldValue.toString().trim() !== changed.newValue.toString().trim()
+                                  ) {
+                                      story.args[changed.property] = changed.newValue;
+
+                                      this.requestUpdate();
+                                      await this.updateComplete;
+
+                                      if (this.codeMirror && !story.source) {
+                                          await this.codeMirror.refresh(() => this._getSourceFromLit(story.render(story.args)));
+                                      }
+                                  }
+                              }}"
+                              @css-change="${(e: CustomEvent<CSSVariable>) => {
+                                  const changed = e.detail;
+                                  const css = this.customCss.sheet;
+
+                                  if (changed.value) {
+                                      let rootCss: CSSStyleRule = undefined;
+                                      if (css.cssRules.length === 0) {
+                                          const index = css.insertRule(':root {}');
+                                          rootCss = css.cssRules.item(index) as CSSStyleRule;
+                                      } else {
+                                          for (let index = 0; index < css.cssRules.length; index++) {
+                                              const rule = css.cssRules[index] as CSSStyleRule;
+                                              if (rule.selectorText === ':root') {
+                                                  rootCss = rule;
+                                                  break;
+                                              }
+                                          }
+                                      }
+
+                                      if (rootCss) {
+                                          rootCss.style.setProperty(changed.name, changed.value);
+                                      }
+
+                                      //   this.requestUpdate();
                                   }
                               }}"></live-property-editor>`
                     : nothing}
