@@ -1,13 +1,13 @@
-import { html, css, nothing, TemplateResult } from 'lit';
+import { html, css } from 'lit';
 import { customElement, query } from 'lit/decorators.js';
 import { live } from 'lit/directives/live.js';
 import { OmniFormElement } from '../core/OmniFormElement.js';
 
 /**
- * A color input control.
- *
+ * Color input control.
+ * 
+ * @import
  * ```js
- *
  * import '@capitec/omni-components/color-field';
  * ```
  * @example

@@ -13,8 +13,9 @@ export function getDescription(value, componentName) {
 }
 
 export function getImport(value, componentName) {
-    const declaration = getComponentDeclaration(value, componentName);
-    const imp = declaration.import.replace(/```/gi, '').replace('js ', '').replace(/(\r\n|\n|\r)/gm, '');
+    const component = loadCustomElementsModuleByFileFor(componentName, value);
+    const declaration = component.declarations.find(d => d.name === componentName);
+    const imp = declaration.import ? declaration.import.replace(/```/gi, '').replace('js ', '').replace(/(\r\n|\n|\r)/gm, '') : null;
     return imp;
 }
 
@@ -25,6 +26,6 @@ export function getAttributes(value, componentName) {
 
 export function getComponentDeclaration(value, componentName) {
     const component = loadCustomElementsModuleByFileFor(componentName, value);
-    const declaration = component.declarations ? component.declarations.find(d => d.name === componentName) : null;
+    const declaration = component.declarations.find(d => d.name === componentName);
     return declaration;
 }
