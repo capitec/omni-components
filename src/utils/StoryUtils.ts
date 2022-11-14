@@ -1,12 +1,20 @@
+import { CompletionSource, Completion } from '@codemirror/autocomplete';
+import { css, cssCompletionSource, cssLanguage } from '@codemirror/lang-css';
 import { html as langHtml, TagSpec } from '@codemirror/lang-html';
 import { javascript } from '@codemirror/lang-javascript';
+import { syntaxTree, LanguageSupport } from '@codemirror/language';
 import { githubDark } from '@ddietr/codemirror-themes/github-dark.js';
 import { Package, ClassDeclaration, CustomElementDeclaration, Declaration, CustomElement } from 'custom-elements-manifest/schema';
 import { html } from 'lit';
 import { render } from 'lit-html';
+import { CodeMirror, CodeMirrorEditorEvent, CodeMirrorSourceUpdateEvent } from './CodeMirror.js';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const codeSnippet = '```';
+const customThemeCssKey = 'omni-docs-custom-theme-css';
+const themeStorageKey = 'omni-docs-theme-selection';
+const customThemeKey = 'Custom Theme';
+const noThemeKey = 'No Theme';
 
 function loadCssProperties(
     element: string,
@@ -267,7 +275,7 @@ async function loadThemesListRemote() {
     const response = await fetch('/themes-list.json');
     const list = await response.json();
 
-    return list.themes;
+    return list.themes as string[];
 }
 
 function formatMarkdownCodeElements(str: string, lang: string = 'js') {
@@ -536,10 +544,6 @@ async function setupThemes() {
     const themes = await loadThemesListRemote();
     const themeSelect = document.getElementById('header-theme-select') as HTMLSelectElement;
     const themeStyle = document.getElementById('theme-styles') as HTMLStyleElement;
-    const themeStorageKey = 'omni-docs-theme-selection';
-    const customThemeCssKey = 'omni-docs-custom-theme-css';
-    const customThemeKey = 'Custom Theme';
-    const noThemeKey = 'No Theme';
 
     function addOption(key: string) {
         const option = document.createElement('option');
@@ -686,6 +690,145 @@ async function setupEleventy() {
     await setupThemes();
 }
 
+async function setupTheming() {
+    const themeSources = document.getElementById('themes-sources');
+    const customThemeSourceParent = document.getElementById('custom-theme-source');
+    const themeStyle = document.getElementById('theme-styles') as HTMLStyleElement;
+    const themesSourcesHtml = (await loadThemesListRemote()).map((theme: string) => {
+        return html` <div>
+            <omni-label label="${theme}" type="subtitle"></omni-label>
+            <omni-code-mirror .extensions="${() => [githubDark, css()]}" .code="${loadFileRemote(`/themes/${theme}`)}" read-only>
+            </omni-code-mirror>
+        </div>`;
+    });
+    render(themesSourcesHtml, themeSources);
+
+    let cssSource = window.sessionStorage.getItem(customThemeCssKey) ?? '';
+    const omniCompletions = cssLanguage.data.of({ autocomplete: await omniCssVariablesCompletionSource() });
+    const cssLang = new LanguageSupport(cssLanguage, [cssLanguage.data.of({ autocomplete: cssCompletionSource }), omniCompletions]); //css();
+    render(
+        html`
+            <omni-code-mirror
+                class="source-code"
+                .extensions="${async () => [githubDark, cssLang]}"
+                code="${cssSource}"
+                @codemirror-loaded="${(e: CustomEvent<CodeMirrorEditorEvent>) => {
+                    const newSource = e.detail.source;
+                    cssSource = newSource;
+                    window.sessionStorage.setItem(customThemeCssKey, cssSource);
+                    if (window.sessionStorage.getItem(themeStorageKey) === customThemeKey) {
+                        themeStyle.innerHTML = cssSource;
+                    }
+                }}"
+                @codemirror-source-change="${(e: CustomEvent<CodeMirrorSourceUpdateEvent>) => {
+                    const newSource = e.detail.source;
+                    cssSource = newSource;
+                    window.sessionStorage.setItem(customThemeCssKey, cssSource);
+                    if (window.sessionStorage.getItem(themeStorageKey) === customThemeKey) {
+                        themeStyle.innerHTML = cssSource;
+                    }
+                }}">
+            </omni-code-mirror>
+        `,
+        customThemeSourceParent
+    );
+}
+
+const omniCssVariablesCompletionSource: () => Promise<CompletionSource> = async () => {
+    const properties: Completion[] = [];
+
+    const customElements = await loadCustomElements();
+    customElements.modules.forEach((m) => {
+        m.declarations.forEach((d) => {
+            const declaration = d as CustomElementDeclaration &
+                CustomElement & {
+                    cssCategory: string;
+                };
+            if (declaration.cssProperties) {
+                declaration.cssProperties.forEach((c) => {
+                    if (!properties.find((p) => p.label === c.name)) {
+                        properties.push({
+                            label: c.name,
+                            type: 'property',
+                            detail: declaration.cssCategory ?? undefined,
+                            boost: declaration.cssCategory
+                                ? declaration.cssCategory.toLowerCase().includes('theme')
+                                    ? 90
+                                    : 80
+                                : undefined,
+                            info: c.description
+                        });
+                    }
+                });
+            }
+        });
+    });
+
+    return (context) => {
+        const identifier = /^[\w-]*/;
+        const values: Completion[] = [];
+        const tags: Completion[] = [];
+        const pseudoClasses: Completion[] = [];
+
+        const { state, pos } = context,
+            node = syntaxTree(state).resolveInner(pos, -1);
+        if (node.name === 'PropertyName') return { from: node.from, options: properties, validFor: identifier };
+        if (node.name === 'ValueName') return { from: node.from, options: values, validFor: identifier };
+        if (node.name === 'PseudoClassName') return { from: node.from, options: pseudoClasses, validFor: identifier };
+        if (node.name === 'TagName') {
+            for (let { parent } = node; parent; parent = parent.parent)
+                if (parent.name === 'Block') return { from: node.from, options: properties, validFor: identifier };
+            return { from: node.from, options: tags, validFor: identifier };
+        }
+        if (!context.explicit) return null;
+        const above = node.resolve(pos),
+            before = above.childBefore(pos);
+        if (before && before.name === ':' && above.name === 'PseudoClassSelector')
+            return { from: pos, options: pseudoClasses, validFor: identifier };
+        if ((before && before.name === ':' && above.name === 'Declaration') || above.name === 'ArgList')
+            return { from: pos, options: values, validFor: identifier };
+        if (above.name === 'Block') return { from: pos, options: properties, validFor: identifier };
+        return null;
+    };
+};
+
+async function uploadTheme(e: Event) {
+    const uploadInput = e.target as HTMLInputElement;
+    const themeStyle = document.getElementById('theme-styles') as HTMLStyleElement;
+    if (uploadInput.files.length > 0) {
+        const inputField = uploadInput;
+        const file = uploadInput.files[0];
+
+        await new Promise<void>((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = (evt) => {
+                const cssRaw = evt.target.result as string;
+
+                inputField.value = '';
+
+                const themeCode = document.querySelector<CodeMirror>('.source-code');
+                if (themeCode) {
+                    themeCode.refresh(() => cssRaw);
+                } else {
+                    window.sessionStorage.setItem(customThemeCssKey, cssRaw);
+                    if (window.sessionStorage.getItem(themeStorageKey) === customThemeKey) {
+                        themeStyle.innerHTML = cssRaw;
+                    }
+                }
+
+                resolve();
+            };
+            reader.onerror = (event) => {
+                reject(event.target.error);
+            };
+            reader.onabort = (event) => {
+                reject(event.target.error);
+            };
+            reader.readAsText(file);
+        });
+    }
+}
+
 export type PlayFunctionContext<T> = {
     args: T;
     story: ComponentStoryFormat<T>;
@@ -737,5 +880,7 @@ export {
     raw,
     querySelectorAsync,
     setupThemes,
-    setupEleventy
+    setupEleventy,
+    setupTheming,
+    uploadTheme
 };

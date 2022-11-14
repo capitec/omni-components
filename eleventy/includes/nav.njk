@@ -5,7 +5,10 @@
         <div class="menu-item {% if currentUrl === '/' %}selected{% endif %}">
             <a class="menu-link {% if currentUrl === '/' %}selected{% endif %}" {% if currentUrl === '/' %}aria-current="page"{% endif %} href="/">Home</a>
         </div>
-
+        <div class="menu-item {% if currentUrl === '/theme-support/' %}selected{% endif %}">
+            <a class="menu-link {% if currentUrl === '/theme-support/' %}selected{% endif %}" {% if currentUrl === '/theme-support/' %}aria-current="page"{% endif %} href="/theme-support/">Theme Support</a>
+        </div>
+        <br />
         {% for component in components %}
         <div class="menu-item {% if currentUrl.includes(component.name | slug) %}selected{% endif %}">
             <a class="menu-link {% if currentUrl.includes(component.name | slug) %}selected{% endif %}"
@@ -14,6 +17,6 @@
                 {{ component.name }}
             </a>
         </div>
-    {%- endfor %}
+        {%- endfor %}
     </div>
 </nav>
