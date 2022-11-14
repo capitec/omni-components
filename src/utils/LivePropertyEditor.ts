@@ -25,7 +25,7 @@ import './CodeMirror.js';
 @customElement('live-property-editor')
 export class LivePropertyEditor extends OmniElement {
     @property({ type: Object, reflect: false }) data: ComponentStoryFormat<any>;
-    @property({ type: Function, reflect: false }) cssValueReader: (variable: CSSVariable) => CSSVariable= (c) => c;
+    @property({ type: Function, reflect: false }) cssValueReader: (variable: CSSVariable) => CSSVariable = (c) => c;
     @property({ type: String, reflect: true }) element: string;
     @property({ type: Boolean, reflect: true }) disabled: boolean;
     @property({ type: String, attribute: 'ignore-attributes', reflect: true }) ignoreAttributes: string;
@@ -93,39 +93,39 @@ export class LivePropertyEditor extends OmniElement {
                 }
 
                 .tooltip {
-                  position: relative;
-                  display: inline-block;
-                  border-bottom: 1px dotted black;
+                    position: relative;
+                    display: inline-block;
+                    border-bottom: 1px dotted black;
                 }
-                
+
                 .tooltip .tooltiptext {
-                  visibility: hidden;
-                  width: 120px;
-                  background-color: black;
-                  color: #fff;
-                  text-align: center;
-                  border-radius: 6px;
-                  padding: 5px 0;
-                  position: absolute;
-                  z-index: 1;
-                  bottom: 150%;
-                  left: 50%;
-                  margin-left: -60px;
+                    visibility: hidden;
+                    width: 120px;
+                    background-color: black;
+                    color: #fff;
+                    text-align: center;
+                    border-radius: 6px;
+                    padding: 5px 0;
+                    position: absolute;
+                    z-index: 1;
+                    bottom: 150%;
+                    left: 50%;
+                    margin-left: -60px;
                 }
-                
+
                 .tooltip .tooltiptext::after {
-                  content: "";
-                  position: absolute;
-                  top: 100%;
-                  left: 50%;
-                  margin-left: -5px;
-                  border-width: 5px;
-                  border-style: solid;
-                  border-color: black transparent transparent transparent;
+                    content: '';
+                    position: absolute;
+                    top: 100%;
+                    left: 50%;
+                    margin-left: -5px;
+                    border-width: 5px;
+                    border-style: solid;
+                    border-color: black transparent transparent transparent;
                 }
-                
+
                 .tooltip:hover .tooltiptext {
-                  visibility: visible;
+                    visibility: visible;
                 }
             `
         ];
@@ -149,7 +149,7 @@ export class LivePropertyEditor extends OmniElement {
         }
         const module = loadCustomElementsModuleFor(this.element, this.customElements);
 
-        const attributes: TemplateResult[] = [];
+        const attributes: { html: TemplateResult; name: string }[] = [];
         const slots: { html: TemplateResult; name: string }[] = [];
         const cssProperties: { category: string; propertiesHtml: TemplateResult[] }[] = [];
 
@@ -188,7 +188,10 @@ export class LivePropertyEditor extends OmniElement {
             }
             if (declaration.attributes) {
                 declaration.attributes.forEach((attribute) => {
-                    if (this.ignoreAttributes && this.ignoreAttributes.split(',').includes(attribute.name)) {
+                    if (
+                        (this.ignoreAttributes && this.ignoreAttributes.split(',').includes(attribute.name)) ||
+                        attributes.find((a) => a.name === attribute.name)
+                    ) {
                         return;
                     }
 
@@ -280,10 +283,13 @@ export class LivePropertyEditor extends OmniElement {
                         `;
                     }
                     if (attributeEditor) {
-                        attributes.push(html`
-                            <omni-label type="subtitle" label="${attribute.name}"></omni-label>
-                            ${attributeEditor}
-                        `);
+                        attributes.push({
+                            html: html`
+                                <omni-label type="subtitle" label="${attribute.name}"></omni-label>
+                                ${attributeEditor}
+                            `,
+                            name: attribute.name
+                        });
                     }
                 });
             }
@@ -291,7 +297,6 @@ export class LivePropertyEditor extends OmniElement {
 
         const cssDefinitions = loadCssProperties(this.element, this.customElements);
         if (cssDefinitions && Object.keys(cssDefinitions).length > 0) {
-
             Object.keys(cssDefinitions).forEach((cssKey) => {
                 const definition = cssDefinitions[cssKey];
                 const category = definition.subcategory ?? 'Component Variables';
@@ -306,55 +311,57 @@ export class LivePropertyEditor extends OmniElement {
 
                 if (definition.control === 'color') {
                     categoryProps.propertiesHtml.push(html`
-                    <div class="tooltip css-prop">
-                        <omni-color-field
-                            id="input-${cssKey}"
-                            class="css-prop"
-                            label="--${cssKey}"
-                            ?disabled=${this.disabled}
-                            .value="${live(this.cssValueReader({
-                                name: `--${cssKey}`,
-                                value: ''
-                            }).value)}"
-                            @input="${async (e: Event) => {
-                                const colorField = e.target as TextField;
-                                const input = colorField.shadowRoot.getElementById('inputField') as HTMLInputElement;
-    
-                                const value = input.value;
-                                this._cssChanged({
-                                    name: `--${cssKey}`,
-                                    value: value,
-                                });
-                            }}">
+                        <div class="tooltip css-prop">
+                            <omni-color-field
+                                id="input-${cssKey}"
+                                class="css-prop"
+                                label="--${cssKey}"
+                                ?disabled=${this.disabled}
+                                .value="${live(
+                                    this.cssValueReader({
+                                        name: `--${cssKey}`,
+                                        value: ''
+                                    }).value
+                                )}"
+                                @input="${async (e: Event) => {
+                                    const colorField = e.target as TextField;
+                                    const input = colorField.shadowRoot.getElementById('inputField') as HTMLInputElement;
+
+                                    const value = input.value;
+                                    this._cssChanged({
+                                        name: `--${cssKey}`,
+                                        value: value
+                                    });
+                                }}">
                             </omni-color-field>
-                        <span class="tooltiptext">${definition.description}</span>
-                    </div>
+                            <span class="tooltiptext">${definition.description}</span>
+                        </div>
                     `);
                 } else {
                     categoryProps.propertiesHtml.push(html`
-                    <div class="tooltip css-prop">
-                        <omni-text-field
-                            class="css-prop"
-                            ?disabled=${this.disabled}
-                            label="--${cssKey}"
-                            @input="${async (e: Event) => {
-                                const textField = e.target as TextField;
-    
-                                const value = (textField.shadowRoot.getElementById('inputField') as HTMLInputElement).value;
-                                this._cssChanged({
-                                    name: `--${cssKey}`,
-                                    value: value,
-                                });
-                            }}">
-                        </omni-text-field>
-                        <span class="tooltiptext">${definition.description}</span>
-                    </div>
+                        <div class="tooltip css-prop">
+                            <omni-text-field
+                                class="css-prop"
+                                ?disabled=${this.disabled}
+                                label="--${cssKey}"
+                                @input="${async (e: Event) => {
+                                    const textField = e.target as TextField;
+
+                                    const value = (textField.shadowRoot.getElementById('inputField') as HTMLInputElement).value;
+                                    this._cssChanged({
+                                        name: `--${cssKey}`,
+                                        value: value
+                                    });
+                                }}">
+                            </omni-text-field>
+                            <span class="tooltiptext">${definition.description}</span>
+                        </div>
                     `);
                 }
             });
         }
 
-        if (attributes.length === 0 && slots.length === 0 && cssProperties.filter(c => c && c.propertiesHtml.length > 0).length === 0) {
+        if (attributes.length === 0 && slots.length === 0 && cssProperties.filter((c) => c && c.propertiesHtml.length > 0).length === 0) {
             return nothing;
         }
 
@@ -362,7 +369,7 @@ export class LivePropertyEditor extends OmniElement {
             <div>
                 <br />
                 <br />
-                ${attributes}
+                ${attributes.map((a) => a.html)}
                 <br />
                 <br />
                 ${slots.map((s) => s.html)}
@@ -370,20 +377,22 @@ export class LivePropertyEditor extends OmniElement {
                 <br />
                 <button type="button" class="collapsible" @click="${(e: PointerEvent) => this._expandCollapse(e)}">CSS Variables</button>
                 <div class="expandable css-prop">
-                    ${cssProperties.map(c => html`
-                    <div class="css-prop">
-                        <button type="button" class="collapsible" @click="${(e: PointerEvent) => this._expandCollapse(e)}">${c.category}</button>
-                        <div class="expandable">
-                            ${c.propertiesHtml}
-                        </div>
-                    </div>
-                    `)}
+                    ${cssProperties.map(
+                        (c) => html`
+                            <div class="css-prop">
+                                <button type="button" class="collapsible" @click="${(e: PointerEvent) => this._expandCollapse(e)}"
+                                    >${c.category}</button
+                                >
+                                <div class="expandable"> ${c.propertiesHtml} </div>
+                            </div>
+                        `
+                    )}
                 </div>
             </div>
         `;
     }
     private _expandCollapse(e: PointerEvent) {
-        const button = (e.target as HTMLButtonElement);
+        const button = e.target as HTMLButtonElement;
         button.classList.toggle('active');
         const content = button.nextElementSibling as HTMLElement;
         if (content.style.display === 'flex') {
@@ -415,4 +424,4 @@ export class LivePropertyEditor extends OmniElement {
 }
 
 export type PropertyChangeEvent = { property: string; newValue: string | number | boolean; oldValue: string | number | boolean };
-export type CSSVariable = { name: string; value: string; };
+export type CSSVariable = { name: string; value: string };

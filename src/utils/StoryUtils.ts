@@ -19,9 +19,9 @@ function loadCssProperties(element: string, customElements: Package, cssDeclarat
         cssDeclarations = {};
     }
 
-    const elementModule = customElements.modules.find((module) =>
+    const elementModule = JSON.parse(JSON.stringify(customElements.modules.find((module) =>
         module.exports.find((e: { name: string }) => e.name === element)
-    );
+    )));
 
     let superModule = elementModule;
     do {

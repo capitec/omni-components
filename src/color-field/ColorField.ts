@@ -7,7 +7,7 @@ import { OmniFormElement } from '../core/OmniFormElement.js';
  * Color input control.
  * 
  * @import
- * ```js
+ * ```js 
  * import '@capitec/omni-components/color-field';
  * ```
  * @example
