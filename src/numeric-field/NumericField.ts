@@ -13,7 +13,7 @@ import '../icons/Minus.icon.js';
  * ```js
  * import '@capitec/omni-components/numeric-field';
  * ```
- * 
+ *
  * @example
  * ```html
  * <omni-numeric-field

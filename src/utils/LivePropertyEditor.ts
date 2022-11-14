@@ -217,7 +217,7 @@ export class LivePropertyEditor extends OmniElement {
                         attribute.type.text !== 'string' &&
                         attribute.type.text !== 'boolean' &&
                         !attribute.type.text.includes('Promise') &&
-                        attribute.type.text.includes('\'')
+                        attribute.type.text.includes("'")
                     ) {
                         const typesRaw = attribute.type.text.split(' | ');
                         const types = [];

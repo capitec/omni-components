@@ -101,9 +101,7 @@ export const ErrorLabel: ComponentStoryFormat<Args> = {
 };
 
 export const Checked: ComponentStoryFormat<Args> = {
-    render: (args: Args) => html`
-        <omni-switch data-testid="test-switch" label="${args.label}" ?checked="${args.checked}"></omni-switch>
-    `,
+    render: (args: Args) => html` <omni-switch data-testid="test-switch" label="${args.label}" ?checked="${args.checked}"></omni-switch> `,
     args: {
         label: 'Checked',
         checked: true

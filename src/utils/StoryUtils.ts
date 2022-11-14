@@ -8,27 +8,37 @@ import { render } from 'lit-html';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const codeSnippet = '```';
 
-function loadCssProperties(element: string, customElements: Package, cssDeclarations: Record<string,{
-    control: 'color' | 'text',
-    description: string,
-    category: string,
-    subcategory: string,
-    value: string
-}> = undefined) {
+function loadCssProperties(
+    element: string,
+    customElements: Package,
+    cssDeclarations: Record<
+        string,
+        {
+            control: 'color' | 'text';
+            description: string;
+            category: string;
+            subcategory: string;
+            value: string;
+        }
+    > = undefined
+) {
     if (!cssDeclarations) {
         cssDeclarations = {};
     }
 
-    const elementModule = JSON.parse(JSON.stringify(customElements.modules.find((module) =>
-        module.exports.find((e: { name: string }) => e.name === element)
-    )));
+    const elementModule = JSON.parse(
+        JSON.stringify(customElements.modules.find((module) => module.exports.find((e: { name: string }) => e.name === element)))
+    );
 
     let superModule = elementModule;
     do {
         if (superModule.declarations.find((sd: any) => sd.superclass)) {
             superModule = customElements.modules.find((module) =>
                 module.exports.find(
-                    (e) => e.name === (superModule.declarations.find((sd: Declaration) => (sd as ClassDeclaration).superclass) as ClassDeclaration).superclass.name
+                    (e) =>
+                        e.name ===
+                        (superModule.declarations.find((sd: Declaration) => (sd as ClassDeclaration).superclass) as ClassDeclaration)
+                            .superclass.name
                 )
             );
         } else {
@@ -39,9 +49,10 @@ function loadCssProperties(element: string, customElements: Package, cssDeclarat
         }
     } while (superModule);
     for (const key in elementModule.declarations) {
-        const declaration = elementModule.declarations[key] as CustomElementDeclaration & CustomElement & {
-            cssCategory: string;
-        };
+        const declaration = elementModule.declarations[key] as CustomElementDeclaration &
+            CustomElement & {
+                cssCategory: string;
+            };
         const cssCategory = declaration.cssCategory;
         if (declaration.cssProperties && declaration.cssProperties.length > 0) {
             for (const cssKey in declaration.cssProperties) {
@@ -374,7 +385,7 @@ function loadCustomElementsCodeMirrorCompletions(customElements: Package) {
                 module.declarations.forEach((d) => {
                     const declaration = d as CustomElement;
                     if (declaration.slots) {
-                        declaration.slots.forEach(slot => {
+                        declaration.slots.forEach((slot) => {
                             if (slot.name && slot.name !== '[Default Slot]') {
                                 if (!extraGlobalAttributes.slot) {
                                     extraGlobalAttributes.slot = [];
@@ -387,16 +398,20 @@ function loadCustomElementsCodeMirrorCompletions(customElements: Package) {
                     }
 
                     if (declaration.tagName) {
-                        const attrs: Record<string,string[]> = {};
+                        const attrs: Record<string, string[]> = {};
                         if (declaration.attributes) {
-                            declaration.attributes.forEach(attribute => {
+                            declaration.attributes.forEach((attribute) => {
                                 let attrValues: string[] = null;
-                                if (attribute.type.text !== 'string' && attribute.type.text !== 'boolean' && !attribute.type.text.includes('Promise')) {
+                                if (
+                                    attribute.type.text !== 'string' &&
+                                    attribute.type.text !== 'boolean' &&
+                                    !attribute.type.text.includes('Promise')
+                                ) {
                                     const types = attribute.type.text.split(' | ');
                                     attrValues = [];
                                     for (const type in types) {
                                         const typeValue = types[type];
-                                        attrValues.push(typeValue.substring(1,typeValue.length - 1));
+                                        attrValues.push(typeValue.substring(1, typeValue.length - 1));
                                     }
                                 }
                                 attrs[attribute.name] = attrValues;
@@ -412,7 +427,7 @@ function loadCustomElementsCodeMirrorCompletions(customElements: Package) {
                 });
             }
         });
-        
+
         _completions = {
             extraTags: extraTags,
             extraGlobalAttributes: extraGlobalAttributes

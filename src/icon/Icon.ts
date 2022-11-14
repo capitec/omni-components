@@ -6,7 +6,7 @@ import { OmniElement } from '../core/OmniElement.js';
  * Component that displays an icon.
  *
  * @import
- * ```js 
+ * ```js
  * import '@capitec/omni-components/icon';
  * ```
  *

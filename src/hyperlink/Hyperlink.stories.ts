@@ -75,8 +75,7 @@ export const Label: ComponentStoryFormat<Args> = {
 };
 
 export const Size: ComponentStoryFormat<Args> = {
-    render: (args: Args) =>
-        html`<omni-hyperlink data-testid="test-hyperlink" label="${args.label}" size="${args.size}"></omni-hyperlink>`,
+    render: (args: Args) => html`<omni-hyperlink data-testid="test-hyperlink" label="${args.label}" size="${args.size}"></omni-hyperlink>`,
     name: 'Size',
     args: {
         label: 'Click',

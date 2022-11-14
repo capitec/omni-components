@@ -15,7 +15,7 @@ export function getDescription(value, componentName) {
 export function getImport(value, componentName) {
     const component = loadCustomElementsModuleByFileFor(componentName, value);
     const declaration = component.declarations.find(d => d.name === componentName);
-    const imp = declaration.import ? declaration.import.replace(/```/gi, '').replace('js ', '').replace(/(\r\n|\n|\r)/gm, '') : null;
+    const imp = declaration.import ? declaration.import.replace(/```/gi, '').replace('js', '').replace(/(\r\n|\n|\r)/gm, '') : null;
     return imp;
 }
 

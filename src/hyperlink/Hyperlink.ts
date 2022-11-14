@@ -6,11 +6,11 @@ import { OmniElement } from '../core/OmniElement.js';
  * Control to indicate an action to be executed. Typically used for navigational purposes.
  *
  * @import
- * ```js 
+ * ```js
  * import '@capitec/omni-components/hyperlink';
  * ```
  *
- * @example 
+ * @example
  * ```html
  * <omni-hyperlink
  *   href="https://example.com"
