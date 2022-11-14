@@ -677,11 +677,15 @@ async function setupEleventy() {
         }
     }
 
+    // Toggle loading indicator off on page load.
     const overlay = document.querySelector<HTMLElement>('.component-overlay');
     if (overlay) {
         overlay.style.display = 'none';
     }
-    document.querySelector<HTMLElement>('.component').style.display = 'block';
+    const component = document.querySelector<HTMLElement>('.component');
+    if (component) {
+        component.style.display = 'block';
+    }
 
     await setupThemes();
 }
