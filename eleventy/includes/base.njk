@@ -11,47 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
     <script type="module" src="/dist/utils/StoryRenderer.js"></script>
     <script type="module" src="/dist/omni-components.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-
-            // Open / Close the menu
-            const menuButton = document.querySelector('.header-menu-button .material-icons');
-            menuButton.addEventListener('click', (e) => {
-                const nav = document.querySelector('nav');
-                if (nav.classList.contains('mobile')) {
-                    nav.classList.remove('mobile');
-                    menuButton.innerText = 'menu';
-                } else {
-                    nav.classList.add('mobile');
-                    menuButton.innerText = 'close';
-                }
-            });
-
-            // Scroll highlight
-            const storyRenderders = document.querySelectorAll('story-renderer');
-            const tocAnchors = document.querySelectorAll('.component-toc a');
-
-            window.addEventListener('scroll', () => {
-                
-                storyRenderders.forEach(sr => {
-                    let top = window.scrollY;
-                    let offset = sr.offsetTop + 65;
-                    let height = sr.offsetHeight;
-                    let id = sr.getAttribute('id');
-
-                    if (top > offset && top < offset + height) {
-
-                        {# console.log(id, top, offset, height); #}
-
-                        tocAnchors.forEach(a => {
-                            a.classList.remove('component-toc-active');
-                            document.querySelector('.component-toc a[href*=' + id + ']').classList.add('component-toc-active');
-                        })
-                    }
-                })
-            });
-        });
-    </script>
+    <script src="/scripts/main.js"></script>
 </head>
 <body>
     <div dir="ltr">
