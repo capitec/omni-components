@@ -98,6 +98,14 @@ header * {
     background-color: #f8f9fa;
 }
 
+.header-theme-section {
+    padding: 5px;
+}
+
+#header-theme-select {
+    min-width: 80px;
+}
+
 /* MENU */
 
 .menu {
