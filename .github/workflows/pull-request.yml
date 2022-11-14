@@ -63,8 +63,8 @@ jobs:
       - name: Install Package Dependencies
         run: npm ci
 
-      - name: Install Playwright Webkit Dependencies
-        run: npx playwright install-deps webkit
+      - name: Install Playwright Chrome Dependencies
+        run: npx playwright install-deps chrome
 
       - name: Compile Code
         run: npm run compile
