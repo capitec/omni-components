@@ -344,7 +344,7 @@ header * {
 }
 
 table {
-    border: 1px solid #ccc;
+    /* border: 1px solid #ccc; */
     border-collapse: collapse;
     margin: 0;
     padding: 0;
@@ -352,16 +352,25 @@ table {
     table-layout: fixed;
 }
 
+table thead tr th,
+table tbody tr td {
+    border-bottom: 1px solid #ddd;
+}
+
 table tr {
-    background-color: #f8f8f8;
-    border: 1px solid #ddd;
+    /* background-color: #f8f8f8; */
+    /* border-bottom: 1px solid #ddd; */
     padding: .35em;
+}
+
+table tbody tr:last-of-type td {
+    border-bottom: none;
 }
 
 table th,
 table td {
     padding: .625em;
-    text-align: center;
+    text-align: left;
 }
 
 table th {
@@ -370,8 +379,14 @@ table th {
     text-transform: uppercase;
 }
 
-.component-props-table>td {
+.component-props-table > td {
     border: 1px solid #000000;
+}
+
+.component-props-table-wrapper {
+    display: flex; 
+    justify-content: center; 
+    padding: 24px;
 }
 
 .component-toc-wrapper {
@@ -460,7 +475,7 @@ table th {
     table {
         border: 0;
     }
-    
+
     table thead {
         border: none;
         clip: rect(0 0 0 0);
@@ -473,16 +488,20 @@ table th {
     }
 
     table tr {
-        border-bottom: 3px solid #ddd;
+        border: 1px solid #ddd;
         display: block;
-        margin-bottom: .625em;
+        margin-bottom: 24px;
+        padding: 0;
+    }
+
+    table tr:last-of-type {
+        border-bottom: 1px solid #ddd;
     }
 
     table td {
-        border-bottom: 1px solid #ddd;
         display: block;
-        font-size: .8em;
-        text-align: right;
+        font-size: .9em;
+        text-align: left;
     }
 
     table td::before {
@@ -493,12 +512,30 @@ table th {
         content: attr(data-label);
         float: left;
         font-weight: bold;
+        min-width: 100px;
         /* text-transform: uppercase; */
     }
+
+    /* table tbody tr:last-of-type td {
+        border-bottom: none;
+    } */
 
     table td:last-child {
         border-bottom: 0;
     }
+
+    table tr:last-child {
+        border-bottom: 0;
+    }
+
+    table tbody tr:last-of-type td {
+        border-bottom: 1px solid #ddd; 
+    }
+
+    /* table tbody tr:last-of-type td {
+        border-bottom: 1px solid #ddd;
+    } */
+    
 }
 
 @media screen and (max-width: 1080px) {
