@@ -178,6 +178,25 @@ header * {
 
 /* COMPONENTS */
 
+.component {
+    display: none;
+}
+
+.component-overlay {
+    /* position: fixed; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: calc(100vh - 60px);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ffffff;
+    z-index: 2;
+}
+
 .component-meta {
     position: relative;
     z-index: 4;
@@ -210,11 +229,11 @@ header * {
     margin: 6px 0;
 }
 
-.component-info-item > div:first-child {
+.component-info-item>div:first-child {
     width: 100px;
 }
 
-.component-info-item > div:last-child {
+.component-info-item>div:last-child {
     flex: 1;
 }
 
@@ -237,8 +256,8 @@ header * {
 }
 
 .component-info-item-img {
-    height: 16px; 
-    margin-right: 6px; 
+    height: 16px;
+    margin-right: 6px;
     cursor: pointer;
 }
 
@@ -324,6 +343,37 @@ header * {
     background-color: #ffffff;
 }
 
+table {
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    table-layout: fixed;
+}
+
+table tr {
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    padding: .35em;
+}
+
+table th,
+table td {
+    padding: .625em;
+    text-align: center;
+}
+
+table th {
+    font-size: .85em;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.component-props-table>td {
+    border: 1px solid #000000;
+}
+
 .component-toc-wrapper {
     flex: 0 0 260px;
     margin-top: 24px;
@@ -387,15 +437,15 @@ header * {
         padding-right: 0;
     }
 
-    .component-meta { 
+    .component-meta {
         padding: 24px;
     }
-    
+
     .component-tab-wrapper {
         padding-left: 24px;
     }
 
-    .component-info-item > div:first-child {
+    .component-info-item>div:first-child {
         display: none;
     }
 
@@ -405,6 +455,49 @@ header * {
 
     .tab button {
         flex: 1
+    }
+
+    table {
+        border: 0;
+    }
+    
+    table thead {
+        border: none;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+    }
+
+    table tr {
+        border-bottom: 3px solid #ddd;
+        display: block;
+        margin-bottom: .625em;
+    }
+
+    table td {
+        border-bottom: 1px solid #ddd;
+        display: block;
+        font-size: .8em;
+        text-align: right;
+    }
+
+    table td::before {
+        /*
+        * aria-label has no advantage, it won't be read inside a table
+        content: attr(aria-label);
+        */
+        content: attr(data-label);
+        float: left;
+        font-weight: bold;
+        /* text-transform: uppercase; */
+    }
+
+    table td:last-child {
+        border-bottom: 0;
     }
 }
 
@@ -471,17 +564,17 @@ pre[class*="language-"] {
     overflow: auto;
 }
 
-:not(pre)>code[class*="language-"],
+/*:not(pre)>code[class*="language-"],
 pre[class*="language-"] {
-    /* background: #f5f2f0; */
-}
+     background: #f5f2f0; 
+}*/
 
 /* Inline code */
-:not(pre)>code[class*="language-"] {
-    /* padding: .1em;
+/*:not(pre)>code[class*="language-"] {
+     padding: .1em;
      border-radius: .3em;
-     white-space: normal; */
-}
+     white-space: normal; 
+}*/
 
 .token.comment,
 .token.prolog,
@@ -557,97 +650,57 @@ pre[class*="language-"] {
     cursor: help;
 }
 
+/* LOADING INDICATOR: https://loading.io/css/ */
 
-/* TOOLTIP */
-
-/* .tooltip {
-    position: relative;
+.lds-ripple {
     display: inline-block;
-    border-bottom: 1px dotted black;
+    position: relative;
+    width: 80px;
+    height: 80px;
 }
 
-.tooltip .tooltiptext {
-    visibility: hidden;
-    min-width: 120px;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    padding: 5px 0;
-    border-radius: 6px;
+.lds-ripple div {
     position: absolute;
-    z-index: 1;
+    border: 4px solid #289cee;
+    opacity: 1;
+    border-radius: 50%;
+    animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
 }
 
-.tooltip .tooltiptext.top {
-    min-width: 120px;
-    bottom: 100%;
-    left: 50%;
-    margin-left: -60px;
+.lds-ripple div:nth-child(2) {
+    animation-delay: -0.5s;
 }
 
-.tooltip .tooltiptext.top::after {
-    content: " ";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: black transparent transparent transparent;
-}
+@keyframes lds-ripple {
+    0% {
+        top: 36px;
+        left: 36px;
+        width: 0;
+        height: 0;
+        opacity: 0;
+    }
 
-.tooltip .tooltiptext.right {
-    top: -5px;
-    left: 105%;
-}
+    4.9% {
+        top: 36px;
+        left: 36px;
+        width: 0;
+        height: 0;
+        opacity: 0;
+    }
 
-.tooltip .tooltiptext.right::after {
-    content: " ";
-    position: absolute;
-    top: 50%;
-    right: 100%;
-    margin-top: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent black transparent transparent;
-}
+    5% {
+        top: 36px;
+        left: 36px;
+        width: 0;
+        height: 0;
+        opacity: 1;
+    }
 
-.tooltip .tooltiptext.bottom {
-    min-width: 120px;
-    top: 100%;
-    left: 50%;
-    margin-left: -60px;
-}
-
-.tooltip .tooltiptext.bottom::after {
-    content: " ";
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent transparent black transparent;
-}
-
-.tooltip .tooltiptext.left {
-    top: -5px;
-    right: 105%;
-}
-
-.tooltip .tooltiptext.left::after {
-    content: " ";
-    position: absolute;
-    top: 50%;
-    left: 100%;
-    margin-top: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent transparent transparent black;
-} */
-
-
-/* Show the tooltip text when you mouse over the tooltip container */
-.tooltip:hover .tooltiptext {
-    visibility: visible;
+    100% {
+        top: 0px;
+        left: 0px;
+        width: 72px;
+        height: 72px;
+        opacity: 0;
+    }
 }

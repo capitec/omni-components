@@ -10,7 +10,7 @@ import { OmniFormElement } from '../core/OmniFormElement.js';
  * ```js
  * import '@capitec/omni-components/text-field';
  * ```
- * 
+ *
  * @example
  * ```html
  * <omni-text-field

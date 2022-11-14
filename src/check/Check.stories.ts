@@ -154,9 +154,7 @@ export const Indeterminate: ComponentStoryFormat<Args> = {
 };
 
 export const Disabled: ComponentStoryFormat<Args> = {
-    render: (args: Args) => html`
-        <omni-check data-testid="test-check" label="${args.label}" ?disabled="${args.disabled}"></omni-check>
-    `,
+    render: (args: Args) => html` <omni-check data-testid="test-check" label="${args.label}" ?disabled="${args.disabled}"></omni-check> `,
     args: {
         label: 'Disabled',
         disabled: true

@@ -6,7 +6,7 @@ import DOMTreeElement from '../core/DOMTreeElement';
  * Plus icon component.
  *
  * @import
- * ```js 
+ * ```js
  * import '@capitec/omni-components/icons/Plus.icon.js';
  * ```
  *

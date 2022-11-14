@@ -116,9 +116,7 @@ export const Checked: ComponentStoryFormat<Args> = {
 };
 
 export const Disabled: ComponentStoryFormat<Args> = {
-    render: (args: Args) => html`
-        <omni-radio data-testid="test-radio" label="${args.label}" ?disabled="${args.disabled}"></omni-radio>
-    `,
+    render: (args: Args) => html` <omni-radio data-testid="test-radio" label="${args.label}" ?disabled="${args.disabled}"></omni-radio> `,
     args: {
         label: 'Disabled',
         disabled: true

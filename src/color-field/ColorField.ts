@@ -5,9 +5,9 @@ import { OmniFormElement } from '../core/OmniFormElement.js';
 
 /**
  * Color input control.
- * 
+ *
  * @import
- * ```js 
+ * ```js
  * import '@capitec/omni-components/color-field';
  * ```
  * @example
@@ -83,7 +83,6 @@ export class ColorField extends OmniFormElement {
                     min-width: var(--omni-color-field-min-width, 100px);
                     padding: var(--omni-color-field-padding, 10px);
 
-
                     -webkit-touch-callout: var(--omni-color-field-text-select, text);
                     -webkit-user-select: var(--omni-color-field-text-select, text);
                     -khtml-user-select: var(--omni-color-field-text-select, text);
@@ -113,21 +112,16 @@ export class ColorField extends OmniFormElement {
                     padding: var(--omni-color-field-padding, 10px);
                 }
 
-                :host(:not([value])) input[type=color]::-webkit-color-swatch, 
-                :host([value='']) input[type=color]::-webkit-color-swatch 
-                { 
-                    background-color: transparent !important; 
+                :host(:not([value])) input[type='color']::-webkit-color-swatch,
+                :host([value='']) input[type='color']::-webkit-color-swatch {
+                    background-color: transparent !important;
                 }
             `
         ];
     }
 
     protected override renderContent() {
-        return html`
-            <label for="inputField" class="field">
-                ${this.value?.toString()?.toUpperCase()}
-             </label>
-        `;
+        return html` <label for="inputField" class="field"> ${this.value?.toString()?.toUpperCase()} </label> `;
     }
 
     protected override renderControl() {

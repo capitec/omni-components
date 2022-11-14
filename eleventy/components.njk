@@ -8,7 +8,11 @@ pagination:
 permalink: "components/{{ component.name | slug }}/"
 ---
 
-<article>
+<div class="component-overlay">
+    <div class="lds-ripple"><div></div><div></div></div>
+</div>
+
+<article class="component">
     <div class="component-meta">
         <div class="component-name">{{ component.name }}</div>
         <div class="component-desc">{{ customElements | getDescription(component.name) | safe }}</div> 
@@ -46,8 +50,8 @@ permalink: "components/{{ component.name | slug }}/"
         <div class="component-tab-root">
             <div class="component-tab-wrapper">
                 <div class="component-tab-list" role="tablist">
-                    <div role="tab" class="component-tab-button active" onclick="openTab(event, 'docs')">Documentation</div>
-                    <div role="tab" class="component-tab-button" onclick="openTab(event, 'props')">Properties</div>
+                    <div role="tab" class="component-tab-button active" data-name="docs" onclick="openTab(event.currentTarget, 'docs')">Documentation</div>
+                    <div role="tab" class="component-tab-button" data-name="props" onclick="openTab(event.currentTarget, 'props')">Properties</div>
                 </div>
             </div>
             <div class="component-tab" id="docs" role="tabpanel" style="display: block;">
@@ -76,52 +80,32 @@ permalink: "components/{{ component.name | slug }}/"
                 </div>
             </div>
             <div class="component-tab" id="props" role="tabpanel">
-                <div class="component-desc">{{ customElements | getAttributes(component.name) | dump }}</div>
+                <div style="display: flex; justify-content: center; padding: 48px 24px;">
+                    <table class="component-props-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for attribute in customElements | getAttributes(component.name) %}
+                            <tr>
+                                <td data-label="Name" scope="row">{{attribute.name}}</td>
+                                <td data-label="Type">{{attribute.type.text}}</td>
+                                <td data-label="Description">{{attribute.description}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-
-
 </article>
 
 {# <script type="module" defer>
     import { enhanceCodeBlocks } from '/dist/utils/StoryUtils.js';
     enhanceCodeBlocks();
 </script> #}
-<script>
-
-    function openTab(evt, tabId) {
-
-        // Declare all variables
-        var i, tabcontent, tablinks;
-
-        // Get all elements with class="tabcontent" and hide them
-        tabcontent = document.getElementsByClassName("component-tab");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-        }
-
-        // Get all elements with class="tablinks" and remove the class "active"
-        tablinks = document.getElementsByClassName("component-tab-button");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" active", "");
-        }
-
-        // Show the current tab, and add an "active" class to the button that opened the tab
-        document.getElementById(tabId).style.display = "block";
-        evt.currentTarget.className += " active";
-    }
-
-    function copyToClipboard(id)
-    {
-        const range = document.createRange();
-        range.selectNode(document.getElementById(id));
-        window.getSelection().removeAllRanges();
-        window.getSelection().addRange(range);
-        document.execCommand('copy');
-        window.getSelection().removeAllRanges();
-    }
-    
-</script>
-
-

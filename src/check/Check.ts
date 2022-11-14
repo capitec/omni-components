@@ -10,11 +10,11 @@ import '../icons/Check.icon.js';
  * Control that allows a selection to be made.
  *
  * @import
- * ```js 
+ * ```js
  * import '@capitec/omni-components/check';
  * ```
  *
- * @example 
+ * @example
  * ```html
  * <omni-check
  *   label="My Toggle Value"
