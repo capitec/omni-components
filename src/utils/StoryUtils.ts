@@ -533,7 +533,6 @@ function querySelectorAsync(parent: Element | ShadowRoot, selector: any, checkFr
 }
 
 async function setupThemes() {
-    
     const themes = await loadThemesListRemote();
     const themeSelect = document.getElementById('header-theme-select') as HTMLSelectElement;
     const themeStyle = document.getElementById('theme-styles') as HTMLStyleElement;
@@ -570,8 +569,8 @@ async function setupThemes() {
             },
             (error) => {
                 console.error(error);
-            });
-        
+            }
+        );
     }
 
     addOption(noThemeKey);
@@ -579,7 +578,7 @@ async function setupThemes() {
         addOption(theme);
     });
     addOption(customThemeKey);
-    
+
     themeSelect.addEventListener('change', (e) => {
         const value = (e.target as HTMLSelectElement).value;
         changeTheme(value);
@@ -588,9 +587,7 @@ async function setupThemes() {
 }
 
 async function setupEleventy() {
-    
     function openTab(target: Element, tabId: string) {
-
         let i;
 
         // Get all elements with class="tabcontent" and hide them
@@ -626,7 +623,7 @@ async function setupEleventy() {
     const windowAny = window as any;
     windowAny.copyToClipboard = copyToClipboard;
     windowAny.openTab = openTab;
-    
+
     // Open / Close the menu
     const menuButton = document.querySelector<HTMLElement>('.header-menu-button .material-icons');
     menuButton.addEventListener('click', (e) => {
@@ -645,18 +642,16 @@ async function setupEleventy() {
     const tocAnchors = document.querySelectorAll('.component-toc a');
 
     window.addEventListener('scroll', () => {
-
-        storyRenderers.forEach(sr => {
+        storyRenderers.forEach((sr) => {
             const top = window.scrollY;
             const offset = sr.offsetTop + 65;
             const height = sr.offsetHeight;
             const id = sr.getAttribute('id');
 
             if (top > offset && top < offset + height) {
-
                 // console.log(id, top, offset, height);
 
-                tocAnchors.forEach(a => {
+                tocAnchors.forEach((a) => {
                     a.classList.remove('component-toc-active');
                     document.querySelector(`.component-toc a[href*='${id}']`).classList.add('component-toc-active');
                 });
@@ -675,7 +670,7 @@ async function setupEleventy() {
                     const target = document.querySelector(`[data-name="${id}"]`);
                     openTab(target, id);
                     break;
-                } 
+                }
                 default:
                     break;
             }
