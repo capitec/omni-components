@@ -245,46 +245,19 @@ function markdownCode(code: string, lang: string = '') {
 //     return markdownCode(output, lang);
 // }
 
-// function loadFileRemote(src: string) {
-//     let error = undefined;
-//     let output = '';
-//     const request = new XMLHttpRequest();
-//     request.open('GET', src, false); // `false` makes the request synchronous
-//     request.onload = () => {
-//         output = request.responseText;
-//     };
-//     request.onerror = () => {
-//         error = `${request.status} - ${request.statusText}`;
-//     };
-//     request.send(null);
+async function loadFileRemote(src: string) {
+    const response = await fetch(src);
+    const output = await response.text();
 
-//     if (error) {
-//         throw new Error(error);
-//     }
-//     return output;
-// }
+    return output;
+}
 
-// function loadThemesListRemote() {
-//     let error = undefined;
-//     let output = '';
-//     const request = new XMLHttpRequest();
-//     request.open('GET', 'themes-list.json', false); // `false` makes the request synchronous
-//     request.onload = () => {
-//         output = request.responseText;
-//     };
-//     request.onerror = () => {
-//         error = `${request.status} - ${request.statusText}`;
-//     };
-//     request.send(null);
+async function loadThemesListRemote() {
+    const response = await fetch('/themes-list.json');
+    const list = await response.json();
 
-//     if (error) {
-//         throw new Error(error);
-//     }
-
-//     const list = JSON.parse(output);
-
-//     return list.themes;
-// }
+    return list.themes;
+}
 
 function formatMarkdownCodeElements(str: string, lang: string = 'js') {
     if (!str) {
@@ -544,6 +517,61 @@ function querySelectorAsync(parent: Element | ShadowRoot, selector: any, checkFr
     });
 }
 
+async function setupThemes() {
+    
+    const themes = await loadThemesListRemote();
+    const themeSelect = document.getElementById('header-theme-select') as HTMLSelectElement;
+    const themeStyle = document.getElementById('theme-styles') as HTMLStyleElement;
+    const themeStorageKey = 'omni-docs-theme-selection';
+    const customThemeCssKey = 'omni-docs-custom-theme-css';
+    const customThemeKey = 'Custom Theme';
+    const noThemeKey = 'No Theme';
+
+    function addOption(key: string) {
+        const option = document.createElement('option');
+        option.text = key;
+        if (window.sessionStorage.getItem(themeStorageKey) === key) {
+            option.selected = true;
+            changeTheme(key);
+        }
+        themeSelect.add(option);
+        return option;
+    }
+
+    function changeTheme(theme: string) {
+        if (theme === noThemeKey) {
+            themeStyle.innerHTML = '';
+            return;
+        }
+        if (theme === customThemeKey) {
+            const customCss = window.sessionStorage.getItem(customThemeCssKey);
+            themeStyle.innerHTML = customCss;
+            return;
+        }
+        const css = themeStyle.sheet;
+        loadFileRemote(`/themes/${theme}`).then(
+            (cssText) => {
+                themeStyle.innerHTML = cssText;
+            },
+            (error) => {
+                console.error(error);
+            });
+        
+    }
+
+    addOption(noThemeKey);
+    themes.forEach((theme: string) => {
+        addOption(theme);
+    });
+    addOption(customThemeKey);
+    
+    themeSelect.addEventListener('change', (e) => {
+        const value = (e.target as HTMLSelectElement).value;
+        changeTheme(value);
+        window.sessionStorage.setItem(themeStorageKey, value);
+    });
+}
+
 export type PlayFunctionContext<T> = {
     args: T;
     story: ComponentStoryFormat<T>;
@@ -582,10 +610,10 @@ export {
     // loadCssPropertiesRemote,
     loadCssProperties,
     // loadThemeVariablesRemote,
-    // loadFileRemote,
+    loadFileRemote,
     markdownCode,
     // markdownCodeRemote,
-    // loadThemesListRemote,
+    loadThemesListRemote,
     asRenderString,
     filterJsDocLinks,
     formatMarkdownCodeElements,
@@ -593,5 +621,6 @@ export {
     assignToSlot,
     enhanceCodeBlocks,
     raw,
-    querySelectorAsync
+    querySelectorAsync,
+    setupThemes
 };

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{ '/assets/css/style.css' | url }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Hind Vadodara" >
+    <style id="theme-styles"></style>
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
     <script type="module" src="/dist/utils/StoryRenderer.js"></script>
     <script type="module" src="/dist/omni-components.js"></script>
@@ -52,6 +53,10 @@
             });
         });
     </script>
+    <script type="module" defer>
+        import { setupThemes } from '/dist/utils/StoryUtils.js';
+        setupThemes();
+    </script>
 </head>
 <body>
     <div dir="ltr">
@@ -69,6 +74,10 @@
                     </div>
                 </div>
                 <div class="header-actions">
+                    <span class="header-theme-section">
+                        Theme: 
+                        <select id="header-theme-select"></select>
+                    </span>
                     <a href="https://github.com/capitec/omni-components" target="_blank" class="action">
                         <img src="/assets/images/github.svg" style="cursor: pointer;">
                     </a>

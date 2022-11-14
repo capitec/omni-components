@@ -18,9 +18,12 @@ export default async config => {
     config.addPassthroughCopy('./eleventy/assets/');
     config.addPassthroughCopy('./eleventy/favicon.ico');
     config.addPassthroughCopy('./custom-elements.json');
+    config.addPassthroughCopy('./themes-list.json');
+    config.addPassthroughCopy('./themes/');
 
     config.addWatchTarget('./scripts/');
     config.addWatchTarget('./eleventy/assets/');
+    config.addWatchTarget('./themes/');
     config.addWatchTarget('./src/');
 
     for (const key in filters) {
@@ -60,6 +63,7 @@ async function build() {
 
     execSync('npx cem analyze --litelement --globs src/**', { stdio: 'inherit' });
     // execSync('npx -p typescript tsc', { stdio: 'inherit' });
+    execSync('npm run docs:theme-list');
 
     const entryPoints = await globby('./src/**/*.ts');
 
