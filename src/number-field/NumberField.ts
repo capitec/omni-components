@@ -7,7 +7,7 @@ import { OmniFormElement } from '../core/OmniFormElement.js';
  * Input control to enter a single line of numbers.
  *
  * @import
- * ```js
+ * ```js 
  * import '@capitec/omni-components/number-field';
  * ```
  * @example
