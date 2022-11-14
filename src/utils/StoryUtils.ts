@@ -587,6 +587,110 @@ async function setupThemes() {
     });
 }
 
+async function setupEleventy() {
+    
+    function openTab(target: Element, tabId: string) {
+
+        let i;
+
+        // Get all elements with class="tabcontent" and hide them
+        const tabContent = document.getElementsByClassName('component-tab') as HTMLCollectionOf<HTMLElement>;
+        for (i = 0; i < tabContent.length; i++) {
+            tabContent[i].style.display = 'none';
+        }
+
+        // Get all elements with class="tablinks" and remove the class "active"
+        const tabLinks = document.getElementsByClassName('component-tab-button');
+        for (i = 0; i < tabLinks.length; i++) {
+            tabLinks[i].classList.remove('active');
+        }
+
+        // Show the current tab, and add an "active" class to the button that opened the tab
+        document.getElementById(tabId).style.display = 'block';
+        target.classList.add('active');
+
+        // Set nav state of tab.
+        window.history.replaceState({}, '', `?tab=${tabId}`);
+    }
+
+    function copyToClipboard(id: string) {
+        const range = document.createRange();
+        range.selectNode(document.getElementById(id));
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+        document.execCommand('copy');
+        window.getSelection().removeAllRanges();
+    }
+
+    // Add functions for DOM access
+    const windowAny = window as any;
+    windowAny.copyToClipboard = copyToClipboard;
+    windowAny.openTab = openTab;
+    
+    // Open / Close the menu
+    const menuButton = document.querySelector<HTMLElement>('.header-menu-button .material-icons');
+    menuButton.addEventListener('click', (e) => {
+        const nav = document.querySelector('nav');
+        if (nav.classList.contains('mobile')) {
+            nav.classList.remove('mobile');
+            menuButton.innerText = 'menu';
+        } else {
+            nav.classList.add('mobile');
+            menuButton.innerText = 'close';
+        }
+    });
+
+    // Scroll highlight
+    const storyRenderers = document.querySelectorAll<HTMLElement>('story-renderer');
+    const tocAnchors = document.querySelectorAll('.component-toc a');
+
+    window.addEventListener('scroll', () => {
+
+        storyRenderers.forEach(sr => {
+            const top = window.scrollY;
+            const offset = sr.offsetTop + 65;
+            const height = sr.offsetHeight;
+            const id = sr.getAttribute('id');
+
+            if (top > offset && top < offset + height) {
+
+                // console.log(id, top, offset, height);
+
+                tocAnchors.forEach(a => {
+                    a.classList.remove('component-toc-active');
+                    document.querySelector(`.component-toc a[href*='${id}']`).classList.add('component-toc-active');
+                });
+            }
+        });
+    });
+
+    // Open tab from query string.
+    if (document.location.pathname !== '/' && document.location.search) {
+        const searchParams = new URLSearchParams(document.location.search);
+
+        for (const param of searchParams) {
+            switch (param[0]) {
+                case 'tab': {
+                    const id = param[1];
+                    const target = document.querySelector(`[data-name="${id}"]`);
+                    openTab(target, id);
+                    break;
+                } 
+                default:
+                    break;
+            }
+        }
+    }
+
+    const overlay = document.querySelector<HTMLElement>('.component-overlay');
+    if (overlay) {
+        overlay.style.display = 'none';
+    }
+    document.querySelector<HTMLElement>('.component').style.display = 'block';
+
+    await setupThemes();
+}
+
 export type PlayFunctionContext<T> = {
     args: T;
     story: ComponentStoryFormat<T>;
@@ -637,5 +741,6 @@ export {
     enhanceCodeBlocks,
     raw,
     querySelectorAsync,
-    setupThemes
+    setupThemes,
+    setupEleventy
 };

@@ -16,7 +16,6 @@ export default async config => {
     }
 
     config.addPassthroughCopy('./eleventy/assets/');
-    config.addPassthroughCopy('./eleventy/scripts/');
     config.addPassthroughCopy('./eleventy/favicon.ico');
     config.addPassthroughCopy('./custom-elements.json');
     config.addPassthroughCopy('./themes-list.json');
@@ -25,7 +24,6 @@ export default async config => {
     config.addWatchTarget('./scripts/');
     config.addWatchTarget('./eleventy/assets/');
     config.addWatchTarget('./themes/');
-    config.addWatchTarget('./eleventy/scripts/');
     config.addWatchTarget('./src/');
 
     for (const key in filters) {
