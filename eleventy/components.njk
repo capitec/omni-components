@@ -51,30 +51,38 @@ permalink: "components/{{ component.name | slug }}/"
             <div class="component-tab-wrapper">
                 <div class="component-tab-list" role="tablist">
                     <div role="tab" class="component-tab-button active" data-name="docs" onclick="openTab(event.currentTarget, 'docs')">Documentation</div>
-                    <div role="tab" class="component-tab-button" data-name="props" onclick="openTab(event.currentTarget, 'props')">Properties</div>
+                    <div role="tab" class="component-tab-button" data-name="props" onclick="openTab(event.currentTarget, 'props')">Attributes</div>
                 </div>
             </div>
             <div class="component-tab" id="docs" role="tabpanel" style="display: block;">
-                <div class="component-tab-content">
-                    <div>
-                        {% for story in component.stories %}
-                        <story-renderer 
-                            id="story-{{ story | lower }}"
-                            path="{{ component.path }}" 
-                            tag="{{ customElements | getTagName(component.name) }}" 
-                            key="{{ story }}"
-                            {% if story === 'Interactive' %}interactive{% endif %} 
-                        >
-                        </story-renderer>
-                        {%- endfor %}
-                    </div>
-                    <div class="component-toc-wrapper">
-                        <div class="component-toc">
+                <div class="component-props-docs-wrapper">
+                    <div class="component-tab-content">
+                        <div class="component-stories">
                             {% for story in component.stories %}
-                                <a href="#story-{{ story | lower }}" id="story-{{ story | lower }}" class="component-toc-active">
-                                    {{ story }}
-                                </a>
+                            <div class="name">{{ story }}</div>
+                            <div class="story">
+                                <div>
+                                    <story-renderer 
+                                        id="story-{{ story | lower }}"
+                                        path="{{ component.path }}" 
+                                        tag="{{ customElements | getTagName(component.name) }}" 
+                                        key="{{ story }}"
+                                        {% if story === 'Interactive' %}interactive{% endif %} 
+                                    >
+                                    </story-renderer>
+                                </div>
+                            </div>
+                            
                             {%- endfor %}
+                        </div>
+                        <div class="component-toc-wrapper">
+                            <div class="component-toc">
+                                {% for story in component.stories %}
+                                    <a href="#story-{{ story | lower }}" id="story-{{ story | lower }}" class="component-toc-active">
+                                        {{ story }}
+                                    </a>
+                                {%- endfor %}
+                            </div>
                         </div>
                     </div>
                 </div>

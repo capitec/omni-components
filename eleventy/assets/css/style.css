@@ -336,11 +336,54 @@ header * {
     }
 }
 
+.component-props-docs-wrapper {
+    display: flex; 
+    padding: 24px 48px;
+    /* background: purple; */
+}
+
 .component-tab-content {
     display: flex;
+    flex: 1;
     position: relative;
     justify-content: space-between;
-    background-color: #ffffff;
+    /* background-color: orange; */
+}
+
+.component-stories {
+    flex: 1;
+    padding-right: 48px;
+    /* background: green; */
+}
+
+.component-stories .name {
+    font-size: 20px;
+}
+
+.component-stories .story {
+    margin-top: 12px;
+    margin-bottom: 24px;
+    border: 1px solid #e1e1e1;
+}
+
+.component-toc-wrapper {
+    flex: 0 0 260px;
+    margin-top: 24px;
+}
+
+.component-toc {
+    position: sticky;
+    top: 84px;
+    display: flex;
+    flex-direction: column;
+    background-color: pink;
+    flex: 0 0 240px;
+    overflow-y: auto;
+    max-height: calc(100vh - 65px);
+}
+
+.component-toc-active {
+    font-weight: bold;
 }
 
 table {
@@ -386,27 +429,7 @@ table th {
 .component-props-table-wrapper {
     display: flex; 
     justify-content: center; 
-    padding: 24px;
-}
-
-.component-toc-wrapper {
-    flex: 0 0 260px;
-    margin-top: 24px;
-}
-
-.component-toc {
-    position: sticky;
-    top: 84px;
-    display: flex;
-    flex-direction: column;
-    background-color: pink;
-    flex: 0 0 240px;
-    overflow-y: auto;
-    max-height: calc(100vh - 65px);
-}
-
-.component-toc-active {
-    font-weight: bold;
+    padding: 24px 48px;
 }
 
 @media screen and (max-width: 760px) {
@@ -470,6 +493,18 @@ table th {
 
     .tab button {
         flex: 1
+    }
+
+    .component-props-table-wrapper {
+        padding: 24px;
+    }
+
+    .component-props-docs-wrapper {
+        padding: 24px;
+    }
+
+    .component-stories {
+        padding: 24px;
     }
 
     table {

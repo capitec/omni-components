@@ -60,7 +60,6 @@ export class StoryRenderer extends LitElement {
 
         const storySource = story.source ? story.source() : this._getSourceFromLit(res);
         return html`
-            <omni-label label="${story.name ?? this.key}" type="title"></omni-label>
             <div class="${this.key}${this.interactive ? ' interactive-story' : ''}" .data=${story}>
                 ${this.overrideInteractive ? unsafeHTML(this.interactiveSrc) : res}
             </div>
