@@ -1,18 +1,14 @@
 import { closeBrackets, autocompletion, closeBracketsKeymap, completionKeymap } from '@codemirror/autocomplete';
 import { indentWithTab } from '@codemirror/commands';
 import { history, defaultKeymap, historyKeymap } from '@codemirror/commands';
-import { foldGutter, indentOnInput, syntaxHighlighting, defaultHighlightStyle, bracketMatching, foldKeymap } from '@codemirror/language';
-import { lintKeymap } from '@codemirror/lint';
+import { indentOnInput, syntaxHighlighting, defaultHighlightStyle, bracketMatching } from '@codemirror/language';
 import { highlightSelectionMatches, searchKeymap } from '@codemirror/search';
 import { Extension, EditorState, Compartment } from '@codemirror/state';
 import {
-    lineNumbers,
     highlightActiveLineGutter,
     highlightSpecialChars,
-    drawSelection,
     dropCursor,
     rectangularSelection,
-    crosshairCursor,
     highlightActiveLine,
     keymap,
     ViewUpdate
@@ -153,13 +149,7 @@ export class CodeMirror extends LitElement {
                         rectangularSelection(),
                         highlightActiveLine(),
                         highlightSelectionMatches(),
-                        keymap.of([
-                            ...closeBracketsKeymap,
-                            ...defaultKeymap,
-                            ...searchKeymap,
-                            ...historyKeymap,
-                            ...completionKeymap
-                        ])
+                        keymap.of([...closeBracketsKeymap, ...defaultKeymap, ...searchKeymap, ...historyKeymap, ...completionKeymap])
                     ],
                     await this.extensions(),
                     this.readonlyOrDisabled.of([
@@ -225,38 +215,6 @@ export class CodeMirror extends LitElement {
                 );
             }
         }
-        // else if (
-        //     !this.disabled &&
-        //     _changedProperties.get('code') &&
-        //     this.editor &&
-        //     (this.code || this.slotElement.assignedNodes().length > 0)
-        // ) {
-        //     const source = this.code
-        //         ? await this.transformSource(await this.code)
-        //         : await this.transformSource(this._readCode(this.slotElement));
-        //     if (
-        //         source.replaceAll('\n', '').replaceAll('\t', '').replaceAll(' ', '') !==
-        //         this.editor.state.doc.toString().replaceAll('\n', '').replaceAll('\t', '').replaceAll(' ', '')
-        //     ) {
-        //         this.editor.dispatch({
-        //             changes: {
-        //                 from: 0,
-        //                 to: this.editor.state.doc.length,
-        //                 insert: source
-        //             }
-        //         });
-        //     }
-        // }
-        //  else if (_changedProperties.has('disabled') && this.editor) {
-        //     this.editor.dispatch({
-        //         effects: [
-        //             this.readonlyOrDisabled.reconfigure([
-        //                 EditorState.readOnly.of(this.readOnly || this.disabled),
-        //                 EditorView.editable.of(!this.readOnly && !this.disabled)
-        //             ])
-        //         ]
-        //     });
-        // }
     }
 
     private async _copyCode() {
@@ -290,13 +248,10 @@ export class CodeMirror extends LitElement {
             this._fallbackCopyTextToClipboard(text);
             return;
         }
-        navigator.clipboard.writeText(text).then(
-            undefined,
-            (err) => {
-                console.error('Attempting fallback, could not copy text: ', err);
-                this._fallbackCopyTextToClipboard(text);
-            }
-        );
+        navigator.clipboard.writeText(text).then(undefined, (err) => {
+            console.error('Attempting fallback, could not copy text: ', err);
+            this._fallbackCopyTextToClipboard(text);
+        });
     }
 
     private async _slotChanged() {
