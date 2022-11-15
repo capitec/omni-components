@@ -51,6 +51,7 @@ const config = {
             name: 'chromium',
             use: {
                 ...devices['Desktop Chrome'],
+                userAgent: 'Test Runner'
             },
         },
 
@@ -58,6 +59,7 @@ const config = {
         //     name: 'firefox',
         //     use: {
         //         ...devices['Desktop Firefox'],
+        //         userAgent: 'Test Runner'
         //     },
         // },
 
@@ -65,6 +67,7 @@ const config = {
         //     name: 'webkit',
         //     use: {
         //         ...devices['Desktop Safari'],
+        //         userAgent: 'Test Runner'
         //     },
         // },
 
@@ -73,12 +76,14 @@ const config = {
         //   name: 'Mobile Chrome',
         //   use: {
         //     ...devices['Pixel 5'],
+        //         userAgent: 'Test Runner'
         //   },
         // },
         // {
         //   name: 'Mobile Safari',
         //   use: {
         //     ...devices['iPhone 12'],
+        //         userAgent: 'Test Runner'
         //   },
         // },
 
@@ -87,12 +92,14 @@ const config = {
         //   name: 'Microsoft Edge',
         //   use: {
         //     channel: 'msedge',
+        //         userAgent: 'Test Runner'
         //   },
         // },
         // {
         //   name: 'Google Chrome',
         //   use: {
         //     channel: 'chrome',
+        //         userAgent: 'Test Runner'
         //   },
         // },
     ],

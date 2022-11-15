@@ -1,5 +1,5 @@
 import { within } from '@testing-library/dom';
-import userEvent from '@testing-library/user-event';
+import userEvent, { PointerEventsCheckLevel } from '@testing-library/user-event';
 import * as jest from 'jest-mock';
 import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
@@ -135,13 +135,11 @@ export const Disabled = {
         await expect(foundDisabledClass).toBeTruthy(); // Test for not clickable.
 
         const click = jest.fn();
-        button.addEventListener('click', () => click());
-        await userEvent.click(button, {
-            pointerEventsCheck: 0
+        button.addEventListener('click', (e) => {
+            click();
         });
-        await userEvent.click(button, {
-            pointerEventsCheck: 0
-        });
+        await expect(() => userEvent.click(button)).rejects.toThrow(/pointer-events: none/);
+        await expect(() => userEvent.click(button)).rejects.toThrow(/pointer-events: none/);
         await expect(click).toBeCalledTimes(0);
     }
 } as ComponentStoryFormat<Args>;
