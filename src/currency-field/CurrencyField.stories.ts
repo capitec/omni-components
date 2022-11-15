@@ -82,7 +82,7 @@ export const Interactive = {
         await expect(input).toBeCalledTimes(value.length);
 
         // Backspacing to cover the removal of cents and cents separator
-        const backspace = '{backspace}{backspace}{backspace}';
+        const backspace = '{backspace>3/}';
         await userEvent.type(inputField, backspace);
         await expect(inputField).toHaveValue('1,200,000');
 
@@ -111,7 +111,7 @@ export const Hint = HintStory<CurrencyField, BaseArgTypes>('omni-currency-field'
 
 export const ErrorLabel = ErrorStory<CurrencyField, BaseArgTypes>('omni-currency-field');
 
-export const Value = ValueStory<CurrencyField, BaseArgTypes>('omni-currency-field', '100');
+export const Value = ValueStory<CurrencyField, BaseArgTypes>('omni-currency-field', '100.15');
 
 export const Prefix = PrefixStory<CurrencyField, BaseArgTypes>('omni-currency-field');
 

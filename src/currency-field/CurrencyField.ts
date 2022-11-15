@@ -1,6 +1,7 @@
 import { html, css } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { live } from 'lit/directives/live.js';
+import _ from 'lodash';
 import { OmniFormElement } from '../core/OmniFormElement.js';
 import '../label/Label.js';
 
@@ -70,11 +71,12 @@ export class CurrencyField extends OmniFormElement {
     @state() private _currencyFormatSeparator: string;
     @state() private _currencyCentsSeparator: string;
     @state() private _stringValue: string = '';
-    
+
+    private _symbolAndFormateUpdate = _.debounce(() => this._updateSymbolAndFormat(), 1000);
+
     constructor() {
         super();
-        this._setCurrencyFormat();
-        this._setSymbolAndSeparators();
+        this._updateSymbolAndFormat();
     }
 
     override connectedCallback(): void {
@@ -84,12 +86,12 @@ export class CurrencyField extends OmniFormElement {
         this.addEventListener('keydown', this._keyDown.bind(this));
     }
 
-    override attributeChangedCallback(name: string, _old: string | null, value: string | null): void {
+    override async attributeChangedCallback(name: string, _old: string | null, value: string | null): Promise<void> {
         super.attributeChangedCallback(name, _old, value);
         
         if(name === 'currency' || name === 'locale') {
-            this._setSymbolAndSeparators();
-            this._setCurrencyFormat();
+            await this.updateComplete;
+            this._symbolAndFormateUpdate();
         }
 
         if(name === 'value') {
@@ -100,6 +102,11 @@ export class CurrencyField extends OmniFormElement {
             }
         }
 
+    }
+
+    _updateSymbolAndFormat() {
+        this._setSymbolAndSeparators();
+        this._setCurrencyFormat();
     }
 
     // Set the currency format that will be used to format the input value.
@@ -241,7 +248,7 @@ export class CurrencyField extends OmniFormElement {
                 );
             }
 
-            //Added so that the number before the separator is not removed.
+            // Added so that the number before the separator is not removed.
             e.preventDefault();
             this.value = this._formatToFloat(this._stringValue);
 
