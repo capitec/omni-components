@@ -100,11 +100,10 @@ export const Interactive: ComponentStoryFormat<Args> = {
         if (navigator.userAgent === 'Test Runner') {
             console.log('CICD Test - Not Visual');
         } else {
-
             await waitFor(() => expect(inputField).toHaveValue(value), {
                 timeout: 3000
             });
-    
+
             await waitFor(() => expect(interactions).toBeCalledTimes(value.length + 1), {
                 timeout: 3000
             });

@@ -81,7 +81,6 @@ export const Interactive: ComponentStoryFormat<BaseArgTypes> = {
                 timeout: 3000
             });
         }
-        
     }
 };
 
