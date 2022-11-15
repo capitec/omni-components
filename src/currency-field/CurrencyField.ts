@@ -65,14 +65,14 @@ export class CurrencyField extends OmniFormElement {
      */
     @property({ type: String, reflect: true }) locale: string = navigator.language;
 
-    /* Internal state properties */
+    // Internal state properties
     @state() private _currencyFormat: Intl.NumberFormat;
     @state() private _currencySymbol: string;
     @state() private _currencyFormatSeparator: string;
     @state() private _currencyCentsSeparator: string;
     @state() private _stringValue: string = '';
 
-    private _symbolAndFormateUpdate = _.debounce(() => this._updateSymbolAndFormat(), 1000);
+    private _symbolAndFormateUpdate = _.debounce(() => this._updateSymbolAndFormat(), 500);
 
     constructor() {
         super();
