@@ -1,5 +1,6 @@
 import { html as langHtml } from '@codemirror/lang-html';
-import { githubDark } from '@ddietr/codemirror-themes/github-dark.js';
+// import { githubDark as codeTheme } from '@ddietr/codemirror-themes/github-dark.js';
+import { githubLight as codeTheme } from '@ddietr/codemirror-themes/github-light.js';
 import { html, LitElement, nothing, render, TemplateResult } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { live } from 'lit/directives/live.js';
@@ -7,10 +8,9 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import pretty from 'pretty';
 import { CodeMirrorSourceUpdateEvent, CodeMirrorEditorEvent } from './CodeMirror.js';
 import { CodeMirror } from './CodeMirror.js';
-import { ifNotEmpty } from './Directives.js';
 import { CSSVariable, LivePropertyEditor, PropertyChangeEvent } from './LivePropertyEditor.js';
 import { StoryController } from './StoryController.js';
-import { ComponentStoryFormat, loadCustomElementsCodeMirrorCompletionsRemote } from './StoryUtils.js';
+import { loadCustomElementsCodeMirrorCompletionsRemote } from './StoryUtils.js';
 
 import '../label/Label.js';
 import '../button/Button';
@@ -176,7 +176,7 @@ export class StoryRenderer extends LitElement {
                 <omni-code-mirror
                     class="source-code"
                     .transformSource="${(s: string) => this._transformSource(s)}"
-                    .extensions="${async () => [githubDark, langHtml(await loadCustomElementsCodeMirrorCompletionsRemote())]}"
+                    .extensions="${async () => [codeTheme, langHtml(await loadCustomElementsCodeMirrorCompletionsRemote())]}"
                     .code="${live(storySource ?? '')}"
                     @codemirror-loaded="${(e: CustomEvent<CodeMirrorEditorEvent>) => {
                         const newSource = e.detail.source;
