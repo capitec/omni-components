@@ -90,14 +90,13 @@ export const Interactive = {
         const leftArrow = '{left>3/}{backspace}';
         await userEvent.type(inputField, leftArrow);
         await expect(inputField).toHaveValue('120,000');
-       
+
         // Clear contents of the input field.
         await userEvent.clear(inputField);
-        await expect(inputField).toHaveValue(''); 
+        await expect(inputField).toHaveValue('');
 
         // Set currency property to be invalid value.
-        currencyField.currency = 'cents';    
-        
+        currencyField.currency = 'cents';
     }
 };
 

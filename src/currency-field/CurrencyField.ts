@@ -88,20 +88,19 @@ export class CurrencyField extends OmniFormElement {
 
     override async attributeChangedCallback(name: string, _old: string | null, value: string | null): Promise<void> {
         super.attributeChangedCallback(name, _old, value);
-        
-        if(name === 'currency' || name === 'locale') {
+
+        if (name === 'currency' || name === 'locale') {
             await this.updateComplete;
             this._symbolAndFormateUpdate();
         }
 
-        if(name === 'value') {
-            if(typeof value === 'string') {
+        if (name === 'value') {
+            if (typeof value === 'string') {
                 this._stringValue = this._formatToCurrency(parseFloat(value));
-            }else {
+            } else {
                 this._stringValue = this._formatToCurrency(value);
             }
         }
-
     }
 
     _updateSymbolAndFormat(): void {
@@ -112,37 +111,40 @@ export class CurrencyField extends OmniFormElement {
     // Set the currency format that will be used to format the input value.
     _setCurrencyFormat(): void {
         try {
-            this._currencyFormat =  new Intl.NumberFormat(this.locale, { currency: this.currency });
+            this._currencyFormat = new Intl.NumberFormat(this.locale, { currency: this.currency });
         } catch (e) {
             console.error('invalid locale or currency provided, falling back to default', e);
-            this._currencyFormat =  new Intl.NumberFormat('en-US', { currency: 'USD' });
+            this._currencyFormat = new Intl.NumberFormat('en-US', { currency: 'USD' });
         }
     }
 
     // Set the currency symbol and sets the currency format separator and cent separator depending on locale.
     _setSymbolAndSeparators(): void {
-        /* 
-        * Set the currency parts providing a default value of 1000.0 to return an array to get the currency separator and cents separator.
-        * Results can be the following based on the locale provided.
-        * ["$", "1", ",", "000", ".", "00"]
-        * ["1", ".", "000", ",", "00", " ", "$"]
-        */
+        /*
+         * Set the currency parts providing a default value of 1000.0 to return an array to get the currency separator and cents separator.
+         * Results can be the following based on the locale provided.
+         * ["$", "1", ",", "000", ".", "00"]
+         * ["1", ".", "000", ",", "00", " ", "$"]
+         */
         let currencyPartsMap = [];
         try {
-            currencyPartsMap = new Intl.NumberFormat(this.locale, { style: 'currency', currency: this.currency, currencyDisplay: 'narrowSymbol'
+            currencyPartsMap = new Intl.NumberFormat(this.locale, {
+                style: 'currency',
+                currency: this.currency,
+                currencyDisplay: 'narrowSymbol'
             })
                 .formatToParts(1000.0)
                 .map((c) => c.value);
         } catch (e) {
             console.error('invalid locale or currency provided, fallback will be used', e);
-            currencyPartsMap = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', currencyDisplay: 'narrowSymbol'})
+            currencyPartsMap = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', currencyDisplay: 'narrowSymbol' })
                 .formatToParts(1000.0)
                 .map((c) => c.value);
         }
         // Get the currency symbol assuming it is the value at the first index of the array.
         const currencySymbol = currencyPartsMap[0];
 
-        // Check to see if value at first index of the array is a number Some locales will have the currency symbol at the last index. 
+        // Check to see if value at first index of the array is a number Some locales will have the currency symbol at the last index.
         if (parseInt(currencySymbol)) {
             this._currencyFormatSeparator = currencyPartsMap[CURRENCY_SEPARATOR.AMOUNT];
             this._currencyCentsSeparator = currencyPartsMap[CURRENCY_SEPARATOR.CENTS];
@@ -190,14 +192,13 @@ export class CurrencyField extends OmniFormElement {
     }
 
     // Format the internal value to a float.
-    _formatToFloat(formattedValue: string): string | number {       
-        if(formattedValue.length > 0) {
+    _formatToFloat(formattedValue: string): string | number {
+        if (formattedValue.length > 0) {
             const preFloatAllReplace = formattedValue.replaceAll(this._currencyFormatSeparator, '');
             return parseFloat(preFloatAllReplace);
-        }else {
+        } else {
             return '';
         }
-
     }
 
     _blur(): void {
@@ -233,17 +234,19 @@ export class CurrencyField extends OmniFormElement {
             if (input.value.includes(this._currencyCentsSeparator)) {
                 const centsPart = this._parseCents(input.value.substring(input.value.indexOf(this._currencyCentsSeparator) + 1));
                 this._stringValue =
-                this._formatToCurrency(
-                    this._parseAmount(
-                        input.value.substring(0, caretPosition - 2) +
-                            input.value.substring(caretPosition, input.value.indexOf(this._currencyCentsSeparator))
-                    )
-                ) +
-                this._currencyCentsSeparator +
-                centsPart;
+                    this._formatToCurrency(
+                        this._parseAmount(
+                            input.value.substring(0, caretPosition - 2) +
+                                input.value.substring(caretPosition, input.value.indexOf(this._currencyCentsSeparator))
+                        )
+                    ) +
+                    this._currencyCentsSeparator +
+                    centsPart;
             } else {
                 this._stringValue = this._formatToCurrency(
-                    this._parseAmount(input.value.substring(0, caretPosition - 2) + input.value.substring(caretPosition, input.value.length + 1))
+                    this._parseAmount(
+                        input.value.substring(0, caretPosition - 2) + input.value.substring(caretPosition, input.value.length + 1)
+                    )
                 );
             }
 
@@ -274,15 +277,14 @@ export class CurrencyField extends OmniFormElement {
     }
 
     async _keyInput(): Promise<void> {
-
         let formatterCount = 0;
         let valueFormatterCount = 0;
         const valueLength = this._inputElement.value.length;
         const caretPosition = this._inputElement.selectionStart;
         const inputValue = this._inputElement.value;
 
-        if(inputValue.includes(this._currencyFormatSeparator)) {
-            formatterCount = this._inputElement.value.match(new RegExp(this._currencyFormatSeparator,'g')).length;
+        if (inputValue.includes(this._currencyFormatSeparator)) {
+            formatterCount = this._inputElement.value.match(new RegExp(this._currencyFormatSeparator, 'g')).length;
         }
 
         if (inputValue.includes(this._currencyCentsSeparator)) {
@@ -302,8 +304,8 @@ export class CurrencyField extends OmniFormElement {
 
         this.requestUpdate();
 
-        if(this._stringValue.includes(this._currencyFormatSeparator)) {
-            valueFormatterCount = this._stringValue.match(new RegExp(this._currencyFormatSeparator,'g')).length;
+        if (this._stringValue.includes(this._currencyFormatSeparator)) {
+            valueFormatterCount = this._stringValue.match(new RegExp(this._currencyFormatSeparator, 'g')).length;
         }
         await this.updateComplete;
 
@@ -315,8 +317,8 @@ export class CurrencyField extends OmniFormElement {
             this._inputElement.setSelectionRange(caretPosition, caretPosition);
         }
 
-        if(valueFormatterCount < formatterCount) {
-            this._inputElement.setSelectionRange(caretPosition -1, caretPosition -1);
+        if (valueFormatterCount < formatterCount) {
+            this._inputElement.setSelectionRange(caretPosition - 1, caretPosition - 1);
         }
 
         // Set value prop to float value
@@ -366,7 +368,7 @@ export class CurrencyField extends OmniFormElement {
                 class="field"
                 id="inputField"
                 type="text"
-                maxlength=21
+                maxlength="21"
                 .value=${live(this._stringValue)}
                 ?readOnly=${this.disabled}
                 tabindex="${this.disabled ? -1 : 0}" />
