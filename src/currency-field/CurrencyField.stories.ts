@@ -87,20 +87,13 @@ export const Interactive = {
         await expect(inputField).toHaveValue('1,200,000');
 
         // Use left arrow key to position the caret after the currency separator.
-        const leftArrow = '{left}{left}{left}{backspace}';
+        const leftArrow = '{left>3/}{backspace}';
         await userEvent.type(inputField, leftArrow);
         await expect(inputField).toHaveValue('120,000');
-
-        const rightArrow = '{right}{right}';
-        await userEvent.type(inputField, rightArrow);
-        // Set value of currency field to be empty before setting properties.
-        //const clearField = '{>ControlLeft>a/}{>ControlLeft>x/}';
-        const clearField = '{backspace>6/}';
-        await userEvent.type(inputField, clearField);
-        //await expect(inputField).toHaveValue('');
-
-        // Set locale for different currency format.
-        currencyField.locale = 'de-DE';        
+       
+        // Clear contents of the input field.
+        await userEvent.clear(inputField);
+        await expect(inputField).toHaveValue('');      
         
     }
 };

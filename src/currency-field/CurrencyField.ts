@@ -200,7 +200,6 @@ export class CurrencyField extends OmniFormElement {
 
     }
 
-    // Called when the input element loses focus.
     _blur() {
         const inputValue = this._inputElement.value;
 
