@@ -32,6 +32,7 @@ export const CURRENCY_SEPARATOR = {
  *  currency="USD"
  *  disabled>
  * </omni-currency-field>
+ * ```
  *
  * @element omni-currency-field
  *
