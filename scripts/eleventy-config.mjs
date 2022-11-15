@@ -1,4 +1,5 @@
 import { execSync } from 'child_process';
+import { EleventyRenderPlugin } from '@11ty/eleventy';
 import brode from '@geut/esbuild-plugin-brode';
 import esbuild from 'esbuild';
 import { dTSPathAliasPlugin } from 'esbuild-plugin-d-ts-path-alias';
@@ -25,6 +26,9 @@ export default async config => {
     config.addWatchTarget('./eleventy/assets/');
     config.addWatchTarget('./themes/');
     config.addWatchTarget('./src/');
+    config.addWatchTarget('./*.md');
+
+    config.addPlugin(EleventyRenderPlugin);
 
     for (const key in filters) {
         config.addFilter(key, filters[key]);
