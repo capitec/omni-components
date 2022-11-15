@@ -61,18 +61,26 @@ permalink: "components/{{ component.name | slug }}/"
                             {% for story in component.stories %}
                             <div class="name">{{ story }}</div>
                             <div class="story">
-                                <div>
-                                    <story-renderer 
-                                        id="story-{{ story | lower }}"
-                                        path="{{ component.path }}" 
-                                        tag="{{ customElements | getTagName(component.name) }}" 
-                                        key="{{ story }}"
-                                        {% if story === 'Interactive' %}interactive{% endif %} 
-                                    >
-                                    </story-renderer>
+                                {# <div class="preview">
+                                    <div>< button > </div>
+                                    <div style="border-left: 1px solid #e1e1e1;">Live Preview</div>
                                 </div>
+                                <div style="border-top: 1px solid #e1e1e1;">
+                                    Code Editor Here
+                                </div>
+                                <div style="border-top: 1px solid #e1e1e1;">
+                                    Tests (Play)
+                                </div> #}
+
+                                <story-renderer 
+                                    id="story-{{ story | lower }}"
+                                    path="{{ component.path }}" 
+                                    tag="{{ customElements | getTagName(component.name) }}" 
+                                    key="{{ story }}"
+                                    {% if story === 'Interactive' %}interactive{% endif %} 
+                                >
+                                </story-renderer>
                             </div>
-                            
                             {%- endfor %}
                         </div>
                         <div class="component-toc-wrapper">
@@ -108,6 +116,9 @@ permalink: "components/{{ component.name | slug }}/"
                         </tbody>
                     </table>
                 </div>
+                <div style="background: red;">Events</div>
+                <div style="background: red;">Slots</div>
+                <div>{{ customElements | getCSSProperties(component.name) | dump }}</div>
             </div>
         </div>
     </div>

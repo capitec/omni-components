@@ -350,7 +350,7 @@ header * {
 }
 
 .component-info-item>div:last-child {
-    flex: 1;
+    /* flex: 1; */
 }
 
 .component-info-item-code {
@@ -477,9 +477,30 @@ header * {
 }
 
 .component-stories .story {
+    display: flex;
+    flex-direction: column;
     margin-top: 12px;
     margin-bottom: 24px;
     border: 1px solid #e1e1e1;
+}
+
+.component-stories .story .preview {
+    display: flex;
+    flex-direction: row;
+    align-content: stretch;
+}
+
+.component-stories .story .preview > div {
+    flex: 1;
+}
+
+.component-stories .story .preview .item {
+    display: flex;
+    justify-content: center;
+    /* background: orange; */
+    align-items: center;
+    width: 100%;
+    padding: 24px;
 }
 
 .component-toc-wrapper {
@@ -627,6 +648,14 @@ table th {
 
     .component-stories {
         padding: 24px;
+    }
+
+    .component-stories .story .preview {
+        flex-direction: column;
+    }
+
+    .component-stories .story .preview div:first-of-type {
+        border-bottom: 1px solid #e1e1e1;
     }
 
     table {

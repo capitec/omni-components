@@ -1,4 +1,4 @@
-import { loadCustomElementsModuleByFileFor } from '../../dist/utils/StoryUtils.js';
+import { loadCustomElementsModuleByFileFor, loadCssProperties } from '../../dist/utils/StoryUtils.js';
 
 export function getTagName(value, componentName) {
     const component = loadCustomElementsModuleByFileFor(componentName, value);
@@ -28,4 +28,10 @@ export function getComponentDeclaration(value, componentName) {
     const component = loadCustomElementsModuleByFileFor(componentName, value);
     const declaration = component.declarations.find(d => d.name === componentName);
     return declaration;
+}
+
+export function getCSSProperties(value, componentName) {
+    const tagName = getTagName(value, componentName);
+    const cssProperties = loadCssProperties(tagName, value);
+    return cssProperties;
 }
