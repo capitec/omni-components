@@ -1,7 +1,7 @@
 import { html, css } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { live } from 'lit/directives/live.js';
-import _ from 'lodash';
+import { debounce } from 'lodash';
 import { OmniFormElement } from '../core/OmniFormElement.js';
 import '../label/Label.js';
 
@@ -47,6 +47,7 @@ export const CURRENCY_SEPARATOR = {
  * @cssprop --omni-currency-field-symbol-font-size - Currency field symbol font size.
  * @cssprop --omni-currency-field-symbol-color - Currency field symbol font color.
  * @cssprop --omni-currency-field-symbol-left-padding - Currency field symbol left padding.
+ * @cssprop --omni-currency-field-symbol-select - Currency field symbol selectable state.
  *
  */
 @customElement('omni-currency-field')
@@ -73,7 +74,7 @@ export class CurrencyField extends OmniFormElement {
     @state() private _currencyCentsSeparator: string;
     @state() private _stringValue: string = '';
 
-    private _symbolAndFormateUpdate = _.debounce(() => this._updateSymbolAndFormat(), 500);
+    private _symbolAndFormateUpdate = debounce(() => this._updateSymbolAndFormat(), 800);
 
     constructor() {
         super();
@@ -195,8 +196,18 @@ export class CurrencyField extends OmniFormElement {
     // Format the internal value to a float.
     _formatToFloat(formattedValue: string): string | number {
         if (formattedValue.length > 0) {
-            const preFloatAllReplace = formattedValue.replaceAll(this._currencyFormatSeparator, '');
-            return parseFloat(preFloatAllReplace);
+            // Some currency formats cents separator is not a '.'
+            if (this._currencyCentsSeparator !== '.' && formattedValue.includes(this._currencyCentsSeparator)) {
+                const lastIndex = formattedValue.lastIndexOf(this._currencyCentsSeparator);
+                formattedValue =
+                    formattedValue.substring(0, lastIndex).replaceAll(this._currencyFormatSeparator, '') +
+                    '.' +
+                    formattedValue.substring(lastIndex + 1);
+                return parseFloat(formattedValue);
+            } else {
+                const preFloatReplaceAll = formattedValue.replaceAll(this._currencyFormatSeparator, '');
+                return parseFloat(preFloatReplaceAll);
+            }
         } else {
             return '';
         }
@@ -353,7 +364,7 @@ export class CurrencyField extends OmniFormElement {
                     font-size: var(--omni-currency-field-symbol-font-size, var(--omni-font-size));
                     color: var(--omni-currency-field-symbol-color, var(--omni-font-color));
                     padding-left: var(--omni-currency-field-symbol-left-padding, 10px);
-                    user-select: text;
+                    user-select: var(--omni-currency-field-symbol-select, text);
                 }
             `
         ];
