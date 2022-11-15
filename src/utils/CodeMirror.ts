@@ -137,19 +137,21 @@ export class CodeMirror extends LitElement {
                 extensions: [
                     // basicSetup from CodeMirror without some unwanted extensions
                     [
-                        highlightActiveLineGutter(),
-                        highlightSpecialChars(),
-                        history(),
-                        dropCursor(),
-                        indentOnInput(),
+                        this.readOnly || this.disabled ? [] : [
+                            highlightActiveLineGutter(),
+                            highlightSpecialChars(),
+                            history(),
+                            dropCursor(),
+                            indentOnInput(),
+                            bracketMatching(),
+                            closeBrackets(),
+                            autocompletion(),
+                            highlightActiveLine(),
+                            keymap.of([...closeBracketsKeymap, ...defaultKeymap, ...searchKeymap, ...historyKeymap, ...completionKeymap])
+                        ],
                         syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
-                        bracketMatching(),
-                        closeBrackets(),
-                        autocompletion(),
                         rectangularSelection(),
-                        highlightActiveLine(),
                         highlightSelectionMatches(),
-                        keymap.of([...closeBracketsKeymap, ...defaultKeymap, ...searchKeymap, ...historyKeymap, ...completionKeymap])
                     ],
                     await this.extensions(),
                     this.readonlyOrDisabled.of([
