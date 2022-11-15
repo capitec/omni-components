@@ -64,7 +64,7 @@ jobs:
         run: npm ci
 
       - name: Install Playwright Chrome Dependencies
-        run: npx playwright install-deps chrome
+        run: npx playwright install --with-deps
 
       - name: Compile Code
         run: npm run compile

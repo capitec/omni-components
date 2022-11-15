@@ -503,7 +503,7 @@ const asRenderString = (strings: TemplateStringsArray, values: unknown[]): strin
     }
 };
 
-function querySelectorAsync(parent: Element | ShadowRoot, selector: any, checkFrequencyMs: number = 500, timeoutMs: number = 1) {
+function querySelectorAsync(parent: Element | ShadowRoot, selector: any, checkFrequencyMs: number = 500, timeoutMs: number = 3000) {
     return new Promise((resolve, reject) => {
         let element = parent.querySelector(selector);
         if (element) {
