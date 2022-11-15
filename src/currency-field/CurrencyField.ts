@@ -104,13 +104,13 @@ export class CurrencyField extends OmniFormElement {
 
     }
 
-    _updateSymbolAndFormat() {
+    _updateSymbolAndFormat(): void {
         this._setSymbolAndSeparators();
         this._setCurrencyFormat();
     }
 
     // Set the currency format that will be used to format the input value.
-    _setCurrencyFormat() {
+    _setCurrencyFormat(): void {
         try {
             this._currencyFormat =  new Intl.NumberFormat(this.locale, { currency: this.currency });
         } catch (e) {
@@ -120,7 +120,7 @@ export class CurrencyField extends OmniFormElement {
     }
 
     // Set the currency symbol and sets the currency format separator and cent separator depending on locale.
-    _setSymbolAndSeparators() {
+    _setSymbolAndSeparators(): void {
         /* 
         * Set the currency parts providing a default value of 1000.0 to return an array to get the currency separator and cents separator.
         * Results can be the following based on the locale provided.
@@ -154,7 +154,7 @@ export class CurrencyField extends OmniFormElement {
         }
     }
 
-    _parseAmount(value: string) {
+    _parseAmount(value: string): number {
         let cleanValue = '';
 
         for (let i = 0; i < value.length; i++) {
@@ -171,7 +171,7 @@ export class CurrencyField extends OmniFormElement {
         }
     }
 
-    _parseCents(value: string) {
+    _parseCents(value: string): string {
         let cleanValue = '';
         for (let i = 0; i < value.length; i++) {
             const character = value.charAt(i);
@@ -182,7 +182,7 @@ export class CurrencyField extends OmniFormElement {
         return cleanValue;
     }
 
-    _formatToCurrency(preFormattedValue: number) {
+    _formatToCurrency(preFormattedValue: number): string {
         if (!preFormattedValue) {
             return '';
         }
@@ -190,7 +190,7 @@ export class CurrencyField extends OmniFormElement {
     }
 
     // Format the internal value to a float.
-    _formatToFloat(formattedValue: string) {       
+    _formatToFloat(formattedValue: string): string | number {       
         if(formattedValue.length > 0) {
             const preFloatAllReplace = formattedValue.replaceAll(this._currencyFormatSeparator, '');
             return parseFloat(preFloatAllReplace);
@@ -200,7 +200,7 @@ export class CurrencyField extends OmniFormElement {
 
     }
 
-    _blur() {
+    _blur(): void {
         const inputValue = this._inputElement.value;
 
         if (inputValue.includes(this._currencyCentsSeparator)) {
@@ -223,7 +223,7 @@ export class CurrencyField extends OmniFormElement {
         this.requestUpdate();
     }
 
-    async _keyDown(e: KeyboardEvent) {
+    async _keyDown(e: KeyboardEvent): Promise<void> {
         const input = this._inputElement;
         const caretPosition = input.selectionStart;
 
@@ -273,7 +273,7 @@ export class CurrencyField extends OmniFormElement {
         }
     }
 
-    async _keyInput() {
+    async _keyInput(): Promise<void> {
 
         let formatterCount = 0;
         let valueFormatterCount = 0;
