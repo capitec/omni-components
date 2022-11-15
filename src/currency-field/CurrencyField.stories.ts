@@ -93,7 +93,10 @@ export const Interactive = {
        
         // Clear contents of the input field.
         await userEvent.clear(inputField);
-        await expect(inputField).toHaveValue('');      
+        await expect(inputField).toHaveValue(''); 
+
+        // Set currency property to be invalid value.
+        currencyField.currency = 'cents';    
         
     }
 };
