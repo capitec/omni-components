@@ -40,7 +40,22 @@ async function renderAsString(data: object) {
     return `<span>${JSON.stringify(data)}</span>`;
 }
 
-export const Interactive: ComponentStoryFormat<Args> = {
+export const AsLit: ComponentStoryFormat<Args> = {
+    source: () => `
+                
+<!-- Bound function used (<script> tags only for syntax highlighting) -->
+<script>
+async function renderAsLit(data: object) {
+    await new Promise<void>((r) => setTimeout(() => r(), 3000));
+    return html\`<span>\${JSON.stringify(data)}</span>\`;
+}
+</script>
+
+...
+                
+<omni-render-element .data="\${this.someData}" .renderer="\${this.renderAsLit}"></omni-render-element>
+`,
+    name: 'As Lit',
     render: (args: Args) => html`
         <omni-render-element data-testid="test-render" .data="${args.data}" .renderer="${args.renderer}"
             >${args.loading_indicator
@@ -65,6 +80,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         console.log(`Running as '${navigator.userAgent}'`);
         if (navigator.userAgent === 'Test Runner') {
             console.log('CICD Test - Not Visual');
+            await new Promise<void>((r) => setTimeout(() => r(), 3000));
         } else {
             await new Promise<void>((r) => setTimeout(() => r(), 10000));
         }
@@ -84,25 +100,6 @@ export const Interactive: ComponentStoryFormat<Args> = {
         // Cleanup
         renderElement.data = context.args.data;
     }
-};
-
-export const AsLit = {
-    ...Interactive,
-    source: () => `
-                
-<!-- Bound function used (<script> tags only for syntax highlighting) -->
-<script>
-async function renderAsLit(data: object) {
-    await new Promise<void>((r) => setTimeout(() => r(), 3000));
-    return html\`<span>\${JSON.stringify(data)}</span>\`;
-}
-</script>
-
-...
-                
-<omni-render-element .data="\${this.someData}" .renderer="\${this.renderAsLit}"></omni-render-element>
-`,
-    name: 'As Lit'
 };
 
 let clicked = () => alert('Clicked');
@@ -158,6 +155,7 @@ export const AsHTMLElement: ComponentStoryFormat<Args> = {
         console.log(`Running as '${navigator.userAgent}'`);
         if (navigator.userAgent === 'Test Runner') {
             console.log('CICD Test - Not Visual');
+            await new Promise<void>((r) => setTimeout(() => r(), 3000));
         } else {
             await new Promise<void>((r) => setTimeout(() => r(), 10000));
         }
@@ -236,6 +234,7 @@ export const AsString: ComponentStoryFormat<Args> = {
         console.log(`Running as '${navigator.userAgent}'`);
         if (navigator.userAgent === 'Test Runner') {
             console.log('CICD Test - Not Visual');
+            await new Promise<void>((r) => setTimeout(() => r(), 3000));
         } else {
             await new Promise<void>((r) => setTimeout(() => r(), 10000));
         }

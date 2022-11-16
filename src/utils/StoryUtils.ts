@@ -3,7 +3,8 @@ import { css, cssCompletionSource, cssLanguage } from '@codemirror/lang-css';
 import { html as langHtml, TagSpec } from '@codemirror/lang-html';
 import { javascript } from '@codemirror/lang-javascript';
 import { syntaxTree, LanguageSupport } from '@codemirror/language';
-import { githubDark } from '@ddietr/codemirror-themes/github-dark.js';
+// import { githubDark as codeTheme } from '@ddietr/codemirror-themes/github-dark.js';
+import { githubLight as codeTheme } from '@ddietr/codemirror-themes/github-light.js';
 import { Package, ClassDeclaration, CustomElementDeclaration, Declaration, CustomElement } from 'custom-elements-manifest/schema';
 import { html } from 'lit';
 import { render } from 'lit-html';
@@ -333,7 +334,7 @@ function enhanceCodeBlocks(parent: Element) {
         render(
             html` <omni-code-mirror
                 .extensions="${() => [
-                    githubDark,
+                    codeTheme,
                     language && (language.value === 'js' || language.value === 'javascript') ? javascript() : langHtml()
                 ]}"
                 .code="${code}"
@@ -701,7 +702,7 @@ async function setupTheming() {
     const themesSourcesHtml = (await loadThemesListRemote()).map((theme: string) => {
         return html` <div>
             <omni-label label="${theme}" type="subtitle"></omni-label>
-            <omni-code-mirror .extensions="${() => [githubDark, css()]}" .code="${loadFileRemote(`/themes/${theme}`)}" read-only>
+            <omni-code-mirror .extensions="${() => [codeTheme, css()]}" .code="${loadFileRemote(`/themes/${theme}`)}" read-only>
             </omni-code-mirror>
         </div>`;
     });
@@ -714,7 +715,7 @@ async function setupTheming() {
         html`
             <omni-code-mirror
                 class="source-code"
-                .extensions="${async () => [githubDark, cssLang]}"
+                .extensions="${async () => [codeTheme, cssLang]}"
                 code="${cssSource}"
                 @codemirror-loaded="${(e: CustomEvent<CodeMirrorEditorEvent>) => {
                     const newSource = e.detail.source;

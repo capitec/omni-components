@@ -101,6 +101,11 @@ export class Button extends OmniElement {
                     display: inline-flex;
                 }
 
+                :host([disabled]),
+                :host([disabled]) > * {
+                    pointer-events: none;
+                }
+
                 .button {
                     width: 100%;
                     height: 100%;

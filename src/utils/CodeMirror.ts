@@ -1,7 +1,19 @@
+import { closeBrackets, autocompletion, closeBracketsKeymap, completionKeymap } from '@codemirror/autocomplete';
 import { indentWithTab } from '@codemirror/commands';
+import { history, defaultKeymap, historyKeymap } from '@codemirror/commands';
+import { indentOnInput, syntaxHighlighting, defaultHighlightStyle, bracketMatching } from '@codemirror/language';
+import { highlightSelectionMatches, searchKeymap } from '@codemirror/search';
 import { Extension, EditorState, Compartment } from '@codemirror/state';
-import { keymap, ViewUpdate } from '@codemirror/view';
-import { basicSetup, EditorView } from 'codemirror';
+import {
+    highlightActiveLineGutter,
+    highlightSpecialChars,
+    dropCursor,
+    rectangularSelection,
+    highlightActiveLine,
+    keymap,
+    ViewUpdate
+} from '@codemirror/view';
+import { EditorView } from 'codemirror';
 import { css, html, LitElement, PropertyValueMap } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 
@@ -30,6 +42,53 @@ export class CodeMirror extends LitElement {
                 :host[disabled] {
                     pointer-events: none;
                 }
+
+                .cm-editor {
+                    border-top-left-radius: 1px;
+                    border-top-right-radius: 1px;
+                    border-bottom-right-radius: 5px;
+                    border-bottom-left-radius: 5px;
+                }
+
+                .copy-code-wrap {
+                    position: absolute;
+                    bottom: 5px;
+                    right: 5px;
+                    z-index: 10;
+                    cursor: pointer;
+                }
+
+                .copy-code {
+                    height: 16px;
+                    width: 16px;
+                    position: relative;
+                    bottom: 0px;
+                    right: 0px;
+                    background: rgb(51, 154, 240);
+                    opacity: 50%;
+                    border-radius: 50%;
+                    z-index: 10;
+                    transition: all 0.2s ease 0s;
+                    color: white;
+                    font-size: xx-small;
+                }
+
+                .copy-code:hover {
+                    opacity: 100%;
+                }
+
+                .copy-code-wrap:active .copy-code {
+                    transform: translate(0, 0) scale(0.9);
+                }
+
+                .animate {
+                    transform: translate(0, 0) scale(1.12);
+                }
+
+                .tooltip {
+                    font-size: 15px;
+                    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+                }
             `
         ];
     }
@@ -54,7 +113,14 @@ export class CodeMirror extends LitElement {
 
     protected override render() {
         return html`
-            <div class="code-parent"> </div>
+            <div style="position: relative">
+                <!-- button to copy the editor -->
+                <div class="copy-code-wrap" @click="${() => this._copyCode()}">
+                    <omni-icon class="copy-code" icon="@material/content_copy" size="${'custom' as any}"></omni-icon>
+                </div>
+                <!-- CodeMirror Editor parent element -->
+                <div class="code-parent"> </div>
+            </div>
             <slot @slotchange="${() => this._slotChanged()}"></slot>
         `;
     }
@@ -69,7 +135,24 @@ export class CodeMirror extends LitElement {
             this.editor = new EditorView({
                 doc: source,
                 extensions: [
-                    basicSetup,
+                    // basicSetup from CodeMirror without some unwanted extensions
+                    [
+                        this.readOnly || this.disabled ? [] : [
+                            highlightActiveLineGutter(),
+                            highlightSpecialChars(),
+                            history(),
+                            dropCursor(),
+                            indentOnInput(),
+                            bracketMatching(),
+                            closeBrackets(),
+                            autocompletion(),
+                            highlightActiveLine(),
+                            keymap.of([...closeBracketsKeymap, ...defaultKeymap, ...searchKeymap, ...historyKeymap, ...completionKeymap])
+                        ],
+                        syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
+                        rectangularSelection(),
+                        highlightSelectionMatches(),
+                    ],
                     await this.extensions(),
                     this.readonlyOrDisabled.of([
                         EditorState.readOnly.of(this.readOnly || this.disabled),
@@ -134,38 +217,43 @@ export class CodeMirror extends LitElement {
                 );
             }
         }
-        // else if (
-        //     !this.disabled &&
-        //     _changedProperties.get('code') &&
-        //     this.editor &&
-        //     (this.code || this.slotElement.assignedNodes().length > 0)
-        // ) {
-        //     const source = this.code
-        //         ? await this.transformSource(await this.code)
-        //         : await this.transformSource(this._readCode(this.slotElement));
-        //     if (
-        //         source.replaceAll('\n', '').replaceAll('\t', '').replaceAll(' ', '') !==
-        //         this.editor.state.doc.toString().replaceAll('\n', '').replaceAll('\t', '').replaceAll(' ', '')
-        //     ) {
-        //         this.editor.dispatch({
-        //             changes: {
-        //                 from: 0,
-        //                 to: this.editor.state.doc.length,
-        //                 insert: source
-        //             }
-        //         });
-        //     }
-        // }
-        //  else if (_changedProperties.has('disabled') && this.editor) {
-        //     this.editor.dispatch({
-        //         effects: [
-        //             this.readonlyOrDisabled.reconfigure([
-        //                 EditorState.readOnly.of(this.readOnly || this.disabled),
-        //                 EditorView.editable.of(!this.readOnly && !this.disabled)
-        //             ])
-        //         ]
-        //     });
-        // }
+    }
+
+    private async _copyCode() {
+        this._copyTextToClipboard(await this.code);
+    }
+
+    private _fallbackCopyTextToClipboard(text: string) {
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+
+        // Avoid scrolling to bottom
+        textArea.style.top = '0';
+        textArea.style.left = '0';
+        textArea.style.position = 'fixed';
+
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+            document.execCommand('copy');
+        } catch (err) {
+            console.error(err);
+        }
+
+        document.body.removeChild(textArea);
+    }
+
+    private _copyTextToClipboard(text: string) {
+        if (!navigator.clipboard) {
+            this._fallbackCopyTextToClipboard(text);
+            return;
+        }
+        navigator.clipboard.writeText(text).then(undefined, (err) => {
+            console.error('Attempting fallback, could not copy text: ', err);
+            this._fallbackCopyTextToClipboard(text);
+        });
     }
 
     private async _slotChanged() {

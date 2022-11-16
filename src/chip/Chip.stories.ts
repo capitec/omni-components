@@ -120,12 +120,8 @@ export const Disabled: ComponentStoryFormat<Args> = {
 
         const click = jest.fn();
         chip.addEventListener('click', click);
-        await userEvent.click(chip, {
-            pointerEventsCheck: 0
-        });
-        await userEvent.click(chip, {
-            pointerEventsCheck: 0
-        });
+        await expect(() => userEvent.click(chip)).rejects.toThrow(/pointer-events: none/);
+        await expect(() => userEvent.click(chip)).rejects.toThrow(/pointer-events: none/);
 
         await expect(click).toBeCalledTimes(0);
     }

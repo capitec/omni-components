@@ -102,6 +102,11 @@ export class Chip extends OmniElement {
                     display: inline-flex;
                 }
 
+                :host([disabled]),
+                :host([disabled]) > * {
+                    pointer-events: none;
+                }
+
                 :host(:not([closable])) .icon {
                     display: none;
                 }

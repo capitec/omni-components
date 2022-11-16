@@ -1,5 +1,6 @@
 import { html as langHtml } from '@codemirror/lang-html';
-import { githubDark } from '@ddietr/codemirror-themes/github-dark.js';
+// import { githubDark as codeTheme } from '@ddietr/codemirror-themes/github-dark.js';
+import { githubLight as codeTheme } from '@ddietr/codemirror-themes/github-light.js';
 import { Package, ClassDeclaration, CustomElementDeclaration, Declaration, CustomElement } from 'custom-elements-manifest/schema';
 import { css, html, LitElement, nothing, PropertyValueMap, TemplateResult } from 'lit';
 import { customElement, property, queryAll, state } from 'lit/decorators.js';
@@ -172,7 +173,7 @@ export class LivePropertyEditor extends OmniElement {
                                 class="slot-code"
                                 data-slot-name="${slot.name}"
                                 ?disabled=${this.disabled}
-                                .extensions="${async () => [githubDark, langHtml(await loadCustomElementsCodeMirrorCompletionsRemote())]}"
+                                .extensions="${async () => [codeTheme, langHtml(await loadCustomElementsCodeMirrorCompletionsRemote())]}"
                                 .code="${ifNotEmpty(this.data && this.data.args[slot.name] ? this.data.args[slot.name] : undefined)}"
                                 @codemirror-source-change="${(e: CustomEvent<CodeMirrorSourceUpdateEvent>) => {
                                     this._propertyChanged({
