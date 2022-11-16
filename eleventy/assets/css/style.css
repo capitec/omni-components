@@ -575,6 +575,10 @@ table th {
     padding: 24px 48px;
 }
 
+.interactive {
+    max-width: 410px;
+}
+
 @media screen and (max-width: 760px) {
 
     .menu {

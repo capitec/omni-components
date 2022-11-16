@@ -155,7 +155,7 @@ export class StoryRenderer extends LitElement {
                       `
                     : nothing}
             </div>
-            <div style="border-top: 1px solid #e1e1e1;">
+            <div style="border-top: 1px solid #e1e1e1;max-width: 600px;">
                 <omni-code-mirror
                     class="source-code"
                     .transformSource="${(s: string) => this._transformSource(s)}"
