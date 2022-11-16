@@ -503,6 +503,12 @@ header * {
     padding: 24px;
 }
 
+.component-stories .story .preview .interactive {
+    border-left: 1px solid #e1e1e1; 
+    align-items: center; 
+    justify-content: center;
+}
+
 .component-toc-wrapper {
     flex: 0 0 260px;
     margin-top: 24px;
