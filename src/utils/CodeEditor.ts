@@ -17,8 +17,8 @@ import { EditorView } from 'codemirror';
 import { css, html, LitElement, PropertyValueMap } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 
-@customElement('omni-code-mirror')
-export class CodeMirror extends LitElement {
+@customElement('code-editor')
+export class CodeEditor extends LitElement {
     @property({ type: Object, reflect: false }) extensions: () => Extension | Promise<Extension> = () => [];
     @property({ type: Object, reflect: false }) transformSource: (source: string) => string | Promise<string> = (s) => s;
     @property({ type: String, reflect: true }) code: string | Promise<string>;
@@ -44,10 +44,8 @@ export class CodeMirror extends LitElement {
                 }
 
                 .cm-editor {
-                    border-top-left-radius: 1px;
-                    border-top-right-radius: 1px;
-                    border-bottom-right-radius: 5px;
-                    border-bottom-left-radius: 5px;
+                    background: #f9f9f9;
+                    padding: 6px;
                 }
 
                 .copy-code-wrap {

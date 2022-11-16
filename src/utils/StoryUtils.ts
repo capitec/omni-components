@@ -8,7 +8,7 @@ import { githubLight as codeTheme } from '@ddietr/codemirror-themes/github-light
 import { Package, ClassDeclaration, CustomElementDeclaration, Declaration, CustomElement } from 'custom-elements-manifest/schema';
 import { html } from 'lit';
 import { render } from 'lit-html';
-import { CodeMirror, CodeMirrorEditorEvent, CodeMirrorSourceUpdateEvent } from './CodeMirror.js';
+import { CodeEditor, CodeMirrorEditorEvent, CodeMirrorSourceUpdateEvent } from './CodeEditor.js';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const codeSnippet = '```';
@@ -332,14 +332,14 @@ function enhanceCodeBlocks(parent: Element) {
         const codeContainer = codeBlock.previousSibling as HTMLElement;
 
         render(
-            html` <omni-code-mirror
+            html` <code-editor
                 .extensions="${() => [
                     codeTheme,
                     language && (language.value === 'js' || language.value === 'javascript') ? javascript() : langHtml()
                 ]}"
                 .code="${code}"
                 read-only>
-            </omni-code-mirror>`,
+            </code-editor>`,
             codeContainer
         );
         codeBlock.parentElement.removeChild(codeBlock);
@@ -702,8 +702,8 @@ async function setupTheming() {
     const themesSourcesHtml = (await loadThemesListRemote()).map((theme: string) => {
         return html` <div>
             <omni-label label="${theme}" type="subtitle"></omni-label>
-            <omni-code-mirror .extensions="${() => [codeTheme, css()]}" .code="${loadFileRemote(`/themes/${theme}`)}" read-only>
-            </omni-code-mirror>
+            <code-editor .extensions="${() => [codeTheme, css()]}" .code="${loadFileRemote(`/themes/${theme}`)}" read-only>
+            </code-editor>
         </div>`;
     });
     render(themesSourcesHtml, themeSources);
@@ -713,7 +713,7 @@ async function setupTheming() {
     const cssLang = new LanguageSupport(cssLanguage, [cssLanguage.data.of({ autocomplete: cssCompletionSource }), omniCompletions]); //css();
     render(
         html`
-            <omni-code-mirror
+            <code-editor
                 class="source-code"
                 .extensions="${async () => [codeTheme, cssLang]}"
                 code="${cssSource}"
@@ -733,7 +733,7 @@ async function setupTheming() {
                         themeStyle.innerHTML = cssSource;
                     }
                 }}">
-            </omni-code-mirror>
+            </code-editor>
         `,
         customThemeSourceParent
     );
@@ -811,7 +811,7 @@ async function uploadTheme(e: Event) {
 
                 inputField.value = '';
 
-                const themeCode = document.querySelector<CodeMirror>('.source-code');
+                const themeCode = document.querySelector<CodeEditor>('.source-code');
                 if (themeCode) {
                     themeCode.refresh(() => cssRaw);
                 } else {

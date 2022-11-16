@@ -101,8 +101,8 @@ async function build() {
                 modulesFilter: (m) => {
                     return m !== 'fs';
                 }
-            }),
-            dTSPathAliasPlugin()
+            })// ,
+            // dTSPathAliasPlugin()
         ],
         logLevel: 'info',
         minify: true,

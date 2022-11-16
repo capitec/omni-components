@@ -6,8 +6,8 @@ import { customElement, property, query, state } from 'lit/decorators.js';
 import { live } from 'lit/directives/live.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import pretty from 'pretty';
-import { CodeMirrorSourceUpdateEvent, CodeMirrorEditorEvent } from './CodeMirror.js';
-import { CodeMirror } from './CodeMirror.js';
+import { CodeMirrorSourceUpdateEvent, CodeMirrorEditorEvent } from './CodeEditor.js';
+import { CodeEditor } from './CodeEditor.js';
 import { CSSVariable, LivePropertyEditor, PropertyChangeEvent } from './LivePropertyEditor.js';
 import { StoryController } from './StoryController.js';
 import { loadCustomElementsCodeMirrorCompletionsRemote } from './StoryUtils.js';
@@ -15,7 +15,7 @@ import { loadCustomElementsCodeMirrorCompletionsRemote } from './StoryUtils.js';
 import '../label/Label.js';
 import '../button/Button';
 import '../icon/Icon.js';
-import './CodeMirror.js';
+import './CodeEditor.js';
 import './LivePropertyEditor.js';
 
 @customElement('story-renderer')
@@ -27,7 +27,7 @@ export class StoryRenderer extends LitElement {
 
     @state() interactiveSrc: string;
 
-    @query('.source-code') codeMirror: CodeMirror;
+    @query('.source-code') codeEditor: CodeEditor;
     @query('.live-props') propertyEditor: LivePropertyEditor;
 
     private originalInteractiveSrc: string;
@@ -118,8 +118,8 @@ export class StoryRenderer extends LitElement {
                                           this.requestUpdate();
                                           await this.updateComplete;
 
-                                          if (this.codeMirror && !this.story.source) {
-                                              await this.codeMirror.refresh(() =>
+                                          if (this.codeEditor && !this.story.source) {
+                                              await this.codeEditor.refresh(() =>
                                                   this._getSourceFromLit(this.story.render(this.story.args))
                                               );
                                           }
@@ -156,7 +156,7 @@ export class StoryRenderer extends LitElement {
                     : nothing}
             </div>
             <div style="border-top: 1px solid #e1e1e1;max-width: 600px;">
-                <omni-code-mirror
+                <code-editor
                     class="source-code"
                     .transformSource="${(s: string) => this._transformSource(s)}"
                     .extensions="${async () => [codeTheme, langHtml(await loadCustomElementsCodeMirrorCompletionsRemote())]}"
@@ -175,7 +175,7 @@ export class StoryRenderer extends LitElement {
                         this.requestUpdate();
                     }}"
                     ?read-only="${!this.interactive}">
-                </omni-code-mirror>
+                </code-editor>
             </div>
             <div style="border-top: 1px solid #e1e1e1;">
                 <button
@@ -214,8 +214,8 @@ export class StoryRenderer extends LitElement {
 
         await this.updateComplete;
 
-        if (this.codeMirror && !this.story.source) {
-            await this.codeMirror.refresh(() => this._getSourceFromLit(this.story.render(this.story.args)));
+        if (this.codeEditor && !this.story.source) {
+            await this.codeEditor.refresh(() => this._getSourceFromLit(this.story.render(this.story.args)));
         }
 
         if (this.propertyEditor) {

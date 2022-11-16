@@ -1,13 +1,13 @@
 import { html as langHtml } from '@codemirror/lang-html';
 // import { githubDark as codeTheme } from '@ddietr/codemirror-themes/github-dark.js';
 import { githubLight as codeTheme } from '@ddietr/codemirror-themes/github-light.js';
-import { Package, ClassDeclaration, CustomElementDeclaration, Declaration, CustomElement } from 'custom-elements-manifest/schema';
-import { css, html, LitElement, nothing, PropertyValueMap, TemplateResult } from 'lit';
+import { Package, CustomElement } from 'custom-elements-manifest/schema';
+import { css, html, nothing, PropertyValueMap, TemplateResult } from 'lit';
 import { customElement, property, queryAll, state } from 'lit/decorators.js';
 import { live } from 'lit/directives/live.js';
 import OmniElement from '../core/OmniElement.js';
 import { TextField } from '../text-field/TextField.js';
-import { CodeMirror, CodeMirrorEditorEvent, CodeMirrorSourceUpdateEvent } from './CodeMirror.js';
+import { CodeEditor, CodeMirrorSourceUpdateEvent } from './CodeEditor.js';
 import { ifNotEmpty } from './Directives.js';
 import {
     loadCustomElementsModuleFor,
@@ -21,7 +21,7 @@ import '../label/Label.js';
 import '../text-field/TextField.js';
 import '../icons/Loading.icon.js';
 import '../switch/Switch.js';
-import './CodeMirror.js';
+import './CodeEditor.js';
 
 @customElement('live-property-editor')
 export class LivePropertyEditor extends OmniElement {
@@ -34,7 +34,7 @@ export class LivePropertyEditor extends OmniElement {
 
     @state() customElements: Package;
 
-    @queryAll('.slot-code') slotCodeMirrors: NodeListOf<CodeMirror>;
+    @queryAll('.slot-code') slotCodeMirrors: NodeListOf<CodeEditor>;
 
     override async connectedCallback() {
         super.connectedCallback();
@@ -134,11 +134,11 @@ export class LivePropertyEditor extends OmniElement {
 
     public resetSlots() {
         if (this.slotCodeMirrors) {
-            this.slotCodeMirrors.forEach(async (codeMirror) => {
-                const slotName = codeMirror.getAttribute('data-slot-name');
+            this.slotCodeMirrors.forEach(async (codeEditor) => {
+                const slotName = codeEditor.getAttribute('data-slot-name');
                 if (slotName) {
                     const newCode = this.data && this.data.args[slotName] ? this.data.args[slotName] : undefined;
-                    await codeMirror.refresh(() => newCode);
+                    await codeEditor.refresh(() => newCode);
                 }
             });
         }
@@ -169,7 +169,7 @@ export class LivePropertyEditor extends OmniElement {
                         name: slot.name,
                         html: html`
                             <omni-label type="subtitle" label="${slot.name}"></omni-label>
-                            <omni-code-mirror
+                            <code-editor
                                 class="slot-code"
                                 data-slot-name="${slot.name}"
                                 ?disabled=${this.disabled}
@@ -182,7 +182,7 @@ export class LivePropertyEditor extends OmniElement {
                                         oldValue: e.detail.oldSource
                                     });
                                 }}">
-                            </omni-code-mirror>
+                            </code-editor>
                         `
                     });
                 });

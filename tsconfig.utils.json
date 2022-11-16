@@ -7,7 +7,7 @@
     "exclude": ["node_modules", "dist"],
     "files": [
         "src/utils/StoryUtils.ts",
-        "src/utils/CodeMirror.ts",
+        "src/utils/CodeEditor.ts",
     ]
     // "include": [
     //     "src/utils/*.ts"

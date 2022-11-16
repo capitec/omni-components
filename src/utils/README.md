@@ -1,4 +1,4 @@
-# omni-code-mirror
+# code-editor
 
 ## Properties
 
