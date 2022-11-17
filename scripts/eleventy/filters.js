@@ -21,7 +21,7 @@ export function getImport(value, componentName) {
 
 export function getAttributes(value, componentName) {
     const declaration = getComponentDeclaration(value, componentName);
-    return declaration.attributes.map(a => {
+    return declaration.attributes?.map(a => {
         return {
             ...a,
             description: filterJsDocLinks(a.description)
@@ -31,7 +31,7 @@ export function getAttributes(value, componentName) {
 
 export function getEvents(value, componentName) {
     const declaration = getComponentDeclaration(value, componentName);
-    return declaration.events.map(e => {
+    return declaration.events?.map(e => {
         return {
             ...e,
             description: filterJsDocLinks(e.description)
@@ -41,7 +41,7 @@ export function getEvents(value, componentName) {
 
 export function getSlots(value, componentName) {
     const declaration = getComponentDeclaration(value, componentName);
-    return declaration.slots.map(s => {
+    return declaration.slots?.map(s => {
         return {
             ...s,
             description: filterJsDocLinks(s.description)
@@ -60,7 +60,7 @@ export function getCSSProperties(value, componentName) {
     const cssProperties = loadCssProperties(tagName, value);
     const keys = Object.keys(cssProperties);
 
-    return keys.map(name => {
+    return keys?.map(name => {
         const prop = cssProperties[name];
         return {
             name: `--${name}`,
