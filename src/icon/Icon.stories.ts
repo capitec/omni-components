@@ -91,7 +91,7 @@ export const SVG: ComponentStoryFormat<Args> = {
     }
 };
 
-export const IconPath: ComponentStoryFormat<Args> = {
+export const Icon_Path: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
         <!-- Icons loaded by content path instead of font-based or slotted content will not be able to be styled directly -->
 
@@ -106,7 +106,7 @@ export const IconPath: ComponentStoryFormat<Args> = {
         const icon = within(context.canvasElement).getByTestId<Icon>('test-icon');
         const imgElement = icon.shadowRoot.querySelector('img');
         await expect(imgElement).toBeTruthy();
-        await expect(imgElement.src.endsWith(IconPath.args.icon)).toBeTruthy();
+        await expect(imgElement.src.endsWith(Icon_Path.args.icon)).toBeTruthy();
     }
 };
 

@@ -126,7 +126,7 @@ export const Label = LabelStory<NumericField, BaseArgTypes>('omni-numeric-field'
 
 export const Hint = HintStory<NumericField, BaseArgTypes>('omni-numeric-field');
 
-export const ErrorLabel = ErrorStory<NumericField, BaseArgTypes>('omni-numeric-field');
+export const Error_Label = ErrorStory<NumericField, BaseArgTypes>('omni-numeric-field');
 
 export const Value = ValueStory<NumericField, BaseArgTypes>('omni-numeric-field', 123);
 
@@ -136,7 +136,7 @@ export const Suffix = SuffixStory<NumericField, BaseArgTypes>('omni-numeric-fiel
 
 export const Disabled = DisabledStory<NumericField, BaseArgTypes>('omni-numeric-field');
 
-export const CustomIconSlot: ComponentStoryFormat<Args> = {
+export const Custom_Icon_Slot: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
         <omni-numeric-field data-testid="test-password-field" label="${ifNotEmpty(args.label)}" ?disabled="${args.disabled}">
             <omni-lock-open-icon slot="increase"></omni-lock-open-icon>

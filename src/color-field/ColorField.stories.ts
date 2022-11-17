@@ -67,7 +67,7 @@ export const Label = LabelStory<ColorField, BaseArgTypes>('omni-color-field');
 
 export const Hint = HintStory<ColorField, BaseArgTypes>('omni-color-field');
 
-export const ErrorLabel = ErrorStory<ColorField, BaseArgTypes>('omni-color-field');
+export const Error_Label = ErrorStory<ColorField, BaseArgTypes>('omni-color-field');
 
 export const Value = ValueStory<ColorField, BaseArgTypes>('omni-color-field', '#f6b73c');
 

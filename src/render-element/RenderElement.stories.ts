@@ -40,7 +40,7 @@ async function renderAsString(data: object) {
     return `<span>${JSON.stringify(data)}</span>`;
 }
 
-export const AsLit: ComponentStoryFormat<Args> = {
+export const As_Lit: ComponentStoryFormat<Args> = {
     source: () => `
                 
 <!-- Bound function used (<script> tags only for syntax highlighting) -->
@@ -103,7 +103,7 @@ async function renderAsLit(data: object) {
 };
 
 let clicked = () => alert('Clicked');
-export const AsHTMLElement: ComponentStoryFormat<Args> = {
+export const As_HTML_Element: ComponentStoryFormat<Args> = {
     render: (args: Args) => {
         const addValues = async () => {
             let renderEl: RenderElement = undefined;
@@ -186,7 +186,7 @@ export const AsHTMLElement: ComponentStoryFormat<Args> = {
     }
 };
 
-export const AsString: ComponentStoryFormat<Args> = {
+export const As_String: ComponentStoryFormat<Args> = {
     render: (args: Args) => {
         const addValues = async () => {
             let renderEl: RenderElement = undefined;

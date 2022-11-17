@@ -125,16 +125,27 @@ export class LivePropertyEditor extends OmniElement {
                     visibility: visible;
                 }
 
+                .docs-text-field {
+                    width: 100%;
+                }
+
                 .docs-select {
                     padding: 5px;
                     cursor: pointer;
                     border-radius: 6px;
                     border: 1px solid #e1e1e1;
                     display: flex;
+                    min-width: 191px;
+                    min-height: 41px;
+                    width: 100%;
                 }
 
                 .docs-select:focus-visible {
                     outline: none;
+                }
+
+                .live-header {
+                    margin-top: 15px;
                 }
             `
         ];
@@ -173,7 +184,7 @@ export class LivePropertyEditor extends OmniElement {
                     slots.push({
                         name: slot.name,
                         html: html`
-                            <omni-label type="subtitle" label="${slot.name}"></omni-label>
+                            <omni-label class="live-header" type="subtitle" label="${slot.name}"></omni-label>
                             <code-editor
                                 class="slot-code"
                                 data-slot-name="${slot.name}"
@@ -266,6 +277,7 @@ export class LivePropertyEditor extends OmniElement {
                     } else {
                         attributeEditor = html`
                             <omni-text-field
+                                class="docs-text-field"
                                 ?disabled=${this.disabled}
                                 .value="${live(
                                     this.data
@@ -295,7 +307,7 @@ export class LivePropertyEditor extends OmniElement {
                     if (attributeEditor) {
                         attributes.push({
                             html: html`
-                                <omni-label type="subtitle" label="${attribute.name}"></omni-label>
+                                <omni-label class="live-header" type="subtitle" label="${attribute.name}"></omni-label>
                                 ${attributeEditor}
                             `,
                             name: attribute.name

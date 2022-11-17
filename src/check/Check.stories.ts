@@ -110,7 +110,7 @@ export const Hint: ComponentStoryFormat<Args> = {
     }
 };
 
-export const ErrorLabel: ComponentStoryFormat<Args> = {
+export const Error_Label: ComponentStoryFormat<Args> = {
     name: 'Error', // Explicitly named as error, the exported name cannot be 'Error' as that is reserved
     render: (args: Args) => html` <omni-check data-testid="test-check" label="${args.label}" error="${args.error}"></omni-check> `,
     args: {
@@ -121,7 +121,7 @@ export const ErrorLabel: ComponentStoryFormat<Args> = {
         const check = within(context.canvasElement).getByTestId<Check>('test-check');
         const errorElement = check.shadowRoot.querySelector<HTMLElement>('.error');
         await expect(errorElement).toBeTruthy();
-        await expect(errorElement).toHaveTextContent(ErrorLabel.args.error);
+        await expect(errorElement).toHaveTextContent(Error_Label.args.error);
     }
 };
 
@@ -179,7 +179,7 @@ export const Disabled: ComponentStoryFormat<Args> = {
     }
 };
 
-export const CustomCheckIcon: ComponentStoryFormat<Args> = {
+export const Custom_Check_Icon: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
         <omni-check data-testid="test-check" label="${args.label}" ?checked="${args.checked}"> ${unsafeHTML(args.check_icon)} </omni-check>
     `,
@@ -203,7 +203,7 @@ export const CustomCheckIcon: ComponentStoryFormat<Args> = {
     }
 };
 
-export const CustomIndeterminateIcon: ComponentStoryFormat<Args> = {
+export const Custom_Indeterminate_Icon: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
         <omni-check data-testid="test-check" label="${args.label}" ?indeterminate="${args.indeterminate}">
             ${unsafeHTML(args.indeterminate_icon)}
