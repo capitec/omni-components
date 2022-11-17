@@ -157,6 +157,7 @@ header * {
 
 /* CONTROLS */
 
+.hidden,
 .hidden-until-760 {
     display: none;
 }
@@ -171,6 +172,67 @@ header * {
 
 .docs-select:focus-visible {
     outline: none;
+}
+
+.docs-search-area {
+    padding: 24px 48px;
+}
+
+.docs-search-wrapper {
+    text-size-adjust: 100%;
+    color-scheme: light;
+    -webkit-font-smoothing: antialiased;
+    color: #343a40;
+    font-size: 15px;
+    line-height: 1.55;
+    box-sizing: border-box;
+    position: relative;
+    margin-bottom: 20px;
+    display: flex;
+}
+
+.docs-search-icon {
+    text-size-adjust: 100%;
+    color-scheme: light;
+    -webkit-font-smoothing: antialiased;
+    font-size: 15px;
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+    line-height: 1.55;
+    box-sizing: border-box;
+    pointer-events: none;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 36px;
+    color: #adb5bd;
+}
+
+.docs-search-input { 
+    height: 36px;
+    -webkit-tap-highlight-color: transparent;
+    width: 100%;
+    color: #000;
+    display: block;
+    text-align: left;
+    min-height: 36px;
+    padding-right: 12px;
+    border-radius: 4px;
+    border: 1px solid #ced4da;
+    background-color: #fff;
+    transition: border-color 100ms ease;
+    padding-left: 36px;
+}
+
+.docs-search-input:focus, .docs-search-input:focus-within {
+    outline: none;
+    border-color: #228be6;
 }
 
 /* MENU */
@@ -660,6 +722,22 @@ table th {
     padding: 24px 48px;
 }
 
+.component-props-table-header {
+    padding: 0px 48px;
+    text-size-adjust: 100%;
+    color-scheme: light;
+    -webkit-font-smoothing: antialiased;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    text-decoration: none;
+    font-size: 26px;
+    line-height: 1.35;
+    margin: 0;
+    color: #000;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
 @media screen and (max-width: 760px) {
     .menu {
         width: 100%;
@@ -720,6 +798,10 @@ table th {
         opacity: 0;
     }
 
+    .docs-search-area {
+        padding: 24px;
+    }
+
     /* STATIC ARTICLES */
 
     .static-article {
@@ -753,6 +835,11 @@ table th {
     .component-props-docs-wrapper {
         padding: 24px;
     }
+
+    .component-props-table-header {
+        padding: 0px 24px;
+    }
+    
 
     .component-stories {
         /* padding: 0 24px; */

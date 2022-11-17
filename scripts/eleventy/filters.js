@@ -1,4 +1,4 @@
-import { loadCustomElementsModuleByFileFor, loadCssProperties } from '../../dist/utils/StoryUtils.js';
+import { loadCustomElementsModuleByFileFor, loadCssProperties, filterJsDocLinks } from '../../dist/utils/StoryUtils.js';
 
 export function getTagName(value, componentName) {
     const component = loadCustomElementsModuleByFileFor(componentName, value);
@@ -21,7 +21,32 @@ export function getImport(value, componentName) {
 
 export function getAttributes(value, componentName) {
     const declaration = getComponentDeclaration(value, componentName);
-    return declaration.attributes;
+    return declaration.attributes?.map(a => {
+        return {
+            ...a,
+            description: filterJsDocLinks(a.description)
+        };
+    });
+}
+
+export function getEvents(value, componentName) {
+    const declaration = getComponentDeclaration(value, componentName);
+    return declaration.events?.map(e => {
+        return {
+            ...e,
+            description: filterJsDocLinks(e.description)
+        };
+    });
+}
+
+export function getSlots(value, componentName) {
+    const declaration = getComponentDeclaration(value, componentName);
+    return declaration.slots?.map(s => {
+        return {
+            ...s,
+            description: filterJsDocLinks(s.description)
+        };
+    });
 }
 
 export function getComponentDeclaration(value, componentName) {
@@ -33,5 +58,14 @@ export function getComponentDeclaration(value, componentName) {
 export function getCSSProperties(value, componentName) {
     const tagName = getTagName(value, componentName);
     const cssProperties = loadCssProperties(tagName, value);
-    return cssProperties;
+    const keys = Object.keys(cssProperties);
+
+    return keys?.map(name => {
+        const prop = cssProperties[name];
+        return {
+            name: `--${name}`,
+            description: filterJsDocLinks(prop.description),
+            category: prop.subcategory
+        };
+    });
 }

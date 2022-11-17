@@ -52,6 +52,7 @@ permalink: "components/{{ component.name | slug }}/"
                 <div class="component-tab-list" role="tablist">
                     <div role="tab" class="component-tab-button active" data-name="docs" onclick="openTab(event.currentTarget, 'docs')">Documentation</div>
                     <div role="tab" class="component-tab-button" data-name="props" onclick="openTab(event.currentTarget, 'props')">Attributes</div>
+                    <div role="tab" class="component-tab-button" data-name="styles" onclick="openTab(event.currentTarget, 'styles')">Styles</div>
                 </div>
             </div>
             <div class="component-tab" id="docs" role="tabpanel" style="display: block;">
@@ -95,6 +96,18 @@ permalink: "components/{{ component.name | slug }}/"
                 </div>
             </div>
             <div class="component-tab" id="props" role="tabpanel">
+
+                <h2 class="component-props-table-header" style="padding-top: 24px;">Attributes</h2>
+                <div class="docs-search-area">
+                    <div class="docs-search-wrapper">
+                        <div class="docs-search-icon">
+                            <span class="material-icons">
+                                search
+                            </span>
+                        </div>
+                        <input class="docs-search-input" id="attribute-search" type="text" placeholder="Search attributes" aria-invalid="false" value="" spellcheck="false" data-ms-editor="true">
+                    </div>
+                </div>
                 <div class="component-props-table-wrapper">
                     <table class="component-props-table">
                         <thead>
@@ -104,20 +117,113 @@ permalink: "components/{{ component.name | slug }}/"
                                 <th scope="col">Description</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="component-attributes">
                             {% for attribute in customElements | getAttributes(component.name) %}
                             <tr>
                                 <td data-label="Name" scope="row">{{attribute.name}}</td>
                                 <td data-label="Type">{{attribute.type.text}}</td>
-                                <td data-label="Description">{{attribute.description}}</td>
+                                <td data-label="Description">{{ attribute.description | safe }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
-                <div style="background: red;">Events</div>
-                <div style="background: red;">Slots</div>
-                <div>{{ customElements | getCSSProperties(component.name) | dump }}</div>
+                
+                <h2 class="component-props-table-header">Events</h2>
+                <div class="docs-search-area">
+                    <div class="docs-search-wrapper">
+                        <div class="docs-search-icon">
+                            <span class="material-icons">
+                                search
+                            </span>
+                        </div>
+                        <input class="docs-search-input" id="event-search" type="text" placeholder="Search events" aria-invalid="false" value="" spellcheck="false" data-ms-editor="true">
+                    </div>
+                </div>
+                <div class="component-props-table-wrapper">
+                    <table class="component-props-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody id="component-events">
+                            {% for event in customElements | getEvents(component.name) %}
+                            <tr>
+                                <td data-label="Name" scope="row">{{event.name}}</td>
+                                <td data-label="Type">{{event.type.text}}</td>
+                                <td data-label="Description">{{ event.description | safe }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+                <h2 class="component-props-table-header">Slots</h2>
+                <div class="docs-search-area">
+                    <div class="docs-search-wrapper">
+                        <div class="docs-search-icon">
+                            <span class="material-icons">
+                                search
+                            </span>
+                        </div>
+                        <input class="docs-search-input" id="slot-search" type="text" placeholder="Search slots" aria-invalid="false" value="" spellcheck="false" data-ms-editor="true">
+                    </div>
+                </div>
+                <div class="component-props-table-wrapper">
+                    <table class="component-props-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody id="component-slots">
+                            {% for slot in customElements | getSlots(component.name) %}
+                            <tr>
+                                <td data-label="Name" scope="row">{{slot.name}}</td>
+                                <td data-label="Description">{{ slot.description | safe }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="component-tab" id="styles" role="tabpanel">
+                
+                <h2 class="component-props-table-header"  style="padding-top: 24px;">CSS Properties</h2>
+                <div class="docs-search-area">
+                    <div class="docs-search-wrapper">
+                        <div class="docs-search-icon">
+                            <span class="material-icons">
+                                search
+                            </span>
+                        </div>
+                        <input class="docs-search-input" id="css-prop-search" type="text" placeholder="Search CSS properties" aria-invalid="false" value="" spellcheck="false" data-ms-editor="true">
+                    </div>
+                </div>
+                <div class="component-props-table-wrapper">
+                    <table class="component-props-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Category</th>
+                            </tr>
+                        </thead>
+                        <tbody id="component-css-props">
+                            {% for cssProp in customElements | getCSSProperties(component.name) %}
+                            <tr>
+                                <td data-label="Name" scope="row">{{cssProp.name}}</td>
+                                <td data-label="Description">{{ cssProp.description | safe }}</td>
+                                <td data-label="Category">{{cssProp.category}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
