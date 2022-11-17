@@ -5,11 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }}</title>
-    <link rel="stylesheet" href="{{ '/assets/css/style.css' | url }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Hind Vadodara" >
-    <style id="theme-styles"></style>
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <style id="theme-styles"></style>
+    <link rel="stylesheet" href="{{ '/assets/css/style.css' | url }}">
     <script type="module" src="/dist/utils/StoryRenderer.js"></script>
     <script type="module" src="/dist/omni-components.js"></script>
     <script type="module" defer>
@@ -34,7 +34,10 @@
                 </div>
                 <div class="header-actions">
                     <span class="header-theme-section">
-                        <select class="docs-select theme-select" id="header-theme-select"></select>
+                        <span class="material-icons action hidden-until-760" id="header-theme-select-btn">
+                            format_color_fill
+                        </span>
+                        <select class="docs-select theme-select transparent-after-760" id="header-theme-select"></select>
                     </span>
                     <a href="https://github.com/capitec/omni-components" target="_blank" class="action">
                         <img src="/assets/images/github.svg" style="cursor: pointer;">
