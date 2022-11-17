@@ -60,7 +60,7 @@ permalink: "components/{{ component.name | slug }}/"
                     <div class="component-tab-content">
                         <div class="component-stories">
                             {% for story in component.stories %}
-                            <div class="name">{{ story }}</div>
+                            <div class="name" id="story-{{ story | lower }}">{{ story }}</div>
                             <div class="story">
                                 {# <div class="preview">
                                     <div>< button > </div>
@@ -74,7 +74,6 @@ permalink: "components/{{ component.name | slug }}/"
                                 </div> #}
 
                                 <story-renderer 
-                                    id="story-{{ story | lower }}"
                                     path="{{ component.path }}" 
                                     tag="{{ customElements | getTagName(component.name) }}" 
                                     key="{{ story }}"
@@ -87,7 +86,7 @@ permalink: "components/{{ component.name | slug }}/"
                         <div class="component-toc-wrapper">
                             <div class="component-toc">
                                 {% for story in component.stories %}
-                                    <a href="#story-{{ story | lower }}" id="story-{{ story | lower }}" class="component-toc-active">
+                                    <a href="#story-{{ story | lower }}" id="story-{{ story | lower }}" class="item">
                                         {{ story }}
                                     </a>
                                 {%- endfor %}
