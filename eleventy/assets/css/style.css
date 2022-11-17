@@ -30,7 +30,7 @@
     --omni-theme-box-shadow-color:  #f2f2f2;
 
     --omni-theme-font-family: 'Hind Vadodara';
-    --omni-theme-font-size: 14px;
+    --omni-theme-font-size: 16px;
     --omni-theme-font-weight: normal;
 
     --omni-theme-border-radius: 4px;
@@ -523,10 +523,6 @@ header * {
     width: 100px;
 }
 
-.component-info-item > div:last-child {
-    /* flex: 1; */
-}
-
 .component-info-item-code {
     align-items: center;
     display: flex;
@@ -648,6 +644,7 @@ header * {
 
 .component-stories .name {
     font-size: 1.5em;
+    font-weight: 500;
 }
 
 .component-stories .story {
@@ -800,7 +797,7 @@ table th {
     line-height: 1.35;
     margin: 0;
     color: #000;
-    font-weight: 600;
+    font-weight: 500;
     margin-bottom: 20px;
 }
 

@@ -184,7 +184,7 @@ export class LivePropertyEditor extends OmniElement {
                     slots.push({
                         name: slot.name,
                         html: html`
-                            <omni-label class="live-header" type="subtitle" label="${slot.name}"></omni-label>
+                            <omni-label class="live-header" label="${slot.name}"></omni-label>
                             <code-editor
                                 class="slot-code"
                                 data-slot-name="${slot.name}"
@@ -307,7 +307,7 @@ export class LivePropertyEditor extends OmniElement {
                     if (attributeEditor) {
                         attributes.push({
                             html: html`
-                                <omni-label class="live-header" type="subtitle" label="${attribute.name}"></omni-label>
+                                <omni-label class="live-header" label="${attribute.name}"></omni-label>
                                 ${attributeEditor}
                             `,
                             name: attribute.name
