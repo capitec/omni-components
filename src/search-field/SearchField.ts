@@ -36,6 +36,17 @@ import '../icons/Search.icon';
  * @cssprop --omni-search-field-height - search field height.
  * @cssprop --omni-search-field-padding - search field width.
  *
+ * @cssprop --omni-search-field-control-padding-right - search field control right padding.
+ * @cssprop --omni-search-field-control-padding-left - search field control left padding.
+ * @cssprop --omni-search-field-control-padding-top - search field control top padding.
+ * @cssprop --omni-search-field-control-padding-bottom -  search field control bottom padding;
+ *
+ * @cssprop --omni-search-field-clear-icon-color - search field clear icon color;
+ * @cssprop --omni-search-field-clear-icon-width - search field clear icon width;
+ *
+ * @cssprop --omni-search-field-search-icon-color - search field search icon color;
+ * @cssprop --omni-search-field-search-icon-width - search field search icon width;
+ *
  */
 @customElement('omni-search-field')
 export class SearchField extends OmniFormElement {
@@ -63,7 +74,6 @@ export class SearchField extends OmniFormElement {
         const label: HTMLElement = this.shadowRoot.getElementById('label');
         console.log(label);
         label.style.transform = '';
-        
     }
 
     static override get styles() {
@@ -133,13 +143,13 @@ export class SearchField extends OmniFormElement {
     }
 
     protected override renderPrefix() {
-        return html `<omni-search-icon class="search-icon"></omni-search-icon>`;
+        return html`<omni-search-icon class="search-icon"></omni-search-icon>`;
     }
 
     protected override renderControl() {
         return html`
             <div class="control" @click="${(e: MouseEvent) => this._clearField(e)}">
-                <slot name="clear"><omni-clear-icon class="clear-icon"></omni-clear-icon></slot> 
+                <slot name="clear"><omni-clear-icon class="clear-icon"></omni-clear-icon></slot>
             </div>
         `;
     }

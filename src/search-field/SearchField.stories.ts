@@ -15,7 +15,7 @@ import {
     SuffixStory
 } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import { assignToSlot, loadCssPropertiesRemote, raw } from '../utils/StoryUtils';
+import { assignToSlot, loadCssPropertiesRemote } from '../utils/StoryUtils';
 import './SearchField.js';
 import { SearchField } from './SearchField.js';
 
@@ -31,15 +31,7 @@ export default {
     }
 } as Meta;
 
-const heroes = [
-    'Batman',
-    'Superman',
-    'Wonder Woman',
-    'Flash',
-    'Aquaman',
-    'Green Lantern',
-    'Shazam',
-];
+const heroes = ['Batman', 'Superman', 'Wonder Woman', 'Flash', 'Aquaman', 'Green Lantern', 'Shazam'];
 
 export const Interactive = {
     render: (args: BaseArgTypes) => html`
@@ -50,9 +42,8 @@ export const Interactive = {
             .data="${args.data}"
             hint="${ifNotEmpty(args.hint)}"
             error="${ifNotEmpty(args.error)}"
-            ?disabled="${args.disabled}"         
-        >
-        ${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${args.suffix
+            ?disabled="${args.disabled}">
+            ${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${args.suffix
                 ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}`
                 : nothing}${args.prefix || args.suffix ? '\r\n' : nothing}
         </omni-search-field>
@@ -70,9 +61,9 @@ export const Interactive = {
         suffix: ''
     },
     play: async (context: StoryContext) => {
-        const searchField= within(context.canvasElement).getByTestId<SearchField>('test-search-field');
+        const searchField = within(context.canvasElement).getByTestId<SearchField>('test-search-field');
         const input = jest.fn();
-        searchField.addEventListener('input', input);    
+        searchField.addEventListener('input', input);
 
         const inputField = searchField.shadowRoot.getElementById('inputField');
 

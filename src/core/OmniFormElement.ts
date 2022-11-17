@@ -347,7 +347,7 @@ export class OmniFormElement extends OmniElement {
             </div>
         `;
     }
-    
+
     protected renderPrefix(): typeof nothing | TemplateResult {
         return nothing;
     }
