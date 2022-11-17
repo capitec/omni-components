@@ -49,10 +49,31 @@
             {{ content | safe }}
 
             <footer>
-                Footer
+                <div class="logo">
+                    <img src="/assets/images/logo.png" width="30" height: "30" alt="logo">
+                    <div style="font-weight: bold">Omni Components</div>
+                </div>
+                <div class="links">
+                    <div class="item">
+                        <a href="https://github.com/capitec/omni-components" target="_blank">Repository</a>
+                    </div>
+                    <div class="spacer"></div>
+                    <div class="item">
+                        <a href="https://github.com/capitec/omni-components/blob/develop/LICENSE" target="_blank">License</a>
+                    </div>
+                    <div class="spacer"></div>
+                    <div class="item">
+                        <a href="https://github.com/capitec/omni-components/discussions" target="_blank">Discussions</a>
+                    </div>
+                    <div class="spacer"></div>
+                    <div class="item">
+                        <a href="https://www.npmjs.com/package/@capitec/omni-components" target="_blank">Packages</a>
+                    </div>
+                    <div class="spacer"></div>
+                    <div class="item copyright" style="">Copyright &copy; {% year %}</div>
+                </div>
             </footer>
         </div>
-        
     </div>
 </body>
 </html>
