@@ -507,6 +507,12 @@ header * {
     border-left: 1px solid #e1e1e1; 
     align-items: center; 
     justify-content: center;
+    max-width: 200px;
+}
+
+.component-stories .story .code-block {
+    border-top: 1px solid #e1e1e1;
+    max-width: calc(100vw - 648px); 
 }
 
 .component-toc-wrapper {
@@ -573,10 +579,6 @@ table th {
     display: flex; 
     justify-content: center; 
     padding: 24px 48px;
-}
-
-.interactive {
-    max-width: 410px;
 }
 
 @media screen and (max-width: 760px) {

@@ -47,16 +47,12 @@ export class LivePropertyEditor extends OmniElement {
             super.styles,
             css`
                 :host {
-                    border-color: black;
-                    border-width: 2px;
-                    border-style: dotted;
-
-                    background-color: beige;
+                    padding: 24px;
                 }
 
-                :host[disabled] {
+                :host([disabled]) {
                     pointer-events: none;
-                    background-color: lightgray;
+                    background-color: #f9f9f9;
                 }
 
                 .loading {
@@ -145,25 +141,22 @@ export class LivePropertyEditor extends OmniElement {
     }
 
     protected override render() {
+
         if (!this.customElements) {
             return html`<omni-loading-icon class="loading"></omni-loading-icon>`;
         }
-        const module = loadCustomElementsModuleFor(this.element, this.customElements);
 
+        const module = loadCustomElementsModuleFor(this.element, this.customElements);
         const attributes: { html: TemplateResult; name: string }[] = [];
         const slots: { html: TemplateResult; name: string }[] = [];
-        const cssProperties: { category: string; propertiesHtml: TemplateResult[] }[] = [];
 
         module.declarations.forEach((d) => {
             const declaration = d as unknown as CustomElement & { cssCategory: string };
             if (declaration.slots) {
                 declaration.slots.forEach((slot) => {
-                    if (
-                        slots.find((s) => s.name === slot.name) ||
-                        (this.data && !Object.prototype.hasOwnProperty.call(this.data.args, slot.name))
-                    ) {
-                        return;
-                    }
+
+                    if (slots.find((s) => s.name === slot.name) ||
+                        (this.data && !Object.prototype.hasOwnProperty.call(this.data.args, slot.name))) return;
 
                     slots.push({
                         name: slot.name,
@@ -187,32 +180,33 @@ export class LivePropertyEditor extends OmniElement {
                     });
                 });
             }
+
             if (declaration.attributes) {
                 declaration.attributes.forEach((attribute) => {
-                    if (
-                        (this.ignoreAttributes && this.ignoreAttributes.split(',').includes(attribute.name)) ||
-                        attributes.find((a) => a.name === attribute.name)
-                    ) {
-                        return;
-                    }
+                    if ((this.ignoreAttributes && this.ignoreAttributes.split(',').includes(attribute.name)) ||
+                        attributes.find((a) => a.name === attribute.name)) return;
 
                     let attributeEditor: TemplateResult = undefined;
+
                     if (attribute.type.text === 'boolean') {
-                        attributeEditor = html` <omni-switch
-                            ?disabled=${this.disabled}
-                            ?checked="${this.data
-                                ? this.data.args[attribute.name] ?? this.data.args[attribute.fieldName ?? attribute.name]
-                                : attribute.default === 'true'}"
-                            @value-change="${(e: CustomEvent) => {
-                                this._propertyChanged({
-                                    property:
-                                        this.data && attribute.fieldName && this.data.args[attribute.fieldName]
-                                            ? attribute.fieldName
-                                            : attribute.name,
-                                    newValue: e.detail.new,
-                                    oldValue: e.detail.old
-                                });
-                            }}"></omni-switch>`;
+                        attributeEditor = html`
+                            <omni-switch
+                                ?disabled=${this.disabled}
+                                ?checked="${this.data
+                                    ? this.data.args[attribute.name] ?? this.data.args[attribute.fieldName ?? attribute.name]
+                                    : attribute.default === 'true'}"
+                                @value-change="${(e: CustomEvent) => {
+                                    this._propertyChanged({
+                                        property:
+                                            this.data && attribute.fieldName && this.data.args[attribute.fieldName]
+                                                ? attribute.fieldName
+                                                : attribute.name,
+                                        newValue: e.detail.new,
+                                        oldValue: e.detail.old
+                                    });
+                                }}">
+                            </omni-switch>
+                        `;
                     } else if (
                         attribute.type.text !== 'object' &&
                         attribute.type.text !== 'string' &&
@@ -230,21 +224,23 @@ export class LivePropertyEditor extends OmniElement {
                             ? this.data.args[attribute.name] ?? this.data.args[attribute.fieldName ?? attribute.name]
                             : undefined;
 
-                        attributeEditor = html` <select
-                            ?disabled=${this.disabled}
-                            @change="${(e: Event) => {
-                                const value = (e.target as HTMLSelectElement).value;
-                                this._propertyChanged({
-                                    property:
-                                        this.data && attribute.fieldName && this.data.args[attribute.fieldName]
-                                            ? attribute.fieldName
-                                            : attribute.name,
-                                    newValue: value,
-                                    oldValue: this.data ? this.data.args[attribute.name] : undefined
-                                });
-                            }}">
-                            ${types.map((t) => html`<option value="${t}" ?selected="${t === startValue}">${t}</option>`)}
-                        </select>`;
+                        attributeEditor = html`
+                            <select
+                                ?disabled=${this.disabled}
+                                @change="${(e: Event) => {
+                                    const value = (e.target as HTMLSelectElement).value;
+                                    this._propertyChanged({
+                                        property:
+                                            this.data && attribute.fieldName && this.data.args[attribute.fieldName]
+                                                ? attribute.fieldName
+                                                : attribute.name,
+                                        newValue: value,
+                                        oldValue: this.data ? this.data.args[attribute.name] : undefined
+                                    });
+                                }}">
+                                ${types.map((t) => html`<option value="${t}" ?selected="${t === startValue}">${t}</option>`)}
+                            </select>
+                            `;
                     } else if (
                         attribute.type.text === 'object' ||
                         attribute.type.text.includes('Promise') ||
@@ -296,123 +292,22 @@ export class LivePropertyEditor extends OmniElement {
             }
         });
 
-        const cssDefinitions = loadCssProperties(this.element, this.customElements);
-        if (cssDefinitions && Object.keys(cssDefinitions).length > 0) {
-            Object.keys(cssDefinitions).forEach((cssKey) => {
-                const definition = cssDefinitions[cssKey];
-                const category = definition.subcategory ?? 'Component Variables';
-                let categoryProps = cssProperties.find((c) => c.category === category);
-                if (!categoryProps) {
-                    categoryProps = {
-                        category: category,
-                        propertiesHtml: []
-                    };
-                    cssProperties.push(categoryProps);
-                }
-
-                if (definition.control === 'color') {
-                    categoryProps.propertiesHtml.push(html`
-                        <div class="tooltip css-prop">
-                            <omni-color-field
-                                id="input-${cssKey}"
-                                class="css-prop"
-                                label="--${cssKey}"
-                                ?disabled=${this.disabled}
-                                .value="${live(
-                                    this.cssValueReader({
-                                        name: `--${cssKey}`,
-                                        value: ''
-                                    }).value
-                                )}"
-                                @input="${async (e: Event) => {
-                                    const colorField = e.target as TextField;
-                                    const input = colorField.shadowRoot.getElementById('inputField') as HTMLInputElement;
-
-                                    const value = input.value;
-                                    this._cssChanged({
-                                        name: `--${cssKey}`,
-                                        value: value
-                                    });
-                                }}">
-                            </omni-color-field>
-                            <span class="tooltiptext">${definition.description}</span>
-                        </div>
-                    `);
-                } else {
-                    categoryProps.propertiesHtml.push(html`
-                        <div class="tooltip css-prop">
-                            <omni-text-field
-                                class="css-prop"
-                                ?disabled=${this.disabled}
-                                label="--${cssKey}"
-                                @input="${async (e: Event) => {
-                                    const textField = e.target as TextField;
-
-                                    const value = (textField.shadowRoot.getElementById('inputField') as HTMLInputElement).value;
-                                    this._cssChanged({
-                                        name: `--${cssKey}`,
-                                        value: value
-                                    });
-                                }}">
-                            </omni-text-field>
-                            <span class="tooltiptext">${definition.description}</span>
-                        </div>
-                    `);
-                }
-            });
-        }
-
-        if (attributes.length === 0 && slots.length === 0 && cssProperties.filter((c) => c && c.propertiesHtml.length > 0).length === 0) {
+        if (attributes.length === 0 && slots.length === 0) {
             return nothing;
         }
 
         return html`
             <div>
-                <br />
-                <br />
                 ${attributes.map((a) => a.html)}
-                <br />
-                <br />
                 ${slots.map((s) => s.html)}
-                <br />
-                <br />
-                <button type="button" class="collapsible" @click="${(e: PointerEvent) => this._expandCollapse(e)}">CSS Variables</button>
-                <div class="expandable css-prop">
-                    ${cssProperties.map(
-                        (c) => html`
-                            <div class="css-prop">
-                                <button type="button" class="collapsible" @click="${(e: PointerEvent) => this._expandCollapse(e)}"
-                                    >${c.category}</button
-                                >
-                                <div class="expandable"> ${c.propertiesHtml} </div>
-                            </div>
-                        `
-                    )}
-                </div>
             </div>
         `;
     }
-    private _expandCollapse(e: PointerEvent) {
-        const button = e.target as HTMLButtonElement;
-        button.classList.toggle('active');
-        const content = button.nextElementSibling as HTMLElement;
-        if (content.style.display === 'flex') {
-            content.style.display = 'none';
-        } else {
-            content.style.display = 'flex';
-        }
-    }
+
     private _propertyChanged(propertyChangeDetail: PropertyChangeEvent) {
         this.dispatchEvent(
             new CustomEvent('property-change', {
                 detail: propertyChangeDetail
-            })
-        );
-    }
-    private _cssChanged(cssVariableDetail: CSSVariable) {
-        this.dispatchEvent(
-            new CustomEvent('css-change', {
-                detail: cssVariableDetail
             })
         );
     }

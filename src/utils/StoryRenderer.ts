@@ -155,7 +155,8 @@ export class StoryRenderer extends LitElement {
                       `
                     : nothing}
             </div>
-            <div style="border-top: 1px solid #e1e1e1;max-width: 600px;">
+            <!-- <div style="border-top: 1px solid #e1e1e1;max-width: 600px;"> -->
+            <div class="code-block">
                 <code-editor
                     class="source-code"
                     .transformSource="${(s: string) => this._transformSource(s)}"
