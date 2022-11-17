@@ -274,7 +274,19 @@ header * {
 
 .menu-item {
     margin: 0 12px;
-    /* border-left: 1px solid #e1e1e1; */
+    border-left: 2px solid #e1e1e1;
+}
+
+.menu-item.separator {
+    padding: 12px 0;
+}
+
+.menu-item.separator .line {
+    height:1px;
+    border:none;
+    color:#e1e1e1;
+    background-color:#e1e1e1;
+    margin-left: 24px;
 }
 
 .menu-item.selected {
@@ -296,12 +308,13 @@ header * {
 
 .menu-link:hover {
     background: #209cee1a;
+    /* margin-left: -2px; */
 }
 
 .menu-link.selected {
     background: #209cee1a;
     color: #209cee;
-    margin-left: -2px;
+    /* margin-left: -2px; */
     /* #00486d; */
 }
 
