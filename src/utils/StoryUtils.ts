@@ -643,13 +643,13 @@ async function setupEleventy() {
     });
 
     // Scroll highlight
-    const storyRenderers = document.querySelectorAll<HTMLElement>('story-renderer');
+    const storyRenderers = document.querySelectorAll<HTMLElement>('div.name');
     const tocAnchors = document.querySelectorAll('.component-toc a');
 
     window.addEventListener('scroll', () => {
         storyRenderers.forEach((sr) => {
             const top = window.scrollY;
-            const offset = sr.offsetTop + 65;
+            const offset = sr.offsetTop + 205;
             const height = sr.offsetHeight;
             const id = sr.getAttribute('id');
 
@@ -657,8 +657,8 @@ async function setupEleventy() {
                 // console.log(id, top, offset, height);
 
                 tocAnchors.forEach((a) => {
-                    a.classList.remove('component-toc-active');
-                    document.querySelector(`.component-toc a[href*='${id}']`).classList.add('component-toc-active');
+                    a.classList.remove('active');
+                    document.querySelector(`.component-toc a[href*='${id}']`).classList.add('active');
                 });
             }
         });
