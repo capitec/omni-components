@@ -107,8 +107,22 @@ header * {
     padding: 5px;
 }
 
-#header-theme-select {
+.theme-select {
     min-width: 80px;
+}
+
+/* CONTROLS */
+
+.docs-select {
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 6px;
+    border: 1px solid #e1e1e1;
+    display: flex;
+}
+
+.docs-select:focus-visible {
+    outline: none;
 }
 
 /* MENU */
