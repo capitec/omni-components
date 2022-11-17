@@ -88,7 +88,7 @@ export const Label = LabelStory<NumberField, BaseArgTypes>('omni-number-field');
 
 export const Hint = HintStory<NumberField, BaseArgTypes>('omni-number-field');
 
-export const ErrorLabel = ErrorStory<NumberField, BaseArgTypes>('omni-number-field');
+export const Error_Label = ErrorStory<NumberField, BaseArgTypes>('omni-number-field');
 
 export const Value = ValueStory<NumberField, BaseArgTypes>('omni-number-field', 123);
 

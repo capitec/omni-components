@@ -88,7 +88,7 @@ export const Hint: ComponentStoryFormat<Args> = {
     }
 };
 
-export const ErrorLabel: ComponentStoryFormat<Args> = {
+export const Error_Label: ComponentStoryFormat<Args> = {
     name: 'Error', // Explicitly named as error, the exported name cannot be 'Error' as that is reserved
     render: (args: Args) => html` <omni-radio data-testid="test-radio" label="${args.label}" error="${args.error}"></omni-radio> `,
     args: {
@@ -98,7 +98,7 @@ export const ErrorLabel: ComponentStoryFormat<Args> = {
     play: async (context) => {
         const radio = within(context.canvasElement).getByTestId<Radio>('test-radio');
         const element = radio.shadowRoot.querySelector<HTMLElement>('.error');
-        await expect(element).toHaveTextContent(ErrorLabel.args.error);
+        await expect(element).toHaveTextContent(Error_Label.args.error);
     }
 };
 

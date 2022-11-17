@@ -127,7 +127,7 @@ export const Disabled: ComponentStoryFormat<Args> = {
     }
 };
 
-export const ChipSlotIcon: ComponentStoryFormat<Args> = {
+export const Chip_Slot_Icon: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
         <omni-chip data-testid="test-chip" label="${ifNotEmpty(args.label)}" ?closable=${args.closable}>
             ${unsafeHTML(args.chip_icon)}
@@ -149,7 +149,7 @@ export const ChipSlotIcon: ComponentStoryFormat<Args> = {
     }
 };
 
-export const CustomCloseIcon: ComponentStoryFormat<Args> = {
+export const Custom_Close_Icon: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
         <omni-chip data-testid="test-chip" label="${ifNotEmpty(args.label)}" ?closable=${args.closable}>
             ${unsafeHTML(args.chip_icon)} ${unsafeHTML(args.close_icon)}

@@ -74,7 +74,7 @@ export const Label = LabelStory<TextField, BaseArgTypes>('omni-text-field');
 
 export const Hint = HintStory<TextField, BaseArgTypes>('omni-text-field');
 
-export const ErrorLabel = ErrorStory<TextField, BaseArgTypes>('omni-text-field');
+export const Error_Label = ErrorStory<TextField, BaseArgTypes>('omni-text-field');
 
 export const Value = ValueStory<TextField, BaseArgTypes>('omni-text-field');
 
