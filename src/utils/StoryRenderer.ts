@@ -26,6 +26,7 @@ export class StoryRenderer extends LitElement {
     @property({ type: Boolean, reflect: true }) interactive: boolean;
 
     @state() interactiveSrc: string;
+    @state() isBusyPlaying: boolean;
 
     @query('.source-code') codeEditor: CodeEditor;
     @query('.live-props') propertyEditor: LivePropertyEditor;
@@ -50,6 +51,7 @@ export class StoryRenderer extends LitElement {
     }
 
     protected override render() {
+
         if (!this.controller.story) {
             return html`<div>Loading...</div>`;
         }
@@ -58,10 +60,10 @@ export class StoryRenderer extends LitElement {
         this.story.originalArgs = this.story.originalArgs ?? JSON.parse(JSON.stringify(this.story.args));
 
         const res = this.story.render(this.story.args);
-
         const storySource = this.story.source ? this.story.source() : this._getSourceFromLit(res);
 
         return html`
+            
             <div class="preview">
                 <div class="item">
                     <div class="${this.key}${this.interactive ? ' interactive-story' : ''}" .data=${this.story}>
@@ -178,8 +180,10 @@ export class StoryRenderer extends LitElement {
                     ?read-only="${!this.interactive}">
                 </code-editor>
             </div>
-            <div style="border-top: 1px solid #e1e1e1;">
-                <button
+            <div class="play-tests">
+                <omni-button
+                    label="Run Tests"
+                    slot-position="left"
                     ?disabled=${this.overrideInteractive ||
                     JSON.stringify(this.story.originalArgs)
                         .replaceAll('\n', '')
@@ -187,8 +191,9 @@ export class StoryRenderer extends LitElement {
                         .replaceAll('\t', '')
                         .replaceAll(' ', '') !==
                         JSON.stringify(this.story.args).replaceAll('\n', '').replaceAll('\\n', '').replaceAll('\t', '').replaceAll(' ', '')}
-                    @click="${() => this._play(this.story, `.${this.key}`)}"
-                    >Play</button
+                    @click="${() => this._play(this.story, `.${this.key}`)}">
+                    <omni-icon icon="@material/play_arrow" style="padding-right: 8px;"></omni-icon>
+                </omni-button
                 >
                 <div class="${this.key + '-result'}"></div>
             </div>
@@ -238,15 +243,21 @@ export class StoryRenderer extends LitElement {
 
     private async _play(story: any, canvasElementQuery: string) {
         try {
+
             if (!story.play) {
                 return;
             }
+
+            this.isBusyPlaying = true;
+
             this.querySelector<HTMLDivElement>(canvasElementQuery + '-result').innerText = '';
             const context = this._createStoryContext(story, canvasElementQuery);
             await story.play(context);
             this.querySelector<HTMLDivElement>(canvasElementQuery + '-result').innerText = 'Passed';
         } catch (error) {
             this.querySelector<HTMLDivElement>(canvasElementQuery + '-result').innerText = error.toString();
+        } finally {
+            this.isBusyPlaying = false;
         }
     }
 

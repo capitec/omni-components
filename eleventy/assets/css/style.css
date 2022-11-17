@@ -577,6 +577,11 @@ header * {
     /* max-width: calc(100vw - 648px);  */
 }
 
+.component-stories .story .play-tests {
+    padding: 24px;
+    border-top: 1px solid #e1e1e1;
+}
+
 .component-toc-wrapper {
     flex: 0 0; /* 260px; */
     margin-top: 24px;
