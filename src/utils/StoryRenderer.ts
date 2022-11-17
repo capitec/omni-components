@@ -74,10 +74,10 @@ export class StoryRenderer extends LitElement {
                 ${this.interactive
                     ? html`
                           <div class="interactive">
-                              <omni-button class="docs-omni-component"
+                              <span class="docs-omni-component interactive-reset"
                                   @click="${this._resetLivePropertyEditor}">
-                                  <omni-icon class="docs-omni-component" icon="@material/settings_backup_restore"></omni-icon>
-                              </omni-button>
+                                  <omni-icon class="docs-omni-component" style="cursor: pointer;" icon="@material/settings_backup_restore"></omni-icon>
+                              </span>
                               <live-property-editor
                                   class="live-props docs-omni-component"
                                   ?disabled=${this.overrideInteractive}
