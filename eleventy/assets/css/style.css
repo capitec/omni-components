@@ -175,7 +175,7 @@ header * {
 }
 
 .docs-search-area {
-    padding: 24px 48px;
+    padding: 0px 48px;
 }
 
 .docs-search-wrapper {
@@ -589,7 +589,7 @@ header * {
     }
 }
 
-.component-props-docs-wrapper {
+.component-props-examples-wrapper {
     display: flex;
     padding: 24px 48px;
     /* background: purple; */
@@ -732,11 +732,13 @@ table th {
 .component-props-table-wrapper {
     display: flex;
     justify-content: center;
-    padding: 24px 48px;
+    padding: 0px 48px;
+    padding-bottom: 24px;
 }
 
 .component-props-table-header {
     padding: 0px 48px;
+    padding-bottom: 0px;
     text-size-adjust: 100%;
     color-scheme: light;
     -webkit-font-smoothing: antialiased;
@@ -812,7 +814,7 @@ table th {
     }
 
     .docs-search-area {
-        padding: 24px;
+        padding: 0px 24px;
     }
 
     /* STATIC ARTICLES */
@@ -842,10 +844,10 @@ table th {
     }
 
     .component-props-table-wrapper {
-        padding: 24px;
+        padding: 0px 24px;
     }
 
-    .component-props-docs-wrapper {
+    .component-props-examples-wrapper {
         padding: 24px;
     }
 

@@ -50,13 +50,13 @@ permalink: "components/{{ component.name | slug }}/"
         <div class="component-tab-root">
             <div class="component-tab-wrapper">
                 <div class="component-tab-list" role="tablist">
-                    <div role="tab" class="component-tab-button active" data-name="docs" onclick="openTab(event.currentTarget, 'docs')">Documentation</div>
-                    <div role="tab" class="component-tab-button" data-name="props" onclick="openTab(event.currentTarget, 'props')">Attributes</div>
+                    <div role="tab" class="component-tab-button active" data-name="examples" onclick="openTab(event.currentTarget, 'examples')">Examples</div>
+                    <div role="tab" class="component-tab-button" data-name="docs" onclick="openTab(event.currentTarget, 'docs')">Documentation</div>
                     <div role="tab" class="component-tab-button" data-name="styles" onclick="openTab(event.currentTarget, 'styles')">Styles</div>
                 </div>
             </div>
-            <div class="component-tab" id="docs" role="tabpanel" style="display: block;">
-                <div class="component-props-docs-wrapper">
+            <div class="component-tab" id="examples" role="tabpanel" style="display: block;">
+                <div class="component-props-examples-wrapper">
                     <div class="component-tab-content">
                         <div class="component-stories">
                             {% for story in component.stories %}
@@ -95,7 +95,7 @@ permalink: "components/{{ component.name | slug }}/"
                     </div>
                 </div>
             </div>
-            <div class="component-tab" id="props" role="tabpanel">
+            <div class="component-tab" id="docs" role="tabpanel">
 
                 <h2 class="component-props-table-header" style="padding-top: 24px;">Attributes</h2>
                 <div class="docs-search-area">
