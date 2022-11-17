@@ -28,24 +28,24 @@ import '../icons/Search.icon';
  *
  * @element omni-search-field
  *
- * @cssprop --omni-search-field-search-align - search field search align.
- * @cssprop --omni-search-field-font-color - search field font color.
- * @cssprop --omni-search-field-font-family - search field font family.
- * @cssprop --omni-search-field-font-size - search field font size.
- * @cssprop --omni-search-field-font-weight - search field font weight.
- * @cssprop --omni-search-field-height - search field height.
- * @cssprop --omni-search-field-padding - search field width.
+ * @cssprop --omni-search-field-search-align - Search field search align.
+ * @cssprop --omni-search-field-font-color - Search field font color.
+ * @cssprop --omni-search-field-font-family - Search field font family.
+ * @cssprop --omni-search-field-font-size - Search field font size.
+ * @cssprop --omni-search-field-font-weight - Search field font weight.
+ * @cssprop --omni-search-field-height - Search field height.
+ * @cssprop --omni-search-field-padding - Search field width.
  *
- * @cssprop --omni-search-field-control-padding-right - search field control right padding.
- * @cssprop --omni-search-field-control-padding-left - search field control left padding.
- * @cssprop --omni-search-field-control-padding-top - search field control top padding.
- * @cssprop --omni-search-field-control-padding-bottom -  search field control bottom padding;
+ * @cssprop --omni-search-field-control-padding-right - Search field control right padding.
+ * @cssprop --omni-search-field-control-padding-left - Search field control left padding.
+ * @cssprop --omni-search-field-control-width - Search field control width.
  *
- * @cssprop --omni-search-field-clear-icon-color - search field clear icon color;
- * @cssprop --omni-search-field-clear-icon-width - search field clear icon width;
+ * @cssprop --omni-search-field-clear-icon-color - Search field clear icon color.
+ * @cssprop --omni-search-field-clear-icon-width - Search field clear icon width.
  *
- * @cssprop --omni-search-field-search-icon-color - search field search icon color;
- * @cssprop --omni-search-field-search-icon-width - search field search icon width;
+ * @cssprop --omni-search-field-search-icon-color - Search field search icon color.
+ * @cssprop --omni-search-field-search-icon-width - Search field search icon width.
+ * @cssprop --omni-search-field-search-icon-margin-left - Search field search icon left margin.
  *
  */
 @customElement('omni-search-field')
@@ -63,7 +63,7 @@ export class SearchField extends OmniFormElement {
         this.value = input.value;
     }
 
-    _clearField(e: MouseEvent) {
+    async _clearField(e: MouseEvent) {
         if (this.disabled) {
             return e.stopImmediatePropagation();
         }
@@ -102,14 +102,12 @@ export class SearchField extends OmniFormElement {
 
                 .control {
                     display: flex;
-                    align-items: center;
-                    justify-content: center;
                     cursor: pointer;
 
-                    padding-right: var(--omni-search-field-control-padding-right, 10px);
-                    padding-left: var(--omni-search-field-control-padding-left, 10px);
-                    padding-top: var(--omni-search-field-control-padding-top, 0px);
-                    padding-bottom: var(--omni-search-field-control-padding-bottom, 0px);
+                    
+                    margin-right: var(--omni-search-field-control-padding-right, 10px);
+                    margin-left: var(--omni-search-field-control-padding-left, 10px);
+                    width: var(--omni-search-field-control-width, 20px);
                 }
 
                 .clear-icon {
@@ -123,11 +121,8 @@ export class SearchField extends OmniFormElement {
 
                 .search-icon {
                     fill: var(--omni-search-field-search-icon-color, var(--omni-primary-color));
-                    width: var(--omni-search-field-search-icon-width, 20px);                       
-                }
-
-                input:empty .label {
-                    transform: '';
+                    width: var(--omni-search-field-search-icon-width, 20px);   
+                    margin-left: var(--omni-search-field-search-icon-margin-left,10px) !important;                                 
                 }
                 
                 /* Remove the default clear button from the input with type="search"*/
@@ -148,8 +143,8 @@ export class SearchField extends OmniFormElement {
 
     protected override renderControl() {
         return html`
-            <div class="control" @click="${(e: MouseEvent) => this._clearField(e)}">
-                <slot name="clear"><omni-clear-icon class="clear-icon"></omni-clear-icon></slot>
+            <div id="control" class="control" @click="${(e: MouseEvent) => this._clearField(e)}">
+                ${this.value ? html`<slot name="clear"><omni-clear-icon class="clear-icon"></omni-clear-icon></slot>` : ``}
             </div>
         `;
     }

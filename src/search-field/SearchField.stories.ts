@@ -31,8 +31,6 @@ export default {
     }
 } as Meta;
 
-const heroes = ['Batman', 'Superman', 'Wonder Woman', 'Flash', 'Aquaman', 'Green Lantern', 'Shazam'];
-
 export const Interactive = {
     render: (args: BaseArgTypes) => html`
         <omni-search-field
@@ -62,16 +60,22 @@ export const Interactive = {
     },
     play: async (context: StoryContext) => {
         const searchField = within(context.canvasElement).getByTestId<SearchField>('test-search-field');
-        const input = jest.fn();
-        searchField.addEventListener('input', input);
+        const interaction = jest.fn();
+        const click = jest.fn();
+        searchField.addEventListener('input', interaction);
+        searchField.addEventListener('click', click);
 
         const inputField = searchField.shadowRoot.getElementById('inputField');
 
-        const searchValue = 'Batman';
-        await userEvent.type(inputField, searchValue);
-        await expect(inputField).toHaveValue(searchValue);
-        await expect(heroes.includes(searchValue)).toBeTruthy();
-        await expect(input).toBeCalledTimes(searchValue.length);
+        const value = 'Batman';
+        await userEvent.type(inputField, value);
+        await expect(inputField).toHaveValue(value);
+        await expect(interaction).toBeCalledTimes(value.length);
+
+        const clearButton = searchField.shadowRoot.getElementById(`control`);
+        await userEvent.click(clearButton);
+
+        await expect(inputField).toHaveValue('');
     }
 };
 
