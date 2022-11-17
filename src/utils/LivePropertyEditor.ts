@@ -124,6 +124,18 @@ export class LivePropertyEditor extends OmniElement {
                 .tooltip:hover .tooltiptext {
                     visibility: visible;
                 }
+
+                .docs-select {
+                    padding: 5px;
+                    cursor: pointer;
+                    border-radius: 6px;
+                    border: 1px solid #e1e1e1;
+                    display: flex;
+                }
+
+                .docs-select:focus-visible {
+                    outline: none;
+                }
             `
         ];
     }
@@ -226,6 +238,7 @@ export class LivePropertyEditor extends OmniElement {
 
                         attributeEditor = html`
                             <select
+                                class="docs-select"
                                 ?disabled=${this.disabled}
                                 @change="${(e: Event) => {
                                     const value = (e.target as HTMLSelectElement).value;

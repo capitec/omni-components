@@ -438,9 +438,9 @@ function filterJsDocLinks(jsdoc: string) {
     const renderLink = (link: { tag: string; text: string; url: string; raw: string }) => {
         if (!link.url.includes(':')) {
             // Local markdown links are not valid
-            return `**${link.text}**`;
+            return raw`<strong>${link.text}</strong>`;
         }
-        return `[${link.text}](${link.url}`;
+        return raw`<a href="${link.url}" target="_blank" >${link.text}</a>`;//`[${link.text}](${link.url}`;
     };
 
     const matches = Array.from(jsdoc.matchAll(/(?:\[(.*?)\])?{@(link|tutorial) (.*?)(?:(?:\|| +)(.*?))?}/gm));
@@ -592,37 +592,6 @@ async function setupThemes() {
 }
 
 async function setupEleventy() {
-    function openTab(target: Element, tabId: string) {
-        let i;
-
-        // Get all elements with class="tabcontent" and hide them
-        const tabContent = document.getElementsByClassName('component-tab') as HTMLCollectionOf<HTMLElement>;
-        for (i = 0; i < tabContent.length; i++) {
-            tabContent[i].style.display = 'none';
-        }
-
-        // Get all elements with class="tablinks" and remove the class "active"
-        const tabLinks = document.getElementsByClassName('component-tab-button');
-        for (i = 0; i < tabLinks.length; i++) {
-            tabLinks[i].classList.remove('active');
-        }
-
-        // Show the current tab, and add an "active" class to the button that opened the tab
-        document.getElementById(tabId).style.display = 'block';
-        target.classList.add('active');
-
-        // Set nav state of tab.
-        window.history.replaceState({}, '', `?tab=${tabId}`);
-    }
-
-    function copyToClipboard(id: string) {
-        const range = document.createRange();
-        range.selectNode(document.getElementById(id));
-        window.getSelection().removeAllRanges();
-        window.getSelection().addRange(range);
-        document.execCommand('copy');
-        window.getSelection().removeAllRanges();
-    }
 
     // Add functions for DOM access
     const windowAny = window as any;
@@ -630,17 +599,7 @@ async function setupEleventy() {
     windowAny.openTab = openTab;
 
     // Open / Close the menu
-    const menuButton = document.querySelector<HTMLElement>('.header-menu-button .material-icons');
-    menuButton.addEventListener('click', (e) => {
-        const nav = document.querySelector('nav');
-        if (nav.classList.contains('mobile')) {
-            nav.classList.remove('mobile');
-            menuButton.innerText = 'menu';
-        } else {
-            nav.classList.add('mobile');
-            menuButton.innerText = 'close';
-        }
-    });
+    setupMenu();
 
     // Scroll highlight
     const storyRenderers = document.querySelectorAll<HTMLElement>('story-renderer');
@@ -665,6 +624,50 @@ async function setupEleventy() {
     });
 
     // Open tab from query string.
+    setupTabs();
+
+    // Toggle loading indicator off on page load.
+    setupLoadingIndicator();
+
+    // Setup search for component members
+    setupSearch();
+
+    await setupThemes();
+}
+
+function openTab(target: Element, tabId: string) {
+    let i;
+
+    // Get all elements with class="tabcontent" and hide them
+    const tabContent = document.getElementsByClassName('component-tab') as HTMLCollectionOf<HTMLElement>;
+    for (i = 0; i < tabContent.length; i++) {
+        tabContent[i].style.display = 'none';
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    const tabLinks = document.getElementsByClassName('component-tab-button');
+    for (i = 0; i < tabLinks.length; i++) {
+        tabLinks[i].classList.remove('active');
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(tabId).style.display = 'block';
+    target.classList.add('active');
+
+    // Set nav state of tab.
+    window.history.replaceState({}, '', `?tab=${tabId}`);
+}
+
+function copyToClipboard(id: string) {
+    const range = document.createRange();
+    range.selectNode(document.getElementById(id));
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+    document.execCommand('copy');
+    window.getSelection().removeAllRanges();
+}
+
+function setupTabs() {
     if (document.location.pathname !== '/' && document.location.search) {
         const searchParams = new URLSearchParams(document.location.search);
 
@@ -681,8 +684,23 @@ async function setupEleventy() {
             }
         }
     }
+}
 
-    // Toggle loading indicator off on page load.
+function setupMenu() {
+    const menuButton = document.querySelector<HTMLElement>('.header-menu-button .material-icons');
+    menuButton.addEventListener('click', (e) => {
+        const nav = document.querySelector('nav');
+        if (nav.classList.contains('mobile')) {
+            nav.classList.remove('mobile');
+            menuButton.innerText = 'menu';
+        } else {
+            nav.classList.add('mobile');
+            menuButton.innerText = 'close';
+        }
+    });
+}
+
+function setupLoadingIndicator() {
     const overlay = document.querySelector<HTMLElement>('.component-overlay');
     if (overlay) {
         overlay.style.display = 'none';
@@ -691,8 +709,77 @@ async function setupEleventy() {
     if (component) {
         component.style.display = 'block';
     }
+}
 
-    await setupThemes();
+function setupSearch() {
+
+    //Attribute search
+    const attributeSearch = document.querySelector<HTMLInputElement>('#attribute-search');
+    const attributeRows = document.querySelector<HTMLTableSectionElement>('#component-attributes')?.children;
+    if (attributeSearch && attributeRows) {
+        attributeSearch.addEventListener('input', () => {
+            const filterValue = attributeSearch.value ?? '';
+            for (let index = 0; index < attributeRows.length; index++) {
+                const element = attributeRows[index] as HTMLElement;
+                if (element.innerText && element.innerText.toLowerCase().includes(filterValue.toLowerCase())) {
+                    element.classList.remove('hidden');
+                } else {
+                    element.classList.add('hidden');
+                }
+            }
+        });
+    }
+
+    //Event search
+    const eventSearch = document.querySelector<HTMLInputElement>('#event-search');
+    const eventRows = document.querySelector<HTMLTableSectionElement>('#component-events')?.children;
+    if (eventSearch && eventRows) {
+        eventSearch.addEventListener('input', () => {
+            const filterValue = eventSearch.value ?? '';
+            for (let index = 0; index < eventRows.length; index++) {
+                const element = eventRows[index] as HTMLElement;
+                if (element.innerText && element.innerText.toLowerCase().includes(filterValue.toLowerCase())) {
+                    element.classList.remove('hidden');
+                } else {
+                    element.classList.add('hidden');
+                }
+            }
+        });
+    }
+
+    //Slot search
+    const slotSearch = document.querySelector<HTMLInputElement>('#slot-search');
+    const slotRows = document.querySelector<HTMLTableSectionElement>('#component-slots')?.children;
+    if (slotSearch && slotRows) {
+        slotSearch.addEventListener('input', () => {
+            const filterValue = slotSearch.value ?? '';
+            for (let index = 0; index < slotRows.length; index++) {
+                const element = slotRows[index] as HTMLElement;
+                if (element.innerText && element.innerText.toLowerCase().includes(filterValue.toLowerCase())) {
+                    element.classList.remove('hidden');
+                } else {
+                    element.classList.add('hidden');
+                }
+            }
+        });
+    }
+
+    //CSS Properties search
+    const cssPropSearch = document.querySelector<HTMLInputElement>('#css-prop-search');
+    const cssPropRows = document.querySelector<HTMLTableSectionElement>('#component-css-props')?.children;
+    if (cssPropSearch && cssPropRows) {
+        cssPropSearch.addEventListener('input', () => {
+            const filterValue = cssPropSearch.value ?? '';
+            for (let index = 0; index < cssPropRows.length; index++) {
+                const element = cssPropRows[index] as HTMLElement;
+                if (element.innerText && element.innerText.toLowerCase().includes(filterValue.toLowerCase())) {
+                    element.classList.remove('hidden');
+                } else {
+                    element.classList.add('hidden');
+                }
+            }
+        });
+    }
 }
 
 async function setupTheming() {
