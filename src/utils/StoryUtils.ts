@@ -602,26 +602,7 @@ async function setupEleventy() {
     setupMenu();
 
     // Scroll highlight
-    const storyRenderers = document.querySelectorAll<HTMLElement>('div.name');
-    const tocAnchors = document.querySelectorAll('.component-toc a');
-
-    window.addEventListener('scroll', () => {
-        storyRenderers.forEach((sr) => {
-            const top = window.scrollY;
-            const offset = sr.offsetTop + 205;
-            const height = sr.offsetHeight;
-            const id = sr.getAttribute('id');
-
-            if (top > offset && top < offset + height) {
-                // console.log(id, top, offset, height);
-
-                tocAnchors.forEach((a) => {
-                    a.classList.remove('active');
-                    document.querySelector(`.component-toc a[href*='${id}']`).classList.add('active');
-                });
-            }
-        });
-    });
+    setupScroll();
 
     // Open tab from query string.
     setupTabs();
@@ -667,6 +648,43 @@ function copyToClipboard(id: string) {
     window.getSelection().removeAllRanges();
 }
 
+function setupMenu() {
+    const menuButton = document.querySelector<HTMLElement>('.header-menu-button .material-icons');
+    menuButton.addEventListener('click', (e) => {
+        const nav = document.querySelector('nav');
+        if (nav.classList.contains('mobile')) {
+            nav.classList.remove('mobile');
+            menuButton.innerText = 'menu';
+        } else {
+            nav.classList.add('mobile');
+            menuButton.innerText = 'close';
+        }
+    });
+}
+
+function setupScroll() {
+    const storyRenderers = document.querySelectorAll<HTMLElement>('div.name');
+    const tocAnchors = document.querySelectorAll('.component-toc a');
+
+    window.addEventListener('scroll', () => {
+        storyRenderers.forEach((sr) => {
+            const top = window.scrollY;
+            const offset = sr.offsetTop + 205;
+            const height = sr.offsetHeight;
+            const id = sr.getAttribute('id');
+
+            if (top > offset && top < offset + height) {
+                // console.log(id, top, offset, height);
+
+                tocAnchors.forEach((a) => {
+                    a.classList.remove('active');
+                    document.querySelector(`.component-toc a[href*='${id}']`).classList.add('active');
+                });
+            }
+        });
+    });
+}
+
 function setupTabs() {
     if (document.location.pathname !== '/' && document.location.search) {
         const searchParams = new URLSearchParams(document.location.search);
@@ -684,20 +702,6 @@ function setupTabs() {
             }
         }
     }
-}
-
-function setupMenu() {
-    const menuButton = document.querySelector<HTMLElement>('.header-menu-button .material-icons');
-    menuButton.addEventListener('click', (e) => {
-        const nav = document.querySelector('nav');
-        if (nav.classList.contains('mobile')) {
-            nav.classList.remove('mobile');
-            menuButton.innerText = 'menu';
-        } else {
-            nav.classList.add('mobile');
-            menuButton.innerText = 'close';
-        }
-    });
 }
 
 function setupLoadingIndicator() {
