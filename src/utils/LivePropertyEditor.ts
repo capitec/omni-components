@@ -47,7 +47,7 @@ export class LivePropertyEditor extends OmniElement {
             super.styles,
             css`
                 :host {
-                    padding: 24px;
+                    
                 }
 
                 :host([disabled]) {
@@ -297,7 +297,7 @@ export class LivePropertyEditor extends OmniElement {
         }
 
         return html`
-            <div>
+            <div style="padding: 24px;">
                 ${attributes.map((a) => a.html)}
                 ${slots.map((s) => s.html)}
             </div>

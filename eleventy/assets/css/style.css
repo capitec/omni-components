@@ -487,7 +487,7 @@ header * {
 }
 
 .component-stories .name {
-    font-size: 20px;
+    font-size: 1.5em;
 }
 
 .component-stories .story {
@@ -496,6 +496,7 @@ header * {
     margin-top: 12px;
     margin-bottom: 24px;
     border: 1px solid #e1e1e1;
+    border-radius: 4px;
 }
 
 .component-stories .story .preview {
@@ -521,16 +522,15 @@ header * {
     border-left: 1px solid #e1e1e1; 
     align-items: center; 
     justify-content: center;
-    max-width: 200px;
 }
 
 .component-stories .story .code-block {
     border-top: 1px solid #e1e1e1;
-    max-width: calc(100vw - 648px); 
+    /* max-width: calc(100vw - 648px);  */
 }
 
 .component-toc-wrapper {
-    flex: 0 0 260px;
+    flex: 0 0; /* 260px; */
     margin-top: 24px;
 }
 
@@ -673,11 +673,16 @@ table th {
     }
 
     .component-stories {
-        padding: 24px;
+        padding: 0 24px;
     }
 
     .component-stories .story .preview {
         flex-direction: column;
+    }
+
+    .component-stories .story .preview .interactive {
+        border-left: none;
+        max-width: 100%;
     }
 
     .component-stories .story .preview div:first-of-type {
@@ -753,6 +758,10 @@ table th {
 @media screen and (max-width: 1080px) {
     .component-toc-wrapper {
         display: none;
+    }
+
+    .component-stories {
+        padding-right: 0;
     }
 }
 

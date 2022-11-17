@@ -48,6 +48,10 @@ export class CodeEditor extends LitElement {
                     padding: 6px;
                 }
 
+                .cm-content {
+                    white-space: pre-wrap !important;
+                }
+
                 .copy-code-wrap {
                     position: absolute;
                     bottom: 5px;
