@@ -702,8 +702,32 @@ header * {
 }
 
 .component-stories .story .play-tests {
+    display: flex;
+    flex-direction: column;
     padding: 24px;
     border-top: 1px solid #e1e1e1;
+}
+
+.component-stories .story .play-tests .success {
+    flex-direction: row;
+    margin-left: 24px;
+    border-radius: .25rem;
+    padding: 12px;
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    display: none;
+}
+
+.component-stories .story .play-tests .failure {
+    flex-direction: row;
+    margin-top: 24px;
+    border-radius: 4px;
+    padding: 12px;
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    display: none;
 }
 
 .component-toc-wrapper {

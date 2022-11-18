@@ -25,8 +25,9 @@ export class StoryRenderer extends LitElement {
     @property({ type: String, reflect: true }) key: string;
     @property({ type: Boolean, reflect: true }) interactive: boolean;
 
-    @state() interactiveSrc: string;
-    @state() isBusyPlaying: boolean;
+    @state() _interactiveSrc: string;
+    @state() _isBusyPlaying: boolean;
+    @state() _playError: string;
 
     @query('.source-code') codeEditor: CodeEditor;
     @query('.live-props') propertyEditor: LivePropertyEditor;
@@ -67,7 +68,7 @@ export class StoryRenderer extends LitElement {
             <div class="preview">
                 <div class="item">
                     <div class="${this.key}${this.interactive ? ' interactive-story' : ''}" .data=${this.story}>
-                        ${this.overrideInteractive ? unsafeHTML(this.interactiveSrc) : res}
+                        ${this.overrideInteractive ? unsafeHTML(this._interactiveSrc) : res}
                     </div>
                 </div>
 
@@ -167,13 +168,13 @@ export class StoryRenderer extends LitElement {
                     @codemirror-loaded="${(e: CustomEvent<CodeMirrorEditorEvent>) => {
                         const newSource = e.detail.source;
                         this.originalInteractiveSrc = newSource;
-                        this.interactiveSrc = newSource;
+                        this._interactiveSrc = newSource;
                     }}"
                     @codemirror-source-change="${(e: CustomEvent<CodeMirrorSourceUpdateEvent>) => {
                         const newSource = e.detail.source;
-                        this.interactiveSrc = newSource;
+                        this._interactiveSrc = newSource;
                         this.overrideInteractive =
-                            this.interactiveSrc !== this.originalInteractiveSrc && this.interactiveSrc !== storySource;
+                            this._interactiveSrc !== this.originalInteractiveSrc && this._interactiveSrc !== storySource;
 
                         this.requestUpdate();
                     }}"
@@ -181,21 +182,29 @@ export class StoryRenderer extends LitElement {
                 </code-editor>
             </div>
             <div class="play-tests">
-                <omni-button
-                    label="Run Tests"
-                    slot-position="left"
-                    ?disabled=${this.overrideInteractive ||
-                    JSON.stringify(this.story.originalArgs)
-                        .replaceAll('\n', '')
-                        .replaceAll('\\n', '')
-                        .replaceAll('\t', '')
-                        .replaceAll(' ', '') !==
-                        JSON.stringify(this.story.args).replaceAll('\n', '').replaceAll('\\n', '').replaceAll('\t', '').replaceAll(' ', '')}
-                    @click="${() => this._play(this.story, `.${this.key}`)}">
-                    <omni-icon icon="@material/play_arrow" style="padding-right: 8px;"></omni-icon>
-                </omni-button
-                >
-                <div class="${this.key + '-result'}"></div>
+                <div style="display: flex; flex-direction: row;">
+                    <omni-button
+                        label="Run Tests"
+                        slot-position="left"
+                        ?disabled=${this.overrideInteractive ||
+                        JSON.stringify(this.story.originalArgs)
+                            .replaceAll('\n', '')
+                            .replaceAll('\\n', '')
+                            .replaceAll('\t', '')
+                            .replaceAll(' ', '') !==
+                            JSON.stringify(this.story.args).replaceAll('\n', '').replaceAll('\\n', '').replaceAll('\t', '').replaceAll(' ', '')}
+                        @click="${() => this._play(this.story, `.${this.key}`)}">
+                        <omni-icon icon="@material/play_arrow" style="margin-right: 8px;"></omni-icon>
+                    </omni-button>
+                    <div class="${this.key + '-result'} success">
+                        <span class="material-icons" style="color: #155724;">check</span>
+                        <span style="margin-left: 8px;">Passed</span>
+                    </div>
+                </div>
+                <div class="${this.key + '-result'} failure">
+                    <span class="material-icons" style="color: #721c24;">close</span>
+                    <span style="margin-left: 8px;">${this._playError}</span>
+                </div>
             </div>
         `;
     }
@@ -248,16 +257,16 @@ export class StoryRenderer extends LitElement {
                 return;
             }
 
-            this.isBusyPlaying = true;
+            this._isBusyPlaying = true;
 
-            this.querySelector<HTMLDivElement>(canvasElementQuery + '-result').innerText = '';
             const context = this._createStoryContext(story, canvasElementQuery);
             await story.play(context);
-            this.querySelector<HTMLDivElement>(canvasElementQuery + '-result').innerText = 'Passed';
+            this.querySelector<HTMLDivElement>(canvasElementQuery + '-result.success').style.display = 'flex';
         } catch (error) {
-            this.querySelector<HTMLDivElement>(canvasElementQuery + '-result').innerText = error.toString();
+            this.querySelector<HTMLDivElement>(canvasElementQuery + '-result.failure').style.display = 'flex';
+            this._playError = error.toString();
         } finally {
-            this.isBusyPlaying = false;
+            this._isBusyPlaying = false;
         }
     }
 
