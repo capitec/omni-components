@@ -180,6 +180,7 @@ export class StoryRenderer extends LitElement {
             slot-position="left"
             ?disabled=${
                 this.overrideInteractive ||
+                this._isBusyPlaying ||
                 JSON.stringify(this.story.originalArgs).replaceAll('\n', '').replaceAll('\\n', '').replaceAll('\t', '').replaceAll(' ', '') !==
                     JSON.stringify(this.story.args).replaceAll('\n', '').replaceAll('\\n', '').replaceAll('\t', '').replaceAll(' ', '')
             }
@@ -193,7 +194,7 @@ export class StoryRenderer extends LitElement {
         </div>
         <div class="${this.key + '-result'} failure">
           <span class="material-icons" style="color: #721c24;">close</span>
-          <span style="margin-left: 8px;">${this._playError}</span>
+          <span style="margin-left: 8px;"><pre>${this._playError}</pre></span>
         </div>
       </div>
     `;

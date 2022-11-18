@@ -72,7 +72,7 @@ export const Interactive = {
         await userEvent.click(button, {
             pointerEventsCheck: 0
         });
-        await expect(click).toBeCalledTimes(3);
+        await expect(click).toBeCalledTimes(2);
     }
 } as ComponentStoryFormat<Args>;
 
