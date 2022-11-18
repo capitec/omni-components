@@ -35,12 +35,12 @@ interface Args {
 
 export const Interactive: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
-        <omni-chip data-testid="test-chip" label="${ifNotEmpty(args.label)}" ?closable=${args.closable} ?disabled="${args.disabled}"
-            >${args.chip_icon ? html`${'\r\n'}${unsafeHTML(assignToSlot('chip_icon', args.chip_icon))}` : nothing}${args.close_icon
-                ? html`${'\r\n'}${unsafeHTML(assignToSlot('close_icon', args.close_icon))}`
-                : nothing}
-        </omni-chip>
-    `,
+    <omni-chip data-testid="test-chip" label="${ifNotEmpty(args.label)}" ?closable=${args.closable} ?disabled="${args.disabled}"
+      >${args.chip_icon ? html`${'\r\n'}${unsafeHTML(assignToSlot('chip_icon', args.chip_icon))}` : nothing}${
+        args.close_icon ? html`${'\r\n'}${unsafeHTML(assignToSlot('close_icon', args.close_icon))}` : nothing
+    }
+    </omni-chip>
+  `,
     name: 'Interactive',
     args: {
         label: 'Chip',
@@ -78,9 +78,7 @@ export const Label: ComponentStoryFormat<Args> = {
 };
 
 export const Closable: ComponentStoryFormat<Args> = {
-    render: (args: Args) => html`
-        <omni-chip data-testid="test-chip" label="${ifNotEmpty(args.label)}" ?closable=${args.closable}> </omni-chip>
-    `,
+    render: (args: Args) => html` <omni-chip data-testid="test-chip" label="${ifNotEmpty(args.label)}" ?closable=${args.closable}> </omni-chip> `,
     name: 'Closable',
     args: {
         label: 'Closable',
@@ -104,9 +102,7 @@ export const Closable: ComponentStoryFormat<Args> = {
 };
 
 export const Disabled: ComponentStoryFormat<Args> = {
-    render: (args: Args) => html`
-        <omni-chip data-testid="test-chip" label="${ifNotEmpty(args.label)}" ?disabled="${args.disabled}"> </omni-chip>
-    `,
+    render: (args: Args) => html` <omni-chip data-testid="test-chip" label="${ifNotEmpty(args.label)}" ?disabled="${args.disabled}"> </omni-chip> `,
     name: 'Disabled',
     args: {
         label: 'Disabled',
@@ -129,10 +125,8 @@ export const Disabled: ComponentStoryFormat<Args> = {
 
 export const Chip_Slot_Icon: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
-        <omni-chip data-testid="test-chip" label="${ifNotEmpty(args.label)}" ?closable=${args.closable}>
-            ${unsafeHTML(args.chip_icon)}
-        </omni-chip>
-    `,
+    <omni-chip data-testid="test-chip" label="${ifNotEmpty(args.label)}" ?closable=${args.closable}> ${unsafeHTML(args.chip_icon)} </omni-chip>
+  `,
     name: 'Chip Icon',
     args: {
         label: 'Chip',
@@ -151,10 +145,10 @@ export const Chip_Slot_Icon: ComponentStoryFormat<Args> = {
 
 export const Custom_Close_Icon: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
-        <omni-chip data-testid="test-chip" label="${ifNotEmpty(args.label)}" ?closable=${args.closable}>
-            ${unsafeHTML(args.chip_icon)} ${unsafeHTML(args.close_icon)}
-        </omni-chip>
-    `,
+    <omni-chip data-testid="test-chip" label="${ifNotEmpty(args.label)}" ?closable=${args.closable}>
+      ${unsafeHTML(args.chip_icon)} ${unsafeHTML(args.close_icon)}
+    </omni-chip>
+  `,
     name: 'Custom Close Icon',
     args: {
         label: 'Close',

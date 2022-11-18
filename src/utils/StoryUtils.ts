@@ -46,8 +46,7 @@ function loadCssProperties(
                 module.exports.find(
                     (e) =>
                         e.name ===
-                        (superModule.declarations.find((sd: Declaration) => (sd as ClassDeclaration).superclass) as ClassDeclaration)
-                            .superclass.name
+                        (superModule.declarations.find((sd: Declaration) => (sd as ClassDeclaration).superclass) as ClassDeclaration).superclass.name
                 )
             );
         } else {
@@ -169,9 +168,7 @@ function loadSlotFor(elementName: string, slotName: string, customElements: Pack
 // }
 
 function loadSlotForModule(elementModule: any, slotName: string): { name: string; description: string } {
-    const declaration = elementModule.declarations.find(
-        (d: any) => d.slots && d.slots.length > 0 && d.slots.find((s: any) => s.name === slotName)
-    );
+    const declaration = elementModule.declarations.find((d: any) => d.slots && d.slots.length > 0 && d.slots.find((s: any) => s.name === slotName));
     if (declaration) {
         const slot = declaration.slots.find((s: any) => s.name === slotName);
         if (slot) {
@@ -333,13 +330,10 @@ function enhanceCodeBlocks(parent: Element) {
 
         render(
             html` <code-editor
-                .extensions="${() => [
-                    codeTheme,
-                    language && (language.value === 'js' || language.value === 'javascript') ? javascript() : langHtml()
-                ]}"
-                .code="${code}"
-                read-only>
-            </code-editor>`,
+        .extensions="${() => [codeTheme, language && (language.value === 'js' || language.value === 'javascript') ? javascript() : langHtml()]}"
+        .code="${code}"
+        read-only>
+      </code-editor>`,
             codeContainer
         );
         codeBlock.parentElement.removeChild(codeBlock);
@@ -522,11 +516,9 @@ function querySelectorAsync(parent: Element | ShadowRoot, selector: any, checkFr
                         try {
                             reject(
                                 new Error(
-                                    `Timed out waiting for query (${selector}) in ${timeoutMs} ms \n\n${parent.toString()} - ${
-                                        parent.nodeName
-                                    } - ${parent.nodeValue} \n${
-                                        parent.parentElement ? parent.parentElement.innerHTML : parent.textContent
-                                    } \n${parent.innerHTML}`
+                                    `Timed out waiting for query (${selector}) in ${timeoutMs} ms \n\n${parent.toString()} - ${parent.nodeName} - ${
+                                        parent.nodeValue
+                                    } \n${parent.parentElement ? parent.parentElement.innerHTML : parent.textContent} \n${parent.innerHTML}`
                                 )
                             );
                         } catch (_) {
@@ -790,9 +782,9 @@ async function setupTheming() {
     const themeStyle = document.getElementById('theme-styles') as HTMLStyleElement;
     const themesSourcesHtml = (await loadThemesListRemote()).map((theme: string) => {
         return html` <div>
-            <omni-label label="${theme}" type="subtitle"></omni-label>
-            <code-editor .extensions="${() => [codeTheme, css()]}" .code="${loadFileRemote(`/themes/${theme}`)}" read-only> </code-editor>
-        </div>`;
+      <omni-label label="${theme}" type="subtitle"></omni-label>
+      <code-editor .extensions="${() => [codeTheme, css()]}" .code="${loadFileRemote(`/themes/${theme}`)}" read-only> </code-editor>
+    </div>`;
     });
     render(themesSourcesHtml, themeSources);
 
@@ -801,28 +793,28 @@ async function setupTheming() {
     const cssLang = new LanguageSupport(cssLanguage, [cssLanguage.data.of({ autocomplete: cssCompletionSource }), omniCompletions]); //css();
     render(
         html`
-            <code-editor
-                class="source-code"
-                .extensions="${async () => [codeTheme, cssLang]}"
-                code="${cssSource}"
-                @codemirror-loaded="${(e: CustomEvent<CodeMirrorEditorEvent>) => {
-                    const newSource = e.detail.source;
-                    cssSource = newSource;
-                    window.sessionStorage.setItem(customThemeCssKey, cssSource);
-                    if (window.sessionStorage.getItem(themeStorageKey) === customThemeKey) {
-                        themeStyle.innerHTML = cssSource;
-                    }
-                }}"
-                @codemirror-source-change="${(e: CustomEvent<CodeMirrorSourceUpdateEvent>) => {
-                    const newSource = e.detail.source;
-                    cssSource = newSource;
-                    window.sessionStorage.setItem(customThemeCssKey, cssSource);
-                    if (window.sessionStorage.getItem(themeStorageKey) === customThemeKey) {
-                        themeStyle.innerHTML = cssSource;
-                    }
-                }}">
-            </code-editor>
-        `,
+      <code-editor
+        class="source-code"
+        .extensions="${async () => [codeTheme, cssLang]}"
+        code="${cssSource}"
+        @codemirror-loaded="${(e: CustomEvent<CodeMirrorEditorEvent>) => {
+            const newSource = e.detail.source;
+            cssSource = newSource;
+            window.sessionStorage.setItem(customThemeCssKey, cssSource);
+            if (window.sessionStorage.getItem(themeStorageKey) === customThemeKey) {
+                themeStyle.innerHTML = cssSource;
+            }
+        }}"
+        @codemirror-source-change="${(e: CustomEvent<CodeMirrorSourceUpdateEvent>) => {
+            const newSource = e.detail.source;
+            cssSource = newSource;
+            window.sessionStorage.setItem(customThemeCssKey, cssSource);
+            if (window.sessionStorage.getItem(themeStorageKey) === customThemeKey) {
+                themeStyle.innerHTML = cssSource;
+            }
+        }}">
+      </code-editor>
+    `,
         customThemeSourceParent
     );
 }
@@ -844,11 +836,7 @@ const omniCssVariablesCompletionSource: () => Promise<CompletionSource> = async 
                             label: c.name,
                             type: 'property',
                             detail: declaration.cssCategory ?? undefined,
-                            boost: declaration.cssCategory
-                                ? declaration.cssCategory.toLowerCase().includes('theme')
-                                    ? 90
-                                    : 80
-                                : undefined,
+                            boost: declaration.cssCategory ? (declaration.cssCategory.toLowerCase().includes('theme') ? 90 : 80) : undefined,
                             info: c.description
                         });
                     }
@@ -876,8 +864,7 @@ const omniCssVariablesCompletionSource: () => Promise<CompletionSource> = async 
         if (!context.explicit) return null;
         const above = node.resolve(pos),
             before = above.childBefore(pos);
-        if (before && before.name === ':' && above.name === 'PseudoClassSelector')
-            return { from: pos, options: pseudoClasses, validFor: identifier };
+        if (before && before.name === ':' && above.name === 'PseudoClassSelector') return { from: pos, options: pseudoClasses, validFor: identifier };
         if ((before && before.name === ':' && above.name === 'Declaration') || above.name === 'ArgList')
             return { from: pos, options: values, validFor: identifier };
         if (above.name === 'Block') return { from: pos, options: properties, validFor: identifier };

@@ -45,15 +45,15 @@ interface Args {
 
 export const Interactive = {
     render: (args: Args) => html`
-        <omni-button
-            data-testid="test-button"
-            type="${args.type}"
-            label="${ifNotEmpty(args.label)}"
-            slot-position="${args.slotPosition}"
-            ?disabled=${args.disabled}>
-            ${unsafeHTML(args['[Default Slot]'])}
-        </omni-button>
-    `,
+    <omni-button
+      data-testid="test-button"
+      type="${args.type}"
+      label="${ifNotEmpty(args.label)}"
+      slot-position="${args.slotPosition}"
+      ?disabled=${args.disabled}>
+      ${unsafeHTML(args['[Default Slot]'])}
+    </omni-button>
+  `,
     name: 'Interactive',
     args: {
         type: 'secondary',
@@ -72,7 +72,7 @@ export const Interactive = {
         await userEvent.click(button, {
             pointerEventsCheck: 0
         });
-        await expect(click).toBeCalledTimes(2);
+        await expect(click).toBeCalledTimes(3);
     }
 } as ComponentStoryFormat<Args>;
 
@@ -107,10 +107,10 @@ export const Label = {
 
 export const Slot = {
     render: () => html`
-        <omni-button data-testid="test-button">
-            <omni-icon size="default" icon="/assets/images/direction.svg"></omni-icon>
-        </omni-button>
-    `,
+    <omni-button data-testid="test-button">
+      <omni-icon size="default" icon="/assets/images/direction.svg"></omni-icon>
+    </omni-button>
+  `,
     name: 'Slot',
     args: {},
     play: async (context) => {

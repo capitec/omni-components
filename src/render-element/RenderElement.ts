@@ -43,10 +43,10 @@ export class RenderElement extends OmniElement {
         return [
             super.styles,
             css`
-                .loading {
-                    width: var(--omni-render-element-loading-indicator-width, 50px);
-                }
-            `
+        .loading {
+          width: var(--omni-render-element-loading-indicator-width, 50px);
+        }
+      `
         ];
     }
 

@@ -59,31 +59,31 @@ export class Label extends OmniElement {
         return [
             super.styles,
             css`
-                :host {
-                    color: var(--omni-label-font-color, var(--omni-font-color));
-                    font-family: var(--omni-label-font-family, var(--omni-font-family));
-                    font-size: var(--omni-label-font-size, var(--omni-font-size));
-                    font-weight: var(--omni-label-font-weight, var(--omni-font-weight));
-                    white-space: pre-wrap;
-                    cursor: var(--omni-label-cursor, default);
-                }
-                :host([type='title']) {
-                    font-size: var(--omni-label-title-font-size, 1.42em);
-                    font-weight: var(--omni-label-title-font-weight, bold);
-                }
-                :host([type='subtitle']) {
-                    font-size: var(--omni-label-subtitle-font-size, 1.14em);
-                    font-weight: var(--omni-label-subtitle-font-weight, bold);
-                }
-                :host([type='strong']) {
-                    font-size: var(--omni-label-strong-font-size, var(--omni-font-size));
-                    font-weight: var(--omni-label-strong-font-weight, bold);
-                }
-                :host([type='default']) {
-                    font-size: var(--omni-label-default-font-size, var(--omni-font-size));
-                    font-weight: var(--omni-label-default-font-weight, var(--omni-font-weight));
-                }
-            `
+        :host {
+          color: var(--omni-label-font-color, var(--omni-font-color));
+          font-family: var(--omni-label-font-family, var(--omni-font-family));
+          font-size: var(--omni-label-font-size, var(--omni-font-size));
+          font-weight: var(--omni-label-font-weight, var(--omni-font-weight));
+          white-space: pre-wrap;
+          cursor: var(--omni-label-cursor, default);
+        }
+        :host([type='title']) {
+          font-size: var(--omni-label-title-font-size, 1.42em);
+          font-weight: var(--omni-label-title-font-weight, bold);
+        }
+        :host([type='subtitle']) {
+          font-size: var(--omni-label-subtitle-font-size, 1.14em);
+          font-weight: var(--omni-label-subtitle-font-weight, bold);
+        }
+        :host([type='strong']) {
+          font-size: var(--omni-label-strong-font-size, var(--omni-font-size));
+          font-weight: var(--omni-label-strong-font-weight, bold);
+        }
+        :host([type='default']) {
+          font-size: var(--omni-label-default-font-size, var(--omni-font-size));
+          font-weight: var(--omni-label-default-font-weight, var(--omni-font-weight));
+        }
+      `
         ];
     }
 

@@ -27,9 +27,7 @@ interface Args {
 }
 
 export const Interactive: ComponentStoryFormat<Args> = {
-    render: (args: Args) => html`
-        <omni-label data-testid="test-label" label="${ifNotEmpty(args.label)}" type="${args.type}"> </omni-label>
-    `,
+    render: (args: Args) => html` <omni-label data-testid="test-label" label="${ifNotEmpty(args.label)}" type="${args.type}"> </omni-label> `,
     name: 'Interactive',
     args: {
         label: 'Label',

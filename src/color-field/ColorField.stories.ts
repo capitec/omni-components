@@ -30,19 +30,19 @@ export default {
 
 export const Interactive: ComponentStoryFormat<BaseArgTypes> = {
     render: (args: BaseArgTypes) => html`
-        <omni-color-field
-            data-testid="test-color-field"
-            label="${ifNotEmpty(args.label)}"
-            .value="${args.value}"
-            .data="${args.data}"
-            hint="${ifNotEmpty(args.hint)}"
-            error="${ifNotEmpty(args.error)}"
-            ?disabled="${args.disabled}"
-            >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${args.suffix
-                ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}`
-                : nothing}${args.prefix || args.suffix ? '\r\n' : nothing}</omni-color-field
-        >
-    `,
+    <omni-color-field
+      data-testid="test-color-field"
+      label="${ifNotEmpty(args.label)}"
+      .value="${args.value}"
+      .data="${args.data}"
+      hint="${ifNotEmpty(args.hint)}"
+      error="${ifNotEmpty(args.error)}"
+      ?disabled="${args.disabled}"
+      >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${
+        args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}` : nothing
+    }${args.prefix || args.suffix ? '\r\n' : nothing}</omni-color-field
+    >
+  `,
     name: 'Interactive',
     args: {
         label: 'Label',
@@ -76,8 +76,7 @@ export const Prefix = PrefixStory<ColorField, BaseArgTypes>('omni-color-field');
 export const Suffix = SuffixStory<ColorField, BaseArgTypes>('omni-color-field');
 
 export const Disabled: ComponentStoryFormat<BaseArgTypes> = {
-    render: (args: BaseArgTypes) =>
-        html`<omni-color-field data-testid="test-field" label="${ifNotEmpty(args.label)}" disabled></omni-color-field>`,
+    render: (args: BaseArgTypes) => html`<omni-color-field data-testid="test-field" label="${ifNotEmpty(args.label)}" disabled></omni-color-field>`,
     name: 'Disabled',
     args: {
         label: 'Disabled',

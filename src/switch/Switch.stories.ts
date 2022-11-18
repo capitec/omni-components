@@ -25,15 +25,15 @@ interface Args {
 
 export const Interactive: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
-        <omni-switch
-            data-testid="test-switch"
-            label="${ifNotEmpty(args.label)}"
-            .data="${args.data}"
-            hint="${ifNotEmpty(args.hint)}"
-            error="${ifNotEmpty(args.error)}"
-            ?checked="${args.checked}"
-            ?disabled="${args.disabled}"></omni-switch>
-    `,
+    <omni-switch
+      data-testid="test-switch"
+      label="${ifNotEmpty(args.label)}"
+      .data="${args.data}"
+      hint="${ifNotEmpty(args.hint)}"
+      error="${ifNotEmpty(args.error)}"
+      ?checked="${args.checked}"
+      ?disabled="${args.disabled}"></omni-switch>
+  `,
     name: 'Interactive',
     args: {
         label: '',
@@ -114,9 +114,7 @@ export const Checked: ComponentStoryFormat<Args> = {
 };
 
 export const Disabled: ComponentStoryFormat<Args> = {
-    render: (args: Args) => html`
-        <omni-switch data-testid="test-switch" label="${args.label}" ?disabled="${args.disabled}"></omni-switch>
-    `,
+    render: (args: Args) => html` <omni-switch data-testid="test-switch" label="${args.label}" ?disabled="${args.disabled}"></omni-switch> `,
     args: {
         label: 'Disabled',
         disabled: true

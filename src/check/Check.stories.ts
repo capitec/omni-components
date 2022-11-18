@@ -37,22 +37,20 @@ interface Args {
 
 export const Interactive: ComponentStoryFormat<Args> = {
     render: (args) => html`
-        <omni-check
-            data-testid="test-check"
-            label="${ifNotEmpty(args.label)}"
-            .data="${args.data}"
-            hint="${ifNotEmpty(args.hint)}"
-            error="${ifNotEmpty(args.error)}"
-            ?checked="${args.checked}"
-            ?disabled="${args.disabled}"
-            ?indeterminate="${args.indeterminate}"
-            >${args.indeterminate_icon
-                ? html`${'\r\n'}${unsafeHTML(assignToSlot('indeterminate_icon', args.indeterminate_icon))}`
-                : nothing}${args.check_icon
-                ? html`${'\r\n'}${unsafeHTML(assignToSlot('check_icon', args.check_icon))}`
-                : nothing}${args.check_icon || args.indeterminate_icon ? '\r\n' : nothing}</omni-check
-        >
-    `,
+    <omni-check
+      data-testid="test-check"
+      label="${ifNotEmpty(args.label)}"
+      .data="${args.data}"
+      hint="${ifNotEmpty(args.hint)}"
+      error="${ifNotEmpty(args.error)}"
+      ?checked="${args.checked}"
+      ?disabled="${args.disabled}"
+      ?indeterminate="${args.indeterminate}"
+      >${args.indeterminate_icon ? html`${'\r\n'}${unsafeHTML(assignToSlot('indeterminate_icon', args.indeterminate_icon))}` : nothing}${
+        args.check_icon ? html`${'\r\n'}${unsafeHTML(assignToSlot('check_icon', args.check_icon))}` : nothing
+    }${args.check_icon || args.indeterminate_icon ? '\r\n' : nothing}</omni-check
+    >
+  `,
     name: 'Interactive',
     args: {
         label: '',
@@ -139,9 +137,7 @@ export const Checked: ComponentStoryFormat<Args> = {
 };
 
 export const Indeterminate: ComponentStoryFormat<Args> = {
-    render: (args: Args) => html`
-        <omni-check data-testid="test-check" label="${args.label}" ?indeterminate="${args.indeterminate}"></omni-check>
-    `,
+    render: (args: Args) => html` <omni-check data-testid="test-check" label="${args.label}" ?indeterminate="${args.indeterminate}"></omni-check> `,
     args: {
         label: 'Indeterminate',
         indeterminate: true
@@ -181,8 +177,8 @@ export const Disabled: ComponentStoryFormat<Args> = {
 
 export const Custom_Check_Icon: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
-        <omni-check data-testid="test-check" label="${args.label}" ?checked="${args.checked}"> ${unsafeHTML(args.check_icon)} </omni-check>
-    `,
+    <omni-check data-testid="test-check" label="${args.label}" ?checked="${args.checked}"> ${unsafeHTML(args.check_icon)} </omni-check>
+  `,
     args: {
         label: 'Custom Check Icon',
         checked: true,
@@ -205,10 +201,10 @@ export const Custom_Check_Icon: ComponentStoryFormat<Args> = {
 
 export const Custom_Indeterminate_Icon: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
-        <omni-check data-testid="test-check" label="${args.label}" ?indeterminate="${args.indeterminate}">
-            ${unsafeHTML(args.indeterminate_icon)}
-        </omni-check>
-    `,
+    <omni-check data-testid="test-check" label="${args.label}" ?indeterminate="${args.indeterminate}">
+      ${unsafeHTML(args.indeterminate_icon)}
+    </omni-check>
+  `,
     args: {
         label: 'Custom Indeterminate Icon',
         indeterminate: true,

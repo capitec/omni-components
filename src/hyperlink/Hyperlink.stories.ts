@@ -29,15 +29,15 @@ interface Args {
 
 export const Interactive: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
-        <omni-hyperlink
-            data-testid="test-hyperlink"
-            label="${ifNotEmpty(args.label)}"
-            href="${ifNotEmpty(args.href)}"
-            target="${ifNotEmpty(args.target)}"
-            ?disabled="${args.disabled}"
-            ?inline="${args.inline}"
-            size="${args.size}"></omni-hyperlink>
-    `,
+    <omni-hyperlink
+      data-testid="test-hyperlink"
+      label="${ifNotEmpty(args.label)}"
+      href="${ifNotEmpty(args.href)}"
+      target="${ifNotEmpty(args.target)}"
+      ?disabled="${args.disabled}"
+      ?inline="${args.inline}"
+      size="${args.size}"></omni-hyperlink>
+  `,
     name: 'Interactive',
     args: {
         label: 'Click',
@@ -106,10 +106,10 @@ export const Href: ComponentStoryFormat<Args> = {
 export const Disabled: ComponentStoryFormat<Args> = {
     render: (args: Args) =>
         html`<omni-hyperlink
-            data-testid="test-hyperlink"
-            href="https://example.com"
-            label="${args.label}"
-            ?disabled="${args.disabled}"></omni-hyperlink>`,
+      data-testid="test-hyperlink"
+      href="https://example.com"
+      label="${args.label}"
+      ?disabled="${args.disabled}"></omni-hyperlink>`,
     name: 'Disabled',
     args: {
         label: 'Click',
@@ -135,9 +135,7 @@ export const Disabled: ComponentStoryFormat<Args> = {
 
 export const Inline: ComponentStoryFormat<Args> = {
     render: (args: Args) =>
-        html`<p data-testid="test-paragraph">
-            Inline <omni-hyperlink label="${args.label}" ?inline="${args.inline}"></omni-hyperlink> example
-        </p>`,
+        html`<p data-testid="test-paragraph"> Inline <omni-hyperlink label="${args.label}" ?inline="${args.inline}"></omni-hyperlink> example </p>`,
     name: 'Inline',
     args: {
         label: 'click',

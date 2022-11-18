@@ -25,15 +25,15 @@ interface Args {
 
 export const Interactive: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
-        <omni-radio
-            data-testid="test-radio"
-            label="${ifNotEmpty(args.label)}"
-            .data="${args.data}"
-            hint="${ifNotEmpty(args.hint)}"
-            error="${ifNotEmpty(args.error)}"
-            ?checked="${args.checked}"
-            ?disabled="${args.disabled}"></omni-radio>
-    `,
+    <omni-radio
+      data-testid="test-radio"
+      label="${ifNotEmpty(args.label)}"
+      .data="${args.data}"
+      hint="${ifNotEmpty(args.hint)}"
+      error="${ifNotEmpty(args.error)}"
+      ?checked="${args.checked}"
+      ?disabled="${args.disabled}"></omni-radio>
+  `,
     name: 'Interactive',
     args: {
         label: '',

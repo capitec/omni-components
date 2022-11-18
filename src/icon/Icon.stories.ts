@@ -34,12 +34,12 @@ interface Args {
 
 export const Interactive: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
-        <!-- Icons loaded by content path instead of font-based or slotted content will not be able to be styled directly -->
+    <!-- Icons loaded by content path instead of font-based or slotted content will not be able to be styled directly -->
 
-        <omni-icon data-testid="test-icon" size="${ifNotEmpty(args.size)}" icon="${ifNotEmpty(args.icon)}">
-            ${unsafeHTML(args['[Default Slot]'])}
-        </omni-icon>
-    `,
+    <omni-icon data-testid="test-icon" size="${ifNotEmpty(args.size)}" icon="${ifNotEmpty(args.icon)}">
+      ${unsafeHTML(args['[Default Slot]'])}
+    </omni-icon>
+  `,
     name: 'Interactive',
     args: {
         size: 'default',
@@ -65,9 +65,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
 };
 
 export const SVG: ComponentStoryFormat<Args> = {
-    render: (args: Args) => html`
-        <omni-icon data-testid="test-icon" size="${args.size}"> ${unsafeHTML(args['[Default Slot]'])} </omni-icon>
-    `,
+    render: (args: Args) => html` <omni-icon data-testid="test-icon" size="${args.size}"> ${unsafeHTML(args['[Default Slot]'])} </omni-icon> `,
     name: 'SVG',
     args: {
         size: 'large',
@@ -93,10 +91,10 @@ export const SVG: ComponentStoryFormat<Args> = {
 
 export const Icon_Path: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
-        <!-- Icons loaded by content path instead of font-based or slotted content will not be able to be styled directly -->
+    <!-- Icons loaded by content path instead of font-based or slotted content will not be able to be styled directly -->
 
-        <omni-icon data-testid="test-icon" size="${args.size}" icon="${args.icon}"></omni-icon>
-    `,
+    <omni-icon data-testid="test-icon" size="${args.size}" icon="${args.icon}"></omni-icon>
+  `,
     name: 'Local Source',
     args: {
         size: 'default',
@@ -112,10 +110,10 @@ export const Icon_Path: ComponentStoryFormat<Args> = {
 
 export const URL: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
-        <!-- Icons loaded by content path instead of font-based or slotted content will not be able to be styled directly -->
+    <!-- Icons loaded by content path instead of font-based or slotted content will not be able to be styled directly -->
 
-        <omni-icon data-testid="test-icon" size="${args.size}" icon="${args.icon}"></omni-icon>
-    `,
+    <omni-icon data-testid="test-icon" size="${args.size}" icon="${args.icon}"></omni-icon>
+  `,
     name: 'Remote Source',
     args: {
         size: 'default',
@@ -131,12 +129,12 @@ export const URL: ComponentStoryFormat<Args> = {
 
 export const Material: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
-        <!-- Add Material to your project, e.g. Adding below link in <head>-->
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-        <!-- ------------------------------------------------------------- -->
+    <!-- Add Material to your project, e.g. Adding below link in <head>-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <!-- ------------------------------------------------------------- -->
 
-        <omni-icon data-testid="test-icon" size="${args.size}" icon="${args.icon}"> </omni-icon>
-    `,
+    <omni-icon data-testid="test-icon" size="${args.size}" icon="${args.icon}"> </omni-icon>
+  `,
     args: {
         size: 'default',
         icon: '@material/receipt_long'

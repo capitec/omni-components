@@ -45,21 +45,21 @@ interface Args extends BaseArgTypes {
 
 export const Interactive: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
-        <omni-numeric-field
-            data-testid="test-numeric-field"
-            label="${ifNotEmpty(args.label)}"
-            .value="${args.value}"
-            .data="${args.data}"
-            hint="${ifNotEmpty(args.hint)}"
-            error="${ifNotEmpty(args.error)}"
-            ?disabled="${args.disabled}"
-            >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${args.suffix
-                ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}`
-                : nothing}${args.increase ? html`${'\r\n'}${unsafeHTML(assignToSlot('increase', args.increase))}` : nothing}${args.decrease
-                ? html`${'\r\n'}${unsafeHTML(assignToSlot('decrease', args.decrease))}`
-                : nothing}${args.prefix || args.suffix || args.increase || args.decrease ? '\r\n' : nothing}</omni-numeric-field
-        >
-    `,
+    <omni-numeric-field
+      data-testid="test-numeric-field"
+      label="${ifNotEmpty(args.label)}"
+      .value="${args.value}"
+      .data="${args.data}"
+      hint="${ifNotEmpty(args.hint)}"
+      error="${ifNotEmpty(args.error)}"
+      ?disabled="${args.disabled}"
+      >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${
+        args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}` : nothing
+    }${args.increase ? html`${'\r\n'}${unsafeHTML(assignToSlot('increase', args.increase))}` : nothing}${
+        args.decrease ? html`${'\r\n'}${unsafeHTML(assignToSlot('decrease', args.decrease))}` : nothing
+    }${args.prefix || args.suffix || args.increase || args.decrease ? '\r\n' : nothing}</omni-numeric-field
+    >
+  `,
     name: 'Interactive',
     args: {
         label: 'Label',
@@ -138,11 +138,11 @@ export const Disabled = DisabledStory<NumericField, BaseArgTypes>('omni-numeric-
 
 export const Custom_Icon_Slot: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
-        <omni-numeric-field data-testid="test-password-field" label="${ifNotEmpty(args.label)}" ?disabled="${args.disabled}">
-            <omni-lock-open-icon slot="increase"></omni-lock-open-icon>
-            <omni-lock-closed-icon slot="decrease"></omni-lock-closed-icon>
-        </omni-numeric-field>
-    `,
+    <omni-numeric-field data-testid="test-password-field" label="${ifNotEmpty(args.label)}" ?disabled="${args.disabled}">
+      <omni-lock-open-icon slot="increase"></omni-lock-open-icon>
+      <omni-lock-closed-icon slot="decrease"></omni-lock-closed-icon>
+    </omni-numeric-field>
+  `,
     name: 'Custom Icon Slot',
     args: {
         label: 'Custom Icon Slot'
@@ -154,12 +154,8 @@ export const Custom_Icon_Slot: ComponentStoryFormat<Args> = {
         await expect(increaseElement).toBeTruthy();
         await expect(decreaseElement).toBeTruthy();
 
-        const foundSlottedIncreaseElement = increaseElement
-            .assignedElements()
-            .find((e) => e.tagName.toLocaleLowerCase() === 'omni-lock-open-icon');
-        const foundSlottedDecreaseElement = decreaseElement
-            .assignedElements()
-            .find((e) => e.tagName.toLocaleLowerCase() === 'omni-lock-closed-icon');
+        const foundSlottedIncreaseElement = increaseElement.assignedElements().find((e) => e.tagName.toLocaleLowerCase() === 'omni-lock-open-icon');
+        const foundSlottedDecreaseElement = decreaseElement.assignedElements().find((e) => e.tagName.toLocaleLowerCase() === 'omni-lock-closed-icon');
         await expect(foundSlottedIncreaseElement).toBeTruthy();
         await expect(foundSlottedDecreaseElement).toBeTruthy();
     }

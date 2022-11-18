@@ -50,9 +50,7 @@ export const LabelStory = <T extends HTMLElement, U extends BaseArgTypes>(tagNam
 export const HintStory = <T extends HTMLElement, U extends BaseArgTypes>(tagName: string) => {
     const Hint: ComponentStoryFormat<U> = {
         render: (args: U) =>
-            html`${unsafeHTML(
-                `<${tagName}  data-testid="test-field" label="${ifNotEmpty(args.label)}" hint="${args.hint}"></${tagName}>`
-            )}`,
+            html`${unsafeHTML(`<${tagName}  data-testid="test-field" label="${ifNotEmpty(args.label)}" hint="${args.hint}"></${tagName}>`)}`,
         name: 'Hint',
         args: {
             label: 'Hint',
@@ -71,9 +69,7 @@ export const HintStory = <T extends HTMLElement, U extends BaseArgTypes>(tagName
 export const ErrorStory = <T extends HTMLElement, U extends BaseArgTypes>(tagName: string) => {
     const Error: ComponentStoryFormat<U> = {
         render: (args: U) =>
-            html`${unsafeHTML(
-                `<${tagName} data-testid="test-field" label="${args.label}" error="${ifNotEmpty(args.error)}"></${tagName}>`
-            )}`,
+            html`${unsafeHTML(`<${tagName} data-testid="test-field" label="${args.label}" error="${ifNotEmpty(args.error)}"></${tagName}>`)}`,
         name: 'Error',
         args: {
             label: 'Error',
@@ -95,9 +91,7 @@ export const ValueStory = <T extends HTMLElement, U extends BaseArgTypes>(
 ) => {
     const Value: ComponentStoryFormat<U> = {
         render: (args: U) =>
-            html`${unsafeHTML(
-                `<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}" value="${args.value}"></${tagName}>`
-            )}`,
+            html`${unsafeHTML(`<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}" value="${args.value}"></${tagName}>`)}`,
         name: 'Value',
         args: {
             label: 'Value',
@@ -159,8 +153,7 @@ export const SuffixStory = <T extends HTMLElement, U extends BaseArgTypes>(tagNa
 
 export const DisabledStory = <T extends HTMLElement, U extends BaseArgTypes>(tagName: string) => {
     const Disabled: ComponentStoryFormat<U> = {
-        render: (args: U) =>
-            html`${unsafeHTML(`<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}" disabled></${tagName}>`)}`,
+        render: (args: U) => html`${unsafeHTML(`<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}" disabled></${tagName}>`)}`,
         name: 'Disabled',
         args: {
             label: 'Disabled',

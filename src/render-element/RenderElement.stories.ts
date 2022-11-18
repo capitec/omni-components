@@ -57,12 +57,12 @@ async function renderAsLit(data: object) {
 `,
     name: 'As Lit',
     render: (args: Args) => html`
-        <omni-render-element data-testid="test-render" .data="${args.data}" .renderer="${args.renderer}"
-            >${args.loading_indicator
-                ? html`${'\r\n'}${unsafeHTML(assignToSlot('loading_indicator', args.loading_indicator))}${'\r\n'}`
-                : nothing}</omni-render-element
-        >
-    `,
+    <omni-render-element data-testid="test-render" .data="${args.data}" .renderer="${args.renderer}"
+      >${
+          args.loading_indicator ? html`${'\r\n'}${unsafeHTML(assignToSlot('loading_indicator', args.loading_indicator))}${'\r\n'}` : nothing
+      }</omni-render-element
+    >
+  `,
     args: {
         data: {
             hello: 'world',

@@ -63,149 +63,140 @@ export class StoryRenderer extends LitElement {
         const storySource = this.story.source ? this.story.source() : this._getSourceFromLit(res);
 
         return html`
-            <div class="preview">
-                <div class="item">
-                    <div class="${this.key}${this.interactive ? ' interactive-story' : ''}" .data=${this.story}>
-                        ${this.overrideInteractive ? unsafeHTML(this._interactiveSrc) : res}
-                    </div>
-                </div>
+      <div class="preview">
+        <div class="item">
+          <div class="${this.key}${this.interactive ? ' interactive-story' : ''}" .data=${this.story}>
+            ${this.overrideInteractive ? unsafeHTML(this._interactiveSrc) : res}
+          </div>
+        </div>
 
-                ${this.interactive
-                    ? html`
-                          <div class="interactive">
-                              <span class="docs-omni-component interactive-reset" @click="${this._resetLivePropertyEditor}">
-                                  <omni-icon
-                                      class="docs-omni-component"
-                                      style="cursor: pointer;"
-                                      icon="@material/settings_backup_restore"></omni-icon>
-                              </span>
-                              <live-property-editor
-                                  class="live-props docs-omni-component"
-                                  ?disabled=${this.overrideInteractive}
-                                  .data="${{ ...this.story }}"
-                                  element="${this.tag}"
-                                  ignore-attributes="dir,lang"
-                                  .cssValueReader="${(variable: CSSVariable) => {
-                                      const css = this.customCss.sheet;
+        ${
+            this.interactive
+                ? html`
+              <div class="interactive">
+                <span class="docs-omni-component interactive-reset" @click="${this._resetLivePropertyEditor}">
+                  <omni-icon class="docs-omni-component" style="cursor: pointer;" icon="@material/settings_backup_restore"></omni-icon>
+                </span>
+                <live-property-editor
+                  class="live-props docs-omni-component"
+                  ?disabled=${this.overrideInteractive}
+                  .data="${{ ...this.story }}"
+                  element="${this.tag}"
+                  ignore-attributes="dir,lang"
+                  .cssValueReader="${(variable: CSSVariable) => {
+                      const css = this.customCss.sheet;
 
-                                      if (variable.name) {
-                                          let rootCss: CSSStyleRule = undefined;
-                                          if (css.cssRules.length === 0) {
-                                              const index = css.insertRule(':root {}');
-                                              rootCss = css.cssRules.item(index) as CSSStyleRule;
-                                          } else {
-                                              for (let index = 0; index < css.cssRules.length; index++) {
-                                                  const rule = css.cssRules[index] as CSSStyleRule;
-                                                  if (rule.selectorText === ':root') {
-                                                      rootCss = rule;
-                                                      break;
-                                                  }
-                                              }
-                                          }
+                      if (variable.name) {
+                          let rootCss: CSSStyleRule = undefined;
+                          if (css.cssRules.length === 0) {
+                              const index = css.insertRule(':root {}');
+                              rootCss = css.cssRules.item(index) as CSSStyleRule;
+                          } else {
+                              for (let index = 0; index < css.cssRules.length; index++) {
+                                  const rule = css.cssRules[index] as CSSStyleRule;
+                                  if (rule.selectorText === ':root') {
+                                      rootCss = rule;
+                                      break;
+                                  }
+                              }
+                          }
 
-                                          if (rootCss) {
-                                              variable.value = rootCss.style.getPropertyValue(variable.name);
-                                          }
-                                      }
-                                      return variable;
-                                  }}"
-                                  @property-change="${async (e: CustomEvent<PropertyChangeEvent>) => {
-                                      const changed = e.detail;
-                                      if (
-                                          !changed.oldValue ||
-                                          !changed.newValue ||
-                                          changed.oldValue.toString().trim() !== changed.newValue.toString().trim()
-                                      ) {
-                                          this.story.args[changed.property] = changed.newValue;
+                          if (rootCss) {
+                              variable.value = rootCss.style.getPropertyValue(variable.name);
+                          }
+                      }
+                      return variable;
+                  }}"
+                  @property-change="${async (e: CustomEvent<PropertyChangeEvent>) => {
+                      const changed = e.detail;
+                      if (!changed.oldValue || !changed.newValue || changed.oldValue.toString().trim() !== changed.newValue.toString().trim()) {
+                          this.story.args[changed.property] = changed.newValue;
 
-                                          this.requestUpdate();
-                                          await this.updateComplete;
+                          this.requestUpdate();
+                          await this.updateComplete;
 
-                                          if (this.codeEditor && !this.story.source) {
-                                              await this.codeEditor.refresh(() =>
-                                                  this._getSourceFromLit(this.story.render(this.story.args))
-                                              );
-                                          }
-                                      }
-                                  }}"
-                                  @css-change="${(e: CustomEvent<CSSVariable>) => {
-                                      const changed = e.detail;
-                                      const css = this.customCss.sheet;
+                          if (this.codeEditor && !this.story.source) {
+                              await this.codeEditor.refresh(() => this._getSourceFromLit(this.story.render(this.story.args)));
+                          }
+                      }
+                  }}"
+                  @css-change="${(e: CustomEvent<CSSVariable>) => {
+                      const changed = e.detail;
+                      const css = this.customCss.sheet;
 
-                                      if (changed.value) {
-                                          let rootCss: CSSStyleRule = undefined;
-                                          if (css.cssRules.length === 0) {
-                                              const index = css.insertRule(':root {}');
-                                              rootCss = css.cssRules.item(index) as CSSStyleRule;
-                                          } else {
-                                              for (let index = 0; index < css.cssRules.length; index++) {
-                                                  const rule = css.cssRules[index] as CSSStyleRule;
-                                                  if (rule.selectorText === ':root') {
-                                                      rootCss = rule;
-                                                      break;
-                                                  }
-                                              }
-                                          }
+                      if (changed.value) {
+                          let rootCss: CSSStyleRule = undefined;
+                          if (css.cssRules.length === 0) {
+                              const index = css.insertRule(':root {}');
+                              rootCss = css.cssRules.item(index) as CSSStyleRule;
+                          } else {
+                              for (let index = 0; index < css.cssRules.length; index++) {
+                                  const rule = css.cssRules[index] as CSSStyleRule;
+                                  if (rule.selectorText === ':root') {
+                                      rootCss = rule;
+                                      break;
+                                  }
+                              }
+                          }
 
-                                          if (rootCss) {
-                                              rootCss.style.setProperty(changed.name, changed.value);
-                                          }
+                          if (rootCss) {
+                              rootCss.style.setProperty(changed.name, changed.value);
+                          }
 
-                                          //   this.requestUpdate();
-                                      }
-                                  }}"></live-property-editor>
-                          </div>
-                      `
-                    : nothing}
-            </div>
-            <!-- <div style="border-top: 1px solid #e1e1e1;max-width: 600px;"> -->
-            <div class="code-block">
-                <code-editor
-                    class="source-code"
-                    .transformSource="${(s: string) => this._transformSource(s)}"
-                    .extensions="${async () => [codeTheme, langHtml(await loadCustomElementsCodeMirrorCompletionsRemote())]}"
-                    .code="${live(storySource ?? '')}"
-                    @codemirror-loaded="${(e: CustomEvent<CodeMirrorEditorEvent>) => {
-                        const newSource = e.detail.source;
-                        this.originalInteractiveSrc = newSource;
-                        this._interactiveSrc = newSource;
-                    }}"
-                    @codemirror-source-change="${(e: CustomEvent<CodeMirrorSourceUpdateEvent>) => {
-                        const newSource = e.detail.source;
-                        this._interactiveSrc = newSource;
-                        this.overrideInteractive =
-                            this._interactiveSrc !== this.originalInteractiveSrc && this._interactiveSrc !== storySource;
+                          //   this.requestUpdate();
+                      }
+                  }}"></live-property-editor>
+              </div>
+            `
+                : nothing
+        }
+      </div>
+      <!-- <div style="border-top: 1px solid #e1e1e1;max-width: 600px;"> -->
+      <div class="code-block">
+        <code-editor
+          class="source-code"
+          .transformSource="${(s: string) => this._transformSource(s)}"
+          .extensions="${async () => [codeTheme, langHtml(await loadCustomElementsCodeMirrorCompletionsRemote())]}"
+          .code="${live(storySource ?? '')}"
+          @codemirror-loaded="${(e: CustomEvent<CodeMirrorEditorEvent>) => {
+              const newSource = e.detail.source;
+              this.originalInteractiveSrc = newSource;
+              this._interactiveSrc = newSource;
+          }}"
+          @codemirror-source-change="${(e: CustomEvent<CodeMirrorSourceUpdateEvent>) => {
+              const newSource = e.detail.source;
+              this._interactiveSrc = newSource;
+              this.overrideInteractive = this._interactiveSrc !== this.originalInteractiveSrc && this._interactiveSrc !== storySource;
 
-                        this.requestUpdate();
-                    }}"
-                    ?read-only="${!this.interactive}">
-                </code-editor>
-            </div>
-            <div class="play-tests">
-                <div style="display: flex; flex-direction: row;">
-                    <omni-button
-                        label="Run Tests"
-                        slot-position="left"
-                        ?disabled=${this.overrideInteractive ||
-                        JSON.stringify(this.story.originalArgs)
-                            .replaceAll('\n', '')
-                            .replaceAll('\\n', '')
-                            .replaceAll('\t', '')
-                            .replaceAll(' ', '') !==
-                            JSON.stringify(this.story.args).replaceAll('\n', '').replaceAll('\\n', '').replaceAll('\t', '').replaceAll(' ', '')}
-                        @click="${() => this._play(this.story, `.${this.key}`)}">
-                        <omni-icon icon="@material/play_arrow" style="margin-right: 8px;"></omni-icon>
-                    </omni-button>    <div class="${this.key + '-result'} success">
-                        <span class="material-icons" style="color: #155724;">check</span>
-                        <span style="margin-left: 8px;">Passed</span>
-                    </div>
-                </div>
-                <div class="${this.key + '-result'} failure">
-                    <span class="material-icons" style="color: #721c24;">close</span>
-                    <span style="margin-left: 8px;">${this._playError}</span>
-                </div>
-            </div>
-        `;
+              this.requestUpdate();
+          }}"
+          ?read-only="${!this.interactive}">
+        </code-editor>
+      </div>
+      <div class="play-tests">
+        <div style="display: flex; flex-direction: row;">
+          <omni-button
+            label="Run Tests"
+            slot-position="left"
+            ?disabled=${
+                this.overrideInteractive ||
+                JSON.stringify(this.story.originalArgs).replaceAll('\n', '').replaceAll('\\n', '').replaceAll('\t', '').replaceAll(' ', '') !==
+                    JSON.stringify(this.story.args).replaceAll('\n', '').replaceAll('\\n', '').replaceAll('\t', '').replaceAll(' ', '')
+            }
+            @click="${() => this._play(this.story, `.${this.key}`)}">
+            <omni-icon icon="@material/play_arrow" style="margin-right: 8px;"></omni-icon>
+          </omni-button>
+          <div class="${this.key + '-result'} success">
+            <span class="material-icons" style="color: #155724;">check</span>
+            <span style="margin-left: 8px;">Passed</span>
+          </div>
+        </div>
+        <div class="${this.key + '-result'} failure">
+          <span class="material-icons" style="color: #721c24;">close</span>
+          <span style="margin-left: 8px;">${this._playError}</span>
+        </div>
+      </div>
+    `;
     }
 
     protected override createRenderRoot(): Element | ShadowRoot {

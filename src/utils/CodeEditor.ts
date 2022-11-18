@@ -35,63 +35,63 @@ export class CodeEditor extends LitElement {
     static override get styles() {
         return [
             css`
-                ::slotted(*) {
-                    display: none;
-                }
+        ::slotted(*) {
+          display: none;
+        }
 
-                :host[disabled] {
-                    pointer-events: none;
-                }
+        :host[disabled] {
+          pointer-events: none;
+        }
 
-                .cm-editor {
-                    background: #f9f9f9;
-                    padding: 6px;
-                }
+        .cm-editor {
+          background: #f9f9f9;
+          padding: 6px;
+        }
 
-                .cm-content {
-                    white-space: pre-wrap !important;
-                }
+        .cm-content {
+          white-space: pre-wrap !important;
+        }
 
-                .copy-code-wrap {
-                    position: absolute;
-                    bottom: 5px;
-                    right: 5px;
-                    z-index: 10;
-                    cursor: pointer;
-                }
+        .copy-code-wrap {
+          position: absolute;
+          bottom: 5px;
+          right: 5px;
+          z-index: 10;
+          cursor: pointer;
+        }
 
-                .copy-code {
-                    height: 16px;
-                    width: 16px;
-                    position: relative;
-                    bottom: 0px;
-                    right: 0px;
-                    background: rgb(51, 154, 240);
-                    opacity: 50%;
-                    border-radius: 50%;
-                    z-index: 10;
-                    transition: all 0.2s ease 0s;
-                    color: white;
-                    font-size: xx-small;
-                }
+        .copy-code {
+          height: 16px;
+          width: 16px;
+          position: relative;
+          bottom: 0px;
+          right: 0px;
+          background: rgb(51, 154, 240);
+          opacity: 50%;
+          border-radius: 50%;
+          z-index: 10;
+          transition: all 0.2s ease 0s;
+          color: white;
+          font-size: xx-small;
+        }
 
-                .copy-code:hover {
-                    opacity: 100%;
-                }
+        .copy-code:hover {
+          opacity: 100%;
+        }
 
-                .copy-code-wrap:active .copy-code {
-                    transform: translate(0, 0) scale(0.9);
-                }
+        .copy-code-wrap:active .copy-code {
+          transform: translate(0, 0) scale(0.9);
+        }
 
-                .animate {
-                    transform: translate(0, 0) scale(1.12);
-                }
+        .animate {
+          transform: translate(0, 0) scale(1.12);
+        }
 
-                .tooltip {
-                    font-size: 15px;
-                    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-                }
-            `
+        .tooltip {
+          font-size: 15px;
+          box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+      `
         ];
     }
 
@@ -100,9 +100,7 @@ export class CodeEditor extends LitElement {
             this.code = await getCode();
         }
         if (!this.disabled && this.editor && (this.code || this.slotElement.assignedNodes().length > 0)) {
-            const source = this.code
-                ? await this.transformSource(await this.code)
-                : await this.transformSource(this._readCode(this.slotElement));
+            const source = this.code ? await this.transformSource(await this.code) : await this.transformSource(this._readCode(this.slotElement));
             this.editor.dispatch({
                 changes: {
                     from: 0,
@@ -115,24 +113,22 @@ export class CodeEditor extends LitElement {
 
     protected override render() {
         return html`
-            <div style="position: relative">
-                <!-- button to copy the editor -->
-                <div class="copy-code-wrap" @click="${() => this._copyCode()}">
-                    <omni-icon class="copy-code" icon="@material/content_copy" size="${'custom' as any}"></omni-icon>
-                </div>
-                <!-- CodeMirror Editor parent element -->
-                <div class="code-parent"> </div>
-            </div>
-            <slot @slotchange="${() => this._slotChanged()}"></slot>
-        `;
+      <div style="position: relative">
+        <!-- button to copy the editor -->
+        <div class="copy-code-wrap" @click="${() => this._copyCode()}">
+          <omni-icon class="copy-code" icon="@material/content_copy" size="${'custom' as any}"></omni-icon>
+        </div>
+        <!-- CodeMirror Editor parent element -->
+        <div class="code-parent"> </div>
+      </div>
+      <slot @slotchange="${() => this._slotChanged()}"></slot>
+    `;
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     protected override async updated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): Promise<void> {
         if (!this.editor && this.codeParent && (this.code || this.slotElement.assignedNodes().length > 0)) {
-            let source = this.code
-                ? await this.transformSource(await this.code)
-                : await this.transformSource(this._readCode(this.slotElement));
+            let source = this.code ? await this.transformSource(await this.code) : await this.transformSource(this._readCode(this.slotElement));
             this._clearElements(this.codeParent);
             this.editor = new EditorView({
                 doc: source,
@@ -142,23 +138,17 @@ export class CodeEditor extends LitElement {
                         this.readOnly || this.disabled
                             ? []
                             : [
-                                highlightActiveLineGutter(),
-                                highlightSpecialChars(),
-                                history(),
-                                dropCursor(),
-                                indentOnInput(),
-                                bracketMatching(),
-                                closeBrackets(),
-                                autocompletion(),
-                                highlightActiveLine(),
-                                keymap.of([
-                                    ...closeBracketsKeymap,
-                                    ...defaultKeymap,
-                                    ...searchKeymap,
-                                    ...historyKeymap,
-                                    ...completionKeymap
-                                ])
-                            ],
+                                  highlightActiveLineGutter(),
+                                  highlightSpecialChars(),
+                                  history(),
+                                  dropCursor(),
+                                  indentOnInput(),
+                                  bracketMatching(),
+                                  closeBrackets(),
+                                  autocompletion(),
+                                  highlightActiveLine(),
+                                  keymap.of([...closeBracketsKeymap, ...defaultKeymap, ...searchKeymap, ...historyKeymap, ...completionKeymap])
+                              ],
                         syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
                         rectangularSelection(),
                         highlightSelectionMatches()
@@ -271,9 +261,7 @@ export class CodeEditor extends LitElement {
             return;
         }
 
-        const source = this.code
-            ? await this.transformSource(await this.code)
-            : await this.transformSource(this._readCode(this.slotElement));
+        const source = this.code ? await this.transformSource(await this.code) : await this.transformSource(this._readCode(this.slotElement));
         if (!this.disabled && source !== this.editor.state.doc.toString()) {
             this.editor.dispatch({
                 changes: {

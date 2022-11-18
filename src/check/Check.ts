@@ -174,181 +174,183 @@ export class Check extends OmniElement {
         return [
             super.styles,
             css`
-                :host {
-                    outline: none;
-                }
+        :host {
+          outline: none;
+        }
 
-                /* CONTAINER STYLES */
+        /* CONTAINER STYLES */
 
-                .container {
-                    display: flex;
-                    align-items: center;
-                }
+        .container {
+          display: flex;
+          align-items: center;
+        }
 
-                /* LABEL STYLES */
+        /* LABEL STYLES */
 
-                .container > .label {
-                    color: var(--omni-check-label-font-color, var(--omni-font-color));
-                    font-family: var(--omni-check-label-font-family, var(--omni-font-family));
-                    font-size: var(--omni-check-label-font-size, var(--omni-font-size));
-                    font-weight: var(--omni-check-label-font-weight, var(--omni-font-weight));
+        .container > .label {
+          color: var(--omni-check-label-font-color, var(--omni-font-color));
+          font-family: var(--omni-check-label-font-family, var(--omni-font-family));
+          font-size: var(--omni-check-label-font-size, var(--omni-font-size));
+          font-weight: var(--omni-check-label-font-weight, var(--omni-font-weight));
 
-                    margin-left: var(--omni-check-label-spacing, 8px);
+          margin-left: var(--omni-check-label-spacing, 8px);
 
-                    cursor: pointer;
-                }
+          cursor: pointer;
+        }
 
-                .container > .label > .hint {
-                    color: var(--omni-check-hint-label-font-color, var(--omni-hint-font-color));
-                    font-family: var(--omni-check-hint-label-font-family, var(--omni-font-family));
-                    font-size: var(--omni-check-hint-label-font-size, 0.86em);
-                    font-weight: var(--omni-check-hint-label-font-weight, 300);
+        .container > .label > .hint {
+          color: var(--omni-check-hint-label-font-color, var(--omni-hint-font-color));
+          font-family: var(--omni-check-hint-label-font-family, var(--omni-font-family));
+          font-size: var(--omni-check-hint-label-font-size, 0.86em);
+          font-weight: var(--omni-check-hint-label-font-weight, 300);
 
-                    padding-top: var(--omni-check-hint-label-padding-top, 4px);
-                }
+          padding-top: var(--omni-check-hint-label-padding-top, 4px);
+        }
 
-                .container > .label > .error {
-                    color: var(--omni-check-error-label-font-color, var(--omni-error-font-color));
-                    font-family: var(--omni-check-error-label-font-family, var(--omni-font-family));
-                    font-size: var(--omni-check-error-label-font-size, 0.86em);
-                    font-weight: var(--omni-check-error-label-font-weight, 300);
+        .container > .label > .error {
+          color: var(--omni-check-error-label-font-color, var(--omni-error-font-color));
+          font-family: var(--omni-check-error-label-font-family, var(--omni-font-family));
+          font-size: var(--omni-check-error-label-font-size, 0.86em);
+          font-weight: var(--omni-check-error-label-font-weight, 300);
 
-                    padding-top: var(--omni-check-error-label-padding-top, 4px);
-                }
+          padding-top: var(--omni-check-error-label-padding-top, 4px);
+        }
 
-                /* CHECK BOX STYLES */
+        /* CHECK BOX STYLES */
 
-                .container > #content {
-                    box-sizing: border-box;
-                    cursor: pointer;
+        .container > #content {
+          box-sizing: border-box;
+          cursor: pointer;
 
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
+          display: flex;
+          align-items: center;
+          justify-content: center;
 
-                    width: var(--omni-check-width, 22px);
-                    height: var(--omni-check-height, 22px);
+          width: var(--omni-check-width, 22px);
+          height: var(--omni-check-height, 22px);
 
-                    background-color: var(--omni-check-background-color, var(--omni-background-color));
+          background-color: var(--omni-check-background-color, var(--omni-background-color));
 
-                    border-width: var(--omni-check-border-width, var(--omni-border-width));
-                    border-style: solid;
-                    border-color: var(--omni-check-border-color, var(--omni-primary-color));
-                    border-radius: var(--omni-check-border-radius, var(--omni-border-radius));
+          border-width: var(--omni-check-border-width, var(--omni-border-width));
+          border-style: solid;
+          border-color: var(--omni-check-border-color, var(--omni-primary-color));
+          border-radius: var(--omni-check-border-radius, var(--omni-border-radius));
 
-                    outline: 0;
-                }
+          outline: 0;
+        }
 
-                .indicator {
-                    width: 100%;
-                    height: 100%;
-                }
+        .indicator {
+          width: 100%;
+          height: 100%;
+        }
 
-                .container.checked > #content > .indicator {
-                    border-width: var(--omni-check-indicator-border-width, 1px);
-                    border-style: solid;
-                    border-color: var(--omni-check-indicator-border-color, var(--omni-primary-color));
-                    border-radius: var(--omni-check-border-radius, var(--omni-border-radius));
+        .container.checked > #content > .indicator {
+          border-width: var(--omni-check-indicator-border-width, 1px);
+          border-style: solid;
+          border-color: var(--omni-check-indicator-border-color, var(--omni-primary-color));
+          border-radius: var(--omni-check-border-radius, var(--omni-border-radius));
 
-                    color: var(--omni-check-indicator-color, var(--omni-background-color));
+          color: var(--omni-check-indicator-color, var(--omni-background-color));
 
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
+          display: flex;
+          align-items: center;
+          justify-content: center;
 
-                    fill: currentColor;
-                }
+          fill: currentColor;
+        }
 
-                /* CHECKED STATE STYLES */
+        /* CHECKED STATE STYLES */
 
-                .container.checked > #content {
-                    background-color: var(--omni-check-checked-background-color, var(--omni-primary-color));
-                }
-                /* INDETERMINATE STATE STYLES */
+        .container.checked > #content {
+          background-color: var(--omni-check-checked-background-color, var(--omni-primary-color));
+        }
+        /* INDETERMINATE STATE STYLES */
 
-                .container.indeterminate > #content {
-                    background-color: var(--omni-check-indeterminate-background-color, var(--omni-primary-color));
-                    color: var(--omni-check-indicator-color, var(--omni-background-color));
-                }
+        .container.indeterminate > #content {
+          background-color: var(--omni-check-indeterminate-background-color, var(--omni-primary-color));
+          color: var(--omni-check-indicator-color, var(--omni-background-color));
+        }
 
-                .container.indeterminate > #content > .indicator {
-                    color: var(--omni-check-indicator-color, var(--omni-background-color));
-                    fill: currentColor;
-                }
+        .container.indeterminate > #content > .indicator {
+          color: var(--omni-check-indicator-color, var(--omni-background-color));
+          fill: currentColor;
+        }
 
-                /* HOVER STATE STYLES */
+        /* HOVER STATE STYLES */
 
-                .container > #content:hover {
-                    box-shadow: var(--omni-check-hover-box-shadow, var(--omni-box-shadow));
-                    background-color: var(--omni-check-hover-background-color, var(--omni-box-shadow-color));
-                }
+        .container > #content:hover {
+          box-shadow: var(--omni-check-hover-box-shadow, var(--omni-box-shadow));
+          background-color: var(--omni-check-hover-background-color, var(--omni-box-shadow-color));
+        }
 
-                .container.checked:hover > #content {
-                    background-color: var(--omni-check-checked-background-color, var(--omni-primary-color));
-                }
+        .container.checked:hover > #content {
+          background-color: var(--omni-check-checked-background-color, var(--omni-primary-color));
+        }
 
-                .container.checked.disabled:hover > #content {
-                    background-color: var(--omni-check-disabled-background-color, var(--omni-disabled-background-color));
-                }
+        .container.checked.disabled:hover > #content {
+          background-color: var(--omni-check-disabled-background-color, var(--omni-disabled-background-color));
+        }
 
-                .container.indeterminate:hover > #content {
-                    background-color: var(--omni-check-indeterminate-background-color, var(--omni-primary-color));
-                }
+        .container.indeterminate:hover > #content {
+          background-color: var(--omni-check-indeterminate-background-color, var(--omni-primary-color));
+        }
 
-                .container.disabled.indeterminate:hover > #content {
-                    background-color: var(--omni-check-disabled-background-color, var(--omni-disabled-background-color));
-                }
+        .container.disabled.indeterminate:hover > #content {
+          background-color: var(--omni-check-disabled-background-color, var(--omni-disabled-background-color));
+        }
 
-                /* DISABLED STATE STYLES */
+        /* DISABLED STATE STYLES */
 
-                .container.disabled > #content {
-                    cursor: default;
-                    border-color: var(--omni-check-disabled-border-color, var(--omni-disabled-background-color));
-                    background-color: var(--omni-check-disabled-background-color, var(--omni-disabled-background-color));
-                }
+        .container.disabled > #content {
+          cursor: default;
+          border-color: var(--omni-check-disabled-border-color, var(--omni-disabled-background-color));
+          background-color: var(--omni-check-disabled-background-color, var(--omni-disabled-background-color));
+        }
 
-                .container.disabled:hover > #content {
-                    box-shadow: none;
-                }
+        .container.disabled:hover > #content {
+          box-shadow: none;
+        }
 
-                .container.checked.disabled > #content > .indicator {
-                    border-color: transparent;
-                }
-            `
+        .container.checked.disabled > #content > .indicator {
+          border-color: transparent;
+        }
+      `
         ];
     }
 
     override render(): TemplateResult {
         return html`
-            <div
-                class=${classMap({
-                    container: true,
-                    indeterminate: this.indeterminate,
-                    checked: this.checked,
-                    disabled: this.disabled
-                })}>
-                <div id="content" @keydown="${this._keyDown}">
-                    <div class="indicator">
-                        ${this.indeterminate
-                            ? html`
-                                  <slot name="indeterminate_icon">
-                                      <omni-indeterminate-icon></omni-indeterminate-icon>
-                                  </slot>
-                              `
-                            : this.checked
-                            ? html`
-                                  <slot name="check_icon">
-                                      <omni-check-icon></omni-check-icon>
-                                  </slot>
-                              `
-                            : nothing}
-                    </div>
-                </div>
-                <label class="label">
-                    ${this.label} ${this.hint && !this.error ? html`<div class="hint">${this.hint}</div>` : nothing}
-                    ${this.error ? html`<div class="error">${this.error}</div>` : nothing}
-                </label>
-            </div>
-        `;
+      <div
+        class=${classMap({
+            container: true,
+            indeterminate: this.indeterminate,
+            checked: this.checked,
+            disabled: this.disabled
+        })}>
+        <div id="content" @keydown="${this._keyDown}">
+          <div class="indicator">
+            ${
+                this.indeterminate
+                    ? html`
+                  <slot name="indeterminate_icon">
+                    <omni-indeterminate-icon></omni-indeterminate-icon>
+                  </slot>
+                `
+                    : this.checked
+                    ? html`
+                  <slot name="check_icon">
+                    <omni-check-icon></omni-check-icon>
+                  </slot>
+                `
+                    : nothing
+            }
+          </div>
+        </div>
+        <label class="label">
+          ${this.label} ${this.hint && !this.error ? html`<div class="hint">${this.hint}</div>` : nothing}
+          ${this.error ? html`<div class="error">${this.error}</div>` : nothing}
+        </label>
+      </div>
+    `;
     }
 }

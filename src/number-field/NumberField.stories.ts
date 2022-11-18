@@ -30,19 +30,19 @@ export default {
 
 export const Interactive: ComponentStoryFormat<BaseArgTypes> = {
     render: (args: BaseArgTypes) => html`
-        <omni-number-field
-            data-testid="test-number-field"
-            label="${ifNotEmpty(args.label)}"
-            .value="${args.value}"
-            .data="${args.data}"
-            hint="${ifNotEmpty(args.hint)}"
-            error="${ifNotEmpty(args.error)}"
-            ?disabled="${args.disabled}"
-            >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${args.suffix
-                ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}`
-                : nothing}${args.prefix || args.suffix ? '\r\n' : nothing}
-        </omni-number-field>
-    `,
+    <omni-number-field
+      data-testid="test-number-field"
+      label="${ifNotEmpty(args.label)}"
+      .value="${args.value}"
+      .data="${args.data}"
+      hint="${ifNotEmpty(args.hint)}"
+      error="${ifNotEmpty(args.error)}"
+      ?disabled="${args.disabled}"
+      >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${
+        args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}` : nothing
+    }${args.prefix || args.suffix ? '\r\n' : nothing}
+    </omni-number-field>
+  `,
     name: 'Interactive',
     args: {
         label: 'Label',

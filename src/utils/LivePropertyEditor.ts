@@ -46,107 +46,107 @@ export class LivePropertyEditor extends OmniElement {
         return [
             super.styles,
             css`
-                :host {
-                }
+        :host {
+        }
 
-                :host([disabled]) {
-                    pointer-events: none;
-                    background-color: #f9f9f9;
-                }
+        :host([disabled]) {
+          pointer-events: none;
+          background-color: #f9f9f9;
+        }
 
-                .loading {
-                    max-width: 25px;
-                    max-height: 100px;
-                }
+        .loading {
+          max-width: 25px;
+          max-height: 100px;
+        }
 
-                .css-prop {
-                    margin: 5px;
-                }
+        .css-prop {
+          margin: 5px;
+        }
 
-                .collapsible {
-                    background-color: #777;
-                    color: white;
-                    cursor: pointer;
-                    padding: 18px;
-                    width: 100%;
-                    border: none;
-                    text-align: left;
-                    outline: none;
-                    font-size: 15px;
-                }
+        .collapsible {
+          background-color: #777;
+          color: white;
+          cursor: pointer;
+          padding: 18px;
+          width: 100%;
+          border: none;
+          text-align: left;
+          outline: none;
+          font-size: 15px;
+        }
 
-                .active,
-                .collapsible:hover {
-                    background-color: #555;
-                }
+        .active,
+        .collapsible:hover {
+          background-color: #555;
+        }
 
-                .expandable {
-                    padding: 0 18px;
-                    display: none;
-                    overflow: hidden;
-                    background-color: #f1f1f1;
-                    flex-direction: column;
-                }
+        .expandable {
+          padding: 0 18px;
+          display: none;
+          overflow: hidden;
+          background-color: #f1f1f1;
+          flex-direction: column;
+        }
 
-                .tooltip {
-                    position: relative;
-                    display: inline-block;
-                    border-bottom: 1px dotted black;
-                }
+        .tooltip {
+          position: relative;
+          display: inline-block;
+          border-bottom: 1px dotted black;
+        }
 
-                .tooltip .tooltiptext {
-                    visibility: hidden;
-                    width: 120px;
-                    background-color: black;
-                    color: #fff;
-                    text-align: center;
-                    border-radius: 6px;
-                    padding: 5px 0;
-                    position: absolute;
-                    z-index: 1;
-                    bottom: 150%;
-                    left: 50%;
-                    margin-left: -60px;
-                }
+        .tooltip .tooltiptext {
+          visibility: hidden;
+          width: 120px;
+          background-color: black;
+          color: #fff;
+          text-align: center;
+          border-radius: 6px;
+          padding: 5px 0;
+          position: absolute;
+          z-index: 1;
+          bottom: 150%;
+          left: 50%;
+          margin-left: -60px;
+        }
 
-                .tooltip .tooltiptext::after {
-                    content: '';
-                    position: absolute;
-                    top: 100%;
-                    left: 50%;
-                    margin-left: -5px;
-                    border-width: 5px;
-                    border-style: solid;
-                    border-color: black transparent transparent transparent;
-                }
+        .tooltip .tooltiptext::after {
+          content: '';
+          position: absolute;
+          top: 100%;
+          left: 50%;
+          margin-left: -5px;
+          border-width: 5px;
+          border-style: solid;
+          border-color: black transparent transparent transparent;
+        }
 
-                .tooltip:hover .tooltiptext {
-                    visibility: visible;
-                }
+        .tooltip:hover .tooltiptext {
+          visibility: visible;
+        }
 
-                .docs-text-field {
-                    width: 100%;
-                }
+        .docs-text-field {
+          width: 100%;
+        }
 
-                .docs-select {
-                    padding: 5px;
-                    cursor: pointer;
-                    border-radius: 6px;
-                    border: 1px solid #e1e1e1;
-                    display: flex;
-                    min-width: 191px;
-                    min-height: 41px;
-                    width: 100%;
-                }
+        .docs-select {
+          padding: 5px;
+          cursor: pointer;
+          border-radius: 6px;
+          border: 1px solid #e1e1e1;
+          display: flex;
+          min-width: 191px;
+          min-height: 41px;
+          width: 100%;
+        }
 
-                .docs-select:focus-visible {
-                    outline: none;
-                }
+        .docs-select:focus-visible {
+          outline: none;
+        }
 
-                .live-header {
-                    margin-top: 15px;
-                }
-            `
+        .live-header {
+          margin-top: 15px;
+        }
+      `
         ];
     }
 
@@ -175,31 +175,28 @@ export class LivePropertyEditor extends OmniElement {
             const declaration = d as unknown as CustomElement & { cssCategory: string };
             if (declaration.slots) {
                 declaration.slots.forEach((slot) => {
-                    if (
-                        slots.find((s) => s.name === slot.name) ||
-                        (this.data && !Object.prototype.hasOwnProperty.call(this.data.args, slot.name))
-                    )
+                    if (slots.find((s) => s.name === slot.name) || (this.data && !Object.prototype.hasOwnProperty.call(this.data.args, slot.name)))
                         return;
 
                     slots.push({
                         name: slot.name,
                         html: html`
-                            <omni-label class="live-header" label="${slot.name}"></omni-label>
-                            <code-editor
-                                class="slot-code"
-                                data-slot-name="${slot.name}"
-                                ?disabled=${this.disabled}
-                                .extensions="${async () => [codeTheme, langHtml(await loadCustomElementsCodeMirrorCompletionsRemote())]}"
-                                .code="${ifNotEmpty(this.data && this.data.args[slot.name] ? this.data.args[slot.name] : undefined)}"
-                                @codemirror-source-change="${(e: CustomEvent<CodeMirrorSourceUpdateEvent>) => {
-                                    this._propertyChanged({
-                                        property: slot.name,
-                                        newValue: e.detail.source,
-                                        oldValue: e.detail.oldSource
-                                    });
-                                }}">
-                            </code-editor>
-                        `
+              <omni-label class="live-header" label="${slot.name}"></omni-label>
+              <code-editor
+                class="slot-code"
+                data-slot-name="${slot.name}"
+                ?disabled=${this.disabled}
+                .extensions="${async () => [codeTheme, langHtml(await loadCustomElementsCodeMirrorCompletionsRemote())]}"
+                .code="${ifNotEmpty(this.data && this.data.args[slot.name] ? this.data.args[slot.name] : undefined)}"
+                @codemirror-source-change="${(e: CustomEvent<CodeMirrorSourceUpdateEvent>) => {
+                    this._propertyChanged({
+                        property: slot.name,
+                        newValue: e.detail.source,
+                        oldValue: e.detail.oldSource
+                    });
+                }}">
+              </code-editor>
+            `
                     });
                 });
             }
@@ -216,23 +213,20 @@ export class LivePropertyEditor extends OmniElement {
 
                     if (attribute.type.text === 'boolean') {
                         attributeEditor = html`
-                            <omni-switch
-                                ?disabled=${this.disabled}
-                                ?checked="${this.data
-                                    ? this.data.args[attribute.name] ?? this.data.args[attribute.fieldName ?? attribute.name]
-                                    : attribute.default === 'true'}"
-                                @value-change="${(e: CustomEvent) => {
-                                    this._propertyChanged({
-                                        property:
-                                            this.data && attribute.fieldName && this.data.args[attribute.fieldName]
-                                                ? attribute.fieldName
-                                                : attribute.name,
-                                        newValue: e.detail.new,
-                                        oldValue: e.detail.old
-                                    });
-                                }}">
-                            </omni-switch>
-                        `;
+              <omni-switch
+                ?disabled=${this.disabled}
+                ?checked="${
+                    this.data ? this.data.args[attribute.name] ?? this.data.args[attribute.fieldName ?? attribute.name] : attribute.default === 'true'
+                }"
+                @value-change="${(e: CustomEvent) => {
+                    this._propertyChanged({
+                        property: this.data && attribute.fieldName && this.data.args[attribute.fieldName] ? attribute.fieldName : attribute.name,
+                        newValue: e.detail.new,
+                        oldValue: e.detail.old
+                    });
+                }}">
+              </omni-switch>
+            `;
                     } else if (
                         attribute.type.text !== 'object' &&
                         attribute.type.text !== 'string' &&
@@ -251,68 +245,55 @@ export class LivePropertyEditor extends OmniElement {
                             : undefined;
 
                         attributeEditor = html`
-                            <select
-                                class="docs-select"
-                                ?disabled=${this.disabled}
-                                @change="${(e: Event) => {
-                                    const value = (e.target as HTMLSelectElement).value;
-                                    this._propertyChanged({
-                                        property:
-                                            this.data && attribute.fieldName && this.data.args[attribute.fieldName]
-                                                ? attribute.fieldName
-                                                : attribute.name,
-                                        newValue: value,
-                                        oldValue: this.data ? this.data.args[attribute.name] : undefined
-                                    });
-                                }}">
-                                ${types.map((t) => html`<option value="${t}" ?selected="${t === startValue}">${t}</option>`)}
-                            </select>
-                        `;
+              <select
+                class="docs-select"
+                ?disabled=${this.disabled}
+                @change="${(e: Event) => {
+                    const value = (e.target as HTMLSelectElement).value;
+                    this._propertyChanged({
+                        property: this.data && attribute.fieldName && this.data.args[attribute.fieldName] ? attribute.fieldName : attribute.name,
+                        newValue: value,
+                        oldValue: this.data ? this.data.args[attribute.name] : undefined
+                    });
+                }}">
+                ${types.map((t) => html`<option value="${t}" ?selected="${t === startValue}">${t}</option>`)}
+              </select>
+            `;
                     } else if (
                         attribute.type.text === 'object' ||
                         attribute.type.text.includes('Promise') ||
                         (this.data?.args &&
                             this.data.args[attribute.name] &&
-                            (typeof this.data.args[attribute.name] === 'function' ||
-                                typeof this.data.args[attribute.name].then === 'function'))
+                            (typeof this.data.args[attribute.name] === 'function' || typeof this.data.args[attribute.name].then === 'function'))
                     ) {
                         return;
                     } else {
                         attributeEditor = html`
-                            <omni-text-field
-                                class="docs-text-field"
-                                ?disabled=${this.disabled}
-                                .value="${live(
-                                    this.data
-                                        ? this.data.args[attribute.name] ?? this.data.args[attribute.fieldName ?? attribute.name] ?? ''
-                                        : ''
-                                )}"
-                                @input="${async (e: Event) => {
-                                    const textField = e.target as TextField;
-                                    // textField.requestUpdate();
-                                    // await textField.updateComplete;
+              <omni-text-field
+                class="docs-text-field"
+                ?disabled=${this.disabled}
+                .value="${live(this.data ? this.data.args[attribute.name] ?? this.data.args[attribute.fieldName ?? attribute.name] ?? '' : '')}"
+                @input="${async (e: Event) => {
+                    const textField = e.target as TextField;
+                    // textField.requestUpdate();
+                    // await textField.updateComplete;
 
-                                    const value = (textField.shadowRoot.getElementById('inputField') as HTMLInputElement).value;
-                                    this._propertyChanged({
-                                        property:
-                                            this.data && attribute.fieldName && this.data.args[attribute.fieldName]
-                                                ? attribute.fieldName
-                                                : attribute.name,
-                                        newValue: value,
-                                        oldValue: this.data
-                                            ? this.data.args[attribute.name] ?? this.data.args[attribute.fieldName ?? attribute.name]
-                                            : undefined
-                                    });
-                                }}">
-                            </omni-text-field>
-                        `;
+                    const value = (textField.shadowRoot.getElementById('inputField') as HTMLInputElement).value;
+                    this._propertyChanged({
+                        property: this.data && attribute.fieldName && this.data.args[attribute.fieldName] ? attribute.fieldName : attribute.name,
+                        newValue: value,
+                        oldValue: this.data ? this.data.args[attribute.name] ?? this.data.args[attribute.fieldName ?? attribute.name] : undefined
+                    });
+                }}">
+              </omni-text-field>
+            `;
                     }
                     if (attributeEditor) {
                         attributes.push({
                             html: html`
-                                <omni-label class="live-header" label="${attribute.name}"></omni-label>
-                                ${attributeEditor}
-                            `,
+                <omni-label class="live-header" label="${attribute.name}"></omni-label>
+                ${attributeEditor}
+              `,
                             name: attribute.name
                         });
                     }

@@ -52,50 +52,50 @@ export class NumberField extends OmniFormElement {
         return [
             super.styles,
             css`
-                .field {
-                    flex: 1 1 auto;
+        .field {
+          flex: 1 1 auto;
 
-                    border: none;
-                    background: none;
-                    box-shadow: none;
-                    outline: 0;
-                    padding: 0;
-                    margin: 0;
+          border: none;
+          background: none;
+          box-shadow: none;
+          outline: 0;
+          padding: 0;
+          margin: 0;
 
-                    text-align: var(--omni-number-field-text-align, left);
+          text-align: var(--omni-number-field-text-align, left);
 
-                    color: var(--omni-number-field-font-color, var(--omni-font-color));
-                    font-family: var(--omni-number-field-font-family, var(--omni-font-family));
-                    font-size: var(--omni-number-field-font-size, var(--omni-font-size));
-                    font-weight: var(--omni-number-field-font-weight, var(--omni-font-weight));
-                    height: var(--omni-number-field-height, 100%);
-                    padding: var(--omni-number-field-padding, 10px);
-                }
+          color: var(--omni-number-field-font-color, var(--omni-font-color));
+          font-family: var(--omni-number-field-font-family, var(--omni-font-family));
+          font-size: var(--omni-number-field-font-size, var(--omni-font-size));
+          font-weight: var(--omni-number-field-font-weight, var(--omni-font-weight));
+          height: var(--omni-number-field-height, 100%);
+          padding: var(--omni-number-field-padding, 10px);
+        }
 
-                /* Used to not display default stepper */
-                input::-webkit-outer-spin-button,
-                input::-webkit-inner-spin-button {
-                    /* display: none; <- Crashes Chrome on hover */
-                    -webkit-appearance: none;
-                    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
-                }
+        /* Used to not display default stepper */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+          /* display: none; <- Crashes Chrome on hover */
+          -webkit-appearance: none;
+          margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+        }
 
-                input[type='number'] {
-                    -moz-appearance: textfield; /* Firefox */
-                }
-            `
+        input[type='number'] {
+          -moz-appearance: textfield; /* Firefox */
+        }
+      `
         ];
     }
 
     protected override renderContent() {
         return html`
-            <input
-                class="field"
-                id="inputField"
-                type="number"
-                .value=${live(this.value as string)}
-                ?readOnly=${this.disabled}
-                tabindex="${this.disabled ? -1 : 0}" />
-        `;
+      <input
+        class="field"
+        id="inputField"
+        type="number"
+        .value=${live(this.value as string)}
+        ?readOnly=${this.disabled}
+        tabindex="${this.disabled ? -1 : 0}" />
+    `;
     }
 }
