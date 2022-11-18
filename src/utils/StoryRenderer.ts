@@ -51,7 +51,6 @@ export class StoryRenderer extends LitElement {
     }
 
     protected override render() {
-
         if (!this.controller.story) {
             return html`<div>Loading...</div>`;
         }
@@ -63,7 +62,6 @@ export class StoryRenderer extends LitElement {
         const storySource = this.story.source ? this.story.source() : this._getSourceFromLit(res);
 
         return html`
-            
             <div class="preview">
                 <div class="item">
                     <div class="${this.key}${this.interactive ? ' interactive-story' : ''}" .data=${this.story}>
@@ -74,9 +72,11 @@ export class StoryRenderer extends LitElement {
                 ${this.interactive
                     ? html`
                           <div class="interactive">
-                              <span class="docs-omni-component interactive-reset"
-                                  @click="${this._resetLivePropertyEditor}">
-                                  <omni-icon class="docs-omni-component" style="cursor: pointer;" icon="@material/settings_backup_restore"></omni-icon>
+                              <span class="docs-omni-component interactive-reset" @click="${this._resetLivePropertyEditor}">
+                                  <omni-icon
+                                      class="docs-omni-component"
+                                      style="cursor: pointer;"
+                                      icon="@material/settings_backup_restore"></omni-icon>
                               </span>
                               <live-property-editor
                                   class="live-props docs-omni-component"
@@ -193,8 +193,7 @@ export class StoryRenderer extends LitElement {
                         JSON.stringify(this.story.args).replaceAll('\n', '').replaceAll('\\n', '').replaceAll('\t', '').replaceAll(' ', '')}
                     @click="${() => this._play(this.story, `.${this.key}`)}">
                     <omni-icon icon="@material/play_arrow" style="padding-right: 8px;"></omni-icon>
-                </omni-button
-                >
+                </omni-button>
                 <div class="${this.key + '-result'}"></div>
             </div>
         `;
@@ -243,7 +242,6 @@ export class StoryRenderer extends LitElement {
 
     private async _play(story: any, canvasElementQuery: string) {
         try {
-
             if (!story.play) {
                 return;
             }
