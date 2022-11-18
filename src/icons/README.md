@@ -26,6 +26,34 @@ import '@capitec/omni-components/icons/Check.icon.js';
 | `createRenderRoot` | `(): this` |
 
 
+# omni-clear-icon
+
+A clear icon component.
+
+```js
+
+import '@capitec/omni-components/icons/Clear.icon.js';
+```
+
+## Example
+
+```html
+<omni-clear-icon></omni-clear-icon>
+```
+
+## Properties
+
+| Property   |
+|------------|
+| `override` |
+
+## Methods
+
+| Method             | Type       |
+|--------------------|------------|
+| `createRenderRoot` | `(): this` |
+
+
 # omni-close-icon
 
 A Close icon component.
@@ -292,6 +320,34 @@ import '@capitec/omni-components/icons/Plus.icon.js';
 
 ```html
 <omni-plus-icon></omni-plus-icon>
+```
+
+## Properties
+
+| Property   |
+|------------|
+| `override` |
+
+## Methods
+
+| Method             | Type       |
+|--------------------|------------|
+| `createRenderRoot` | `(): this` |
+
+
+# omni-search-icon
+
+A search icon component.
+
+```js
+
+import '@capitec/omni-components/icons/Search.icon.js';
+```
+
+## Example
+
+```html
+<omni-search-icon></omni-search-icon>
 ```
 
 ## Properties

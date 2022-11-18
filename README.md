@@ -206,6 +206,22 @@ import '@capitec/omni-components/icons/Check.icon.js';
 
 </td></tr><tr><td>
 
+[omni-clear-icon](src/icons/README.md)
+
+</td><td>
+
+A clear icon component.
+
+
+```js
+
+
+import '@capitec/omni-components/icons/Clear.icon.js';
+
+```
+
+</td></tr><tr><td>
+
 [omni-close-icon](src/icons/README.md)
 
 </td><td>
@@ -348,6 +364,22 @@ import '@capitec/omni-components/icons/Plus.icon.js';
 
 </td></tr><tr><td>
 
+[omni-search-icon](src/icons/README.md)
+
+</td><td>
+
+A search icon component.
+
+
+```js
+
+
+import '@capitec/omni-components/icons/Search.icon.js';
+
+```
+
+</td></tr><tr><td>
+
 [omni-label](src/label/README.md)
 
 </td><td>
@@ -439,6 +471,22 @@ An element that defers content rendering to a provided function/promise.
 
 
 import '@capitec/omni-components/render-element';
+
+```
+
+</td></tr><tr><td>
+
+[omni-search-field](src/search-field/README.md)
+
+</td><td>
+
+A search input control.
+
+
+```js
+
+
+import '@capitec/omni-components/search-field';
 
 ```
 
