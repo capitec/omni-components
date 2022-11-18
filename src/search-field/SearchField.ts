@@ -28,7 +28,7 @@ import '../icons/Search.icon';
  *
  * @element omni-search-field
  *
- * @cssprop --omni-search-field-search-align - Search field search align.
+ * @cssprop --omni-search-field-text-align - Search field text align.
  * @cssprop --omni-search-field-font-color - Search field font color.
  * @cssprop --omni-search-field-font-family - Search field font family.
  * @cssprop --omni-search-field-font-size - Search field font size.
@@ -69,11 +69,8 @@ export class SearchField extends OmniFormElement {
         }
 
         this.value = '';
-
-        /*Come back and fix this horrid implementation*/
-        const label: HTMLElement = this.shadowRoot.getElementById('label');
-        console.log(label);
-        label.style.transform = '';
+        // Moves the label back into position when clear button is clicked.
+        super._focusLost();
     }
 
     static override get styles() {
@@ -90,7 +87,7 @@ export class SearchField extends OmniFormElement {
                     padding: 0;
                     margin: 0;
 
-                    text-align: var(--omni-search-field-search-align, left);
+                    text-align: var(--omni-search-field-text-align, left);
 
                     color: var(--omni-search-field-font-color, var(--omni-font-color));
                     font-family: var(--omni-search-field-font-family, var(--omni-font-family));
@@ -102,9 +99,7 @@ export class SearchField extends OmniFormElement {
 
                 .control {
                     display: flex;
-                    cursor: pointer;
-
-                    
+                  
                     margin-right: var(--omni-search-field-control-padding-right, 10px);
                     margin-left: var(--omni-search-field-control-padding-left, 10px);
                     width: var(--omni-search-field-control-width, 20px);
@@ -117,6 +112,7 @@ export class SearchField extends OmniFormElement {
                 .clear-icon,
                 ::slotted([slot='clear']){
                     width: var(--omni-search-field-clear-icon-width, 20px);
+                    cursor: pointer;
                 }
 
                 .search-icon {

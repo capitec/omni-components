@@ -367,7 +367,7 @@ export class OmniFormElement extends OmniElement {
             disabled: this.disabled
         };
 
-        return html`${this.label ? html`<div id="label" class=${classMap(labelClass)}><span>${this.label}</span></div>` : nothing}`;
+        return html`${this.label ? html`<div class=${classMap(labelClass)}><span>${this.label}</span></div>` : nothing}`;
     }
 
     protected renderHint() {
