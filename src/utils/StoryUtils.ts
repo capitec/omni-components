@@ -440,7 +440,7 @@ function filterJsDocLinks(jsdoc: string) {
             // Local markdown links are not valid
             return raw`<strong>${link.text}</strong>`;
         }
-        return raw`<a href="${link.url}" target="_blank" >${link.text}</a>`;//`[${link.text}](${link.url}`;
+        return raw`<a href="${link.url}" target="_blank" >${link.text}</a>`; //`[${link.text}](${link.url}`;
     };
 
     const matches = Array.from(jsdoc.matchAll(/(?:\[(.*?)\])?{@(link|tutorial) (.*?)(?:(?:\|| +)(.*?))?}/gm));
@@ -592,7 +592,6 @@ async function setupThemes() {
 }
 
 async function setupEleventy() {
-
     // Add functions for DOM access
     const windowAny = window as any;
     windowAny.copyToClipboard = copyToClipboard;
@@ -716,7 +715,6 @@ function setupLoadingIndicator() {
 }
 
 function setupSearch() {
-
     //Attribute search
     const attributeSearch = document.querySelector<HTMLInputElement>('#attribute-search');
     const attributeRows = document.querySelector<HTMLTableSectionElement>('#component-attributes')?.children;
@@ -793,8 +791,7 @@ async function setupTheming() {
     const themesSourcesHtml = (await loadThemesListRemote()).map((theme: string) => {
         return html` <div>
             <omni-label label="${theme}" type="subtitle"></omni-label>
-            <code-editor .extensions="${() => [codeTheme, css()]}" .code="${loadFileRemote(`/themes/${theme}`)}" read-only>
-            </code-editor>
+            <code-editor .extensions="${() => [codeTheme, css()]}" .code="${loadFileRemote(`/themes/${theme}`)}" read-only> </code-editor>
         </div>`;
     });
     render(themesSourcesHtml, themeSources);

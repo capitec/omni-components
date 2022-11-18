@@ -139,21 +139,29 @@ export class CodeEditor extends LitElement {
                 extensions: [
                     // basicSetup from CodeMirror without some unwanted extensions
                     [
-                        this.readOnly || this.disabled ? [] : [
-                            highlightActiveLineGutter(),
-                            highlightSpecialChars(),
-                            history(),
-                            dropCursor(),
-                            indentOnInput(),
-                            bracketMatching(),
-                            closeBrackets(),
-                            autocompletion(),
-                            highlightActiveLine(),
-                            keymap.of([...closeBracketsKeymap, ...defaultKeymap, ...searchKeymap, ...historyKeymap, ...completionKeymap])
-                        ],
+                        this.readOnly || this.disabled
+                            ? []
+                            : [
+                                highlightActiveLineGutter(),
+                                highlightSpecialChars(),
+                                history(),
+                                dropCursor(),
+                                indentOnInput(),
+                                bracketMatching(),
+                                closeBrackets(),
+                                autocompletion(),
+                                highlightActiveLine(),
+                                keymap.of([
+                                    ...closeBracketsKeymap,
+                                    ...defaultKeymap,
+                                    ...searchKeymap,
+                                    ...historyKeymap,
+                                    ...completionKeymap
+                                ])
+                            ],
                         syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
                         rectangularSelection(),
-                        highlightSelectionMatches(),
+                        highlightSelectionMatches()
                     ],
                     await this.extensions(),
                     this.readonlyOrDisabled.of([

@@ -47,7 +47,6 @@ export class LivePropertyEditor extends OmniElement {
             super.styles,
             css`
                 :host {
-                    
                 }
 
                 :host([disabled]) {
@@ -164,7 +163,6 @@ export class LivePropertyEditor extends OmniElement {
     }
 
     protected override render() {
-
         if (!this.customElements) {
             return html`<omni-loading-icon class="loading"></omni-loading-icon>`;
         }
@@ -177,9 +175,11 @@ export class LivePropertyEditor extends OmniElement {
             const declaration = d as unknown as CustomElement & { cssCategory: string };
             if (declaration.slots) {
                 declaration.slots.forEach((slot) => {
-
-                    if (slots.find((s) => s.name === slot.name) ||
-                        (this.data && !Object.prototype.hasOwnProperty.call(this.data.args, slot.name))) return;
+                    if (
+                        slots.find((s) => s.name === slot.name) ||
+                        (this.data && !Object.prototype.hasOwnProperty.call(this.data.args, slot.name))
+                    )
+                        return;
 
                     slots.push({
                         name: slot.name,
@@ -206,8 +206,11 @@ export class LivePropertyEditor extends OmniElement {
 
             if (declaration.attributes) {
                 declaration.attributes.forEach((attribute) => {
-                    if ((this.ignoreAttributes && this.ignoreAttributes.split(',').includes(attribute.name)) ||
-                        attributes.find((a) => a.name === attribute.name)) return;
+                    if (
+                        (this.ignoreAttributes && this.ignoreAttributes.split(',').includes(attribute.name)) ||
+                        attributes.find((a) => a.name === attribute.name)
+                    )
+                        return;
 
                     let attributeEditor: TemplateResult = undefined;
 
@@ -264,7 +267,7 @@ export class LivePropertyEditor extends OmniElement {
                                 }}">
                                 ${types.map((t) => html`<option value="${t}" ?selected="${t === startValue}">${t}</option>`)}
                             </select>
-                            `;
+                        `;
                     } else if (
                         attribute.type.text === 'object' ||
                         attribute.type.text.includes('Promise') ||
@@ -321,12 +324,7 @@ export class LivePropertyEditor extends OmniElement {
             return nothing;
         }
 
-        return html`
-            <div style="padding: 24px;">
-                ${attributes.map((a) => a.html)}
-                ${slots.map((s) => s.html)}
-            </div>
-        `;
+        return html` <div style="padding: 24px;"> ${attributes.map((a) => a.html)} ${slots.map((s) => s.html)} </div> `;
     }
 
     private _propertyChanged(propertyChangeDetail: PropertyChangeEvent) {

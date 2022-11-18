@@ -1049,6 +1049,17 @@ table th {
     }
 }
 
+@media screen and (max-width: 376px) {   
+
+    .header-text {
+        display: none;
+    }
+
+    .header-logo {
+        flex: 1;
+    }
+}
+
 /* PRISM */
 
 code[class*='language-'],
