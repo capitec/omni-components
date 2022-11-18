@@ -566,18 +566,19 @@ header * {
 
 .component-tab-wrapper {
     border-bottom: 1px solid #e1e1e1;
-    padding-left: 48px;
+    padding: 0 48px;
 }
 
 .component-tab-list {
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: row;
     -webkit-box-pack: start;
     justify-content: flex-start;
-    /* max-width: 1082px; */
     margin-left: auto;
     margin-right: auto;
-    border-bottom: 0px;
+    border-bottom: 0;
+    margin-bottom: -1px;
+    overflow-x: auto;
 }
 
 .component-tab-button {
@@ -596,7 +597,7 @@ header * {
     font-weight: 500;
     height: 46px;
     padding: 0 20px;
-    margin-bottom: -1px;
+    /* margin-bottom: -1px; */
 }
 
 .component-tab-button.active {
@@ -898,7 +899,7 @@ table th {
     }
 
     .component-tab-wrapper {
-        padding-left: 24px;
+        padding: 0 24px;
     }
 
     .component-info-item > div:first-child {
