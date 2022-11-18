@@ -36,8 +36,8 @@ import '../icons/Search.icon';
  * @cssprop --omni-search-field-height - Search field height.
  * @cssprop --omni-search-field-padding - Search field width.
  *
- * @cssprop --omni-search-field-control-padding-right - Search field control right padding.
- * @cssprop --omni-search-field-control-padding-left - Search field control left padding.
+ * @cssprop --omni-search-field-control-margin-right - Search field control right margin.
+ * @cssprop --omni-search-field-control-margin-left - Search field control left margin.
  * @cssprop --omni-search-field-control-width - Search field control width.
  *
  * @cssprop --omni-search-field-clear-icon-color - Search field clear icon color.
@@ -100,8 +100,8 @@ export class SearchField extends OmniFormElement {
                 .control {
                     display: flex;
                   
-                    margin-right: var(--omni-search-field-control-padding-right, 10px);
-                    margin-left: var(--omni-search-field-control-padding-left, 10px);
+                    margin-right: var(--omni-search-field-control-margin-right, 10px);
+                    margin-left: var(--omni-search-field-control-margin-left, 10px);
                     width: var(--omni-search-field-control-width, 20px);
                 }
 
