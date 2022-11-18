@@ -2,7 +2,7 @@ name: Build
 
 on: 
   push:
-    branches: [ main,develop ]
+    branches: [ main,develop,alpha ]
     paths-ignore: 
       - '*.md'
       - '**/*.md'
@@ -76,13 +76,19 @@ jobs:
         run: |
           npm ci
 
-      - name: Build Project 🔧📝
+      - name: Build Docs 📝
         run: |
-          npm run build
+          npm run docs
 
       - name: Copy docs definition ⏩
         run: |
           cp .oss-docs.json docs/.oss-docs.json
+          
+      - name: Bump patch version for alpha ☝
+        # Alpha branch only
+        if: github.ref == 'refs/heads/alpha'
+        run: |
+          node scripts/unique-version.mjs --tag "alpha"
           
       - name: Bump patch version for beta ☝
         # Develop branch only
@@ -103,6 +109,22 @@ jobs:
         with:
           commit_message: Updated docs
           branch: ${{ env.GITHUB_REF_NAME }}
+
+      - name: Publish Alpha Docs 🚀
+        uses: JamesIves/github-pages-deploy-action@v4.3.4
+        # Alpha branch only
+        if: github.ref == 'refs/heads/alpha'
+        with:
+          token: ${{ secrets.ACCESS_TOKEN }}
+          repository-name: capitec/open-source
+          branch: main
+          folder: docs # The folder to grab the built docs files from
+          target-folder: ${{ env.DOCS_BASE_PATH }}/versions/alpha # The folder to commit the build docs files into
+          clean: true # Clean out any previous files in the target folder
+          clean-exclude: |
+            versions
+          git-config-name: Deploy Bot
+          git-config-email: opensource@capitecbank.co.za
 
       - name: Publish Beta Docs 🚀
         uses: JamesIves/github-pages-deploy-action@v4.3.4
@@ -176,13 +198,26 @@ jobs:
         run: |
           LOCAL_VERSION=$(cat package.json | jq -r .version | awk '{ print tolower($1) }')
           echo LOCAL_VERSION=${LOCAL_VERSION} >> $GITHUB_ENV
-          
+      
+      - name: Build Project 🔧
+        run: |
+          npm run compile    
+
       - name: Publish Latest Package 📦
         # Release only
         if: ${{ startsWith(github.ref, 'refs/tags/') }}
         run: |
           npm version "${{ github.event.release.tag_name }}" -git-tag-version false -allow-same-version true
           npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          
+      - name: Publish Alpha Package 📦
+        # Alpha branch only
+        if: github.ref == 'refs/heads/alpha'
+        run: |
+          npm version "${{ env.LOCAL_VERSION }}-alpha" -git-tag-version false -allow-same-version true          
+          npm publish --tag alpha --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           
@@ -215,6 +250,15 @@ jobs:
         run: |
           npm version "${{ github.event.release.tag_name }}-esm" -git-tag-version false -allow-same-version true
           npm publish --tag esm --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          
+      - name: Publish Alpha ESM Package 📦
+        # Alpha branch only
+        if: github.ref == 'refs/heads/alpha'
+        run: |
+          npm version "${{ env.LOCAL_VERSION }}-esm-alpha" -git-tag-version false -allow-same-version true          
+          npm publish --tag esm-alpha --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           

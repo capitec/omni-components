@@ -66,9 +66,6 @@ jobs:
       - name: Install Playwright Chrome Dependencies
         run: npx playwright install --with-deps
 
-      - name: Compile Code
-        run: npm run compile
-
       - name: Run Tests
         run: npm run test
         env:
