@@ -576,6 +576,7 @@ async function setupThemes() {
     });
     addOption(customThemeKey);
 
+    themeSelect.style.display = 'flex';
     themeSelect.addEventListener('change', (e) => {
         const value = (e.target as HTMLSelectElement).value;
         changeTheme(value);
@@ -660,18 +661,25 @@ function setupScroll() {
     window.addEventListener('scroll', () => {
         storyRenderers.forEach((sr) => {
             const top = window.scrollY;
-            const offset = sr.offsetTop + 205;
+            const offset = sr.offsetTop + 290;
             const height = sr.offsetHeight;
             const id = sr.getAttribute('id');
+            
+
+            // console.log(top, offset, height, id, hash);
 
             if (top > offset && top < offset + height) {
-                // console.log(id, top, offset, height);
-
                 tocAnchors.forEach((a) => {
                     a.classList.remove('active');
                     document.querySelector(`.component-toc a[href*='${id}']`).classList.add('active');
                 });
-            }
+            } 
+            // else if (id === hash) {
+            //     tocAnchors.forEach((a) => {
+            //         a.classList.remove('active');
+            //         document.querySelector(`.component-toc a[href*='${hash}']`).classList.add('active');
+            //     });
+            // }
         });
     });
 }

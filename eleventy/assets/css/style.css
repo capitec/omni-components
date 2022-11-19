@@ -5,6 +5,10 @@
     cursor: default;
 }
 
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 84px;
+}
 
 .docs-omni-component {
 
@@ -204,7 +208,7 @@ header * {
     cursor: pointer;
     border-radius: 6px;
     border: 1px solid #e1e1e1;
-    display: flex;
+    display: none;
 }
 
 .docs-select:focus-visible {
@@ -737,14 +741,15 @@ header * {
 }
 
 .component-toc {
+    --offset: 84px;
     position: sticky;
-    top: 84px;
+    top: var(--offset);
     display: flex;
     flex-direction: column;
     /* background-color: pink; */
     flex: 0 0 240px;
     overflow-y: auto;
-    max-height: calc(100vh - 65px);
+    max-height: calc(100vh - var(--offset));
 }
 
 .component-toc .item {

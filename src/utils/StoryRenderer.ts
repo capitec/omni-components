@@ -53,7 +53,7 @@ export class StoryRenderer extends LitElement {
 
     protected override render() {
         if (!this.controller.story) {
-            return html`<div>Loading...</div>`;
+            return html`<omni-loading-icon style="max-height: 64px;"></omni-loading-icon>`;
         }
 
         this.story = this.controller.story[this.key];
