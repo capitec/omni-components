@@ -665,7 +665,6 @@ function setupScroll() {
             const height = sr.offsetHeight;
             const id = sr.getAttribute('id');
             
-
             // console.log(top, offset, height, id, hash);
 
             if (top > offset && top < offset + height) {
