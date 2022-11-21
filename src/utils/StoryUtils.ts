@@ -664,7 +664,7 @@ function setupScroll() {
             const offset = sr.offsetTop + 290;
             const height = sr.offsetHeight;
             const id = sr.getAttribute('id');
-            
+
             // console.log(top, offset, height, id, hash);
 
             if (top > offset && top < offset + height) {
@@ -672,7 +672,7 @@ function setupScroll() {
                     a.classList.remove('active');
                     document.querySelector(`.component-toc a[href*='${id}']`).classList.add('active');
                 });
-            } 
+            }
             // else if (id === hash) {
             //     tocAnchors.forEach((a) => {
             //         a.classList.remove('active');

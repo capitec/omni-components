@@ -196,9 +196,7 @@ export class CurrencyField extends OmniFormElement {
     // Format the internal value to a float.
     _formatToFloat(formattedValue: string): string | number {
         if (formattedValue.length > 0) {
-            const preFloatReplaceAll = formattedValue
-                .replaceAll(this._currencyFormatSeparator, '')
-                .replace(this._currencyCentsSeparator, '.');
+            const preFloatReplaceAll = formattedValue.replaceAll(this._currencyFormatSeparator, '').replace(this._currencyCentsSeparator, '.');
             return parseFloat(preFloatReplaceAll);
         } else {
             return '';
@@ -248,9 +246,7 @@ export class CurrencyField extends OmniFormElement {
                     centsPart;
             } else {
                 this._stringValue = this._formatToCurrency(
-                    this._parseAmount(
-                        input.value.substring(0, caretPosition - 2) + input.value.substring(caretPosition, input.value.length + 1)
-                    )
+                    this._parseAmount(input.value.substring(0, caretPosition - 2) + input.value.substring(caretPosition, input.value.length + 1))
                 );
             }
 

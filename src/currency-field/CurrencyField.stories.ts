@@ -25,7 +25,7 @@ import './CurrencyField.js';
 export default {
     title: 'UI Components/Currency Field',
     component: 'omni-currency-field',
-    argTypes: BaseArgTypeDefinitions,
+    argTypes: BaseArgTypeDefinitions
 } as CSFIdentifier;
 
 interface Args extends BaseArgs {
@@ -45,9 +45,9 @@ export const Interactive: ComponentStoryFormat<Args> = {
             ?disabled="${args.disabled}"
             currency="${ifNotEmpty(args.currency)}"
             locale="${ifNotEmpty(args.locale)}"
-            >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${args.suffix
-                ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}`
-                : nothing}${args.prefix || args.suffix ? '\r\n' : nothing}
+            >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${
+        args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}` : nothing
+    }${args.prefix || args.suffix ? '\r\n' : nothing}
         </omni-currency-field>
     `,
     name: 'Interactive',
@@ -70,7 +70,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         // Required to clear userEvent Symbol that keeps hidden state of previously typed values via userEvent. If not cleared this cannot be run multiple times with the same results
         setUIValueClean(inputField);
         inputField.value = '';
-        
+
         const input = jest.fn();
         currencyField.addEventListener('input', input);
 
@@ -97,7 +97,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         const leftArrow = '{ArrowLeft>3/}{Backspace}';
         await userEvent.type(inputField, leftArrow);
         await expect(inputField).toHaveValue('120,000');
-        
+
         // Set currency property to be invalid value.
         currencyField.currency = 'cents';
     }
