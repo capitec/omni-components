@@ -34,19 +34,20 @@
 
 ## Properties
 
-| Property             | Attribute           | Modifiers | Type                        | Default                 | Description                                      |
-|----------------------|---------------------|-----------|-----------------------------|-------------------------|--------------------------------------------------|
-| `customElements`     |                     |           | `Package`                   |                         |                                                  |
-| `customElementsPath` | `custom-elements`   |           | `string`                    | "/custom-elements.json" |                                                  |
-| `data`               | `data`              |           | `ComponentStoryFormat<any>` |                         |                                                  |
-| `dir`                |                     |           | `string`                    |                         |                                                  |
-| `disabled`           | `disabled`          |           | `boolean`                   |                         |                                                  |
-| `element`            | `element`           |           | `string`                    |                         |                                                  |
-| `ignoreAttributes`   | `ignore-attributes` |           | `string`                    |                         |                                                  |
-| `lang`               |                     |           | `string`                    |                         |                                                  |
-| `override`           | `override`          |           |                             |                         | Used to set the base direction of text for display |
-| `slotCodeMirrors`    |                     |           | `NodeListOf<CodeMirror>`    |                         |                                                  |
-| `styles`             |                     | readonly  | `CSSResultGroup[]`          |                         |                                                  |
+| Property             | Attribute           | Modifiers | Type                                     | Default                 | Description                                      |
+|----------------------|---------------------|-----------|------------------------------------------|-------------------------|--------------------------------------------------|
+| `cssValueReader`     | `cssValueReader`    |           | `(variable: CSSVariable) => CSSVariable` | "(c) => c"              |                                                  |
+| `customElements`     |                     |           | `Package`                                |                         |                                                  |
+| `customElementsPath` | `custom-elements`   |           | `string`                                 | "/custom-elements.json" |                                                  |
+| `data`               | `data`              |           | `ComponentStoryFormat<any>`              |                         |                                                  |
+| `dir`                |                     |           | `string`                                 |                         |                                                  |
+| `disabled`           | `disabled`          |           | `boolean`                                |                         |                                                  |
+| `element`            | `element`           |           | `string`                                 |                         |                                                  |
+| `ignoreAttributes`   | `ignore-attributes` |           | `string`                                 |                         |                                                  |
+| `lang`               |                     |           | `string`                                 |                         |                                                  |
+| `override`           | `override`          |           |                                          |                         | Used to set the base direction of text for display |
+| `slotCodeMirrors`    |                     |           | `NodeListOf<CodeEditor>`                 |                         |                                                  |
+| `styles`             |                     | readonly  | `CSSResultGroup[]`                       |                         |                                                  |
 
 ## Methods
 
@@ -101,9 +102,8 @@
 
 | Property         | Attribute     | Type                 |
 |------------------|---------------|----------------------|
-| `codeMirror`     |               | `CodeMirror`         |
+| `codeEditor`     |               | `CodeEditor`         |
 | `interactive`    | `interactive` | `boolean`            |
-| `interactiveSrc` |               | `string`             |
 | `key`            | `key`         | `string`             |
 | `override`       |               |                      |
 | `path`           | `path`        | `string`             |
