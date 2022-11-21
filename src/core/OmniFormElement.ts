@@ -139,191 +139,191 @@ export class OmniFormElement extends OmniElement {
     static override get styles(): CSSResultGroup {
         return [
             css`
-        ${super.styles}
+                ${super.styles}
 
-        :host {
-          display: inline-flex;
-        }
+                :host {
+                    display: inline-flex;
+                }
 
-        /* CONTAINER STYLES */
+                /* CONTAINER STYLES */
 
-        .container {
-          display: flex;
-          flex-direction: column;
-          align-items: stretch;
-          justify-content: flex-start;
+                .container {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: stretch;
+                    justify-content: flex-start;
 
-          width: var(--omni-form-container-width, 100%);
+                    width: var(--omni-form-container-width, 100%);
 
-          /* added at a container level to apply to all child elements */
-          font-family: var(--omni-form-container-font-family, var(--omni-font-family));
-        }
+                    /* added at a container level to apply to all child elements */
+                    font-family: var(--omni-form-container-font-family, var(--omni-font-family));
+                }
 
-        /* LAYOUT STYLES */
+                /* LAYOUT STYLES */
 
-        .layout {
-          position: relative;
+                .layout {
+                    position: relative;
 
-          display: flex;
-          flex-direction: row;
-          align-items: stretch;
-          justify-content: center;
-          background-color: var(--omni-form-field-background-color, var(--omni-background-color));
-        }
+                    display: flex;
+                    flex-direction: row;
+                    align-items: stretch;
+                    justify-content: center;
+                    background-color: var(--omni-form-field-background-color, var(--omni-background-color));
+                }
 
-        .border {
-          position: absolute;
-          top: var(--omni-form-border-top, 0px);
-          bottom: var(--omni-form-border-bottom, 0px);
-          left: var(--omni-form-border-left, 0px);
-          right: var(--omni-form-border-right, 0px);
+                .border {
+                    position: absolute;
+                    top: var(--omni-form-border-top, 0px);
+                    bottom: var(--omni-form-border-bottom, 0px);
+                    left: var(--omni-form-border-left, 0px);
+                    right: var(--omni-form-border-right, 0px);
 
-          border-width: var(--omni-form-border-width, 1px);
-          border-radius: var(--omni-form-border-radius, 4px);
-          border-style: var(--omni-form-border-style, solid);
-          border-color: var(--omni-form-border-color, var(--omni-primary-color));
-          pointer-events: none;
-        }
+                    border-width: var(--omni-form-border-width, 1px);
+                    border-radius: var(--omni-form-border-radius, 4px);
+                    border-style: var(--omni-form-border-style, solid);
+                    border-color: var(--omni-form-border-color, var(--omni-primary-color));
+                    pointer-events: none;
+                }
 
-        /* INPUT CONTAINER STYLES */
+                /* INPUT CONTAINER STYLES */
 
-        .form-container {
-          position: relative;
-          display: flex;
-          align-items: center;
-          width: var(--omni-form-container-width, 100%);
-        }
+                .form-container {
+                    position: relative;
+                    display: flex;
+                    align-items: center;
+                    width: var(--omni-form-container-width, 100%);
+                }
 
-        /* LABEL STYLES */
+                /* LABEL STYLES */
 
-        .label {
-          position: absolute;
-          flex: 1 1 auto;
-          transform-origin: top var(--omni-form-label-transform-origin, left);
+                .label {
+                    position: absolute;
+                    flex: 1 1 auto;
+                    transform-origin: top var(--omni-form-label-transform-origin, left);
 
-          transition: all 150ms ease 0s;
+                    transition: all 150ms ease 0s;
 
-          line-height: 100%;
+                    line-height: 100%;
 
-          text-align: var(--omni-form-label-text-align, left);
+                    text-align: var(--omni-form-label-text-align, left);
 
-          pointer-events: none;
-          user-select: none;
+                    pointer-events: none;
+                    user-select: none;
 
-          color: var(--omni-form-label-color, var(--omni-font-color));
-          font-size: var(--omni-form-label-font-size, var(--omni-font-size));
-          font-weight: var(--omni-form-label-font-weight, var(--omni-font-weight));
+                    color: var(--omni-form-label-color, var(--omni-font-color));
+                    font-size: var(--omni-form-label-font-size, var(--omni-font-size));
+                    font-weight: var(--omni-form-label-font-weight, var(--omni-font-weight));
 
-          left: var(--omni-form-label-left, 10px);
-        }
+                    left: var(--omni-form-label-left, 10px);
+                }
 
-        .layout > .label > span {
-          position: relative;
-        }
+                .layout > .label > span {
+                    position: relative;
+                }
 
-        /* FOCUS STYLES */
+                /* FOCUS STYLES */
 
-        :host([value]:not([value=''])) .layout > .form-container > .label,
-        :focus + .label {
-          top: 0px;
-          transform: translateY(-37.5%) scale(95%);
-          color: var(--omni-form-focussed-label-color, var(--omni-primary-color));
-        }
+                :host([value]:not([value=''])) .layout > .form-container > .label,
+                :focus + .label {
+                    top: 0px;
+                    transform: translateY(-37.5%) scale(95%);
+                    color: var(--omni-form-focussed-label-color, var(--omni-primary-color));
+                }
 
-        :host([value]) .layout > .form-container > .label::before,
-        :focus + .label::before {
-          content: '';
-          background-color: var(--omni-label-focus-background-color, white);
-          position: absolute;
-          left: var(--omni-label-focus-left, -3px);
-          right: var(--omni-label-focus-right, -3px);
-          top: 39%;
-          height: 50%;
-          z-index: -1;
-        }
+                :host([value]) .layout > .form-container > .label::before,
+                :focus + .label::before {
+                    content: '';
+                    background-color: var(--omni-label-focus-background-color, white);
+                    position: absolute;
+                    left: var(--omni-label-focus-left, -3px);
+                    right: var(--omni-label-focus-right, -3px);
+                    top: 39%;
+                    height: 50%;
+                    z-index: -1;
+                }
 
-        .layout:focus-within > .border {
-          border-style: solid;
-          border-width: var(--omni-form-focussed-border-width, 2px);
-          border-color: var(--omni-form-focussed-border-color, var(--omni-primary-color));
-        }
+                .layout:focus-within > .border {
+                    border-style: solid;
+                    border-width: var(--omni-form-focussed-border-width, 2px);
+                    border-color: var(--omni-form-focussed-border-color, var(--omni-primary-color));
+                }
 
-        /* ERROR STYLES */
+                /* ERROR STYLES */
 
-        .label.error {
-          color: var(--omni-form-error-label-color, var(--omni-error-font-color));
-        }
+                .label.error {
+                    color: var(--omni-form-error-label-color, var(--omni-error-font-color));
+                }
 
-        .layout.error > .border {
-          border-color: var(--omni-form-error-border-color, var(--omni-error-border-color));
-        }
+                .layout.error > .border {
+                    border-color: var(--omni-form-error-border-color, var(--omni-error-border-color));
+                }
 
-        /* DISABLED STYLES */
+                /* DISABLED STYLES */
 
-        .layout.disabled {
-          pointer-events: none;
-        }
+                .layout.disabled {
+                    pointer-events: none;
+                }
 
-        .label.disabled {
-          /*color: var(--omni-form-label-disabled-color, var(--omni-disabled-border-color));*/
-          pointer-events: none;
-        }
+                .label.disabled {
+                    /*color: var(--omni-form-label-disabled-color, var(--omni-disabled-border-color));*/
+                    pointer-events: none;
+                }
 
-        .layout.disabled > .border {
-          border-color: var(--omni-form-disabled-border-color, var(--omni-disabled-border-color));
-          background-color: var(--omni-form-disabled-background-color, var(--omni-disabled-background-color));
-        }
+                .layout.disabled > .border {
+                    border-color: var(--omni-form-disabled-border-color, var(--omni-disabled-border-color));
+                    background-color: var(--omni-form-disabled-background-color, var(--omni-disabled-background-color));
+                }
 
-        :host([value]) .layout.disabled > .form-container > .label::before {
-          background-color: var(--omni-form-disabled-focussed-label-background-color, var(--omni-disabled-background-color));
-        }
+                :host([value]) .layout.disabled > .form-container > .label::before {
+                    background-color: var(--omni-form-disabled-focussed-label-background-color, var(--omni-disabled-background-color));
+                }
 
-        /* HINT LABEL STYLES */
+                /* HINT LABEL STYLES */
 
-        .hint-label {
-          color: var(--omni-form-hint-label-font-color, var(--omni-hint-font-color));
-          font-family: var(--omni-form-hint-label-font-family, var(--omni-font-family));
-          font-size: var(--omni-form-hint-label-font-size, 0.86em);
-          font-weight: var(--omni-form-hint-label-font-weight, 300);
+                .hint-label {
+                    color: var(--omni-form-hint-label-font-color, var(--omni-hint-font-color));
+                    font-family: var(--omni-form-hint-label-font-family, var(--omni-font-family));
+                    font-size: var(--omni-form-hint-label-font-size, 0.86em);
+                    font-weight: var(--omni-form-hint-label-font-weight, 300);
 
-          padding-top: var(--omni-form-hint-label-padding-top, 2px);
-          padding-left: calc(var(--omni-form-hint-label-padding-left, 10px) + var(--omni-form-hint-label-border-width, 1px));
-        }
+                    padding-top: var(--omni-form-hint-label-padding-top, 2px);
+                    padding-left: calc(var(--omni-form-hint-label-padding-left, 10px) + var(--omni-form-hint-label-border-width, 1px));
+                }
 
-        /* ERROR LABEL STYLES */
+                /* ERROR LABEL STYLES */
 
-        .error-label {
-          color: var(--omni-form-error-label-font-color, var(--omni-error-font-color));
-          font-family: var(--omni-form-error-label-font-family, var(--omni-font-family));
-          font-size: var(--omni-form-error-label-font-size, var(--omni-font-size));
-          font-weight: var(--omni-form-error-label-font-weight, var(--omni-font-weight));
+                .error-label {
+                    color: var(--omni-form-error-label-font-color, var(--omni-error-font-color));
+                    font-family: var(--omni-form-error-label-font-family, var(--omni-font-family));
+                    font-size: var(--omni-form-error-label-font-size, var(--omni-font-size));
+                    font-weight: var(--omni-form-error-label-font-weight, var(--omni-font-weight));
 
-          padding-top: var(--omni-form-error-label-padding-top, 2px);
-          padding-left: calc(var(--omni-form-error-label-padding-left, 10px) + var(--omni-form-error-label-border-width, 1px));
-        }
+                    padding-top: var(--omni-form-error-label-padding-top, 2px);
+                    padding-left: calc(var(--omni-form-error-label-padding-left, 10px) + var(--omni-form-error-label-border-width, 1px));
+                }
 
-        /* HOVER STYLES */
+                /* HOVER STYLES */
 
-        .layout:hover > .border {
-          box-shadow: inset 0px 0px 0px 1px var(--omni-form-hover-color, var(--omni-primary-color));
-        }
+                .layout:hover > .border {
+                    box-shadow: inset 0px 0px 0px 1px var(--omni-form-hover-color, var(--omni-primary-color));
+                }
 
-        .layout.disabled:hover > .border {
-          box-shadow: inset 0px 0px 0px 1px var(--omni-form-disabled-hover-color, var(--omni-disabled-border-color));
-        }
+                .layout.disabled:hover > .border {
+                    box-shadow: inset 0px 0px 0px 1px var(--omni-form-disabled-hover-color, var(--omni-disabled-border-color));
+                }
 
-        .layout.error:hover > .border {
-          box-shadow: inset 0px 0px 0px 1px var(--omni-form-error-hover-color, var(--omni-error-border-color));
-        }
+                .layout.error:hover > .border {
+                    box-shadow: inset 0px 0px 0px 1px var(--omni-form-error-hover-color, var(--omni-error-border-color));
+                }
 
-        slot[name='prefix'],
-        slot[name='suffix'],
-        ::slotted([slot='prefix']),
-        ::slotted([slot='suffix']) {
-          display: flex;
-          align-items: center;
-        }
-      `
+                slot[name='prefix'],
+                slot[name='suffix'],
+                ::slotted([slot='prefix']),
+                ::slotted([slot='suffix']) {
+                    display: flex;
+                    align-items: center;
+                }
+            `
         ];
     }
 
@@ -335,17 +335,21 @@ export class OmniFormElement extends OmniElement {
         };
 
         return html`
-      <div class="container">
-        <div class=${classMap(layout)}>
-          <div class="border"></div>
-          <slot name="prefix"></slot>
-          <div class="form-container"> ${this.renderContent()} ${this.renderLabel()} </div>
-          <slot name="suffix"></slot>
-          ${this.renderControl()}
-        </div>
-        ${this.renderHint()} ${this.renderError()}
-      </div>
-    `;
+            <div class="container">
+                <div class=${classMap(layout)}>
+                    <div class="border"></div>
+                    <slot name="prefix">${this.renderPrefix()}</slot>
+                    <div class="form-container"> ${this.renderContent()} ${this.renderLabel()} </div>
+                    <slot name="suffix"></slot>
+                    ${this.renderControl()}
+                </div>
+                ${this.renderHint()} ${this.renderError()}
+            </div>
+        `;
+    }
+
+    protected renderPrefix(): typeof nothing | TemplateResult {
+        return nothing;
     }
 
     protected renderContent(): typeof nothing | TemplateResult {

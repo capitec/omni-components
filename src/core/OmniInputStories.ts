@@ -19,7 +19,7 @@ export const BaseArgTypeDefinitions = {
     }
 };
 
-export interface BaseArgTypes {
+export interface BaseArgs {
     label: string;
     value: string;
     data: object;
@@ -31,7 +31,7 @@ export interface BaseArgTypes {
     prefix: string;
 }
 
-export const LabelStory = <T extends HTMLElement, U extends BaseArgTypes>(tagName: string) => {
+export const LabelStory = <T extends HTMLElement, U extends BaseArgs>(tagName: string) => {
     const Label: ComponentStoryFormat<U> = {
         render: (args: U) => html`${unsafeHTML(`<${tagName}  data-testid="test-field" label="${ifNotEmpty(args.label)}"></${tagName}>`)}`,
         name: 'Label',
@@ -47,7 +47,7 @@ export const LabelStory = <T extends HTMLElement, U extends BaseArgTypes>(tagNam
     return Label;
 };
 
-export const HintStory = <T extends HTMLElement, U extends BaseArgTypes>(tagName: string) => {
+export const HintStory = <T extends HTMLElement, U extends BaseArgs>(tagName: string) => {
     const Hint: ComponentStoryFormat<U> = {
         render: (args: U) =>
             html`${unsafeHTML(`<${tagName}  data-testid="test-field" label="${ifNotEmpty(args.label)}" hint="${args.hint}"></${tagName}>`)}`,
@@ -66,7 +66,7 @@ export const HintStory = <T extends HTMLElement, U extends BaseArgTypes>(tagName
     return Hint;
 };
 
-export const ErrorStory = <T extends HTMLElement, U extends BaseArgTypes>(tagName: string) => {
+export const ErrorStory = <T extends HTMLElement, U extends BaseArgs>(tagName: string) => {
     const Error: ComponentStoryFormat<U> = {
         render: (args: U) =>
             html`${unsafeHTML(`<${tagName} data-testid="test-field" label="${args.label}" error="${ifNotEmpty(args.error)}"></${tagName}>`)}`,
@@ -85,7 +85,7 @@ export const ErrorStory = <T extends HTMLElement, U extends BaseArgTypes>(tagNam
     return Error;
 };
 
-export const ValueStory = <T extends HTMLElement, U extends BaseArgTypes>(
+export const ValueStory = <T extends HTMLElement, U extends BaseArgs>(
     tagName: string,
     inputValue: string | number | string[] = 'The input value'
 ) => {
@@ -107,7 +107,7 @@ export const ValueStory = <T extends HTMLElement, U extends BaseArgTypes>(
     return Value;
 };
 
-export const PrefixStory = <T extends HTMLElement, U extends BaseArgTypes>(tagName: string) => {
+export const PrefixStory = <T extends HTMLElement, U extends BaseArgs>(tagName: string) => {
     const Prefix: ComponentStoryFormat<U> = {
         render: (args: U) =>
             html`${unsafeHTML(`<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}">${args.prefix}</${tagName}>`)}`,
@@ -129,7 +129,7 @@ export const PrefixStory = <T extends HTMLElement, U extends BaseArgTypes>(tagNa
     return Prefix;
 };
 
-export const SuffixStory = <T extends HTMLElement, U extends BaseArgTypes>(tagName: string) => {
+export const SuffixStory = <T extends HTMLElement, U extends BaseArgs>(tagName: string) => {
     const Suffix: ComponentStoryFormat<U> = {
         render: (args: U) =>
             html`${unsafeHTML(`<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}">${args.suffix}</${tagName}>`)}`,
@@ -151,7 +151,7 @@ export const SuffixStory = <T extends HTMLElement, U extends BaseArgTypes>(tagNa
     return Suffix;
 };
 
-export const DisabledStory = <T extends HTMLElement, U extends BaseArgTypes>(tagName: string) => {
+export const DisabledStory = <T extends HTMLElement, U extends BaseArgs>(tagName: string) => {
     const Disabled: ComponentStoryFormat<U> = {
         render: (args: U) => html`${unsafeHTML(`<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}" disabled></${tagName}>`)}`,
         name: 'Disabled',

@@ -5,7 +5,7 @@ import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import {
     LabelStory,
-    BaseArgTypes,
+    BaseArgs,
     BaseArgTypeDefinitions,
     HintStory,
     ErrorStory,
@@ -27,8 +27,8 @@ export default {
     argTypes: BaseArgTypeDefinitions
 } as CSFIdentifier;
 
-export const Interactive: ComponentStoryFormat<BaseArgTypes> = {
-    render: (args: BaseArgTypes) => html`
+export const Interactive: ComponentStoryFormat<BaseArgs> = {
+    render: (args: BaseArgs) => html`
     <omni-text-field
       data-testid="test-text-field"
       label="${ifNotEmpty(args.label)}"
@@ -70,16 +70,16 @@ export const Interactive: ComponentStoryFormat<BaseArgTypes> = {
     }
 };
 
-export const Label = LabelStory<TextField, BaseArgTypes>('omni-text-field');
+export const Label = LabelStory<TextField, BaseArgs>('omni-text-field');
 
-export const Hint = HintStory<TextField, BaseArgTypes>('omni-text-field');
+export const Hint = HintStory<TextField, BaseArgs>('omni-text-field');
 
-export const Error_Label = ErrorStory<TextField, BaseArgTypes>('omni-text-field');
+export const Error_Label = ErrorStory<TextField, BaseArgs>('omni-text-field');
 
-export const Value = ValueStory<TextField, BaseArgTypes>('omni-text-field');
+export const Value = ValueStory<TextField, BaseArgs>('omni-text-field');
 
-export const Prefix = PrefixStory<TextField, BaseArgTypes>('omni-text-field');
+export const Prefix = PrefixStory<TextField, BaseArgs>('omni-text-field');
 
-export const Suffix = SuffixStory<TextField, BaseArgTypes>('omni-text-field');
+export const Suffix = SuffixStory<TextField, BaseArgs>('omni-text-field');
 
-export const Disabled = DisabledStory<TextField, BaseArgTypes>('omni-text-field');
+export const Disabled = DisabledStory<TextField, BaseArgs>('omni-text-field');

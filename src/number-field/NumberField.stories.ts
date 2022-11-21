@@ -6,7 +6,7 @@ import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import {
     LabelStory,
-    BaseArgTypes,
+    BaseArgs,
     BaseArgTypeDefinitions,
     HintStory,
     ErrorStory,
@@ -28,8 +28,8 @@ export default {
     argTypes: BaseArgTypeDefinitions
 } as CSFIdentifier;
 
-export const Interactive: ComponentStoryFormat<BaseArgTypes> = {
-    render: (args: BaseArgTypes) => html`
+export const Interactive: ComponentStoryFormat<BaseArgs> = {
+    render: (args: BaseArgs) => html`
     <omni-number-field
       data-testid="test-number-field"
       label="${ifNotEmpty(args.label)}"
@@ -84,16 +84,16 @@ export const Interactive: ComponentStoryFormat<BaseArgTypes> = {
     }
 };
 
-export const Label = LabelStory<NumberField, BaseArgTypes>('omni-number-field');
+export const Label = LabelStory<NumberField, BaseArgs>('omni-number-field');
 
-export const Hint = HintStory<NumberField, BaseArgTypes>('omni-number-field');
+export const Hint = HintStory<NumberField, BaseArgs>('omni-number-field');
 
-export const Error_Label = ErrorStory<NumberField, BaseArgTypes>('omni-number-field');
+export const Error_Label = ErrorStory<NumberField, BaseArgs>('omni-number-field');
 
-export const Value = ValueStory<NumberField, BaseArgTypes>('omni-number-field', 123);
+export const Value = ValueStory<NumberField, BaseArgs>('omni-number-field', 123);
 
-export const Prefix = PrefixStory<NumberField, BaseArgTypes>('omni-number-field');
+export const Prefix = PrefixStory<NumberField, BaseArgs>('omni-number-field');
 
-export const Suffix = SuffixStory<NumberField, BaseArgTypes>('omni-number-field');
+export const Suffix = SuffixStory<NumberField, BaseArgs>('omni-number-field');
 
-export const Disabled = DisabledStory<NumberField, BaseArgTypes>('omni-number-field');
+export const Disabled = DisabledStory<NumberField, BaseArgs>('omni-number-field');

@@ -5,7 +5,7 @@ import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import {
     LabelStory,
-    BaseArgTypes,
+    BaseArgs,
     BaseArgTypeDefinitions,
     HintStory,
     ErrorStory,
@@ -38,7 +38,7 @@ export default {
     }
 } as CSFIdentifier;
 
-interface Args extends BaseArgTypes {
+interface Args extends BaseArgs {
     hide: string;
     show: string;
 }
@@ -111,19 +111,19 @@ export const Interactive: ComponentStoryFormat<Args> = {
     }
 };
 
-export const Label = LabelStory<PasswordField, BaseArgTypes>('omni-password-field');
+export const Label = LabelStory<PasswordField, BaseArgs>('omni-password-field');
 
-export const Hint = HintStory<PasswordField, BaseArgTypes>('omni-password-field');
+export const Hint = HintStory<PasswordField, BaseArgs>('omni-password-field');
 
-export const Error_Label = ErrorStory<PasswordField, BaseArgTypes>('omni-password-field');
+export const Error_Label = ErrorStory<PasswordField, BaseArgs>('omni-password-field');
 
-export const Value = ValueStory<PasswordField, BaseArgTypes>('omni-password-field');
+export const Value = ValueStory<PasswordField, BaseArgs>('omni-password-field');
 
-export const Prefix = PrefixStory<PasswordField, BaseArgTypes>('omni-password-field');
+export const Prefix = PrefixStory<PasswordField, BaseArgs>('omni-password-field');
 
-export const Suffix = SuffixStory<PasswordField, BaseArgTypes>('omni-password-field');
+export const Suffix = SuffixStory<PasswordField, BaseArgs>('omni-password-field');
 
-export const Disabled = DisabledStory<PasswordField, BaseArgTypes>('omni-password-field');
+export const Disabled = DisabledStory<PasswordField, BaseArgs>('omni-password-field');
 
 export const Custom_Icon_Slot: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`

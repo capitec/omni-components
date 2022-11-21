@@ -142,6 +142,22 @@ import '@capitec/omni-components/chip';
 
 </td></tr><tr><td>
 
+[omni-currency-field](src/currency-field/README.md)
+
+</td><td>
+
+A currency input control that formats input based on currency and locale.
+
+
+```js
+
+
+import '@capitec/omni-components/currency-field';
+
+```
+
+</td></tr><tr><td>
+
 [omni-hyperlink](src/hyperlink/README.md)
 
 </td><td>
@@ -185,6 +201,22 @@ A check icon component.
 
 
 import '@capitec/omni-components/icons/Check.icon.js';
+
+```
+
+</td></tr><tr><td>
+
+[omni-clear-icon](src/icons/README.md)
+
+</td><td>
+
+A clear icon component.
+
+
+```js
+
+
+import '@capitec/omni-components/icons/Clear.icon.js';
 
 ```
 
@@ -332,6 +364,22 @@ import '@capitec/omni-components/icons/Plus.icon.js';
 
 </td></tr><tr><td>
 
+[omni-search-icon](src/icons/README.md)
+
+</td><td>
+
+A search icon component.
+
+
+```js
+
+
+import '@capitec/omni-components/icons/Search.icon.js';
+
+```
+
+</td></tr><tr><td>
+
 [omni-label](src/label/README.md)
 
 </td><td>
@@ -428,6 +476,22 @@ import '@capitec/omni-components/render-element';
 
 </td></tr><tr><td>
 
+[omni-search-field](src/search-field/README.md)
+
+</td><td>
+
+A search input control.
+
+
+```js
+
+
+import '@capitec/omni-components/search-field';
+
+```
+
+</td></tr><tr><td>
+
 [omni-switch](src/switch/README.md)
 
 </td><td>
@@ -494,17 +558,17 @@ For more on contribution guidelines, see [`CONTRIBUTING.md`](./CONTRIBUTING.md).
         </a>
     </td>
     <td align="center">
-        <a href="https://github.com/stefan505">
-            <img src="https://avatars.githubusercontent.com/u/10812446?v=4" width="100;" alt="stefan505"/>
-            <br />
-            <sub><b>stefan505</b></sub>
-        </a>
-    </td>
-    <td align="center">
         <a href="https://github.com/chromaticWaster">
             <img src="https://avatars.githubusercontent.com/u/22874454?v=4" width="100;" alt="chromaticWaster"/>
             <br />
             <sub><b>chromaticWaster</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/stefan505">
+            <img src="https://avatars.githubusercontent.com/u/10812446?v=4" width="100;" alt="stefan505"/>
+            <br />
+            <sub><b>stefan505</b></sub>
         </a>
     </td>
     <td align="center">

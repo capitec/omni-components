@@ -5,7 +5,7 @@ import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import {
     LabelStory,
-    BaseArgTypes,
+    BaseArgs,
     BaseArgTypeDefinitions,
     HintStory,
     ErrorStory,
@@ -38,7 +38,7 @@ export default {
     }
 } as CSFIdentifier;
 
-interface Args extends BaseArgTypes {
+interface Args extends BaseArgs {
     increase: string;
     decrease: string;
 }
@@ -122,19 +122,19 @@ export const Interactive: ComponentStoryFormat<Args> = {
     }
 };
 
-export const Label = LabelStory<NumericField, BaseArgTypes>('omni-numeric-field');
+export const Label = LabelStory<NumericField, BaseArgs>('omni-numeric-field');
 
-export const Hint = HintStory<NumericField, BaseArgTypes>('omni-numeric-field');
+export const Hint = HintStory<NumericField, BaseArgs>('omni-numeric-field');
 
-export const Error_Label = ErrorStory<NumericField, BaseArgTypes>('omni-numeric-field');
+export const Error_Label = ErrorStory<NumericField, BaseArgs>('omni-numeric-field');
 
-export const Value = ValueStory<NumericField, BaseArgTypes>('omni-numeric-field', 123);
+export const Value = ValueStory<NumericField, BaseArgs>('omni-numeric-field', 123);
 
-export const Prefix = PrefixStory<NumericField, BaseArgTypes>('omni-numeric-field');
+export const Prefix = PrefixStory<NumericField, BaseArgs>('omni-numeric-field');
 
-export const Suffix = SuffixStory<NumericField, BaseArgTypes>('omni-numeric-field');
+export const Suffix = SuffixStory<NumericField, BaseArgs>('omni-numeric-field');
 
-export const Disabled = DisabledStory<NumericField, BaseArgTypes>('omni-numeric-field');
+export const Disabled = DisabledStory<NumericField, BaseArgs>('omni-numeric-field');
 
 export const Custom_Icon_Slot: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
