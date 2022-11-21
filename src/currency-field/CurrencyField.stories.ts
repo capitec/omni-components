@@ -65,31 +65,39 @@ export const Interactive: ComponentStoryFormat<Args> = {
     },
     play: async (context) => {
         const currencyField = within(context.canvasElement).getByTestId<CurrencyField>('test-currency-field');
+
+        const inputField = currencyField.shadowRoot.getElementById('inputField') as HTMLInputElement;
+        // Required to clear userEvent Symbol that keeps hidden state of previously typed values via userEvent. If not cleared this cannot be run multiple times with the same results
+        setUIValueClean(inputField);
+        inputField.value = '';
+        
         const input = jest.fn();
         currencyField.addEventListener('input', input);
 
-        const inputField = currencyField.shadowRoot.getElementById('inputField');
-
-        const value = '1200000.00';
+        const value = '1200000.15';
         await userEvent.type(inputField, value);
         // Check the following value as input value is formatted to currency value;
-        await expect(inputField).toHaveValue('1,200,000.00');
+        await expect(inputField).toHaveValue('1,200,000.15');
         await expect(input).toBeCalledTimes(value.length);
 
         // Backspacing to cover the removal of cents and cents separator
-        const backspace = '{backspace>3/}';
-        await userEvent.type(inputField, backspace);
+        const backspace = '{Backspace}';
+        // Required to clear userEvent Symbol that keeps hidden state of previously typed values via userEvent. If not cleared this cannot be run multiple times with the same results
+        setUIValueClean(inputField);
+        await userEvent.type(inputField, backspace, {
+            initialSelectionStart: 10,
+            initialSelectionEnd: 10
+        });
+
+        await currencyField.updateComplete;
+
         await expect(inputField).toHaveValue('1,200,000');
 
         // Use left arrow key to position the caret after the currency separator.
-        const leftArrow = '{left>3/}{backspace}';
+        const leftArrow = '{ArrowLeft>3/}{Backspace}';
         await userEvent.type(inputField, leftArrow);
         await expect(inputField).toHaveValue('120,000');
-
-        // Clear contents of the input field.
-        await userEvent.clear(inputField);
-        await expect(inputField).toHaveValue('');
-
+        
         // Set currency property to be invalid value.
         currencyField.currency = 'cents';
     }

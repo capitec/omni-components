@@ -270,6 +270,8 @@ export class CurrencyField extends OmniFormElement {
         if (input.value.charAt(caretPosition - 1) === this._currencyCentsSeparator && e.key.toLowerCase() === 'backspace') {
             this._stringValue = input.value.substring(0, input.value.indexOf(this._currencyCentsSeparator));
             e.preventDefault();
+            // Set value prop to float value
+            this.value = this._formatToFloat(this._stringValue);
             return;
         }
 
