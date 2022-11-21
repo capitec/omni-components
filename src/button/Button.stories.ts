@@ -4,7 +4,7 @@ import { Meta, StoryContext } from '@storybook/web-components';
 import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import { loadCssPropertiesRemote, loadDefaultSlotForRemote, raw } from '../utils/StoryUtils.js';
+import { loadCssPropertiesRemote, raw } from '../utils/StoryUtils.js';
 import { Button } from './Button.js';
 
 import './Button.js';
@@ -28,9 +28,8 @@ export default {
         'slot-position': {
             control: false
         },
-        slot: {
-            control: 'text',
-            description: loadDefaultSlotForRemote('omni-button').description
+        '[Default Slot]': {
+            control: 'text'
         }
     },
     parameters: {
@@ -46,7 +45,7 @@ interface Args {
     label: string;
     slotPosition: typeof slotPositionOptions[number];
     disabled: boolean;
-    slot: string;
+    '[Default Slot]': string;
 }
 
 export const Interactive = {
@@ -57,7 +56,7 @@ export const Interactive = {
             label="${ifNotEmpty(args.label)}"
             slot-position="${args.slotPosition}"
             ?disabled=${args.disabled}>
-            ${unsafeHTML(args.slot)}
+            ${unsafeHTML(args['[Default Slot]'])}
         </omni-button>
     `,
     name: 'Interactive',
@@ -66,7 +65,7 @@ export const Interactive = {
         label: 'Button',
         slotPosition: 'top',
         disabled: false,
-        slot: raw`<omni-icon icon="@material/thumb_up"></omni-icon>`
+        '[Default Slot]': raw`<omni-icon icon="@material/thumb_up"></omni-icon>`
     },
     play: async (context: StoryContext) => {
         const button = within(context.canvasElement).getByTestId<Button>('test-button');

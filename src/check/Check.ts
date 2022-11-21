@@ -1,7 +1,7 @@
-import { html, css, LitElement, TemplateResult, nothing } from 'lit';
+import { html, css, TemplateResult, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
-import ComponentStyles from '../styles/ComponentStyles';
+import { OmniElement } from '../core/OmniElement.js';
 
 import '../icons/Indeterminate.icon.js';
 import '../icons/Check.icon.js';
@@ -46,11 +46,13 @@ import '../icons/Check.icon.js';
  * @cssprop --omni-check-hint-label-font-family - Hint font family.
  * @cssprop --omni-check-hint-label-font-size - Hint font size.
  * @cssprop --omni-check-hint-label-font-weight - Hint font weight.
+ * @cssprop --omni-check-hint-label-padding-top - Hint top padding.
  *
  * @cssprop --omni-check-error-label-font-color - Error font color.
  * @cssprop --omni-check-error-label-font-family - Error font family.
  * @cssprop --omni-check-error-label-font-size - Error font size.
  * @cssprop --omni-check-error-label-font-weight - Error font weight.
+ * @cssprop --omni-check-error-label-padding-top - Error top padding.
  *
  * @cssprop --omni-check-width - Width.
  * @cssprop --omni-check-height - Height.
@@ -74,7 +76,7 @@ import '../icons/Check.icon.js';
  *
  */
 @customElement('omni-check')
-export class Check extends LitElement {
+export class Check extends OmniElement {
     /**
      * Text label.
      * @attr
@@ -171,7 +173,7 @@ export class Check extends LitElement {
 
     static override get styles() {
         return [
-            ComponentStyles,
+            super.styles,
             css`
                 :host {
                     outline: none;
@@ -203,7 +205,7 @@ export class Check extends LitElement {
                     font-size: var(--omni-check-hint-label-font-size, 0.86em);
                     font-weight: var(--omni-check-hint-label-font-weight, 300);
 
-                    padding-top: 4px;
+                    padding-top: var(--omni-check-hint-label-padding-top, 4px);
                 }
 
                 .container > .label > .error {
@@ -212,7 +214,7 @@ export class Check extends LitElement {
                     font-size: var(--omni-check-error-label-font-size, 0.86em);
                     font-weight: var(--omni-check-error-label-font-weight, 300);
 
-                    padding-top: 4px;
+                    padding-top: var(--omni-check-error-label-padding-top, 4px);
                 }
 
                 /* CHECK BOX STYLES */

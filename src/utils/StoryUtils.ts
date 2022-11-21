@@ -9,8 +9,25 @@ function loadCssProperties(element: string, customElements: any, cssDeclarations
     const elementModule = customElements.modules.find((module: { exports: any[] }) =>
         module.exports.find((e: { name: string }) => e.name === element)
     );
+
+    let superModule = elementModule;
+    do {
+        if (superModule.declarations.find((sd: any) => sd.superclass)) {
+            superModule = customElements.modules.find((module: { exports: any[] }) =>
+                module.exports.find(
+                    (e: { name: string }) => e.name === superModule.declarations.find((sd: any) => sd.superclass).superclass.name
+                )
+            );
+        } else {
+            superModule = undefined;
+        }
+        if (superModule) {
+            elementModule.declarations = [...superModule.declarations, ...elementModule.declarations];
+        }
+    } while (superModule);
     for (const key in elementModule.declarations) {
         const declaration = elementModule.declarations[key];
+        const cssCategory = declaration.cssCategory;
         if (declaration.cssProperties && declaration.cssProperties.length > 0) {
             for (const cssKey in declaration.cssProperties) {
                 const cssProperty = declaration.cssProperties[cssKey];
@@ -22,7 +39,7 @@ function loadCssProperties(element: string, customElements: any, cssDeclarations
                                 : 'text',
                         description: cssProperty.description,
                         category: 'CSS Variables',
-                        subcategory: 'Component Variables',
+                        subcategory: cssCategory ?? 'Component Variables',
                         value: ''
                     };
                 } else {
@@ -36,31 +53,13 @@ function loadCssProperties(element: string, customElements: any, cssDeclarations
 }
 
 function loadThemeVariablesRemote() {
-    let error = undefined;
-    let output = '';
-    const request = new XMLHttpRequest();
-    request.open('GET', 'theme-variables.json', false); // `false` makes the request synchronous
-    request.onload = () => {
-        output = request.responseText;
-    };
-    request.onerror = () => {
-        error = request.status;
-    };
-    request.send(null);
-
-    if (error) {
-        console.warn(error);
-        return {};
-    }
-
-    const themeVariables = JSON.parse(output);
+    const themeVariables = loadCssPropertiesRemote('OmniElement');
     return themeVariables;
 }
 
 function loadCssPropertiesRemote(element: string, cssDeclarations: any = undefined): any {
     if (!cssDeclarations) {
-        const defaultVariables = loadThemeVariablesRemote();
-        cssDeclarations = { ...defaultVariables };
+        cssDeclarations = {};
     }
 
     let error = undefined;
@@ -110,7 +109,9 @@ function loadCustomElementsRemote(): any {
 }
 
 function loadCustomElementsModuleFor(elementName: string, customElements: any) {
-    return customElements.modules.find((module: any) => module.declarations.find((d: any) => d.tagName === elementName && d.customElement));
+    return customElements.modules.find((module: any) =>
+        module.declarations.find((d: any) => (d.tagName === elementName && d.customElement) || d.name === elementName)
+    );
 }
 
 function loadCustomElementsModuleForRemote(elementName: string) {
@@ -130,7 +131,7 @@ function loadSlotForRemote(elementName: string, slotName: string) {
 
 function loadSlotForModule(elementModule: any, slotName: string): { name: string; description: string } {
     const declaration = elementModule.declarations.find(
-        (d: any) => d.slots && d.slots.length > 0 && d.slots.find((s: any) => s.name === '')
+        (d: any) => d.slots && d.slots.length > 0 && d.slots.find((s: any) => s.name === slotName)
     );
     if (declaration) {
         const slot = declaration.slots.find((s: any) => s.name === slotName);
@@ -163,7 +164,7 @@ function assignToSlot(slotName: string, rawHtml: string) {
 
     const parser = new DOMParser();
 
-    const doc = parser.parseFromString(rawHtml, 'text/xml');
+    const doc = parser.parseFromString(`<main>${rawHtml}</main>`, 'text/xml');
     const errorNode = doc.querySelector('parsererror');
     if (errorNode) {
         // parsing failed
@@ -171,12 +172,20 @@ function assignToSlot(slotName: string, rawHtml: string) {
     }
 
     // parsing succeeded
-    const element = doc.documentElement;
-    element.removeAttribute('slot');
-    element.setAttribute('slot', slotName);
-
     const serializer = new XMLSerializer();
-    rawHtml = serializer.serializeToString(doc);
+    let newHtml = '';
+
+    for (let index = 0; index < doc.documentElement.childElementCount; index++) {
+        const element = doc.documentElement.children[index];
+        element.removeAttribute('slot');
+        element.setAttribute('slot', slotName);
+        if (newHtml) {
+            newHtml += '\r\n';
+        }
+        newHtml += serializer.serializeToString(element);
+    }
+
+    rawHtml = newHtml;
 
     return rawHtml;
 }
@@ -306,7 +315,45 @@ function filterJsDocLinks(jsdoc: string) {
  *
  * The `raw` tag returns a string that can be used directly as ```innerHTML``` or as ```unsafeHTML``` via lit.
  */
-const raw = (strings: TemplateStringsArray) => strings.join('\r\n');
+const raw = (strings: TemplateStringsArray, ...values: unknown[]) => asRenderString(strings, values);
+
+const asRenderString = (strings: TemplateStringsArray, values: unknown[]) => {
+    const v: any = [...values, ''].map((e) => {
+        switch (typeof e) {
+            case 'object': {
+                return asRenderString((e as any).strings, (e as any).values);
+            }
+            default:
+                return e;
+        }
+    });
+    return strings.reduce((acc, s, i) => acc + s + v[i], '');
+};
+
+function querySelectorAsync(parent: Element | ShadowRoot, selector: any, checkFrequencyMs: number = 500, timeoutMs: number = 15000) {
+    return new Promise((resolve, reject) => {
+        let element = parent.querySelector(selector);
+        if (element) {
+            return resolve(element);
+        }
+
+        const startTimeInMs = Date.now();
+        (function loopSearch() {
+            element = parent.querySelector(selector);
+            if (element) {
+                resolve(element);
+            } else {
+                setTimeout(function () {
+                    if (timeoutMs && Date.now() - startTimeInMs > timeoutMs) {
+                        reject(new Error(`Timed out waiting for query (${selector}) in ${timeoutMs} ms`));
+                    } else {
+                        loopSearch();
+                    }
+                }, checkFrequencyMs);
+            }
+        })();
+    });
+}
 
 export {
     loadCustomElementsRemote,
@@ -328,5 +375,6 @@ export {
     filterJsDocLinks,
     formatMarkdownCodeElements,
     assignToSlot,
-    raw
+    raw,
+    querySelectorAsync
 };

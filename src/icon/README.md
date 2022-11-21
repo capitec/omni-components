@@ -25,27 +25,53 @@ import '@capitec/omni-components/icon';
 
 ## Properties
 
-| Property   | Attribute | Modifiers | Type                                             | Default   | Description                                      |
-|------------|-----------|-----------|--------------------------------------------------|-----------|--------------------------------------------------|
-| `icon`     | `icon`    |           | `string`                                         |           | The name of the icon to display. Takes preference over the slotted icon. |
-| `override` |           |           |                                                  |           |                                                  |
-| `size`     | `size`    |           | `"default" \| "extra-small" \| "small" \| "medium" \| "large"` | "default" | The size to display the icon at                  |
-| `styles`   |           | readonly  | `CSSResult[]`                                    |           |                                                  |
+| Property   | Attribute  | Modifiers | Type                                             | Default   | Description                                      |
+|------------|------------|-----------|--------------------------------------------------|-----------|--------------------------------------------------|
+| `dir`      |            |           | `string`                                         |           |                                                  |
+| `icon`     | `icon`     |           | `string`                                         |           | The name of the icon to display. Takes preference over the slotted icon. |
+| `lang`     |            |           | `string`                                         |           |                                                  |
+| `override` | `override` |           |                                                  |           | Used to set the base direction of text for display |
+| `size`     | `size`     |           | `"default" \| "extra-small" \| "small" \| "medium" \| "large"` | "default" | The size to display the icon at                  |
+| `styles`   |            | readonly  | `CSSResultGroup[]`                               |           |                                                  |
 
 ## Slots
 
-| Name | Description              |
-|------|--------------------------|
-|      | The icon to be displayed |
+| Name                | Description                                      |
+|---------------------|--------------------------------------------------|
+|                     | The icon to be displayed                         |
+| `loading_indicator` | Used to define content that is displayed while async rendering is awaiting, or when renderLoading() is implicitly called |
 
 ## CSS Custom Properties
 
-| Property                       | Description            |
-|--------------------------------|------------------------|
-| `--omni-icon-background-color` | Icon background color. |
-| `--omni-icon-fill`             | Icon fill color.       |
-| `--omni-icon-size-default`     | Icon default size.     |
-| `--omni-icon-size-extra-small` | Icon extra small size. |
-| `--omni-icon-size-large`       | Icon large size.       |
-| `--omni-icon-size-medium`      | Icon medium size.      |
-| `--omni-icon-size-small`       | Icon small size.       |
+| Property                                 | Description                      |
+|------------------------------------------|----------------------------------|
+| `--omni-icon-background-color`           | Icon background color.           |
+| `--omni-icon-fill`                       | Icon fill color.                 |
+| `--omni-icon-size-default`               | Icon default size.               |
+| `--omni-icon-size-extra-small`           | Icon extra small size.           |
+| `--omni-icon-size-large`                 | Icon large size.                 |
+| `--omni-icon-size-medium`                | Icon medium size.                |
+| `--omni-icon-size-small`                 | Icon small size.                 |
+| `--omni-theme-accent-active-color`       | Theme accent active color.       |
+| `--omni-theme-accent-color`              | Theme accent color.              |
+| `--omni-theme-accent-hover-color`        | Theme accent hover color.        |
+| `--omni-theme-background-active-color`   | Theme background active color.   |
+| `--omni-theme-background-color`          | Theme background color.          |
+| `--omni-theme-background-hover-color`    | Theme background hover color.    |
+| `--omni-theme-border-radius`             | Theme border radius.             |
+| `--omni-theme-border-width`              | Theme border width.              |
+| `--omni-theme-box-shadow`                | Theme box shadow.                |
+| `--omni-theme-box-shadow-color`          | Theme inactive color.            |
+| `--omni-theme-disabled-background-color` | Theme disabled background color. |
+| `--omni-theme-disabled-border-color`     | Theme disabled border color.     |
+| `--omni-theme-error-border-color`        | Theme error border color.        |
+| `--omni-theme-error-font-color`          | Theme disabled background color. |
+| `--omni-theme-font-color`                | Theme font color.                |
+| `--omni-theme-font-family`               | Theme font family.               |
+| `--omni-theme-font-size`                 | Theme font size.                 |
+| `--omni-theme-font-weight`               | Theme font weight.               |
+| `--omni-theme-hint-font-color`           | Theme hint font color.           |
+| `--omni-theme-inactive-color`            | Theme inactive color.            |
+| `--omni-theme-primary-active-color`      | Theme primary active color.      |
+| `--omni-theme-primary-color`             | Theme primary color.             |
+| `--omni-theme-primary-hover-color`       | Theme primary hover color.       |

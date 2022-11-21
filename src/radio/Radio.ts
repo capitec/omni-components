@@ -1,7 +1,7 @@
-import { html, css, LitElement, TemplateResult, nothing } from 'lit';
+import { html, css, TemplateResult, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
-import ComponentStyles from '../styles/ComponentStyles';
+import { OmniElement } from '../core/OmniElement.js';
 
 /**
  * A control that allows a user to select a single value from a group of values.
@@ -72,7 +72,7 @@ import ComponentStyles from '../styles/ComponentStyles';
  *
  */
 @customElement('omni-radio')
-export class Radio extends LitElement {
+export class Radio extends OmniElement {
     /**
      * Text label.
      * @attr
@@ -157,7 +157,7 @@ export class Radio extends LitElement {
 
     static override get styles() {
         return [
-            ComponentStyles,
+            super.styles,
             css`
                 :host {
                     --omni-radio-width: 24px;
