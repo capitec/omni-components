@@ -74,7 +74,7 @@ jobs:
 
       - name: Install Package Dependencies 🔗
         run: |
-          npm ci
+          npm ci --force
 
       - name: Build Docs 📝
         run: |

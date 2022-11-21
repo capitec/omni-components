@@ -21,7 +21,6 @@ jobs:
 
       - name: Install Package Dependencies 🔗
         run: |
-          find .
           npm ci --force
 
       - name: Run Lint Checks
@@ -42,7 +41,6 @@ jobs:
 
       - name: Install Package Dependencies 🔗
         run: |
-          find .
           npm ci --force
 
       - name: Run Format Checks
@@ -64,7 +62,6 @@ jobs:
 
       - name: Install Package Dependencies
         run: |
-          find .
           npm ci --force
 
       - name: Install Playwright Chrome Dependencies
