@@ -21,7 +21,8 @@ jobs:
 
       - name: Install Package Dependencies 🔗
         run: |
-          npm ci
+          find .
+          npm ci --force
 
       - name: Run Lint Checks
         run: |
@@ -41,7 +42,8 @@ jobs:
 
       - name: Install Package Dependencies 🔗
         run: |
-          npm ci
+          find .
+          npm ci --force
 
       - name: Run Format Checks
         run: |
@@ -61,7 +63,9 @@ jobs:
           always-auth: true
 
       - name: Install Package Dependencies
-        run: npm ci
+        run: |
+          find .
+          npm ci --force
 
       - name: Install Playwright Chrome Dependencies
         run: npx playwright install --with-deps
