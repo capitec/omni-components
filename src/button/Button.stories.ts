@@ -108,7 +108,7 @@ export const Label = {
 export const Slot = {
     render: () => html`
     <omni-button data-testid="test-button">
-      <omni-icon size="default" icon="/assets/images/direction.svg"></omni-icon>
+      <omni-icon size="default" icon="./assets/images/direction.svg"></omni-icon>
     </omni-button>
   `,
     name: 'Slot',

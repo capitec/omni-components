@@ -98,7 +98,7 @@ export const Icon_Path: ComponentStoryFormat<Args> = {
     name: 'Local Source',
     args: {
         size: 'default',
-        icon: '/assets/images/colors.svg'
+        icon: './assets/images/colors.svg'
     },
     play: async (context) => {
         const icon = within(context.canvasElement).getByTestId<Icon>('test-icon');

@@ -30,7 +30,7 @@ export class LivePropertyEditor extends OmniElement {
     @property({ type: String, reflect: true }) element: string;
     @property({ type: Boolean, reflect: true }) disabled: boolean;
     @property({ type: String, attribute: 'ignore-attributes', reflect: true }) ignoreAttributes: string;
-    @property({ type: String, attribute: 'custom-elements', reflect: true }) customElementsPath: string = '/custom-elements.json';
+    @property({ type: String, attribute: 'custom-elements', reflect: true }) customElementsPath: string = './custom-elements.json';
 
     @state() customElements: Package;
 

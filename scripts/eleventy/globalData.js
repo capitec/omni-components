@@ -19,7 +19,7 @@ export async function components() {
         // console.log(name);
 
         response.push({
-            path: story.replace('./', '/'),
+            path: story,
             srcPath: story.replace('.stories', '').replace('./dist', 'src').replace('js', 'ts'),
             name: name,
             stories: moduleStories

@@ -270,7 +270,7 @@ async function loadFileRemote(src: string) {
 }
 
 async function loadThemesListRemote() {
-    const response = await fetch('/themes-list.json');
+    const response = await fetch('./themes-list.json');
     const list = await response.json();
 
     return list.themes as string[];
@@ -412,7 +412,7 @@ function loadCustomElementsCodeMirrorCompletions(customElements: Package) {
     return _completions;
 }
 
-async function loadCustomElementsCodeMirrorCompletionsRemote(path = '/custom-elements.json') {
+async function loadCustomElementsCodeMirrorCompletionsRemote(path = './custom-elements.json') {
     if (!_completions) {
         const customElements = await loadCustomElements(path);
         return loadCustomElementsCodeMirrorCompletions(customElements);
@@ -420,7 +420,7 @@ async function loadCustomElementsCodeMirrorCompletionsRemote(path = '/custom-ele
     return _completions;
 }
 
-async function loadCustomElements(path = '/custom-elements.json') {
+async function loadCustomElements(path = './custom-elements.json') {
     const response = await fetch(path);
     const customElements = await response.json();
     return customElements as Package;
@@ -560,7 +560,7 @@ async function setupThemes() {
             return;
         }
         const css = themeStyle.sheet;
-        loadFileRemote(`/themes/${theme}`).then(
+        loadFileRemote(`./themes/${theme}`).then(
             (cssText) => {
                 themeStyle.innerHTML = cssText;
             },
@@ -684,7 +684,7 @@ function setupScroll() {
 }
 
 function setupTabs() {
-    if (document.location.pathname !== '/' && document.location.search) {
+    if (document.location.pathname !== '/' && document.location.pathname !== './' && document.location.search) {
         const searchParams = new URLSearchParams(document.location.search);
 
         for (const param of searchParams) {
@@ -790,7 +790,7 @@ async function setupTheming() {
     const themesSourcesHtml = (await loadThemesListRemote()).map((theme: string) => {
         return html` <div>
       <omni-label label="${theme}" type="subtitle"></omni-label>
-      <code-editor .extensions="${() => [codeTheme, css()]}" .code="${loadFileRemote(`/themes/${theme}`)}" read-only> </code-editor>
+      <code-editor .extensions="${() => [codeTheme, css()]}" .code="${loadFileRemote(`./themes/${theme}`)}" read-only> </code-editor>
     </div>`;
     });
     render(themesSourcesHtml, themeSources);
