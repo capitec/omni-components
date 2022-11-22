@@ -132,14 +132,6 @@ Color input control.
 
 A currency input control that formats input based on currency and locale.
 
-
-```js
-
-
-import '@capitec/omni-components/currency-field';
-
-```
-
 </td></tr><tr><td>
 
 [omni-hyperlink](src/hyperlink/README.md)
@@ -323,14 +315,6 @@ Element that defers content rendering to a provided function / promise.
 </td><td>
 
 A search input control.
-
-
-```js
-
-
-import '@capitec/omni-components/search-field';
-
-```
 
 </td></tr><tr><td>
 
