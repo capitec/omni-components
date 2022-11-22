@@ -11,7 +11,7 @@ export class StoryController implements ReactiveController {
     }
 
     async hostConnected() {
-        this.story = await import(this.storyPath);
+        this.story = await import(document.baseURI + this.storyPath);
         this.host.requestUpdate();
     }
 }

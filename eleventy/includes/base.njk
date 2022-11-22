@@ -5,15 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }}</title>
+    {% baseHref %}
+    <link rel='shortcut icon' type='image/x-icon' href='./favicon.ico' />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Hind Vadodara" >
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
     <style id="theme-styles"></style>
-    <link rel="stylesheet" href="{{ '/assets/css/style.css' | url }}">
-    <script type="module" src="/dist/utils/StoryRenderer.js"></script>
-    <script type="module" src="/dist/omni-components.js"></script>
+    <link rel="stylesheet" href="{{ './assets/css/style.css' | url }}">
+    <script type="module" src="./dist/utils/StoryRenderer.js"></script>
+    <script type="module" src="./dist/omni-components.js"></script>
     <script type="module" defer>
-        import { setupEleventy } from '/dist/utils/StoryUtils.js';
+        import { setupEleventy } from './dist/utils/StoryUtils.js';
         setupEleventy();
     </script>
 </head>
@@ -28,7 +30,7 @@
                 </div>
                 <div class="header-logo">
                     <div class="header-container">
-                        <img src="/assets/images/logo.png" width="30" height: "30" alt="logo">
+                        <img src="./assets/images/logo.png" width="30" height: "30" alt="logo">
                         <div class="header-text" style="padding-left: 10px; font-weight: bold">Omni Components</div>
                     </div>
                 </div>
@@ -40,7 +42,7 @@
                         <select class="docs-select theme-select transparent-after-760" id="header-theme-select"></select>
                     </span>
                     <a href="https://github.com/capitec/omni-components" target="_blank" class="action">
-                        <img src="/assets/images/github.svg" style="cursor: pointer;">
+                        <img src="./assets/images/github.svg" style="cursor: pointer;">
                     </a>
                 </div>
             </header>
@@ -50,7 +52,7 @@
 
             <footer>
                 <div class="logo">
-                    <img src="/assets/images/logo.png" width="30" height: "30" alt="logo">
+                    <img src="./assets/images/logo.png" width="30" height: "30" alt="logo">
                     <div style="font-weight: bold">Omni Components</div>
                 </div>
                 <div class="links">

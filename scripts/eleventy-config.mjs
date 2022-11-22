@@ -7,6 +7,7 @@ import { dTSPathAliasPlugin } from 'esbuild-plugin-d-ts-path-alias';
 import { nodeModulesPolyfillPlugin } from 'esbuild-plugins-node-modules-polyfill';
 import { globby } from 'globby';
 import minimist from 'minimist';
+import { raw } from '../dist/utils/StoryUtils.js';
 import * as filters from './eleventy/filters.js';
 import * as globalData from './eleventy/globalData.js';
 
@@ -68,6 +69,13 @@ export default async config => {
     }
 
     config.addShortcode('year', () => `${new Date().getFullYear()}`);
+    config.addShortcode('baseHref', () => {
+        const basePath = process.env.ELEVENTY_BASE_PATH;
+        if (basePath) {
+            return raw`<base href="${basePath}" >`
+        }
+        return raw`<base href="/" >`
+    });
 
     config.on('eleventy.beforeWatch', async (files) => {
         const isSrc = files.some(f => f.startsWith('./src'));
