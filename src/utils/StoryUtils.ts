@@ -533,6 +533,17 @@ function querySelectorAsync(parent: Element | ShadowRoot, selector: any, checkFr
     });
 }
 
+function titleCase(str: string) {
+    const splitStr = str.toLowerCase().split(' ');
+    for (let i = 0; i < splitStr.length; i++) {
+        // You do not need to check if i is larger than splitStr length, as your for does that for you
+        // Assign it back to the array
+        splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
+    }
+    // Directly return the joined string
+    return splitStr.join(' '); 
+ }
+
 async function setupThemes() {
     const themes = await loadThemesListRemote();
     const themeSelect = document.getElementById('header-theme-select') as HTMLSelectElement;
@@ -540,7 +551,8 @@ async function setupThemes() {
 
     function addOption(key: string) {
         const option = document.createElement('option');
-        option.text = key;
+        option.value = key;
+        option.label = titleCase(key.replaceAll('.css', '').replaceAll('-',' '))
         if (window.sessionStorage.getItem(themeStorageKey) === key) {
             option.selected = true;
             changeTheme(key);
@@ -799,13 +811,13 @@ async function setupTheming() {
     const themeStyle = document.getElementById('theme-styles') as HTMLStyleElement;
     const themesSourcesHtml = (await loadThemesListRemote()).map((theme: string) => {
         return html` <div>
-      <omni-label label="${theme}" type="subtitle"></omni-label>
+      <h3 style="padding-top: 12px;">${titleCase(theme.replaceAll('.css', '').replaceAll('-',' '))}</h3>
       <code-editor .extensions="${() => [codeTheme, css()]}" .code="${loadFileRemote(`./themes/${theme}`)}" read-only> </code-editor>
     </div>`;
     });
     render(themesSourcesHtml, themeSources);
 
-    let cssSource = window.sessionStorage.getItem(customThemeCssKey) ?? '';
+    let cssSource = window.sessionStorage.getItem(customThemeCssKey) ?? ':root { }';
     const omniCompletions = cssLanguage.data.of({ autocomplete: await omniCssVariablesCompletionSource() });
     const cssLang = new LanguageSupport(cssLanguage, [cssLanguage.data.of({ autocomplete: cssCompletionSource }), omniCompletions]); //css();
     render(
