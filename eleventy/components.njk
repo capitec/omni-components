@@ -21,7 +21,7 @@ permalink: "components/{{ component.name | slug }}/"
                 <div>Module</div>
                 <div class="component-info-item-code">
                     <pre><code class="language-js" id="component-import-code">{{ customElements | getImport(component.name)}}</code></pre>
-                    <span class="material-icons" style="font-size: 16px; cursor: pointer; margin-left: 6px;" onclick="copyToClipboard('component-import-code');return false;">
+                    <span class="copy-icon material-icons" style="font-size: 16px; cursor: pointer; margin-left: 6px;" onclick="copyToClipboard('component-import-code');return false;">
                         content_copy
                     </span>
                 </div>
@@ -86,7 +86,7 @@ permalink: "components/{{ component.name | slug }}/"
                         <div class="component-toc-wrapper">
                             <div class="component-toc">
                                 {% for story in component.stories %}
-                                    <a href="#story-{{ story | replace("_", "-") | lower }}" id="story-{{ story | lower }}" class="item">
+                                    <a href="components/{{ component.name | slug }}/#story-{{ story | replace("_", "-") | lower }}" id="story-{{ story | lower }}" class="item">
                                         {{ story | replace("_", " ") }}
                                     </a>
                                 {%- endfor %}
