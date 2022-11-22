@@ -35,7 +35,7 @@ export default function plugin(md, _opts) {
                 if (childToken.attrs) {
                     childToken.attrs.forEach(attr => {
                         if (attr[0] === 'href' && attr[1].startsWith('#')) {
-                            attr[1] = state.env.page.url + '#' + options.prefix + attr[1].replace('#','');
+                            attr[1] = state.env.page.url.replace('/','') + '#' + options.prefix + attr[1].replace('#','').replaceAll('(','').replaceAll(')','');
                         }
                     })
                 }
@@ -45,7 +45,6 @@ export default function plugin(md, _opts) {
 
         state.tokens.forEach(token => {
             if (token && token.content && token.content.includes('](#')) {
-                token.content = token.content.replaceAll('](#',`](${state.env.page.url + '#' + options.prefix}`)
                 fixLinks(token);
             }
         });
@@ -71,7 +70,7 @@ export default function plugin(md, _opts) {
 
             linkOpen.attrSet('id', options.prefix + postfix)
             linkOpen.attrSet('class', options.className)
-            linkOpen.attrSet('href', env.page.url + '#' + options.prefix + postfix)
+            linkOpen.attrSet('href', env.page.url.replace('/','') + '#' + options.prefix + postfix)
             linkOpen.attrSet('aria-hidden', 'true')
 
             children.unshift(linkClose)
