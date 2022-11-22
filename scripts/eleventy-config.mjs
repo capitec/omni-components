@@ -7,9 +7,9 @@ import { dTSPathAliasPlugin } from 'esbuild-plugin-d-ts-path-alias';
 import { nodeModulesPolyfillPlugin } from 'esbuild-plugins-node-modules-polyfill';
 import { globby } from 'globby';
 import minimist from 'minimist';
-import { raw } from '../dist/utils/StoryUtils.js';
 import * as filters from './eleventy/filters.js';
 import * as globalData from './eleventy/globalData.js';
+import * as shortCodes from './eleventy/shortCodes.js';
 
 const argv = minimist(process.argv.slice(2), {
     string: [
@@ -64,18 +64,15 @@ export default async config => {
 
     config.addPlugin(EleventyRenderPlugin);
 
+    // filters
     for (const key in filters) {
         config.addFilter(key, filters[key]);
     }
 
-    config.addShortcode('year', () => `${new Date().getFullYear()}`);
-    config.addShortcode('baseHref', () => {
-        const basePath = process.env.ELEVENTY_BASE_PATH;
-        if (basePath) {
-            return raw`<base href="${basePath}" >`
-        }
-        return raw`<base href="/" >`
-    });
+    // short codes
+    for (const key in shortCodes) {
+        config.addShortcode(key, shortCodes[key]);
+    }
 
     config.on('eleventy.beforeWatch', async (files) => {
         const isSrc = files.some(f => f.startsWith('./src'));

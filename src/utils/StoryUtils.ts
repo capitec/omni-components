@@ -628,7 +628,7 @@ function openTab(target: Element, tabId: string) {
     target.classList.add('active');
 
     // Set nav state of tab.
-    window.history.replaceState({}, '', `?tab=${tabId}`);
+    window.history.replaceState({}, '', `${document.location.pathname}?tab=${tabId}`);
 }
 
 function copyToClipboard(id: string) {
@@ -684,7 +684,7 @@ function setupScroll() {
 }
 
 function setupTabs() {
-    if (document.location.pathname !== '/' && document.location.pathname !== './' && document.location.search) {
+    if (document.location.search) {
         const searchParams = new URLSearchParams(document.location.search);
 
         for (const param of searchParams) {
