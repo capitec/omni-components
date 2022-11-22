@@ -15,8 +15,8 @@ export const CURRENCY_SEPARATOR = {
 /**
  * A currency input control that formats input based on currency and locale.
  *
+ * @import
  * ```js
- *
  * import '@capitec/omni-components/currency-field';
  * ```
  * @example
