@@ -84,12 +84,13 @@ export default async config => {
     config.setBrowserSyncConfig({
         logLevel: 'info',
         server: {
-            baseDir: 'docs',
+            baseDir: process.env.ELEVENTY_BASE_PATH ? '.' : 'docs',
             routes: {
-                '/dist': './dist',
-                '/src': './src'
+                [`${process.env.ELEVENTY_BASE_PATH ? process.env.ELEVENTY_BASE_PATH : '/'}dist`]: './dist',
+                [`${process.env.ELEVENTY_BASE_PATH ? process.env.ELEVENTY_BASE_PATH : '/'}src`]: './src'
             }
-        }
+        },
+        startPath: process.env.ELEVENTY_BASE_PATH ? process.env.ELEVENTY_BASE_PATH : '/'
     });
 
     return {

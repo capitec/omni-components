@@ -5,6 +5,23 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Serve Debug (/docs/)",
+            "type": "node-terminal",
+            "request": "launch",
+            "env": {
+                "ELEVENTY_BASE_PATH": "/docs/"
+            },
+            "command": "npm run serve",
+            "internalConsoleOptions": "openOnFirstSessionStart",
+            "serverReadyAction": {
+                "pattern": "Local:.+(https?://[^:]+:[0-9]+)/docs/",
+                "uriFormat": "%s/docs/",
+                "action": "debugWithChrome",
+                "webRoot": "${workspaceFolder}"
+            },
+            "sourceMaps": true
+        },
+        {
             "name": "Serve Debug",
             "type": "node-terminal",
             "request": "launch",

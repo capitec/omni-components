@@ -86,7 +86,7 @@ permalink: "components/{{ component.name | slug }}/"
                         <div class="component-toc-wrapper">
                             <div class="component-toc">
                                 {% for story in component.stories %}
-                                    <a href="#story-{{ story | replace("_", "-") | lower }}" id="story-{{ story | lower }}" class="item">
+                                    <a href="components/{{ component.name | slug }}/#story-{{ story | replace("_", "-") | lower }}" id="story-{{ story | lower }}" class="item">
                                         {{ story | replace("_", " ") }}
                                     </a>
                                 {%- endfor %}

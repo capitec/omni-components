@@ -109,8 +109,11 @@ footer .links .spacer {
     color: #000000cc
 }
 
-footer .links .item.copyright {
+footer .copyright {
     color: #999;
+    text-align: center;
+    margin-top: 24px;
+    font-size: 0.9em;
 }
 
 /* HEADER */
@@ -145,17 +148,30 @@ header * {
     cursor: pointer;
 }
 
-.header-logo {
+header .header-logo {
     display: flex;
     padding: 0 20px;
     justify-content: flex-start;
     /* background-color: pink; */
 }
 
-.header-logo .header-container {
+header .header-logo .header-container {
     display: flex;
     justify-content: flex-start;
     align-items: center;
+}
+
+header .header-logo .header-container * {
+    cursor: pointer;
+}
+
+header .header-version {
+    margin-right: 12px;
+    background: #00000010;
+    padding: 2px 6px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.8em;
 }
 
 .header-actions {
@@ -173,20 +189,25 @@ header * {
     display: flex;
 }
 
-.header-actions > .action:hover {
+.header-actions > .action:hover,
+.header-actions > .header-theme-section:hover {
     background-color: #f8f9fa;
 }
 
 .header-actions > .header-theme-section {
-    padding: 5px;
     position: relative;
+    margin-right: 12px;
 }
 
 .header-actions > .header-theme-section > .theme-select {
     width: 132px;
     position: absolute;
-    right: 10px;
-    bottom: -12px;
+    right: 0;
+    bottom: -18px;
+    height: 36px;
+}
+.header-actions > .header-theme-section > .theme-select:hover {
+    background-color: #f8f9fa;
 }
 
 .header-actions > .header-theme-section > .action {
@@ -310,11 +331,11 @@ header * {
 .menu-container {
     display: flex;
     flex-direction: column;
-    padding: 12px 0;
+    padding: 24px 0;
 }
 
 .menu-item {
-    margin: 0 12px;
+    margin: 0 24px;
     border-left: 2px solid #e1e1e1;
 }
 
@@ -862,7 +883,7 @@ table th {
     .header-menu-button {
         display: flex;
         justify-content: flex-start;
-        flex: 1;
+        flex: unset;
     }
 
     .header-logo {
@@ -879,8 +900,8 @@ table th {
         width: 36px;
         height: 36px;
         position: absolute;
-        right: 5px;
-        bottom: 6px;
+        right: 0;
+        bottom: 0;
     }
 
     .menu {
@@ -1054,14 +1075,20 @@ table th {
     }
 }
 
-@media screen and (max-width: 376px) {   
-
+@media screen and (max-width: 464px) {
     .header-text {
         display: none;
     }
+}
+
+@media screen and (max-width: 376px) {   
 
     .header-logo {
         flex: 1;
+    }
+
+    .component-info-item {
+        font-size: 0.9em;
     }
 }
 

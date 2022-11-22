@@ -590,6 +590,9 @@ async function setupEleventy() {
     windowAny.copyToClipboard = copyToClipboard;
     windowAny.openTab = openTab;
 
+    // Links
+    setupLinks();
+
     // Open / Close the menu
     setupMenu();
 
@@ -606,6 +609,13 @@ async function setupEleventy() {
     setupSearch();
 
     await setupThemes();
+}
+
+function setupLinks() {
+    const logo = document.getElementById('header-container');
+    logo.addEventListener('click', () => {
+        document.location = document.baseURI;
+    });
 }
 
 function openTab(target: Element, tabId: string) {

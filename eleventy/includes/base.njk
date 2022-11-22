@@ -28,15 +28,20 @@
                         menu
                     </span>
                 </div>
-                <div class="header-logo">
-                    <div class="header-container">
-                        <img src="./assets/images/logo.png" width="30" height: "30" alt="logo">
-                        <div class="header-text" style="padding-left: 10px; font-weight: bold">Omni Components</div>
+                <div style="display: flex;">
+                    <div class="header-logo">
+                        <div class="header-container" id="header-container">
+                            <img src="./assets/images/logo.png" width="30" height: "30" alt="logo">
+                            <div class="header-text" style="padding-left: 10px; font-weight: bold">Omni Components</div>
+                        </div>
+                    </div>
+                    <div class="header-version">
+                        {% version %}
                     </div>
                 </div>
                 <div class="header-actions">
                     <span class="header-theme-section">
-                        <span class="material-icons action hidden-until-760" id="header-theme-select-btn">
+                        <span class="material-icons action hidden-until-760 action" id="header-theme-select-btn">
                             format_color_fill
                         </span>
                         <select class="docs-select theme-select transparent-after-760" id="header-theme-select"></select>
@@ -71,9 +76,8 @@
                     <div class="item">
                         <a href="https://www.npmjs.com/package/@capitec/omni-components" target="_blank">Packages</a>
                     </div>
-                    <div class="spacer"></div>
-                    <div class="item copyright" style="">Copyright &copy; {% year %}</div>
                 </div>
+                <div class="copyright" style="">Copyright &copy; {% year %}</div>
             </footer>
         </div>
     </div>
