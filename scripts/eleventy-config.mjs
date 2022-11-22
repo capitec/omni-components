@@ -72,9 +72,9 @@ export default async config => {
     config.addShortcode('baseHref', () => {
         const basePath = process.env.ELEVENTY_BASE_PATH;
         if (basePath) {
-            return raw`<base href="${basePath}" >`
+            return raw`<base href="${basePath}">`
         }
-        return raw`<base href="/" >`
+        return raw`<base href="/">`
     });
 
     config.on('eleventy.beforeWatch', async (files) => {

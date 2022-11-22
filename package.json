@@ -16,7 +16,7 @@
     "docs:generate": "npm run docs:elements && readme generate -c \"readme/blueprint.json\" -i \"readme/blueprint.md\"",
     "docs:custom-elements": "npx cem analyze --litelement --globs src/**",
     "docs:ssg": "tsc -p tsconfig.utils.json && eleventy --config=.eleventy.cjs && npm run docs:copy-dist",
-    "docs:copy-dist": "copyfiles -a \"dist/*\" \"dist/**/*\" docs",
+    "docs:copy-dist": "copyfiles -a \"./dist/*\" \"./dist/**/*\" \"./docs\"",
     "docs:theme-list": "node scripts/themes-list.mjs",
     "docs:readme": "npx web-component-analyzer ./src/**/*.{js,ts} --outFiles {dir}/README.md",
     "docs:elements": "node scripts/elements-list.mjs",
