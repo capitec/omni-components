@@ -6,9 +6,11 @@ import esbuild from 'esbuild';
 import { dTSPathAliasPlugin } from 'esbuild-plugin-d-ts-path-alias';
 import { nodeModulesPolyfillPlugin } from 'esbuild-plugins-node-modules-polyfill';
 import { globby } from 'globby';
+import markdownIt from 'markdown-it';
 import minimist from 'minimist';
 import * as filters from './eleventy/filters.js';
 import * as globalData from './eleventy/globalData.js';
+import markdownItHeadings from './eleventy/markdownLinksPlugin.js';
 import * as shortCodes from './eleventy/shortCodes.js';
 
 const argv = minimist(process.argv.slice(2), {
@@ -63,6 +65,15 @@ export default async config => {
     config.addWatchTarget('./*.md');
 
     config.addPlugin(EleventyRenderPlugin);
+
+    let mdOptions = {
+        html: true,
+        breaks: true,
+        linkify: true
+    };
+
+    const md = markdownIt(mdOptions).use(markdownItHeadings,mdOptions);
+    config.setLibrary('md', md);
 
     // filters
     for (const key in filters) {

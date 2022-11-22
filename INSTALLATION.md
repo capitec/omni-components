@@ -15,7 +15,9 @@ The easiest way to install Omni Components is with the CDN. Just a script of typ
 
 
 <br/>
-<strong> If you're only using a few components, it will be more efficient to [cherry pick](#cherry-picking-) the ones you need. </strong>
+<strong> 
+
+If you're only using a few components, it will be more efficient to [cherry pick](#cherry-picking-) the ones you need. </strong>
 
 ## Local Installation 💾
 
