@@ -75,14 +75,6 @@ jobs:
       - name: Install Package Dependencies 🔗
         run: |
           npm ci
-
-      - name: Build Docs 📝
-        run: |
-          npm run docs
-
-      - name: Copy docs definition ⏩
-        run: |
-          cp .oss-docs.json docs/.oss-docs.json
           
       - name: Bump patch version for alpha ☝
         # Alpha branch only
@@ -101,6 +93,33 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: |
           node scripts/unique-version.mjs --tag "next"
+
+      - name: Build Docs (Alpha) 📝
+        # Alpha branch only
+        if: github.ref == 'refs/heads/alpha'
+        run: |
+          npm run docs
+          cp .oss-docs.json docs/.oss-docs.json
+        env:
+          ELEVENTY_BASE_PATH: /open-source/${{ env.DOCS_BASE_PATH }}/versions/alpha/
+
+      - name: Build Docs (Beta) 📝
+        # Develop branch only
+        if: github.ref == 'refs/heads/develop'
+        run: |
+          npm run docs
+          cp .oss-docs.json docs/.oss-docs.json
+        env:
+          ELEVENTY_BASE_PATH: /open-source/${{ env.DOCS_BASE_PATH }}/versions/beta/
+
+      - name: Build Docs (Next) 📝
+        # Main branch only
+        if: github.ref == 'refs/heads/main'
+        run: |
+          npm run docs
+          cp .oss-docs.json docs/.oss-docs.json
+        env:
+          ELEVENTY_BASE_PATH: /open-source/${{ env.DOCS_BASE_PATH }}/versions/next/
 
       - name: Auto Commit Changes 👩‍💻
         uses: stefanzweifel/git-auto-commit-action@v4
@@ -142,22 +161,6 @@ jobs:
           git-config-name: Deploy Bot
           git-config-email: opensource@capitecbank.co.za
 
-      - name: Publish Version Docs 🚀
-        uses: JamesIves/github-pages-deploy-action@v4.3.4
-        # Tagged release branch only
-        if: ${{ startsWith(github.ref, 'refs/tags/') }}
-        with:
-          token: ${{ secrets.ACCESS_TOKEN }}
-          repository-name: capitec/open-source
-          branch: main
-          folder: docs # The folder to grab the built docs files from
-          target-folder: ${{ env.DOCS_BASE_PATH }}/versions/${{ github.event.release.tag_name }} # The folder to commit the build docs files into
-          clean: true
-          clean-exclude: |
-            versions
-          git-config-name: Deploy Bot
-          git-config-email: opensource@capitecbank.co.za
-
       - name: Publish Next Docs 🚀
         uses: JamesIves/github-pages-deploy-action@v4.3.4
         # Main branch only
@@ -174,6 +177,40 @@ jobs:
             versions
           git-config-name: Deploy Bot
           git-config-email: opensource@capitecbank.co.za
+
+      - name: Build Docs (Version) 📝
+        # Tagged release branch only
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        run: |
+          npm run docs
+          cp .oss-docs.json docs/.oss-docs.json
+        env:
+          ELEVENTY_BASE_PATH: /open-source/${{ env.DOCS_BASE_PATH }}/versions/${{ github.event.release.tag_name }}/
+
+      - name: Publish Version Docs 🚀
+        uses: JamesIves/github-pages-deploy-action@v4.3.4
+        # Tagged release branch only
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        with:
+          token: ${{ secrets.ACCESS_TOKEN }}
+          repository-name: capitec/open-source
+          branch: main
+          folder: docs # The folder to grab the built docs files from
+          target-folder: ${{ env.DOCS_BASE_PATH }}/versions/${{ github.event.release.tag_name }} # The folder to commit the build docs files into
+          clean: true
+          clean-exclude: |
+            versions
+          git-config-name: Deploy Bot
+          git-config-email: opensource@capitecbank.co.za
+
+      - name: Build Docs (Latest) 📝
+        # Release only
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        run: |
+          npm run docs
+          cp .oss-docs.json docs/.oss-docs.json
+        env:
+          ELEVENTY_BASE_PATH: /open-source/${{ env.DOCS_BASE_PATH }}/versions/latest/
 
       - name: Publish Latest Docs 🚀
         uses: JamesIves/github-pages-deploy-action@v4.3.4
