@@ -9,8 +9,8 @@ import '../icons/Search.icon';
 /**
  * A search input control.
  *
+ * @import
  * ```js
- *
  * import '@capitec/omni-components/search-field';
  * ```
  * @example

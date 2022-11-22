@@ -104,7 +104,7 @@ export const Icon_Path: ComponentStoryFormat<Args> = {
         const icon = within(context.canvasElement).getByTestId<Icon>('test-icon');
         const imgElement = icon.shadowRoot.querySelector('img');
         await expect(imgElement).toBeTruthy();
-        await expect(imgElement.src.endsWith(Icon_Path.args.icon)).toBeTruthy();
+        await expect(imgElement.src.endsWith(Icon_Path.args.icon.replace('./', '/'))).toBeTruthy();
     }
 };
 
