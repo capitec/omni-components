@@ -362,7 +362,7 @@ header .header-version {
     display: block;
     list-style-type: none;
     text-decoration: none;
-    line-height: 2;
+    line-height: 2.5;
     color: #000000cc;
     font-weight: 500;
     cursor: pointer;

@@ -102,6 +102,7 @@ jobs:
           cp .oss-docs.json docs/.oss-docs.json
         env:
           ELEVENTY_BASE_PATH: /open-source/${{ env.DOCS_BASE_PATH }}/versions/alpha/
+          ELEVENTY_DOCS_VERSION: alpha
 
       - name: Build Docs (Beta) 📝
         # Develop branch only
@@ -111,6 +112,7 @@ jobs:
           cp .oss-docs.json docs/.oss-docs.json
         env:
           ELEVENTY_BASE_PATH: /open-source/${{ env.DOCS_BASE_PATH }}/versions/beta/
+          ELEVENTY_DOCS_VERSION: beta
 
       - name: Build Docs (Next) 📝
         # Main branch only
@@ -120,6 +122,7 @@ jobs:
           cp .oss-docs.json docs/.oss-docs.json
         env:
           ELEVENTY_BASE_PATH: /open-source/${{ env.DOCS_BASE_PATH }}/versions/next/
+          ELEVENTY_DOCS_VERSION: next
 
       - name: Auto Commit Changes 👩‍💻
         uses: stefanzweifel/git-auto-commit-action@v4
@@ -186,6 +189,7 @@ jobs:
           cp .oss-docs.json docs/.oss-docs.json
         env:
           ELEVENTY_BASE_PATH: /open-source/${{ env.DOCS_BASE_PATH }}/versions/${{ github.event.release.tag_name }}/
+          ELEVENTY_DOCS_VERSION: ${{ github.event.release.tag_name }}
 
       - name: Publish Version Docs 🚀
         uses: JamesIves/github-pages-deploy-action@v4.3.4
@@ -210,7 +214,8 @@ jobs:
           npm run docs
           cp .oss-docs.json docs/.oss-docs.json
         env:
-          ELEVENTY_BASE_PATH: /open-source/${{ env.DOCS_BASE_PATH }}/versions/latest/
+          ELEVENTY_BASE_PATH: /open-source/${{ env.DOCS_BASE_PATH }}/
+          ELEVENTY_DOCS_VERSION: ${{ github.event.release.tag_name }}
 
       - name: Publish Latest Docs 🚀
         uses: JamesIves/github-pages-deploy-action@v4.3.4
