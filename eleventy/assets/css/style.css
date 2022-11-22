@@ -956,6 +956,10 @@ table th {
         display: none;
     }
 
+    .component-info-item-code .copy-icon {
+        display: none;
+    }
+
     .tab {
         display: flex;
     }
