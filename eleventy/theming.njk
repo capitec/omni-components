@@ -8,59 +8,28 @@ permalink: "theme-support/"
     <div class="lds-ripple"><div></div><div></div></div>
 </div>
 <style>
-  .title {
-    --omni-label-title-font-size: 34pt;
-  }
 
-  .live-section {
-    background-color: var(--omni-theme-filled-background-color, white);
-    padding: 20px;
-  }
+    .live-section {
+        background-color: var(--omni-theme-filled-background-color, white);
+        padding: 20px;
+    }
 
-  .css-1p8ieni {
-    font-family: inherit;
-    font-size: inherit;
-    color: inherit;
-  }
+    .flex-row {
+        display: inline-flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        margin: 6px;
+    }
 
-  .flex-row {
-    display: inline-flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    margin: 6px;
-  }
+    .flex-row > * {
+        margin: 6px;
+    }
 
-  .flex-row > * {
-    margin: 6px;
-  }
-
-  .hidden {
-    display: none;
-  }
-
-  .flow-text {    
-    display: flow-root;
-  }
-
-  .css-19nbuh3 {    
-	font-family: inherit;
-    margin: inherit;
-    -webkit-font-smoothing: inherit;
-    -moz-osx-font-smoothing: inherit;
-    -webkit-tap-highlight-color: inherit;
-    -webkit-overflow-scrolling: inherit;
-    font-size: inherit;
-    line-height: inherit;
-    color: inherit;
-    -webkit-text-decoration: inherit;
-    text-decoration: underline;
-}  
-
-#custom-theme-source {
-    min-height: 50px;
-}
+    #custom-theme-source {
+        min-height: 50px;
+    }
 </style>
 <script type="module" defer>
     import { setupTheming, uploadTheme } from './dist/utils/StoryUtils.js';
@@ -82,29 +51,30 @@ permalink: "theme-support/"
 <article class="component static-article">    
     <div class="live-section">
 
-    <omni-label class="title" label="Theme Support" type="title"></omni-label>
+        <h2>Theme Support</h2>
 
-    <omni-label label="All Omni Components support our theme CSS variables" type="subtitle"></omni-label>
-
-    <omni-label type="default">
-
-    Theme variables are used to style the overall theme of all Omni Components. 
-    Each component also can still be styled individually using their own component specific css variables, which would override the theme if specified.
-
-    Theme variables typically affect 
-    &nbsp;&nbsp;&nbsp;&nbsp;◉ shared colors
-    &nbsp;&nbsp;&nbsp;&nbsp;◉ fonts
-    &nbsp;&nbsp;&nbsp;&nbsp;◉ borders
-    &nbsp;&nbsp;&nbsp;&nbsp;◉ accessibility options
-
-
-    Currently provided theme variables are listed below and can be modified for a live preview of its effects on components.
-
-    </omni-label>
-
-    <omni-label class="flow-text" type="default">There are multiple built-in themes available to test how theme variables can affect te various components. Use the theme dropdown to select a built-in theme or select 'No Theme' to view the components in their default state. The source for the built-in themes are available <a target="_self" href="#examples" >below</a>.</omni-label>
-    <br/>
-    <omni-label class="flow-text" type="default">Alternatively, a custom theme can be authored or uploaded to have a live view of its effects on the components. <a target="_self" href="#custom-theme" >Try it now below</a> and select your current theme to be 'Custom Theme'.</omni-label>
+        <h3>All Omni Components support our theme CSS variables</h3>
+        <br/>
+        <p>
+        Theme variables are used to style the overall theme of all Omni Components. 
+        Each component also can still be styled individually using their own component specific css variables, which would override the theme if specified.
+        </p>
+        <br/>
+        <p>
+        Theme variables typically affect
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;◉ shared colors</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;◉ fonts</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;◉ borders</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;◉ accessibility options</p>
+        </p>
+        <br/>
+        <p>
+        Currently provided theme variables are listed below and can be modified for a live preview of its effects on components.
+        </p>
+        <br/>
+        <p>There are multiple built-in themes available to test how theme variables can affect te various components. Use the theme dropdown to select a built-in theme or select 'No Theme' to view the components in their default state. The source for the built-in themes are available <a target="_self" href="#examples" >below</a>.</p>
+        <br/>
+        <p>Alternatively, a custom theme can be authored or uploaded to have a live view of its effects on the components. <a target="_self" href="#custom-theme" >Try it now below</a> and select your current theme to be 'Custom Theme'.</p>
 
     </div>
 
@@ -117,24 +87,20 @@ permalink: "theme-support/"
 
     
 
-    <omni-label id="examples" label="Example Themes Source" type="title"></omni-label>
+    <h1 id="examples" >Example Themes Source</h1>
     <br/>
 
     <div>
-        <omni-label id="custom-theme" label="Custom Theme" type="subtitle"></omni-label>
-        <br/>
-        <input class="hidden" id="cssValue" type="file" accept=".css" onInput="uploadTheme(event)" />
-        <omni-button label="Upload Theme" type="secondary" onclick="uploadThemeClick(event)" ></omni-button>
-        <div>
-            <br/>
-            <br/>
+        <span class="flex-row">
+            <h3 id="custom-theme" style="margin-left: 0px;">Custom Theme</h3>
+            <input class="hidden" id="cssValue" type="file" accept=".css" onInput="uploadTheme(event)" />
+            <omni-button class="docs-omni-component" label="Upload" type="secondary" onclick="uploadThemeClick(event)" ></omni-button>
+        </span>
+        <div style="padding-top: 12px;">
             <div id="custom-theme-source" >
             </div>
         </div>
     </div>
-
-    <br/>
-
     <div id="themes-sources"></div>
     
 </article>
