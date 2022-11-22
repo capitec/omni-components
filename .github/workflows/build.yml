@@ -100,8 +100,6 @@ jobs:
         run: |
           npm run docs
           cp .oss-docs.json docs/.oss-docs.json
-          find docs
-          find dist
           find docs/dist
         env:
           ELEVENTY_BASE_PATH: /open-source/${{ env.DOCS_BASE_PATH }}/versions/alpha/
