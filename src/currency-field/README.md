@@ -2,11 +2,6 @@
 
 A currency input control that formats input based on currency and locale.
 
-```js
-
-import '@capitec/omni-components/currency-field';
-```
-
 ## Example
 
 ```html

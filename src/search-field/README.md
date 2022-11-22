@@ -2,11 +2,6 @@
 
 A search input control.
 
-```js
-
-import '@capitec/omni-components/search-field';
-```
-
 ## Example
 
 ```html
