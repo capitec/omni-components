@@ -19,9 +19,9 @@ export function getImport(value, componentName) {
     return imp;
 }
 
-export function getAttributes(value, componentName) {
+export function getProperties(value, componentName) {
     const declaration = getComponentDeclaration(value, componentName);
-    return declaration.attributes?.map(a => {
+    return declaration.members?.filter(m => m.kind === 'field')?.map(a => {
         return {
             ...a,
             description: filterJsDocLinks(a.description)
@@ -60,7 +60,7 @@ export function getCSSProperties(value, componentName) {
     const cssProperties = loadCssProperties(tagName, value);
     const keys = Object.keys(cssProperties);
 
-    return keys?.map(name => {
+    const properties = keys?.map(name => {
         const prop = cssProperties[name];
         return {
             name: `--${name}`,
@@ -68,4 +68,17 @@ export function getCSSProperties(value, componentName) {
             category: prop.subcategory
         };
     });
+
+    const categories = properties.map(p => p.category).filter(distinct);
+
+    return categories.map(c => {
+        return {
+            category: c,
+            properties: properties.filter(p => p.category === c)
+        }
+    })
+}
+
+function distinct(value, index, self) {
+    return self.indexOf(value) === index;
 }

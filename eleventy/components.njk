@@ -97,7 +97,7 @@ permalink: "components/{{ component.name | slug }}/"
             </div>
             <div class="component-tab" id="docs" role="tabpanel">
 
-                <h2 class="component-props-table-header" style="padding-top: 24px;">Attributes</h2>
+                <h2 class="component-props-table-header" style="padding-top: 24px;">Properties</h2>
                 <div class="docs-search-area">
                     <div class="docs-search-wrapper">
                         <div class="docs-search-icon">
@@ -105,7 +105,7 @@ permalink: "components/{{ component.name | slug }}/"
                                 search
                             </span>
                         </div>
-                        <input class="docs-search-input" id="attribute-search" type="text" placeholder="Search attributes" aria-invalid="false" value="" spellcheck="false" data-ms-editor="true">
+                        <input class="docs-search-input" id="attribute-search" type="text" placeholder="Search properties" aria-invalid="false" value="" spellcheck="false" data-ms-editor="true">
                     </div>
                 </div>
                 <div class="component-props-table-wrapper">
@@ -113,16 +113,18 @@ permalink: "components/{{ component.name | slug }}/"
                         <thead>
                             <tr>
                                 <th scope="col">Name</th>
+                                <th scope="col">Attribute</th>
                                 <th scope="col">Type</th>
                                 <th scope="col">Description</th>
                             </tr>
                         </thead>
                         <tbody id="component-attributes">
-                            {% for attribute in customElements | getAttributes(component.name) %}
+                            {% for property in customElements | getProperties(component.name) %}
                             <tr>
-                                <td data-label="Name" scope="row">{{attribute.name}}</td>
-                                <td data-label="Type">{{attribute.type.text}}</td>
-                                <td data-label="Description">{{ attribute.description | safe }}</td>
+                                <td data-label="Name" scope="row">{{property.name}}</td>
+                                <td data-label="Attribute" scope="row">{{ property.attribute }}&nbsp;</td>
+                                <td data-label="Type">{{property.type.text}}</td>
+                                <td data-label="Description">{{ property.description | safe }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -192,8 +194,9 @@ permalink: "components/{{ component.name | slug }}/"
                 </div>
             </div>
             <div class="component-tab" id="styles" role="tabpanel">
-                
-                <h2 class="component-props-table-header"  style="padding-top: 24px;">CSS Properties</h2>
+                <div style="padding-top: 24px;"></div>
+                {% for cssCat in customElements | getCSSProperties(component.name) %}
+                <h2 class="component-props-table-header" >{{ cssCat.category }}</h2>
                 <div class="docs-search-area">
                     <div class="docs-search-wrapper">
                         <div class="docs-search-icon">
@@ -201,7 +204,7 @@ permalink: "components/{{ component.name | slug }}/"
                                 search
                             </span>
                         </div>
-                        <input class="docs-search-input" id="css-prop-search" type="text" placeholder="Search CSS properties" aria-invalid="false" value="" spellcheck="false" data-ms-editor="true">
+                        <input class="docs-search-input css-category" data-category="{{ cssCat.category }}" type="text" placeholder="Search {{ cssCat.category }}" aria-invalid="false" value="" spellcheck="false" data-ms-editor="true">
                     </div>
                 </div>
                 <div class="component-props-table-wrapper">
@@ -210,20 +213,19 @@ permalink: "components/{{ component.name | slug }}/"
                             <tr>
                                 <th scope="col">Name</th>
                                 <th scope="col">Description</th>
-                                <th scope="col">Category</th>
                             </tr>
                         </thead>
-                        <tbody id="component-css-props">
-                            {% for cssProp in customElements | getCSSProperties(component.name) %}
+                        <tbody data-category="{{ cssCat.category }}" class="component-css-props">
+                            {% for cssProp in cssCat.properties %}
                             <tr>
                                 <td data-label="Name" scope="row">{{cssProp.name}}</td>
                                 <td data-label="Description">{{ cssProp.description | safe }}</td>
-                                <td data-label="Category">{{cssProp.category}}</td>
                             </tr>
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
+                {% endfor %}
             </div>
         </div>
     </div>

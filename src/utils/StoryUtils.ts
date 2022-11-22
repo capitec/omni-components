@@ -766,20 +766,30 @@ function setupSearch() {
     }
 
     //CSS Properties search
-    const cssPropSearch = document.querySelector<HTMLInputElement>('#css-prop-search');
-    const cssPropRows = document.querySelector<HTMLTableSectionElement>('#component-css-props')?.children;
-    if (cssPropSearch && cssPropRows) {
-        cssPropSearch.addEventListener('input', () => {
-            const filterValue = cssPropSearch.value ?? '';
-            for (let index = 0; index < cssPropRows.length; index++) {
-                const element = cssPropRows[index] as HTMLElement;
-                if (element.innerText && element.innerText.toLowerCase().includes(filterValue.toLowerCase())) {
-                    element.classList.remove('hidden');
-                } else {
-                    element.classList.add('hidden');
+    const categories = document.querySelectorAll('.css-category');
+    const tables = document.querySelectorAll<HTMLTableSectionElement>('.component-css-props');
+    for (let index = 0; index < categories.length; index++) {
+        const categorySearchElement = categories[index] as HTMLInputElement;
+        const category = categorySearchElement.getAttribute('data-category');
+        for (let index = 0; index < tables.length; index++) {
+            const tableSection = tables[index];
+            if (tableSection.getAttribute('data-category') === category) {
+                const cssPropRows = tableSection?.children;
+                if (categorySearchElement && cssPropRows) {
+                    categorySearchElement.addEventListener('input', () => {
+                        const filterValue = categorySearchElement.value ?? '';
+                        for (let index = 0; index < cssPropRows.length; index++) {
+                            const element = cssPropRows[index] as HTMLElement;
+                            if (element.innerText && element.innerText.toLowerCase().includes(filterValue.toLowerCase())) {
+                                element.classList.remove('hidden');
+                            } else {
+                                element.classList.add('hidden');
+                            }
+                        }
+                    });
                 }
-            }
-        });
+            }            
+        }        
     }
 }
 

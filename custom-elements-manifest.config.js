@@ -121,8 +121,54 @@ const plugins = {
                     // console.log(customElementsManifest);
                 }
             };
+        }(),
+        function removeAttributePlugin() {
+            return {
+                analyzePhase({ ts, node, moduleDoc }) {
+                    switch (node.kind) {
+                        case ts.SyntaxKind.PropertyDeclaration:
+                            const propertyName = node.name.getText();
+                            const classNode = findParentClass(ts, node);
+                            if (classNode){
+                                const className = classNode.name.getText();
+    
+                                node.jsDoc?.forEach(jsDoc => {
+                                    jsDoc.tags?.forEach(tag => {
+                                        const tagName = tag.tagName.getText();
+                                        if (tagName && (tagName.toLowerCase() === 'no_attribute')) {
+                                            const value = tag.comment;
+                                            const classDeclaration = moduleDoc.declarations.find(declaration => declaration.name === className);
+                                            
+                                            const attributes = classDeclaration.attributes.filter(a => a.name !== propertyName && a.fieldName !== propertyName);
+                                            classDeclaration.attributes = attributes;
+
+                                            const field = classDeclaration.members.find(m => m.name === propertyName);
+                                            delete field.attribute;
+                                        }
+                                    });
+                                });
+                            }
+
+                            break;
+                    }
+                },
+                moduleLinkPhase({ moduleDoc }) {
+                    // console.log(moduleDoc);
+                },
+                packageLinkPhase({ customElementsManifest }) {
+                    // console.log(customElementsManifest);
+                }
+            };
         }()
     ]
 };
+
+function findParentClass(ts, node) {
+    let parent = node.parent;
+    while (parent && parent.kind !== ts.SyntaxKind.ClassDeclaration) {
+        parent = parent.parent;
+    }
+    return parent;
+}
 
 export default plugins;
