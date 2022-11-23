@@ -20,8 +20,8 @@ permalink: "components/{{ component.name | slug }}/"
             <div class="component-info-item">
                 <div>Module</div>
                 <div class="component-info-item-code">
-                    <pre><code class="language-js" id="component-import-code">{{ customElements | getImport(component.name)}}</code></pre>
-                    <span class="copy-icon material-icons" style="font-size: 16px; cursor: pointer; margin-left: 6px;" onclick="copyToClipboard('component-import-code');return false;">
+                    <pre><code class="language-js" style="white-space: pre; !important" id="component-import-code">{{ customElements | getImport(component.name)}}</code></pre>
+                    <span class="copy-icon material-icons" onclick="copyToClipboard('component-import-code');return false;">
                         content_copy
                     </span>
                 </div>
@@ -62,23 +62,11 @@ permalink: "components/{{ component.name | slug }}/"
                             {% for story in component.stories %}
                             <div class="name" id="story-{{ story | replace("_", "-") | lower }}">{{ story | replace("_", " ") }}</div>
                             <div class="story">
-                                {# <div class="preview">
-                                    <div>< button > </div>
-                                    <div style="border-left: 1px solid #e1e1e1;">Live Preview</div>
-                                </div>
-                                <div style="border-top: 1px solid #e1e1e1;">
-                                    Code Editor Here
-                                </div>
-                                <div style="border-top: 1px solid #e1e1e1;">
-                                    Tests (Play)
-                                </div> #}
-
                                 <story-renderer 
                                     path="{{ component.path }}" 
                                     tag="{{ customElements | getTagName(component.name) }}" 
                                     key="{{ story }}"
-                                    {% if story === 'Interactive' %}interactive{% endif %} 
-                                >
+                                    {% if story === 'Interactive' %}interactive{% endif %} >
                                 </story-renderer>
                             </div>
                             {%- endfor %}
@@ -123,7 +111,7 @@ permalink: "components/{{ component.name | slug }}/"
                             <tr>
                                 <td data-label="Name" scope="row">{{property.name}}</td>
                                 <td data-label="Attribute" scope="row">{{ property.attribute }}&nbsp;</td>
-                                <td data-label="Type">{{property.type.text}}</td>
+                                <td data-label="Type"><pre><code class="language-js">{{property.type.text}}</code></pre></td>
                                 <td data-label="Description">{{ property.description | safe }}</td>
                             </tr>
                             {% endfor %}
@@ -155,7 +143,7 @@ permalink: "components/{{ component.name | slug }}/"
                             {% for event in customElements | getEvents(component.name) %}
                             <tr>
                                 <td data-label="Name" scope="row">{{event.name}}</td>
-                                <td data-label="Type">{{event.type.text}}</td>
+                                <td data-label="Type"><pre><code class="language-js">{{event.type.text}}</code></pre></td>
                                 <td data-label="Description">{{ event.description | safe }}</td>
                             </tr>
                             {% endfor %}
@@ -185,7 +173,7 @@ permalink: "components/{{ component.name | slug }}/"
                         <tbody id="component-slots">
                             {% for slot in customElements | getSlots(component.name) %}
                             <tr>
-                                <td data-label="Name" scope="row">{{slot.name}}</td>
+                                <td data-label="Name" scope="row"><pre><code class="language-js">{{slot.name}}</code></pre></td>
                                 <td data-label="Description">{{ slot.description | safe }}</td>
                             </tr>
                             {% endfor %}
@@ -218,7 +206,7 @@ permalink: "components/{{ component.name | slug }}/"
                         <tbody data-category="{{ cssCat.category }}" class="component-css-props">
                             {% for cssProp in cssCat.properties %}
                             <tr>
-                                <td data-label="Name" scope="row">{{cssProp.name}}</td>
+                                <td data-label="Name" scope="row"><pre><code class="language-js">{{cssProp.name}}</code></pre></td>
                                 <td data-label="Description">{{ cssProp.description | safe }}</td>
                             </tr>
                             {% endfor %}
