@@ -20,7 +20,7 @@ permalink: "components/{{ component.name | slug }}/"
             <div class="component-info-item">
                 <div>Module</div>
                 <div class="component-info-item-code">
-                    <pre><code class="language-js" style="white-space: pre; !important" id="component-import-code">{{ customElements | getImport(component.name)}}</code></pre>
+                    <pre><code class="language-js no-code-scroll" id="component-import-code">{{ customElements | getImport(component.name)}}</code></pre>
                     <span class="copy-icon material-icons" onclick="copyToClipboard('component-import-code');return false;">
                         content_copy
                     </span>
@@ -93,7 +93,7 @@ permalink: "components/{{ component.name | slug }}/"
                                 search
                             </span>
                         </div>
-                        <input class="docs-search-input" id="attribute-search" type="text" placeholder="Search properties" aria-invalid="false" value="" spellcheck="false" data-ms-editor="true">
+                        <input class="docs-search-input" id="attribute-search" type="text" placeholder="Search Properties" aria-invalid="false" value="" spellcheck="false" data-ms-editor="true">
                     </div>
                 </div>
                 <div class="component-props-table-wrapper">
@@ -127,7 +127,7 @@ permalink: "components/{{ component.name | slug }}/"
                                 search
                             </span>
                         </div>
-                        <input class="docs-search-input" id="event-search" type="text" placeholder="Search events" aria-invalid="false" value="" spellcheck="false" data-ms-editor="true">
+                        <input class="docs-search-input" id="event-search" type="text" placeholder="Search Events" aria-invalid="false" value="" spellcheck="false" data-ms-editor="true">
                     </div>
                 </div>
                 <div class="component-props-table-wrapper">
@@ -159,7 +159,7 @@ permalink: "components/{{ component.name | slug }}/"
                                 search
                             </span>
                         </div>
-                        <input class="docs-search-input" id="slot-search" type="text" placeholder="Search slots" aria-invalid="false" value="" spellcheck="false" data-ms-editor="true">
+                        <input class="docs-search-input" id="slot-search" type="text" placeholder="Search Slots" aria-invalid="false" value="" spellcheck="false" data-ms-editor="true">
                     </div>
                 </div>
                 <div class="component-props-table-wrapper">
