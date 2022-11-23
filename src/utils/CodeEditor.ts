@@ -45,7 +45,7 @@ export class CodeEditor extends LitElement {
 
         .cm-editor {
           background: #f9f9f9;
-          padding: 6px;
+          padding: 12px;
         }
 
         .cm-content {

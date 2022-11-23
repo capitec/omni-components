@@ -46,107 +46,111 @@ export class LivePropertyEditor extends OmniElement {
         return [
             super.styles,
             css`
-        :host {
-        }
+                :host {
+                }
 
-        :host([disabled]) {
-          pointer-events: none;
-          background-color: #f9f9f9;
-        }
+                :host([disabled]) {
+                    pointer-events: none;
+                    background-color: #f9f9f9;
+                }
 
-        .loading {
-          max-width: 25px;
-          max-height: 100px;
-        }
+                .loading {
+                    max-width: 25px;
+                    max-height: 100px;
+                }
 
-        .css-prop {
-          margin: 5px;
-        }
+                .css-prop {
+                    margin: 5px;
+                }
 
-        .collapsible {
-          background-color: #777;
-          color: white;
-          cursor: pointer;
-          padding: 18px;
-          width: 100%;
-          border: none;
-          text-align: left;
-          outline: none;
-          font-size: 15px;
-        }
+                .collapsible {
+                    background-color: #777;
+                    color: white;
+                    cursor: pointer;
+                    padding: 18px;
+                    width: 100%;
+                    border: none;
+                    text-align: left;
+                    outline: none;
+                    font-size: 15px;
+                }
 
-        .active,
-        .collapsible:hover {
-          background-color: #555;
-        }
+                .active,
+                .collapsible:hover {
+                    background-color: #555;
+                }
 
-        .expandable {
-          padding: 0 18px;
-          display: none;
-          overflow: hidden;
-          background-color: #f1f1f1;
-          flex-direction: column;
-        }
+                .expandable {
+                    padding: 0 18px;
+                    display: none;
+                    overflow: hidden;
+                    background-color: #f1f1f1;
+                    flex-direction: column;
+                }
 
-        .tooltip {
-          position: relative;
-          display: inline-block;
-          border-bottom: 1px dotted black;
-        }
+                .tooltip {
+                    position: relative;
+                    display: inline-block;
+                    border-bottom: 1px dotted black;
+                }
 
-        .tooltip .tooltiptext {
-          visibility: hidden;
-          width: 120px;
-          background-color: black;
-          color: #fff;
-          text-align: center;
-          border-radius: 6px;
-          padding: 5px 0;
-          position: absolute;
-          z-index: 1;
-          bottom: 150%;
-          left: 50%;
-          margin-left: -60px;
-        }
+                .tooltip .tooltiptext {
+                    visibility: hidden;
+                    width: 120px;
+                    background-color: black;
+                    color: #fff;
+                    text-align: center;
+                    border-radius: 6px;
+                    padding: 5px 0;
+                    position: absolute;
+                    z-index: 1;
+                    bottom: 150%;
+                    left: 50%;
+                    margin-left: -60px;
+                }
 
-        .tooltip .tooltiptext::after {
-          content: '';
-          position: absolute;
-          top: 100%;
-          left: 50%;
-          margin-left: -5px;
-          border-width: 5px;
-          border-style: solid;
-          border-color: black transparent transparent transparent;
-        }
+                .tooltip .tooltiptext::after {
+                    content: '';
+                    position: absolute;
+                    top: 100%;
+                    left: 50%;
+                    margin-left: -5px;
+                    border-width: 5px;
+                    border-style: solid;
+                    border-color: black transparent transparent transparent;
+                }
 
-        .tooltip:hover .tooltiptext {
-          visibility: visible;
-        }
+                .tooltip:hover .tooltiptext {
+                    visibility: visible;
+                }
 
-        .docs-text-field {
-          width: 100%;
-        }
+                .docs-text-field {
+                    width: 100%;
+                }
 
-        .docs-select {
-          padding: 5px;
-          cursor: pointer;
-          border-radius: 6px;
-          border: 1px solid #e1e1e1;
-          display: flex;
-          min-width: 191px;
-          min-height: 41px;
-          width: 100%;
-        }
+                .docs-select {
+                    padding: 5px;
+                    cursor: pointer;
+                    border-radius: 6px;
+                    border: 1px solid #e1e1e1;
+                    display: flex;
+                    min-width: 191px;
+                    min-height: 41px;
+                    width: 100%;
+                }
 
-        .docs-select:focus-visible {
-          outline: none;
-        }
+                .docs-select:focus-visible {
+                    outline: none;
+                }
 
-        .live-header {
-          margin-top: 15px;
-        }
-      `
+                .live-header {
+                    margin-top: 15px;
+                }
+
+                .live-header:first-of-type {
+                    margin-top: 0;
+                }
+            `
         ];
     }
 
