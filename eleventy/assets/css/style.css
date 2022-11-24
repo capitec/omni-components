@@ -219,6 +219,16 @@ header .header-version {
 
 /* MODAL SUPPORT */
 
+.code-modal {
+    min-width: 700px;
+    min-height: 500px;
+}
+
+/* .code-modal > div > div > [data-identifier="custom-theme-source-code"] { */
+[data-identifier="custom-theme-source-code"] {
+    --code-editor-max-height: 500px;
+    --code-editor-min-height: 400px;
+}
 
 .modal {
     display: flex;
