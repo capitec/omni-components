@@ -70,7 +70,6 @@ export class CodeEditor extends LitElement {
           position: relative;
           bottom: 0px;
           right: 0px;
-          background: rgb(51, 154, 240);
           opacity: 50%;
           border-radius: 50%;
           z-index: 10;
@@ -79,10 +78,19 @@ export class CodeEditor extends LitElement {
           font-size: xx-small;
         }
 
+        .copy-icon {
+            font-size: 16px; 
+            cursor: pointer; 
+            margin-left: 12px;
+            opacity: 50%;
+        }
+
+        .copy-icon:hover,
         .copy-code:hover {
           opacity: 100%;
         }
 
+        .copy-code-wrap:active .copy-icon,
         .copy-code-wrap:active .copy-code {
           transform: translate(0, 0) scale(0.9);
         }
@@ -120,7 +128,7 @@ export class CodeEditor extends LitElement {
       <div style="position: relative">
         <!-- button to copy the editor -->
         <div class="copy-code-wrap" @click="${() => this._copyCode()}">
-          <omni-icon class="copy-code" icon="@material/content_copy" size="${'custom' as any}"></omni-icon>
+          <omni-icon class="copy-icon" icon="@material/content_copy" size="${'custom' as any}"></omni-icon>
         </div>
         <!-- CodeMirror Editor parent element -->
         <div class="code-parent"> </div>
