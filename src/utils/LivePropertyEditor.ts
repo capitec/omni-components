@@ -26,7 +26,6 @@ import './CodeEditor.js';
 @customElement('live-property-editor')
 export class LivePropertyEditor extends OmniElement {
     @property({ type: Object, reflect: false }) data: ComponentStoryFormat<any>;
-    @property({ type: Function, reflect: false }) cssValueReader: (variable: CSSVariable) => CSSVariable = (c) => c;
     @property({ type: String, reflect: true }) element: string;
     @property({ type: Boolean, reflect: true }) disabled: boolean;
     @property({ type: String, attribute: 'ignore-attributes', reflect: true }) ignoreAttributes: string;
@@ -328,4 +327,3 @@ export class LivePropertyEditor extends OmniElement {
 }
 
 export type PropertyChangeEvent = { property: string; newValue: string | number | boolean; oldValue: string | number | boolean };
-export type CSSVariable = { name: string; value: string };
