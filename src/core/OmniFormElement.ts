@@ -76,7 +76,7 @@ export class OmniFormElement extends OmniElement {
      * The value entered into the form component.
      * @attr
      */
-    @property({ reflect: true }) value: string | number = null;
+    @property({ reflect: true }) value: string | number | object  = null;
 
     /**
      * Data associated with the component.
@@ -342,6 +342,7 @@ export class OmniFormElement extends OmniElement {
                     <div class="form-container"> ${this.renderContent()} ${this.renderLabel()} </div>
                     <slot name="suffix"></slot>
                     ${this.renderControl()}
+                    ${this.renderPicker()}
                 </div>
                 ${this.renderHint()} ${this.renderError()}
             </div>
@@ -356,10 +357,6 @@ export class OmniFormElement extends OmniElement {
         return nothing;
     }
 
-    protected renderControl(): typeof nothing | TemplateResult {
-        return nothing;
-    }
-
     protected renderLabel() {
         const labelClass: ClassInfo = {
             label: true,
@@ -368,6 +365,14 @@ export class OmniFormElement extends OmniElement {
         };
 
         return html`${this.label ? html`<div class=${classMap(labelClass)}><span>${this.label}</span></div>` : nothing}`;
+    }
+
+    protected renderControl(): typeof nothing | TemplateResult {
+        return nothing;
+    }
+
+    protected renderPicker():  typeof nothing | TemplateResult {
+        return nothing;
     }
 
     protected renderHint() {
