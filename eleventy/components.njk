@@ -206,7 +206,7 @@ permalink: "components/{{ component.name | slug }}/"
                         <tbody data-category="{{ cssCat.category }}" class="component-css-props">
                             {% for cssProp in cssCat.properties %}
                             <tr>
-                                <td data-label="Name" scope="row"><pre><code class="language-js">{{cssProp.name}}</code></pre></td>
+                                <td data-label="Name" scope="row"><pre><code class="language-css">{{cssProp.name}}</code></pre></td>
                                 <td data-label="Description">{{ cssProp.description | safe }}</td>
                             </tr>
                             {% endfor %}

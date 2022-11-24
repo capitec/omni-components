@@ -138,7 +138,7 @@ export class StoryRenderer extends LitElement {
                             <tbody data-target="custom-css-table-${this.tag}" class="component-css-props">
                                 ${this.cssVariables.sort((a,b) => this._sortCssVariables(a,b)).map(variable => html`
                                     <tr>
-                                        <td data-label="Name" scope="row"><pre><code class="language-js">--${variable.name}</code></pre></td>
+                                        <td data-label="Name" scope="row"><pre><code class="language-css">--${variable.name}</code></pre></td>
                                         <td data-label="Description">${variable.description}</td>
                                         <td data-label="Override Value">${this.renderCssVariable(variable)}</td>
                                     </tr>
@@ -228,6 +228,7 @@ export class StoryRenderer extends LitElement {
       <div class="play-tests">
         <div style="display: flex; flex-direction: row;">
           <omni-button
+            class="docs-omni-component"
             label="Run Tests"
             slot-position="left"
             ?disabled=${
@@ -237,7 +238,7 @@ export class StoryRenderer extends LitElement {
                     JSON.stringify(this.story.args).replaceAll('\n', '').replaceAll('\\n', '').replaceAll('\t', '').replaceAll(' ', '')
             }
             @click="${() => this._play(this.story, `.${this.key}`)}">
-            <omni-icon icon="@material/play_arrow" style="margin-right: 8px;"></omni-icon>
+            <omni-icon class="docs-omni-component" icon="@material/play_arrow" style="margin-right: 8px;"></omni-icon>
           </omni-button>
           <div class="${this.key + '-result'} success">
             <span class="material-icons" style="color: #155724;">check</span>
