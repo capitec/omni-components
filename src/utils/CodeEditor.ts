@@ -46,6 +46,10 @@ export class CodeEditor extends LitElement {
         .cm-editor {
           background: #f9f9f9;
           padding: 12px;
+          max-height: var(--code-editor-max-height);
+          max-width: var(--code-editor-max-width);
+          min-height: var(--code-editor-min-height);
+          min-width: var(--code-editor-min-width);
         }
 
         .cm-content {
