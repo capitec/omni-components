@@ -4,7 +4,7 @@ import innertext from 'innertext';
 
 const defaultOptions = {
     prefixHeadingIds: true,
-    prefix: 'user-content-',
+    prefix: '',
     className: 'anchor',
     resetSlugger: true
 }
