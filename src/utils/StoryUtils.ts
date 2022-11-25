@@ -539,11 +539,11 @@ function titleCase(str: string) {
     for (let i = 0; i < splitStr.length; i++) {
         // You do not need to check if i is larger than splitStr length, as your for does that for you
         // Assign it back to the array
-        splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
+        splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
     }
     // Directly return the joined string
-    return splitStr.join(' '); 
- }
+    return splitStr.join(' ');
+}
 
 async function setupThemes() {
     let themeModal = document.createElement('div');
@@ -552,7 +552,7 @@ async function setupThemes() {
     function uploadThemeClick(e: Event) {
         document.getElementById('cssValue').click();
     }
-    
+
     const themes = await loadThemesListRemote();
     const themeSelect = document.getElementById('header-theme-select') as HTMLSelectElement;
     const themeStyle = document.getElementById('theme-styles') as HTMLStyleElement;
@@ -560,7 +560,7 @@ async function setupThemes() {
     function addOption(key: string) {
         const option = document.createElement('option');
         option.value = key;
-        option.label = titleCase(key.replaceAll('.css', '').replaceAll('-',' '))
+        option.label = titleCase(key.replaceAll('.css', '').replaceAll('-', ' '));
         if (window.sessionStorage.getItem(themeStorageKey) === key) {
             option.selected = true;
             changeTheme(null, key);
@@ -578,7 +578,7 @@ async function setupThemes() {
         }
     }
 
-    function changeTheme(e: Event,theme: string) {
+    function changeTheme(e: Event, theme: string) {
         if (theme === noThemeKey) {
             themeStyle.innerHTML = '';
             return;
@@ -588,31 +588,34 @@ async function setupThemes() {
             themeStyle.innerHTML = customCss;
             const customThemeSourceParent = document.getElementById('custom-theme-source');
             if (e && !customThemeSourceParent) {
-                
                 // Theme change is triggered by user if the event (e) is defined and this is not the theme support page if there is no customThemeSourceParent already
                 // Show custom theme code editor modal
-                render(html` 
+                render(
+                    html` 
                     <div class="modal" role="dialog" aria-modal="true"
                     @click="${(e: Event) => _checkCloseModal(e)}" @touch="${(e: Event) => _checkCloseModal(e)}">
-                    <div class="modal-container">
-                        <div class="modal-body">
-                            <div class="code-modal">
-                                <span class="flex-row">
-                                    <h3 id="custom-theme" style="margin-left: 0px;">Custom Theme</h3>
-                                    <input class="hidden" id="cssValue" type="file" accept=".css" @input="${(e: Event) => uploadTheme(e)}" />
-                                    <omni-button class="docs-omni-component" label="Upload" type="secondary" @click="${(e:Event) => uploadThemeClick(e)}" ></omni-button>
-                                </span>
-                                <div style="padding-top: 12px;">
-                                    <div id="custom-theme-source" >
+                        <div class="modal-container">
+                            <div class="modal-body">
+                                <div class="code-modal">
+                                    <span class="flex-row">
+                                        <h3 id="custom-theme" style="margin-left: 0px;">Custom Theme</h3>
+                                        <input class="hidden" id="cssValue" type="file" accept=".css" @input="${(e: Event) => uploadTheme(e)}" />
+                                        <omni-button class="docs-omni-component" label="Upload" type="secondary" @click="${(e: Event) =>
+                                            uploadThemeClick(e)}" ></omni-button>
+                                    </span>
+                                    <div style="padding-top: 12px;">
+                                        <div id="custom-theme-source" >
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            `, themeModal);
+                `,
+                    themeModal
+                );
 
-            setupTheming();
+                setupCustomTheming();
             } else if (e && customThemeSourceParent) {
                 (customThemeSourceParent?.parentElement?.previousElementSibling ?? customThemeSourceParent).scrollIntoView();
             }
@@ -857,25 +860,27 @@ function setupSearch() {
                         }
                     });
                 }
-            }            
-        }        
+            }
+        }
     }
 }
 
 async function setupTheming() {
     const themeSources = document.getElementById('themes-sources');
-    const customThemeSourceParent = document.getElementById('custom-theme-source');
-    const themeStyle = document.getElementById('theme-styles') as HTMLStyleElement;
     if (themeSources) {
         const themesSourcesHtml = (await loadThemesListRemote()).map((theme: string) => {
             return html` <div>
-          <h3 style="padding-top: 12px;">${titleCase(theme.replaceAll('.css', '').replaceAll('-',' '))}</h3>
-          <code-editor .extensions="${() => [codeTheme, css()]}" .code="${loadFileRemote(`./themes/${theme}`)}" read-only> </code-editor>
-        </div>`;
+                <h3 style="padding-top: 12px;">${titleCase(theme.replaceAll('.css', '').replaceAll('-', ' '))}</h3>
+                <code-editor .extensions="${() => [codeTheme, css()]}" .code="${loadFileRemote(`./themes/${theme}`)}" read-only> </code-editor>
+            </div>`;
         });
         render(themesSourcesHtml, themeSources);
     }
+}
 
+async function setupCustomTheming() {
+    const customThemeSourceParent = document.getElementById('custom-theme-source');
+    const themeStyle = document.getElementById('theme-styles') as HTMLStyleElement;
     let cssSource = window.sessionStorage.getItem(customThemeCssKey) ?? ':root { }';
     const omniCompletions = cssLanguage.data.of({ autocomplete: await omniCssVariablesCompletionSource() });
     const cssLang = new LanguageSupport(cssLanguage, [cssLanguage.data.of({ autocomplete: cssCompletionSource }), omniCompletions]); //css();
