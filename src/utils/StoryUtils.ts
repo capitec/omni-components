@@ -902,6 +902,11 @@ async function setupCustomTheming() {
     const customThemeSourceParent = document.getElementById('custom-theme-source');
     const themeStyle = document.getElementById('theme-styles') as HTMLStyleElement;
     let cssSource = window.sessionStorage.getItem(customThemeCssKey) ?? ':root { }';
+    
+    const windowAny = window as any;
+    if (windowAny.cssbeautify) {
+        cssSource = windowAny.cssbeautify(cssSource);
+    }
     const omniCompletions = cssLanguage.data.of({ autocomplete: await omniCssVariablesCompletionSource() });
     const cssLang = new LanguageSupport(cssLanguage, [cssLanguage.data.of({ autocomplete: cssCompletionSource }), omniCompletions]); //css();
     render(
