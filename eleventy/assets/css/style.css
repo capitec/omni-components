@@ -456,6 +456,10 @@ header .header-version {
     cursor: pointer;
 }
 
+.menu-link:visited {
+    color: var(--omni-theme-font-color);
+}
+
 .menu-link:hover {
     background: #209cee1a;
     /* margin-left: -2px; */
@@ -637,7 +641,8 @@ header .header-version {
     white-space: pre;
 }
 
-.component-info-item-link {
+.component-info-item-link,
+.component-info-item-link:visited {
     display: flex;
     color: var(--omni-theme-font-color);
     text-decoration: none;
@@ -874,7 +879,8 @@ header .header-version {
     max-height: calc(100vh - var(--offset));
 }
 
-.component-toc .item {
+.component-toc .item,
+.component-toc .item:visited {
     color: var(--omni-theme-font-color);
     text-decoration: none;
     border-left: 2px solid #e1e1e1;

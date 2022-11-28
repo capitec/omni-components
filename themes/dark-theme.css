@@ -35,6 +35,14 @@ html {
     --code-editor-background-color: rgb(36, 41, 46);
 }
 
+a {
+    color: deepskyblue;
+}
+
+a:visited {
+    color: blueviolet;
+}
+
 footer {
     background-color: #5F5F5F;
 }
