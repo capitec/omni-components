@@ -701,7 +701,11 @@ function openTab(target: Element, tabId: string) {
     target.classList.add('active');
 
     // Set nav state of tab.
-    window.history.replaceState({}, '', `${document.location.pathname}?tab=${tabId}`);
+    if (tabId.toLowerCase() === 'examples') {
+        window.history.replaceState({}, '', document.location.pathname);
+    } else {
+        window.history.replaceState({}, '', `${document.location.pathname}?tab=${tabId}`);
+    }
 }
 
 function copyToClipboard(id: string) {
