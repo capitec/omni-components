@@ -781,8 +781,14 @@ function setupScroll() {
             if ((top > offset && top < offset + height) || (key === 0 && top <= 290)) {
                 tocAnchors.forEach((a) => {
                     a.classList.remove('active');
-                    document.querySelector(`.component-toc a[href*='${id}']`).classList.add('active');
                 });
+                const active = document.querySelector(`.component-toc a[href*='${id}']`);
+                active.classList.add('active');
+
+                // Only apply for the examples tab
+                if (!document.location.search) {
+                    window.history.replaceState({}, '', `${document.location.pathname}#${id}`);
+                }
             }
 
             // if (key === 0 && top <= 290) {
@@ -800,6 +806,35 @@ function setupScroll() {
             //         document.querySelector(`.component-toc a[href*='${hash}']`).classList.add('active');
             //     });
             // }
+        });
+    });
+
+    tocAnchors.forEach((a) => {
+        a.addEventListener('click', (e: MouseEvent) => {
+            e.preventDefault();
+
+            // Getting element by anchor id (without the -a at the end)
+            const id = a.id.substring(0, a.id.length - 2);
+            const element = document.getElementById(id);
+
+            element.scrollIntoView({
+                behavior: 'smooth'
+            });
+
+            // Needs improvements.First scroll sometimes doesn't go all the way
+            setTimeout(() => {
+                element.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }, 100);
+
+            // Too soon to do the below, at some point determine when scrolling is complete and then apply correct highlighting
+            // tocAnchors.forEach((a2) => {
+            //     a2.classList.remove('active');
+            // });
+            // a.classList.add('active');
+
+            return false;
         });
     });
 }
