@@ -1,7 +1,7 @@
 import { html as langHtml } from '@codemirror/lang-html';
 // import { githubDark as codeTheme } from '@ddietr/codemirror-themes/github-dark.js';
 import { githubLight as codeTheme } from '@ddietr/codemirror-themes/github-light.js';
-import { html, LitElement, nothing, render, TemplateResult } from 'lit';
+import { html, LitElement, nothing, PropertyValueMap, render, TemplateResult } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { live } from 'lit/directives/live.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
@@ -111,9 +111,11 @@ export class StoryRenderer extends LitElement {
                                     search
                                 </span>
                             </div>
-                            <input class="docs-search-input css-category" type="text" placeholder="Search component variables" aria-invalid="false" value="" spellcheck="false" data-ms-editor="true" @input="${(e: Event) => {
+                            <input class="docs-search-input css-category" type="text" placeholder="Search component variables" aria-invalid="false" value="" spellcheck="false" data-ms-editor="true" @input="${(
+                                e: Event
+                            ) => {
                                 const filterValue = (e.target as HTMLInputElement).value ?? '';
-                                const table = document.querySelector(`[data-target=custom-css-table-${this.tag}]`) as HTMLTableSectionElement
+                                const table = document.querySelector(`[data-target=custom-css-table-${this.tag}]`) as HTMLTableSectionElement;
                                 const cssPropRows = table.children;
                                 for (let index = 0; index < cssPropRows.length; index++) {
                                     const element = cssPropRows[index] as HTMLElement;
@@ -136,13 +138,17 @@ export class StoryRenderer extends LitElement {
                                 </tr>
                             </thead>
                             <tbody data-target="custom-css-table-${this.tag}" class="component-css-props">
-                                ${this.cssVariables.sort((a,b) => this._sortCssVariables(a,b)).map(variable => html`
+                                ${this.cssVariables
+                                    .sort((a, b) => this._sortCssVariables(a, b))
+                                    .map(
+                                        (variable) => html`
                                     <tr>
                                         <td data-label="Name" scope="row"><pre><code class="language-css">--${variable.name}</code></pre></td>
                                         <td data-label="Description">${variable.description}</td>
                                         <td data-label="Override Value">${this.renderCssVariable(variable)}</td>
                                     </tr>
-                                `)}
+                                `
+                                    )}
                             </tbody>
                         </table>
                     </div>
@@ -314,7 +320,7 @@ export class StoryRenderer extends LitElement {
         return this;
     }
 
-    private _sortCssVariables(a: CSSVariable,b: CSSVariable) {
+    private _sortCssVariables(a: CSSVariable, b: CSSVariable) {
         const css = this.customCss.sheet;
         let rootCss: CSSStyleRule = undefined;
         if (css.cssRules.length === 0) {
@@ -335,7 +341,7 @@ export class StoryRenderer extends LitElement {
             b.value = rootCss.style.getPropertyValue(`--${b.name}`);
         }
 
-         return a.value ? b.value ? 0 : -1 : b.value ? 1 : 0;
+        return a.value ? (b.value ? 0 : -1) : b.value ? 1 : 0;
     }
 
     private _cssChanged(changed: CSSVariable) {
@@ -354,9 +360,8 @@ export class StoryRenderer extends LitElement {
                 }
             }
         }
-        
-        if (changed.value) {
 
+        if (changed.value) {
             if (rootCss) {
                 rootCss.style.setProperty(`--${changed.name}`, changed.value);
             }

@@ -10,6 +10,7 @@ export { Package, ClassDeclaration, CustomElementDeclaration, Declaration, Custo
 import { html } from 'lit';
 import { render } from 'lit-html';
 import { CodeEditor, CodeMirrorEditorEvent, CodeMirrorSourceUpdateEvent } from './CodeEditor.js';
+import { StoryRenderer } from './StoryRenderer.js';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const codeSnippet = '```';
@@ -539,11 +540,11 @@ function titleCase(str: string) {
     for (let i = 0; i < splitStr.length; i++) {
         // You do not need to check if i is larger than splitStr length, as your for does that for you
         // Assign it back to the array
-        splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
+        splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
     }
     // Directly return the joined string
-    return splitStr.join(' '); 
- }
+    return splitStr.join(' ');
+}
 
 async function setupThemes() {
     let themeModal = document.createElement('div');
@@ -552,7 +553,7 @@ async function setupThemes() {
     function uploadThemeClick(e: Event) {
         document.getElementById('cssValue').click();
     }
-    
+
     const themes = await loadThemesListRemote();
     const themeSelect = document.getElementById('header-theme-select') as HTMLSelectElement;
     const themeStyle = document.getElementById('theme-styles') as HTMLStyleElement;
@@ -560,7 +561,7 @@ async function setupThemes() {
     function addOption(key: string) {
         const option = document.createElement('option');
         option.value = key;
-        option.label = titleCase(key.replaceAll('.css', '').replaceAll('-',' '))
+        option.label = titleCase(key.replaceAll('.css', '').replaceAll('-', ' '));
         if (window.sessionStorage.getItem(themeStorageKey) === key) {
             option.selected = true;
             changeTheme(null, key);
@@ -578,7 +579,7 @@ async function setupThemes() {
         }
     }
 
-    function changeTheme(e: Event,theme: string) {
+    function changeTheme(e: Event, theme: string) {
         if (theme === noThemeKey) {
             themeStyle.innerHTML = '';
             return;
@@ -588,10 +589,10 @@ async function setupThemes() {
             themeStyle.innerHTML = customCss;
             const customThemeSourceParent = document.getElementById('custom-theme-source');
             if (e && !customThemeSourceParent) {
-                
                 // Theme change is triggered by user if the event (e) is defined and this is not the theme support page if there is no customThemeSourceParent already
                 // Show custom theme code editor modal
-                render(html` 
+                render(
+                    html` 
                     <div class="modal" role="dialog" aria-modal="true"
                     @click="${(e: Event) => _checkCloseModal(e)}" @touch="${(e: Event) => _checkCloseModal(e)}">
                     <div class="modal-container">
@@ -600,7 +601,8 @@ async function setupThemes() {
                                 <span class="flex-row">
                                     <h3 id="custom-theme" style="margin-left: 0px;">Custom Theme</h3>
                                     <input class="hidden" id="cssValue" type="file" accept=".css" @input="${(e: Event) => uploadTheme(e)}" />
-                                    <omni-button class="docs-omni-component" label="Upload" type="secondary" @click="${(e:Event) => uploadThemeClick(e)}" ></omni-button>
+                                    <omni-button class="docs-omni-component" label="Upload" type="secondary" @click="${(e: Event) =>
+                                        uploadThemeClick(e)}" ></omni-button>
                                 </span>
                                 <div style="padding-top: 12px;">
                                     <div id="custom-theme-source" >
@@ -610,9 +612,11 @@ async function setupThemes() {
                         </div>
                     </div>
                 </div>
-            `, themeModal);
+            `,
+                    themeModal
+                );
 
-            setupTheming();
+                setupTheming();
             } else if (e && customThemeSourceParent) {
                 (customThemeSourceParent?.parentElement?.previousElementSibling ?? customThemeSourceParent).scrollIntoView();
             }
@@ -724,24 +728,68 @@ function setupMenu() {
 }
 
 function setupScroll() {
-    const storyRenderers = document.querySelectorAll<HTMLElement>('div.name');
-    const tocAnchors = document.querySelectorAll('.component-toc a');
+    const storyRendererContainers = document.querySelectorAll<HTMLElement>('div.name');
+    const storyRenderers = document.querySelectorAll<StoryRenderer>('story-renderer');
+    const tocAnchors = document.querySelectorAll<HTMLAnchorElement>('.component-toc a');
+
+    window.srCount = storyRenderers.length + 1;
+    window.srCompleteCount = 0;
+
+    window.addEventListener('component-render-complete', () => {
+        window.srCompleteCount++;
+
+        if (window.srCount === window.srCompleteCount && document.location.hash) {
+            
+            setTimeout(() => {
+                document.querySelector(document.location.hash).scrollIntoView({
+                    behavior: 'auto'
+                });
+            }, 200);
+
+            // // Needs improvements.
+            // setTimeout(() => {
+            //     const id = document.location.hash.replace('#', '');
+            //     const a = document.querySelector<HTMLAnchorElement>(`.component-toc a[id='${id}-a']`);
+            //     a.click();
+            //     // document.querySelector(document.location.hash).scrollIntoView();
+
+            //     // Needs improvements.
+            //     setTimeout(() => {
+            //         const id = document.location.hash.replace('#', '');
+            //         const a = document.querySelector<HTMLAnchorElement>(`.component-toc a[id='${id}-a']`);
+            //         a.click();
+            //         // document.querySelector(document.location.hash).scrollIntoView();
+            //     }, 500);
+
+            // }, 100);
+        }
+    });
 
     window.addEventListener('scroll', () => {
-        storyRenderers.forEach((sr) => {
+        storyRendererContainers.forEach((sr, key) => {
             const top = window.scrollY;
             const offset = sr.offsetTop + 290;
             const height = sr.offsetHeight;
             const id = sr.getAttribute('id');
 
-            // console.log(top, offset, height, id, hash);
+            // console.log(top, offset, height, id);
 
-            if (top > offset && top < offset + height) {
+            if ((top > offset && top < offset + height) || (key === 0 && top <= 290)) {
                 tocAnchors.forEach((a) => {
                     a.classList.remove('active');
                     document.querySelector(`.component-toc a[href*='${id}']`).classList.add('active');
                 });
             }
+
+            // if (key === 0 && top <= 290) {
+            //     document.querySelector(`.component-toc a[href*='${id}']`).classList.add('active');
+            // }
+
+            // if (top === 0) {
+            //     console.log('top');
+
+            // }
+
             // else if (id === hash) {
             //     tocAnchors.forEach((a) => {
             //         a.classList.remove('active');
@@ -857,8 +905,8 @@ function setupSearch() {
                         }
                     });
                 }
-            }            
-        }        
+            }
+        }
     }
 }
 
@@ -869,7 +917,7 @@ async function setupTheming() {
     if (themeSources) {
         const themesSourcesHtml = (await loadThemesListRemote()).map((theme: string) => {
             return html` <div>
-          <h3 style="padding-top: 12px;">${titleCase(theme.replaceAll('.css', '').replaceAll('-',' '))}</h3>
+          <h3 style="padding-top: 12px;">${titleCase(theme.replaceAll('.css', '').replaceAll('-', ' '))}</h3>
           <code-editor .extensions="${() => [codeTheme, css()]}" .code="${loadFileRemote(`./themes/${theme}`)}" read-only> </code-editor>
         </div>`;
         });
@@ -995,6 +1043,13 @@ async function uploadTheme(e: Event) {
             };
             reader.readAsText(file);
         });
+    }
+}
+
+declare global {
+    interface Window {
+        srCount: number;
+        srCompleteCount: number;
     }
 }
 

@@ -35,6 +35,8 @@ export class LivePropertyEditor extends OmniElement {
 
     @queryAll('.slot-code') slotCodeMirrors: NodeListOf<CodeEditor>;
 
+    private _firstRenderCompleted: boolean;
+
     override async connectedCallback() {
         super.connectedCallback();
 
@@ -319,9 +321,24 @@ export class LivePropertyEditor extends OmniElement {
         );
     }
 
-    protected override updated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+    protected override async updated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): Promise<void> {
         if (_changedProperties.has('disabled') && this.slotCodeMirrors) {
             this.resetSlots();
+        }
+
+        if (_changedProperties.has('data') && 
+            _changedProperties.get('data')) {
+            if (!this._firstRenderCompleted) {
+                // console.log('await updateComplete');
+                await this.updateComplete;
+                // console.log('awaited updateComplete');
+                this.dispatchEvent(
+                    new CustomEvent('component-render-complete', {
+                        bubbles: true
+                    })
+                );
+                this._firstRenderCompleted = true;
+            }
         }
     }
 }

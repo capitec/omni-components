@@ -6,8 +6,11 @@
 }
 
 html {
-    scroll-behavior: smooth;
     scroll-padding-top: 84px;
+}
+
+body {
+    scroll-behavior: smooth;
 }
 
 .docs-omni-component {
