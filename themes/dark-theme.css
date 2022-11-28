@@ -8,9 +8,9 @@
     --omni-theme-accent-hover-color:  #bbbbbb1a;
     --omni-theme-accent-active-color:  #c3c3c3;
 
-    --omni-theme-background-color:  #787878;
-    --omni-theme-background-hover-color:  #929292;
-    --omni-theme-background-active-color:  #ABABAB;
+    --omni-theme-background-color:  #24292e;
+    --omni-theme-background-hover-color:  #2C3136;
+    --omni-theme-background-active-color:  #33383D;
 
     --omni-theme-font-color:  white;
     --omni-theme-disabled-border-color:  #dedede44;
@@ -43,20 +43,11 @@ a:visited {
     color: blueviolet;
 }
 
-footer {
-    background-color: #5F5F5F;
-}
-
-.component-meta {    
-    background-color: #5F5F5F;
-}
-
-.component-tab-button {
-    background-color: #5F5F5F;
-}
-
+footer,
+.component-meta,
+.component-tab-button,
 .component-tab-container {
-    background-color: #5F5F5F;
+    background-color: #2C3136;
 }
 
 /**

@@ -558,13 +558,14 @@ async function setupThemes() {
     themes.sort(t => t === 'dark-theme.css' ? -1 : 0);
     const themeSelect = document.getElementById('header-theme-select') as HTMLSelectElement;
     const themeStyle = document.getElementById('theme-styles') as HTMLStyleElement;
+    const darkThemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 
     function addOption(key: string) {
         const option = document.createElement('option');
         option.value = key;
         option.label = titleCase(key.replaceAll('.css', '').replaceAll('-', ' '));
         const storedTheme = window.sessionStorage.getItem(themeStorageKey);
-        if (storedTheme === key || (!storedTheme && key === noThemeKey)) {
+        if (storedTheme === key || (!storedTheme && ((!darkThemePreferred && key === noThemeKey) || (darkThemePreferred && key?.toLowerCase() === 'dark-theme.css')))) {
             option.selected = true;
             changeTheme(null, key);
         }

@@ -546,11 +546,13 @@ header .header-version {
     margin-bottom: 2px;
 }
 
-.link-item img {
+.link-item img,
+.link-item svg {
     height: 40px;
     width: 40px;
     margin-right: 15px;
     flex: none;
+    color: var(--omni-theme-font-color,inherit);
 }
 
 .link-item span {
