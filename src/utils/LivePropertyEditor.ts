@@ -1,5 +1,5 @@
 import { html as langHtml } from '@codemirror/lang-html';
-// import { githubDark as codeTheme } from '@ddietr/codemirror-themes/github-dark.js';
+import { githubDark as codeThemeDark } from '@ddietr/codemirror-themes/github-dark.js';
 import { githubLight as codeTheme } from '@ddietr/codemirror-themes/github-light.js';
 import { Package, CustomElement } from 'custom-elements-manifest/schema';
 import { css, html, nothing, PropertyValueMap, TemplateResult } from 'lit';
@@ -36,11 +36,25 @@ export class LivePropertyEditor extends OmniElement {
     @queryAll('.slot-code') slotCodeMirrors: NodeListOf<CodeEditor>;
 
     private _firstRenderCompleted: boolean;
+    private theme: string;
 
     override async connectedCallback() {
         super.connectedCallback();
 
         this.customElements = await loadCustomElements(this.customElementsPath);
+
+        document.addEventListener('omni-docs-theme-change', (e: Event) => {
+            this.theme = (e as CustomEvent<string>).detail;
+            const codeEditors = this.renderRoot.querySelectorAll<CodeEditor>('code-editor');
+            if (codeEditors) {
+                codeEditors.forEach(ce => {
+                    ce.updateExtensions();
+                });
+            }
+        });
+        
+        const themeStorageKey = 'omni-docs-theme-selection';
+        this.theme = window.sessionStorage.getItem(themeStorageKey);
     }
 
     static override get styles() {
@@ -138,6 +152,8 @@ export class LivePropertyEditor extends OmniElement {
                     min-width: 191px;
                     min-height: 41px;
                     width: 100%;
+                    background-color: var(--omni-theme-background-color, inherit);
+                    color: var(--omni-theme-font-color, inherit);
                 }
 
                 .docs-select:focus-visible {
@@ -191,7 +207,7 @@ export class LivePropertyEditor extends OmniElement {
                 class="slot-code"
                 data-slot-name="${slot.name}"
                 ?disabled=${this.disabled}
-                .extensions="${async () => [codeTheme, langHtml(await loadCustomElementsCodeMirrorCompletionsRemote())]}"
+                .extensions="${async () => [this._currentCodeTheme(), langHtml(await loadCustomElementsCodeMirrorCompletionsRemote())]}"
                 .code="${ifNotEmpty(this.data && this.data.args[slot.name] ? this.data.args[slot.name] : undefined)}"
                 @codemirror-source-change="${(e: CustomEvent<CodeMirrorSourceUpdateEvent>) => {
                     this._propertyChanged({
@@ -319,6 +335,13 @@ export class LivePropertyEditor extends OmniElement {
                 detail: propertyChangeDetail
             })
         );
+    }    
+
+    private _currentCodeTheme() {
+        if (this.theme?.toLowerCase() === 'dark-theme.css') {
+            return codeThemeDark;
+        }
+        return codeTheme;
     }
 
     protected override async updated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): Promise<void> {

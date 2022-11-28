@@ -1,5 +1,5 @@
 import { html as langHtml } from '@codemirror/lang-html';
-// import { githubDark as codeTheme } from '@ddietr/codemirror-themes/github-dark.js';
+import { githubDark as codeThemeDark } from '@ddietr/codemirror-themes/github-dark.js';
 import { githubLight as codeTheme } from '@ddietr/codemirror-themes/github-light.js';
 import { html, LitElement, nothing, PropertyValueMap, render, TemplateResult } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
@@ -47,6 +47,7 @@ export class StoryRenderer extends LitElement {
     private cssVariables: CSSVariable[];
 
     private modal: HTMLDivElement;
+    private theme: string;
 
     override async connectedCallback() {
         super.connectedCallback();
@@ -81,6 +82,18 @@ export class StoryRenderer extends LitElement {
                     ...cssProp
                 };
             });
+
+        document.addEventListener('omni-docs-theme-change', (e: Event) => {
+            this.theme = (e as CustomEvent<string>).detail;
+            const codeEditors = this.renderRoot.querySelectorAll<CodeEditor>('code-editor');
+            if (codeEditors) {
+                codeEditors.forEach(ce => {
+                    ce.updateExtensions();
+                });
+            }
+        });
+        const themeStorageKey = 'omni-docs-theme-selection';
+        this.theme = window.sessionStorage.getItem(themeStorageKey);
     }
 
     override disconnectedCallback() {
@@ -214,7 +227,7 @@ export class StoryRenderer extends LitElement {
         <code-editor
           class="source-code"
           .transformSource="${(s: string) => this._transformSource(s)}"
-          .extensions="${async () => [codeTheme, langHtml(await loadCustomElementsCodeMirrorCompletionsRemote())]}"
+          .extensions="${async () => [this._currentCodeTheme(), langHtml(await loadCustomElementsCodeMirrorCompletionsRemote())]}"
           .code="${live(storySource ?? '')}"
           @codemirror-loaded="${(e: CustomEvent<CodeMirrorEditorEvent>) => {
               const newSource = e.detail.source;
@@ -465,6 +478,13 @@ export class StoryRenderer extends LitElement {
         // Remove any properties with empty string assignments within the tag
         // 			 .replace(new RegExp("(([\\r\\n]+| )([^ \\r\\n])*)=(\"([^\"]|\"\"){0}\")"), " ");
         return pretty(input);
+    }
+
+    private _currentCodeTheme() {
+        if (this.theme?.toLowerCase() === 'dark-theme.css') {
+            return codeThemeDark;
+        }
+        return codeTheme;
     }
 }
 

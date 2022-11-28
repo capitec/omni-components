@@ -31,6 +31,7 @@ export class CodeEditor extends LitElement {
 
     private editor: EditorView;
     private readonlyOrDisabled = new Compartment();
+    private userExtensions = new Compartment();
 
     static override get styles() {
         return [
@@ -44,7 +45,7 @@ export class CodeEditor extends LitElement {
         }
 
         .cm-editor {
-          background: #f9f9f9;
+          background: var(--code-editor-background-color);
           font-size: 16px;
           padding: 12px;
           max-height: var(--code-editor-max-height);
@@ -139,6 +140,36 @@ export class CodeEditor extends LitElement {
         }
     }
 
+    public async updateExtensions() {
+        if (!this.editor) {
+            return;
+        }
+
+        this.editor.dispatch({
+            effects: this.userExtensions.reconfigure([
+                // basicSetup from CodeMirror without some unwanted extensions
+                this.readOnly || this.disabled
+                    ? []
+                    : [
+                          highlightActiveLineGutter(),
+                          highlightSpecialChars(),
+                          history(),
+                          dropCursor(),
+                          indentOnInput(),
+                          bracketMatching(),
+                          closeBrackets(),
+                          autocompletion(),
+                          highlightActiveLine(),
+                          keymap.of([...closeBracketsKeymap, ...defaultKeymap, ...searchKeymap, ...historyKeymap, ...completionKeymap])
+                      ],
+                syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
+                rectangularSelection(),
+                highlightSelectionMatches(),
+                await this.extensions()
+            ])
+        });
+    }
+
     protected override render() {
         return html`
       <div style="position: relative">
@@ -161,8 +192,8 @@ export class CodeEditor extends LitElement {
             this.editor = new EditorView({
                 doc: source,
                 extensions: [
-                    // basicSetup from CodeMirror without some unwanted extensions
-                    [
+                    this.userExtensions.of([
+                        // basicSetup from CodeMirror without some unwanted extensions
                         this.readOnly || this.disabled
                             ? []
                             : [
@@ -179,9 +210,9 @@ export class CodeEditor extends LitElement {
                               ],
                         syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
                         rectangularSelection(),
-                        highlightSelectionMatches()
-                    ],
-                    await this.extensions(),
+                        highlightSelectionMatches(),
+                        await this.extensions()
+                    ]),
                     this.readonlyOrDisabled.of([
                         EditorState.readOnly.of(this.readOnly || this.disabled),
                         EditorView.editable.of(!this.readOnly && !this.disabled)

@@ -3,7 +3,7 @@ import { css as cssSupport, cssCompletionSource, cssLanguage } from '@codemirror
 import { html as langHtml, TagSpec } from '@codemirror/lang-html';
 import { javascript } from '@codemirror/lang-javascript';
 import { syntaxTree, LanguageSupport } from '@codemirror/language';
-// import { githubDark as codeTheme } from '@ddietr/codemirror-themes/github-dark.js';
+import { githubDark as codeThemeDark } from '@ddietr/codemirror-themes/github-dark.js';
 import { githubLight as codeTheme } from '@ddietr/codemirror-themes/github-light.js';
 import { Package, ClassDeclaration, CustomElementDeclaration, Declaration, CustomElement } from 'custom-elements-manifest/schema';
 export { Package, ClassDeclaration, CustomElementDeclaration, Declaration, CustomElement } from 'custom-elements-manifest/schema';
@@ -17,7 +17,7 @@ const codeSnippet = '```';
 const customThemeCssKey = 'omni-docs-custom-theme-css';
 const themeStorageKey = 'omni-docs-theme-selection';
 const customThemeKey = 'Custom Theme';
-const noThemeKey = 'No Theme';
+const noThemeKey = 'Light Theme';
 
 function loadCssProperties(
     element: string,
@@ -332,7 +332,7 @@ function enhanceCodeBlocks(parent: Element) {
 
         render(
             html` <code-editor
-        .extensions="${() => [codeTheme, language && (language.value === 'js' || language.value === 'javascript') ? javascript() : langHtml()]}"
+        .extensions="${() => [currentCodeTheme(), language && (language.value === 'js' || language.value === 'javascript') ? javascript() : langHtml()]}"
         .code="${code}"
         read-only>
       </code-editor>`,
@@ -555,6 +555,7 @@ async function setupThemes() {
     }
 
     const themes = await loadThemesListRemote();
+    themes.sort(t => t === 'dark-theme.css' ? -1 : 0);
     const themeSelect = document.getElementById('header-theme-select') as HTMLSelectElement;
     const themeStyle = document.getElementById('theme-styles') as HTMLStyleElement;
 
@@ -562,7 +563,8 @@ async function setupThemes() {
         const option = document.createElement('option');
         option.value = key;
         option.label = titleCase(key.replaceAll('.css', '').replaceAll('-', ' '));
-        if (window.sessionStorage.getItem(themeStorageKey) === key) {
+        const storedTheme = window.sessionStorage.getItem(themeStorageKey);
+        if (storedTheme === key || (!storedTheme && key === noThemeKey)) {
             option.selected = true;
             changeTheme(null, key);
         }
@@ -580,46 +582,61 @@ async function setupThemes() {
     }
 
     function changeTheme(e: Event, theme: string) {
+        document.dispatchEvent(new CustomEvent<string>('omni-docs-theme-change', {
+            detail: theme
+        }));
+        const codeEditors = document.querySelectorAll<CodeEditor>('code-editor');
+        if (codeEditors) {
+            codeEditors.forEach(ce => {
+                ce.updateExtensions();
+            });
+        }
         if (theme === noThemeKey) {
             themeStyle.innerHTML = '';
             return;
         }
         if (theme === customThemeKey) {
-            const customCss = window.sessionStorage.getItem(customThemeCssKey);
-            themeStyle.innerHTML = customCss;
-            const customThemeSourceParent = document.getElementById('custom-theme-source');
-            if (e && !customThemeSourceParent) {
-                // Theme change is triggered by user if the event (e) is defined and this is not the theme support page if there is no customThemeSourceParent already
-                // Show custom theme code editor modal
-                render(
-                    html` 
-                    <div class="modal" role="dialog" aria-modal="true"
-                    @click="${(e: Event) => _checkCloseModal(e)}" @touch="${(e: Event) => _checkCloseModal(e)}">
-                        <div class="modal-container">
-                            <div class="modal-body">
-                                <div class="code-modal">
-                                    <span class="flex-row">
-                                        <h3 id="custom-theme" style="margin-left: 0px;">Custom Theme</h3>
-                                        <input class="hidden" id="cssValue" type="file" accept=".css" @input="${(e: Event) => uploadTheme(e)}" />
-                                        <omni-button class="docs-omni-component" label="Upload" type="secondary" @click="${(e: Event) =>
-                                            uploadThemeClick(e)}" ></omni-button>
-                                    </span>
-                                    <div style="padding-top: 12px;">
-                                        <div id="custom-theme-source" >
+            let customCss = window.sessionStorage.getItem(customThemeCssKey);
+            const switchToCustomTheme = async () => {
+                if (!customCss) {
+                    customCss = await loadFileRemote(`./assets/css/default-light-theme.css`);
+                }
+                themeStyle.innerHTML = customCss;
+                const customThemeSourceParent = document.getElementById('custom-theme-source');
+                if (e && !customThemeSourceParent) {
+                    // Theme change is triggered by user if the event (e) is defined and this is not the theme support page if there is no customThemeSourceParent already
+                    // Show custom theme code editor modal
+                    render(
+                        html` 
+                        <div class="modal" role="dialog" aria-modal="true"
+                        @click="${(e: Event) => _checkCloseModal(e)}" @touch="${(e: Event) => _checkCloseModal(e)}">
+                            <div class="modal-container">
+                                <div class="modal-body">
+                                    <div class="code-modal">
+                                        <span class="flex-row">
+                                            <h3 id="custom-theme" style="margin-left: 0px;">Custom Theme</h3>
+                                            <input class="hidden" id="cssValue" type="file" accept=".css" @input="${(e: Event) => uploadTheme(e)}" />
+                                            <omni-button class="docs-omni-component" label="Upload" type="secondary" @click="${(e: Event) =>
+                                                uploadThemeClick(e)}" ></omni-button>
+                                        </span>
+                                        <div style="padding-top: 12px;">
+                                            <div id="custom-theme-source" >
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                `,
-                    themeModal
-                );
-
-                setupCustomTheming();
-            } else if (e && customThemeSourceParent) {
-                (customThemeSourceParent?.parentElement?.previousElementSibling ?? customThemeSourceParent).scrollIntoView();
+                    `,
+                        themeModal
+                    );
+    
+                    setupCustomTheming();
+                } else if (e && customThemeSourceParent) {
+                    (customThemeSourceParent?.parentElement?.previousElementSibling ?? customThemeSourceParent).scrollIntoView();
+                }
             }
+            switchToCustomTheme();
             return;
         }
         const css = themeStyle.sheet;
@@ -642,8 +659,8 @@ async function setupThemes() {
     themeSelect.style.display = 'flex';
     themeSelect.addEventListener('change', (e) => {
         const value = (e.target as HTMLSelectElement).value;
-        changeTheme(e, value);
         window.sessionStorage.setItem(themeStorageKey, value);
+        changeTheme(e, value);
     });
 }
 
@@ -955,7 +972,9 @@ async function setupTheming() {
         const themesSourcesHtml = await Promise.all(
             (
                 await loadThemesListRemote()
-            ).map(async (theme: string) => {
+            )
+            .sort(t => t === 'dark-theme.css' ? -1 : 0)
+            .map(async (theme: string) => {
                 const themeName = theme;
                 theme = await loadFileRemote(`./themes/${theme}`);
                 const themeCss = unsafeCSS(theme);
@@ -974,7 +993,7 @@ async function setupTheming() {
                 }
                 return html` <div>
                 <h3 style="padding-top: 12px;">${titleCase(themeName.replaceAll('.css', '').replaceAll('-', ' '))}</h3>
-                <code-editor .extensions="${() => [codeTheme, cssSupport()]}" .code="${theme}" read-only> </code-editor>
+                <code-editor .extensions="${() => [currentCodeTheme(), cssSupport()]}" .code="${theme}" read-only> </code-editor>
             </div>`;
             })
         );
@@ -985,7 +1004,10 @@ async function setupTheming() {
 async function setupCustomTheming() {
     const customThemeSourceParent = document.getElementById('custom-theme-source');
     const themeStyle = document.getElementById('theme-styles') as HTMLStyleElement;
-    let cssSource = window.sessionStorage.getItem(customThemeCssKey) ?? ':root { }';
+    let cssSource = window.sessionStorage.getItem(customThemeCssKey);
+    if (!cssSource) {
+        cssSource = await loadFileRemote(`./assets/css/default-light-theme.css`);
+    }
     
     const windowAny = window as any;
     if (windowAny.cssbeautify) {
@@ -998,7 +1020,7 @@ async function setupCustomTheming() {
       <code-editor
         data-identifier="custom-theme-source-code"
         class="source-code"
-        .extensions="${async () => [codeTheme, cssLang]}"
+        .extensions="${async () => [currentCodeTheme(), cssLang]}"
         code="${cssSource}"
         @codemirror-loaded="${(e: CustomEvent<CodeMirrorEditorEvent>) => {
             const newSource = e.detail.source;
@@ -1110,6 +1132,15 @@ async function uploadTheme(e: Event) {
             reader.readAsText(file);
         });
     }
+}
+
+function currentCodeTheme() {
+
+    const storedTheme = window.sessionStorage.getItem(themeStorageKey);
+    if (storedTheme?.toLowerCase() === 'dark-theme.css') {
+        return codeThemeDark;
+    }
+    return codeTheme;
 }
 
 declare global {
