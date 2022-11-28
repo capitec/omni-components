@@ -1,5 +1,5 @@
 import { CompletionSource, Completion } from '@codemirror/autocomplete';
-import { css, cssCompletionSource, cssLanguage } from '@codemirror/lang-css';
+import { css as cssSupport, cssCompletionSource, cssLanguage } from '@codemirror/lang-css';
 import { html as langHtml, TagSpec } from '@codemirror/lang-html';
 import { javascript } from '@codemirror/lang-javascript';
 import { syntaxTree, LanguageSupport } from '@codemirror/language';
@@ -7,7 +7,7 @@ import { syntaxTree, LanguageSupport } from '@codemirror/language';
 import { githubLight as codeTheme } from '@ddietr/codemirror-themes/github-light.js';
 import { Package, ClassDeclaration, CustomElementDeclaration, Declaration, CustomElement } from 'custom-elements-manifest/schema';
 export { Package, ClassDeclaration, CustomElementDeclaration, Declaration, CustomElement } from 'custom-elements-manifest/schema';
-import { html } from 'lit';
+import { html, unsafeCSS } from 'lit';
 import { render } from 'lit-html';
 import { CodeEditor, CodeMirrorEditorEvent, CodeMirrorSourceUpdateEvent } from './CodeEditor.js';
 import { StoryRenderer } from './StoryRenderer.js';
@@ -595,28 +595,28 @@ async function setupThemes() {
                     html` 
                     <div class="modal" role="dialog" aria-modal="true"
                     @click="${(e: Event) => _checkCloseModal(e)}" @touch="${(e: Event) => _checkCloseModal(e)}">
-                    <div class="modal-container">
-                        <div class="modal-body">
-                            <div class="code-modal">
-                                <span class="flex-row">
-                                    <h3 id="custom-theme" style="margin-left: 0px;">Custom Theme</h3>
-                                    <input class="hidden" id="cssValue" type="file" accept=".css" @input="${(e: Event) => uploadTheme(e)}" />
-                                    <omni-button class="docs-omni-component" label="Upload" type="secondary" @click="${(e: Event) =>
-                                        uploadThemeClick(e)}" ></omni-button>
-                                </span>
-                                <div style="padding-top: 12px;">
-                                    <div id="custom-theme-source" >
+                        <div class="modal-container">
+                            <div class="modal-body">
+                                <div class="code-modal">
+                                    <span class="flex-row">
+                                        <h3 id="custom-theme" style="margin-left: 0px;">Custom Theme</h3>
+                                        <input class="hidden" id="cssValue" type="file" accept=".css" @input="${(e: Event) => uploadTheme(e)}" />
+                                        <omni-button class="docs-omni-component" label="Upload" type="secondary" @click="${(e: Event) =>
+                                            uploadThemeClick(e)}" ></omni-button>
+                                    </span>
+                                    <div style="padding-top: 12px;">
+                                        <div id="custom-theme-source" >
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            `,
+                `,
                     themeModal
                 );
 
-                setupTheming();
+                setupCustomTheming();
             } else if (e && customThemeSourceParent) {
                 (customThemeSourceParent?.parentElement?.previousElementSibling ?? customThemeSourceParent).scrollIntoView();
             }
@@ -912,18 +912,40 @@ function setupSearch() {
 
 async function setupTheming() {
     const themeSources = document.getElementById('themes-sources');
-    const customThemeSourceParent = document.getElementById('custom-theme-source');
-    const themeStyle = document.getElementById('theme-styles') as HTMLStyleElement;
     if (themeSources) {
-        const themesSourcesHtml = (await loadThemesListRemote()).map((theme: string) => {
-            return html` <div>
-          <h3 style="padding-top: 12px;">${titleCase(theme.replaceAll('.css', '').replaceAll('-', ' '))}</h3>
-          <code-editor .extensions="${() => [codeTheme, css()]}" .code="${loadFileRemote(`./themes/${theme}`)}" read-only> </code-editor>
-        </div>`;
-        });
+        const themesSourcesHtml = await Promise.all(
+            (
+                await loadThemesListRemote()
+            ).map(async (theme: string) => {
+                const themeName = theme;
+                theme = await loadFileRemote(`./themes/${theme}`);
+                const themeCss = unsafeCSS(theme);
+                const rules = themeCss.styleSheet.cssRules;
+                theme = '';
+                for (let index = 0; index < rules.length; index++) {
+                    const rule = rules[index] as CSSStyleRule;
+                    if (rule.selectorText && rule.selectorText.startsWith(':root')) {
+                        theme += `${rule.cssText} \n`;
+                    }
+                }
+
+                const windowAny = window as any;
+                if (windowAny.cssbeautify) {
+                    theme = windowAny.cssbeautify(theme);
+                }
+                return html` <div>
+                <h3 style="padding-top: 12px;">${titleCase(themeName.replaceAll('.css', '').replaceAll('-', ' '))}</h3>
+                <code-editor .extensions="${() => [codeTheme, cssSupport()]}" .code="${theme}" read-only> </code-editor>
+            </div>`;
+            })
+        );
         render(themesSourcesHtml, themeSources);
     }
+}
 
+async function setupCustomTheming() {
+    const customThemeSourceParent = document.getElementById('custom-theme-source');
+    const themeStyle = document.getElementById('theme-styles') as HTMLStyleElement;
     let cssSource = window.sessionStorage.getItem(customThemeCssKey) ?? ':root { }';
     const omniCompletions = cssLanguage.data.of({ autocomplete: await omniCssVariablesCompletionSource() });
     const cssLang = new LanguageSupport(cssLanguage, [cssLanguage.data.of({ autocomplete: cssCompletionSource }), omniCompletions]); //css();

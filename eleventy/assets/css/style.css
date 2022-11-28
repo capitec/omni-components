@@ -647,9 +647,20 @@ header .header-version {
     font-size: 16px; 
     cursor: pointer; 
     margin-left: 12px;
+    opacity: 50%;
+    user-select: none;
 }
 
-.component-info-item-code .no-code-scroll > span {
+.component-info-item-code .copy-icon:hover {
+  opacity: 100%;
+}
+
+.component-info-item-code .copy-icon:active {
+  transform: translate(0, 0) scale(0.9);
+}
+
+.component-info-item-code .no-code-scroll > span,
+.component-info-item-code .no-code-scroll {
     white-space: pre;
 }
 
