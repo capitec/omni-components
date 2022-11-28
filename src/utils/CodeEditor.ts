@@ -95,14 +95,29 @@ export class CodeEditor extends LitElement {
         .copy-code-wrap:active .copy-code {
           transform: translate(0, 0) scale(0.9);
         }
-
-        .animate {
-          transform: translate(0, 0) scale(1.12);
+        
+        .cm-scroller::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
         }
-
-        .tooltip {
-          font-size: 15px;
-          box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        
+        .cm-scroller::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            background-color: lightgrey;
+        }
+        
+        .cm-scroller::-webkit-scrollbar-thumb {
+            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            background-color:  darkgrey;
+        
+            border-top: 1px solid transparent;
+            border-bottom: 1px solid transparent;
+            border-left: 1px solid transparent;
+            border-right: 1px solid transparent;
+        
+            background-clip: padding-box;
         }
       `
         ];
