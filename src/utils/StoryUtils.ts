@@ -10,6 +10,7 @@ export { Package, ClassDeclaration, CustomElementDeclaration, Declaration, Custo
 import { html, unsafeCSS } from 'lit';
 import { render } from 'lit-html';
 import { CodeEditor, CodeMirrorEditorEvent, CodeMirrorSourceUpdateEvent } from './CodeEditor.js';
+import { StoryRenderer } from './StoryRenderer.js';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const codeSnippet = '```';
@@ -727,24 +728,68 @@ function setupMenu() {
 }
 
 function setupScroll() {
-    const storyRenderers = document.querySelectorAll<HTMLElement>('div.name');
-    const tocAnchors = document.querySelectorAll('.component-toc a');
+    const storyRendererContainers = document.querySelectorAll<HTMLElement>('div.name');
+    const storyRenderers = document.querySelectorAll<StoryRenderer>('story-renderer');
+    const tocAnchors = document.querySelectorAll<HTMLAnchorElement>('.component-toc a');
+
+    window.srCount = storyRenderers.length + 1;
+    window.srCompleteCount = 0;
+
+    window.addEventListener('component-render-complete', () => {
+        window.srCompleteCount++;
+
+        if (window.srCount === window.srCompleteCount && document.location.hash) {
+            
+            setTimeout(() => {
+                document.querySelector(document.location.hash).scrollIntoView({
+                    behavior: 'auto'
+                });
+            }, 200);
+
+            // // Needs improvements.
+            // setTimeout(() => {
+            //     const id = document.location.hash.replace('#', '');
+            //     const a = document.querySelector<HTMLAnchorElement>(`.component-toc a[id='${id}-a']`);
+            //     a.click();
+            //     // document.querySelector(document.location.hash).scrollIntoView();
+
+            //     // Needs improvements.
+            //     setTimeout(() => {
+            //         const id = document.location.hash.replace('#', '');
+            //         const a = document.querySelector<HTMLAnchorElement>(`.component-toc a[id='${id}-a']`);
+            //         a.click();
+            //         // document.querySelector(document.location.hash).scrollIntoView();
+            //     }, 500);
+
+            // }, 100);
+        }
+    });
 
     window.addEventListener('scroll', () => {
-        storyRenderers.forEach((sr) => {
+        storyRendererContainers.forEach((sr, key) => {
             const top = window.scrollY;
             const offset = sr.offsetTop + 290;
             const height = sr.offsetHeight;
             const id = sr.getAttribute('id');
 
-            // console.log(top, offset, height, id, hash);
+            // console.log(top, offset, height, id);
 
-            if (top > offset && top < offset + height) {
+            if ((top > offset && top < offset + height) || (key === 0 && top <= 290)) {
                 tocAnchors.forEach((a) => {
                     a.classList.remove('active');
                     document.querySelector(`.component-toc a[href*='${id}']`).classList.add('active');
                 });
             }
+
+            // if (key === 0 && top <= 290) {
+            //     document.querySelector(`.component-toc a[href*='${id}']`).classList.add('active');
+            // }
+
+            // if (top === 0) {
+            //     console.log('top');
+
+            // }
+
             // else if (id === hash) {
             //     tocAnchors.forEach((a) => {
             //         a.classList.remove('active');
@@ -1025,6 +1070,13 @@ async function uploadTheme(e: Event) {
             };
             reader.readAsText(file);
         });
+    }
+}
+
+declare global {
+    interface Window {
+        srCount: number;
+        srCompleteCount: number;
     }
 }
 

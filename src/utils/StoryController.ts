@@ -1,4 +1,4 @@
-import { ReactiveController, ReactiveControllerHost } from 'lit';
+import { LitElement, ReactiveController, ReactiveControllerHost } from 'lit';
 
 export class StoryController implements ReactiveController {
     host: ReactiveControllerHost;
@@ -13,5 +13,13 @@ export class StoryController implements ReactiveController {
     async hostConnected() {
         this.story = await import(document.baseURI + this.storyPath);
         this.host.requestUpdate();
+
+        await this.host.updateComplete;
+
+        (this.host as LitElement).dispatchEvent(
+            new CustomEvent('component-render-complete', {
+                bubbles: true
+            })
+        );
     }
 }
