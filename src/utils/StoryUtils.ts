@@ -566,6 +566,7 @@ async function setupThemes() {
         option.label = titleCase(key.replaceAll('.css', '').replaceAll('-', ' '));
         const storedTheme = window.sessionStorage.getItem(themeStorageKey);
         if (storedTheme === key || (!storedTheme && ((!darkThemePreferred && key === noThemeKey) || (darkThemePreferred && key?.toLowerCase() === 'dark-theme.css')))) {
+            window.sessionStorage.setItem(themeStorageKey,key);
             option.selected = true;
             changeTheme(null, key);
         }
