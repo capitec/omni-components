@@ -17,9 +17,10 @@
 
 ## Methods
 
-| Method    | Type                                             |
-|-----------|--------------------------------------------------|
-| `refresh` | `(getCode?: (): string \| Promise<string>) => Promise<void>` |
+| Method             | Type                                             |
+|--------------------|--------------------------------------------------|
+| `refresh`          | `(getCode?: (): string \| Promise<string>) => Promise<void>` |
+| `updateExtensions` | `(): Promise<void>`                              |
 
 ## Events
 
@@ -34,20 +35,19 @@
 
 ## Properties
 
-| Property             | Attribute           | Modifiers | Type                                     | Default                  | Description                                      |
-|----------------------|---------------------|-----------|------------------------------------------|--------------------------|--------------------------------------------------|
-| `cssValueReader`     | `cssValueReader`    |           | `(variable: CSSVariable) => CSSVariable` | "(c) => c"               |                                                  |
-| `customElements`     |                     |           | `Package`                                |                          |                                                  |
-| `customElementsPath` | `custom-elements`   |           | `string`                                 | "./custom-elements.json" |                                                  |
-| `data`               | `data`              |           | `ComponentStoryFormat<any>`              |                          |                                                  |
-| `dir`                |                     |           | `string`                                 |                          |                                                  |
-| `disabled`           | `disabled`          |           | `boolean`                                |                          |                                                  |
-| `element`            | `element`           |           | `string`                                 |                          |                                                  |
-| `ignoreAttributes`   | `ignore-attributes` |           | `string`                                 |                          |                                                  |
-| `lang`               |                     |           | `string`                                 |                          |                                                  |
-| `override`           | `override`          |           |                                          |                          | Used to set the base direction of text for display |
-| `slotCodeMirrors`    |                     |           | `NodeListOf<CodeEditor>`                 |                          |                                                  |
-| `styles`             |                     | readonly  | `CSSResultGroup[]`                       |                          |                                                  |
+| Property             | Attribute           | Modifiers | Type                        | Default                  | Description                                      |
+|----------------------|---------------------|-----------|-----------------------------|--------------------------|--------------------------------------------------|
+| `customElements`     |                     |           | `Package`                   |                          |                                                  |
+| `customElementsPath` | `custom-elements`   |           | `string`                    | "./custom-elements.json" |                                                  |
+| `data`               | `data`              |           | `ComponentStoryFormat<any>` |                          |                                                  |
+| `dir`                |                     |           | `string`                    |                          |                                                  |
+| `disabled`           | `disabled`          |           | `boolean`                   |                          |                                                  |
+| `element`            | `element`           |           | `string`                    |                          |                                                  |
+| `ignoreAttributes`   | `ignore-attributes` |           | `string`                    |                          |                                                  |
+| `lang`               |                     |           | `string`                    |                          |                                                  |
+| `override`           | `override`          |           |                             |                          | Used to set the base direction of text for display |
+| `slotCodeEditors`    |                     |           | `NodeListOf<CodeEditor>`    |                          |                                                  |
+| `styles`             |                     | readonly  | `CSSResultGroup[]`          |                          |                                                  |
 
 ## Methods
 
@@ -57,9 +57,10 @@
 
 ## Events
 
-| Event             | Type                               |
-|-------------------|------------------------------------|
-| `property-change` | `CustomEvent<PropertyChangeEvent>` |
+| Event                       | Type                               |
+|-----------------------------|------------------------------------|
+| `component-render-complete` |                                    |
+| `property-change`           | `CustomEvent<PropertyChangeEvent>` |
 
 ## Slots
 
@@ -112,6 +113,7 @@
 
 ## Methods
 
-| Method             | Type                        |
-|--------------------|-----------------------------|
-| `createRenderRoot` | `(): Element \| ShadowRoot` |
+| Method              | Type                                             |
+|---------------------|--------------------------------------------------|
+| `createRenderRoot`  | `(): Element \| ShadowRoot`                      |
+| `renderCssVariable` | `(variable: CSSVariable): TemplateResult<1> \| unique symbol` |
