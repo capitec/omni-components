@@ -25,11 +25,6 @@ Check icon component.
 
 A clear icon component.
 
-```js
-
-import '@capitec/omni-components/icons/Clear.icon.js';
-```
-
 ## Example
 
 ```html
@@ -290,11 +285,6 @@ Plus icon component.
 # omni-search-icon
 
 A search icon component.
-
-```js
-
-import '@capitec/omni-components/icons/Search.icon.js';
-```
 
 ## Example
 

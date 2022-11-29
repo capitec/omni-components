@@ -164,14 +164,6 @@ Check icon component.
 
 A clear icon component.
 
-
-```js
-
-
-import '@capitec/omni-components/icons/Clear.icon.js';
-
-```
-
 </td></tr><tr><td>
 
 [omni-close-icon](src/icons/README.md)
@@ -252,14 +244,6 @@ Plus icon component.
 
 A search icon component.
 
-
-```js
-
-
-import '@capitec/omni-components/icons/Search.icon.js';
-
-```
-
 </td></tr><tr><td>
 
 [omni-label](src/label/README.md)
@@ -331,22 +315,6 @@ Control to switch a value on or off.
 </td><td>
 
 Control to input text.
-
-</td></tr><tr><td>
-
-[code-editor](src/utils/README.md)
-
-</td><td>
-
-
-
-</td></tr><tr><td>
-
-[live-property-editor](src/utils/README.md)
-
-</td><td>
-
-
 
 </td></tr></tbody></table>
 
