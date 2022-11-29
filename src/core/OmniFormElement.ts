@@ -233,7 +233,7 @@ export class OmniFormElement extends OmniElement {
                 :host([value]) .layout > .form-container > .label::before,
                 :focus + .label::before {
                     content: '';
-                    background-color: var(--omni-label-focus-background-color, white);
+                    background-color: var(--omni-form-field-background-color, var(--omni-background-color));
                     position: absolute;
                     left: var(--omni-label-focus-left, -3px);
                     right: var(--omni-label-focus-right, -3px);
