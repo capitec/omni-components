@@ -253,7 +253,7 @@ header .header-version {
 
 .modal-body {
     margin-top:0px;
-    color:  #4E6066;
+    /* color:  #4E6066; */
     padding:  24px;
     font-size:  14px;
     border-radius:  4px 4px 0px 0px;
