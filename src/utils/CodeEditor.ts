@@ -265,6 +265,11 @@ export class CodeEditor extends LitElement {
                 parent: this.codeParent
             });
 
+            this._clearOtherElements(this.codeParent, this.editor.dom);
+            this.editor.dom?.part?.add('editor');
+            this.editor.scrollDOM?.part?.add('editor-scroller');
+            this.editor.contentDOM?.part?.add('editor-content');
+
             if (!this.disabled) {
                 this.dispatchEvent(
                     new CustomEvent('codemirror-loaded', {
@@ -356,6 +361,27 @@ export class CodeEditor extends LitElement {
             child = child.previousElementSibling;
             if (!curChild.hasAttribute('slot')) {
                 el.removeChild(curChild);
+            }
+        }
+    }
+
+    private _clearOtherElements(el: Element | ShadowRoot = undefined, onlyChild: Element) {
+        if (!el) {
+            el = this.renderRoot;
+        }
+
+        if (!onlyChild || !el.contains(onlyChild)) {
+            this._clearElements(el);
+            return;
+        }
+
+        const childCount = el.children.length;
+        if (childCount > 1) {
+            for (let index = childCount - 1; index >= 0; index--) {
+                const child = el.children[index];
+                if (!child.hasAttribute('slot') && child !== onlyChild) {
+                    el.removeChild(child);
+                }
             }
         }
     }

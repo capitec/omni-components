@@ -33,7 +33,7 @@ export class LivePropertyEditor extends OmniElement {
 
     @state() customElements: Package;
 
-    @queryAll('.slot-code') slotCodeMirrors: NodeListOf<CodeEditor>;
+    @queryAll('.slot-code') slotCodeEditors: NodeListOf<CodeEditor>;
 
     private _firstRenderCompleted: boolean;
     private theme: string;
@@ -172,8 +172,8 @@ export class LivePropertyEditor extends OmniElement {
     }
 
     public resetSlots() {
-        if (this.slotCodeMirrors) {
-            this.slotCodeMirrors.forEach(async (codeEditor) => {
+        if (this.slotCodeEditors) {
+            this.slotCodeEditors.forEach(async (codeEditor) => {
                 const slotName = codeEditor.getAttribute('data-slot-name');
                 if (slotName) {
                     const newCode = this.data && this.data.args[slotName] ? this.data.args[slotName] : undefined;
@@ -345,7 +345,7 @@ export class LivePropertyEditor extends OmniElement {
     }
 
     protected override async updated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): Promise<void> {
-        if (_changedProperties.has('disabled') && this.slotCodeMirrors) {
+        if (_changedProperties.has('disabled') && this.slotCodeEditors) {
             this.resetSlots();
         }
 
