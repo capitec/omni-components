@@ -332,7 +332,10 @@ function enhanceCodeBlocks(parent: Element) {
 
         render(
             html` <code-editor
-        .extensions="${() => [currentCodeTheme(), language && (language.value === 'js' || language.value === 'javascript') ? javascript() : langHtml()]}"
+        .extensions="${() => [
+            currentCodeTheme(),
+            language && (language.value === 'js' || language.value === 'javascript') ? javascript() : langHtml()
+        ]}"
         .code="${code}"
         read-only>
       </code-editor>`,
@@ -555,7 +558,7 @@ async function setupThemes() {
     }
 
     const themes = await loadThemesListRemote();
-    themes.sort(t => t === 'dark-theme.css' ? -1 : 0);
+    themes.sort((t) => (t === 'dark-theme.css' ? -1 : 0));
     const themeSelect = document.getElementById('header-theme-select') as HTMLSelectElement;
     const themeStyle = document.getElementById('theme-styles') as HTMLStyleElement;
     const darkThemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -565,8 +568,11 @@ async function setupThemes() {
         option.value = key;
         option.label = titleCase(key.replaceAll('.css', '').replaceAll('-', ' '));
         const storedTheme = window.sessionStorage.getItem(themeStorageKey);
-        if (storedTheme === key || (!storedTheme && ((!darkThemePreferred && key === noThemeKey) || (darkThemePreferred && key?.toLowerCase() === 'dark-theme.css')))) {
-            window.sessionStorage.setItem(themeStorageKey,key);
+        if (
+            storedTheme === key ||
+            (!storedTheme && ((!darkThemePreferred && key === noThemeKey) || (darkThemePreferred && key?.toLowerCase() === 'dark-theme.css')))
+        ) {
+            window.sessionStorage.setItem(themeStorageKey, key);
             option.selected = true;
             changeTheme(null, key);
         }
@@ -584,12 +590,14 @@ async function setupThemes() {
     }
 
     function changeTheme(e: Event, theme: string) {
-        document.dispatchEvent(new CustomEvent<string>('omni-docs-theme-change', {
-            detail: theme
-        }));
+        document.dispatchEvent(
+            new CustomEvent<string>('omni-docs-theme-change', {
+                detail: theme
+            })
+        );
         const codeEditors = document.querySelectorAll<CodeEditor>('code-editor');
         if (codeEditors) {
-            codeEditors.forEach(ce => {
+            codeEditors.forEach((ce) => {
                 ce.updateExtensions();
             });
         }
@@ -632,12 +640,12 @@ async function setupThemes() {
                     `,
                         themeModal
                     );
-    
+
                     setupCustomTheming();
                 } else if (e && customThemeSourceParent) {
                     (customThemeSourceParent?.parentElement?.previousElementSibling ?? customThemeSourceParent).scrollIntoView();
                 }
-            }
+            };
             switchToCustomTheme();
             return;
         }
@@ -762,7 +770,6 @@ function setupScroll() {
         window.srCompleteCount++;
 
         if (window.srCount === window.srCompleteCount && document.location.hash) {
-            
             setTimeout(() => {
                 document.querySelector(document.location.hash).scrollIntoView({
                     behavior: 'auto'
@@ -975,29 +982,29 @@ async function setupTheming() {
             (
                 await loadThemesListRemote()
             )
-            .sort(t => t === 'dark-theme.css' ? -1 : 0)
-            .map(async (theme: string) => {
-                const themeName = theme;
-                theme = await loadFileRemote(`./themes/${theme}`);
-                const themeCss = unsafeCSS(theme);
-                const rules = themeCss.styleSheet.cssRules;
-                theme = '';
-                for (let index = 0; index < rules.length; index++) {
-                    const rule = rules[index] as CSSStyleRule;
-                    if (rule.selectorText && rule.selectorText.startsWith(':root')) {
-                        theme += `${rule.cssText} \n`;
+                .sort((t) => (t === 'dark-theme.css' ? -1 : 0))
+                .map(async (theme: string) => {
+                    const themeName = theme;
+                    theme = await loadFileRemote(`./themes/${theme}`);
+                    const themeCss = unsafeCSS(theme);
+                    const rules = themeCss.styleSheet.cssRules;
+                    theme = '';
+                    for (let index = 0; index < rules.length; index++) {
+                        const rule = rules[index] as CSSStyleRule;
+                        if (rule.selectorText && rule.selectorText.startsWith(':root')) {
+                            theme += `${rule.cssText} \n`;
+                        }
                     }
-                }
 
-                const windowAny = window as any;
-                if (windowAny.cssbeautify) {
-                    theme = windowAny.cssbeautify(theme);
-                }
-                return html` <div>
+                    const windowAny = window as any;
+                    if (windowAny.cssbeautify) {
+                        theme = windowAny.cssbeautify(theme);
+                    }
+                    return html` <div>
                 <h3 style="padding-top: 12px;">${titleCase(themeName.replaceAll('.css', '').replaceAll('-', ' '))}</h3>
                 <code-editor .extensions="${() => [currentCodeTheme(), cssSupport()]}" .code="${theme}" read-only> </code-editor>
             </div>`;
-            })
+                })
         );
         render(themesSourcesHtml, themeSources);
     }
@@ -1010,7 +1017,7 @@ async function setupCustomTheming() {
     if (!cssSource) {
         cssSource = await loadFileRemote(`./assets/css/default-light-theme.css`);
     }
-    
+
     const windowAny = window as any;
     if (windowAny.cssbeautify) {
         cssSource = windowAny.cssbeautify(cssSource);
@@ -1137,7 +1144,6 @@ async function uploadTheme(e: Event) {
 }
 
 function currentCodeTheme() {
-
     const storedTheme = window.sessionStorage.getItem(themeStorageKey);
     if (storedTheme?.toLowerCase() === 'dark-theme.css') {
         return codeThemeDark;

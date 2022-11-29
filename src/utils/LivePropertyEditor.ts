@@ -47,12 +47,12 @@ export class LivePropertyEditor extends OmniElement {
             this.theme = (e as CustomEvent<string>).detail;
             const codeEditors = this.renderRoot.querySelectorAll<CodeEditor>('code-editor');
             if (codeEditors) {
-                codeEditors.forEach(ce => {
+                codeEditors.forEach((ce) => {
                     ce.updateExtensions();
                 });
             }
         });
-        
+
         const themeStorageKey = 'omni-docs-theme-selection';
         this.theme = window.sessionStorage.getItem(themeStorageKey);
     }
@@ -335,7 +335,7 @@ export class LivePropertyEditor extends OmniElement {
                 detail: propertyChangeDetail
             })
         );
-    }    
+    }
 
     private _currentCodeTheme() {
         if (this.theme?.toLowerCase() === 'dark-theme.css') {
@@ -349,8 +349,7 @@ export class LivePropertyEditor extends OmniElement {
             this.resetSlots();
         }
 
-        if (_changedProperties.has('data') && 
-            _changedProperties.get('data')) {
+        if (_changedProperties.has('data') && _changedProperties.get('data')) {
             if (!this._firstRenderCompleted) {
                 // console.log('await updateComplete');
                 await this.updateComplete;

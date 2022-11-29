@@ -87,7 +87,7 @@ export class StoryRenderer extends LitElement {
             this.theme = (e as CustomEvent<string>).detail;
             const codeEditors = this.renderRoot.querySelectorAll<CodeEditor>('code-editor');
             if (codeEditors) {
-                codeEditors.forEach(ce => {
+                codeEditors.forEach((ce) => {
                     ce.updateExtensions();
                 });
             }
