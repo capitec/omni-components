@@ -553,11 +553,14 @@ header .header-version {
     margin-right: 15px;
     flex: none;
     color: var(--omni-theme-font-color,inherit);
+    text-decoration: none;
 }
 
 .link-item span {
     font-size: 14px;
     line-height: 20px;
+    color: var(--omni-theme-font-color,inherit);
+    text-decoration: underline;
 }
 
 /* COMPONENTS */
