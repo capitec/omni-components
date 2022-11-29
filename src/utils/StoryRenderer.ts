@@ -241,7 +241,7 @@ export class StoryRenderer extends LitElement {
 
               this.requestUpdate();
           }}"
-          ?read-only="${!this.interactive}">
+          ?read-only="${true/*!this.interactive*/}">
         </code-editor>
       </div>
       <div class="play-tests">
