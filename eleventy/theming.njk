@@ -4,33 +4,10 @@ layout: page.njk
 permalink: "theme-support/"
 ---
 
+<script src="https://cdn.jsdelivr.net/npm/cssbeautify@0.3.1/cssbeautify.js"></script>
 <div class="component-overlay">
     <div class="lds-ripple"><div></div><div></div></div>
 </div>
-<style>
-
-    .live-section {
-        background-color: var(--omni-theme-filled-background-color, white);
-        padding: 20px;
-    }
-
-    .flex-row {
-        display: inline-flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: center;
-        margin: 6px;
-    }
-
-    .flex-row > * {
-        margin: 6px;
-    }
-
-    #custom-theme-source {
-        min-height: 50px;
-    }
-</style>
 <script type="module" defer>
     import { setupTheming, uploadTheme } from './dist/utils/StoryUtils.js';
 
@@ -51,7 +28,7 @@ permalink: "theme-support/"
 <article class="component static-article">    
     <div class="live-section">
 
-        <h2>Theme Support</h2>
+        <h1>Theme Support</h1>
 
         <h3>All Omni Components support our theme CSS variables</h3>
         <br/>
@@ -72,9 +49,9 @@ permalink: "theme-support/"
         Currently provided theme variables are listed below and can be modified for a live preview of its effects on components.
         </p>
         <br/>
-        <p>There are multiple built-in themes available to test how theme variables can affect te various components. Use the theme dropdown to select a built-in theme or select 'No Theme' to view the components in their default state. The source for the built-in themes are available <a target="_self" href="#examples" >below</a>.</p>
+        <p>There are multiple built-in themes available to test how theme variables can affect te various components. Use the theme dropdown to select a built-in theme or select 'Light Theme' to view the components in their default state. The source for the built-in themes are available <a target="_self" href="theme-support/#examples" >below</a>.</p>
         <br/>
-        <p>Alternatively, a custom theme can be authored or uploaded to have a live view of its effects on the components. <a target="_self" href="#custom-theme" >Try it now below</a> and select your current theme to be 'Custom Theme'.</p>
+        <p>Alternatively, a custom theme can be authored or uploaded to have a live view of its effects on the components. Try it now by selecting your current theme to be 'Custom Theme'.</p>
 
     </div>
 
@@ -88,19 +65,6 @@ permalink: "theme-support/"
     
 
     <h1 id="examples" >Example Themes Source</h1>
-    <br/>
-
-    <div>
-        <span class="flex-row">
-            <h3 id="custom-theme" style="margin-left: 0px;">Custom Theme</h3>
-            <input class="hidden" id="cssValue" type="file" accept=".css" onInput="uploadTheme(event)" />
-            <omni-button class="docs-omni-component" label="Upload" type="secondary" onclick="uploadThemeClick(event)" ></omni-button>
-        </span>
-        <div style="padding-top: 12px;">
-            <div id="custom-theme-source" >
-            </div>
-        </div>
-    </div>
     <div id="themes-sources"></div>
     
 </article>

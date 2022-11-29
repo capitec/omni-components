@@ -31,6 +31,7 @@ export class CodeEditor extends LitElement {
 
     private editor: EditorView;
     private readonlyOrDisabled = new Compartment();
+    private userExtensions = new Compartment();
 
     static override get styles() {
         return [
@@ -44,8 +45,13 @@ export class CodeEditor extends LitElement {
         }
 
         .cm-editor {
-          background: #f9f9f9;
+          background: var(--code-editor-background-color);
+          font-size: 16px;
           padding: 12px;
+          max-height: var(--code-editor-max-height);
+          max-width: var(--code-editor-max-width);
+          min-height: var(--code-editor-min-height);
+          min-width: var(--code-editor-min-width);
         }
 
         .cm-content {
@@ -66,7 +72,6 @@ export class CodeEditor extends LitElement {
           position: relative;
           bottom: 0px;
           right: 0px;
-          background: rgb(51, 154, 240);
           opacity: 50%;
           border-radius: 50%;
           z-index: 10;
@@ -75,21 +80,45 @@ export class CodeEditor extends LitElement {
           font-size: xx-small;
         }
 
+        .copy-icon {
+            font-size: 16px; 
+            cursor: pointer; 
+            margin-left: 12px;
+            opacity: 50%;
+        }
+
+        .copy-icon:hover,
         .copy-code:hover {
           opacity: 100%;
         }
 
+        .copy-code-wrap:active .copy-icon,
         .copy-code-wrap:active .copy-code {
           transform: translate(0, 0) scale(0.9);
         }
-
-        .animate {
-          transform: translate(0, 0) scale(1.12);
+        
+        .cm-scroller::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
         }
-
-        .tooltip {
-          font-size: 15px;
-          box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        
+        .cm-scroller::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            background-color: lightgrey;
+        }
+        
+        .cm-scroller::-webkit-scrollbar-thumb {
+            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            background-color:  darkgrey;
+        
+            border-top: 1px solid transparent;
+            border-bottom: 1px solid transparent;
+            border-left: 1px solid transparent;
+            border-right: 1px solid transparent;
+        
+            background-clip: padding-box;
         }
       `
         ];
@@ -111,12 +140,42 @@ export class CodeEditor extends LitElement {
         }
     }
 
+    public async updateExtensions() {
+        if (!this.editor) {
+            return;
+        }
+
+        this.editor.dispatch({
+            effects: this.userExtensions.reconfigure([
+                // basicSetup from CodeMirror without some unwanted extensions
+                this.readOnly || this.disabled
+                    ? []
+                    : [
+                          highlightActiveLineGutter(),
+                          highlightSpecialChars(),
+                          history(),
+                          dropCursor(),
+                          indentOnInput(),
+                          bracketMatching(),
+                          closeBrackets(),
+                          autocompletion(),
+                          highlightActiveLine(),
+                          keymap.of([...closeBracketsKeymap, ...defaultKeymap, ...searchKeymap, ...historyKeymap, ...completionKeymap])
+                      ],
+                syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
+                rectangularSelection(),
+                highlightSelectionMatches(),
+                await this.extensions()
+            ])
+        });
+    }
+
     protected override render() {
         return html`
       <div style="position: relative">
         <!-- button to copy the editor -->
         <div class="copy-code-wrap" @click="${() => this._copyCode()}">
-          <omni-icon class="copy-code" icon="@material/content_copy" size="${'custom' as any}"></omni-icon>
+          <omni-icon class="copy-icon" icon="@material/content_copy" size="${'custom' as any}"></omni-icon>
         </div>
         <!-- CodeMirror Editor parent element -->
         <div class="code-parent"> </div>
@@ -133,8 +192,8 @@ export class CodeEditor extends LitElement {
             this.editor = new EditorView({
                 doc: source,
                 extensions: [
-                    // basicSetup from CodeMirror without some unwanted extensions
-                    [
+                    this.userExtensions.of([
+                        // basicSetup from CodeMirror without some unwanted extensions
                         this.readOnly || this.disabled
                             ? []
                             : [
@@ -151,9 +210,9 @@ export class CodeEditor extends LitElement {
                               ],
                         syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
                         rectangularSelection(),
-                        highlightSelectionMatches()
-                    ],
-                    await this.extensions(),
+                        highlightSelectionMatches(),
+                        await this.extensions()
+                    ]),
                     this.readonlyOrDisabled.of([
                         EditorState.readOnly.of(this.readOnly || this.disabled),
                         EditorView.editable.of(!this.readOnly && !this.disabled)
@@ -205,6 +264,11 @@ export class CodeEditor extends LitElement {
                 ],
                 parent: this.codeParent
             });
+
+            this._clearOtherElements(this.codeParent, this.editor.dom);
+            this.editor.dom?.part?.add('editor');
+            this.editor.scrollDOM?.part?.add('editor-scroller');
+            this.editor.contentDOM?.part?.add('editor-content');
 
             if (!this.disabled) {
                 this.dispatchEvent(
@@ -297,6 +361,27 @@ export class CodeEditor extends LitElement {
             child = child.previousElementSibling;
             if (!curChild.hasAttribute('slot')) {
                 el.removeChild(curChild);
+            }
+        }
+    }
+
+    private _clearOtherElements(el: Element | ShadowRoot = undefined, onlyChild: Element) {
+        if (!el) {
+            el = this.renderRoot;
+        }
+
+        if (!onlyChild || !el.contains(onlyChild)) {
+            this._clearElements(el);
+            return;
+        }
+
+        const childCount = el.children.length;
+        if (childCount > 1) {
+            for (let index = childCount - 1; index >= 0; index--) {
+                const child = el.children[index];
+                if (!child.hasAttribute('slot') && child !== onlyChild) {
+                    el.removeChild(child);
+                }
             }
         }
     }

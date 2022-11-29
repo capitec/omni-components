@@ -1,5 +1,5 @@
 import { html as langHtml } from '@codemirror/lang-html';
-// import { githubDark as codeTheme } from '@ddietr/codemirror-themes/github-dark.js';
+import { githubDark as codeThemeDark } from '@ddietr/codemirror-themes/github-dark.js';
 import { githubLight as codeTheme } from '@ddietr/codemirror-themes/github-light.js';
 import { Package, CustomElement } from 'custom-elements-manifest/schema';
 import { css, html, nothing, PropertyValueMap, TemplateResult } from 'lit';
@@ -26,7 +26,6 @@ import './CodeEditor.js';
 @customElement('live-property-editor')
 export class LivePropertyEditor extends OmniElement {
     @property({ type: Object, reflect: false }) data: ComponentStoryFormat<any>;
-    @property({ type: Function, reflect: false }) cssValueReader: (variable: CSSVariable) => CSSVariable = (c) => c;
     @property({ type: String, reflect: true }) element: string;
     @property({ type: Boolean, reflect: true }) disabled: boolean;
     @property({ type: String, attribute: 'ignore-attributes', reflect: true }) ignoreAttributes: string;
@@ -34,12 +33,28 @@ export class LivePropertyEditor extends OmniElement {
 
     @state() customElements: Package;
 
-    @queryAll('.slot-code') slotCodeMirrors: NodeListOf<CodeEditor>;
+    @queryAll('.slot-code') slotCodeEditors: NodeListOf<CodeEditor>;
+
+    private _firstRenderCompleted: boolean;
+    private theme: string;
 
     override async connectedCallback() {
         super.connectedCallback();
 
         this.customElements = await loadCustomElements(this.customElementsPath);
+
+        document.addEventListener('omni-docs-theme-change', (e: Event) => {
+            this.theme = (e as CustomEvent<string>).detail;
+            const codeEditors = this.renderRoot.querySelectorAll<CodeEditor>('code-editor');
+            if (codeEditors) {
+                codeEditors.forEach((ce) => {
+                    ce.updateExtensions();
+                });
+            }
+        });
+
+        const themeStorageKey = 'omni-docs-theme-selection';
+        this.theme = window.sessionStorage.getItem(themeStorageKey);
     }
 
     static override get styles() {
@@ -137,6 +152,8 @@ export class LivePropertyEditor extends OmniElement {
                     min-width: 191px;
                     min-height: 41px;
                     width: 100%;
+                    background-color: var(--omni-theme-background-color, inherit);
+                    color: var(--omni-theme-font-color, inherit);
                 }
 
                 .docs-select:focus-visible {
@@ -155,8 +172,8 @@ export class LivePropertyEditor extends OmniElement {
     }
 
     public resetSlots() {
-        if (this.slotCodeMirrors) {
-            this.slotCodeMirrors.forEach(async (codeEditor) => {
+        if (this.slotCodeEditors) {
+            this.slotCodeEditors.forEach(async (codeEditor) => {
                 const slotName = codeEditor.getAttribute('data-slot-name');
                 if (slotName) {
                     const newCode = this.data && this.data.args[slotName] ? this.data.args[slotName] : undefined;
@@ -190,7 +207,7 @@ export class LivePropertyEditor extends OmniElement {
                 class="slot-code"
                 data-slot-name="${slot.name}"
                 ?disabled=${this.disabled}
-                .extensions="${async () => [codeTheme, langHtml(await loadCustomElementsCodeMirrorCompletionsRemote())]}"
+                .extensions="${async () => [this._currentCodeTheme(), langHtml(await loadCustomElementsCodeMirrorCompletionsRemote())]}"
                 .code="${ifNotEmpty(this.data && this.data.args[slot.name] ? this.data.args[slot.name] : undefined)}"
                 @codemirror-source-change="${(e: CustomEvent<CodeMirrorSourceUpdateEvent>) => {
                     this._propertyChanged({
@@ -320,12 +337,32 @@ export class LivePropertyEditor extends OmniElement {
         );
     }
 
-    protected override updated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
-        if (_changedProperties.has('disabled') && this.slotCodeMirrors) {
+    private _currentCodeTheme() {
+        if (this.theme?.toLowerCase() === 'dark-theme.css') {
+            return codeThemeDark;
+        }
+        return codeTheme;
+    }
+
+    protected override async updated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): Promise<void> {
+        if (_changedProperties.has('disabled') && this.slotCodeEditors) {
             this.resetSlots();
+        }
+
+        if (_changedProperties.has('data') && _changedProperties.get('data')) {
+            if (!this._firstRenderCompleted) {
+                // console.log('await updateComplete');
+                await this.updateComplete;
+                // console.log('awaited updateComplete');
+                this.dispatchEvent(
+                    new CustomEvent('component-render-complete', {
+                        bubbles: true
+                    })
+                );
+                this._firstRenderCompleted = true;
+            }
         }
     }
 }
 
 export type PropertyChangeEvent = { property: string; newValue: string | number | boolean; oldValue: string | number | boolean };
-export type CSSVariable = { name: string; value: string };

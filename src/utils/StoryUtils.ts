@@ -1,21 +1,23 @@
 import { CompletionSource, Completion } from '@codemirror/autocomplete';
-import { css, cssCompletionSource, cssLanguage } from '@codemirror/lang-css';
+import { css as cssSupport, cssCompletionSource, cssLanguage } from '@codemirror/lang-css';
 import { html as langHtml, TagSpec } from '@codemirror/lang-html';
 import { javascript } from '@codemirror/lang-javascript';
 import { syntaxTree, LanguageSupport } from '@codemirror/language';
-// import { githubDark as codeTheme } from '@ddietr/codemirror-themes/github-dark.js';
+import { githubDark as codeThemeDark } from '@ddietr/codemirror-themes/github-dark.js';
 import { githubLight as codeTheme } from '@ddietr/codemirror-themes/github-light.js';
 import { Package, ClassDeclaration, CustomElementDeclaration, Declaration, CustomElement } from 'custom-elements-manifest/schema';
-import { html } from 'lit';
+export { Package, ClassDeclaration, CustomElementDeclaration, Declaration, CustomElement } from 'custom-elements-manifest/schema';
+import { html, unsafeCSS } from 'lit';
 import { render } from 'lit-html';
 import { CodeEditor, CodeMirrorEditorEvent, CodeMirrorSourceUpdateEvent } from './CodeEditor.js';
+import { StoryRenderer } from './StoryRenderer.js';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const codeSnippet = '```';
 const customThemeCssKey = 'omni-docs-custom-theme-css';
 const themeStorageKey = 'omni-docs-theme-selection';
 const customThemeKey = 'Custom Theme';
-const noThemeKey = 'No Theme';
+const noThemeKey = 'Light Theme';
 
 function loadCssProperties(
     element: string,
@@ -330,7 +332,10 @@ function enhanceCodeBlocks(parent: Element) {
 
         render(
             html` <code-editor
-        .extensions="${() => [codeTheme, language && (language.value === 'js' || language.value === 'javascript') ? javascript() : langHtml()]}"
+        .extensions="${() => [
+            currentCodeTheme(),
+            language && (language.value === 'js' || language.value === 'javascript') ? javascript() : langHtml()
+        ]}"
         .code="${code}"
         read-only>
       </code-editor>`,
@@ -538,37 +543,110 @@ function titleCase(str: string) {
     for (let i = 0; i < splitStr.length; i++) {
         // You do not need to check if i is larger than splitStr length, as your for does that for you
         // Assign it back to the array
-        splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
+        splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
     }
     // Directly return the joined string
-    return splitStr.join(' '); 
- }
+    return splitStr.join(' ');
+}
 
 async function setupThemes() {
+    let themeModal = document.createElement('div');
+    document.body.appendChild(themeModal);
+
+    function uploadThemeClick(e: Event) {
+        document.getElementById('cssValue').click();
+    }
+
     const themes = await loadThemesListRemote();
+    themes.sort((t) => (t === 'dark-theme.css' ? -1 : 0));
     const themeSelect = document.getElementById('header-theme-select') as HTMLSelectElement;
     const themeStyle = document.getElementById('theme-styles') as HTMLStyleElement;
+    const darkThemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 
     function addOption(key: string) {
         const option = document.createElement('option');
         option.value = key;
-        option.label = titleCase(key.replaceAll('.css', '').replaceAll('-',' '))
-        if (window.sessionStorage.getItem(themeStorageKey) === key) {
+        option.label = titleCase(key.replaceAll('.css', '').replaceAll('-', ' '));
+        const storedTheme = window.sessionStorage.getItem(themeStorageKey);
+        if (
+            storedTheme === key ||
+            (!storedTheme && ((!darkThemePreferred && key === noThemeKey) || (darkThemePreferred && key?.toLowerCase() === 'dark-theme.css')))
+        ) {
+            window.sessionStorage.setItem(themeStorageKey, key);
             option.selected = true;
-            changeTheme(key);
+            changeTheme(null, key);
         }
         themeSelect.add(option);
         return option;
     }
 
-    function changeTheme(theme: string) {
+    function _checkCloseModal(e: any) {
+        const containerElement = themeModal.querySelector(`div.modal-container`);
+        if (!e.path.includes(containerElement)) {
+            document.body.removeChild(themeModal);
+            themeModal = document.createElement('div');
+            document.body.appendChild(themeModal);
+        }
+    }
+
+    function changeTheme(e: Event, theme: string) {
+        document.dispatchEvent(
+            new CustomEvent<string>('omni-docs-theme-change', {
+                detail: theme
+            })
+        );
+        const codeEditors = document.querySelectorAll<CodeEditor>('code-editor');
+        if (codeEditors) {
+            codeEditors.forEach((ce) => {
+                ce.updateExtensions();
+            });
+        }
         if (theme === noThemeKey) {
             themeStyle.innerHTML = '';
             return;
         }
         if (theme === customThemeKey) {
-            const customCss = window.sessionStorage.getItem(customThemeCssKey);
-            themeStyle.innerHTML = customCss;
+            let customCss = window.sessionStorage.getItem(customThemeCssKey);
+            const switchToCustomTheme = async () => {
+                if (!customCss) {
+                    customCss = await loadFileRemote(`./assets/css/default-light-theme.css`);
+                }
+                themeStyle.innerHTML = customCss;
+                const customThemeSourceParent = document.getElementById('custom-theme-source');
+                if (e && !customThemeSourceParent) {
+                    // Theme change is triggered by user if the event (e) is defined and this is not the theme support page if there is no customThemeSourceParent already
+                    // Show custom theme code editor modal
+                    render(
+                        html` 
+                        <div class="modal" role="dialog" aria-modal="true"
+                        @click="${(e: Event) => _checkCloseModal(e)}" @touch="${(e: Event) => _checkCloseModal(e)}">
+                            <div class="modal-container">
+                                <div class="modal-body">
+                                    <div class="code-modal">
+                                        <span class="flex-row">
+                                            <h3 id="custom-theme" style="margin-left: 0px;">Custom Theme</h3>
+                                            <input class="hidden" id="cssValue" type="file" accept=".css" @input="${(e: Event) => uploadTheme(e)}" />
+                                            <omni-button class="docs-omni-component" label="Upload" type="secondary" @click="${(e: Event) =>
+                                                uploadThemeClick(e)}" ></omni-button>
+                                        </span>
+                                        <div style="padding-top: 12px;">
+                                            <div id="custom-theme-source" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `,
+                        themeModal
+                    );
+
+                    setupCustomTheming();
+                } else if (e && customThemeSourceParent) {
+                    (customThemeSourceParent?.parentElement?.previousElementSibling ?? customThemeSourceParent).scrollIntoView();
+                }
+            };
+            switchToCustomTheme();
             return;
         }
         const css = themeStyle.sheet;
@@ -591,8 +669,8 @@ async function setupThemes() {
     themeSelect.style.display = 'flex';
     themeSelect.addEventListener('change', (e) => {
         const value = (e.target as HTMLSelectElement).value;
-        changeTheme(value);
         window.sessionStorage.setItem(themeStorageKey, value);
+        changeTheme(e, value);
     });
 }
 
@@ -650,7 +728,11 @@ function openTab(target: Element, tabId: string) {
     target.classList.add('active');
 
     // Set nav state of tab.
-    window.history.replaceState({}, '', `${document.location.pathname}?tab=${tabId}`);
+    if (tabId.toLowerCase() === 'examples') {
+        window.history.replaceState({}, '', document.location.pathname);
+    } else {
+        window.history.replaceState({}, '', `${document.location.pathname}?tab=${tabId}`);
+    }
 }
 
 function copyToClipboard(id: string) {
@@ -677,30 +759,108 @@ function setupMenu() {
 }
 
 function setupScroll() {
-    const storyRenderers = document.querySelectorAll<HTMLElement>('div.name');
-    const tocAnchors = document.querySelectorAll('.component-toc a');
+    const storyRendererContainers = document.querySelectorAll<HTMLElement>('div.name');
+    const storyRenderers = document.querySelectorAll<StoryRenderer>('story-renderer');
+    const tocAnchors = document.querySelectorAll<HTMLAnchorElement>('.component-toc a');
+
+    window.srCount = storyRenderers.length + 1;
+    window.srCompleteCount = 0;
+
+    window.addEventListener('component-render-complete', () => {
+        window.srCompleteCount++;
+
+        if (window.srCount === window.srCompleteCount && document.location.hash) {
+            setTimeout(() => {
+                document.querySelector(document.location.hash).scrollIntoView({
+                    behavior: 'auto'
+                });
+            }, 200);
+
+            // // Needs improvements.
+            // setTimeout(() => {
+            //     const id = document.location.hash.replace('#', '');
+            //     const a = document.querySelector<HTMLAnchorElement>(`.component-toc a[id='${id}-a']`);
+            //     a.click();
+            //     // document.querySelector(document.location.hash).scrollIntoView();
+
+            //     // Needs improvements.
+            //     setTimeout(() => {
+            //         const id = document.location.hash.replace('#', '');
+            //         const a = document.querySelector<HTMLAnchorElement>(`.component-toc a[id='${id}-a']`);
+            //         a.click();
+            //         // document.querySelector(document.location.hash).scrollIntoView();
+            //     }, 500);
+
+            // }, 100);
+        }
+    });
 
     window.addEventListener('scroll', () => {
-        storyRenderers.forEach((sr) => {
+        storyRendererContainers.forEach((sr, key) => {
             const top = window.scrollY;
             const offset = sr.offsetTop + 290;
             const height = sr.offsetHeight;
             const id = sr.getAttribute('id');
 
-            // console.log(top, offset, height, id, hash);
+            // console.log(top, offset, height, id);
 
-            if (top > offset && top < offset + height) {
+            if ((top > offset && top < offset + height) || (key === 0 && top <= 290)) {
                 tocAnchors.forEach((a) => {
                     a.classList.remove('active');
-                    document.querySelector(`.component-toc a[href*='${id}']`).classList.add('active');
                 });
+                const active = document.querySelector(`.component-toc a[href*='${id}']`);
+                active.classList.add('active');
+
+                // Only apply for the examples tab
+                if (!document.location.search) {
+                    window.history.replaceState({}, '', `${document.location.pathname}#${id}`);
+                }
             }
+
+            // if (key === 0 && top <= 290) {
+            //     document.querySelector(`.component-toc a[href*='${id}']`).classList.add('active');
+            // }
+
+            // if (top === 0) {
+            //     console.log('top');
+
+            // }
+
             // else if (id === hash) {
             //     tocAnchors.forEach((a) => {
             //         a.classList.remove('active');
             //         document.querySelector(`.component-toc a[href*='${hash}']`).classList.add('active');
             //     });
             // }
+        });
+    });
+
+    tocAnchors.forEach((a) => {
+        a.addEventListener('click', (e: MouseEvent) => {
+            e.preventDefault();
+
+            // Getting element by anchor id (without the -a at the end)
+            const id = a.id.substring(0, a.id.length - 2);
+            const element = document.getElementById(id);
+
+            element.scrollIntoView({
+                behavior: 'smooth'
+            });
+
+            // Needs improvements.First scroll sometimes doesn't go all the way
+            setTimeout(() => {
+                element.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }, 100);
+
+            // Too soon to do the below, at some point determine when scrolling is complete and then apply correct highlighting
+            // tocAnchors.forEach((a2) => {
+            //     a2.classList.remove('active');
+            // });
+            // a.classList.add('active');
+
+            return false;
         });
     });
 }
@@ -810,31 +970,66 @@ function setupSearch() {
                         }
                     });
                 }
-            }            
-        }        
+            }
+        }
     }
 }
 
 async function setupTheming() {
     const themeSources = document.getElementById('themes-sources');
+    if (themeSources) {
+        const themesSourcesHtml = await Promise.all(
+            (
+                await loadThemesListRemote()
+            )
+                .sort((t) => (t === 'dark-theme.css' ? -1 : 0))
+                .map(async (theme: string) => {
+                    const themeName = theme;
+                    theme = await loadFileRemote(`./themes/${theme}`);
+                    const themeCss = unsafeCSS(theme);
+                    const rules = themeCss.styleSheet.cssRules;
+                    theme = '';
+                    for (let index = 0; index < rules.length; index++) {
+                        const rule = rules[index] as CSSStyleRule;
+                        if (rule.selectorText && rule.selectorText.startsWith(':root')) {
+                            theme += `${rule.cssText} \n`;
+                        }
+                    }
+
+                    const windowAny = window as any;
+                    if (windowAny.cssbeautify) {
+                        theme = windowAny.cssbeautify(theme);
+                    }
+                    return html` <div>
+                <h3 style="padding-top: 12px;">${titleCase(themeName.replaceAll('.css', '').replaceAll('-', ' '))}</h3>
+                <code-editor .extensions="${() => [currentCodeTheme(), cssSupport()]}" .code="${theme}" read-only> </code-editor>
+            </div>`;
+                })
+        );
+        render(themesSourcesHtml, themeSources);
+    }
+}
+
+async function setupCustomTheming() {
     const customThemeSourceParent = document.getElementById('custom-theme-source');
     const themeStyle = document.getElementById('theme-styles') as HTMLStyleElement;
-    const themesSourcesHtml = (await loadThemesListRemote()).map((theme: string) => {
-        return html` <div>
-      <h3 style="padding-top: 12px;">${titleCase(theme.replaceAll('.css', '').replaceAll('-',' '))}</h3>
-      <code-editor .extensions="${() => [codeTheme, css()]}" .code="${loadFileRemote(`./themes/${theme}`)}" read-only> </code-editor>
-    </div>`;
-    });
-    render(themesSourcesHtml, themeSources);
+    let cssSource = window.sessionStorage.getItem(customThemeCssKey);
+    if (!cssSource) {
+        cssSource = await loadFileRemote(`./assets/css/default-light-theme.css`);
+    }
 
-    let cssSource = window.sessionStorage.getItem(customThemeCssKey) ?? ':root { }';
+    const windowAny = window as any;
+    if (windowAny.cssbeautify) {
+        cssSource = windowAny.cssbeautify(cssSource);
+    }
     const omniCompletions = cssLanguage.data.of({ autocomplete: await omniCssVariablesCompletionSource() });
     const cssLang = new LanguageSupport(cssLanguage, [cssLanguage.data.of({ autocomplete: cssCompletionSource }), omniCompletions]); //css();
     render(
         html`
       <code-editor
+        data-identifier="custom-theme-source-code"
         class="source-code"
-        .extensions="${async () => [codeTheme, cssLang]}"
+        .extensions="${async () => [currentCodeTheme(), cssLang]}"
         code="${cssSource}"
         @codemirror-loaded="${(e: CustomEvent<CodeMirrorEditorEvent>) => {
             const newSource = e.detail.source;
@@ -925,7 +1120,7 @@ async function uploadTheme(e: Event) {
 
                 inputField.value = '';
 
-                const themeCode = document.querySelector<CodeEditor>('.source-code');
+                const themeCode = document.querySelector<CodeEditor>('[data-identifier=custom-theme-source-code');
                 if (themeCode) {
                     themeCode.refresh(() => cssRaw);
                 } else {
@@ -945,6 +1140,21 @@ async function uploadTheme(e: Event) {
             };
             reader.readAsText(file);
         });
+    }
+}
+
+function currentCodeTheme() {
+    const storedTheme = window.sessionStorage.getItem(themeStorageKey);
+    if (storedTheme?.toLowerCase() === 'dark-theme.css') {
+        return codeThemeDark;
+    }
+    return codeTheme;
+}
+
+declare global {
+    interface Window {
+        srCount: number;
+        srCompleteCount: number;
     }
 }
 
