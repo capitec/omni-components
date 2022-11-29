@@ -17,7 +17,8 @@ const codeSnippet = '```';
 const customThemeCssKey = 'omni-docs-custom-theme-css';
 const themeStorageKey = 'omni-docs-theme-selection';
 const customThemeKey = 'Custom Theme';
-const noThemeKey = 'Light Theme';
+const lightThemeKey = 'Light Theme';
+const darkThemeKey = 'dark-theme.css';
 
 function loadCssProperties(
     element: string,
@@ -558,10 +559,25 @@ async function setupThemes() {
     }
 
     const themes = await loadThemesListRemote();
-    themes.sort((t) => (t === 'dark-theme.css' ? -1 : 0));
+    themes.sort((t) => (t === darkThemeKey ? -1 : 0));
     const themeSelect = document.getElementById('header-theme-select') as HTMLSelectElement;
     const themeStyle = document.getElementById('theme-styles') as HTMLStyleElement;
-    const darkThemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    let darkThemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            darkThemePreferred = event.matches;
+            const storedTheme = window.sessionStorage.getItem(themeStorageKey);
+            if (darkThemePreferred && storedTheme === lightThemeKey) {
+                themeSelect.value = darkThemeKey;
+                window.sessionStorage.setItem(themeStorageKey, darkThemeKey);
+                changeTheme(event, darkThemeKey);
+            } else if (!darkThemePreferred && storedTheme === darkThemeKey) {
+                themeSelect.value = lightThemeKey;
+                window.sessionStorage.setItem(themeStorageKey, lightThemeKey);
+                changeTheme(event, lightThemeKey);
+            }
+        });
+    }
 
     function addOption(key: string) {
         const option = document.createElement('option');
@@ -570,7 +586,7 @@ async function setupThemes() {
         const storedTheme = window.sessionStorage.getItem(themeStorageKey);
         if (
             storedTheme === key ||
-            (!storedTheme && ((!darkThemePreferred && key === noThemeKey) || (darkThemePreferred && key?.toLowerCase() === 'dark-theme.css')))
+            (!storedTheme && ((!darkThemePreferred && key === lightThemeKey) || (darkThemePreferred && key?.toLowerCase() === darkThemeKey)))
         ) {
             window.sessionStorage.setItem(themeStorageKey, key);
             option.selected = true;
@@ -601,7 +617,7 @@ async function setupThemes() {
                 ce.updateExtensions();
             });
         }
-        if (theme === noThemeKey) {
+        if (theme === lightThemeKey) {
             themeStyle.innerHTML = '';
             return;
         }
@@ -660,7 +676,7 @@ async function setupThemes() {
         );
     }
 
-    addOption(noThemeKey);
+    addOption(lightThemeKey);
     themes.forEach((theme: string) => {
         addOption(theme);
     });
@@ -982,7 +998,7 @@ async function setupTheming() {
             (
                 await loadThemesListRemote()
             )
-                .sort((t) => (t === 'dark-theme.css' ? -1 : 0))
+                .sort((t) => (t === darkThemeKey ? -1 : 0))
                 .map(async (theme: string) => {
                     const themeName = theme;
                     theme = await loadFileRemote(`./themes/${theme}`);
@@ -1145,7 +1161,7 @@ async function uploadTheme(e: Event) {
 
 function currentCodeTheme() {
     const storedTheme = window.sessionStorage.getItem(themeStorageKey);
-    if (storedTheme?.toLowerCase() === 'dark-theme.css') {
+    if (storedTheme?.toLowerCase() === darkThemeKey) {
         return codeThemeDark;
     }
     return codeTheme;
