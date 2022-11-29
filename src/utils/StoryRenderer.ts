@@ -23,6 +23,9 @@ import '../text-field/TextField.js';
 import '../color-field/ColorField.js';
 import './LivePropertyEditor.js';
 
+/**
+ * @ignore
+ */
 @customElement('story-renderer')
 export class StoryRenderer extends LitElement {
     @property({ type: String, reflect: true }) path: string;

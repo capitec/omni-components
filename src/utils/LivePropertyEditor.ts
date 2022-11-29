@@ -23,6 +23,9 @@ import '../icons/Loading.icon.js';
 import '../switch/Switch.js';
 import './CodeEditor.js';
 
+/**
+ * @ignore
+ */
 @customElement('live-property-editor')
 export class LivePropertyEditor extends OmniElement {
     @property({ type: Object, reflect: false }) data: ComponentStoryFormat<any>;

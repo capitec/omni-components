@@ -17,6 +17,9 @@ import { EditorView } from 'codemirror';
 import { css, html, LitElement, PropertyValueMap } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 
+/**
+ * @ignore
+ */
 @customElement('code-editor')
 export class CodeEditor extends LitElement {
     @property({ type: Object, reflect: false }) extensions: () => Extension | Promise<Extension> = () => [];
