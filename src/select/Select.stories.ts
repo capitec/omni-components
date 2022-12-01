@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { expect, jest } from '@storybook/jest';
-import { userEvent, within, fireEvent } from '@storybook/testing-library';
+import { userEvent, within } from '@storybook/testing-library';
 import { Meta, StoryContext } from '@storybook/web-components';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
@@ -9,14 +11,12 @@ import {
     BaseArgTypeDefinitions,
     HintStory,
     ErrorStory,
-    DisabledStory,
-    ValueStory,
     PrefixStory,
     SuffixStory
 } from '../core/OmniInputStories.js';
 import { RenderFunction } from '../render-element/RenderElement.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import { assignToSlot, loadCssPropertiesRemote } from '../utils/StoryUtils';
+import { assignToSlot, loadCssPropertiesRemote, querySelectorAsync } from '../utils/StoryUtils';
 import { Select } from './Select.js';
 
 import './Select.js';
@@ -34,22 +34,31 @@ export default {
 } as Meta;
 
 interface ArgTypes extends BaseArgTypes {
-    items: Array<unknown>;
-    selectedItem: string;
-    placeHolder: string;
-    inline: boolean;
+    items:
+        | string[]
+        | object[]
+        | Promise<object[]>
+        | Promise<string[]>
+        | (() => string[] | object[] | Promise<object[]> | Promise<string[]>);
     displayField: string;
     idField: string;
     renderItem: RenderFunction;
 }
 
 const displayItems = [
-    {id:'1', label: 'Peter Parker'},
-    {id:'2', label: 'James Howlett'},
-    {id:'3', label: 'Tony Stark'},
-    {id:'4', label: 'Steve Rodgers'},
-    {id:'5', label: 'Bruce Banner'}
+    { id: '1', label: 'Peter Parker' },
+    { id: '2', label: 'James Howlett' },
+    { id: '3', label: 'Tony Stark' },
+    { id: '4', label: 'Steve Rodgers' },
+    { id: '5', label: 'Bruce Banner' }
 ];
+
+const stringItems = ['Bruce Wayne', 'Clark Kent', 'Barry Allen', 'Arthur Curry', 'Hal Jordan'];
+
+async function promiseDisplayItems(data: object[]) {
+    await new Promise<void>((r) => setTimeout(() => r(), 3000));
+    return data;
+}
 
 export const Interactive = {
     render: (args: ArgTypes) => html`
@@ -61,7 +70,6 @@ export const Interactive = {
             hint="${ifNotEmpty(args.hint)}"
             error="${ifNotEmpty(args.error)}"
             .items="${args.items}"
-            selectedItem="${args.selectedItem}"
             display-field="${args.displayField}"
             .renderItem="${args.renderItem}"
             idField="${args.idField}"
@@ -83,32 +91,235 @@ export const Interactive = {
         prefix: '',
         suffix: '',
         items: displayItems,
-        selectedItem:'',
-        placeHolder: '',
-        inline: false,
         displayField: 'label',
         idField: 'id'
-
     } as ArgTypes,
     play: async (context: StoryContext) => {
-        const Select = within(context.canvasElement).getByTestId<Select>('test-select');
-        const input = jest.fn();
-        Select.addEventListener('input', input);
+        const select = within(context.canvasElement).getByTestId<Select>('test-select');
+        const click = jest.fn();
+        const change = jest.fn();
+        select.addEventListener('click', click);
+        select.addEventListener('change', change);
+
+        await userEvent.click(select);
+        await userEvent.click(select);
+
+        await expect(click).toBeCalledTimes(2);
+
+        const controlButton = select.shadowRoot.getElementById('control');
+
+        await expect(controlButton).toBeTruthy();
+
+        await userEvent.click(select);
+
+        const itemContainer = await querySelectorAsync(select.shadowRoot, '#items-container', 500, 1000);
+        await expect(itemContainer).toBeTruthy();
+
+        const items = select.shadowRoot.getElementById('items');
+        await expect(items).toBeTruthy();
+
+        const item = await querySelectorAsync(select.shadowRoot, '.item');
+
+        await expect(item).toBeTruthy();
+        await userEvent.click(item as HTMLDivElement);
+
+        const selectField = select.shadowRoot.getElementById('select');
+        await expect(selectField).toHaveValue(displayItems[0].label);
+
+        await expect(change).toBeCalledTimes(1);
     }
 };
-/*
+
+export const AsyncItems = {
+    render: (args: ArgTypes) => html`
+        <omni-select
+            data-testid="test-select"
+            label="${ifNotEmpty(args.label)}"
+            .data="${args.data}"
+            hint="${ifNotEmpty(args.hint)}"
+            error="${ifNotEmpty(args.error)}"
+            .items="${args.items}"
+            display-field="${args.displayField}"
+            .renderItem="${args.renderItem}"
+            idField="${args.idField}">
+        </omni-select>
+    `,
+    name: 'Promise',
+    parameters: {},
+    args: {
+        label: 'Async',
+        data: {},
+        items: promiseDisplayItems(displayItems),
+        displayField: 'label',
+        idField: 'id'
+    } as ArgTypes,
+    play: async (context: StoryContext) => {
+        const select = within(context.canvasElement).getByTestId<Select>('test-select');
+        const click = jest.fn();
+        const change = jest.fn();
+        select.addEventListener('click', click);
+        select.addEventListener('change', change);
+
+        await userEvent.click(select);
+
+        const item = await querySelectorAsync(select.shadowRoot, '.item');
+        await userEvent.click(item as HTMLDivElement);
+
+        const selectField = select.shadowRoot.getElementById('select');
+        await expect(selectField).toHaveValue(displayItems[0].label);
+    }
+};
+
+export const AsyncPerItem = {
+    render: (args: ArgTypes) => html`
+        <omni-select
+            data-testid="test-select"
+            label="${ifNotEmpty(args.label)}"
+            .data="${args.data}"
+            hint="${ifNotEmpty(args.hint)}"
+            error="${ifNotEmpty(args.error)}"
+            .items="${args.items}"
+            display-field="${args.displayField}"
+            .renderItem="${args.renderItem}"
+            idField="${args.idField}">
+        </omni-select>
+    `,
+    name: 'Async',
+    parameters: {},
+    args: {
+        label: 'Async Items',
+        data: {},
+        items: () => promiseDisplayItems(displayItems),
+        displayField: 'label',
+        idField: 'id',
+        renderItem: async (item: any) => {
+            await new Promise((resolve, reject) => {
+                // Setting 2000 ms time
+                setTimeout(resolve, 2000);
+            });
+            const i = document.createElement('i');
+            i.innerText = item.label;
+            i.style.color = 'red';
+
+            return i;
+        }
+    } as ArgTypes,
+    play: async (context: StoryContext) => {
+        const select = within(context.canvasElement).getByTestId<Select>('test-select');
+        const click = jest.fn();
+        const change = jest.fn();
+        select.addEventListener('click', click);
+        select.addEventListener('change', change);
+
+        await userEvent.click(select);
+
+        const item = await querySelectorAsync(select.shadowRoot, '.item');
+        await userEvent.click(item as HTMLDivElement);
+
+        const selectField = select.shadowRoot.getElementById('select');
+        await expect(selectField).toHaveValue(displayItems[0].label);
+    }
+};
+
+export const StringArray = {
+    render: (args: ArgTypes) => html`
+        <omni-select
+            data-testid="test-select"
+            label="${ifNotEmpty(args.label)}"
+            .data="${args.data}"
+            hint="${ifNotEmpty(args.hint)}"
+            error="${ifNotEmpty(args.error)}"
+            .items="${args.items}"
+            display-field="${args.displayField}"
+            .renderItem="${args.renderItem}"
+            idField="${args.idField}">
+        </omni-select>
+    `,
+    name: 'String',
+    parameters: {},
+    args: {
+        label: 'String Array',
+        data: {},
+        items: stringItems,
+        displayField: 'label',
+        idField: 'id'
+    } as ArgTypes,
+    play: async (context: StoryContext) => {
+        const select = within(context.canvasElement).getByTestId<Select>('test-select');
+        const click = jest.fn();
+        const change = jest.fn();
+        select.addEventListener('click', click);
+        select.addEventListener('change', change);
+
+        await userEvent.click(select);
+
+        const item = await querySelectorAsync(select.shadowRoot, '.item');
+        await userEvent.click(item as HTMLDivElement);
+
+        const selectField = select.shadowRoot.getElementById('select');
+        await expect(selectField).toHaveValue(stringItems[0]);
+    }
+};
+
+export const Empty = {
+    render: (args: ArgTypes) => html`
+        <omni-select
+            data-testid="test-select"
+            label="${ifNotEmpty(args.label)}"
+            .items="${args.items}"
+            display-field="${args.displayField}"
+            idField="${args.idField}">
+        </omni-select>
+    `,
+    name: 'Empty',
+    parameters: {},
+    args: {
+        label: 'Empty Array',
+        items: [],
+        displayField: 'label',
+        idField: 'id'
+    } as ArgTypes,
+    play: async (context: StoryContext) => {
+        const select = within(context.canvasElement).getByTestId<Select>('test-select');
+        const click = jest.fn();
+        select.addEventListener('click', click);
+        await userEvent.click(select);
+
+        const item = await querySelectorAsync(select.shadowRoot, '.none');
+        await expect(item).toHaveTextContent('No items provided');
+    }
+};
+
+export const Disabled = {
+    render: (args: ArgTypes) => html`
+        <omni-select data-testid="test-select" label="${ifNotEmpty(args.label)}" .items="${args.items}" ?disabled="${args.disabled}">
+        </omni-select>
+    `,
+    name: 'Disabled',
+    parameters: {},
+    args: {
+        label: 'Disabled',
+        disabled: true,
+        items: displayItems
+    } as ArgTypes,
+    play: async (context: StoryContext) => {
+        const select = within(context.canvasElement).getByTestId<Select>('test-select');
+
+        /* Story fails cause it is unable to click element should disabled play functions even be valid going forward
+        const click = jest.fn();
+        select.addEventListener('click', click);
+        await userEvent.click(select);
+        await expect(() => userEvent.click(select)).rejects.toThrow(/unable to click element as it has or inherits pointer-events set to "none"./);
+        await expect(click).toBeCalledTimes(0);*/
+    }
+};
+
 export const Label = LabelStory<Select, BaseArgTypes>('omni-select');
 
 export const Hint = HintStory<Select, BaseArgTypes>('omni-select');
 
 export const ErrorLabel = ErrorStory<Select, BaseArgTypes>('omni-select');
 
-export const Value = ValueStory<Select, BaseArgTypes>('omni-select');
-
 export const Prefix = PrefixStory<Select, BaseArgTypes>('omni-select');
 
 export const Suffix = SuffixStory<Select, BaseArgTypes>('omni-select');
-
-export const Disabled = DisabledStory<Select, BaseArgTypes>('omni-select');
-
-*/

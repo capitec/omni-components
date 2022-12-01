@@ -76,7 +76,7 @@ export class OmniFormElement extends OmniElement {
      * The value entered into the form component.
      * @attr
      */
-    @property({ reflect: true }) value: string | number | object  = null;
+    @property({ reflect: true }) value: string | number = null;
 
     /**
      * Data associated with the component.
@@ -145,6 +145,11 @@ export class OmniFormElement extends OmniElement {
                     display: inline-flex;
                 }
 
+                :host([disabled]),
+                :host([disabled]) > * {
+                    pointer-events: none;
+                }
+
                 /* CONTAINER STYLES */
 
                 .container {
@@ -168,6 +173,7 @@ export class OmniFormElement extends OmniElement {
                     flex-direction: row;
                     align-items: stretch;
                     justify-content: center;
+                    border-radius: var(--omni-form-border-radius, 4px);
                     background-color: var(--omni-form-field-background-color, var(--omni-background-color));
                 }
 
@@ -341,8 +347,7 @@ export class OmniFormElement extends OmniElement {
                     <slot name="prefix">${this.renderPrefix()}</slot>
                     <div class="form-container"> ${this.renderContent()} ${this.renderLabel()} </div>
                     <slot name="suffix"></slot>
-                    ${this.renderControl()}
-                    ${this.renderPicker()}
+                    ${this.renderControl()} ${this.renderPicker()}
                 </div>
                 ${this.renderHint()} ${this.renderError()}
             </div>
@@ -371,7 +376,7 @@ export class OmniFormElement extends OmniElement {
         return nothing;
     }
 
-    protected renderPicker():  typeof nothing | TemplateResult {
+    protected renderPicker(): typeof nothing | TemplateResult {
         return nothing;
     }
 
