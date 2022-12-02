@@ -31,6 +31,7 @@ import OmniElement from './OmniElement.js';
  * @cssprop --omni-form-label-font-size - Form label font size.
  * @cssprop --omni-form-label-font-weight - Form label font weight.
  * @cssprop --omni-form-label-left - Form label left margin.
+ * @cssprop --omni-form-label-z-index - Form label z-index.
  *
  * @cssprop --omni-form-focussed-border-width - Form focussed border width.
  * @cssprop --omni-form-focussed-border-color - Form focussed border color.
@@ -221,6 +222,8 @@ export class OmniFormElement extends OmniElement {
                     font-weight: var(--omni-form-label-font-weight, var(--omni-font-weight));
 
                     left: var(--omni-form-label-left, 10px);
+
+                    z-index: var(--omni-form-label-z-index, var(--omni-z-index-form-label));
                 }
 
                 .layout > .label > span {

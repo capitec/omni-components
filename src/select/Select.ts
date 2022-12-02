@@ -260,7 +260,7 @@ export class Select extends OmniFormElement {
                 .items-container {
                     box-shadow: var(--omni-select-items-container-box-shadow, 0 0 6px 0 rgba(0, 0, 0, 0.11));
                     background-color: var(--omni-select-items-container-background-color, #ffffff);
-                    z-index: var(--omni-select-items-container-z-index, 100);
+                    z-index: var(--omni-select-items-container-z-index, var(--omni-z-index-item-container));
                 }
 
                 /* Mobile device styling */

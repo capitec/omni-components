@@ -93,17 +93,28 @@ export abstract class OmniElement extends LitElement {
                 --omni-border-radius: var(--omni-theme-border-radius, 4px);
                 --omni-border-width: var(--omni-theme-border-width, 2px);
 
+                /* global z-index pattern for elements */
+                --omni-z-index-item-container: 400;
+                --omni-z-index-dialog: 500;
+                --omni-z-index-dropdown: 600;
+                --omni-z-index-alert: 700;
+                --omni-z-index-tooltip: 800;
+
+                /* global z-index for component elements */
+                --omni-z-index-form-label: 410;
+
+
                 /*
-            --omni-cursor: var(--omni-theme-cursor, default);
-            --omni-cursor-target: var(--omni-theme-target-cursor, pointer);
-            --omni-cursor-disabled: var(--omni-theme-cursor-disabled, not-allowed);
-            */
+                --omni-cursor: var(--omni-theme-cursor, default);
+                --omni-cursor-target: var(--omni-theme-target-cursor, pointer);
+                --omni-cursor-disabled: var(--omni-theme-cursor-disabled, not-allowed);
+                */
 
                 /*  
-            --omni-margin: var(--omni-theme-margin, 1px);
-            --omni-padding: var(--omni-theme-padding, 1px);
-            --omni-outline: var(--omni-theme-outline, 1px);
-            */
+                --omni-margin: var(--omni-theme-margin, 1px);
+                --omni-padding: var(--omni-theme-padding, 1px);
+                --omni-outline: var(--omni-theme-outline, 1px);
+                */
 
                 --omni-box-shadow: var(--omni-theme-box-shadow, 0 0 4px 4px var(--omni-box-shadow-color));
 

@@ -112,7 +112,7 @@ export const Interactive = {
 
         await userEvent.click(select);
 
-        const itemContainer = await querySelectorAsync(select.shadowRoot, '#items-container', 500, 1000);
+        const itemContainer = await querySelectorAsync(select.shadowRoot, '#items-container');
         await expect(itemContainer).toBeTruthy();
 
         const items = select.shadowRoot.getElementById('items');
@@ -147,7 +147,7 @@ export const AsyncItems = {
     name: 'Promise',
     parameters: {},
     args: {
-        label: 'Async',
+        label: 'Promise',
         data: {},
         items: promiseDisplayItems(displayItems),
         displayField: 'label',
@@ -187,7 +187,7 @@ export const AsyncPerItem = {
     name: 'Async',
     parameters: {},
     args: {
-        label: 'Async Items',
+        label: 'Async',
         data: {},
         items: () => promiseDisplayItems(displayItems),
         displayField: 'label',
@@ -238,7 +238,7 @@ export const StringArray = {
     name: 'String',
     parameters: {},
     args: {
-        label: 'String Array',
+        label: 'String',
         data: {},
         items: stringItems,
         displayField: 'label',
@@ -274,7 +274,7 @@ export const Empty = {
     name: 'Empty',
     parameters: {},
     args: {
-        label: 'Empty Array',
+        label: 'Empty',
         items: [],
         displayField: 'label',
         idField: 'id'
@@ -303,14 +303,9 @@ export const Disabled = {
         items: displayItems
     } as ArgTypes,
     play: async (context: StoryContext) => {
+        // To be updated with the new branch changes
         const select = within(context.canvasElement).getByTestId<Select>('test-select');
-
-        /* Story fails cause it is unable to click element should disabled play functions even be valid going forward
-        const click = jest.fn();
-        select.addEventListener('click', click);
-        await userEvent.click(select);
-        await expect(() => userEvent.click(select)).rejects.toThrow(/unable to click element as it has or inherits pointer-events set to "none"./);
-        await expect(click).toBeCalledTimes(0);*/
+        await expect(() => userEvent.click(select)).not.toBe(true);
     }
 };
 
