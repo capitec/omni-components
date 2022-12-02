@@ -103,7 +103,6 @@ export abstract class OmniElement extends LitElement {
                 /* global z-index for component elements */
                 --omni-z-index-form-label: 410;
 
-
                 /*
                 --omni-cursor: var(--omni-theme-cursor, default);
                 --omni-cursor-target: var(--omni-theme-target-cursor, pointer);

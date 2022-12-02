@@ -50,7 +50,12 @@ const displayItems = [
     { id: '2', label: 'James Howlett' },
     { id: '3', label: 'Tony Stark' },
     { id: '4', label: 'Steve Rodgers' },
-    { id: '5', label: 'Bruce Banner' }
+    { id: '5', label: 'Bruce Banner' },
+    { id: '6', label: 'Wanda Maximoff' },
+    { id: '7', label: 'TChalla' },
+    { id: '8', label: 'Henry P. McCoy' },
+    { id: '9', label: 'Carl Lucas' },
+    { id: '10', label: 'Frank Castle' }
 ];
 
 const stringItems = ['Bruce Wayne', 'Clark Kent', 'Barry Allen', 'Arthur Curry', 'Hal Jordan'];
