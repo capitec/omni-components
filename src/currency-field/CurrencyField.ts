@@ -83,9 +83,15 @@ export class CurrencyField extends OmniFormElement {
 
     override connectedCallback(): void {
         super.connectedCallback();
-        this.addEventListener('input', this._keyInput.bind(this));
-        this.addEventListener('blur', this._blur.bind(this));
-        this.addEventListener('keydown', this._keyDown.bind(this));
+        this.addEventListener('input', this._keyInput.bind(this), {
+            capture: true
+        });
+        this.addEventListener('blur', this._blur.bind(this), {
+            capture: true
+        });
+        this.addEventListener('keydown', this._keyDown.bind(this), {
+            capture: true
+        });
     }
 
     override async attributeChangedCallback(name: string, _old: string | null, value: string | null): Promise<void> {

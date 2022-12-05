@@ -55,7 +55,9 @@ export class SearchField extends OmniFormElement {
 
     override connectedCallback() {
         super.connectedCallback();
-        this.addEventListener('input', this._keyInput.bind(this));
+        this.addEventListener('input', this._keyInput.bind(this), {
+            capture: true
+        });
     }
 
     _keyInput() {
@@ -71,6 +73,12 @@ export class SearchField extends OmniFormElement {
         this.value = '';
         // Moves the label back into position when clear button is clicked.
         super._focusLost();
+
+        // Dispatch standard DOM event to cater for single clear.
+        this.dispatchEvent(new Event('change', {
+            bubbles: true,
+            composed: true
+        }));
     }
 
     static override get styles() {
