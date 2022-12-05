@@ -9,6 +9,7 @@ import { Package, ClassDeclaration, CustomElementDeclaration, Declaration, Custo
 export { Package, ClassDeclaration, CustomElementDeclaration, Declaration, CustomElement } from 'custom-elements-manifest/schema';
 import { html, unsafeCSS } from 'lit';
 import { render } from 'lit-html';
+import { SearchField } from '../search-field/SearchField.js';
 import { CodeEditor, CodeMirrorEditorEvent, CodeMirrorSourceUpdateEvent } from './CodeEditor.js';
 import { StoryRenderer } from './StoryRenderer.js';
 
@@ -913,79 +914,91 @@ function setupLoadingIndicator() {
 
 function setupSearch() {
     //Attribute search
-    const attributeSearch = document.querySelector<HTMLInputElement>('#attribute-search');
+    const attributeSearch = document.querySelector<SearchField>('#attribute-search');
     const attributeRows = document.querySelector<HTMLTableSectionElement>('#component-attributes')?.children;
     if (attributeSearch && attributeRows) {
-        attributeSearch.addEventListener('input', () => {
-            const filterValue = attributeSearch.value ?? '';
-            for (let index = 0; index < attributeRows.length; index++) {
-                const element = attributeRows[index] as HTMLElement;
-                if (element.innerText && element.innerText.toLowerCase().includes(filterValue.toLowerCase())) {
-                    element.classList.remove('hidden');
-                } else {
-                    element.classList.add('hidden');
-                }
+        attributeSearch.addEventListener('input', handleAttributes);
+        attributeSearch.addEventListener('change', handleAttributes);
+    }
+
+    function handleAttributes() {
+        const filterValue = attributeSearch.value ?? '';
+        for (let index = 0; index < attributeRows.length; index++) {
+            const element = attributeRows[index] as HTMLElement;
+            if (element.innerText && element.innerText.toLowerCase().includes((<string>filterValue).toLowerCase())) {
+                element.classList.remove('hidden');
+            } else {
+                element.classList.add('hidden');
             }
-        });
+        }
     }
 
     //Event search
-    const eventSearch = document.querySelector<HTMLInputElement>('#event-search');
+    const eventSearch = document.querySelector<SearchField>('#event-search');
     const eventRows = document.querySelector<HTMLTableSectionElement>('#component-events')?.children;
     if (eventSearch && eventRows) {
-        eventSearch.addEventListener('input', () => {
-            const filterValue = eventSearch.value ?? '';
-            for (let index = 0; index < eventRows.length; index++) {
-                const element = eventRows[index] as HTMLElement;
-                if (element.innerText && element.innerText.toLowerCase().includes(filterValue.toLowerCase())) {
-                    element.classList.remove('hidden');
-                } else {
-                    element.classList.add('hidden');
-                }
+        eventSearch.addEventListener('input', handleEvents);
+        eventSearch.addEventListener('change', handleEvents);
+    }
+
+    function handleEvents() {
+        const filterValue = eventSearch.value ?? '';
+        for (let index = 0; index < eventRows.length; index++) {
+            const element = eventRows[index] as HTMLElement;
+            if (element.innerText && element.innerText.toLowerCase().includes((<string>filterValue).toLowerCase())) {
+                element.classList.remove('hidden');
+            } else {
+                element.classList.add('hidden');
             }
-        });
+        }
     }
 
     //Slot search
-    const slotSearch = document.querySelector<HTMLInputElement>('#slot-search');
+    const slotSearch = document.querySelector<SearchField>('#slot-search');
     const slotRows = document.querySelector<HTMLTableSectionElement>('#component-slots')?.children;
     if (slotSearch && slotRows) {
-        slotSearch.addEventListener('input', () => {
-            const filterValue = slotSearch.value ?? '';
-            for (let index = 0; index < slotRows.length; index++) {
-                const element = slotRows[index] as HTMLElement;
-                if (element.innerText && element.innerText.toLowerCase().includes(filterValue.toLowerCase())) {
-                    element.classList.remove('hidden');
-                } else {
-                    element.classList.add('hidden');
-                }
+        slotSearch.addEventListener('input', handleSlots);
+        slotSearch.addEventListener('change', handleSlots);
+    }
+
+    function handleSlots() {
+        const filterValue = slotSearch.value ?? '';
+        for (let index = 0; index < slotRows.length; index++) {
+            const element = slotRows[index] as HTMLElement;
+            if (element.innerText && element.innerText.toLowerCase().includes((<string>filterValue).toLowerCase())) {
+                element.classList.remove('hidden');
+            } else {
+                element.classList.add('hidden');
             }
-        });
+        }
     }
 
     //CSS Properties search
     const categories = document.querySelectorAll('.css-category');
     const tables = document.querySelectorAll<HTMLTableSectionElement>('.component-css-props');
     for (let index = 0; index < categories.length; index++) {
-        const categorySearchElement = categories[index] as HTMLInputElement;
+        const categorySearchElement = categories[index] as SearchField;
         const category = categorySearchElement.getAttribute('data-category');
         for (let index = 0; index < tables.length; index++) {
             const tableSection = tables[index];
             if (tableSection.getAttribute('data-category') === category) {
                 const cssPropRows = tableSection?.children;
                 if (categorySearchElement && cssPropRows) {
-                    categorySearchElement.addEventListener('input', () => {
-                        const filterValue = categorySearchElement.value ?? '';
-                        for (let index = 0; index < cssPropRows.length; index++) {
-                            const element = cssPropRows[index] as HTMLElement;
-                            if (element.innerText && element.innerText.toLowerCase().includes(filterValue.toLowerCase())) {
-                                element.classList.remove('hidden');
-                            } else {
-                                element.classList.add('hidden');
-                            }
-                        }
-                    });
+                    categorySearchElement.addEventListener('input', () => handleCSSPropertySearch(categorySearchElement, cssPropRows));
+                    categorySearchElement.addEventListener('change', () => handleCSSPropertySearch(categorySearchElement, cssPropRows));
                 }
+            }
+        }
+    }
+
+    function handleCSSPropertySearch(categorySearchElement: SearchField, cssPropRows: HTMLCollection) {
+        const filterValue = categorySearchElement.value ?? '';
+        for (let index = 0; index < cssPropRows.length; index++) {
+            const element = cssPropRows[index] as HTMLElement;
+            if (element.innerText && element.innerText.toLowerCase().includes((<string>filterValue).toLowerCase())) {
+                element.classList.remove('hidden');
+            } else {
+                element.classList.add('hidden');
             }
         }
     }

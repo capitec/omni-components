@@ -28,5 +28,5 @@
     --omni-theme-border-radius: 4px;
     --omni-theme-border-width: 2px;
 
-    --omni-theme-box-shadow: 0 0 4px 4px var(--omni-box-shadow-color)
+    --omni-theme-box-shadow: 0 0 4px 4px var(--omni-box-shadow-color);
 }

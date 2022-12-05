@@ -144,13 +144,21 @@ export class LivePropertyEditor extends OmniElement {
 
                 .docs-text-field {
                     width: 100%;
+                    /*
+                    --omni-form-border-color: var(--docs-border-color);
+                    --omni-theme-border-width: 10px;
+                    --omni-form-hover-color: transparent;
+                    --omni-form-focussed-border-width: 1px;
+                    --omni-form-focussed-border-color: var(--docs-border-color);
+                    */
+                    /*border: 1px solid var(--docs-border-color);*/
                 }
 
                 .docs-select {
                     padding: 5px;
                     cursor: pointer;
                     border-radius: 6px;
-                    border: 1px solid #e1e1e1;
+                    border: 1px solid var(--docs-border-color);
                     display: flex;
                     min-width: 191px;
                     min-height: 41px;
