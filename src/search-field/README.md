@@ -93,6 +93,7 @@ A search input control.
 | `--omni-form-label-left`                         | Form label left margin.                        |
 | `--omni-form-label-text-align`                   | Form label text align.                         |
 | `--omni-form-label-transform-origin`             | Form label text align                          |
+| `--omni-form-label-z-index`                      | Form label z-index.                            |
 | `--omni-search-field-clear-icon-color`           | Search field clear icon color.                 |
 | `--omni-search-field-clear-icon-width`           | Search field clear icon width.                 |
 | `--omni-search-field-control-margin-left`        | Search field control left margin.              |
