@@ -21,6 +21,34 @@ Check icon component.
 | `createRenderRoot` | `(): this` |
 
 
+# omni-chevron-down-icon
+
+Chevron down icon component.
+
+```js
+
+import '@capitec/omni-components/icons/ChevronDown.icon.js';
+```
+
+## Example
+
+```html
+<omni-chevron-down-icon></omni-chevron-down-icon>
+```
+
+## Properties
+
+| Property   |
+|------------|
+| `override` |
+
+## Methods
+
+| Method             | Type       |
+|--------------------|------------|
+| `createRenderRoot` | `(): this` |
+
+
 # omni-clear-icon
 
 A clear icon component.
@@ -249,6 +277,34 @@ Minus icon component.
 
 ```html
 <omni-minus-icon></omni-minus-icon>
+```
+
+## Properties
+
+| Property   |
+|------------|
+| `override` |
+
+## Methods
+
+| Method             | Type       |
+|--------------------|------------|
+| `createRenderRoot` | `(): this` |
+
+
+# omni-more-icon
+
+More icon component.
+
+```js
+
+import '@capitec/omni-components/icons/More.icon.js';
+```
+
+## Example
+
+```html
+<omni-more-icon></omni-more-icon>
 ```
 
 ## Properties
