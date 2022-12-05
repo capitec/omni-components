@@ -142,7 +142,7 @@ export class OmniFormElement extends OmniElement {
                 ${super.styles}
 
                 :host {
-                    display: inline-flex;
+                    display: flex;
                 }
 
                 /* CONTAINER STYLES */
