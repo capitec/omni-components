@@ -96,6 +96,7 @@ import '@capitec/omni-components/number-field';
 | `--omni-form-label-left`                         | Form label left margin.                        |
 | `--omni-form-label-text-align`                   | Form label text align.                         |
 | `--omni-form-label-transform-origin`             | Form label text align                          |
+| `--omni-form-label-z-index`                      | Form label z-index.                            |
 | `--omni-number-field-font-color`                 | Number field font color.                       |
 | `--omni-number-field-font-family`                | Number field font family.                      |
 | `--omni-number-field-font-size`                  | Number field font size.                        |

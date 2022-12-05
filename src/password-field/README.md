@@ -99,6 +99,7 @@ import '@capitec/omni-components/password-field';
 | `--omni-form-label-left`                         | Form label left margin.                        |
 | `--omni-form-label-text-align`                   | Form label text align.                         |
 | `--omni-form-label-transform-origin`             | Form label text align                          |
+| `--omni-form-label-z-index`                      | Form label z-index.                            |
 | `--omni-password-field-control-padding-bottom`   | Password field control padding bottom.         |
 | `--omni-password-field-control-padding-left`     | Password field control padding left.           |
 | `--omni-password-field-control-padding-right`    | Password field control padding right.          |
