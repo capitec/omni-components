@@ -223,7 +223,7 @@ export class OmniFormElement extends OmniElement {
 
                     left: var(--omni-form-label-left, 10px);
 
-                    z-index: var(--omni-form-label-z-index, var(--omni-z-index-form-label));
+                    z-index: var(--omni-form-label-z-index, 410);
                 }
 
                 .layout > .label > span {

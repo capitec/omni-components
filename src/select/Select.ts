@@ -28,7 +28,6 @@ import '../icons/More.icon.js';
  *   items={'item1','item2','item3','item4'}
  *   display-field="label"
  *   id-field="id"
- *   renderItem=() => {}
  *   disabled>
  * </omni-select>
  * ```
@@ -145,13 +144,9 @@ export class Select extends OmniFormElement {
     @state() private _bottomOfScreen: boolean = false;
     @state() private _mobileWidth: boolean = false;
 
-    constructor() {
-        super();
-        this._sizeCheck();
-    }
-
     override connectedCallback() {
         super.connectedCallback();
+        this._sizeCheck();
         this.addEventListener('click', this._inputClick.bind(this));
         window.addEventListener('click', this._windowClick.bind(this));
         window.addEventListener('resize', this._sizeCheck.bind(this));
@@ -197,13 +192,13 @@ export class Select extends OmniFormElement {
     }
 
     // Check the size of the screen to determine how to render items and which control icon to apply
-    async _sizeCheck() {
+    _sizeCheck() {
         this._heightCheck();
         this._widthCheck();
     }
 
     // Check to see if the component is at the bottom of the screen if true render items container above input element.
-    async _heightCheck() {
+    _heightCheck() {
         if (window.innerHeight < 200) {
             this._bottomOfScreen = true;
         } else {
@@ -212,7 +207,7 @@ export class Select extends OmniFormElement {
     }
 
     // Check the width of the screen to set the internal mobile boolean to true of false.
-    async _widthCheck() {
+    _widthCheck() {
         if (window.innerWidth > 767) {
             // Desktop width is at least 767px
             this._mobileWidth = false;
@@ -274,7 +269,7 @@ export class Select extends OmniFormElement {
                 .items-container {
                     box-shadow: var(--omni-select-items-container-box-shadow, 0 0 6px 0 rgba(0, 0, 0, 0.11));
                     background-color: var(--omni-select-items-container-background-color, #ffffff);
-                    z-index: var(--omni-select-items-container-z-index, var(--omni-z-index-item-container));
+                    z-index: var(--omni-select-items-container-z-index, 400);
                 }
 
                 /* Mobile device styling */

@@ -93,16 +93,6 @@ export abstract class OmniElement extends LitElement {
                 --omni-border-radius: var(--omni-theme-border-radius, 4px);
                 --omni-border-width: var(--omni-theme-border-width, 2px);
 
-                /* global z-index pattern for elements */
-                --omni-z-index-item-container: 400;
-                --omni-z-index-dialog: 500;
-                --omni-z-index-dropdown: 600;
-                --omni-z-index-alert: 700;
-                --omni-z-index-tooltip: 800;
-
-                /* global z-index for component elements */
-                --omni-z-index-form-label: 410;
-
                 /*
                 --omni-cursor: var(--omni-theme-cursor, default);
                 --omni-cursor-target: var(--omni-theme-target-cursor, pointer);
