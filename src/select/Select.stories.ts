@@ -16,7 +16,7 @@ import {
 } from '../core/OmniInputStories.js';
 import { RenderFunction } from '../render-element/RenderElement.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import { assignToSlot, loadCssPropertiesRemote, querySelectorAsync } from '../utils/StoryUtils';
+import { assignToSlot, loadCssPropertiesRemote, querySelectorAsync, raw } from '../utils/StoryUtils';
 import { Select } from './Select.js';
 
 import './Select.js';
@@ -43,6 +43,7 @@ interface ArgTypes extends BaseArgTypes {
     displayField: string;
     idField: string;
     renderItem: RenderFunction;
+    loading_indicator: string;
 }
 
 const displayItems = [
@@ -81,6 +82,9 @@ export const Interactive = {
             ?disabled="${args.disabled}"
             >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${args.suffix
                 ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}`
+                : nothing}
+            ${args.loading_indicator
+                ? html`${'\r\n'}${unsafeHTML(assignToSlot('loading_indicator', args.loading_indicator))}${'\r\n'}`
                 : nothing}${args.prefix || args.suffix ? '\r\n' : nothing}</omni-select
         >
     `,
@@ -97,7 +101,8 @@ export const Interactive = {
         suffix: '',
         items: displayItems,
         displayField: 'label',
-        idField: 'id'
+        idField: 'id',
+        loading_indicator: ''
     } as ArgTypes,
     play: async (context: StoryContext) => {
         const select = within(context.canvasElement).getByTestId<Select>('test-select');
@@ -135,7 +140,7 @@ export const Interactive = {
     }
 };
 
-export const AsyncItems = {
+export const AsyncPerItem = {
     render: (args: ArgTypes) => html`
         <omni-select
             data-testid="test-select"
@@ -149,14 +154,25 @@ export const AsyncItems = {
             idField="${args.idField}">
         </omni-select>
     `,
-    name: 'Promise',
+    name: 'Async',
     parameters: {},
     args: {
-        label: 'Promise',
+        label: 'Async item renderer function',
         data: {},
-        items: promiseDisplayItems(displayItems),
+        items: () => promiseDisplayItems(displayItems),
         displayField: 'label',
-        idField: 'id'
+        idField: 'id',
+        renderItem: async (item: any) => {
+            await new Promise((resolve, reject) => {
+                // Setting 2000 ms time
+                setTimeout(resolve, 2000);
+            });
+            const i = document.createElement('i');
+            i.innerText = item.label;
+            i.style.color = 'red';
+
+            return i;
+        }
     } as ArgTypes,
     play: async (context: StoryContext) => {
         const select = within(context.canvasElement).getByTestId<Select>('test-select');
@@ -175,7 +191,7 @@ export const AsyncItems = {
     }
 };
 
-export const AsyncPerItem = {
+export const LoadingSlot = {
     render: (args: ArgTypes) => html`
         <omni-select
             data-testid="test-select"
@@ -187,12 +203,13 @@ export const AsyncPerItem = {
             display-field="${args.displayField}"
             .renderItem="${args.renderItem}"
             idField="${args.idField}">
+            ${unsafeHTML(assignToSlot('loading_indicator', args.loading_indicator))}
         </omni-select>
     `,
-    name: 'Async',
+    name: 'Loading Slot',
     parameters: {},
     args: {
-        label: 'Async',
+        label: 'Loading Slot',
         data: {},
         items: () => promiseDisplayItems(displayItems),
         displayField: 'label',
@@ -207,7 +224,8 @@ export const AsyncPerItem = {
             i.style.color = 'red';
 
             return i;
-        }
+        },
+        loading_indicator: raw`<span>...</span>`
     } as ArgTypes,
     play: async (context: StoryContext) => {
         const select = within(context.canvasElement).getByTestId<Select>('test-select');

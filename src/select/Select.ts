@@ -487,9 +487,7 @@ export class Select extends OmniFormElement {
                 this._onItemClick(typeof item !== 'string' && this.displayField ? (item[this.displayField] as string) : (item as string))}">
             ${this.renderItem
                 ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  html` <omni-render-element .data="${item as any}" .renderer="${this.renderItem}">
-                      <div slot="loading_indicator">${this.renderLoading()}</div>
-                  </omni-render-element>`
+                  html` <omni-render-element .data="${item as any}" .renderer="${this.renderItem}"></omni-render-element>`
                 : typeof item !== 'string' && this.displayField
                 ? item[this.displayField]
                 : item}
