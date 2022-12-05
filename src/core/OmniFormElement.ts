@@ -31,6 +31,7 @@ import OmniElement from './OmniElement.js';
  * @cssprop --omni-form-label-font-size - Form label font size.
  * @cssprop --omni-form-label-font-weight - Form label font weight.
  * @cssprop --omni-form-label-left - Form label left margin.
+ * @cssprop --omni-form-label-z-index - Form label z-index.
  *
  * @cssprop --omni-form-focussed-border-width - Form focussed border width.
  * @cssprop --omni-form-focussed-border-color - Form focussed border color.
@@ -145,6 +146,11 @@ export class OmniFormElement extends OmniElement {
                     display: inline-flex;
                 }
 
+                :host([disabled]),
+                :host([disabled]) > * {
+                    pointer-events: none;
+                }
+
                 /* CONTAINER STYLES */
 
                 .container {
@@ -168,6 +174,7 @@ export class OmniFormElement extends OmniElement {
                     flex-direction: row;
                     align-items: stretch;
                     justify-content: center;
+                    border-radius: var(--omni-form-border-radius, 4px);
                     background-color: var(--omni-form-field-background-color, var(--omni-background-color));
                 }
 
@@ -215,6 +222,8 @@ export class OmniFormElement extends OmniElement {
                     font-weight: var(--omni-form-label-font-weight, var(--omni-font-weight));
 
                     left: var(--omni-form-label-left, 10px);
+
+                    z-index: var(--omni-form-label-z-index, 410);
                 }
 
                 .layout > .label > span {
@@ -341,7 +350,7 @@ export class OmniFormElement extends OmniElement {
                     <slot name="prefix">${this.renderPrefix()}</slot>
                     <div class="form-container"> ${this.renderContent()} ${this.renderLabel()} </div>
                     <slot name="suffix"></slot>
-                    ${this.renderControl()}
+                    ${this.renderControl()} ${this.renderPicker()}
                 </div>
                 ${this.renderHint()} ${this.renderError()}
             </div>
@@ -356,10 +365,6 @@ export class OmniFormElement extends OmniElement {
         return nothing;
     }
 
-    protected renderControl(): typeof nothing | TemplateResult {
-        return nothing;
-    }
-
     protected renderLabel() {
         const labelClass: ClassInfo = {
             label: true,
@@ -368,6 +373,14 @@ export class OmniFormElement extends OmniElement {
         };
 
         return html`${this.label ? html`<div class=${classMap(labelClass)}><span>${this.label}</span></div>` : nothing}`;
+    }
+
+    protected renderControl(): typeof nothing | TemplateResult {
+        return nothing;
+    }
+
+    protected renderPicker(): typeof nothing | TemplateResult {
+        return nothing;
     }
 
     protected renderHint() {
