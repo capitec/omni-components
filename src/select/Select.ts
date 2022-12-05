@@ -12,8 +12,8 @@ import '../icons/More.icon.js';
 /**
  * Control to get / set a value within a list of options.
  *
+ * @import
  * ```js
- *
  * import '@capitec/omni-components/select';
  * ```
  * @example
@@ -443,9 +443,11 @@ export class Select extends OmniFormElement {
 
     protected override renderControl() {
         return html` <div id="control" class="control ${this._popUp ? `expanded` : `collapsed`}" @click="${() => this._controlClick()}">
-            ${this._mobileWidth
-                ? html`<omni-more-icon class="control-icon"></omni-more-icon>`
-                : html`<omni-chevron-down-icon class="control-icon"></omni-chevron-down-icon>`}
+            ${
+                this._mobileWidth
+                    ? html`<omni-more-icon class="control-icon"></omni-more-icon>`
+                    : html`<omni-chevron-down-icon class="control-icon"></omni-chevron-down-icon>`
+            }
         </div>`;
     }
 
@@ -475,17 +477,17 @@ export class Select extends OmniFormElement {
     // Render the each option in the item container
     _renderOption(item: Record<string, unknown> | string) {
         return html` <div
-            class="item ${this.value === (typeof item === 'string' ? item : item[this.displayField]) || this.value === item
-                ? `selected`
-                : ``}"
+            class="item ${this.value === (typeof item === 'string' ? item : item[this.displayField]) || this.value === item ? `selected` : ``}"
             @click="${() =>
                 this._onItemClick(typeof item !== 'string' && this.displayField ? (item[this.displayField] as string) : (item as string))}">
-            ${this.renderItem
-                ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  html` <omni-render-element .data="${item as any}" .renderer="${this.renderItem}"></omni-render-element>`
-                : typeof item !== 'string' && this.displayField
-                ? item[this.displayField]
-                : item}
+            ${
+                this.renderItem
+                    ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      html` <omni-render-element .data="${item as any}" .renderer="${this.renderItem}"></omni-render-element>`
+                    : typeof item !== 'string' && this.displayField
+                    ? item[this.displayField]
+                    : item
+            }
         </div>`;
     }
 

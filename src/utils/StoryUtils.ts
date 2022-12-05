@@ -564,7 +564,7 @@ async function setupThemes() {
     const themeStyle = document.getElementById('theme-styles') as HTMLStyleElement;
     let darkThemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     if (window.matchMedia) {
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
             darkThemePreferred = event.matches;
             const storedTheme = window.sessionStorage.getItem(themeStorageKey);
             if (darkThemePreferred && storedTheme === lightThemeKey) {
@@ -791,23 +791,6 @@ function setupScroll() {
                     behavior: 'auto'
                 });
             }, 200);
-
-            // // Needs improvements.
-            // setTimeout(() => {
-            //     const id = document.location.hash.replace('#', '');
-            //     const a = document.querySelector<HTMLAnchorElement>(`.component-toc a[id='${id}-a']`);
-            //     a.click();
-            //     // document.querySelector(document.location.hash).scrollIntoView();
-
-            //     // Needs improvements.
-            //     setTimeout(() => {
-            //         const id = document.location.hash.replace('#', '');
-            //         const a = document.querySelector<HTMLAnchorElement>(`.component-toc a[id='${id}-a']`);
-            //         a.click();
-            //         // document.querySelector(document.location.hash).scrollIntoView();
-            //     }, 500);
-
-            // }, 100);
         }
     });
 
