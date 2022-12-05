@@ -3,7 +3,7 @@ import { customElement } from 'lit/decorators.js';
 import DOMTreeElement from '../core/DOMTreeElement.js';
 
 /**
- * A chevron down icon component.
+ * Chevron down icon component.
  *
  * ```js
  *

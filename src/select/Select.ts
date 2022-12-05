@@ -10,7 +10,7 @@ import '../icons/ChevronDown.icon.js';
 import '../icons/More.icon.js';
 
 /**
- * A select input control.
+ * Control to get / set a value within a list of options.
  *
  * ```js
  *
