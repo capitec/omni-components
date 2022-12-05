@@ -33,6 +33,7 @@
 
     /* COMPONENT SPECIFIC STYLES */
     --omni-switch-knob-box-shadow: 0 2px 4px 0 rgb(255, 255, 255), 0 1px 3px rgb(255, 255, 255), 0 -1px 2px rgb(255, 255, 255);
+    --omni-select-item-header-font-color: var(--omni-theme-background-color);
 }
 
 /* DOCS SPECIFIC */
