@@ -6,7 +6,6 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import {
     LabelStory,
     BaseArgs,
-    BaseArgTypeDefinitions,
     HintStory,
     ErrorStory,
     DisabledStory,
@@ -27,15 +26,6 @@ import './NumericField.js';
 export default {
     title: 'UI Components/Numeric Field',
     component: 'omni-numeric-field',
-    argTypes: {
-        ...BaseArgTypeDefinitions,
-        increase: {
-            control: 'text'
-        },
-        decrease: {
-            control: 'text'
-        }
-    }
 } as CSFIdentifier;
 
 interface Args extends BaseArgs {

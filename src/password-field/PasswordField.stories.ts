@@ -6,7 +6,6 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import {
     LabelStory,
     BaseArgs,
-    BaseArgTypeDefinitions,
     HintStory,
     ErrorStory,
     DisabledStory,
@@ -26,16 +25,7 @@ import '../icons/LockClosed.icon.js';
 
 export default {
     title: 'UI Components/Password Field',
-    component: 'omni-password-field',
-    argTypes: {
-        ...BaseArgTypeDefinitions,
-        hide: {
-            control: 'text'
-        },
-        show: {
-            control: 'text'
-        }
-    }
+    component: 'omni-password-field'
 } as CSFIdentifier;
 
 interface Args extends BaseArgs {

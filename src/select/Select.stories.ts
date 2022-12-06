@@ -5,23 +5,22 @@ import userEvent from '@testing-library/user-event';
 import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { LabelStory, BaseArgs, BaseArgTypeDefinitions, HintStory, ErrorStory, PrefixStory, SuffixStory } from '../core/OmniInputStories.js';
+import { LabelStory, BaseArgs, HintStory, ErrorStory, PrefixStory, SuffixStory } from '../core/OmniInputStories.js';
 import { RenderFunction } from '../render-element/RenderElement.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
 import { assignToSlot, ComponentStoryFormat, CSFIdentifier, querySelectorAsync, raw } from '../utils/StoryUtils.js';
-import { Select } from './Select.js';
+import { Select, SelectItems, SelectTypes } from './Select.js';
 
 import './Select.js';
 
 export default {
     title: 'UI Components/Select',
-    component: 'omni-select',
-    argTypes: BaseArgTypeDefinitions
+    component: 'omni-select'
 } as CSFIdentifier;
 
 interface Args extends BaseArgs {
-    items: string[] | object[] | Promise<object[]> | Promise<string[]> | (() => string[] | object[] | Promise<object[]> | Promise<string[]>);
+    items: SelectItems | (() => SelectItems);
     displayField: string;
     idField: string;
     renderItem: RenderFunction;
@@ -43,9 +42,9 @@ const displayItems = [
 
 const stringItems = ['Bruce Wayne', 'Clark Kent', 'Barry Allen', 'Arthur Curry', 'Hal Jordan'];
 
-async function promiseDisplayItems(data: object[]) {
+async function promiseDisplayItems(data: Record<string,unknown>[]) {
     await new Promise<void>((r) => setTimeout(() => r(), 3000));
-    return data;
+    return data as SelectTypes;
 }
 
 export const Interactive: ComponentStoryFormat<Args> = {
@@ -80,7 +79,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         disabled: false,
         prefix: '',
         suffix: '',
-        items: displayItems,
+        items: displayItems as Record<string,unknown>[],
         displayField: 'label',
         idField: 'id',
         loading_indicator: ''
@@ -299,7 +298,7 @@ export const Disabled: ComponentStoryFormat<Args> = {
     args: {
         label: 'Disabled',
         disabled: true,
-        items: displayItems
+        items: displayItems as Record<string,unknown>[]
     } as Args,
     play: async (context) => {
         // To be updated with the new branch changes
