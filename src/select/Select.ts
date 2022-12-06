@@ -210,7 +210,7 @@ export class Select extends OmniFormElement {
 
     // Check the width of the screen to set the internal mobile boolean to true of false.
     _widthCheck() {
-        if (window.innerWidth > 767) {
+        if (window.innerWidth >= 767) {
             // Desktop width is at least 767px
             this._mobileWidth = false;
         } else {
@@ -249,6 +249,7 @@ export class Select extends OmniFormElement {
 
                     /* Added to stop the transforming of the label when the input is clicked */
                     pointer-events: none;
+                    width: var(--omni-select-field-width);
                 }
 
                 .control {
@@ -272,24 +273,6 @@ export class Select extends OmniFormElement {
                     box-shadow: var(--omni-select-items-container-box-shadow, 0 0 6px 0 rgba(0, 0, 0, 0.11));
                     background-color: var(--omni-select-items-container-background-color, var(--omni-theme-background-color));
                     z-index: var(--omni-select-items-container-z-index, 420);
-                }
-
-                /* Mobile device styling */
-                @media screen and (max-width: 767px) {
-                    .items {
-                        max-height: var(--omni-select-mobile-items-max-height, 240px);
-                    }
-
-                    .items-container {
-                        position: fixed;
-
-                        left: var(--omni-select-mobile-items-container-left, 0px);
-                        right: var(--omni-select-mobile-items-container-right, 0px);
-                        bottom: var(--omni-select-mobile-items-container-bottom, 0px);
-
-                        border-top-left-radius: var(--omni-select-mobile-items-container-border-top-left-radius, 10px);
-                        border-top-right-radius: var(--omni-select-mobile-items-container-border-top-right-radius, 10px);
-                    }
                 }
 
                 /* Desktop and landscape tablet device styling, if element is at the bottom of the screen make items render above the input */
@@ -322,6 +305,24 @@ export class Select extends OmniFormElement {
                     .control.collapsed {
                         transform: none;
                         transition: all linear 0.15s;
+                    }
+                }
+                
+                /* Mobile device styling */
+                @media screen and (max-width: 766px) {
+                    .items {
+                        max-height: var(--omni-select-mobile-items-max-height, 240px);
+                    }
+
+                    .items-container {
+                        position: fixed;
+
+                        left: var(--omni-select-mobile-items-container-left, 0px);
+                        right: var(--omni-select-mobile-items-container-right, 0px);
+                        bottom: var(--omni-select-mobile-items-container-bottom, 0px);
+
+                        border-top-left-radius: var(--omni-select-mobile-items-container-border-top-left-radius, 10px);
+                        border-top-right-radius: var(--omni-select-mobile-items-container-border-top-right-radius, 10px);
                     }
                 }
 

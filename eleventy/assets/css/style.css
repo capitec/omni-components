@@ -190,7 +190,8 @@ header .header-version {
     --header-action-background-color:var(--omni-theme-background-hover-color);
 }
 
-.header-actions > .action:hover {
+.header-actions > .action:hover,
+.header-actions  > .header-theme-section:hover > .action {
     box-shadow: inset 0px 0px 0px 1px var(--omni-form-hover-color, var(--omni-theme-primary-color));
 }
 
@@ -205,7 +206,7 @@ header .header-version {
     position: absolute;
     right: 0;
     bottom: -18px;
-    height: 36px;
+    height: 37px;
 }
 
 .header-actions > .header-theme-section > .action {
@@ -320,6 +321,10 @@ header .header-version {
 .hidden,
 .hidden-until-760 {
     display: none;
+}
+
+.transparent {
+    opacity: 0;
 }
 
 .docs-select {
@@ -975,8 +980,8 @@ table th {
     }
     
     .header-actions > .header-theme-section > .theme-select {
-        width: 36px;
-        height: 36px;
+        width: 37px;
+        height: 37px;
         position: absolute;
         right: 0;
         bottom: 0;
@@ -1010,6 +1015,10 @@ table th {
 
     .hidden-until-760 {
         display: flex;
+    }
+
+    .hidden-after-760 {
+        display: none;
     }
     
     .transparent-after-760 {
@@ -1167,7 +1176,7 @@ table th {
     }
 }
 
-@media screen and (max-width: 510px) {
+@media screen and (max-width: 484px) {
     .header-text {
         display: none;
     }
