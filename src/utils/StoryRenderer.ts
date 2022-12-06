@@ -122,7 +122,9 @@ export class StoryRenderer extends LitElement {
             <div class="modal-container">
                 <div class="modal-body">
                     <div class="docs-search-area">
-                        <omni-search-field class="css-category" @input="${(e: Event) => this.handleCustomThemeCSSVariableSearch(e)}" @change="${(e: Event) => this.handleCustomThemeCSSVariableSearch(e)}"></omni-search-field>
+                        <omni-search-field class="css-category" @input="${(e: Event) => this.handleCustomThemeCSSVariableSearch(e)}" @change="${(
+                      e: Event
+                  ) => this.handleCustomThemeCSSVariableSearch(e)}"></omni-search-field>
                     </div>
                     <div class="component-props-table-wrapper">
                         <table class="component-props-table">
@@ -189,7 +191,20 @@ export class StoryRenderer extends LitElement {
                   ignore-attributes="dir,lang"
                   @property-change="${async (e: CustomEvent<PropertyChangeEvent>) => {
                       const changed = e.detail;
-                      if (!changed.oldValue || !changed.newValue || changed.oldValue.toString().trim() !== changed.newValue.toString().trim()) {
+                      let mustUpdate = false;
+
+                      if (!changed.oldValue || !changed.newValue) {
+                          mustUpdate = true;
+                      } else if (
+                          typeof changed.newValue !== 'string' &&
+                          JSON.stringify(changed.oldValue).trim() !== JSON.stringify(changed.newValue).trim()
+                      ) {
+                          mustUpdate = true;
+                      } else if (changed.oldValue.toString().trim() !== changed.newValue.toString().trim()) {
+                          mustUpdate = true;
+                      }
+
+                      if (mustUpdate) {
                           this.story.args[changed.property] = changed.newValue;
 
                           this.requestUpdate();

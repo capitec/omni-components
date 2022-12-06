@@ -242,9 +242,9 @@ export class LivePropertyEditor extends OmniElement {
                         return;
 
                     let attributeEditor: TemplateResult = undefined;
-
-                    if (attribute.type.text === 'boolean') {
-                        attributeEditor = html`
+                    try {
+                        if (attribute.type.text === 'boolean') {
+                            attributeEditor = html`
               <omni-switch
                 ?disabled=${this.disabled}
                 ?checked="${
@@ -259,24 +259,24 @@ export class LivePropertyEditor extends OmniElement {
                 }}">
               </omni-switch>
             `;
-                    } else if (
-                        attribute.type.text !== 'object' &&
-                        attribute.type.text !== 'string' &&
-                        attribute.type.text !== 'boolean' &&
-                        !attribute.type.text.includes('Promise') &&
-                        attribute.type.text.includes("'")
-                    ) {
-                        const typesRaw = attribute.type.text.split(' | ');
-                        const types = [];
-                        for (const type in typesRaw) {
-                            const typeValue = typesRaw[type];
-                            types.push(typeValue.substring(1, typeValue.length - 1));
-                        }
-                        const startValue = this.data
-                            ? this.data.args[attribute.name] ?? this.data.args[attribute.fieldName ?? attribute.name]
-                            : undefined;
+                        } else if (
+                            attribute.type.text !== 'object' &&
+                            attribute.type.text !== 'string' &&
+                            attribute.type.text !== 'boolean' &&
+                            !attribute.type.text.includes('Promise') &&
+                            attribute.type.text.includes("'")
+                        ) {
+                            const typesRaw = attribute.type.text.split(' | ');
+                            const types = [];
+                            for (const type in typesRaw) {
+                                const typeValue = typesRaw[type];
+                                types.push(typeValue.substring(1, typeValue.length - 1));
+                            }
+                            const startValue = this.data
+                                ? this.data.args[attribute.name] ?? this.data.args[attribute.fieldName ?? attribute.name]
+                                : undefined;
 
-                        attributeEditor = html`
+                            attributeEditor = html`
               <select
                 class="docs-select"
                 ?disabled=${this.disabled}
@@ -291,26 +291,38 @@ export class LivePropertyEditor extends OmniElement {
                 ${types.map((t) => html`<option value="${t}" ?selected="${t === startValue}">${t}</option>`)}
               </select>
             `;
-                    } else if (
-                        attribute.type.text === 'object' ||
-                        attribute.type.text.includes('Promise') ||
-                        (this.data?.args &&
-                            this.data.args[attribute.name] &&
-                            (typeof this.data.args[attribute.name] === 'function' || typeof this.data.args[attribute.name].then === 'function'))
-                    ) {
-                        return;
-                    } else {
-                        attributeEditor = html`
+                        } else if (
+                            attribute.type.text === 'object' ||
+                            attribute.type.text.includes('Promise') ||
+                            (this.data?.args &&
+                                this.data.args[attribute.name] &&
+                                (typeof this.data.args[attribute.name] === 'function' || typeof this.data.args[attribute.name].then === 'function'))
+                        ) {
+                            return;
+                        } else {
+                            const val = this.data
+                                ? this.data.args[attribute.name] ?? this.data.args[attribute.fieldName ?? attribute.name] ?? ''
+                                : '';
+                            let boundValue = '';
+                            if (typeof val === 'string') {
+                                boundValue = val;
+                            } else {
+                                boundValue = JSON.stringify(val);
+                            }
+                            attributeEditor = html`
               <omni-text-field
                 class="docs-text-field"
                 ?disabled=${this.disabled}
-                .value="${live(this.data ? this.data.args[attribute.name] ?? this.data.args[attribute.fieldName ?? attribute.name] ?? '' : '')}"
+                .value="${live(boundValue)}"
                 @input="${async (e: Event) => {
                     const textField = e.target as TextField;
                     // textField.requestUpdate();
                     // await textField.updateComplete;
 
-                    const value = (textField.shadowRoot.getElementById('inputField') as HTMLInputElement).value;
+                    let value = (textField.shadowRoot.getElementById('inputField') as HTMLInputElement).value;
+                    if (typeof val !== 'string') {
+                        value = JSON.parse(value);
+                    }
                     this._propertyChanged({
                         property: this.data && attribute.fieldName && this.data.args[attribute.fieldName] ? attribute.fieldName : attribute.name,
                         newValue: value,
@@ -319,6 +331,10 @@ export class LivePropertyEditor extends OmniElement {
                 }}">
               </omni-text-field>
             `;
+                        }
+                    } catch (error) {
+                        console.error(error);
+                        return;
                     }
                     if (attributeEditor) {
                         attributes.push({
