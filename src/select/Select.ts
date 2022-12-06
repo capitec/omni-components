@@ -178,7 +178,8 @@ export class Select extends OmniFormElement {
     }
 
     // Set the value when a item is clicked
-    async _onItemClick(item: string) {
+    async _onItemClick(item: Record<string, unknown> | string) {
+
         this.value = item;
 
         await this.updateComplete;
@@ -269,7 +270,7 @@ export class Select extends OmniFormElement {
                 /* Default item container styles*/
                 .items-container {
                     box-shadow: var(--omni-select-items-container-box-shadow, 0 0 6px 0 rgba(0, 0, 0, 0.11));
-                    background-color: var(--omni-select-items-container-background-color, #ffffff);
+                    background-color: var(--omni-select-items-container-background-color, var(--omni-theme-background-color));
                     z-index: var(--omni-select-items-container-z-index, 400);
                 }
 
@@ -425,9 +426,11 @@ export class Select extends OmniFormElement {
                 type="text"
                 readonly
                 ?disabled=${this.disabled}
-                .value=${live(this.value as string)}
+                .value=${live(typeof this.value !== 'string' && this.displayField ? ((this.value as Record<string, unknown>)[this.displayField] as string) : (this.value as string))}
                 tabindex="${this.disabled ? -1 : 0}" />
         `;
+
+        // typeof item !== 'string' && this.displayField ? (item[this.displayField] as string) : (item as string)
     }
 
     protected override renderPicker() {
@@ -480,7 +483,7 @@ export class Select extends OmniFormElement {
         return html` <div
             class="item ${this.value === (typeof item === 'string' ? item : item[this.displayField]) || this.value === item ? `selected` : ``}"
             @click="${() =>
-                this._onItemClick(typeof item !== 'string' && this.displayField ? (item[this.displayField] as string) : (item as string))}">
+                this._onItemClick(item)}">
             ${
                 this.renderItem
                     ? // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -10,6 +10,7 @@ export { Package, ClassDeclaration, CustomElementDeclaration, Declaration, Custo
 import { html, unsafeCSS } from 'lit';
 import { render } from 'lit-html';
 import { SearchField } from '../search-field/SearchField.js';
+import { Select } from '../select/Select.js';
 import { CodeEditor, CodeMirrorEditorEvent, CodeMirrorSourceUpdateEvent } from './CodeEditor.js';
 import { StoryRenderer } from './StoryRenderer.js';
 
@@ -561,7 +562,7 @@ async function setupThemes() {
 
     const themes = await loadThemesListRemote();
     themes.sort((t) => (t === darkThemeKey ? -1 : 0));
-    const themeSelect = document.getElementById('header-theme-select') as HTMLSelectElement;
+    const themeSelect = document.getElementById('header-theme-select') as Select;
     const themeStyle = document.getElementById('theme-styles') as HTMLStyleElement;
     let darkThemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     if (window.matchMedia) {
@@ -569,31 +570,41 @@ async function setupThemes() {
             darkThemePreferred = event.matches;
             const storedTheme = window.sessionStorage.getItem(themeStorageKey);
             if (darkThemePreferred && storedTheme === lightThemeKey) {
-                themeSelect.value = darkThemeKey;
+                themeSelect.value = {
+                    value: darkThemeKey,
+                    label: titleCase(darkThemeKey.replaceAll('.css', '').replaceAll('-', ' '))
+                };
                 window.sessionStorage.setItem(themeStorageKey, darkThemeKey);
                 changeTheme(event, darkThemeKey);
             } else if (!darkThemePreferred && storedTheme === darkThemeKey) {
-                themeSelect.value = lightThemeKey;
+                themeSelect.value = {
+                    value: lightThemeKey,
+                    label: titleCase(lightThemeKey.replaceAll('.css', '').replaceAll('-', ' '))
+                };
                 window.sessionStorage.setItem(themeStorageKey, lightThemeKey);
                 changeTheme(event, lightThemeKey);
             }
         });
     }
 
+    const themeOptions: { value: string; label: string }[] = [];
+
     function addOption(key: string) {
-        const option = document.createElement('option');
-        option.value = key;
-        option.label = titleCase(key.replaceAll('.css', '').replaceAll('-', ' '));
+        const option = {
+            value: key,
+            label: titleCase(key.replaceAll('.css', '').replaceAll('-', ' '))
+        };
+
         const storedTheme = window.sessionStorage.getItem(themeStorageKey);
         if (
             storedTheme === key ||
             (!storedTheme && ((!darkThemePreferred && key === lightThemeKey) || (darkThemePreferred && key?.toLowerCase() === darkThemeKey)))
         ) {
             window.sessionStorage.setItem(themeStorageKey, key);
-            option.selected = true;
+            themeSelect.value = option;
             changeTheme(null, key);
         }
-        themeSelect.add(option);
+        themeOptions.push(option);
         return option;
     }
 
@@ -666,7 +677,6 @@ async function setupThemes() {
             switchToCustomTheme();
             return;
         }
-        const css = themeStyle.sheet;
         loadFileRemote(`./themes/${theme}`).then(
             (cssText) => {
                 themeStyle.innerHTML = cssText;
@@ -683,11 +693,14 @@ async function setupThemes() {
     });
     addOption(customThemeKey);
 
-    themeSelect.style.display = 'flex';
+    themeSelect.items = themeOptions;
+    themeSelect.displayField = 'label';
+    themeSelect.idField = 'value';
+    // themeSelect.style.display = 'flex';
     themeSelect.addEventListener('change', (e) => {
-        const value = (e.target as HTMLSelectElement).value;
-        window.sessionStorage.setItem(themeStorageKey, value);
-        changeTheme(e, value);
+        const value = (e.target as Select).value as any;
+        window.sessionStorage.setItem(themeStorageKey, value.value);
+        changeTheme(e, value.value);
     });
 }
 
