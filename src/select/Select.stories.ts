@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { waitFor, within } from '@testing-library/dom';
+import { within } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
@@ -43,7 +43,7 @@ const displayItems = [
 const stringItems = ['Bruce Wayne', 'Clark Kent', 'Barry Allen', 'Arthur Curry', 'Hal Jordan'];
 
 async function promiseDisplayItems(data: Record<string,unknown>[]) {
-    await new Promise<void>((r) => setTimeout(() => r(), 3000));
+    await new Promise<void>((r) => setTimeout(() => r(), 2000));
     return data as SelectTypes;
 }
 
@@ -162,7 +162,13 @@ export const Async_Per_Item: ComponentStoryFormat<Args> = {
 
         await userEvent.click(select);
 
-        const item = await querySelectorAsync(select.shadowRoot, '.item');
+        let item;
+        // TODO: Fix race conditions in tests
+        if (navigator.userAgent === 'Test Runner') {
+            item = await querySelectorAsync(select.shadowRoot, '.item', undefined, 3000);
+        } else {
+            item = await querySelectorAsync(select.shadowRoot, '.item', undefined, 5000);
+        }
         await userEvent.click(item as HTMLDivElement);
 
         const selectField = select.shadowRoot.getElementById('select');
@@ -214,7 +220,13 @@ export const Loading_Slot: ComponentStoryFormat<Args> = {
 
         await userEvent.click(select);
 
-        const item = await querySelectorAsync(select.shadowRoot, '.item');
+        let item;
+        // TODO: Fix race conditions in tests
+        if (navigator.userAgent === 'Test Runner') {
+            item = await querySelectorAsync(select.shadowRoot, '.item', undefined, 3000);
+        } else {
+            item = await querySelectorAsync(select.shadowRoot, '.item', undefined, 5000);
+        }
         await userEvent.click(item as HTMLDivElement);
 
         const selectField = select.shadowRoot.getElementById('select');
@@ -301,9 +313,11 @@ export const Disabled: ComponentStoryFormat<Args> = {
         items: displayItems as Record<string,unknown>[]
     } as Args,
     play: async (context) => {
-        // To be updated with the new branch changes
         const select = within(context.canvasElement).getByTestId<Select>('test-select');
-        await expect(() => userEvent.click(select)).not.toBe(true);
+        const click = jest.fn();
+        select.addEventListener('click', click);
+        await expect(() => userEvent.click(select)).rejects.toThrow(/pointer-events: none/);
+        await expect(click).toBeCalledTimes(0);
     }
 };
 
