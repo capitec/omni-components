@@ -562,6 +562,11 @@ async function setupThemes() {
 
     const themes = await loadThemesListRemote();
     themes.sort((t) => (t === darkThemeKey ? -1 : 0));
+    const themeEdit = document.getElementById('header-theme-edit-btn') as HTMLSpanElement;
+    if (themeEdit) {
+        themeEdit.style.display = 'none';
+        themeEdit.addEventListener('click', () => showCustomCssSource());
+    }
     const themeSelect = document.getElementById('header-theme-select') as Select;
     const themeStyle = document.getElementById('theme-styles') as HTMLStyleElement;
     let darkThemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -617,7 +622,46 @@ async function setupThemes() {
         }
     }
 
+    function showCustomCssSource() {
+        const customThemeSourceParent = document.getElementById('custom-theme-source');
+        if (!customThemeSourceParent) {
+            // Theme change is triggered by user if the event (e) is defined and this is not the theme support page if there is no customThemeSourceParent already
+            // Show custom theme code editor modal
+            render(
+                html` 
+                        <div class="modal" role="dialog" aria-modal="true"
+                        @click="${(e0: Event) => _checkCloseModal(e0)}" @touch="${(e1: Event) => _checkCloseModal(e1)}">
+                            <div class="modal-container">
+                                <div class="modal-body">
+                                    <div class="code-modal">
+                                        <span class="flex-row">
+                                            <h3 id="custom-theme" style="margin-left: 0px;">Custom Theme</h3>
+                                            <input class="hidden" id="cssValue" type="file" accept=".css" @input="${(e2: Event) => uploadTheme(e2)}" />
+                                            <omni-button class="docs-omni-component" label="Upload" type="secondary" @click="${(e3: Event) =>
+                                                uploadThemeClick(e3)}" ></omni-button>
+                                        </span>
+                                        <div style="padding-top: 12px;">
+                                            <div id="custom-theme-source" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `,
+                themeModal
+            );
+
+            setupCustomTheming();
+        } else {
+            (customThemeSourceParent?.parentElement?.previousElementSibling ?? customThemeSourceParent).scrollIntoView();
+        }
+    }
+
     function changeTheme(e: Event, theme: string) {
+        if (themeEdit) {
+            themeEdit.style.display = 'none';
+        }
         document.dispatchEvent(
             new CustomEvent<string>('omni-docs-theme-change', {
                 detail: theme
@@ -634,44 +678,17 @@ async function setupThemes() {
             return;
         }
         if (theme === customThemeKey) {
+            if (themeEdit) {
+                themeEdit.style.display = 'flex';
+            }
             let customCss = window.sessionStorage.getItem(customThemeCssKey);
             const switchToCustomTheme = async () => {
                 if (!customCss) {
                     customCss = await loadFileRemote(`./assets/css/default-light-theme.css`);
                 }
                 themeStyle.innerHTML = customCss;
-                const customThemeSourceParent = document.getElementById('custom-theme-source');
-                if (e && !customThemeSourceParent) {
-                    // Theme change is triggered by user if the event (e) is defined and this is not the theme support page if there is no customThemeSourceParent already
-                    // Show custom theme code editor modal
-                    render(
-                        html` 
-                        <div class="modal" role="dialog" aria-modal="true"
-                        @click="${(e: Event) => _checkCloseModal(e)}" @touch="${(e: Event) => _checkCloseModal(e)}">
-                            <div class="modal-container">
-                                <div class="modal-body">
-                                    <div class="code-modal">
-                                        <span class="flex-row">
-                                            <h3 id="custom-theme" style="margin-left: 0px;">Custom Theme</h3>
-                                            <input class="hidden" id="cssValue" type="file" accept=".css" @input="${(e: Event) => uploadTheme(e)}" />
-                                            <omni-button class="docs-omni-component" label="Upload" type="secondary" @click="${(e: Event) =>
-                                                uploadThemeClick(e)}" ></omni-button>
-                                        </span>
-                                        <div style="padding-top: 12px;">
-                                            <div id="custom-theme-source" >
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `,
-                        themeModal
-                    );
-
-                    setupCustomTheming();
-                } else if (e && customThemeSourceParent) {
-                    (customThemeSourceParent?.parentElement?.previousElementSibling ?? customThemeSourceParent).scrollIntoView();
+                if (e) {
+                    showCustomCssSource();
                 }
             };
             switchToCustomTheme();

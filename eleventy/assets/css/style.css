@@ -190,6 +190,7 @@ header .header-version {
 .header-actions > .header-theme-section {
     position: relative;
     margin-right: 12px;
+    margin-left: 12px;
 }
 
 .header-actions > .header-theme-section > .theme-select {
