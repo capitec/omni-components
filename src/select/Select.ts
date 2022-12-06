@@ -426,7 +426,7 @@ export class Select extends OmniFormElement {
                 type="text"
                 readonly
                 ?disabled=${this.disabled}
-                .value=${live(typeof this.value !== 'string' && this.displayField ? ((this.value as Record<string, unknown>)[this.displayField] as string) : (this.value as string))}
+                .value=${live((typeof this.value !== 'string' && this.displayField ? (((this.value as Record<string, unknown>) ?? {})[this.displayField] as string) : (this.value as string)) ?? '')}
                 tabindex="${this.disabled ? -1 : 0}" />
         `;
 
