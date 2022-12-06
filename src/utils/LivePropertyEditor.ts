@@ -155,6 +155,7 @@ export class LivePropertyEditor extends OmniElement {
                 }
 
                 .docs-select {
+                    /*
                     padding: 5px;
                     cursor: pointer;
                     border-radius: 6px;
@@ -164,7 +165,7 @@ export class LivePropertyEditor extends OmniElement {
                     min-height: 41px;
                     width: 100%;
                     background-color: var(--omni-theme-background-color, inherit);
-                    color: var(--omni-theme-font-color, inherit);
+                    color: var(--omni-theme-font-color, inherit);*/
                 }
 
                 .docs-select:focus-visible {
@@ -246,6 +247,7 @@ export class LivePropertyEditor extends OmniElement {
                         if (attribute.type.text === 'boolean') {
                             attributeEditor = html`
               <omni-switch
+                class="docs-select"
                 ?disabled=${this.disabled}
                 ?checked="${
                     this.data ? this.data.args[attribute.name] ?? this.data.args[attribute.fieldName ?? attribute.name] : attribute.default === 'true'
@@ -277,9 +279,11 @@ export class LivePropertyEditor extends OmniElement {
                                 : undefined;
 
                             attributeEditor = html`
-              <select
+              <omni-select
                 class="docs-select"
                 ?disabled=${this.disabled}
+                value=${startValue}
+                .items=${types}
                 @change="${(e: Event) => {
                     const value = (e.target as HTMLSelectElement).value;
                     this._propertyChanged({
@@ -287,9 +291,11 @@ export class LivePropertyEditor extends OmniElement {
                         newValue: value,
                         oldValue: this.data ? this.data.args[attribute.name] : undefined
                     });
-                }}">
-                ${types.map((t) => html`<option value="${t}" ?selected="${t === startValue}">${t}</option>`)}
-              </select>
+                }}"
+            >
+                
+            </omni-select>
+
             `;
                         } else if (
                             attribute.type.text === 'object' ||
@@ -339,7 +345,7 @@ export class LivePropertyEditor extends OmniElement {
                     if (attributeEditor) {
                         attributes.push({
                             html: html`
-                <omni-label class="live-header" label="${attribute.name}"></omni-label>
+                            <omni-label class="live-header" label="${attribute.name}"></omni-label>                
                 ${attributeEditor}
               `,
                             name: attribute.name
