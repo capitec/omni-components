@@ -404,9 +404,9 @@ export class StoryRenderer extends LitElement {
         this._showStylesDialog = true;
     }
 
-    private _checkCloseModal(e: any) {
+    private _checkCloseModal(e: Event) {
         const containerElement = this.modal.querySelector(`div.modal-container`);
-        if (!e.path.includes(containerElement)) {
+        if (!e.composedPath().includes(containerElement)) {
             this._showStylesDialog = false;
         }
     }
