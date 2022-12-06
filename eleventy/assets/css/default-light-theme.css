@@ -72,6 +72,10 @@ header {
 
     --omni-theme-border-radius: 4px;
     --omni-theme-border-width: 2px;
+
+    --omni-form-border-color: var(--docs-border-color);
+    --omni-select-field-padding: 8px;
+    --omni-text-field-padding: 8px;
 }
 
 footer {

@@ -167,6 +167,9 @@ header .header-version {
     border-radius: 6px;
     border: 1px solid var(--docs-border-color);
     display: flex;
+
+    /* Height */
+    height: 37px;
 }
 
 .header-actions > .action,
@@ -185,6 +188,10 @@ header .header-version {
 .header-actions > .action:hover,
 .header-actions > .header-theme-section:hover {
     --header-action-background-color:var(--omni-theme-background-hover-color);
+}
+
+.header-actions > .action:hover {
+    box-shadow: inset 0px 0px 0px 1px var(--omni-form-hover-color, var(--omni-theme-primary-color));
 }
 
 .header-actions > .header-theme-section {
@@ -1160,7 +1167,7 @@ table th {
     }
 }
 
-@media screen and (max-width: 464px) {
+@media screen and (max-width: 510px) {
     .header-text {
         display: none;
     }
