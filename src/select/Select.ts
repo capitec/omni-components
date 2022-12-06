@@ -124,18 +124,19 @@ export class Select extends OmniFormElement {
 
     /**
      * The field of the item to display as one of the selectable options.
-     * @attr
+     * @attr [display-field]
      */
     @property({ type: String, reflect: true, attribute: 'display-field' }) displayField: string;
 
     /**
      * The id field of the items provided.
-     * @attr
+     * @attr [id-field]
      */
     @property({ type: String, reflect: true, attribute: 'id-field' }) idField: string = 'id';
 
     /**
      * The render function for each item.
+     * @no_attribute
      */
     @property({ type: Object, reflect: false }) renderItem: RenderFunction;
 
