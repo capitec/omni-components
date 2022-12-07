@@ -45,6 +45,7 @@ import '../icons/Minus.icon.js';
  * @cssprop --omni-numeric-field-font-weight - Numeric input field font weight.
  * @cssprop --omni-numeric-field-height - Numeric input field height.
  * @cssprop --omni-numeric-field-padding - Numeric input field padding.
+ * @cssprop --omni-numeric-field-width - Numeric input field width.
  *
  * @cssprop --omni-numeric-control-hover - Numeric input control hover color.
  *
@@ -131,6 +132,7 @@ export class NumericField extends OmniFormElement {
           font-weight: var(--omni-numeric-field-font-weight, var(--omni-font-weight));
           height: var(--omni-numeric-field-height, 100%);
           padding: var(--omni-numeric-field-padding, 10px);
+          width: var(--omni-numeric-field-width);
         }
 
         .control {
