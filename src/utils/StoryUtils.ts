@@ -568,6 +568,7 @@ async function setupThemes() {
         themeEdit.addEventListener('click', () => showCustomCssSource());
     }
     const themeSelect = document.getElementById('header-theme-select') as Select;
+    const themeNativeSelect = document.getElementById('header-theme-native-select') as HTMLSelectElement;
     const themeStyle = document.getElementById('theme-styles') as HTMLStyleElement;
     let darkThemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     if (window.matchMedia) {
@@ -579,6 +580,7 @@ async function setupThemes() {
                     value: darkThemeKey,
                     label: titleCase(darkThemeKey.replaceAll('.css', '').replaceAll('-', ' '))
                 };
+                themeNativeSelect.value = darkThemeKey;
                 window.sessionStorage.setItem(themeStorageKey, darkThemeKey);
                 changeTheme(event, darkThemeKey);
             } else if (!darkThemePreferred && storedTheme === darkThemeKey) {
@@ -586,6 +588,7 @@ async function setupThemes() {
                     value: lightThemeKey,
                     label: titleCase(lightThemeKey.replaceAll('.css', '').replaceAll('-', ' '))
                 };
+                themeNativeSelect.value = lightThemeKey;
                 window.sessionStorage.setItem(themeStorageKey, lightThemeKey);
                 changeTheme(event, lightThemeKey);
             }
@@ -599,6 +602,9 @@ async function setupThemes() {
             value: key,
             label: titleCase(key.replaceAll('.css', '').replaceAll('-', ' '))
         };
+        const nativeOption = document.createElement('option');
+        nativeOption.label = option.label;
+        nativeOption.value = option.value;
 
         const storedTheme = window.sessionStorage.getItem(themeStorageKey);
         if (
@@ -607,9 +613,11 @@ async function setupThemes() {
         ) {
             window.sessionStorage.setItem(themeStorageKey, key);
             themeSelect.value = option;
+            nativeOption.selected = true;
             changeTheme(null, key);
         }
         themeOptions.push(option);
+        themeNativeSelect.add(nativeOption);
         return option;
     }
 
@@ -717,7 +725,14 @@ async function setupThemes() {
     themeSelect.addEventListener('change', (e) => {
         const value = (e.target as Select).value as any;
         window.sessionStorage.setItem(themeStorageKey, value.value);
+        themeNativeSelect.value = value.value;
         changeTheme(e, value.value);
+    });
+    themeNativeSelect.addEventListener('change', (e) => {
+        const value = (e.target as HTMLSelectElement).value as any;
+        window.sessionStorage.setItem(themeStorageKey, value);
+        themeSelect.value = value;
+        changeTheme(e, value);
     });
 }
 
