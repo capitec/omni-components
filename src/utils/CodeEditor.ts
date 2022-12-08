@@ -47,7 +47,7 @@ export class CodeEditor extends LitElement {
           pointer-events: none;
         }
 
-        .cm-editor {
+       /*.cm-editor {
           background: var(--code-editor-background-color);
           font-size: 16px;
           padding: 12px;
@@ -55,7 +55,7 @@ export class CodeEditor extends LitElement {
           max-width: var(--code-editor-max-width);
           min-height: var(--code-editor-min-height);
           min-width: var(--code-editor-min-width);
-        }
+        }*/
 
         .cm-content {
           white-space: pre-wrap !important;
@@ -100,7 +100,7 @@ export class CodeEditor extends LitElement {
           transform: translate(0, 0) scale(0.9);
         }
         
-        .cm-scroller::-webkit-scrollbar {
+        /*.cm-scroller::-webkit-scrollbar {
             width: 10px;
             height: 10px;
         }
@@ -122,7 +122,7 @@ export class CodeEditor extends LitElement {
             border-right: 1px solid transparent;
         
             background-clip: padding-box;
-        }
+        }*/
       `
         ];
     }
