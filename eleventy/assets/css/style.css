@@ -296,7 +296,71 @@ header .header-version {
     background-clip: padding-box;
 }
 
+/* HOME */
 
+.home-header {
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    background-color: #209cef; 
+    padding: 24px 48px;
+}
+
+.home-header .title {
+    font-size: 64px; 
+    color: white; 
+    padding: 24px 0;
+    text-align: center;
+    /* text-shadow: 1px 1px #cccccc; */
+}
+
+.home-header .sub-title {
+    font-size: 32px;
+    padding-bottom: 24px;
+    text-align: center;
+}
+
+.home-content {
+    display: flex; 
+    align-items: stretch; 
+    background-color: white; 
+    padding: 48px;
+}
+
+.home-content .wrapper {
+    flex: 1; 
+    display: flex; 
+    flex-direction: row; 
+    justify-content: space-between;
+    /* background-color: orange;  */
+}
+
+.home-content .wrapper .block {
+    flex: 1; 
+    /* background: green; */
+    /* margin: 12px 24px; */
+    padding: 24px;
+    background-color: var(--docs-secondary-background-color);
+}
+
+.home-content .wrapper .block .header {
+    text-transform: uppercase;
+    font-size: 24px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-bottom: 12px;
+}
+
+.home-content .wrapper .block .header .icon {
+    color: #209cef; 
+    font-size: 36px;
+    padding: 0;
+}
+
+.home-content .wrapper .block .header .text {
+    padding-left: 12px;
+}
 
 /* CONTROLS */
 
@@ -926,6 +990,38 @@ table th {
     margin-bottom: 20px;
 }
 
+
+@media screen and (max-width: 1080px) {
+    
+    .home-content {
+        padding: 24px;
+    }
+
+    .home-header .title {
+        font-size: 48px;
+    }
+    
+    .home-header .sub-title {
+        font-size: 24px;
+    }
+    
+    .home-content .wrapper {
+        flex-direction: column;
+    }
+
+    .home-content .wrapper .block {
+        margin: 24px;
+    }
+    
+    .component-toc-wrapper {
+        display: none;
+    }
+    
+    .component-stories {
+        padding-right: 0;
+    }
+}
+
 @media screen and (max-width: 915px) {
 
     /* CONTROLS */
@@ -936,7 +1032,7 @@ table th {
 }
 
 @media screen and (max-width: 760px) {
-
+    
     footer {
         flex-direction: column;
         justify-content: center;
@@ -956,6 +1052,14 @@ table th {
 
     footer .links .item.copyright {
         margin-top: 24px;
+    }
+
+    .home-header .title {
+        font-size: 36px;
+    }
+
+    .home-header .sub-title {
+        font-size: 18px;
     }
 
     .menu {
@@ -1166,19 +1270,17 @@ table th {
     } */
 }
 
-@media screen and (max-width: 1080px) {
-    .component-toc-wrapper {
-        display: none;
-    }
-
-    .component-stories {
-        padding-right: 0;
-    }
-}
-
 @media screen and (max-width: 484px) {
     .header-text {
         display: none;
+    }
+
+    .home-header .title {
+        font-size: 24px;
+    }
+
+    .home-header .sub-title {
+        font-size: 16px;
     }
 }
 
