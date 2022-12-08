@@ -14,8 +14,10 @@ import {
     ViewUpdate
 } from '@codemirror/view';
 import { EditorView } from 'codemirror';
-import { css, html, LitElement, PropertyValueMap } from 'lit';
+import { css, html, LitElement } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
+
+import '../icon/Icon.js';
 
 /**
  * @ignore
@@ -188,7 +190,7 @@ export class CodeEditor extends LitElement {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    protected override async updated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): Promise<void> {
+    protected override async updated(): Promise<void> {
         if (!this.editor && this.codeParent && (this.code || this.slotElement.assignedNodes().length > 0)) {
             let source = this.code ? await this.transformSource(await this.code) : await this.transformSource(this._readCode(this.slotElement));
             this._clearElements(this.codeParent);
