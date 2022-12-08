@@ -185,6 +185,10 @@ header .header-version {
     background-color: var(--header-action-background-color);
 }
 
+.header-actions {    
+    --omni-select-items-max-height: 300px;
+}
+
 .header-actions > .action:hover,
 .header-actions > .header-theme-section:hover {
     --header-action-background-color:var(--omni-theme-background-hover-color);
