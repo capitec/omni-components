@@ -164,14 +164,6 @@ Check icon component.
 
 Chevron down icon component.
 
-
-```js
-
-
-import '@capitec/omni-components/icons/ChevronDown.icon.js';
-
-```
-
 </td></tr><tr><td>
 
 [omni-clear-icon](src/icons/README.md)
@@ -179,14 +171,6 @@ import '@capitec/omni-components/icons/ChevronDown.icon.js';
 </td><td>
 
 A clear icon component.
-
-
-```js
-
-
-import '@capitec/omni-components/icons/Clear.icon.js';
-
-```
 
 </td></tr><tr><td>
 
@@ -260,14 +244,6 @@ Minus icon component.
 
 More icon component.
 
-
-```js
-
-
-import '@capitec/omni-components/icons/More.icon.js';
-
-```
-
 </td></tr><tr><td>
 
 [omni-plus-icon](src/icons/README.md)
@@ -283,14 +259,6 @@ Plus icon component.
 </td><td>
 
 A search icon component.
-
-
-```js
-
-
-import '@capitec/omni-components/icons/Search.icon.js';
-
-```
 
 </td></tr><tr><td>
 
@@ -356,14 +324,6 @@ A search input control.
 
 Control to get / set a value within a list of options.
 
-
-```js
-
-
-import '@capitec/omni-components/select';
-
-```
-
 </td></tr><tr><td>
 
 [omni-switch](src/switch/README.md)
@@ -379,22 +339,6 @@ Control to switch a value on or off.
 </td><td>
 
 Control to input text.
-
-</td></tr><tr><td>
-
-[code-editor](src/utils/README.md)
-
-</td><td>
-
-
-
-</td></tr><tr><td>
-
-[live-property-editor](src/utils/README.md)
-
-</td><td>
-
-
 
 </td></tr></tbody></table>
 

@@ -25,11 +25,6 @@ Check icon component.
 
 Chevron down icon component.
 
-```js
-
-import '@capitec/omni-components/icons/ChevronDown.icon.js';
-```
-
 ## Example
 
 ```html
@@ -52,11 +47,6 @@ import '@capitec/omni-components/icons/ChevronDown.icon.js';
 # omni-clear-icon
 
 A clear icon component.
-
-```js
-
-import '@capitec/omni-components/icons/Clear.icon.js';
-```
 
 ## Example
 
@@ -296,11 +286,6 @@ Minus icon component.
 
 More icon component.
 
-```js
-
-import '@capitec/omni-components/icons/More.icon.js';
-```
-
 ## Example
 
 ```html
@@ -346,11 +331,6 @@ Plus icon component.
 # omni-search-icon
 
 A search icon component.
-
-```js
-
-import '@capitec/omni-components/icons/Search.icon.js';
-```
 
 ## Example
 
