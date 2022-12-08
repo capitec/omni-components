@@ -25,11 +25,6 @@ Check icon component.
 
 Chevron down icon component.
 
-```js
-
-import '@capitec/omni-components/icons/ChevronDown.icon.js';
-```
-
 ## Example
 
 ```html
@@ -290,11 +285,6 @@ Minus icon component.
 # omni-more-icon
 
 More icon component.
-
-```js
-
-import '@capitec/omni-components/icons/More.icon.js';
-```
 
 ## Example
 

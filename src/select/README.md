@@ -2,11 +2,6 @@
 
 Control to get / set a value within a list of options.
 
-```js
-
-import '@capitec/omni-components/select';
-```
-
 ## Example
 
 ```html
@@ -40,7 +35,7 @@ import '@capitec/omni-components/select';
 | `override`     | `override`      |           |                                                  |         | Used to set the base direction of text for display |
 | `renderItem`   | `renderItem`    |           | `RenderFunction`                                 |         | The render function for each item.               |
 | `styles`       |                 | readonly  | `CSSResultGroup[]`                               |         |                                                  |
-| `value`        | `value`         |           | `string \| number`                               | null    | The value entered into the form component.       |
+| `value`        | `value`         |           | `string \| number \| Record<string, unknown>`    | null    | The value entered into the form component.       |
 
 ## Methods
 

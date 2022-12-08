@@ -164,14 +164,6 @@ Check icon component.
 
 Chevron down icon component.
 
-
-```js
-
-
-import '@capitec/omni-components/icons/ChevronDown.icon.js';
-
-```
-
 </td></tr><tr><td>
 
 [omni-clear-icon](src/icons/README.md)
@@ -252,14 +244,6 @@ Minus icon component.
 
 More icon component.
 
-
-```js
-
-
-import '@capitec/omni-components/icons/More.icon.js';
-
-```
-
 </td></tr><tr><td>
 
 [omni-plus-icon](src/icons/README.md)
@@ -339,14 +323,6 @@ A search input control.
 </td><td>
 
 Control to get / set a value within a list of options.
-
-
-```js
-
-
-import '@capitec/omni-components/select';
-
-```
 
 </td></tr><tr><td>
 

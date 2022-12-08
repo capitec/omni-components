@@ -113,7 +113,8 @@
 
 ## Methods
 
-| Method              | Type                                             |
-|---------------------|--------------------------------------------------|
-| `createRenderRoot`  | `(): Element \| ShadowRoot`                      |
-| `renderCssVariable` | `(variable: CSSVariable): TemplateResult<1> \| unique symbol` |
+| Method                               | Type                                             |
+|--------------------------------------|--------------------------------------------------|
+| `createRenderRoot`                   | `(): Element \| ShadowRoot`                      |
+| `handleCustomThemeCSSVariableSearch` | `(e: Event): void`                               |
+| `renderCssVariable`                  | `(variable: CSSVariable): TemplateResult<1> \| unique symbol` |
