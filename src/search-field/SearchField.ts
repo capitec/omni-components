@@ -76,10 +76,12 @@ export class SearchField extends OmniFormElement {
         super._focusLost();
 
         // Dispatch standard DOM event to cater for single clear.
-        this.dispatchEvent(new Event('change', {
-            bubbles: true,
-            composed: true
-        }));
+        this.dispatchEvent(
+            new Event('change', {
+                bubbles: true,
+                composed: true
+            })
+        );
     }
 
     static override get styles() {

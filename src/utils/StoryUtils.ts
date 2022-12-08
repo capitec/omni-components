@@ -14,6 +14,8 @@ import { Select } from '../select/Select.js';
 import { CodeEditor, CodeMirrorEditorEvent, CodeMirrorSourceUpdateEvent } from './CodeEditor.js';
 import { StoryRenderer } from './StoryRenderer.js';
 
+import './CodeEditor.js';
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const codeSnippet = '```';
 const customThemeCssKey = 'omni-docs-custom-theme-css';
@@ -556,7 +558,7 @@ async function setupThemes() {
     let themeModal = document.createElement('div');
     document.body.appendChild(themeModal);
 
-    function uploadThemeClick(e: Event) {
+    function uploadThemeClick() {
         document.getElementById('cssValue').click();
     }
 
@@ -644,9 +646,10 @@ async function setupThemes() {
                                     <div class="code-modal">
                                         <span class="flex-row">
                                             <h3 id="custom-theme" style="margin-left: 0px;">Custom Theme</h3>
-                                            <input class="hidden" id="cssValue" type="file" accept=".css" @input="${(e2: Event) => uploadTheme(e2)}" />
-                                            <omni-button class="docs-omni-component" label="Upload" type="secondary" @click="${(e3: Event) =>
-                                                uploadThemeClick(e3)}" ></omni-button>
+                                            <input class="hidden" id="cssValue" type="file" accept=".css" @input="${(e2: Event) =>
+                                                uploadTheme(e2)}" />
+                                            <omni-button class="docs-omni-component" label="Upload" type="secondary" @click="${() =>
+                                                uploadThemeClick()}" ></omni-button>
                                         </span>
                                         <div style="padding-top: 12px;">
                                             <div id="custom-theme-source" >
@@ -808,7 +811,7 @@ function copyToClipboard(id: string) {
 
 function setupMenu() {
     const menuButton = document.querySelector<HTMLElement>('.header-menu-button .material-icons');
-    menuButton.addEventListener('click', (e) => {
+    menuButton.addEventListener('click', () => {
         const nav = document.querySelector('nav');
         if (nav.classList.contains('mobile')) {
             nav.classList.remove('mobile');
