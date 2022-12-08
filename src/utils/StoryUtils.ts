@@ -644,7 +644,8 @@ async function setupThemes() {
                                     <div class="code-modal">
                                         <span class="flex-row">
                                             <h3 id="custom-theme" style="margin-left: 0px;">Custom Theme</h3>
-                                            <input class="hidden" id="cssValue" type="file" accept=".css" @input="${(e2: Event) => uploadTheme(e2)}" />
+                                            <input class="hidden" id="cssValue" type="file" accept=".css" @input="${(e2: Event) =>
+                                                uploadTheme(e2)}" />
                                             <omni-button class="docs-omni-component" label="Upload" type="secondary" @click="${(e3: Event) =>
                                                 uploadThemeClick(e3)}" ></omni-button>
                                         </span>
