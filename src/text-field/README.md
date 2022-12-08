@@ -91,6 +91,7 @@ Control to input text.
 | `--omni-form-label-left`                         | Form label left margin.                        |
 | `--omni-form-label-text-align`                   | Form label text align.                         |
 | `--omni-form-label-transform-origin`             | Form label text align                          |
+| `--omni-form-label-z-index`                      | Form label z-index.                            |
 | `--omni-text-field-font-color`                   | Text field font color.                         |
 | `--omni-text-field-font-family`                  | Text field font family.                        |
 | `--omni-text-field-font-size`                    | Text field font size.                          |

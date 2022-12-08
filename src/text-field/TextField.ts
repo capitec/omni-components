@@ -41,7 +41,9 @@ export class TextField extends OmniFormElement {
 
     override connectedCallback() {
         super.connectedCallback();
-        this.addEventListener('input', this._keyInput.bind(this));
+        this.addEventListener('input', this._keyInput.bind(this), {
+            capture: true
+        });
     }
 
     _keyInput() {
@@ -71,6 +73,7 @@ export class TextField extends OmniFormElement {
           font-weight: var(--omni-text-field-font-weight, var(--omni-font-weight));
           height: var(--omni-text-field-height, 100%);
           padding: var(--omni-text-field-padding, 10px);
+          width: var(--omni-text-field-width);
         }
       `
         ];

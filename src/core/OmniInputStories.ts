@@ -10,15 +10,6 @@ import expect from '../utils/ExpectDOM';
 import { ComponentStoryFormat, raw } from '../utils/StoryUtils.js';
 import { OmniFormElement } from './OmniFormElement.js';
 
-export const BaseArgTypeDefinitions = {
-    suffix: {
-        control: 'text'
-    },
-    prefix: {
-        control: 'text'
-    }
-};
-
 export interface BaseArgs {
     label: string;
     value: string;
@@ -40,7 +31,6 @@ export const LabelStory = <T extends HTMLElement, U extends BaseArgs>(tagName: s
         } as U,
         play: async (context) => {
             const input = within(context.canvasElement).getByTestId<T>('test-field');
-            console.log(input);
             await expect(input.shadowRoot.querySelector<HTMLElement>('.label > span')).toHaveTextContent(Label.args.label);
         }
     };

@@ -1,12 +1,13 @@
 import { html as langHtml } from '@codemirror/lang-html';
 import { githubDark as codeThemeDark } from '@ddietr/codemirror-themes/github-dark.js';
 import { githubLight as codeTheme } from '@ddietr/codemirror-themes/github-light.js';
-import { html, LitElement, nothing, PropertyValueMap, render, TemplateResult } from 'lit';
+import { html, LitElement, nothing, render, TemplateResult } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { live } from 'lit/directives/live.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import pretty from 'pretty';
 import { ColorField } from '../color-field/ColorField.js';
+import { SearchField } from '../search-field/SearchField.js';
 import { TextField } from '../text-field/TextField.js';
 import { CodeMirrorSourceUpdateEvent, CodeMirrorEditorEvent } from './CodeEditor.js';
 import { CodeEditor } from './CodeEditor.js';
@@ -121,28 +122,9 @@ export class StoryRenderer extends LitElement {
             <div class="modal-container">
                 <div class="modal-body">
                     <div class="docs-search-area">
-                        <div class="docs-search-wrapper">
-                            <div class="docs-search-icon">
-                                <span class="material-icons">
-                                    search
-                                </span>
-                            </div>
-                            <input class="docs-search-input css-category" type="text" placeholder="Search component variables" aria-invalid="false" value="" spellcheck="false" data-ms-editor="true" @input="${(
-                                e: Event
-                            ) => {
-                                const filterValue = (e.target as HTMLInputElement).value ?? '';
-                                const table = document.querySelector(`[data-target=custom-css-table-${this.tag}]`) as HTMLTableSectionElement;
-                                const cssPropRows = table.children;
-                                for (let index = 0; index < cssPropRows.length; index++) {
-                                    const element = cssPropRows[index] as HTMLElement;
-                                    if (element.innerText && element.innerText.toLowerCase().includes(filterValue.toLowerCase())) {
-                                        element.classList.remove('hidden');
-                                    } else {
-                                        element.classList.add('hidden');
-                                    }
-                                }
-                            }}" >
-                        </div>
+                        <omni-search-field class="css-category" @input="${(e: Event) => this.handleCustomThemeCSSVariableSearch(e)}" @change="${(
+                      e: Event
+                  ) => this.handleCustomThemeCSSVariableSearch(e)}"></omni-search-field>
                     </div>
                     <div class="component-props-table-wrapper">
                         <table class="component-props-table">
@@ -209,7 +191,20 @@ export class StoryRenderer extends LitElement {
                   ignore-attributes="dir,lang"
                   @property-change="${async (e: CustomEvent<PropertyChangeEvent>) => {
                       const changed = e.detail;
-                      if (!changed.oldValue || !changed.newValue || changed.oldValue.toString().trim() !== changed.newValue.toString().trim()) {
+                      let mustUpdate = false;
+
+                      if (!changed.oldValue || !changed.newValue) {
+                          mustUpdate = true;
+                      } else if (
+                          typeof changed.newValue !== 'string' &&
+                          JSON.stringify(changed.oldValue).trim() !== JSON.stringify(changed.newValue).trim()
+                      ) {
+                          mustUpdate = true;
+                      } else if (changed.oldValue.toString().trim() !== changed.newValue.toString().trim()) {
+                          mustUpdate = true;
+                      }
+
+                      if (mustUpdate) {
                           this.story.args[changed.property] = changed.newValue;
 
                           this.requestUpdate();
@@ -273,6 +268,20 @@ export class StoryRenderer extends LitElement {
         </div>
       </div>
     `;
+    }
+
+    handleCustomThemeCSSVariableSearch(e: Event) {
+        const filterValue = (e.target as SearchField).value ?? '';
+        const table = document.querySelector(`[data-target=custom-css-table-${this.tag}]`) as HTMLTableSectionElement;
+        const cssPropRows = table.children;
+        for (let index = 0; index < cssPropRows.length; index++) {
+            const element = cssPropRows[index] as HTMLElement;
+            if (element.innerText && element.innerText.toLowerCase().includes((<string>filterValue).toLowerCase())) {
+                element.classList.remove('hidden');
+            } else {
+                element.classList.add('hidden');
+            }
+        }
     }
 
     renderCssVariable(variable: CSSVariable) {
@@ -395,9 +404,9 @@ export class StoryRenderer extends LitElement {
         this._showStylesDialog = true;
     }
 
-    private _checkCloseModal(e: any) {
+    private _checkCloseModal(e: Event) {
         const containerElement = this.modal.querySelector(`div.modal-container`);
-        if (!e.path.includes(containerElement)) {
+        if (!e.composedPath().includes(containerElement)) {
             this._showStylesDialog = false;
         }
     }

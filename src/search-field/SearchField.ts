@@ -34,7 +34,8 @@ import '../icons/Search.icon';
  * @cssprop --omni-search-field-font-size - Search field font size.
  * @cssprop --omni-search-field-font-weight - Search field font weight.
  * @cssprop --omni-search-field-height - Search field height.
- * @cssprop --omni-search-field-padding - Search field width.
+ * @cssprop --omni-search-field-padding - Search field padding.
+ * @cssprop --omni-search-field-width - Search field width
  *
  * @cssprop --omni-search-field-control-margin-right - Search field control right margin.
  * @cssprop --omni-search-field-control-margin-left - Search field control left margin.
@@ -55,7 +56,9 @@ export class SearchField extends OmniFormElement {
 
     override connectedCallback() {
         super.connectedCallback();
-        this.addEventListener('input', this._keyInput.bind(this));
+        this.addEventListener('input', this._keyInput.bind(this), {
+            capture: true
+        });
     }
 
     _keyInput() {
@@ -71,6 +74,12 @@ export class SearchField extends OmniFormElement {
         this.value = '';
         // Moves the label back into position when clear button is clicked.
         super._focusLost();
+
+        // Dispatch standard DOM event to cater for single clear.
+        this.dispatchEvent(new Event('change', {
+            bubbles: true,
+            composed: true
+        }));
     }
 
     static override get styles() {
@@ -95,6 +104,7 @@ export class SearchField extends OmniFormElement {
                     font-weight: var(--omni-search-field-font-weight, var(--omni-font-weight));
                     height: var(--omni-search-field-height, 100%);
                     padding: var(--omni-search-field-padding, 10px);
+                    width: var(--omni-search-field-width);
                 }
 
                 .control {

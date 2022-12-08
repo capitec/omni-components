@@ -158,6 +158,22 @@ Check icon component.
 
 </td></tr><tr><td>
 
+[omni-chevron-down-icon](src/icons/README.md)
+
+</td><td>
+
+Chevron down icon component.
+
+
+```js
+
+
+import '@capitec/omni-components/icons/ChevronDown.icon.js';
+
+```
+
+</td></tr><tr><td>
+
 [omni-clear-icon](src/icons/README.md)
 
 </td><td>
@@ -230,6 +246,22 @@ Minus icon component.
 
 </td></tr><tr><td>
 
+[omni-more-icon](src/icons/README.md)
+
+</td><td>
+
+More icon component.
+
+
+```js
+
+
+import '@capitec/omni-components/icons/More.icon.js';
+
+```
+
+</td></tr><tr><td>
+
 [omni-plus-icon](src/icons/README.md)
 
 </td><td>
@@ -299,6 +331,22 @@ Element that defers content rendering to a provided function / promise.
 </td><td>
 
 A search input control.
+
+</td></tr><tr><td>
+
+[omni-select](src/select/README.md)
+
+</td><td>
+
+Control to get / set a value within a list of options.
+
+
+```js
+
+
+import '@capitec/omni-components/select';
+
+```
 
 </td></tr><tr><td>
 

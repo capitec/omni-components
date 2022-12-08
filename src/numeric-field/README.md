@@ -94,6 +94,7 @@ Input control to enter a single line of numbers with a stepper control.
 | `--omni-form-label-left`                         | Form label left margin.                        |
 | `--omni-form-label-text-align`                   | Form label text align.                         |
 | `--omni-form-label-transform-origin`             | Form label text align                          |
+| `--omni-form-label-z-index`                      | Form label z-index.                            |
 | `--omni-numeric-control-hover`                   | Numeric input control hover color.             |
 | `--omni-numeric-field-font-color`                | Numeric input field font color.                |
 | `--omni-numeric-field-font-family`               | Numeric input field font family.               |

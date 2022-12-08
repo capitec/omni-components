@@ -7,7 +7,6 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import {
     LabelStory,
     BaseArgs,
-    BaseArgTypeDefinitions,
     HintStory,
     ErrorStory,
     DisabledStory,
@@ -25,7 +24,6 @@ import './CurrencyField.js';
 export default {
     title: 'UI Components/Currency Field',
     component: 'omni-currency-field',
-    argTypes: BaseArgTypeDefinitions
 } as CSFIdentifier;
 
 interface Args extends BaseArgs {

@@ -6,7 +6,6 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import {
     LabelStory,
     BaseArgs,
-    BaseArgTypeDefinitions,
     HintStory,
     ErrorStory,
     DisabledStory,
@@ -24,7 +23,6 @@ import './TextField.js';
 export default {
     title: 'UI Components/Text Field',
     component: 'omni-text-field',
-    argTypes: BaseArgTypeDefinitions
 } as CSFIdentifier;
 
 export const Interactive: ComponentStoryFormat<BaseArgs> = {

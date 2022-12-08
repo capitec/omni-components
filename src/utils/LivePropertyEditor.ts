@@ -144,19 +144,28 @@ export class LivePropertyEditor extends OmniElement {
 
                 .docs-text-field {
                     width: 100%;
+                    /*
+                    --omni-form-border-color: var(--docs-border-color);
+                    --omni-theme-border-width: 10px;
+                    --omni-form-hover-color: transparent;
+                    --omni-form-focussed-border-width: 1px;
+                    --omni-form-focussed-border-color: var(--docs-border-color);
+                    */
+                    /*border: 1px solid var(--docs-border-color);*/
                 }
 
                 .docs-select {
+                    /*
                     padding: 5px;
                     cursor: pointer;
                     border-radius: 6px;
-                    border: 1px solid #e1e1e1;
+                    border: 1px solid var(--docs-border-color);
                     display: flex;
                     min-width: 191px;
                     min-height: 41px;
                     width: 100%;
                     background-color: var(--omni-theme-background-color, inherit);
-                    color: var(--omni-theme-font-color, inherit);
+                    color: var(--omni-theme-font-color, inherit);*/
                 }
 
                 .docs-select:focus-visible {
@@ -234,10 +243,11 @@ export class LivePropertyEditor extends OmniElement {
                         return;
 
                     let attributeEditor: TemplateResult = undefined;
-
-                    if (attribute.type.text === 'boolean') {
-                        attributeEditor = html`
+                    try {
+                        if (attribute.type.text === 'boolean') {
+                            attributeEditor = html`
               <omni-switch
+                class="docs-select"
                 ?disabled=${this.disabled}
                 ?checked="${
                     this.data ? this.data.args[attribute.name] ?? this.data.args[attribute.fieldName ?? attribute.name] : attribute.default === 'true'
@@ -251,27 +261,29 @@ export class LivePropertyEditor extends OmniElement {
                 }}">
               </omni-switch>
             `;
-                    } else if (
-                        attribute.type.text !== 'object' &&
-                        attribute.type.text !== 'string' &&
-                        attribute.type.text !== 'boolean' &&
-                        !attribute.type.text.includes('Promise') &&
-                        attribute.type.text.includes("'")
-                    ) {
-                        const typesRaw = attribute.type.text.split(' | ');
-                        const types = [];
-                        for (const type in typesRaw) {
-                            const typeValue = typesRaw[type];
-                            types.push(typeValue.substring(1, typeValue.length - 1));
-                        }
-                        const startValue = this.data
-                            ? this.data.args[attribute.name] ?? this.data.args[attribute.fieldName ?? attribute.name]
-                            : undefined;
+                        } else if (
+                            attribute.type.text !== 'object' &&
+                            attribute.type.text !== 'string' &&
+                            attribute.type.text !== 'boolean' &&
+                            !attribute.type.text.includes('Promise') &&
+                            attribute.type.text.includes("'")
+                        ) {
+                            const typesRaw = attribute.type.text.split(' | ');
+                            const types = [];
+                            for (const type in typesRaw) {
+                                const typeValue = typesRaw[type];
+                                types.push(typeValue.substring(1, typeValue.length - 1));
+                            }
+                            const startValue = this.data
+                                ? this.data.args[attribute.name] ?? this.data.args[attribute.fieldName ?? attribute.name]
+                                : undefined;
 
-                        attributeEditor = html`
-              <select
+                            attributeEditor = html`
+              <omni-select
                 class="docs-select"
                 ?disabled=${this.disabled}
+                value=${startValue}
+                .items=${types}
                 @change="${(e: Event) => {
                     const value = (e.target as HTMLSelectElement).value;
                     this._propertyChanged({
@@ -279,30 +291,44 @@ export class LivePropertyEditor extends OmniElement {
                         newValue: value,
                         oldValue: this.data ? this.data.args[attribute.name] : undefined
                     });
-                }}">
-                ${types.map((t) => html`<option value="${t}" ?selected="${t === startValue}">${t}</option>`)}
-              </select>
+                }}"
+            >
+                
+            </omni-select>
+
             `;
-                    } else if (
-                        attribute.type.text === 'object' ||
-                        attribute.type.text.includes('Promise') ||
-                        (this.data?.args &&
-                            this.data.args[attribute.name] &&
-                            (typeof this.data.args[attribute.name] === 'function' || typeof this.data.args[attribute.name].then === 'function'))
-                    ) {
-                        return;
-                    } else {
-                        attributeEditor = html`
+                        } else if (
+                            attribute.type.text === 'object' ||
+                            attribute.type.text.includes('Promise') ||
+                            (this.data?.args &&
+                                this.data.args[attribute.name] &&
+                                (typeof this.data.args[attribute.name] === 'function' || typeof this.data.args[attribute.name].then === 'function'))
+                        ) {
+                            return;
+                        } else {
+                            const val = this.data
+                                ? this.data.args[attribute.name] ?? this.data.args[attribute.fieldName ?? attribute.name] ?? ''
+                                : '';
+                            let boundValue = '';
+                            if (typeof val === 'string') {
+                                boundValue = val;
+                            } else {
+                                boundValue = JSON.stringify(val);
+                            }
+                            attributeEditor = html`
               <omni-text-field
                 class="docs-text-field"
                 ?disabled=${this.disabled}
-                .value="${live(this.data ? this.data.args[attribute.name] ?? this.data.args[attribute.fieldName ?? attribute.name] ?? '' : '')}"
+                .value="${live(boundValue)}"
                 @input="${async (e: Event) => {
                     const textField = e.target as TextField;
                     // textField.requestUpdate();
                     // await textField.updateComplete;
 
-                    const value = (textField.shadowRoot.getElementById('inputField') as HTMLInputElement).value;
+                    let value = (textField.shadowRoot.getElementById('inputField') as HTMLInputElement).value;
+                    if (typeof val !== 'string') {
+                        value = JSON.parse(value);
+                    }
                     this._propertyChanged({
                         property: this.data && attribute.fieldName && this.data.args[attribute.fieldName] ? attribute.fieldName : attribute.name,
                         newValue: value,
@@ -311,11 +337,15 @@ export class LivePropertyEditor extends OmniElement {
                 }}">
               </omni-text-field>
             `;
+                        }
+                    } catch (error) {
+                        console.error(error);
+                        return;
                     }
                     if (attributeEditor) {
                         attributes.push({
                             html: html`
-                <omni-label class="live-header" label="${attribute.name}"></omni-label>
+                            <omni-label class="live-header" label="${attribute.name}"></omni-label>                
                 ${attributeEditor}
               `,
                             name: attribute.name

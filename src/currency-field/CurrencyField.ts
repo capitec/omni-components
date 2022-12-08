@@ -43,6 +43,7 @@ export const CURRENCY_SEPARATOR = {
  * @cssprop --omni-currency-field-font-weight - Currency field font weight.
  * @cssprop --omni-currency-field-height - Currency field height.
  * @cssprop --omni-currency-field-padding - Currency field padding.
+ * @cssprop --omni-currency-field-width - Currency field width.
  *
  * @cssprop --omni-currency-field-symbol-font-size - Currency field symbol font size.
  * @cssprop --omni-currency-field-symbol-color - Currency field symbol font color.
@@ -83,9 +84,15 @@ export class CurrencyField extends OmniFormElement {
 
     override connectedCallback(): void {
         super.connectedCallback();
-        this.addEventListener('input', this._keyInput.bind(this));
-        this.addEventListener('blur', this._blur.bind(this));
-        this.addEventListener('keydown', this._keyDown.bind(this));
+        this.addEventListener('input', this._keyInput.bind(this), {
+            capture: true
+        });
+        this.addEventListener('blur', this._blur.bind(this), {
+            capture: true
+        });
+        this.addEventListener('keydown', this._keyDown.bind(this), {
+            capture: true
+        });
     }
 
     override async attributeChangedCallback(name: string, _old: string | null, value: string | null): Promise<void> {
@@ -348,6 +355,7 @@ export class CurrencyField extends OmniFormElement {
                     font-weight: var(--omni-currency-field-font-weight, var(--omni-font-weight));
                     height: var(--omni-currency-field-height, 100%);
                     padding: var(--omni-currency-field-padding, 10px);
+                    width: var(--omni-currency-field-width);
                 }
 
                 .currency-symbol {

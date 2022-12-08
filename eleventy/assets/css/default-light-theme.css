@@ -1,5 +1,49 @@
 :root {
     
+    --omni-theme-primary-color:  #808080;
+    --omni-theme-primary-hover-color: #7878781a ; /* 3% darker */
+    --omni-theme-primary-active-color: #787878 ; /* 6% darker */
+
+    --omni-theme-accent-color: #c3c3c3;
+    --omni-theme-accent-hover-color:  #bbbbbb1a; /* 3% darker */
+    --omni-theme-accent-active-color:  #b4b4b4; /* 6% darker */
+
+    --omni-theme-background-color:  #ffffff;
+    --omni-theme-background-hover-color:  #f7f7f71a; /* 3% darker */
+    --omni-theme-background-active-color:  #f0f0f0; /* 6% darker */
+
+    --omni-theme-font-color:  black;
+    --omni-theme-disabled-border-color:  #dedede44;
+    --omni-theme-disabled-background-color:  #dedede;
+    --omni-theme-error-font-color:  red;
+    --omni-theme-error-border-color:  red;
+    --omni-theme-hint-font-color:  lightgrey;
+    --omni-theme-inactive-color:  #7c7c7c;
+    --omni-theme-box-shadow-color:  #f2f2f2;
+
+    --omni-theme-font-family: 'Hind Vadodara';
+    --omni-theme-font-size: 14px;
+    --omni-theme-font-weight: normal;
+
+    --omni-theme-border-radius: 4px;
+    --omni-theme-border-width: 2px;
+
+    /* COMPONENT SPECIFIC STYLES */
+    --omni-select-items-max-height: 300px;
+}
+
+/* DOCS SPECIFIC */
+* {
+    --docs-border-color: #e1e1e1;
+    --docs-secondary-background-color: #f9f9f9;
+    --code-editor-background-color: var(--docs-secondary-background-color);
+}
+
+header {
+    --header-border-bottom-color: #e1e1e1;
+}
+
+.docs-omni-component {
 
     --omni-theme-primary-color:  #808080;
     --omni-theme-primary-hover-color: #7878781a ; /* 3% darker */
@@ -28,41 +72,11 @@
 
     --omni-theme-border-radius: 4px;
     --omni-theme-border-width: 2px;
-}
 
-html {
-    --code-editor-background-color: #f9f9f9;
-}
-
-.docs-omni-component {
-
-    --omni-theme-primary-color:  #808080;
-    --omni-theme-primary-hover-color: #7878781a ; /* 3% darker */
-    --omni-theme-primary-active-color: #787878 ; /* 6% darker */
-
-    --omni-theme-accent-color: #c3c3c3;
-    --omni-theme-accent-hover-color:  #bbbbbb1a; /* 3% darker */
-    --omni-theme-accent-active-color:  #b4b4b4; /* 6% darker */
-
-    --omni-theme-background-color:  #ffffff;
-    --omni-theme-background-hover-color:  #f7f7f71a; /* 3% darker */
-    --omni-theme-background-active-color:  #f0f0f0; /* 6% darker */
-
-    --omni-theme-font-color:  black;
-    --omni-theme-disabled-border-color:  #dedede44;
-    --omni-theme-disabled-background-color:  #dedede;
-    --omni-theme-error-font-color:  red;
-    --omni-theme-error-border-color:  red;
-    --omni-theme-hint-font-color:  lightgrey;
-    --omni-theme-inactive-color:  #7c7c7c;
-    --omni-theme-box-shadow-color:  #f2f2f2;
-
-    --omni-theme-font-family: 'Hind Vadodara';
-    --omni-theme-font-size: 16px;
-    --omni-theme-font-weight: normal;
-
-    --omni-theme-border-radius: 4px;
-    --omni-theme-border-width: 2px;
+    --omni-form-border-color: var(--docs-border-color);
+    --omni-select-field-padding: 8px;
+    --omni-text-field-padding: 8px;
+    --omni-select-field-width: 110px;
 }
 
 footer {
@@ -80,7 +94,6 @@ footer {
 .component-tab-container {
     background-color: #f9f9f9;
 }
-
 
 /* PRISM */
 

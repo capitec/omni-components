@@ -7,10 +7,8 @@ import { OmniFormElement } from '../core/OmniFormElement.js';
 import {
     LabelStory,
     BaseArgs,
-    BaseArgTypeDefinitions,
     HintStory,
     ErrorStory,
-    DisabledStory,
     ValueStory,
     PrefixStory,
     SuffixStory
@@ -25,7 +23,6 @@ import './ColorField.js';
 export default {
     title: 'UI Components/Color Field',
     component: 'omni-color-field',
-    argTypes: BaseArgTypeDefinitions
 } as CSFIdentifier;
 
 export const Interactive: ComponentStoryFormat<BaseArgs> = {

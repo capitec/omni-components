@@ -46,6 +46,7 @@ import '../icons/EyeVisible.icon.js';
  * @cssprop --omni-password-field-font-weight - Password field font weight.
  * @cssprop --omni-password-field-height - Password field height.
  * @cssprop --omni-password-field-padding - Password field width.
+ * @cssprop --omni-password-field-width - Password field width.
  *
  */
 @customElement('omni-password-field')
@@ -60,7 +61,9 @@ export class PasswordField extends OmniFormElement {
 
     override connectedCallback() {
         super.connectedCallback();
-        this.addEventListener('input', this._keyInput.bind(this));
+        this.addEventListener('input', this._keyInput.bind(this), {
+            capture: true
+        });
     }
 
     _keyInput() {
@@ -134,6 +137,7 @@ export class PasswordField extends OmniFormElement {
           font-weight: var(--omni-password-field-font-weight, var(--omni-font-weight));
           height: var(--omni-password-field-height, 100%);
           padding: var(--omni-password-field-padding, 10px);
+          width: var(--omni-password-field-width);
         }
       `
         ];

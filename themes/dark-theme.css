@@ -1,3 +1,4 @@
+/* Only dark theme changes both root and docs vars explicitly */
 :root,
 .docs-omni-component {
     --omni-theme-primary-color:  #b4b4b4;
@@ -32,10 +33,15 @@
 
     /* COMPONENT SPECIFIC STYLES */
     --omni-switch-knob-box-shadow: 0 2px 4px 0 rgb(255, 255, 255), 0 1px 3px rgb(255, 255, 255), 0 -1px 2px rgb(255, 255, 255);
+    --omni-select-item-header-font-color: var(--omni-theme-background-color);
 }
 
-html {
-    --code-editor-background-color: rgb(36, 41, 46);
+/* DOCS SPECIFIC */
+* {
+
+    --docs-border-color: #373a40;
+    --docs-secondary-background-color: #2C3136;
+    --code-editor-background-color: var(--docs-secondary-background-color);
 }
 
 a {
@@ -44,13 +50,6 @@ a {
 
 a:visited {
     color: blueviolet;
-}
-
-footer,
-.component-meta,
-.component-tab-button,
-.component-tab-container {
-    background-color: #2C3136;
 }
 
 /**

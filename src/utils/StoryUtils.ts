@@ -9,6 +9,8 @@ import { Package, ClassDeclaration, CustomElementDeclaration, Declaration, Custo
 export { Package, ClassDeclaration, CustomElementDeclaration, Declaration, CustomElement } from 'custom-elements-manifest/schema';
 import { html, unsafeCSS } from 'lit';
 import { render } from 'lit-html';
+import { SearchField } from '../search-field/SearchField.js';
+import { Select } from '../select/Select.js';
 import { CodeEditor, CodeMirrorEditorEvent, CodeMirrorSourceUpdateEvent } from './CodeEditor.js';
 import { StoryRenderer } from './StoryRenderer.js';
 
@@ -560,39 +562,62 @@ async function setupThemes() {
 
     const themes = await loadThemesListRemote();
     themes.sort((t) => (t === darkThemeKey ? -1 : 0));
-    const themeSelect = document.getElementById('header-theme-select') as HTMLSelectElement;
+    const themeEdit = document.getElementById('header-theme-edit-btn') as HTMLSpanElement;
+    if (themeEdit) {
+        themeEdit.style.display = 'none';
+        themeEdit.addEventListener('click', () => showCustomCssSource());
+    }
+    const themeSelect = document.getElementById('header-theme-select') as Select;
+    const themeNativeSelect = document.getElementById('header-theme-native-select') as HTMLSelectElement;
     const themeStyle = document.getElementById('theme-styles') as HTMLStyleElement;
     let darkThemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     if (window.matchMedia) {
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
             darkThemePreferred = event.matches;
             const storedTheme = window.sessionStorage.getItem(themeStorageKey);
             if (darkThemePreferred && storedTheme === lightThemeKey) {
-                themeSelect.value = darkThemeKey;
+                themeSelect.value = {
+                    value: darkThemeKey,
+                    label: titleCase(darkThemeKey.replaceAll('.css', '').replaceAll('-', ' '))
+                };
+                themeNativeSelect.value = darkThemeKey;
                 window.sessionStorage.setItem(themeStorageKey, darkThemeKey);
                 changeTheme(event, darkThemeKey);
             } else if (!darkThemePreferred && storedTheme === darkThemeKey) {
-                themeSelect.value = lightThemeKey;
+                themeSelect.value = {
+                    value: lightThemeKey,
+                    label: titleCase(lightThemeKey.replaceAll('.css', '').replaceAll('-', ' '))
+                };
+                themeNativeSelect.value = lightThemeKey;
                 window.sessionStorage.setItem(themeStorageKey, lightThemeKey);
                 changeTheme(event, lightThemeKey);
             }
         });
     }
 
+    const themeOptions: { value: string; label: string }[] = [];
+
     function addOption(key: string) {
-        const option = document.createElement('option');
-        option.value = key;
-        option.label = titleCase(key.replaceAll('.css', '').replaceAll('-', ' '));
+        const option = {
+            value: key,
+            label: titleCase(key.replaceAll('.css', '').replaceAll('-', ' '))
+        };
+        const nativeOption = document.createElement('option');
+        nativeOption.label = option.label;
+        nativeOption.value = option.value;
+
         const storedTheme = window.sessionStorage.getItem(themeStorageKey);
         if (
             storedTheme === key ||
             (!storedTheme && ((!darkThemePreferred && key === lightThemeKey) || (darkThemePreferred && key?.toLowerCase() === darkThemeKey)))
         ) {
             window.sessionStorage.setItem(themeStorageKey, key);
-            option.selected = true;
+            themeSelect.value = option;
+            nativeOption.selected = true;
             changeTheme(null, key);
         }
-        themeSelect.add(option);
+        themeOptions.push(option);
+        themeNativeSelect.add(nativeOption);
         return option;
     }
 
@@ -605,7 +630,46 @@ async function setupThemes() {
         }
     }
 
+    function showCustomCssSource() {
+        const customThemeSourceParent = document.getElementById('custom-theme-source');
+        if (!customThemeSourceParent) {
+            // Theme change is triggered by user if the event (e) is defined and this is not the theme support page if there is no customThemeSourceParent already
+            // Show custom theme code editor modal
+            render(
+                html` 
+                        <div class="modal" role="dialog" aria-modal="true"
+                        @click="${(e0: Event) => _checkCloseModal(e0)}" @touch="${(e1: Event) => _checkCloseModal(e1)}">
+                            <div class="modal-container">
+                                <div class="modal-body">
+                                    <div class="code-modal">
+                                        <span class="flex-row">
+                                            <h3 id="custom-theme" style="margin-left: 0px;">Custom Theme</h3>
+                                            <input class="hidden" id="cssValue" type="file" accept=".css" @input="${(e2: Event) => uploadTheme(e2)}" />
+                                            <omni-button class="docs-omni-component" label="Upload" type="secondary" @click="${(e3: Event) =>
+                                                uploadThemeClick(e3)}" ></omni-button>
+                                        </span>
+                                        <div style="padding-top: 12px;">
+                                            <div id="custom-theme-source" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `,
+                themeModal
+            );
+
+            setupCustomTheming();
+        } else {
+            (customThemeSourceParent?.parentElement?.previousElementSibling ?? customThemeSourceParent).scrollIntoView();
+        }
+    }
+
     function changeTheme(e: Event, theme: string) {
+        if (themeEdit) {
+            themeEdit.style.display = 'none';
+        }
         document.dispatchEvent(
             new CustomEvent<string>('omni-docs-theme-change', {
                 detail: theme
@@ -622,50 +686,22 @@ async function setupThemes() {
             return;
         }
         if (theme === customThemeKey) {
+            if (themeEdit) {
+                themeEdit.style.display = 'flex';
+            }
             let customCss = window.sessionStorage.getItem(customThemeCssKey);
             const switchToCustomTheme = async () => {
                 if (!customCss) {
                     customCss = await loadFileRemote(`./assets/css/default-light-theme.css`);
                 }
                 themeStyle.innerHTML = customCss;
-                const customThemeSourceParent = document.getElementById('custom-theme-source');
-                if (e && !customThemeSourceParent) {
-                    // Theme change is triggered by user if the event (e) is defined and this is not the theme support page if there is no customThemeSourceParent already
-                    // Show custom theme code editor modal
-                    render(
-                        html` 
-                        <div class="modal" role="dialog" aria-modal="true"
-                        @click="${(e: Event) => _checkCloseModal(e)}" @touch="${(e: Event) => _checkCloseModal(e)}">
-                            <div class="modal-container">
-                                <div class="modal-body">
-                                    <div class="code-modal">
-                                        <span class="flex-row">
-                                            <h3 id="custom-theme" style="margin-left: 0px;">Custom Theme</h3>
-                                            <input class="hidden" id="cssValue" type="file" accept=".css" @input="${(e: Event) => uploadTheme(e)}" />
-                                            <omni-button class="docs-omni-component" label="Upload" type="secondary" @click="${(e: Event) =>
-                                                uploadThemeClick(e)}" ></omni-button>
-                                        </span>
-                                        <div style="padding-top: 12px;">
-                                            <div id="custom-theme-source" >
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `,
-                        themeModal
-                    );
-
-                    setupCustomTheming();
-                } else if (e && customThemeSourceParent) {
-                    (customThemeSourceParent?.parentElement?.previousElementSibling ?? customThemeSourceParent).scrollIntoView();
+                if (e) {
+                    showCustomCssSource();
                 }
             };
             switchToCustomTheme();
             return;
         }
-        const css = themeStyle.sheet;
         loadFileRemote(`./themes/${theme}`).then(
             (cssText) => {
                 themeStyle.innerHTML = cssText;
@@ -682,10 +718,20 @@ async function setupThemes() {
     });
     addOption(customThemeKey);
 
-    themeSelect.style.display = 'flex';
+    themeSelect.items = themeOptions;
+    themeSelect.displayField = 'label';
+    themeSelect.idField = 'value';
+    // themeSelect.style.display = 'flex';
     themeSelect.addEventListener('change', (e) => {
-        const value = (e.target as HTMLSelectElement).value;
+        const value = (e.target as Select).value as any;
+        window.sessionStorage.setItem(themeStorageKey, value.value);
+        themeNativeSelect.value = value.value;
+        changeTheme(e, value.value);
+    });
+    themeNativeSelect.addEventListener('change', (e) => {
+        const value = (e.target as HTMLSelectElement).value as any;
         window.sessionStorage.setItem(themeStorageKey, value);
+        themeSelect.value = value;
         changeTheme(e, value);
     });
 }
@@ -791,23 +837,6 @@ function setupScroll() {
                     behavior: 'auto'
                 });
             }, 200);
-
-            // // Needs improvements.
-            // setTimeout(() => {
-            //     const id = document.location.hash.replace('#', '');
-            //     const a = document.querySelector<HTMLAnchorElement>(`.component-toc a[id='${id}-a']`);
-            //     a.click();
-            //     // document.querySelector(document.location.hash).scrollIntoView();
-
-            //     // Needs improvements.
-            //     setTimeout(() => {
-            //         const id = document.location.hash.replace('#', '');
-            //         const a = document.querySelector<HTMLAnchorElement>(`.component-toc a[id='${id}-a']`);
-            //         a.click();
-            //         // document.querySelector(document.location.hash).scrollIntoView();
-            //     }, 500);
-
-            // }, 100);
         }
     });
 
@@ -913,79 +942,91 @@ function setupLoadingIndicator() {
 
 function setupSearch() {
     //Attribute search
-    const attributeSearch = document.querySelector<HTMLInputElement>('#attribute-search');
+    const attributeSearch = document.querySelector<SearchField>('#attribute-search');
     const attributeRows = document.querySelector<HTMLTableSectionElement>('#component-attributes')?.children;
     if (attributeSearch && attributeRows) {
-        attributeSearch.addEventListener('input', () => {
-            const filterValue = attributeSearch.value ?? '';
-            for (let index = 0; index < attributeRows.length; index++) {
-                const element = attributeRows[index] as HTMLElement;
-                if (element.innerText && element.innerText.toLowerCase().includes(filterValue.toLowerCase())) {
-                    element.classList.remove('hidden');
-                } else {
-                    element.classList.add('hidden');
-                }
+        attributeSearch.addEventListener('input', handleAttributes);
+        attributeSearch.addEventListener('change', handleAttributes);
+    }
+
+    function handleAttributes() {
+        const filterValue = attributeSearch.value ?? '';
+        for (let index = 0; index < attributeRows.length; index++) {
+            const element = attributeRows[index] as HTMLElement;
+            if (element.innerText && element.innerText.toLowerCase().includes((<string>filterValue).toLowerCase())) {
+                element.classList.remove('hidden');
+            } else {
+                element.classList.add('hidden');
             }
-        });
+        }
     }
 
     //Event search
-    const eventSearch = document.querySelector<HTMLInputElement>('#event-search');
+    const eventSearch = document.querySelector<SearchField>('#event-search');
     const eventRows = document.querySelector<HTMLTableSectionElement>('#component-events')?.children;
     if (eventSearch && eventRows) {
-        eventSearch.addEventListener('input', () => {
-            const filterValue = eventSearch.value ?? '';
-            for (let index = 0; index < eventRows.length; index++) {
-                const element = eventRows[index] as HTMLElement;
-                if (element.innerText && element.innerText.toLowerCase().includes(filterValue.toLowerCase())) {
-                    element.classList.remove('hidden');
-                } else {
-                    element.classList.add('hidden');
-                }
+        eventSearch.addEventListener('input', handleEvents);
+        eventSearch.addEventListener('change', handleEvents);
+    }
+
+    function handleEvents() {
+        const filterValue = eventSearch.value ?? '';
+        for (let index = 0; index < eventRows.length; index++) {
+            const element = eventRows[index] as HTMLElement;
+            if (element.innerText && element.innerText.toLowerCase().includes((<string>filterValue).toLowerCase())) {
+                element.classList.remove('hidden');
+            } else {
+                element.classList.add('hidden');
             }
-        });
+        }
     }
 
     //Slot search
-    const slotSearch = document.querySelector<HTMLInputElement>('#slot-search');
+    const slotSearch = document.querySelector<SearchField>('#slot-search');
     const slotRows = document.querySelector<HTMLTableSectionElement>('#component-slots')?.children;
     if (slotSearch && slotRows) {
-        slotSearch.addEventListener('input', () => {
-            const filterValue = slotSearch.value ?? '';
-            for (let index = 0; index < slotRows.length; index++) {
-                const element = slotRows[index] as HTMLElement;
-                if (element.innerText && element.innerText.toLowerCase().includes(filterValue.toLowerCase())) {
-                    element.classList.remove('hidden');
-                } else {
-                    element.classList.add('hidden');
-                }
+        slotSearch.addEventListener('input', handleSlots);
+        slotSearch.addEventListener('change', handleSlots);
+    }
+
+    function handleSlots() {
+        const filterValue = slotSearch.value ?? '';
+        for (let index = 0; index < slotRows.length; index++) {
+            const element = slotRows[index] as HTMLElement;
+            if (element.innerText && element.innerText.toLowerCase().includes((<string>filterValue).toLowerCase())) {
+                element.classList.remove('hidden');
+            } else {
+                element.classList.add('hidden');
             }
-        });
+        }
     }
 
     //CSS Properties search
     const categories = document.querySelectorAll('.css-category');
     const tables = document.querySelectorAll<HTMLTableSectionElement>('.component-css-props');
     for (let index = 0; index < categories.length; index++) {
-        const categorySearchElement = categories[index] as HTMLInputElement;
+        const categorySearchElement = categories[index] as SearchField;
         const category = categorySearchElement.getAttribute('data-category');
         for (let index = 0; index < tables.length; index++) {
             const tableSection = tables[index];
             if (tableSection.getAttribute('data-category') === category) {
                 const cssPropRows = tableSection?.children;
                 if (categorySearchElement && cssPropRows) {
-                    categorySearchElement.addEventListener('input', () => {
-                        const filterValue = categorySearchElement.value ?? '';
-                        for (let index = 0; index < cssPropRows.length; index++) {
-                            const element = cssPropRows[index] as HTMLElement;
-                            if (element.innerText && element.innerText.toLowerCase().includes(filterValue.toLowerCase())) {
-                                element.classList.remove('hidden');
-                            } else {
-                                element.classList.add('hidden');
-                            }
-                        }
-                    });
+                    categorySearchElement.addEventListener('input', () => handleCSSPropertySearch(categorySearchElement, cssPropRows));
+                    categorySearchElement.addEventListener('change', () => handleCSSPropertySearch(categorySearchElement, cssPropRows));
                 }
+            }
+        }
+    }
+
+    function handleCSSPropertySearch(categorySearchElement: SearchField, cssPropRows: HTMLCollection) {
+        const filterValue = categorySearchElement.value ?? '';
+        for (let index = 0; index < cssPropRows.length; index++) {
+            const element = cssPropRows[index] as HTMLElement;
+            if (element.innerText && element.innerText.toLowerCase().includes((<string>filterValue).toLowerCase())) {
+                element.classList.remove('hidden');
+            } else {
+                element.classList.add('hidden');
             }
         }
     }

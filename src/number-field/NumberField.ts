@@ -31,6 +31,7 @@ import { OmniFormElement } from '../core/OmniFormElement.js';
  * @cssprop --omni-number-field-font-weight - Number field font weight.
  * @cssprop --omni-number-field-height - Number field height.
  * @cssprop --omni-number-field-padding - Number field width.
+ * @cssprop --omni-number-field-width - Number field width.
  *
  */
 @customElement('omni-number-field')
@@ -40,7 +41,9 @@ export class NumberField extends OmniFormElement {
 
     override connectedCallback() {
         super.connectedCallback();
-        this.addEventListener('input', this._keyInput.bind(this));
+        this.addEventListener('input', this._keyInput.bind(this), {
+            capture: true
+        });
     }
 
     _keyInput() {
@@ -70,6 +73,7 @@ export class NumberField extends OmniFormElement {
           font-weight: var(--omni-number-field-font-weight, var(--omni-font-weight));
           height: var(--omni-number-field-height, 100%);
           padding: var(--omni-number-field-padding, 10px);
+          width: var(--omni-number-field-width);
         }
 
         /* Used to not display default stepper */

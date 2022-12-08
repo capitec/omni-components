@@ -7,7 +7,6 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import {
     LabelStory,
     BaseArgs,
-    BaseArgTypeDefinitions,
     HintStory,
     ErrorStory,
     DisabledStory,
@@ -25,7 +24,6 @@ import './NumberField.js';
 export default {
     title: 'UI Components/Number Field',
     component: 'omni-number-field',
-    argTypes: BaseArgTypeDefinitions
 } as CSFIdentifier;
 
 export const Interactive: ComponentStoryFormat<BaseArgs> = {
