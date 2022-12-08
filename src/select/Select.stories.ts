@@ -42,7 +42,7 @@ const displayItems = [
 
 const stringItems = ['Bruce Wayne', 'Clark Kent', 'Barry Allen', 'Arthur Curry', 'Hal Jordan'];
 
-async function promiseDisplayItems(data: Record<string,unknown>[]) {
+async function promiseDisplayItems(data: Record<string, unknown>[]) {
     await new Promise<void>((r) => setTimeout(() => r(), 2000));
     return data as SelectTypes;
 }
@@ -79,7 +79,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         disabled: false,
         prefix: '',
         suffix: '',
-        items: displayItems as Record<string,unknown>[],
+        items: displayItems as Record<string, unknown>[],
         displayField: 'label',
         idField: 'id',
         loading_indicator: ''
@@ -310,7 +310,7 @@ export const Disabled: ComponentStoryFormat<Args> = {
     args: {
         label: 'Disabled',
         disabled: true,
-        items: displayItems as Record<string,unknown>[]
+        items: displayItems as Record<string, unknown>[]
     } as Args,
     play: async (context) => {
         const select = within(context.canvasElement).getByTestId<Select>('test-select');

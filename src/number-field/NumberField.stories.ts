@@ -4,16 +4,7 @@ import { setUIValueClean } from '@testing-library/user-event/dist/esm/document/U
 import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import {
-    LabelStory,
-    BaseArgs,
-    HintStory,
-    ErrorStory,
-    DisabledStory,
-    ValueStory,
-    PrefixStory,
-    SuffixStory
-} from '../core/OmniInputStories.js';
+import { LabelStory, BaseArgs, HintStory, ErrorStory, DisabledStory, ValueStory, PrefixStory, SuffixStory } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
 import { assignToSlot, ComponentStoryFormat, CSFIdentifier } from '../utils/StoryUtils.js';
@@ -23,7 +14,7 @@ import './NumberField.js';
 
 export default {
     title: 'UI Components/Number Field',
-    component: 'omni-number-field',
+    component: 'omni-number-field'
 } as CSFIdentifier;
 
 export const Interactive: ComponentStoryFormat<BaseArgs> = {
