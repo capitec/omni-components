@@ -312,42 +312,45 @@ header .header-version {
 
 .home-header .title {
     font-size: 64px; 
-    color: var(--docs-home-header-font-color);
+    color: var(--docs-home-header-title-font-color);
     padding: 24px 0;
     text-align: center;
-    /* text-shadow: 1px 1px #cccccc; */
 }
 
 .home-header .sub-title {
     font-size: 32px;
     padding-bottom: 24px;
+    color: var(--docs-home-header-sub-title-font-color);
     text-align: center;
 }
 
 .home-content {
     display: flex; 
+    flex-direction: column;
     align-items: stretch; 
     background-color: var(--omni-theme-background-color);
-    padding: 48px;
+    padding: 24px;
 }
 
 .home-content .wrapper {
     flex: 1; 
     display: flex; 
     flex-direction: row; 
-    justify-content: space-between;
-    /* background-color: orange;  */
 }
 
 .home-content .wrapper .block {
+    display: flex;
     flex: 1; 
-    /* background: green; */
-    /* margin: 12px 24px; */
     padding: 24px;
+}
+
+.home-content .wrapper .block .inner {
+    flex: 1;
+    padding: 24px; 
     background-color: var(--docs-secondary-background-color);
 }
 
-.home-content .wrapper .block .header {
+.home-content .wrapper .block .inner .header {
     text-transform: uppercase;
     font-size: 24px;
     display: flex;
@@ -356,13 +359,13 @@ header .header-version {
     padding-bottom: 12px;
 }
 
-.home-content .wrapper .block .header .icon {
+.home-content .wrapper .block .inner .header .icon {
     color: #209cef; 
     font-size: 36px;
     padding: 0;
 }
 
-.home-content .wrapper .block .header .text {
+.home-content .wrapper .block .inner .header .text {
     padding-left: 12px;
 }
 
@@ -1012,10 +1015,6 @@ table th {
     .home-content .wrapper {
         flex-direction: column;
     }
-
-    .home-content .wrapper .block {
-        margin: 24px;
-    }
     
     .component-toc-wrapper {
         display: none;
@@ -1177,11 +1176,6 @@ table th {
 
     .component-props-table-header {
         padding: 0px 24px;
-    }
-    
-
-    .component-stories {
-        /* padding: 0 24px; */
     }
 
     .component-stories .story .preview {
