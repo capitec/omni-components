@@ -4,15 +4,7 @@ import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { OmniFormElement } from '../core/OmniFormElement.js';
-import {
-    LabelStory,
-    BaseArgs,
-    HintStory,
-    ErrorStory,
-    ValueStory,
-    PrefixStory,
-    SuffixStory
-} from '../core/OmniInputStories.js';
+import { LabelStory, BaseArgs, HintStory, ErrorStory, ValueStory, PrefixStory, SuffixStory } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
 import { assignToSlot, ComponentStoryFormat, CSFIdentifier } from '../utils/StoryUtils.js';
@@ -22,7 +14,7 @@ import './ColorField.js';
 
 export default {
     title: 'UI Components/Color Field',
-    component: 'omni-color-field',
+    component: 'omni-color-field'
 } as CSFIdentifier;
 
 export const Interactive: ComponentStoryFormat<BaseArgs> = {

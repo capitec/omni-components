@@ -27,15 +27,15 @@
 
     --omni-theme-border-radius: 4px;
     --omni-theme-border-width: 2px;
-
-    /* COMPONENT SPECIFIC STYLES */
-    --omni-select-items-max-height: 300px;
 }
 
 /* DOCS SPECIFIC */
 * {
     --docs-border-color: #e1e1e1;
     --docs-secondary-background-color: #f9f9f9;
+    --docs-home-header-title-font-color: #ffffff; 
+    --docs-home-header-sub-title-font-color: #000000b3;
+    --docs-home-header-background-color: #209cef;
     --code-editor-background-color: var(--docs-secondary-background-color);
 }
 

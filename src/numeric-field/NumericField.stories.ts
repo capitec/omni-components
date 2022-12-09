@@ -3,16 +3,7 @@ import userEvent from '@testing-library/user-event';
 import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import {
-    LabelStory,
-    BaseArgs,
-    HintStory,
-    ErrorStory,
-    DisabledStory,
-    ValueStory,
-    PrefixStory,
-    SuffixStory
-} from '../core/OmniInputStories.js';
+import { LabelStory, BaseArgs, HintStory, ErrorStory, DisabledStory, ValueStory, PrefixStory, SuffixStory } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
 import { assignToSlot, ComponentStoryFormat, CSFIdentifier } from '../utils/StoryUtils.js';
@@ -25,7 +16,7 @@ import './NumericField.js';
 
 export default {
     title: 'UI Components/Numeric Field',
-    component: 'omni-numeric-field',
+    component: 'omni-numeric-field'
 } as CSFIdentifier;
 
 interface Args extends BaseArgs {

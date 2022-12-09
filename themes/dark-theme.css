@@ -41,6 +41,9 @@
 
     --docs-border-color: #373a40;
     --docs-secondary-background-color: #2C3136;
+    --docs-home-header-title-font-color: #209cef;
+    --docs-home-header-sub-title-font-color: #ffffff;
+    --docs-home-header-background-color: var(--omni-theme-background-color);
     --code-editor-background-color: var(--docs-secondary-background-color);
 }
 
