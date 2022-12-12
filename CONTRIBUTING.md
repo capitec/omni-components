@@ -116,8 +116,8 @@ Here's a *non-exhaustive* list of requirements that are key to contributing to t
 * **Do** implement only *one* component class within a component file.
 
 #### Stories
-* **Do** use [Component Story Format (CSF) 3](https://github.com/capitec/omni-components/blob/storybook-removal/src/utils/StoryUtils.ts#L927).
-* **Do** implement a [play function](https://github.com/capitec/omni-components/blob/storybook-removal/src/utils/StoryUtils.ts#L919) per story to test story-specific component state and event behaviors. 🛝
+* **Do** use [Component Story Format (CSF) 3](https://github.com/capitec/omni-components/blob/develop/src/utils/ComponentStoryFormat.ts).
+* **Do** implement a [play function](https://github.com/capitec/omni-components/blob/develop/src/utils/PlayFunction.ts) per story to test story-specific component state and event behaviors. 🛝
   * **Do** set the `data-testid` within every story template.
 
 #### Themes

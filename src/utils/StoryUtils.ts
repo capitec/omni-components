@@ -12,6 +12,8 @@ import { render } from 'lit-html';
 import { SearchField } from '../search-field/SearchField.js';
 import { Select } from '../select/Select.js';
 import { CodeEditor, CodeMirrorEditorEvent, CodeMirrorSourceUpdateEvent } from './CodeEditor.js';
+export { ComponentStoryFormat, CSFIdentifier } from './ComponentStoryFormat.js';
+export { PlayFunction, PlayFunctionContext } from './PlayFunction.js'
 import { StoryRenderer } from './StoryRenderer.js';
 
 import './CodeEditor.js';
@@ -1217,27 +1219,6 @@ declare global {
         srCompleteCount: number;
     }
 }
-
-export type PlayFunctionContext<T> = {
-    args: T;
-    story: ComponentStoryFormat<T>;
-    canvasElement: HTMLElement;
-};
-
-export type PlayFunction<T> = (context: PlayFunctionContext<T>) => Promise<void> | void;
-
-export type ComponentStoryFormat<T> = {
-    render?: (args: T) => any;
-    name?: string;
-    args?: Partial<T>;
-    play?: PlayFunction<T>;
-    source?: () => string;
-};
-
-export type CSFIdentifier = {
-    title: string;
-    component: string;
-};
 
 export {
     // loadCustomElementsRemote,
