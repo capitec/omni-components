@@ -3,7 +3,7 @@
   <img src="https://raw.githubusercontent.com/capitec/omni-components/storybook-removal/eleventy/assets/images/logo.png" alt="Logo" width="150" height="auto" />
 </p>
 
-<p align="center" style="font-size: 64px">Omni Components</p>
+<h1 align="center">Omni Components</h1>
 
 <p align="center">
   <b>Customizable web components for any application.</b></br>

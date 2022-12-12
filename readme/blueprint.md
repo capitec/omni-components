@@ -1,7 +1,7 @@
 
 {{ template:logo }}
 
-<p align="center" style="font-size: 64px">Omni Components</p>
+<h1 align="center">Omni Components</h1>
 
 {{ template:description }}
 
