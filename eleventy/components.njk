@@ -1,0 +1,199 @@
+---
+title: Omni Components
+layout: page.njk
+pagination:
+    data: components
+    size: 1
+    alias: component
+permalink: "components/{{ component.name | slug }}/"
+---
+
+<div class="component-overlay">
+    <div class="lds-ripple"><div></div><div></div></div>
+</div>
+
+<article class="component">
+    <div class="component-meta">
+        <div class="component-name">{{ component.name }}</div>
+        <div class="component-desc">{{ customElements | getDescription(component.name) | safe }}</div> 
+        <div class="component-info">
+            <div class="component-info-item">
+                <div>Module</div>
+                <div class="component-info-item-code">
+                    <pre><code class="language-js no-code-scroll" id="component-import-code">{{ customElements | getImport(component.name)}}</code></pre>
+                    <span class="copy-icon material-icons" onclick="copyToClipboard('component-import-code');return false;">
+                        content_copy
+                    </span>
+                </div>
+            </div>
+            <div class="component-info-item">
+                <div>Source</div>
+                <div>
+                    <a href="https://github.com/capitec/omni-components/tree/develop/{{ component.srcPath }}" target="blank" class="component-info-item-link">
+                        <svg class="component-info-item-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="24" height="24" fill="currentColor">
+                            <path style="cursor: pointer;" fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+                        </svg>
+                        View on GitHub
+                    </a>
+                </div>
+            </div>
+            <div class="component-info-item">
+                <div>Package</div>
+                <div>
+                    <a href="https://www.npmjs.com/package/@capitec/omni-components" target="blank" class="component-info-item-link">
+                        <img src="./assets/images/npm.svg" class="component-info-item-img">
+                        @capitec/omni-components
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="component-tab-container">
+        <div class="component-tab-root">
+            <div class="component-tab-wrapper">
+                <div class="component-tab-list" role="tablist">
+                    <div role="tab" class="component-tab-button active" data-name="examples" onclick="openTab(event.currentTarget, 'examples')">Examples</div>
+                    <div role="tab" class="component-tab-button" data-name="docs" onclick="openTab(event.currentTarget, 'docs')">Docs</div>
+                    <div role="tab" class="component-tab-button" data-name="styles" onclick="openTab(event.currentTarget, 'styles')">Styles</div>
+                </div>
+            </div>
+            <div class="component-tab" id="examples" role="tabpanel" style="display: block;">
+                <div class="component-props-examples-wrapper">
+                    <div class="component-tab-content">
+                        <div class="component-stories">
+                            {% for story in component.stories %}
+                            <div class="name" id="story-{{ story | replace("_", "-") | lower }}">{{ story | replace("_", " ") }}</div>
+                            <div class="story">
+                                <story-renderer 
+                                    path="{{ component.path }}" 
+                                    tag="{{ customElements | getTagName(component.name) }}" 
+                                    key="{{ story }}"
+                                    {% if story === 'Interactive' %}interactive{% endif %} >
+                                </story-renderer>
+                            </div>
+                            {%- endfor %}
+                        </div>
+                        <div class="component-toc-wrapper">
+                            <div class="component-toc">
+                                {% for story in component.stories %}
+                                    <a href="components/{{ component.name | slug }}/#story-{{ story | replace("_", "-") | lower }}" id="story-{{ story | replace("_", "-") | lower }}-a" class="item">
+                                        {{ story | replace("_", " ") }}
+                                    </a>
+                                {%- endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="component-tab" id="docs" role="tabpanel">
+
+                <h2 class="component-props-table-header" style="padding-top: 24px;">Properties</h2>
+                <div class="docs-search-area">
+                    <omni-search-field id="attribute-search"></omni-search-field>
+                </div>
+                <div class="component-props-table-wrapper">
+                    <table class="component-props-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Attribute</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody id="component-attributes">
+                            {% for property in customElements | getProperties(component.name) %}
+                            <tr>
+                                <td data-label="Name" scope="row">{{property.name}}</td>
+                                <td data-label="Attribute" scope="row">{{ property.attribute }}&nbsp;</td>
+                                <td data-label="Type"><pre><code class="language-js">{{property.type.text}}</code></pre></td>
+                                <td data-label="Description">{{ property.description | safe }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+                <h2 class="component-props-table-header">Events</h2>
+                <div class="docs-search-area">
+                    <omni-search-field id="event-search"></omni-search-field>
+                </div>
+                <div class="component-props-table-wrapper">
+                    <table class="component-props-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody id="component-events">
+                            {% for event in customElements | getEvents(component.name) %}
+                            <tr>
+                                <td data-label="Name" scope="row">{{event.name}}</td>
+                                <td data-label="Type"><pre><code class="language-js">{{event.type.text}}</code></pre></td>
+                                <td data-label="Description">{{ event.description | safe }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+                <h2 class="component-props-table-header">Slots</h2>
+                <div class="docs-search-area">
+                    <omni-search-field id="slot-search"></omni-search-field>
+                </div>
+                <div class="component-props-table-wrapper">
+                    <table class="component-props-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody id="component-slots">
+                            {% for slot in customElements | getSlots(component.name) %}
+                            <tr>
+                                <td data-label="Name" scope="row"><pre><code class="language-js">{{slot.name}}</code></pre></td>
+                                <td data-label="Description">{{ slot.description | safe }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="component-tab" id="styles" role="tabpanel">
+                <div style="padding-top: 24px;"></div>
+                {% for cssCat in customElements | getCSSProperties(component.name) %}
+                <h2 class="component-props-table-header" >{{ cssCat.category }}</h2>
+                <div class="docs-search-area">
+                    <omni-search-field class="css-category" data-category="{{ cssCat.category }}"></omni-search-field>
+                </div>
+                <div class="component-props-table-wrapper">
+                    <table class="component-props-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody data-category="{{ cssCat.category }}" class="component-css-props">
+                            {% for cssProp in cssCat.properties %}
+                            <tr>
+                                <td data-label="Name" scope="row"><pre><code class="language-css">{{cssProp.name}}</code></pre></td>
+                                <td data-label="Description">{{ cssProp.description | safe }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</article>
+
+{# <script type="module" defer>
+    import { enhanceCodeBlocks } from '/dist/utils/StoryUtils.js';
+    enhanceCodeBlocks();
+</script> #}

@@ -2,7 +2,7 @@ name: Build
 
 on: 
   push:
-    branches: [ main,develop ]
+    branches: [ main,develop,alpha ]
     paths-ignore: 
       - '*.md'
       - '**/*.md'
@@ -74,15 +74,13 @@ jobs:
 
       - name: Install Package Dependencies 🔗
         run: |
-          npm ci
-
-      - name: Build Project 🔧📝
+          npm ci --force
+          
+      - name: Bump patch version for alpha ☝
+        # Alpha branch only
+        if: github.ref == 'refs/heads/alpha'
         run: |
-          npm run build
-
-      - name: Copy docs definition ⏩
-        run: |
-          cp .oss-docs.json docs/.oss-docs.json
+          node scripts/unique-version.mjs --tag "alpha"
           
       - name: Bump patch version for beta ☝
         # Develop branch only
@@ -96,6 +94,36 @@ jobs:
         run: |
           node scripts/unique-version.mjs --tag "next"
 
+      - name: Build Docs (Alpha) 📝
+        # Alpha branch only
+        if: github.ref == 'refs/heads/alpha'
+        run: |
+          npm run docs
+          cp .oss-docs.json docs/.oss-docs.json
+        env:
+          ELEVENTY_BASE_PATH: /open-source/${{ env.DOCS_BASE_PATH }}/versions/alpha/
+          ELEVENTY_DOCS_VERSION: alpha
+
+      - name: Build Docs (Beta) 📝
+        # Develop branch only
+        if: github.ref == 'refs/heads/develop'
+        run: |
+          npm run docs
+          cp .oss-docs.json docs/.oss-docs.json
+        env:
+          ELEVENTY_BASE_PATH: /open-source/${{ env.DOCS_BASE_PATH }}/versions/beta/
+          ELEVENTY_DOCS_VERSION: beta
+
+      - name: Build Docs (Next) 📝
+        # Main branch only
+        if: github.ref == 'refs/heads/main'
+        run: |
+          npm run docs
+          cp .oss-docs.json docs/.oss-docs.json
+        env:
+          ELEVENTY_BASE_PATH: /open-source/${{ env.DOCS_BASE_PATH }}/versions/next/
+          ELEVENTY_DOCS_VERSION: next
+
       - name: Auto Commit Changes 👩‍💻
         uses: stefanzweifel/git-auto-commit-action@v4
         # Only on branch pushes, not on tagged releases
@@ -103,6 +131,22 @@ jobs:
         with:
           commit_message: Updated docs
           branch: ${{ env.GITHUB_REF_NAME }}
+
+      - name: Publish Alpha Docs 🚀
+        uses: JamesIves/github-pages-deploy-action@v4.3.4
+        # Alpha branch only
+        if: github.ref == 'refs/heads/alpha'
+        with:
+          token: ${{ secrets.ACCESS_TOKEN }}
+          repository-name: capitec/open-source
+          branch: main
+          folder: docs # The folder to grab the built docs files from
+          target-folder: ${{ env.DOCS_BASE_PATH }}/versions/alpha # The folder to commit the build docs files into
+          clean: true # Clean out any previous files in the target folder
+          clean-exclude: |
+            versions
+          git-config-name: Deploy Bot
+          git-config-email: opensource@capitecbank.co.za
 
       - name: Publish Beta Docs 🚀
         uses: JamesIves/github-pages-deploy-action@v4.3.4
@@ -115,22 +159,6 @@ jobs:
           folder: docs # The folder to grab the built docs files from
           target-folder: ${{ env.DOCS_BASE_PATH }}/versions/beta # The folder to commit the build docs files into
           clean: true # Clean out any previous files in the target folder
-          clean-exclude: |
-            versions
-          git-config-name: Deploy Bot
-          git-config-email: opensource@capitecbank.co.za
-
-      - name: Publish Version Docs 🚀
-        uses: JamesIves/github-pages-deploy-action@v4.3.4
-        # Tagged release branch only
-        if: ${{ startsWith(github.ref, 'refs/tags/') }}
-        with:
-          token: ${{ secrets.ACCESS_TOKEN }}
-          repository-name: capitec/open-source
-          branch: main
-          folder: docs # The folder to grab the built docs files from
-          target-folder: ${{ env.DOCS_BASE_PATH }}/versions/${{ github.event.release.tag_name }} # The folder to commit the build docs files into
-          clean: true
           clean-exclude: |
             versions
           git-config-name: Deploy Bot
@@ -152,6 +180,42 @@ jobs:
             versions
           git-config-name: Deploy Bot
           git-config-email: opensource@capitecbank.co.za
+
+      - name: Build Docs (Version) 📝
+        # Tagged release branch only
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        run: |
+          npm run docs
+          cp .oss-docs.json docs/.oss-docs.json
+        env:
+          ELEVENTY_BASE_PATH: /open-source/${{ env.DOCS_BASE_PATH }}/versions/${{ github.event.release.tag_name }}/
+          ELEVENTY_DOCS_VERSION: ${{ github.event.release.tag_name }}
+
+      - name: Publish Version Docs 🚀
+        uses: JamesIves/github-pages-deploy-action@v4.3.4
+        # Tagged release branch only
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        with:
+          token: ${{ secrets.ACCESS_TOKEN }}
+          repository-name: capitec/open-source
+          branch: main
+          folder: docs # The folder to grab the built docs files from
+          target-folder: ${{ env.DOCS_BASE_PATH }}/versions/${{ github.event.release.tag_name }} # The folder to commit the build docs files into
+          clean: true
+          clean-exclude: |
+            versions
+          git-config-name: Deploy Bot
+          git-config-email: opensource@capitecbank.co.za
+
+      - name: Build Docs (Latest) 📝
+        # Release only
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        run: |
+          npm run docs
+          cp .oss-docs.json docs/.oss-docs.json
+        env:
+          ELEVENTY_BASE_PATH: /open-source/${{ env.DOCS_BASE_PATH }}/
+          ELEVENTY_DOCS_VERSION: ${{ github.event.release.tag_name }}
 
       - name: Publish Latest Docs 🚀
         uses: JamesIves/github-pages-deploy-action@v4.3.4
@@ -176,13 +240,26 @@ jobs:
         run: |
           LOCAL_VERSION=$(cat package.json | jq -r .version | awk '{ print tolower($1) }')
           echo LOCAL_VERSION=${LOCAL_VERSION} >> $GITHUB_ENV
-          
+      
+      - name: Build Project 🔧
+        run: |
+          npm run compile    
+
       - name: Publish Latest Package 📦
         # Release only
         if: ${{ startsWith(github.ref, 'refs/tags/') }}
         run: |
           npm version "${{ github.event.release.tag_name }}" -git-tag-version false -allow-same-version true
           npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          
+      - name: Publish Alpha Package 📦
+        # Alpha branch only
+        if: github.ref == 'refs/heads/alpha'
+        run: |
+          npm version "${{ env.LOCAL_VERSION }}-alpha" -git-tag-version false -allow-same-version true          
+          npm publish --tag alpha --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           
@@ -215,6 +292,15 @@ jobs:
         run: |
           npm version "${{ github.event.release.tag_name }}-esm" -git-tag-version false -allow-same-version true
           npm publish --tag esm --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          
+      - name: Publish Alpha ESM Package 📦
+        # Alpha branch only
+        if: github.ref == 'refs/heads/alpha'
+        run: |
+          npm version "${{ env.LOCAL_VERSION }}-esm-alpha" -git-tag-version false -allow-same-version true          
+          npm publish --tag esm-alpha --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           

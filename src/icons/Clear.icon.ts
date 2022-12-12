@@ -5,8 +5,8 @@ import DOMTreeElement from '../core/DOMTreeElement.js';
 /**
  * A clear icon component.
  *
+ * @import
  * ```js
- *
  * import '@capitec/omni-components/icons/Clear.icon.js';
  * ```
  *

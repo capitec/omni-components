@@ -77,7 +77,7 @@ export class OmniFormElement extends OmniElement {
      * The value entered into the form component.
      * @attr
      */
-    @property({ reflect: true }) value: string | number = null;
+    @property({ reflect: true }) value: string | number | Record<string, unknown> = null;
 
     /**
      * Data associated with the component.
@@ -143,7 +143,7 @@ export class OmniFormElement extends OmniElement {
                 ${super.styles}
 
                 :host {
-                    display: inline-flex;
+                    display: flex;
                 }
 
                 :host([disabled]),
@@ -242,7 +242,7 @@ export class OmniFormElement extends OmniElement {
                 :host([value]) .layout > .form-container > .label::before,
                 :focus + .label::before {
                     content: '';
-                    background-color: var(--omni-label-focus-background-color, white);
+                    background-color: var(--omni-form-field-background-color, var(--omni-background-color));
                     position: absolute;
                     left: var(--omni-label-focus-left, -3px);
                     right: var(--omni-label-focus-right, -3px);

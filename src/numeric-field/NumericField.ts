@@ -3,18 +3,18 @@ import { customElement, query } from 'lit/decorators.js';
 import { live } from 'lit/directives/live.js';
 import { OmniFormElement } from '../core/OmniFormElement.js';
 
-import '../icons/Plus.icon';
-import '../icons/Minus.icon';
+import '../icons/Plus.icon.js';
+import '../icons/Minus.icon.js';
 
 /**
- * An input control that allows a user to enter a single line of numbers with a stepper control.
+ * Input control to enter a single line of numbers with a stepper control.
  *
+ * @import
  * ```js
- *
  * import '@capitec/omni-components/numeric-field';
  * ```
- * @example
  *
+ * @example
  * ```html
  * <omni-numeric-field
  *   label="Enter a numeric value"
@@ -45,6 +45,7 @@ import '../icons/Minus.icon';
  * @cssprop --omni-numeric-field-font-weight - Numeric input field font weight.
  * @cssprop --omni-numeric-field-height - Numeric input field height.
  * @cssprop --omni-numeric-field-padding - Numeric input field padding.
+ * @cssprop --omni-numeric-field-width - Numeric input field width.
  *
  * @cssprop --omni-numeric-control-hover - Numeric input control hover color.
  *
@@ -56,7 +57,9 @@ export class NumericField extends OmniFormElement {
 
     override connectedCallback() {
         super.connectedCallback();
-        this.addEventListener('input', this._keyInput.bind(this));
+        this.addEventListener('input', this._keyInput.bind(this), {
+            capture: true
+        });
     }
 
     _keyInput() {
@@ -92,97 +95,98 @@ export class NumericField extends OmniFormElement {
         return [
             super.styles,
             css`
-                .quantity {
-                    display: flex;
-                    height: var(--omni-numeric-input-quantity-height, 100%);
-                }
+        .quantity {
+          display: flex;
+          height: var(--omni-numeric-input-quantity-height, 100%);
+        }
 
-                .plus-icon,
-                .minus-icon,
-                ::slotted([slot='increase']),
-                ::slotted([slot='decrease']) {
-                    width: var(--omni-numeric-input-slot-width, 36px);
-                    height: var(--omni-numeric-input-slot-height, 36px);
-                    cursor: pointer;
-                }
+        .plus-icon,
+        .minus-icon,
+        ::slotted([slot='increase']),
+        ::slotted([slot='decrease']) {
+          width: var(--omni-numeric-input-slot-width, 36px);
+          height: var(--omni-numeric-input-slot-height, 36px);
+          cursor: pointer;
+        }
 
-                .divider {
-                    background-color: var(--omni-numeric-input-divider-color, var(--omni-primary-color));
-                    width: var(--omni-numeric-input-divider-width, 1px);
-                }
+        .divider {
+          background-color: var(--omni-numeric-input-divider-color, var(--omni-primary-color));
+          width: var(--omni-numeric-input-divider-width, 1px);
+        }
 
-                .field {
-                    flex: 1 1 auto;
+        .field {
+          flex: 1 1 auto;
 
-                    border: none;
-                    background: none;
-                    box-shadow: none;
-                    outline: 0;
-                    padding: 0;
-                    margin: 0;
+          border: none;
+          background: none;
+          box-shadow: none;
+          outline: 0;
+          padding: 0;
+          margin: 0;
 
-                    text-align: var(--omni-numeric-field-text-align, left);
+          text-align: var(--omni-numeric-field-text-align, left);
 
-                    color: var(--omni-numeric-field-font-color, var(--omni-font-color));
-                    font-family: var(--omni-numeric-field-font-family, var(--omni-font-family));
-                    font-size: var(--omni-numeric-field-font-size, var(--omni-font-size));
-                    font-weight: var(--omni-numeric-field-font-weight, var(--omni-font-weight));
-                    height: var(--omni-numeric-field-height, 100%);
-                    padding: var(--omni-numeric-field-padding, 10px);
-                }
+          color: var(--omni-numeric-field-font-color, var(--omni-font-color));
+          font-family: var(--omni-numeric-field-font-family, var(--omni-font-family));
+          font-size: var(--omni-numeric-field-font-size, var(--omni-font-size));
+          font-weight: var(--omni-numeric-field-font-weight, var(--omni-font-weight));
+          height: var(--omni-numeric-field-height, 100%);
+          padding: var(--omni-numeric-field-padding, 10px);
+          width: var(--omni-numeric-field-width);
+        }
 
-                .control {
-                    display: inline-flex;
-                    flex: 0 0 auto;
-                    align-items: center;
-                    cursor: default;
-                }
+        .control {
+          display: inline-flex;
+          flex: 0 0 auto;
+          align-items: center;
+          cursor: default;
+        }
 
-                .increase-container:hover,
-                .decrease-container:hover {
-                    background-color: var(--omni-numeric-control-hover, var(--omni-accent-hover-color));
-                }
+        .increase-container:hover,
+        .decrease-container:hover {
+          background-color: var(--omni-numeric-control-hover, var(--omni-accent-hover-color));
+        }
 
-                /* Used to not display default stepper */
-                input::-webkit-outer-spin-button,
-                input::-webkit-inner-spin-button {
-                    /* display: none; <- Crashes Chrome on hover */
-                    -webkit-appearance: none;
-                    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
-                }
+        /* Used to not display default stepper */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+          /* display: none; <- Crashes Chrome on hover */
+          -webkit-appearance: none;
+          margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+        }
 
-                input[type='number'] {
-                    -moz-appearance: textfield; /* Firefox */
-                }
-            `
+        input[type='number'] {
+          -moz-appearance: textfield; /* Firefox */
+        }
+      `
         ];
     }
 
     protected override renderControl() {
         return html`
-            <span class="control">
-                <div class="quantity">
-                    <div class="increase-container" @click="${this._onAddClick}"
-                        ><slot name="increase"><omni-plus-icon class="plus-icon"></omni-plus-icon></slot
-                    ></div>
-                    <div class="divider"></div>
-                    <div class="decrease-container" @click="${this._onMinusClick}"
-                        ><slot name="decrease"><omni-minus-icon class="minus-icon"></omni-minus-icon></slot
-                    ></div>
-                </div>
-            </span>
-        `;
+      <span class="control">
+        <div class="quantity">
+          <div class="increase-container" @click="${this._onAddClick}"
+            ><slot name="increase"><omni-plus-icon class="plus-icon"></omni-plus-icon></slot
+          ></div>
+          <div class="divider"></div>
+          <div class="decrease-container" @click="${this._onMinusClick}"
+            ><slot name="decrease"><omni-minus-icon class="minus-icon"></omni-minus-icon></slot
+          ></div>
+        </div>
+      </span>
+    `;
     }
 
     protected override renderContent() {
         return html`
-            <input
-                class="field"
-                id="inputField"
-                type="number"
-                .value=${live(this.value as string)}
-                ?readOnly=${this.disabled}
-                tabindex="${this.disabled ? -1 : 0}" />
-        `;
+      <input
+        class="field"
+        id="inputField"
+        type="number"
+        .value=${live(this.value as string)}
+        ?readOnly=${this.disabled}
+        tabindex="${this.disabled ? -1 : 0}" />
+    `;
     }
 }

@@ -1,11 +1,6 @@
 # omni-radio
 
-A control that allows a user to select a single value from a group of values.
-
-```js
-
-import '@capitec/omni-components/radio';
-```
+Control to select a single value from a group of values.
 
 ## Example
 

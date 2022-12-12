@@ -1,10 +1,11 @@
-import { expect, jest } from '@storybook/jest';
-import { userEvent, within } from '@storybook/testing-library';
-import { Meta, StoryContext } from '@storybook/web-components';
+import { within } from '@testing-library/dom';
+import userEvent, { PointerEventsCheckLevel } from '@testing-library/user-event';
+import * as jest from 'jest-mock';
 import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import { loadCssPropertiesRemote, raw } from '../utils/StoryUtils.js';
+import expect from '../utils/ExpectDOM.js';
+import { raw, CSFIdentifier, ComponentStoryFormat } from '../utils/StoryUtils.js';
 import { Button } from './Button.js';
 
 import './Button.js';
@@ -31,14 +32,8 @@ export default {
         '[Default Slot]': {
             control: 'text'
         }
-    },
-    parameters: {
-        actions: {
-            handles: ['value-change']
-        },
-        cssprops: loadCssPropertiesRemote('omni-button')
     }
-} as Meta;
+} as CSFIdentifier;
 
 interface Args {
     type: typeof buttonOptions[number];
@@ -50,15 +45,15 @@ interface Args {
 
 export const Interactive = {
     render: (args: Args) => html`
-        <omni-button
-            data-testid="test-button"
-            type="${args.type}"
-            label="${ifNotEmpty(args.label)}"
-            slot-position="${args.slotPosition}"
-            ?disabled=${args.disabled}>
-            ${unsafeHTML(args['[Default Slot]'])}
-        </omni-button>
-    `,
+    <omni-button
+      data-testid="test-button"
+      type="${args.type}"
+      label="${ifNotEmpty(args.label)}"
+      slot-position="${args.slotPosition}"
+      ?disabled=${args.disabled}>
+      ${unsafeHTML(args['[Default Slot]'])}
+    </omni-button>
+  `,
     name: 'Interactive',
     args: {
         type: 'secondary',
@@ -67,15 +62,19 @@ export const Interactive = {
         disabled: false,
         '[Default Slot]': raw`<omni-icon icon="@material/thumb_up"></omni-icon>`
     },
-    play: async (context: StoryContext) => {
+    play: async (context) => {
         const button = within(context.canvasElement).getByTestId<Button>('test-button');
         const click = jest.fn();
         button.addEventListener('click', () => click());
-        await userEvent.click(button);
-        await userEvent.click(button);
+        await userEvent.click(button, {
+            pointerEventsCheck: 0
+        });
+        await userEvent.click(button, {
+            pointerEventsCheck: 0
+        });
         await expect(click).toBeCalledTimes(2);
     }
-};
+} as ComponentStoryFormat<Args>;
 
 export const Type = {
     render: (args: Args) => html` <omni-button type="${args.type}" label="${args.label}" data-testid="test-button"></omni-button> `,
@@ -84,13 +83,13 @@ export const Type = {
         type: 'primary',
         label: 'Click'
     },
-    play: async (context: StoryContext) => {
+    play: async (context) => {
         const button = within(context.canvasElement).getByTestId<Button>('test-button');
         const buttonElement = button.shadowRoot.getElementById('button');
         const foundPrimaryClass = buttonElement.classList.contains('primary');
         await expect(foundPrimaryClass).toBeTruthy();
     }
-};
+} as ComponentStoryFormat<Args>;
 
 export const Label = {
     render: (args: Args) => html` <omni-button label="${args.label}" data-testid="test-button"></omni-button> `,
@@ -98,29 +97,29 @@ export const Label = {
     args: {
         label: 'Click'
     },
-    play: async (context: StoryContext) => {
+    play: async (context) => {
         const button = within(context.canvasElement).getByTestId<Button>('test-button');
         const labelElement = button.shadowRoot.getElementById('label');
         const labelMatches = labelElement.innerText === Label.args.label;
         await expect(labelMatches).toBeTruthy();
     }
-};
+} as ComponentStoryFormat<Args>;
 
 export const Slot = {
     render: () => html`
-        <omni-button data-testid="test-button">
-            <omni-icon size="default" icon="assets/direction.svg"></omni-icon>
-        </omni-button>
-    `,
+    <omni-button data-testid="test-button">
+      <omni-icon size="default" icon="./assets/images/direction.svg"></omni-icon>
+    </omni-button>
+  `,
     name: 'Slot',
     args: {},
-    play: async (context: StoryContext) => {
+    play: async (context) => {
         const button = within(context.canvasElement).getByTestId<Button>('test-button');
         const slotElement = button.shadowRoot.querySelector('slot');
         const foundSlottedOmniIconElement = slotElement.assignedElements().find((e) => e.tagName.toLowerCase() === 'omni-icon');
         await expect(foundSlottedOmniIconElement).toBeTruthy();
     }
-};
+} as ComponentStoryFormat<Args>;
 
 export const Disabled = {
     render: (args: Args) => html` <omni-button disabled label="${args.label}" data-testid="test-button"></omni-button> `,
@@ -128,7 +127,7 @@ export const Disabled = {
     args: {
         label: 'Disabled'
     },
-    play: async (context: StoryContext) => {
+    play: async (context) => {
         const button = within(context.canvasElement).getByTestId<Button>('test-button'); // Test for disabled CSS.
 
         const buttonElement = button.shadowRoot.getElementById('button');
@@ -136,9 +135,11 @@ export const Disabled = {
         await expect(foundDisabledClass).toBeTruthy(); // Test for not clickable.
 
         const click = jest.fn();
-        button.addEventListener('click', () => click());
-        await userEvent.click(button);
-        await userEvent.click(button);
+        button.addEventListener('click', (e) => {
+            click();
+        });
+        await expect(() => userEvent.click(button)).rejects.toThrow(/pointer-events: none/);
+        await expect(() => userEvent.click(button)).rejects.toThrow(/pointer-events: none/);
         await expect(click).toBeCalledTimes(0);
     }
-};
+} as ComponentStoryFormat<Args>;

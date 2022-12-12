@@ -3,20 +3,18 @@ import { customElement, property } from 'lit/decorators.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import OmniElement from '../core/OmniElement.js';
 
-import '../icons/Loading.icon';
+import '../icons/Loading.icon.js';
 
 /**
- * An element that defers content rendering to a provided function/promise.
+ * Element that defers content rendering to a provided function / promise.
  *
+ * @import
  * ```js
- *
  * import '@capitec/omni-components/render-element';
  * ```
  *
  * @example
- *
  * ```html
- *
  * <omni-render-element></omni-render-element>
  * ```
  *
@@ -28,6 +26,7 @@ import '../icons/Loading.icon';
 export class RenderElement extends OmniElement {
     /**
      * The renderer function
+     * @no_attribute
      */
     @property({ type: Object, reflect: false }) renderer: RenderFunction;
 
@@ -45,10 +44,10 @@ export class RenderElement extends OmniElement {
         return [
             super.styles,
             css`
-                .loading {
-                    width: var(--omni-render-element-loading-indicator-width, 50px);
-                }
-            `
+        .loading {
+          width: var(--omni-render-element-loading-indicator-width, 50px);
+        }
+      `
         ];
     }
 

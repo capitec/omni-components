@@ -2,11 +2,6 @@
 
 A search input control.
 
-```js
-
-import '@capitec/omni-components/search-field';
-```
-
 ## Example
 
 ```html
@@ -22,18 +17,18 @@ import '@capitec/omni-components/search-field';
 
 ## Properties
 
-| Property   | Attribute  | Modifiers | Type               | Default | Description                                      |
-|------------|------------|-----------|--------------------|---------|--------------------------------------------------|
-| `data`     | `data`     |           | `object`           |         | Data associated with the component.              |
-| `dir`      |            |           | `string`           |         |                                                  |
-| `disabled` | `disabled` |           | `boolean`          | false   | Indicator if the component should be disabled.   |
-| `error`    | `error`    |           | `string`           |         | A error message guiding a user to correct a mistake. |
-| `hint`     | `hint`     |           | `string`           |         | A hint message to assist the user.               |
-| `label`    | `label`    |           | `string`           |         | Text label.                                      |
-| `lang`     |            |           | `string`           |         |                                                  |
-| `override` | `override` |           |                    |         | Used to set the base direction of text for display |
-| `styles`   |            | readonly  | `CSSResultGroup[]` |         |                                                  |
-| `value`    | `value`    |           | `string \| number` | null    | The value entered into the form component.       |
+| Property   | Attribute  | Modifiers | Type                                          | Default | Description                                      |
+|------------|------------|-----------|-----------------------------------------------|---------|--------------------------------------------------|
+| `data`     | `data`     |           | `object`                                      |         | Data associated with the component.              |
+| `dir`      |            |           | `string`                                      |         |                                                  |
+| `disabled` | `disabled` |           | `boolean`                                     | false   | Indicator if the component should be disabled.   |
+| `error`    | `error`    |           | `string`                                      |         | A error message guiding a user to correct a mistake. |
+| `hint`     | `hint`     |           | `string`                                      |         | A hint message to assist the user.               |
+| `label`    | `label`    |           | `string`                                      |         | Text label.                                      |
+| `lang`     |            |           | `string`                                      |         |                                                  |
+| `override` | `override` |           |                                               |         | Used to set the base direction of text for display |
+| `styles`   |            | readonly  | `CSSResultGroup[]`                            |         |                                                  |
+| `value`    | `value`    |           | `string \| number \| Record<string, unknown>` | null    | The value entered into the form component.       |
 
 ## Methods
 
@@ -42,6 +37,12 @@ import '@capitec/omni-components/search-field';
 | `renderContent` | `(): TemplateResult<1>` |
 | `renderControl` | `(): TemplateResult<1>` |
 | `renderPrefix`  | `(): TemplateResult<1>` |
+
+## Events
+
+| Event    |
+|----------|
+| `change` |
 
 ## Slots
 
@@ -109,11 +110,12 @@ import '@capitec/omni-components/search-field';
 | `--omni-search-field-font-size`                  | Search field font size.                        |
 | `--omni-search-field-font-weight`                | Search field font weight.                      |
 | `--omni-search-field-height`                     | Search field height.                           |
-| `--omni-search-field-padding`                    | Search field width.                            |
+| `--omni-search-field-padding`                    | Search field padding.                          |
 | `--omni-search-field-search-icon-color`          | Search field search icon color.                |
 | `--omni-search-field-search-icon-margin-left`    | Search field search icon left margin.          |
 | `--omni-search-field-search-icon-width`          | Search field search icon width.                |
 | `--omni-search-field-text-align`                 | Search field text align.                       |
+| `--omni-search-field-width`                      | Search field width                             |
 | `--omni-theme-accent-active-color`               | Theme accent active color.                     |
 | `--omni-theme-accent-color`                      | Theme accent color.                            |
 | `--omni-theme-accent-hover-color`                | Theme accent hover color.                      |

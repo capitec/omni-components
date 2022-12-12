@@ -1,6 +1,7 @@
 import { html, css, nothing } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { live } from 'lit/directives/live.js';
+import { ref } from 'lit/directives/ref.js';
 import { until } from 'lit/directives/until.js';
 import { OmniFormElement } from '../core/OmniFormElement.js';
 import { RenderFunction } from '../render-element/RenderElement.js';
@@ -12,8 +13,8 @@ import '../icons/More.icon.js';
 /**
  * Control to get / set a value within a list of options.
  *
+ * @import
  * ```js
- *
  * import '@capitec/omni-components/select';
  * ```
  * @example
@@ -115,6 +116,7 @@ import '../icons/More.icon.js';
 export class Select extends OmniFormElement {
     @query('#select')
     private _selectElement: HTMLInputElement;
+    private _itemsContainer: HTMLDivElement;
 
     /**
      * Selectable items of the select component.
@@ -124,32 +126,44 @@ export class Select extends OmniFormElement {
 
     /**
      * The field of the item to display as one of the selectable options.
-     * @attr
+     * @attr [display-field]
      */
     @property({ type: String, reflect: true, attribute: 'display-field' }) displayField: string;
 
     /**
      * The id field of the items provided.
-     * @attr
+     * @attr [id-field]
      */
     @property({ type: String, reflect: true, attribute: 'id-field' }) idField: string = 'id';
 
     /**
+     * The message displayed in the items container when no items are bound to the component.
+     * @attr [empty-message]
+     */
+    @property({ type: String, reflect: true, attribute: 'empty-message' }) emptyMessage: string = 'No items provided';
+
+    /**
      * The render function for each item.
+     * @no_attribute
      */
     @property({ type: Object, reflect: false }) renderItem: RenderFunction;
 
     // Internal state properties
     @state() private _popUp: boolean = false;
-    @state() private _bottomOfScreen: boolean = false;
-    @state() private _mobileWidth: boolean = false;
+    @state() private _bottomOfViewport: boolean = false;
+    @state() private _isMobile: boolean = false;
 
     override connectedCallback() {
         super.connectedCallback();
-        this._sizeCheck();
+        this._mobileCheck();
         this.addEventListener('click', this._inputClick.bind(this));
         window.addEventListener('click', this._windowClick.bind(this));
-        window.addEventListener('resize', this._sizeCheck.bind(this));
+    }
+
+    protected override async firstUpdated(): Promise<void> {
+        await this._dimensionsCheck();
+        window.addEventListener('resize', this._dimensionsCheck.bind(this));
+        window.addEventListener('scroll', this._dimensionsCheck.bind(this));
     }
 
     _inputClick() {
@@ -177,7 +191,7 @@ export class Select extends OmniFormElement {
     }
 
     // Set the value when a item is clicked
-    async _onItemClick(item: string) {
+    async _onItemClick(item: Record<string, unknown> | string) {
         this.value = item;
 
         await this.updateComplete;
@@ -191,29 +205,54 @@ export class Select extends OmniFormElement {
         );
     }
 
-    // Check the size of the screen to determine how to render items and which control icon to apply
-    _sizeCheck() {
-        this._heightCheck();
-        this._widthCheck();
+    // Check the dimensions of the screen to determine how to render items container and which control icon to apply.
+    async _dimensionsCheck() {
+        await this._bottomCheck();
+        this._mobileCheck();
+        await this._itemsMaxHeightChange();
     }
 
-    // Check to see if the component is at the bottom of the screen if true render items container above input element.
-    _heightCheck() {
-        if (window.innerHeight < 200) {
-            this._bottomOfScreen = true;
+    // Check to see if the component is at the bottom of the viewport if true set the internal boolean value.
+    async _bottomCheck() {
+        const distanceFromBottom = visualViewport.height - this.getBoundingClientRect().bottom;
+        if (distanceFromBottom < 150) {
+            this._bottomOfViewport = true;
         } else {
-            this._bottomOfScreen = false;
+            this._bottomOfViewport = false;
         }
     }
 
     // Check the width of the screen to set the internal mobile boolean to true of false.
-    _widthCheck() {
-        if (window.innerWidth > 767) {
+    _mobileCheck() {
+        if (!window.matchMedia ? window.innerWidth >= 767 : window.matchMedia('screen and (min-width: 767px)').matches) {
             // Desktop width is at least 767px
-            this._mobileWidth = false;
+            this._isMobile = false;
         } else {
             // Mobile screen less than 767px
-            this._mobileWidth = true;
+            this._isMobile = true;
+        }
+    }
+
+    // Set the max height of the items container to be within bounds of the viewport when it is rendered at the bottom or at the top of the input.
+    async _itemsMaxHeightChange(el?: Element) {
+        if (el) {
+            this._itemsContainer = el as HTMLDivElement;
+        }
+        if (this._itemsContainer && !this._isMobile) {
+            await this.updateComplete;
+
+            if (this._bottomOfViewport) {
+                const newHeight =
+                    visualViewport.height -
+                    this.getBoundingClientRect().height -
+                    (visualViewport.height - this.getBoundingClientRect().top) -
+                    10 +
+                    'px';
+                this._itemsContainer.style.maxHeight = `var(--omni-select-items-max-height, ${newHeight})`;
+            } else {
+                const newHeight = visualViewport.height - this.getBoundingClientRect().bottom - 10 + 'px';
+                this._itemsContainer.style.maxHeight = `var(--omni-select-items-max-height, ${newHeight})`;
+            }
         }
     }
 
@@ -221,7 +260,7 @@ export class Select extends OmniFormElement {
         return [
             super.styles,
             css`
-                /*Added to ensure that component has pointer cursor applied*/
+                /* Added to ensure that component has pointer cursor applied */
                 :host {
                     cursor: pointer;
                 }
@@ -247,6 +286,7 @@ export class Select extends OmniFormElement {
 
                     /* Added to stop the transforming of the label when the input is clicked */
                     pointer-events: none;
+                    width: var(--omni-select-field-width);
                 }
 
                 .control {
@@ -268,32 +308,14 @@ export class Select extends OmniFormElement {
                 /* Default item container styles*/
                 .items-container {
                     box-shadow: var(--omni-select-items-container-box-shadow, 0 0 6px 0 rgba(0, 0, 0, 0.11));
-                    background-color: var(--omni-select-items-container-background-color, #ffffff);
-                    z-index: var(--omni-select-items-container-z-index, 400);
-                }
-
-                /* Mobile device styling */
-                @media screen and (max-width: 767px) {
-                    .items {
-                        max-height: var(--omni-select-mobile-items-max-height, 240px);
-                    }
-
-                    .items-container {
-                        position: fixed;
-
-                        left: var(--omni-select-mobile-items-container-left, 0px);
-                        right: var(--omni-select-mobile-items-container-right, 0px);
-                        bottom: var(--omni-select-mobile-items-container-bottom, 0px);
-
-                        border-top-left-radius: var(--omni-select-mobile-items-container-border-top-left-radius, 10px);
-                        border-top-right-radius: var(--omni-select-mobile-items-container-border-top-right-radius, 10px);
-                    }
+                    background-color: var(--omni-select-items-container-background-color, var(--omni-theme-background-color));
+                    z-index: var(--omni-select-items-container-z-index, 420);
                 }
 
                 /* Desktop and landscape tablet device styling, if element is at the bottom of the screen make items render above the input */
                 @media screen and (min-width: 767px) {
                     .items {
-                        max-height: var(--omni-select-items-max-height, 240px);
+                       max-height: var(--omni-select-items-max-height, 100%);
                     }
 
                     .items-container {
@@ -320,6 +342,24 @@ export class Select extends OmniFormElement {
                     .control.collapsed {
                         transform: none;
                         transition: all linear 0.15s;
+                    }
+                }
+                
+                /* Mobile device styling */
+                @media screen and (max-width: 766px) {
+                    .items {
+                       max-height: var(--omni-select-mobile-items-max-height, 240px);
+                    }
+
+                    .items-container {
+                        position: fixed;
+
+                        left: var(--omni-select-mobile-items-container-left, 0px);
+                        right: var(--omni-select-mobile-items-container-right, 0px);
+                        bottom: var(--omni-select-mobile-items-container-bottom, 0px);
+
+                        border-top-left-radius: var(--omni-select-mobile-items-container-border-top-left-radius, 10px);
+                        border-top-right-radius: var(--omni-select-mobile-items-container-border-top-right-radius, 10px);
                     }
                 }
 
@@ -424,7 +464,11 @@ export class Select extends OmniFormElement {
                 type="text"
                 readonly
                 ?disabled=${this.disabled}
-                .value=${live(this.value as string)}
+                .value=${live(
+                    (typeof this.value !== 'string' && this.displayField
+                        ? (((this.value as Record<string, unknown>) ?? {})[this.displayField] as string)
+                        : (this.value as string)) ?? ''
+                )}
                 tabindex="${this.disabled ? -1 : 0}" />
         `;
     }
@@ -434,26 +478,29 @@ export class Select extends OmniFormElement {
             return nothing;
         }
         return html`
-            <div id="items-container" class="items-container ${this._bottomOfScreen ? `bottom` : ``}">
-                ${this._mobileWidth ? html`<div class="header">${this.label}</div>` : nothing}
-                <div id="items" class="items"> ${until(this._renderOptions(), html`<div>${this.renderLoading()}</div>`)} </div>
+            <div id="items-container" class="items-container ${this._bottomOfViewport ? `bottom` : ``}">
+                ${this._isMobile && this.label ? html`<div class="header">${this.label}</div>` : nothing}
+                <div ${ref(this._itemsMaxHeightChange)} id="items" class="items"> ${until(
+            this._renderOptions(),
+            html`<div>${this.renderLoading()}</div>`
+        )} </div>
             </div>
         `;
     }
 
     protected override renderControl() {
         return html` <div id="control" class="control ${this._popUp ? `expanded` : `collapsed`}" @click="${() => this._controlClick()}">
-            ${this._mobileWidth
-                ? html`<omni-more-icon class="control-icon"></omni-more-icon>`
-                : html`<omni-chevron-down-icon class="control-icon"></omni-chevron-down-icon>`}
+            ${
+                this._isMobile
+                    ? html`<omni-more-icon class="control-icon"></omni-more-icon>`
+                    : html`<omni-chevron-down-icon class="control-icon"></omni-chevron-down-icon>`
+            }
         </div>`;
     }
 
     async _renderOptions() {
         let items: SelectTypes = [];
         let itemsLength = 0;
-
-        await this._sizeCheck();
 
         if (typeof this.items === 'function') {
             items = await this.items();
@@ -466,7 +513,7 @@ export class Select extends OmniFormElement {
         }
 
         if (itemsLength === 0) {
-            return html`<div class="none">No items provided</div>`;
+            return html`<div class="none">${this.emptyMessage}</div>`;
         } else {
             return items.map((i) => this._renderOption(i));
         }
@@ -475,17 +522,16 @@ export class Select extends OmniFormElement {
     // Render the each option in the item container
     _renderOption(item: Record<string, unknown> | string) {
         return html` <div
-            class="item ${this.value === (typeof item === 'string' ? item : item[this.displayField]) || this.value === item
-                ? `selected`
-                : ``}"
-            @click="${() =>
-                this._onItemClick(typeof item !== 'string' && this.displayField ? (item[this.displayField] as string) : (item as string))}">
-            ${this.renderItem
-                ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  html` <omni-render-element .data="${item as any}" .renderer="${this.renderItem}"></omni-render-element>`
-                : typeof item !== 'string' && this.displayField
-                ? item[this.displayField]
-                : item}
+            class="item ${this.value === (typeof item === 'string' ? item : item[this.displayField]) || this.value === item ? `selected` : ``}"
+            @click="${() => this._onItemClick(item)}">
+            ${
+                this.renderItem
+                    ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      html` <omni-render-element .data="${item as any}" .renderer="${this.renderItem}"></omni-render-element>`
+                    : typeof item !== 'string' && this.displayField
+                    ? item[this.displayField]
+                    : item
+            }
         </div>`;
     }
 

@@ -7,23 +7,23 @@ const plugins = {
                 // Runs for each module
                 analyzePhase({ ts, node, moduleDoc }) {
                     switch (node.kind) {
-                    case ts.SyntaxKind.ClassDeclaration:
-                        const className = node.name.getText();
+                        case ts.SyntaxKind.ClassDeclaration:
+                            const className = node.name.getText();
 
-                        node.jsDoc?.forEach(jsDoc => {
-                            jsDoc.tags?.forEach(tag => {
-                                const tagName = tag.tagName.getText();
-                                if (tagName && (tagName.toLowerCase() === 'csscat' || tagName.toLowerCase() === 'csscategory')) {
-                                    const description = tag.comment;
+                            node.jsDoc?.forEach(jsDoc => {
+                                jsDoc.tags?.forEach(tag => {
+                                    const tagName = tag.tagName.getText();
+                                    if (tagName && (tagName.toLowerCase() === 'csscat' || tagName.toLowerCase() === 'csscategory')) {
+                                        const description = tag.comment;
 
-                                    const classDeclaration = moduleDoc.declarations.find(declaration => declaration.name === className);
+                                        const classDeclaration = moduleDoc.declarations.find(declaration => declaration.name === className);
 
-                                    classDeclaration.cssCategory = description;
-                                }
+                                        classDeclaration.cssCategory = description;
+                                    }
+                                });
                             });
-                        });
 
-                        break;
+                            break;
                     }
                 },
                 // Runs for each module, after analyzing, all information about your module should now be available
@@ -41,16 +41,16 @@ const plugins = {
                 // Runs for each module
                 analyzePhase({ ts, node, moduleDoc }) {
                     switch (node.kind) {
-                    case ts.SyntaxKind.ClassDeclaration:
-                        const declaration = moduleDoc.declarations.find((d) => d.slots && d.slots.length > 0 && d.slots.find((s) => s.name === ''));
-                        if (declaration) {
-                            const slot = declaration.slots.find((s) => s.name === '');
-                            if (slot) {
-                                slot.name = '[Default Slot]';
+                        case ts.SyntaxKind.ClassDeclaration:
+                            const declaration = moduleDoc.declarations.find((d) => d.slots && d.slots.length > 0 && d.slots.find((s) => s.name === ''));
+                            if (declaration) {
+                                const slot = declaration.slots.find((s) => s.name === '');
+                                if (slot) {
+                                    slot.name = '[Default Slot]';
+                                }
                             }
-                        }
 
-                        break;
+                            break;
                     }
                 },
                 // Runs for each module, after analyzing, all information about your module should now be available
@@ -92,8 +92,83 @@ const plugins = {
                     });
                 },
             };
+        }(),
+        function importPlugin() {
+            return {
+                analyzePhase({ ts, node, moduleDoc }) {
+                    switch (node.kind) {
+                        case ts.SyntaxKind.ClassDeclaration:
+                            const className = node.name.getText();
+
+                            node.jsDoc?.forEach(jsDoc => {
+                                jsDoc.tags?.forEach(tag => {
+                                    const tagName = tag.tagName.getText();
+                                    if (tagName && (tagName.toLowerCase() === 'import')) {
+                                        const value = tag.comment;
+                                        const classDeclaration = moduleDoc.declarations.find(declaration => declaration.name === className);
+                                        classDeclaration.import = value;
+                                    }
+                                });
+                            });
+
+                            break;
+                    }
+                },
+                moduleLinkPhase({ moduleDoc }) {
+                    // console.log(moduleDoc);
+                },
+                packageLinkPhase({ customElementsManifest }) {
+                    // console.log(customElementsManifest);
+                }
+            };
+        }(),
+        function removeAttributePlugin() {
+            return {
+                analyzePhase({ ts, node, moduleDoc }) {
+                    switch (node.kind) {
+                        case ts.SyntaxKind.PropertyDeclaration:
+                            const propertyName = node.name.getText();
+                            const classNode = findParentClass(ts, node);
+                            if (classNode){
+                                const className = classNode.name.getText();
+    
+                                node.jsDoc?.forEach(jsDoc => {
+                                    jsDoc.tags?.forEach(tag => {
+                                        const tagName = tag.tagName.getText();
+                                        if (tagName && (tagName.toLowerCase() === 'no_attribute')) {
+                                            const value = tag.comment;
+                                            const classDeclaration = moduleDoc.declarations.find(declaration => declaration.name === className);
+                                            
+                                            const attributes = classDeclaration.attributes.filter(a => a.name !== propertyName && a.fieldName !== propertyName);
+                                            classDeclaration.attributes = attributes;
+
+                                            const field = classDeclaration.members.find(m => m.name === propertyName);
+                                            delete field.attribute;
+                                        }
+                                    });
+                                });
+                            }
+
+                            break;
+                    }
+                },
+                moduleLinkPhase({ moduleDoc }) {
+                    // console.log(moduleDoc);
+                },
+                packageLinkPhase({ customElementsManifest }) {
+                    // console.log(customElementsManifest);
+                }
+            };
         }()
     ]
 };
 
-module.exports = plugins;
+function findParentClass(ts, node) {
+    let parent = node.parent;
+    while (parent && parent.kind !== ts.SyntaxKind.ClassDeclaration) {
+        parent = parent.parent;
+    }
+    return parent;
+}
+
+export default plugins;

@@ -1,10 +1,9 @@
-import { expect } from '@storybook/jest';
-import { within } from '@storybook/testing-library';
-import { Meta, StoryContext } from '@storybook/web-components';
+import { within } from '@testing-library/dom';
 import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import { raw } from '../utils/StoryUtils';
+import expect from '../utils/ExpectDOM.js';
+import { ComponentStoryFormat, CSFIdentifier, raw } from '../utils/StoryUtils.js';
 import { Icon } from './Icon.js';
 import './Icon.js';
 
@@ -25,24 +24,23 @@ export default {
     '[Default Slot]': {
         control: 'text'
     }
-} as Meta;
+} as CSFIdentifier;
 
-interface ArgTypes {
+interface Args {
     size: typeof sizeOptions[number];
     icon: string;
     '[Default Slot]': string;
 }
 
-export const Interactive = {
-    render: (args: ArgTypes) => html`
-        <!-- Icons loaded by content path instead of font-based or slotted content will not be able to be styled directly -->
+export const Interactive: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
+    <!-- Icons loaded by content path instead of font-based or slotted content will not be able to be styled directly -->
 
-        <omni-icon data-testid="test-icon" size="${ifNotEmpty(args.size)}" icon="${ifNotEmpty(args.icon)}">
-            ${unsafeHTML(args['[Default Slot]'])}
-        </omni-icon>
-    `,
+    <omni-icon data-testid="test-icon" size="${ifNotEmpty(args.size)}" icon="${ifNotEmpty(args.icon)}">
+      ${unsafeHTML(args['[Default Slot]'])}
+    </omni-icon>
+  `,
     name: 'Interactive',
-    parameters: {},
     args: {
         size: 'default',
         '[Default Slot]': raw`<svg
@@ -58,7 +56,7 @@ export const Interactive = {
   </svg>`,
         icon: undefined as string
     },
-    play: async (context: StoryContext) => {
+    play: async (context) => {
         const icon = within(context.canvasElement).getByTestId<Icon>('test-icon');
         const slotElement = icon.shadowRoot.querySelector('slot');
         const foundSlottedSvgElement = slotElement.assignedElements().find((e) => e.tagName.toLowerCase() === 'svg');
@@ -66,12 +64,9 @@ export const Interactive = {
     }
 };
 
-export const SVG = {
-    render: (args: ArgTypes) => html`
-        <omni-icon data-testid="test-icon" size="${args.size}"> ${unsafeHTML(args['[Default Slot]'])} </omni-icon>
-    `,
+export const SVG: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html` <omni-icon data-testid="test-icon" size="${args.size}"> ${unsafeHTML(args['[Default Slot]'])} </omni-icon> `,
     name: 'SVG',
-    parameters: {},
     args: {
         size: 'large',
         '[Default Slot]': `<svg
@@ -86,7 +81,7 @@ export const SVG = {
                 </g>
               </svg>`
     },
-    play: async (context: StoryContext) => {
+    play: async (context) => {
         const icon = within(context.canvasElement).getByTestId<Icon>('test-icon');
         const slotElement = icon.shadowRoot.querySelector('slot');
         const foundSlottedSvgElement = slotElement.assignedElements().find((e) => e.tagName.toLowerCase() === 'svg');
@@ -94,39 +89,37 @@ export const SVG = {
     }
 };
 
-export const IconPath = {
-    render: (args: ArgTypes) => html`
-        <!-- Icons loaded by content path instead of font-based or slotted content will not be able to be styled directly -->
+export const Icon_Path: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
+    <!-- Icons loaded by content path instead of font-based or slotted content will not be able to be styled directly -->
 
-        <omni-icon data-testid="test-icon" size="${args.size}" icon="${args.icon}"></omni-icon>
-    `,
+    <omni-icon data-testid="test-icon" size="${args.size}" icon="${args.icon}"></omni-icon>
+  `,
     name: 'Local Source',
-    parameters: {},
     args: {
         size: 'default',
-        icon: 'assets/colors.svg'
+        icon: './assets/images/colors.svg'
     },
-    play: async (context: StoryContext) => {
+    play: async (context) => {
         const icon = within(context.canvasElement).getByTestId<Icon>('test-icon');
         const imgElement = icon.shadowRoot.querySelector('img');
         await expect(imgElement).toBeTruthy();
-        await expect(imgElement.src.endsWith(IconPath.args.icon)).toBeTruthy();
+        await expect(imgElement.src.endsWith(Icon_Path.args.icon.replace('./', '/'))).toBeTruthy();
     }
 };
 
-export const URL = {
-    render: (args: ArgTypes) => html`
-        <!-- Icons loaded by content path instead of font-based or slotted content will not be able to be styled directly -->
+export const URL: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
+    <!-- Icons loaded by content path instead of font-based or slotted content will not be able to be styled directly -->
 
-        <omni-icon data-testid="test-icon" size="${args.size}" icon="${args.icon}"></omni-icon>
-    `,
+    <omni-icon data-testid="test-icon" size="${args.size}" icon="${args.icon}"></omni-icon>
+  `,
     name: 'Remote Source',
-    parameters: {},
     args: {
         size: 'default',
         icon: 'https://img.shields.io/badge/Source-remote-lightgrey.svg'
     },
-    play: async (context: StoryContext) => {
+    play: async (context) => {
         const icon = within(context.canvasElement).getByTestId<Icon>('test-icon');
         const imgElement = icon.shadowRoot.querySelector('img');
         await expect(imgElement).toBeTruthy();
@@ -134,19 +127,19 @@ export const URL = {
     }
 };
 
-export const Material = {
-    render: (args: ArgTypes) => html`
-        <!-- Add Material to your project, e.g. Adding below link in <head>-->
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-        <!-- ------------------------------------------------------------- -->
+export const Material: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
+    <!-- Add Material to your project, e.g. Adding below link in <head>-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <!-- ------------------------------------------------------------- -->
 
-        <omni-icon data-testid="test-icon" size="${args.size}" icon="${args.icon}"> </omni-icon>
-    `,
+    <omni-icon data-testid="test-icon" size="${args.size}" icon="${args.icon}"> </omni-icon>
+  `,
     args: {
         size: 'default',
         icon: '@material/receipt_long'
     },
-    play: async (context: StoryContext) => {
+    play: async (context) => {
         const icon = within(context.canvasElement).getByTestId<Icon>('test-icon');
         const materialElement = icon.shadowRoot.querySelector<HTMLElement>('.material-icon');
         await expect(materialElement).toBeTruthy();

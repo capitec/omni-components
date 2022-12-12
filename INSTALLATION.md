@@ -15,7 +15,9 @@ The easiest way to install Omni Components is with the CDN. Just a script of typ
 
 
 <br/>
-<strong> If you're only using a few components, it will be more efficient to [cherry pick](#cherry-picking-) the ones you need. </strong>
+<strong> 
+
+If you're only using a few components, it will be more efficient to [cherry pick](#cherry-picking-) the ones you need. </strong>
 
 ## Local Installation 💾
 
@@ -29,7 +31,7 @@ npm install @capitec/omni-components
 
 
 With the latest package installed from NPM, [you can use a bundler](#bundling-). 
-The ESM package used for [CDN Installation](#cdn-installation-(easiest)) has its dependencies bundled already which allows it to be used without the need to install dependencies.
+The ESM package used for [CDN Installation](#cdn-installation-(easiest)-) has its dependencies bundled already which allows it to be used without the need to install dependencies.
 However when using the local installation from NPM, the dependencies need to be provided externally, or you would need to [bundle the dependencies](#bundling-).
 
 <strong> For clarity, the docs will usually show imports from `@capitec/omni-components`. If you're not using a module resolver or bundler, you'll need to adjust these paths to point to the folder Omni Components is in. </strong>
