@@ -1,6 +1,6 @@
 {
   "name": "@capitec/omni-components",
-  "version": "0.3.19",
+  "version": "0.3.20",
   "type": "module",
   "description": "Customizable web components for any application.",
   "scripts": {
