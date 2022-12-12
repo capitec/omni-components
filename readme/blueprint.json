@@ -1,6 +1,6 @@
 {
     "logo": {
-      "src": "https://raw.githubusercontent.com/capitec/omni-components/storybook-removal/eleventy/assets/images/logo.png",
+      "src": "https://raw.githubusercontent.com/capitec/omni-components/develop/eleventy/assets/images/logo.png",
       "width": "150"
     },
 	"ids": {

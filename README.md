@@ -1,6 +1,6 @@
 <!-- ⚠️ This README has been generated from the file(s) "readme/blueprint.md" ⚠️-->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/capitec/omni-components/storybook-removal/eleventy/assets/images/logo.png" alt="Logo" width="150" height="auto" />
+  <img src="https://raw.githubusercontent.com/capitec/omni-components/develop/eleventy/assets/images/logo.png" alt="Logo" width="150" height="auto" />
 </p>
 
 <h1 align="center">Omni Components</h1>
