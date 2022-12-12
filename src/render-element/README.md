@@ -1,11 +1,6 @@
 # omni-render-element
 
-An element that defers content rendering to a provided function/promise.
-
-```js
-
-import '@capitec/omni-components/render-element';
-```
+Element that defers content rendering to a provided function / promise.
 
 ## Example
 

@@ -56,11 +56,7 @@ A feature request is an improvement or new capability associated with *any part*
 
 1. [Fork](https://github.com/capitec/omni-components/fork) the repository and create a branch from `develop`.
 2. Clone the forked repo, checkout your branch, and run `npm ci` inside the repository root.
-3. Start up the dev server with `npm run storybook` (or by launching debugging in VS Code).
-
-### Storybook
-
-We make extensive use of [Storybook](https://storybook.js.org/) for developing, testing as well as exploring published component documentation. This is achieved using [stories](https://storybook.js.org/docs/web-components/writing-stories/introduction) with [play functions](https://storybook.js.org/docs/web-components/writing-stories/play-function).
+3. Start up the dev server with `npm run serve` (or by launching debugging in VS Code).
 
 ### Directory Structure
 
@@ -83,7 +79,7 @@ When adding or editing components, please note the following key directories:
   * `Button.ts` - The component. *(NOTE: There might be multiple, depending on complexity and composition)*
   * `index.ts` - The directory-level index, containing one or more component exports.
   * `README.md` - The README for the component *(NOTE: Generated when Pull Request is merged)*.
-* `themes` - Basic built-in themes, viewable within the Storybook application.
+* `themes` - Basic built-in themes, viewable within the hosted documentation.
 
 ### Naming Conventions
 
@@ -96,7 +92,7 @@ When adding or editing components, please note the following key directories:
 * **Do** name CSS custom properties as follows: 
   * Component: `--omni-<component>-<state>-<css-property>`, e.g. `--omni-button-primary-background-color`
   * Theme: `--omni-theme-<state>-<css-property>`, e.g. `--omni-theme-primary-color`
-* **Do** follow standard [TypeScript](https://www.typescriptlang.org/docs/), [Lit](https://lit.dev/docs/) and [Storybook](https://storybook.js.org/docs/web-components/writing-stories/introduction) related conventions. 
+* **Do** follow standard [TypeScript](https://www.typescriptlang.org/docs/), [Lit](https://lit.dev/docs/) related conventions. 
 
 > 💡 TIP: Refer to existing components and stories for examples. 
 
@@ -120,14 +116,13 @@ Here's a *non-exhaustive* list of requirements that are key to contributing to t
 * **Do** implement only *one* component class within a component file.
 
 #### Stories
-* **Do** use [Component Story Format (CSF) 3](https://storybook.js.org/blog/component-story-format-3-0/).
-* **Do** implement a [play function](https://storybook.js.org/docs/web-components/writing-stories/play-function) per story to test story-specific component state and event behaviors. 🛝
+* **Do** use [Component Story Format (CSF) 3](https://github.com/capitec/omni-components/blob/develop/src/utils/ComponentStoryFormat.ts).
+* **Do** implement a [play function](https://github.com/capitec/omni-components/blob/develop/src/utils/PlayFunction.ts) per story to test story-specific component state and event behaviors. 🛝
   * **Do** set the `data-testid` within every story template.
-  * **Do** ensure there are no [accessibility](https://storybook.js.org/docs/web-components/writing-tests/accessibility-testing) violations.
 
 #### Themes
 * **Do** maintain each built-in theme, by ensuring all `--omni-theme-*` CSS custom properties are implemented.
-* **Do** test each theme thoroughly via the Storybook application.
+* **Do** test each theme thoroughly via the hosted documentation.
 
 > 💡 TIP: Refer to existing components, stories and themes for examples for any of the above.
 

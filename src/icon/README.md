@@ -1,11 +1,6 @@
 # omni-icon
 
-Component that displays an icon
-
-```js
-
-import '@capitec/omni-components/icon';
-```
+Component that displays an icon.
 
 ## Examples
 

@@ -1,11 +1,6 @@
 # omni-password-field
 
-A password input control.
-
-```js
-
-import '@capitec/omni-components/password-field';
-```
+Password input control.
 
 ## Example
 
@@ -22,18 +17,18 @@ import '@capitec/omni-components/password-field';
 
 ## Properties
 
-| Property   | Attribute  | Modifiers | Type               | Default | Description                                      |
-|------------|------------|-----------|--------------------|---------|--------------------------------------------------|
-| `data`     | `data`     |           | `object`           |         | Data associated with the component.              |
-| `dir`      |            |           | `string`           |         |                                                  |
-| `disabled` | `disabled` |           | `boolean`          | false   | Indicator if the component should be disabled.   |
-| `error`    | `error`    |           | `string`           |         | A error message guiding a user to correct a mistake. |
-| `hint`     | `hint`     |           | `string`           |         | A hint message to assist the user.               |
-| `label`    | `label`    |           | `string`           |         | Text label.                                      |
-| `lang`     |            |           | `string`           |         |                                                  |
-| `override` | `override` |           |                    |         | Used to set the base direction of text for display |
-| `styles`   |            | readonly  | `CSSResultGroup[]` |         |                                                  |
-| `value`    | `value`    |           | `string \| number` | null    | The value entered into the form component.       |
+| Property   | Attribute  | Modifiers | Type                                          | Default | Description                                      |
+|------------|------------|-----------|-----------------------------------------------|---------|--------------------------------------------------|
+| `data`     | `data`     |           | `object`                                      |         | Data associated with the component.              |
+| `dir`      |            |           | `string`                                      |         |                                                  |
+| `disabled` | `disabled` |           | `boolean`                                     | false   | Indicator if the component should be disabled.   |
+| `error`    | `error`    |           | `string`                                      |         | A error message guiding a user to correct a mistake. |
+| `hint`     | `hint`     |           | `string`                                      |         | A hint message to assist the user.               |
+| `label`    | `label`    |           | `string`                                      |         | Text label.                                      |
+| `lang`     |            |           | `string`                                      |         |                                                  |
+| `override` | `override` |           |                                               |         | Used to set the base direction of text for display |
+| `styles`   |            | readonly  | `CSSResultGroup[]`                            |         |                                                  |
+| `value`    | `value`    |           | `string \| number \| Record<string, unknown>` | null    | The value entered into the form component.       |
 
 ## Methods
 
@@ -113,6 +108,7 @@ import '@capitec/omni-components/password-field';
 | `--omni-password-field-icon-width`               | Password field slot width.                     |
 | `--omni-password-field-padding`                  | Password field width.                          |
 | `--omni-password-field-text-align`               | Password field text align.                     |
+| `--omni-password-field-width`                    | Password field width.                          |
 | `--omni-theme-accent-active-color`               | Theme accent active color.                     |
 | `--omni-theme-accent-color`                      | Theme accent color.                            |
 | `--omni-theme-accent-hover-color`                | Theme accent hover color.                      |

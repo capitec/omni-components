@@ -1,11 +1,6 @@
 # omni-numeric-field
 
-An input control that allows a user to enter a single line of numbers with a stepper control.
-
-```js
-
-import '@capitec/omni-components/numeric-field';
-```
+Input control to enter a single line of numbers with a stepper control.
 
 ## Example
 
@@ -22,18 +17,18 @@ import '@capitec/omni-components/numeric-field';
 
 ## Properties
 
-| Property   | Attribute  | Modifiers | Type               | Default | Description                                      |
-|------------|------------|-----------|--------------------|---------|--------------------------------------------------|
-| `data`     | `data`     |           | `object`           |         | Data associated with the component.              |
-| `dir`      |            |           | `string`           |         |                                                  |
-| `disabled` | `disabled` |           | `boolean`          | false   | Indicator if the component should be disabled.   |
-| `error`    | `error`    |           | `string`           |         | A error message guiding a user to correct a mistake. |
-| `hint`     | `hint`     |           | `string`           |         | A hint message to assist the user.               |
-| `label`    | `label`    |           | `string`           |         | Text label.                                      |
-| `lang`     |            |           | `string`           |         |                                                  |
-| `override` | `override` |           |                    |         | Used to set the base direction of text for display |
-| `styles`   |            | readonly  | `CSSResultGroup[]` |         |                                                  |
-| `value`    | `value`    |           | `string \| number` | null    | The value entered into the form component.       |
+| Property   | Attribute  | Modifiers | Type                                          | Default | Description                                      |
+|------------|------------|-----------|-----------------------------------------------|---------|--------------------------------------------------|
+| `data`     | `data`     |           | `object`                                      |         | Data associated with the component.              |
+| `dir`      |            |           | `string`                                      |         |                                                  |
+| `disabled` | `disabled` |           | `boolean`                                     | false   | Indicator if the component should be disabled.   |
+| `error`    | `error`    |           | `string`                                      |         | A error message guiding a user to correct a mistake. |
+| `hint`     | `hint`     |           | `string`                                      |         | A hint message to assist the user.               |
+| `label`    | `label`    |           | `string`                                      |         | Text label.                                      |
+| `lang`     |            |           | `string`                                      |         |                                                  |
+| `override` | `override` |           |                                               |         | Used to set the base direction of text for display |
+| `styles`   |            | readonly  | `CSSResultGroup[]`                            |         |                                                  |
+| `value`    | `value`    |           | `string \| number \| Record<string, unknown>` | null    | The value entered into the form component.       |
 
 ## Methods
 
@@ -108,6 +103,7 @@ import '@capitec/omni-components/numeric-field';
 | `--omni-numeric-field-height`                    | Numeric input field height.                    |
 | `--omni-numeric-field-padding`                   | Numeric input field padding.                   |
 | `--omni-numeric-field-text-align`                | Numeric input field text align.                |
+| `--omni-numeric-field-width`                     | Numeric input field width.                     |
 | `--omni-numeric-input-divider-color`             | Numeric input control divider color.           |
 | `--omni-numeric-input-divider-width`             | Numeric input control divider width.           |
 | `--omni-numeric-input-quantity-height`           | Numeric input quantity container height.       |

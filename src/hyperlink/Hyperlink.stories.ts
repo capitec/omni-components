@@ -1,9 +1,10 @@
-import { expect, jest } from '@storybook/jest';
-import { within, userEvent } from '@storybook/testing-library';
-import { Meta } from '@storybook/web-components';
+import { within } from '@testing-library/dom';
+import userEvent from '@testing-library/user-event';
+import * as jest from 'jest-mock';
 import { html } from 'lit';
 import { ifNotEmpty } from '../utils/Directives.js';
-import { loadCssPropertiesRemote } from '../utils/StoryUtils';
+import expect from '../utils/ExpectDOM.js';
+import { ComponentStoryFormat, CSFIdentifier } from '../utils/StoryUtils.js';
 import './Hyperlink.js';
 
 const linkTarget = ['_self', '_blank', '_parent', '_top'] as const;
@@ -14,16 +15,10 @@ export default {
     argTypes: {
         size: { control: 'radio', options: ['default', 'small'] },
         target: { control: 'radio', options: linkTarget }
-    },
-    parameters: {
-        cssprops: loadCssPropertiesRemote('omni-hyperlink'),
-        actions: {
-            handles: ['click']
-        }
     }
-} as Meta;
+} as CSFIdentifier;
 
-interface ArgTypes {
+interface Args {
     label: string;
     href: string;
     target: typeof linkTarget[number];
@@ -32,93 +27,95 @@ interface ArgTypes {
     size: string;
 }
 
-export const Interactive = {
-    render: (args: ArgTypes) => html`
-        <omni-hyperlink
-            data-testid="test-hyperlink"
-            label="${ifNotEmpty(args.label)}"
-            href="${ifNotEmpty(args.href)}"
-            target="${ifNotEmpty(args.target)}"
-            ?disabled="${args.disabled}"
-            ?inline="${args.inline}"
-            size="${args.size}"></omni-hyperlink>
-    `,
+export const Interactive: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
+    <omni-hyperlink
+      data-testid="test-hyperlink"
+      label="${ifNotEmpty(args.label)}"
+      href="${ifNotEmpty(args.href)}"
+      target="${ifNotEmpty(args.target)}"
+      ?disabled="${args.disabled}"
+      ?inline="${args.inline}"
+      size="${args.size}"></omni-hyperlink>
+  `,
     name: 'Interactive',
     args: {
         label: 'Click',
         href: '',
-        target: '',
         disabled: false,
         inline: false,
         size: ''
     },
-    play: async (context: { canvasElement: HTMLElement }) => {
+    play: async (context) => {
         const canvas = within(context.canvasElement);
         const Hyperlink = canvas.getByTestId('test-hyperlink');
         const click = jest.fn();
         Hyperlink.addEventListener('click', () => click());
-        await userEvent.click(Hyperlink);
-        await userEvent.click(Hyperlink);
+        await userEvent.click(Hyperlink, {
+            pointerEventsCheck: 0
+        });
+        await userEvent.click(Hyperlink, {
+            pointerEventsCheck: 0
+        });
         await expect(click).toBeCalledTimes(2);
     }
 };
 
-export const Label = {
-    render: (args: ArgTypes) => html`<omni-hyperlink data-testid="test-hyperlink" label="${args.label}"></omni-hyperlink>`,
+export const Label: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`<omni-hyperlink data-testid="test-hyperlink" label="${args.label}"></omni-hyperlink>`,
     name: 'Label',
     args: {
         label: 'Click'
     },
-    play: async (context: { canvasElement: HTMLElement }) => {
+    play: async (context) => {
         const canvas = within(context.canvasElement);
         const Hyperlink = canvas.getByTestId('test-hyperlink');
         await expect(Hyperlink.shadowRoot.querySelector('a')).toHaveTextContent(Label.args.label);
     }
 };
 
-export const Size = {
-    render: (args: ArgTypes) =>
-        html`<omni-hyperlink data-testid="test-hyperlink" label="${args.label}" size="${args.size}"></omni-hyperlink>`,
+export const Size: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`<omni-hyperlink data-testid="test-hyperlink" label="${args.label}" size="${args.size}"></omni-hyperlink>`,
     name: 'Size',
     args: {
         label: 'Click',
         size: 'small'
     },
-    play: async (context: { canvasElement: HTMLElement }) => {
+    play: async (context) => {
         const canvas = within(context.canvasElement);
         const Hyperlink = canvas.getByTestId('test-hyperlink');
         await expect(Hyperlink).toHaveAttribute('size', Size.args.size);
     }
 };
 
-export const Href = {
-    render: (args: ArgTypes) =>
+export const Href: ComponentStoryFormat<Args> = {
+    render: (args: Args) =>
         html`<omni-hyperlink data-testid="test-hyperlink" label="${args.label}" href="${args.href}" target="_blank"></omni-hyperlink>`,
     name: 'Href',
     args: {
         label: 'Click',
         href: 'https://example.com'
     },
-    play: async (context: { canvasElement: HTMLElement }) => {
+    play: async (context) => {
         const canvas = within(context.canvasElement);
         const Hyperlink = canvas.getByTestId('test-hyperlink');
         await expect(Hyperlink).toHaveAttribute('href', Href.args.href);
     }
 };
 
-export const Disabled = {
-    render: (args: ArgTypes) =>
+export const Disabled: ComponentStoryFormat<Args> = {
+    render: (args: Args) =>
         html`<omni-hyperlink
-            data-testid="test-hyperlink"
-            href="https://example.com"
-            label="${args.label}"
-            ?disabled="${args.disabled}"></omni-hyperlink>`,
+      data-testid="test-hyperlink"
+      href="https://example.com"
+      label="${args.label}"
+      ?disabled="${args.disabled}"></omni-hyperlink>`,
     name: 'Disabled',
     args: {
         label: 'Click',
         disabled: true
     },
-    play: async (context: { canvasElement: HTMLElement }) => {
+    play: async (context) => {
         const canvas = within(context.canvasElement);
 
         const Hyperlink = canvas.getByTestId('test-hyperlink');
@@ -126,23 +123,25 @@ export const Disabled = {
         const click = jest.fn();
         Hyperlink.addEventListener('click', () => click());
 
-        await userEvent.click(Hyperlink);
-        await userEvent.click(Hyperlink);
+        await userEvent.click(Hyperlink, {
+            pointerEventsCheck: 0
+        });
+        await userEvent.click(Hyperlink, {
+            pointerEventsCheck: 0
+        });
         await expect(click).toBeCalledTimes(0);
     }
 };
 
-export const Inline = {
-    render: (args: ArgTypes) =>
-        html`<p data-testid="test-paragraph">
-            Inline <omni-hyperlink label="${args.label}" ?inline="${args.inline}"></omni-hyperlink> example
-        </p>`,
+export const Inline: ComponentStoryFormat<Args> = {
+    render: (args: Args) =>
+        html`<p data-testid="test-paragraph"> Inline <omni-hyperlink label="${args.label}" ?inline="${args.inline}"></omni-hyperlink> example </p>`,
     name: 'Inline',
     args: {
         label: 'click',
         inline: true
     },
-    play: async (context: { canvasElement: HTMLElement }) => {
+    play: async (context) => {
         const canvas = within(context.canvasElement);
 
         const paragraph = canvas.getByTestId('test-paragraph');

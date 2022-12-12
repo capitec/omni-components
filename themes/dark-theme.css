@@ -1,0 +1,182 @@
+/* Only dark theme changes both root and docs vars explicitly */
+:root,
+.docs-omni-component {
+    --omni-theme-primary-color:  #b4b4b4;
+    --omni-theme-primary-hover-color: #f7f7f71a ;
+    --omni-theme-primary-active-color: #ffffff ;
+
+    --omni-theme-accent-color: #808080;
+    --omni-theme-accent-hover-color:  #bbbbbb1a;
+    --omni-theme-accent-active-color:  #c3c3c3;
+
+    --omni-theme-background-color:  #24292e;
+    --omni-theme-background-hover-color:  #2C3136;
+    --omni-theme-background-active-color:  #33383D;
+
+    --omni-theme-font-color:  white;
+    --omni-theme-disabled-border-color:  #dedede44;
+    --omni-theme-disabled-background-color:  #dedede;
+    --omni-theme-error-font-color:  red;
+    --omni-theme-error-border-color:  red;
+    --omni-theme-hint-font-color:  lightgrey;
+    --omni-theme-inactive-color:  #7c7c7c;
+    --omni-theme-box-shadow-color:  #f2f2f2;
+
+    --omni-theme-font-family: 'Hind Vadodara';
+    --omni-theme-font-size: 14px;
+    --omni-theme-font-weight: normal;
+
+    --omni-theme-border-radius: 4px;
+    --omni-theme-border-width: 2px;
+
+    --omni-theme-box-shadow: 0 0 4px 4px var(--omni-box-shadow-color);
+
+    /* COMPONENT SPECIFIC STYLES */
+    --omni-switch-knob-box-shadow: 0 2px 4px 0 rgb(255, 255, 255), 0 1px 3px rgb(255, 255, 255), 0 -1px 2px rgb(255, 255, 255);
+    --omni-select-item-header-font-color: var(--omni-theme-background-color);
+}
+
+/* DOCS SPECIFIC */
+* {
+
+    --docs-border-color: #373a40;
+    --docs-secondary-background-color: #2C3136;
+    --docs-home-header-title-font-color: #209cef;
+    --docs-home-header-sub-title-font-color: #ffffff;
+    --docs-home-header-background-color: var(--docs-secondary-background-color);
+    --code-editor-background-color: var(--docs-secondary-background-color);
+}
+
+a {
+    color: deepskyblue;
+}
+
+a:visited {
+    color: blueviolet;
+}
+
+/**
+ * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
+ * Based on https://github.com/chriskempson/tomorrow-theme
+ * @author Rose Pritchard
+ */
+
+ code[class*='language-'],
+ pre[class*='language-'],
+ code[class*='language-'] > span {
+     color: var(--omni-theme-font-color);
+     background: none;
+     font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+     font-size: 14px;
+     text-align: left;
+     white-space: pre-wrap;
+     word-spacing: normal;
+     word-break: normal;
+     word-wrap: normal;
+     line-height: 1.5;
+ 
+     -moz-tab-size: 4;
+     -o-tab-size: 4;
+     tab-size: 4;
+ 
+     -webkit-hyphens: none;
+     -moz-hyphens: none;
+     -ms-hyphens: none;
+     hyphens: none;
+ }
+ 
+ /* Code blocks */
+ pre[class*="language-"] {
+    /* padding: 1em; */
+    /* margin: .5em 0; */
+    overflow: auto;
+ }
+/*  
+ :not(pre) > code[class*="language-"],
+ pre[class*="language-"] {
+ } */
+ 
+ /* Inline code */
+ /* :not(pre) > code[class*="language-"] {
+     padding: .1em;
+     border-radius: .3em;
+     white-space: normal;
+ } */
+ 
+ .token.comment,
+ .token.block-comment,
+ .token.prolog,
+ .token.doctype,
+ .token.cdata {
+     color: #999;
+ }
+ 
+ .token.punctuation {
+     color: #ccc;
+ }
+ 
+ .token.tag,
+ .token.attr-name,
+ .token.namespace,
+ .token.deleted {
+     color: #e2777a;
+ }
+ 
+ .token.function-name {
+     color: #6196cc;
+ }
+ 
+ .token.boolean,
+ .token.number,
+ .token.function {
+     color: #f08d49;
+ }
+ 
+ .token.property,
+ .token.class-name,
+ .token.constant,
+ .token.symbol {
+     color: #f8c555;
+ }
+ 
+ .token.selector,
+ .token.important,
+ .token.atrule,
+ .token.keyword,
+ .token.builtin {
+     color: #cc99cd;
+ }
+ 
+ .token.string,
+ .token.char,
+ .token.attr-value,
+ .token.regex,
+ .token.variable {
+     color: #7ec699;
+ }
+ 
+ .token.operator,
+ .token.entity,
+ .token.url, 
+ .language-css .token.string,
+ .style .token.string {
+     color: #67cdcc;
+     /* This background color was intended by the author of this theme. */
+     background: hsla(0, 0%, 100%, 0);
+ }
+ 
+ .token.important,
+ .token.bold {
+     font-weight: bold;
+ }
+ .token.italic {
+     font-style: italic;
+ }
+ 
+ .token.entity {
+     cursor: help;
+ }
+ 
+ .token.inserted {
+     color: green;
+ }

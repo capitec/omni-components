@@ -1,45 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { expect, jest } from '@storybook/jest';
-import { userEvent, within } from '@storybook/testing-library';
-import { Meta, StoryContext } from '@storybook/web-components';
+import { within } from '@testing-library/dom';
+import userEvent from '@testing-library/user-event';
+import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import {
-    LabelStory,
-    BaseArgTypes,
-    BaseArgTypeDefinitions,
-    HintStory,
-    ErrorStory,
-    PrefixStory,
-    SuffixStory
-} from '../core/OmniInputStories.js';
+import { LabelStory, BaseArgs, HintStory, ErrorStory, PrefixStory, SuffixStory } from '../core/OmniInputStories.js';
 import { RenderFunction } from '../render-element/RenderElement.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import { assignToSlot, loadCssPropertiesRemote, querySelectorAsync, raw } from '../utils/StoryUtils';
-import { Select } from './Select.js';
+import expect from '../utils/ExpectDOM.js';
+import { assignToSlot, ComponentStoryFormat, CSFIdentifier, querySelectorAsync, raw } from '../utils/StoryUtils.js';
+import { Select, SelectItems, SelectTypes } from './Select.js';
 
 import './Select.js';
 
 export default {
     title: 'UI Components/Select',
-    component: 'omni-select',
-    argTypes: BaseArgTypeDefinitions,
-    parameters: {
-        cssprops: loadCssPropertiesRemote('omni-select'),
-        actions: {
-            handles: ['input']
-        }
-    }
-} as Meta;
+    component: 'omni-select'
+} as CSFIdentifier;
 
-interface ArgTypes extends BaseArgTypes {
-    items:
-        | string[]
-        | object[]
-        | Promise<object[]>
-        | Promise<string[]>
-        | (() => string[] | object[] | Promise<object[]> | Promise<string[]>);
+interface Args extends BaseArgs {
+    items: SelectItems | (() => SelectItems);
     displayField: string;
     idField: string;
     renderItem: RenderFunction;
@@ -61,13 +42,13 @@ const displayItems = [
 
 const stringItems = ['Bruce Wayne', 'Clark Kent', 'Barry Allen', 'Arthur Curry', 'Hal Jordan'];
 
-async function promiseDisplayItems(data: object[]) {
-    await new Promise<void>((r) => setTimeout(() => r(), 3000));
-    return data;
+async function promiseDisplayItems(data: Record<string, unknown>[]) {
+    await new Promise<void>((r) => setTimeout(() => r(), 2000));
+    return data as SelectTypes;
 }
 
-export const Interactive = {
-    render: (args: ArgTypes) => html`
+export const Interactive: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
         <omni-select
             data-testid="test-select"
             label="${ifNotEmpty(args.label)}"
@@ -80,16 +61,15 @@ export const Interactive = {
             .renderItem="${args.renderItem}"
             idField="${args.idField}"
             ?disabled="${args.disabled}"
-            >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${args.suffix
-                ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}`
-                : nothing}
-            ${args.loading_indicator
-                ? html`${'\r\n'}${unsafeHTML(assignToSlot('loading_indicator', args.loading_indicator))}${'\r\n'}`
-                : nothing}${args.prefix || args.suffix ? '\r\n' : nothing}</omni-select
+            >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${
+        args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}` : nothing
+    }
+            ${args.loading_indicator ? html`${'\r\n'}${unsafeHTML(assignToSlot('loading_indicator', args.loading_indicator))}${'\r\n'}` : nothing}${
+        args.prefix || args.suffix ? '\r\n' : nothing
+    }</omni-select
         >
     `,
     name: 'Interactive',
-    parameters: {},
     args: {
         label: 'Label',
         value: '',
@@ -99,12 +79,12 @@ export const Interactive = {
         disabled: false,
         prefix: '',
         suffix: '',
-        items: displayItems,
+        items: displayItems as Record<string, unknown>[],
         displayField: 'label',
         idField: 'id',
         loading_indicator: ''
-    } as ArgTypes,
-    play: async (context: StoryContext) => {
+    } as Args,
+    play: async (context) => {
         const select = within(context.canvasElement).getByTestId<Select>('test-select');
         const click = jest.fn();
         const change = jest.fn();
@@ -140,8 +120,8 @@ export const Interactive = {
     }
 };
 
-export const AsyncPerItem = {
-    render: (args: ArgTypes) => html`
+export const Async_Per_Item: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
         <omni-select
             data-testid="test-select"
             label="${ifNotEmpty(args.label)}"
@@ -155,7 +135,6 @@ export const AsyncPerItem = {
         </omni-select>
     `,
     name: 'Async',
-    parameters: {},
     args: {
         label: 'Async item renderer function',
         data: {},
@@ -173,8 +152,8 @@ export const AsyncPerItem = {
 
             return i;
         }
-    } as ArgTypes,
-    play: async (context: StoryContext) => {
+    } as Args,
+    play: async (context) => {
         const select = within(context.canvasElement).getByTestId<Select>('test-select');
         const click = jest.fn();
         const change = jest.fn();
@@ -183,7 +162,13 @@ export const AsyncPerItem = {
 
         await userEvent.click(select);
 
-        const item = await querySelectorAsync(select.shadowRoot, '.item');
+        let item;
+        // TODO: Fix race conditions in tests
+        if (navigator.userAgent === 'Test Runner') {
+            item = await querySelectorAsync(select.shadowRoot, '.item', undefined, 3000);
+        } else {
+            item = await querySelectorAsync(select.shadowRoot, '.item', undefined, 5000);
+        }
         await userEvent.click(item as HTMLDivElement);
 
         const selectField = select.shadowRoot.getElementById('select');
@@ -191,8 +176,8 @@ export const AsyncPerItem = {
     }
 };
 
-export const LoadingSlot = {
-    render: (args: ArgTypes) => html`
+export const Loading_Slot: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
         <omni-select
             data-testid="test-select"
             label="${ifNotEmpty(args.label)}"
@@ -207,7 +192,6 @@ export const LoadingSlot = {
         </omni-select>
     `,
     name: 'Loading Slot',
-    parameters: {},
     args: {
         label: 'Loading Slot',
         data: {},
@@ -226,8 +210,8 @@ export const LoadingSlot = {
             return i;
         },
         loading_indicator: raw`<span>...</span>`
-    } as ArgTypes,
-    play: async (context: StoryContext) => {
+    } as Args,
+    play: async (context) => {
         const select = within(context.canvasElement).getByTestId<Select>('test-select');
         const click = jest.fn();
         const change = jest.fn();
@@ -236,7 +220,13 @@ export const LoadingSlot = {
 
         await userEvent.click(select);
 
-        const item = await querySelectorAsync(select.shadowRoot, '.item');
+        let item;
+        // TODO: Fix race conditions in tests
+        if (navigator.userAgent === 'Test Runner') {
+            item = await querySelectorAsync(select.shadowRoot, '.item', undefined, 3000);
+        } else {
+            item = await querySelectorAsync(select.shadowRoot, '.item', undefined, 5000);
+        }
         await userEvent.click(item as HTMLDivElement);
 
         const selectField = select.shadowRoot.getElementById('select');
@@ -244,8 +234,8 @@ export const LoadingSlot = {
     }
 };
 
-export const StringArray = {
-    render: (args: ArgTypes) => html`
+export const String_Array: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
         <omni-select
             data-testid="test-select"
             label="${ifNotEmpty(args.label)}"
@@ -259,15 +249,14 @@ export const StringArray = {
         </omni-select>
     `,
     name: 'String',
-    parameters: {},
     args: {
         label: 'String',
         data: {},
         items: stringItems,
         displayField: 'label',
         idField: 'id'
-    } as ArgTypes,
-    play: async (context: StoryContext) => {
+    } as Args,
+    play: async (context) => {
         const select = within(context.canvasElement).getByTestId<Select>('test-select');
         const click = jest.fn();
         const change = jest.fn();
@@ -284,8 +273,8 @@ export const StringArray = {
     }
 };
 
-export const Empty = {
-    render: (args: ArgTypes) => html`
+export const Empty: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
         <omni-select
             data-testid="test-select"
             label="${ifNotEmpty(args.label)}"
@@ -295,14 +284,13 @@ export const Empty = {
         </omni-select>
     `,
     name: 'Empty',
-    parameters: {},
     args: {
         label: 'Empty',
         items: [],
         displayField: 'label',
         idField: 'id'
-    } as ArgTypes,
-    play: async (context: StoryContext) => {
+    } as Args,
+    play: async (context) => {
         const select = within(context.canvasElement).getByTestId<Select>('test-select');
         const click = jest.fn();
         select.addEventListener('click', click);
@@ -313,31 +301,32 @@ export const Empty = {
     }
 };
 
-export const Disabled = {
-    render: (args: ArgTypes) => html`
+export const Disabled: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
         <omni-select data-testid="test-select" label="${ifNotEmpty(args.label)}" .items="${args.items}" ?disabled="${args.disabled}">
         </omni-select>
     `,
     name: 'Disabled',
-    parameters: {},
     args: {
         label: 'Disabled',
         disabled: true,
-        items: displayItems
-    } as ArgTypes,
-    play: async (context: StoryContext) => {
-        // To be updated with the new branch changes
+        items: displayItems as Record<string, unknown>[]
+    } as Args,
+    play: async (context) => {
         const select = within(context.canvasElement).getByTestId<Select>('test-select');
-        await expect(() => userEvent.click(select)).not.toBe(true);
+        const click = jest.fn();
+        select.addEventListener('click', click);
+        await expect(() => userEvent.click(select)).rejects.toThrow(/pointer-events: none/);
+        await expect(click).toBeCalledTimes(0);
     }
 };
 
-export const Label = LabelStory<Select, BaseArgTypes>('omni-select');
+export const Label = LabelStory<Select, BaseArgs>('omni-select');
 
-export const Hint = HintStory<Select, BaseArgTypes>('omni-select');
+export const Hint = HintStory<Select, BaseArgs>('omni-select');
 
-export const ErrorLabel = ErrorStory<Select, BaseArgTypes>('omni-select');
+export const Error_Label = ErrorStory<Select, BaseArgs>('omni-select');
 
-export const Prefix = PrefixStory<Select, BaseArgTypes>('omni-select');
+export const Prefix = PrefixStory<Select, BaseArgs>('omni-select');
 
-export const Suffix = SuffixStory<Select, BaseArgTypes>('omni-select');
+export const Suffix = SuffixStory<Select, BaseArgs>('omni-select');

@@ -30,5 +30,5 @@
       "rootDir": "./src"
     },
     "exclude": ["node_modules", "dist"],
-    "references": [],
+    "references": []
   }

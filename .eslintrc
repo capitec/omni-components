@@ -1,5 +1,5 @@
 {
-	"root": true,
+	"root": false,
 	"parser": "@typescript-eslint/parser",
 	"plugins": [
 		"@typescript-eslint",
@@ -10,7 +10,8 @@
 		"eslint:recommended",
 		"plugin:@typescript-eslint/eslint-recommended",
 		"plugin:@typescript-eslint/recommended",
-		"plugin:lit/recommended"
+		"plugin:lit/recommended",
+        "prettier"
 	],
 	"env": {
 		"browser": true,
@@ -18,17 +19,6 @@
 	},
 	"rules": {
 		"eqeqeq": "error",
-		"indent": [
-			"error",
-			4,
-			{
-				"ignoredNodes": [
-					"ConditionalExpression",
-					"TemplateLiteral *"
-				],
-                "SwitchCase": 1
-			}
-		],
 		"no-multiple-empty-lines": [
 			"error",
 			{
@@ -39,20 +29,8 @@
 			"error",
 			"single",
 			{
-				"allowTemplateLiterals": true
-			}
-		],
-		"semi": [
-			"error",
-			"always"
-		],
-		"space-before-blocks": "error",
-		"space-before-function-paren": [
-			"error",
-			{
-				"anonymous": "always",
-				"named": "never",
-				"asyncArrow": "always"
+				"allowTemplateLiterals": true,
+                "avoidEscape": true
 			}
 		],
 		"@typescript-eslint/no-inferrable-types": "off",

@@ -2,11 +2,6 @@
 
 A currency input control that formats input based on currency and locale.
 
-```js
-
-import '@capitec/omni-components/currency-field';
-```
-
 ## Example
 
 ```html
@@ -24,20 +19,20 @@ import '@capitec/omni-components/currency-field';
 
 ## Properties
 
-| Property   | Attribute  | Modifiers | Type               | Default    | Description                                      |
-|------------|------------|-----------|--------------------|------------|--------------------------------------------------|
-| `currency` | `currency` |           | `string`           | "USD"      | The currency for the input.                      |
-| `data`     | `data`     |           | `object`           |            | Data associated with the component.              |
-| `dir`      |            |           | `string`           |            |                                                  |
-| `disabled` | `disabled` |           | `boolean`          | false      | Indicator if the component should be disabled.   |
-| `error`    | `error`    |           | `string`           |            | A error message guiding a user to correct a mistake. |
-| `hint`     | `hint`     |           | `string`           |            | A hint message to assist the user.               |
-| `label`    | `label`    |           | `string`           |            | Text label.                                      |
-| `lang`     |            |           | `string`           |            |                                                  |
-| `locale`   | `locale`   |           | `string`           | "language" | The locale for the input.                        |
-| `override` | `override` |           |                    |            | Used to set the base direction of text for display |
-| `styles`   |            | readonly  | `CSSResultGroup[]` |            |                                                  |
-| `value`    | `value`    |           | `string \| number` | null       | The value entered into the form component.       |
+| Property   | Attribute  | Modifiers | Type                                          | Default    | Description                                      |
+|------------|------------|-----------|-----------------------------------------------|------------|--------------------------------------------------|
+| `currency` | `currency` |           | `string`                                      | "USD"      | The currency for the input.                      |
+| `data`     | `data`     |           | `object`                                      |            | Data associated with the component.              |
+| `dir`      |            |           | `string`                                      |            |                                                  |
+| `disabled` | `disabled` |           | `boolean`                                     | false      | Indicator if the component should be disabled.   |
+| `error`    | `error`    |           | `string`                                      |            | A error message guiding a user to correct a mistake. |
+| `hint`     | `hint`     |           | `string`                                      |            | A hint message to assist the user.               |
+| `label`    | `label`    |           | `string`                                      |            | Text label.                                      |
+| `lang`     |            |           | `string`                                      |            |                                                  |
+| `locale`   | `locale`   |           | `string`                                      | "language" | The locale for the input.                        |
+| `override` | `override` |           |                                               |            | Used to set the base direction of text for display |
+| `styles`   |            | readonly  | `CSSResultGroup[]`                            |            |                                                  |
+| `value`    | `value`    |           | `string \| number \| Record<string, unknown>` | null       | The value entered into the form component.       |
 
 ## Methods
 
@@ -69,6 +64,7 @@ import '@capitec/omni-components/currency-field';
 | `--omni-currency-field-symbol-left-padding`      | Currency field symbol left padding.            |
 | `--omni-currency-field-symbol-select`            | Currency field symbol selectable state.        |
 | `--omni-currency-field-text-align`               | Currency field text align.                     |
+| `--omni-currency-field-width`                    | Currency field width.                          |
 | `--omni-form-border-bottom`                      | Form border bottom.                            |
 | `--omni-form-border-color`                       | Form border color.                             |
 | `--omni-form-border-left`                        | Form border left.                              |

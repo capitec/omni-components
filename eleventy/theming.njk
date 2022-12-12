@@ -1,0 +1,70 @@
+---
+title: Omni Components - Theme Support
+layout: page.njk
+permalink: "theme-support/"
+---
+
+<script src="https://cdn.jsdelivr.net/npm/cssbeautify@0.3.1/cssbeautify.js"></script>
+<div class="component-overlay">
+    <div class="lds-ripple"><div></div><div></div></div>
+</div>
+<script type="module" defer>
+    import { setupTheming, uploadTheme } from './dist/utils/StoryUtils.js';
+
+    function uploadThemeClick(e) {
+        document.getElementById('cssValue').click();
+    }
+
+    function uploadThemeGlobal(e) {
+        uploadTheme(e);
+    }
+
+    window.uploadTheme = uploadThemeGlobal;
+    window.uploadThemeClick = uploadThemeClick;
+
+    setupTheming();
+</script>
+
+<article class="component static-article">    
+    <div class="live-section">
+
+        <h1>Theme Support</h1>
+
+        <h3>All Omni Components support our theme CSS variables</h3>
+        <br/>
+        <p>
+        Theme variables are used to style the overall theme of all Omni Components. 
+        Each component also can still be styled individually using their own component specific css variables, which would override the theme if specified.
+        </p>
+        <br/>
+        <p>
+        Theme variables typically affect
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;◉ shared colors</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;◉ fonts</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;◉ borders</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;◉ accessibility options</p>
+        </p>
+        <br/>
+        <p>
+        Currently provided theme variables are listed below and can be modified for a live preview of its effects on components.
+        </p>
+        <br/>
+        <p>There are multiple built-in themes available to test how theme variables can affect te various components. Use the theme dropdown to select a built-in theme or select 'Light Theme' to view the components in their default state. The source for the built-in themes are available <a target="_self" href="theme-support/#examples" >below</a>.</p>
+        <br/>
+        <p>Alternatively, a custom theme can be authored or uploaded to have a live view of its effects on the components. Try it now by selecting your current theme to be 'Custom Theme'.</p>
+
+    </div>
+
+    <div class="flex-row">
+        <omni-button label="Button" type="primary"></omni-button>
+        <omni-switch label="Switch" checked></omni-switch>
+        <omni-check label="Check" checked></omni-check>
+        <omni-text-field label="Text Field" value="Text Field"></omni-text-field>
+    </div>
+
+    
+
+    <h1 id="examples" >Example Themes Source</h1>
+    <div id="themes-sources"></div>
+    
+</article>

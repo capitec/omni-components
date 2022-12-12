@@ -1,54 +1,37 @@
-import { expect, jest } from '@storybook/jest';
-import { userEvent, within } from '@storybook/testing-library';
-import { Meta, StoryContext } from '@storybook/web-components';
+import { within } from '@testing-library/dom';
+import userEvent from '@testing-library/user-event';
+import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import {
-    LabelStory,
-    BaseArgTypes,
-    BaseArgTypeDefinitions,
-    HintStory,
-    ErrorStory,
-    DisabledStory,
-    ValueStory,
-    PrefixStory,
-    SuffixStory
-} from '../core/OmniInputStories.js';
+import { LabelStory, BaseArgs, HintStory, ErrorStory, DisabledStory, ValueStory, PrefixStory, SuffixStory } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import { assignToSlot, loadCssPropertiesRemote } from '../utils/StoryUtils';
+import expect from '../utils/ExpectDOM.js';
+import { assignToSlot, ComponentStoryFormat, CSFIdentifier } from '../utils/StoryUtils.js';
 import { TextField } from './TextField.js';
 
 import './TextField.js';
 
 export default {
     title: 'UI Components/Text Field',
-    component: 'omni-text-field',
-    argTypes: BaseArgTypeDefinitions,
-    parameters: {
-        cssprops: loadCssPropertiesRemote('omni-text-field'),
-        actions: {
-            handles: ['input']
-        }
-    }
-} as Meta;
+    component: 'omni-text-field'
+} as CSFIdentifier;
 
-export const Interactive = {
-    render: (args: BaseArgTypes) => html`
-        <omni-text-field
-            data-testid="test-text-field"
-            label="${ifNotEmpty(args.label)}"
-            .value="${args.value}"
-            .data="${args.data}"
-            hint="${ifNotEmpty(args.hint)}"
-            error="${ifNotEmpty(args.error)}"
-            ?disabled="${args.disabled}"
-            >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${args.suffix
-                ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}`
-                : nothing}${args.prefix || args.suffix ? '\r\n' : nothing}</omni-text-field
-        >
-    `,
+export const Interactive: ComponentStoryFormat<BaseArgs> = {
+    render: (args: BaseArgs) => html`
+    <omni-text-field
+      data-testid="test-text-field"
+      label="${ifNotEmpty(args.label)}"
+      .value="${args.value}"
+      .data="${args.data}"
+      hint="${ifNotEmpty(args.hint)}"
+      error="${ifNotEmpty(args.error)}"
+      ?disabled="${args.disabled}"
+      >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${
+        args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}` : nothing
+    }${args.prefix || args.suffix ? '\r\n' : nothing}</omni-text-field
+    >
+  `,
     name: 'Interactive',
-    parameters: {},
     args: {
         label: 'Label',
         value: '',
@@ -59,14 +42,16 @@ export const Interactive = {
         prefix: '',
         suffix: ''
     },
-    play: async (context: StoryContext) => {
+    play: async (context) => {
         const textField = within(context.canvasElement).getByTestId<TextField>('test-text-field');
         const input = jest.fn();
         textField.addEventListener('input', input);
 
         const inputField = textField.shadowRoot.getElementById('inputField');
 
-        await userEvent.type(inputField, 'Value{space}Update');
+        await userEvent.type(inputField, 'Value Update', {
+            pointerEventsCheck: 0
+        });
         const value = 'Value Update';
         await expect(inputField).toHaveValue(value);
 
@@ -74,16 +59,16 @@ export const Interactive = {
     }
 };
 
-export const Label = LabelStory<TextField, BaseArgTypes>('omni-text-field');
+export const Label = LabelStory<TextField, BaseArgs>('omni-text-field');
 
-export const Hint = HintStory<TextField, BaseArgTypes>('omni-text-field');
+export const Hint = HintStory<TextField, BaseArgs>('omni-text-field');
 
-export const ErrorLabel = ErrorStory<TextField, BaseArgTypes>('omni-text-field');
+export const Error_Label = ErrorStory<TextField, BaseArgs>('omni-text-field');
 
-export const Value = ValueStory<TextField, BaseArgTypes>('omni-text-field');
+export const Value = ValueStory<TextField, BaseArgs>('omni-text-field');
 
-export const Prefix = PrefixStory<TextField, BaseArgTypes>('omni-text-field');
+export const Prefix = PrefixStory<TextField, BaseArgs>('omni-text-field');
 
-export const Suffix = SuffixStory<TextField, BaseArgTypes>('omni-text-field');
+export const Suffix = SuffixStory<TextField, BaseArgs>('omni-text-field');
 
-export const Disabled = DisabledStory<TextField, BaseArgTypes>('omni-text-field');
+export const Disabled = DisabledStory<TextField, BaseArgs>('omni-text-field');

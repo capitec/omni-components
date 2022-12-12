@@ -1,11 +1,6 @@
 # omni-text-field
 
-A text input control.
-
-```js
-
-import '@capitec/omni-components/text-field';
-```
+Control to input text.
 
 ## Example
 
@@ -22,18 +17,18 @@ import '@capitec/omni-components/text-field';
 
 ## Properties
 
-| Property   | Attribute  | Modifiers | Type               | Default | Description                                      |
-|------------|------------|-----------|--------------------|---------|--------------------------------------------------|
-| `data`     | `data`     |           | `object`           |         | Data associated with the component.              |
-| `dir`      |            |           | `string`           |         |                                                  |
-| `disabled` | `disabled` |           | `boolean`          | false   | Indicator if the component should be disabled.   |
-| `error`    | `error`    |           | `string`           |         | A error message guiding a user to correct a mistake. |
-| `hint`     | `hint`     |           | `string`           |         | A hint message to assist the user.               |
-| `label`    | `label`    |           | `string`           |         | Text label.                                      |
-| `lang`     |            |           | `string`           |         |                                                  |
-| `override` | `override` |           |                    |         | Used to set the base direction of text for display |
-| `styles`   |            | readonly  | `CSSResultGroup[]` |         |                                                  |
-| `value`    | `value`    |           | `string \| number` | null    | The value entered into the form component.       |
+| Property   | Attribute  | Modifiers | Type                                          | Default | Description                                      |
+|------------|------------|-----------|-----------------------------------------------|---------|--------------------------------------------------|
+| `data`     | `data`     |           | `object`                                      |         | Data associated with the component.              |
+| `dir`      |            |           | `string`                                      |         |                                                  |
+| `disabled` | `disabled` |           | `boolean`                                     | false   | Indicator if the component should be disabled.   |
+| `error`    | `error`    |           | `string`                                      |         | A error message guiding a user to correct a mistake. |
+| `hint`     | `hint`     |           | `string`                                      |         | A hint message to assist the user.               |
+| `label`    | `label`    |           | `string`                                      |         | Text label.                                      |
+| `lang`     |            |           | `string`                                      |         |                                                  |
+| `override` | `override` |           |                                               |         | Used to set the base direction of text for display |
+| `styles`   |            | readonly  | `CSSResultGroup[]`                            |         |                                                  |
+| `value`    | `value`    |           | `string \| number \| Record<string, unknown>` | null    | The value entered into the form component.       |
 
 ## Methods
 
