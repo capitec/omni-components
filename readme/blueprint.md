@@ -1,6 +1,8 @@
 
 {{ template:logo }}
 
+<p align="center" style="font-size: 64px">Omni Components</p>
+
 {{ template:description }}
 
 {{ template:badges }}

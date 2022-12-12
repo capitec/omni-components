@@ -1,7 +1,9 @@
 <!-- ⚠️ This README has been generated from the file(s) "readme/blueprint.md" ⚠️-->
 <p align="center">
-  <img src="https://avatars.githubusercontent.com/u/109590421" alt="Logo" width="150" height="auto" />
+  <img src="https://raw.githubusercontent.com/capitec/omni-components/storybook-removal/eleventy/assets/images/logo.png" alt="Logo" width="150" height="auto" />
 </p>
+
+<p align="center" style="font-size: 64px">Omni Components</p>
 
 <p align="center">
   <b>Customizable web components for any application.</b></br>
@@ -30,7 +32,7 @@
 
 
 
-&nbsp;
+&nbsp;ww
 
 [](#table-of-contents)
 
