@@ -4,7 +4,7 @@
 </p>
 
 <p align="center">
-  <b>Omni Components come with minimal dependencies to reduce the bloat in your project. All web components base off <strong>OmniElement</strong> (Which itself is based off <a href="https://lit.dev"><strong>LitElement</strong></a>) and are each available as fully standalone imports.</b></br>
+  <b>Customizable web components for any application.</b></br>
   <sub><sub>
 </p>
 
