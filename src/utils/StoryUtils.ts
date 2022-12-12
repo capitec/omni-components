@@ -13,7 +13,7 @@ import { SearchField } from '../search-field/SearchField.js';
 import { Select } from '../select/Select.js';
 import { CodeEditor, CodeMirrorEditorEvent, CodeMirrorSourceUpdateEvent } from './CodeEditor.js';
 export { ComponentStoryFormat, CSFIdentifier } from './ComponentStoryFormat.js';
-export { PlayFunction, PlayFunctionContext } from './PlayFunction.js'
+export { PlayFunction, PlayFunctionContext } from './PlayFunction.js';
 import { StoryRenderer } from './StoryRenderer.js';
 
 import './CodeEditor.js';
