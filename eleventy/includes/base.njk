@@ -10,12 +10,79 @@
     <title>{{ title }}</title>
     {% baseHref %}
     <link rel='shortcut icon' type='image/x-icon' href='./favicon.ico' />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Hind Vadodara" >
+    <!-- Preload material fonts to lessen chance of icons as text on slower networks -->
+    <link rel="preload" href="https://fonts.gstatic.com/s/materialicons/v139/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- Preload Hind Vadodara fonts to lessen chance of system default from initially applying -->
+    <link rel="preload" href="https://fonts.gstatic.com/s/hindvadodara/v12/neINzCKvrIcn5pbuuuriV9tTQInVrEsf.woff2" as="font" type="font/woff2" crossorigin>
+    <style>
+        @font-face {
+            font-family: 'Material Icons';
+            font-style: normal;
+            font-weight: 400;
+            font-display: block;
+            src: url(https://fonts.gstatic.com/s/materialicons/v139/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
+        }
+        @font-face {
+            font-family: 'Hind Vadodara';
+            font-style: normal;
+            font-weight: 400;
+            src: url(https://fonts.gstatic.com/s/hindvadodara/v12/neINzCKvrIcn5pbuuuriV9tTQInVrEsf.woff2) format('woff2');
+            unicode-range: U+0964-0965, U+0A80-0AFF, U+200C-200D, U+20B9, U+25CC, U+A830-A839;
+        }
+    </style>
+    <link rel="stylesheet preload" href="https://fonts.googleapis.com/icon?family=Material+Icons"  as="style"/>
+    <link rel="stylesheet preload" href="https://fonts.googleapis.com/css?family=Hind Vadodara"  as="style">
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
-    <link rel="stylesheet" href="{{ './assets/css/default-light-theme.css' | url }}">
+    <link rel="stylesheet preload" href="{{ './assets/css/default-light-theme.css' | url }}" as="style">
+    <link id="temp-dark" rel="preload" href="{{ './themes/dark-theme.css' | url }}" as="style">
     <style id="theme-styles"></style>
-    <link rel="stylesheet" href="{{ './assets/css/style.css' | url }}">
+    <script>        
+        const themeStorageKey = 'omni-docs-theme-selection';
+        const customThemeCssKey = 'omni-docs-custom-theme-css';
+        const customThemeKey = 'Custom Theme';
+        const lightThemeKey = 'Light Theme';
+        const darkThemeKey = 'dark-theme.css';
+        const themeStyle = document.getElementById('theme-styles');
+        const tempDarkLink = document.getElementById('temp-dark');
+        
+        let darkThemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const storedTheme = window.sessionStorage.getItem(themeStorageKey);
+
+        let key = undefined;
+        if (darkThemePreferred && (!storedTheme || storedTheme === lightThemeKey)) {
+            key = darkThemeKey;            
+        } else if (storedTheme) {
+            key = storedTheme;
+        }
+
+        if (key && key !== lightThemeKey) {
+            if (key === customThemeKey) {
+                let customCss = window.sessionStorage.getItem(customThemeCssKey);
+                if (customCss) {
+                    themeStyle.innerHTML = customCss;
+                }
+                tempDarkLink.parentElement.removeChild(tempDarkLink);
+            } else {        
+                if (key === darkThemeKey) {
+                    // Update preloaded stylesheet to be used until fetch is completed to change to 'theme-styles' <style> tag
+                    tempDarkLink.rel = 'stylesheet';
+                }        
+                fetch(`./themes/${key}`).then(response => response.text()).then(
+                    (cssText) => {
+                        themeStyle.innerHTML = cssText;
+                        tempDarkLink.parentElement.removeChild(tempDarkLink);
+                    },
+                    (error) => {
+                        console.error(error);
+                        tempDarkLink.parentElement.removeChild(tempDarkLink);
+                    }
+                );
+            }
+        } else {
+            tempDarkLink.parentElement.removeChild(tempDarkLink);
+        }
+    </script>
+    <link rel="stylesheet preload" href="{{ './assets/css/style.css' | url }}" as="style">
     <script type="module" src="./dist/utils/StoryRenderer.js"></script>
     <script type="module" src="./dist/omni-components.js"></script>
     <script type="module" defer>
