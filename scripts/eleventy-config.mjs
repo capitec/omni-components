@@ -55,12 +55,9 @@ export default async config => {
     config.addPassthroughCopy('./eleventy/assets/');
     config.addPassthroughCopy('./eleventy/favicon.ico');
     config.addPassthroughCopy('./custom-elements.json');
-    config.addPassthroughCopy('./themes-list.json');
-    config.addPassthroughCopy('./themes/');
 
     config.addWatchTarget('./scripts/');
     config.addWatchTarget('./eleventy/assets/');
-    config.addWatchTarget('./themes/');
     config.addWatchTarget('./src/');
     config.addWatchTarget('./*.md');
 
@@ -117,9 +114,6 @@ async function build() {
 
     console.log(chalk.yellow('Analyzing custom elements...'));
     execSync('npm run docs:custom-elements', { stdio: 'inherit' });
-    // execSync('npx -p typescript tsc', { stdio: 'inherit' });
-    console.log(chalk.yellow('Generating themes list...'));
-    execSync('npm run docs:theme-list', { stdio: 'inherit' });
 
     console.log(chalk.yellow('Reading entry points...'));
     const entryPoints = await globby('./src/**/*.ts');
