@@ -33,53 +33,35 @@
     <link rel="stylesheet preload" href="https://fonts.googleapis.com/icon?family=Material+Icons"  as="style"/>
     <link rel="stylesheet preload" href="https://fonts.googleapis.com/css?family=Hind Vadodara"  as="style">
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
-    <link rel="stylesheet preload" href="{{ './assets/css/default-light-theme.css' | url }}" as="style">
-    <link id="temp-dark" rel="preload" href="{{ './themes/dark-theme.css' | url }}" as="style">
+    <link id="theme-styles-link" rel="stylesheet preload" href="{{ './assets/css/themes.css' | url }}" as="style">
     <style id="theme-styles"></style>
+    <script src="https://cdn.jsdelivr.net/npm/cssbeautify@0.3.1/cssbeautify.js"></script>
     <script>        
         const themeStorageKey = 'omni-docs-theme-selection';
         const customThemeCssKey = 'omni-docs-custom-theme-css';
-        const customThemeKey = 'Custom Theme';
-        const lightThemeKey = 'Light Theme';
-        const darkThemeKey = 'dark-theme.css';
+        const customThemeKey = 'custom';
+        const lightThemeKey = 'light';
+        const darkThemeKey = 'dark';
         const themeStyle = document.getElementById('theme-styles');
-        const tempDarkLink = document.getElementById('temp-dark');
         
         let darkThemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
         const storedTheme = window.sessionStorage.getItem(themeStorageKey);
 
         let key = undefined;
-        if (darkThemePreferred && (!storedTheme || storedTheme === lightThemeKey)) {
+        if (darkThemePreferred && !storedTheme) {
             key = darkThemeKey;            
         } else if (storedTheme) {
             key = storedTheme;
         }
 
         if (key && key !== lightThemeKey) {
+            document.documentElement.setAttribute('theme', key);
             if (key === customThemeKey) {
                 let customCss = window.sessionStorage.getItem(customThemeCssKey);
                 if (customCss) {
                     themeStyle.innerHTML = customCss;
                 }
-                tempDarkLink.parentElement.removeChild(tempDarkLink);
-            } else {        
-                if (key === darkThemeKey) {
-                    // Update preloaded stylesheet to be used until fetch is completed to change to 'theme-styles' <style> tag
-                    tempDarkLink.rel = 'stylesheet';
-                }        
-                fetch(`./themes/${key}`).then(response => response.text()).then(
-                    (cssText) => {
-                        themeStyle.innerHTML = cssText;
-                        tempDarkLink.parentElement.removeChild(tempDarkLink);
-                    },
-                    (error) => {
-                        console.error(error);
-                        tempDarkLink.parentElement.removeChild(tempDarkLink);
-                    }
-                );
             }
-        } else {
-            tempDarkLink.parentElement.removeChild(tempDarkLink);
         }
     </script>
     <link rel="stylesheet preload" href="{{ './assets/css/style.css' | url }}" as="style">

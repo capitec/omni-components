@@ -47,7 +47,7 @@ export class LivePropertyEditor extends OmniElement {
         this.customElements = await loadCustomElements(this.customElementsPath);
 
         document.addEventListener('omni-docs-theme-change', (e: Event) => {
-            this.theme = (e as CustomEvent<string>).detail;
+            this.theme = getComputedStyle(document.documentElement).getPropertyValue('--code-editor-theme')?.trim();
             const codeEditors = this.renderRoot.querySelectorAll<CodeEditor>('code-editor');
             if (codeEditors) {
                 codeEditors.forEach((ce) => {
@@ -56,8 +56,7 @@ export class LivePropertyEditor extends OmniElement {
             }
         });
 
-        const themeStorageKey = 'omni-docs-theme-selection';
-        this.theme = window.sessionStorage.getItem(themeStorageKey);
+        this.theme = getComputedStyle(document.documentElement).getPropertyValue('--code-editor-theme')?.trim();
     }
 
     static override get styles() {
@@ -371,7 +370,7 @@ export class LivePropertyEditor extends OmniElement {
     }
 
     private _currentCodeTheme() {
-        if (this.theme?.toLowerCase() === 'dark-theme.css') {
+        if (this.theme?.toLowerCase() === 'dark') {
             return codeThemeDark;
         }
         return codeTheme;
