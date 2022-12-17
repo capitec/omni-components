@@ -10,13 +10,6 @@
         </a>
     </td>
     <td align="center">
-        <a href="https://github.com/chromaticWaster">
-            <img src="https://avatars.githubusercontent.com/u/22874454?v=4" width="100;" alt="chromaticWaster"/>
-            <br />
-            <sub><b>chromaticWaster</b></sub>
-        </a>
-    </td>
-    <td align="center">
         <a href="https://github.com/stefan505">
             <img src="https://avatars.githubusercontent.com/u/10812446?v=4" width="100;" alt="stefan505"/>
             <br />
@@ -24,10 +17,24 @@
         </a>
     </td>
     <td align="center">
+        <a href="https://github.com/chromaticWaster">
+            <img src="https://avatars.githubusercontent.com/u/22874454?v=4" width="100;" alt="chromaticWaster"/>
+            <br />
+            <sub><b>chromaticWaster</b></sub>
+        </a>
+    </td>
+    <td align="center">
         <a href="https://github.com/capitec-oss">
             <img src="https://avatars.githubusercontent.com/u/109588738?v=4" width="100;" alt="capitec-oss"/>
             <br />
             <sub><b>capitec-oss</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/jn42lm1">
+            <img src="https://avatars.githubusercontent.com/u/54233338?v=4" width="100;" alt="jn42lm1"/>
+            <br />
+            <sub><b>jn42lm1</b></sub>
         </a>
     </td></tr>
 </table>
