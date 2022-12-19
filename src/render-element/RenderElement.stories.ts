@@ -1,24 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { expect, jest } from '@storybook/jest';
-import { userEvent, within } from '@storybook/testing-library';
-import { Meta, StoryContext } from '@storybook/web-components';
+import { within } from '@testing-library/dom';
+import userEvent from '@testing-library/user-event';
+import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { assignToSlot, loadCssPropertiesRemote, querySelectorAsync } from '../utils/StoryUtils.js';
+import expect from '../utils/ExpectDOM.js';
+import { assignToSlot, ComponentStoryFormat, CSFIdentifier, querySelectorAsync } from '../utils/StoryUtils.js';
 import { RenderElement, RenderFunction } from './RenderElement.js';
 
 import './RenderElement';
 
 export default {
     title: 'UI Components/RenderElement',
-    component: 'omni-render-element',
-    parameters: {
-        cssprops: loadCssPropertiesRemote('omni-render-element')
-    }
-} as Meta;
+    component: 'omni-render-element'
+} as CSFIdentifier;
 
-interface ArgTypes {
+interface Args {
     renderer: RenderFunction;
     data: object;
     loading_indicator: string;
@@ -42,19 +40,29 @@ async function renderAsString(data: object) {
     return `<span>${JSON.stringify(data)}</span>`;
 }
 
-export const Interactive = {
-    render: (args: ArgTypes) => html`
-        <omni-render-element data-testid="test-render" .data="${args.data}" .renderer="${args.renderer}"
-            >${args.loading_indicator
-                ? html`${'\r\n'}${unsafeHTML(assignToSlot('loading_indicator', args.loading_indicator))}${'\r\n'}`
-                : nothing}</omni-render-element
-        >
-    `,
-    argTypes: {
-        renderer: {
-            control: false
-        }
-    },
+export const As_Lit: ComponentStoryFormat<Args> = {
+    source: () => `
+                
+<!-- Bound function used (<script> tags only for syntax highlighting) -->
+<script>
+async function renderAsLit(data: object) {
+    await new Promise<void>((r) => setTimeout(() => r(), 3000));
+    return html\`<span>\${JSON.stringify(data)}</span>\`;
+}
+</script>
+
+...
+                
+<omni-render-element .data="\${this.someData}" .renderer="\${this.renderAsLit}"></omni-render-element>
+`,
+    name: 'As Lit',
+    render: (args: Args) => html`
+    <omni-render-element data-testid="test-render" .data="${args.data}" .renderer="${args.renderer}"
+      >${
+          args.loading_indicator ? html`${'\r\n'}${unsafeHTML(assignToSlot('loading_indicator', args.loading_indicator))}${'\r\n'}` : nothing
+      }</omni-render-element
+    >
+  `,
     args: {
         data: {
             hello: 'world',
@@ -62,16 +70,17 @@ export const Interactive = {
         },
         renderer: renderAsLit,
         loading_indicator: ''
-    } as ArgTypes,
-    play: async (context: StoryContext) => {
+    } as Args,
+    play: async (context) => {
         const renderElement = within(context.canvasElement).getByTestId<RenderElement>('test-render');
         const data = JSON.parse(JSON.stringify(context.args.data));
 
-        await expect(renderElement.renderRoot.querySelector('omni-loading-icon')).toBeTruthy();
+        // await expect(renderElement.renderRoot.querySelector('omni-loading-icon')).toBeTruthy();
 
         console.log(`Running as '${navigator.userAgent}'`);
-        if (navigator.userAgent === 'Storybook Test Runner') {
+        if (navigator.userAgent === 'Test Runner') {
             console.log('CICD Test - Not Visual');
+            await new Promise<void>((r) => setTimeout(() => r(), 3000));
         } else {
             await new Promise<void>((r) => setTimeout(() => r(), 10000));
         }
@@ -87,38 +96,15 @@ export const Interactive = {
 
         const span2 = await querySelectorAsync(renderElement.renderRoot, 'span');
         await expect(span2).toHaveTextContent(JSON.stringify(data));
+
+        // Cleanup
+        renderElement.data = context.args.data;
     }
 };
 
-export const AsLit = {
-    ...Interactive,
-    parameters: {
-        docs: {
-            source: {
-                code: `
-                
-<!-- Bound function used (<script> tags only for syntax highlighting) -->
-<script>
-async function renderAsLit(data: object) {
-    await new Promise<void>((r) => setTimeout(() => r(), 3000));
-    return html\`<span>\${JSON.stringify(data)}</span>\`;
-}
-</script>
-
-...
-                
-<omni-render-element .data="\${this.someData}" .renderer="\${this.renderAsLit}"></omni-render-element>
-`,
-                language: 'html'
-            }
-        }
-    },
-    name: 'As Lit'
-};
-
 let clicked = () => alert('Clicked');
-export const AsHTMLElement = {
-    render: (args: ArgTypes) => {
+export const As_HTML_Element: ComponentStoryFormat<Args> = {
+    render: (args: Args) => {
         const addValues = async () => {
             let renderEl: RenderElement = undefined;
             while (!renderEl) {
@@ -133,10 +119,7 @@ export const AsHTMLElement = {
         return html` <omni-render-element id="renderElI" data-testid="test-render"></omni-render-element> `;
     },
     name: 'As HTML Element',
-    parameters: {
-        docs: {
-            source: {
-                code: `
+    source: () => `
 <omni-render-element id="renderElI"></omni-render-element>
 <script defer>
     async function renderAsElement(data) {
@@ -155,27 +138,24 @@ export const AsHTMLElement = {
             'other-data': false
     };
 </script>`,
-                language: 'html'
-            }
-        }
-    },
     args: {
         data: {
             hello: 'world',
             'other-data': false
         },
         renderer: renderAsElement
-    } as ArgTypes,
-    play: async (context: StoryContext) => {
+    } as Args,
+    play: async (context) => {
         const renderElement = within(context.canvasElement).getByTestId<RenderElement>('test-render');
         const data = JSON.parse(JSON.stringify(context.args.data));
         clicked = jest.fn();
 
-        await expect(renderElement.renderRoot.querySelector('omni-loading-icon')).toBeTruthy();
+        // await expect(renderElement.renderRoot.querySelector('omni-loading-icon')).toBeTruthy();
 
         console.log(`Running as '${navigator.userAgent}'`);
-        if (navigator.userAgent === 'Storybook Test Runner') {
+        if (navigator.userAgent === 'Test Runner') {
             console.log('CICD Test - Not Visual');
+            await new Promise<void>((r) => setTimeout(() => r(), 3000));
         } else {
             await new Promise<void>((r) => setTimeout(() => r(), 10000));
         }
@@ -191,16 +171,23 @@ export const AsHTMLElement = {
 
         const span2 = (await querySelectorAsync(renderElement.renderRoot, 'span')) as HTMLSpanElement;
         await expect(span2).toHaveTextContent(JSON.stringify(data));
-        await userEvent.click(span2);
-        await userEvent.click(span2);
+        await userEvent.click(span2, {
+            pointerEventsCheck: 0
+        });
+        await userEvent.click(span2, {
+            pointerEventsCheck: 0
+        });
         await expect(clicked).toBeCalledTimes(2);
 
         clicked = () => alert('Clicked');
+
+        // Cleanup
+        renderElement.data = context.args.data;
     }
 };
 
-export const AsString = {
-    render: (args: ArgTypes) => {
+export const As_String: ComponentStoryFormat<Args> = {
+    render: (args: Args) => {
         const addValues = async () => {
             let renderEl: RenderElement = undefined;
             while (!renderEl) {
@@ -215,10 +202,7 @@ export const AsString = {
         return html` <omni-render-element id="renderElS" data-testid="test-render"> </omni-render-element> `;
     },
     name: 'As String',
-    parameters: {
-        docs: {
-            source: {
-                code: `
+    source: () => `
 <omni-render-element id="renderElS"></omni-render-element>
 <script defer>
     async function renderAsString(data) {
@@ -234,26 +218,23 @@ export const AsString = {
             'other-data': false
     };
 </script>`,
-                language: 'html'
-            }
-        }
-    },
     args: {
         data: {
             hello: 'world',
             'other-data': false
         },
         renderer: renderAsString
-    } as ArgTypes,
-    play: async (context: StoryContext) => {
+    } as Args,
+    play: async (context) => {
         const renderElement = within(context.canvasElement).getByTestId<RenderElement>('test-render');
         const data = JSON.parse(JSON.stringify(context.args.data));
 
-        await expect(renderElement.renderRoot.querySelector('omni-loading-icon')).toBeTruthy();
+        // await expect(renderElement.renderRoot.querySelector('omni-loading-icon')).toBeTruthy();
 
         console.log(`Running as '${navigator.userAgent}'`);
-        if (navigator.userAgent === 'Storybook Test Runner') {
+        if (navigator.userAgent === 'Test Runner') {
             console.log('CICD Test - Not Visual');
+            await new Promise<void>((r) => setTimeout(() => r(), 3000));
         } else {
             await new Promise<void>((r) => setTimeout(() => r(), 10000));
         }
@@ -269,5 +250,8 @@ export const AsString = {
 
         const span2 = await querySelectorAsync(renderElement.renderRoot, 'span');
         await expect(span2).toHaveTextContent(JSON.stringify(data));
+
+        // Cleanup
+        renderElement.data = context.args.data;
     }
 };

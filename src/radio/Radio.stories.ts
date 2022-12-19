@@ -1,26 +1,20 @@
-import { expect, jest } from '@storybook/jest';
-import { userEvent, within, fireEvent } from '@storybook/testing-library';
-import { Meta, StoryContext } from '@storybook/web-components';
+import { within, fireEvent } from '@testing-library/dom';
+import userEvent from '@testing-library/user-event';
+import * as jest from 'jest-mock';
 import { html } from 'lit';
 import { ifNotEmpty } from '../utils/Directives.js';
-import { loadCssPropertiesRemote } from '../utils/StoryUtils';
+import expect from '../utils/ExpectDOM.js';
+import { ComponentStoryFormat, CSFIdentifier } from '../utils/StoryUtils.js';
 import { Radio } from './Radio.js';
 
 import './Radio.js';
 
 export default {
     title: 'UI Components/Radio',
-    component: 'omni-radio',
-    argTypes: {},
-    parameters: {
-        actions: {
-            handles: ['value-change']
-        },
-        cssprops: loadCssPropertiesRemote('omni-radio')
-    }
-} as Meta;
+    component: 'omni-radio'
+} as CSFIdentifier;
 
-interface ArgTypes {
+interface Args {
     label: string;
     data: object;
     hint: string;
@@ -29,19 +23,18 @@ interface ArgTypes {
     disabled: boolean;
 }
 
-export const Interactive = {
-    render: (args: ArgTypes) => html`
-        <omni-radio
-            data-testid="test-radio"
-            label="${ifNotEmpty(args.label)}"
-            .data="${args.data}"
-            hint="${ifNotEmpty(args.hint)}"
-            error="${ifNotEmpty(args.error)}"
-            ?checked="${args.checked}"
-            ?disabled="${args.disabled}"></omni-radio>
-    `,
+export const Interactive: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
+    <omni-radio
+      data-testid="test-radio"
+      label="${ifNotEmpty(args.label)}"
+      .data="${args.data}"
+      hint="${ifNotEmpty(args.hint)}"
+      error="${ifNotEmpty(args.error)}"
+      ?checked="${args.checked}"
+      ?disabled="${args.disabled}"></omni-radio>
+  `,
     name: 'Interactive',
-    parameters: {},
     args: {
         label: '',
         data: {},
@@ -50,7 +43,7 @@ export const Interactive = {
         checked: false,
         disabled: false
     },
-    play: async (context: StoryContext) => {
+    play: async (context) => {
         const radio = within(context.canvasElement).getByTestId<Radio>('test-radio');
         radio.focus();
 
@@ -58,7 +51,9 @@ export const Interactive = {
         const valueChange = jest.fn();
         radio.addEventListener('value-change', valueChange);
 
-        await userEvent.click(content);
+        await userEvent.click(content, {
+            pointerEventsCheck: 0
+        });
         await fireEvent.keyDown(content, {
             key: ' ',
             code: 'Space'
@@ -68,67 +63,65 @@ export const Interactive = {
     }
 };
 
-export const Label = {
-    render: (args: ArgTypes) => html` <omni-radio data-testid="test-radio" label="${args.label}"></omni-radio> `,
+export const Label: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html` <omni-radio data-testid="test-radio" label="${args.label}"></omni-radio> `,
     args: {
         label: 'Label'
     },
-    play: async (context: StoryContext) => {
+    play: async (context) => {
         const radio = within(context.canvasElement).getByTestId<Radio>('test-radio');
         const labelElement = radio.shadowRoot.getElementById('label');
         await expect(labelElement).toHaveTextContent(Label.args.label);
     }
 };
 
-export const Hint = {
-    render: (args: ArgTypes) => html` <omni-radio data-testid="test-radio" label="${args.label}" hint="${args.hint}"></omni-radio> `,
+export const Hint: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html` <omni-radio data-testid="test-radio" label="${args.label}" hint="${args.hint}"></omni-radio> `,
     args: {
         label: 'Hint',
         hint: 'This is a hint'
     },
-    play: async (context: StoryContext) => {
+    play: async (context) => {
         const radio = within(context.canvasElement).getByTestId<Radio>('test-radio');
         const element = radio.shadowRoot.querySelector<HTMLElement>('.hint');
         await expect(element).toHaveTextContent(Hint.args.hint);
     }
 };
 
-export const ErrorLabel = {
+export const Error_Label: ComponentStoryFormat<Args> = {
     name: 'Error', // Explicitly named as error, the exported name cannot be 'Error' as that is reserved
-    render: (args: ArgTypes) => html` <omni-radio data-testid="test-radio" label="${args.label}" error="${args.error}"></omni-radio> `,
+    render: (args: Args) => html` <omni-radio data-testid="test-radio" label="${args.label}" error="${args.error}"></omni-radio> `,
     args: {
         label: 'Error',
         error: 'This is an error state'
     },
-    play: async (context: StoryContext) => {
+    play: async (context) => {
         const radio = within(context.canvasElement).getByTestId<Radio>('test-radio');
         const element = radio.shadowRoot.querySelector<HTMLElement>('.error');
-        await expect(element).toHaveTextContent(ErrorLabel.args.error);
+        await expect(element).toHaveTextContent(Error_Label.args.error);
     }
 };
 
-export const Checked = {
-    render: (args: ArgTypes) => html` <omni-radio data-testid="test-radio" label="${args.label}" ?checked="${args.checked}"></omni-radio> `,
+export const Checked: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html` <omni-radio data-testid="test-radio" label="${args.label}" ?checked="${args.checked}"></omni-radio> `,
     args: {
         label: 'Checked',
         checked: true
     },
-    play: async (context: StoryContext) => {
+    play: async (context) => {
         const radio = within(context.canvasElement).getByTestId<Radio>('test-radio');
         const checkedElement = radio.shadowRoot.querySelector<HTMLElement>('.checked');
         await expect(checkedElement).toBeTruthy();
     }
 };
 
-export const Disabled = {
-    render: (args: ArgTypes) => html`
-        <omni-radio data-testid="test-radio" label="${args.label}" ?disabled="${args.disabled}"></omni-radio>
-    `,
+export const Disabled: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html` <omni-radio data-testid="test-radio" label="${args.label}" ?disabled="${args.disabled}"></omni-radio> `,
     args: {
         label: 'Disabled',
         disabled: true
     },
-    play: async (context: StoryContext) => {
+    play: async (context) => {
         const radio = within(context.canvasElement).getByTestId<Radio>('test-radio');
         const valueChange = jest.fn();
         radio.addEventListener('value-change', valueChange);
@@ -137,7 +130,9 @@ export const Disabled = {
         await expect(disabledElement).toBeTruthy();
 
         const content = radio.shadowRoot.getElementById('content');
-        await userEvent.click(content);
+        await userEvent.click(content, {
+            pointerEventsCheck: 0
+        });
         await fireEvent.keyDown(content, {
             key: ' ',
             code: 'Space'

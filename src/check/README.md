@@ -1,11 +1,6 @@
 # omni-check
 
-A control that allows a user to check a value on or off.
-
-```js
-
-import '@capitec/omni-components/check';
-```
+Control that allows a selection to be made.
 
 ## Example
 

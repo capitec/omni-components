@@ -1,11 +1,6 @@
 # omni-switch
 
-A control that allows a user to switch a value on or off.
-
-```js
-
-import '@capitec/omni-components/switch';
-```
+Control to switch a value on or off.
 
 ## Example
 

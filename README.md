@@ -1,10 +1,12 @@
 <!-- ⚠️ This README has been generated from the file(s) "readme/blueprint.md" ⚠️-->
 <p align="center">
-  <img src="https://avatars.githubusercontent.com/u/109590421" alt="Logo" width="150" height="auto" />
+  <img src="https://raw.githubusercontent.com/capitec/omni-components/develop/eleventy/assets/images/logo.png" alt="Logo" width="150" height="auto" />
 </p>
 
+<h1 align="center">Omni Components</h1>
+
 <p align="center">
-  <b>Omni Components come with minimal dependencies to reduce the bloat in your project. All web components base off <strong>OmniElement</strong> (Which itself is based off <a href="https://lit.dev"><strong>LitElement</strong></a>) and are each available as fully standalone imports.</b></br>
+  <b>Customizable web components for any application.</b></br>
   <sub><sub>
 </p>
 
@@ -98,15 +100,7 @@ For a more detailed installation guide, see [`INSTALLATION.md`](./INSTALLATION.m
 
 </td><td>
 
-A control that allows an action to be executed.
-
-
-```js
-
-
-import '@capitec/omni-components/button';
-
-```
+Control that allows an action to be executed.
 
 </td></tr><tr><td>
 
@@ -114,15 +108,7 @@ import '@capitec/omni-components/button';
 
 </td><td>
 
-A control that allows a user to check a value on or off.
-
-
-```js
-
-
-import '@capitec/omni-components/check';
-
-```
+Control that allows a selection to be made.
 
 </td></tr><tr><td>
 
@@ -130,15 +116,15 @@ import '@capitec/omni-components/check';
 
 </td><td>
 
-A control that can be used for input, setting attributes, or performing actions.
+Control that can be used for input, setting attributes, or performing actions.
 
+</td></tr><tr><td>
 
-```js
+[omni-color-field](src/color-field/README.md)
 
+</td><td>
 
-import '@capitec/omni-components/chip';
-
-```
+Color input control.
 
 </td></tr><tr><td>
 
@@ -148,29 +134,13 @@ import '@capitec/omni-components/chip';
 
 A currency input control that formats input based on currency and locale.
 
-
-```js
-
-
-import '@capitec/omni-components/currency-field';
-
-```
-
 </td></tr><tr><td>
 
 [omni-hyperlink](src/hyperlink/README.md)
 
 </td><td>
 
-A link control that allows a user to indicate an action to be executed. Typically used for navigational purposes.
-
-
-```js
-
-
-import '@capitec/omni-components/hyperlink';
-
-```
+Control to indicate an action to be executed. Typically used for navigational purposes.
 
 </td></tr><tr><td>
 
@@ -178,15 +148,7 @@ import '@capitec/omni-components/hyperlink';
 
 </td><td>
 
-Component that displays an icon
-
-
-```js
-
-
-import '@capitec/omni-components/icon';
-
-```
+Component that displays an icon.
 
 </td></tr><tr><td>
 
@@ -194,15 +156,15 @@ import '@capitec/omni-components/icon';
 
 </td><td>
 
-A check icon component.
+Check icon component.
 
+</td></tr><tr><td>
 
-```js
+[omni-chevron-down-icon](src/icons/README.md)
 
+</td><td>
 
-import '@capitec/omni-components/icons/Check.icon.js';
-
-```
+Chevron down icon component.
 
 </td></tr><tr><td>
 
@@ -212,29 +174,13 @@ import '@capitec/omni-components/icons/Check.icon.js';
 
 A clear icon component.
 
-
-```js
-
-
-import '@capitec/omni-components/icons/Clear.icon.js';
-
-```
-
 </td></tr><tr><td>
 
 [omni-close-icon](src/icons/README.md)
 
 </td><td>
 
-A Close icon component.
-
-
-```js
-
-
-import '@capitec/omni-components/icons/Close.icon.js';
-
-```
+Close icon component.
 
 </td></tr><tr><td>
 
@@ -242,15 +188,7 @@ import '@capitec/omni-components/icons/Close.icon.js';
 
 </td><td>
 
-A hidden eye icon component
-
-
-```js
-
-
-import '@capitec/omni-components/icons/EyeHidden.icon.js';
-
-```
+Hidden eye icon component
 
 </td></tr><tr><td>
 
@@ -258,15 +196,7 @@ import '@capitec/omni-components/icons/EyeHidden.icon.js';
 
 </td><td>
 
-A visible eye icon component
-
-
-```js
-
-
-import '@capitec/omni-components/icons/EyeVisible.icon.js';
-
-```
+Visible eye icon component.
 
 </td></tr><tr><td>
 
@@ -274,15 +204,7 @@ import '@capitec/omni-components/icons/EyeVisible.icon.js';
 
 </td><td>
 
-An indeterminate icon component.
-
-
-```js
-
-
-import '@capitec/omni-components/icons/Indeterminate.icon.js';
-
-```
+Indeterminate icon component.
 
 </td></tr><tr><td>
 
@@ -290,15 +212,7 @@ import '@capitec/omni-components/icons/Indeterminate.icon.js';
 
 </td><td>
 
-A loading icon component.
-
-
-```js
-
-
-import '@capitec/omni-components/icons/Loading.icon.js';
-
-```
+Loading icon component.
 
 </td></tr><tr><td>
 
@@ -306,15 +220,7 @@ import '@capitec/omni-components/icons/Loading.icon.js';
 
 </td><td>
 
-A closed lock icon component
-
-
-```js
-
-
-import '@capitec/omni-components/icons/LockClosed.icon.js';
-
-```
+Closed lock icon component.
 
 </td></tr><tr><td>
 
@@ -322,15 +228,7 @@ import '@capitec/omni-components/icons/LockClosed.icon.js';
 
 </td><td>
 
-A open lock icon component
-
-
-```js
-
-
-import '@capitec/omni-components/icons/LockOpen.icon.js';
-
-```
+Open lock icon component.
 
 </td></tr><tr><td>
 
@@ -338,14 +236,15 @@ import '@capitec/omni-components/icons/LockOpen.icon.js';
 
 </td><td>
 
-A minus icon component
+Minus icon component.
 
+</td></tr><tr><td>
 
-```js
+[omni-more-icon](src/icons/README.md)
 
-import '@capitec/omni-components/icons/Minus.icon.js';
+</td><td>
 
-```
+More icon component.
 
 </td></tr><tr><td>
 
@@ -353,14 +252,7 @@ import '@capitec/omni-components/icons/Minus.icon.js';
 
 </td><td>
 
-A plus icon component
-
-
-```js
-
-import '@capitec/omni-components/icons/Plus.icon.js';
-
-```
+Plus icon component.
 
 </td></tr><tr><td>
 
@@ -370,29 +262,13 @@ import '@capitec/omni-components/icons/Plus.icon.js';
 
 A search icon component.
 
-
-```js
-
-
-import '@capitec/omni-components/icons/Search.icon.js';
-
-```
-
 </td></tr><tr><td>
 
 [omni-label](src/label/README.md)
 
 </td><td>
 
-A simple label component that renders styled text.
-
-
-```js
-
-
-import '@capitec/omni-components/label';
-
-```
+Label component that renders styled text.
 
 </td></tr><tr><td>
 
@@ -400,15 +276,7 @@ import '@capitec/omni-components/label';
 
 </td><td>
 
-An input control that allows a user to enter a single line of numbers.
-
-
-```js
-
-
-import '@capitec/omni-components/number-field';
-
-```
+Input control to enter a single line of numbers.
 
 </td></tr><tr><td>
 
@@ -416,15 +284,7 @@ import '@capitec/omni-components/number-field';
 
 </td><td>
 
-An input control that allows a user to enter a single line of numbers with a stepper control.
-
-
-```js
-
-
-import '@capitec/omni-components/numeric-field';
-
-```
+Input control to enter a single line of numbers with a stepper control.
 
 </td></tr><tr><td>
 
@@ -432,15 +292,7 @@ import '@capitec/omni-components/numeric-field';
 
 </td><td>
 
-A password input control.
-
-
-```js
-
-
-import '@capitec/omni-components/password-field';
-
-```
+Password input control.
 
 </td></tr><tr><td>
 
@@ -448,15 +300,7 @@ import '@capitec/omni-components/password-field';
 
 </td><td>
 
-A control that allows a user to select a single value from a group of values.
-
-
-```js
-
-
-import '@capitec/omni-components/radio';
-
-```
+Control to select a single value from a group of values.
 
 </td></tr><tr><td>
 
@@ -464,15 +308,7 @@ import '@capitec/omni-components/radio';
 
 </td><td>
 
-An element that defers content rendering to a provided function/promise.
-
-
-```js
-
-
-import '@capitec/omni-components/render-element';
-
-```
+Element that defers content rendering to a provided function / promise.
 
 </td></tr><tr><td>
 
@@ -482,13 +318,13 @@ import '@capitec/omni-components/render-element';
 
 A search input control.
 
+</td></tr><tr><td>
 
-```js
+[omni-select](src/select/README.md)
 
+</td><td>
 
-import '@capitec/omni-components/search-field';
-
-```
+Control to get / set a value within a list of options.
 
 </td></tr><tr><td>
 
@@ -496,15 +332,7 @@ import '@capitec/omni-components/search-field';
 
 </td><td>
 
-A control that allows a user to switch a value on or off.
-
-
-```js
-
-
-import '@capitec/omni-components/switch';
-
-```
+Control to switch a value on or off.
 
 </td></tr><tr><td>
 
@@ -512,15 +340,7 @@ import '@capitec/omni-components/switch';
 
 </td><td>
 
-A text input control.
-
-
-```js
-
-
-import '@capitec/omni-components/text-field';
-
-```
+Control to input text.
 
 </td></tr></tbody></table>
 
@@ -538,7 +358,7 @@ import '@capitec/omni-components/text-field';
 
 1. [Fork](https://github.com/capitec/omni-components/fork) the repository and create a branch from `develop`.
 2. Clone the forked repo, checkout your branch, and run `npm ci` inside the repository root.
-3. Start up the dev server with `npm run storybook` (or by launching debugging in VS Code).
+3. Start up the dev server with `npm run serve` (or by launching debugging in VS Code).
 
 For more on contribution guidelines, see [`CONTRIBUTING.md`](./CONTRIBUTING.md).
 
@@ -558,6 +378,13 @@ For more on contribution guidelines, see [`CONTRIBUTING.md`](./CONTRIBUTING.md).
         </a>
     </td>
     <td align="center">
+        <a href="https://github.com/stefan505">
+            <img src="https://avatars.githubusercontent.com/u/10812446?v=4" width="100;" alt="stefan505"/>
+            <br />
+            <sub><b>stefan505</b></sub>
+        </a>
+    </td>
+    <td align="center">
         <a href="https://github.com/chromaticWaster">
             <img src="https://avatars.githubusercontent.com/u/22874454?v=4" width="100;" alt="chromaticWaster"/>
             <br />
@@ -565,10 +392,10 @@ For more on contribution guidelines, see [`CONTRIBUTING.md`](./CONTRIBUTING.md).
         </a>
     </td>
     <td align="center">
-        <a href="https://github.com/stefan505">
-            <img src="https://avatars.githubusercontent.com/u/10812446?v=4" width="100;" alt="stefan505"/>
+        <a href="https://github.com/jn42lm1">
+            <img src="https://avatars.githubusercontent.com/u/54233338?v=4" width="100;" alt="jn42lm1"/>
             <br />
-            <sub><b>stefan505</b></sub>
+            <sub><b>jn42lm1</b></sub>
         </a>
     </td>
     <td align="center">

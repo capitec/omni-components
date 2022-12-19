@@ -1,11 +1,6 @@
 # omni-number-field
 
-An input control that allows a user to enter a single line of numbers.
-
-```js
-
-import '@capitec/omni-components/number-field';
-```
+Input control to enter a single line of numbers.
 
 ## Example
 
@@ -22,18 +17,18 @@ import '@capitec/omni-components/number-field';
 
 ## Properties
 
-| Property   | Attribute  | Modifiers | Type               | Default | Description                                      |
-|------------|------------|-----------|--------------------|---------|--------------------------------------------------|
-| `data`     | `data`     |           | `object`           |         | Data associated with the component.              |
-| `dir`      |            |           | `string`           |         |                                                  |
-| `disabled` | `disabled` |           | `boolean`          | false   | Indicator if the component should be disabled.   |
-| `error`    | `error`    |           | `string`           |         | A error message guiding a user to correct a mistake. |
-| `hint`     | `hint`     |           | `string`           |         | A hint message to assist the user.               |
-| `label`    | `label`    |           | `string`           |         | Text label.                                      |
-| `lang`     |            |           | `string`           |         |                                                  |
-| `override` | `override` |           |                    |         | Used to set the base direction of text for display |
-| `styles`   |            | readonly  | `CSSResultGroup[]` |         |                                                  |
-| `value`    | `value`    |           | `string \| number` | null    | The value entered into the form component.       |
+| Property   | Attribute  | Modifiers | Type                                          | Default | Description                                      |
+|------------|------------|-----------|-----------------------------------------------|---------|--------------------------------------------------|
+| `data`     | `data`     |           | `object`                                      |         | Data associated with the component.              |
+| `dir`      |            |           | `string`                                      |         |                                                  |
+| `disabled` | `disabled` |           | `boolean`                                     | false   | Indicator if the component should be disabled.   |
+| `error`    | `error`    |           | `string`                                      |         | A error message guiding a user to correct a mistake. |
+| `hint`     | `hint`     |           | `string`                                      |         | A hint message to assist the user.               |
+| `label`    | `label`    |           | `string`                                      |         | Text label.                                      |
+| `lang`     |            |           | `string`                                      |         |                                                  |
+| `override` | `override` |           |                                               |         | Used to set the base direction of text for display |
+| `styles`   |            | readonly  | `CSSResultGroup[]`                            |         |                                                  |
+| `value`    | `value`    |           | `string \| number \| Record<string, unknown>` | null    | The value entered into the form component.       |
 
 ## Methods
 
@@ -96,6 +91,7 @@ import '@capitec/omni-components/number-field';
 | `--omni-form-label-left`                         | Form label left margin.                        |
 | `--omni-form-label-text-align`                   | Form label text align.                         |
 | `--omni-form-label-transform-origin`             | Form label text align                          |
+| `--omni-form-label-z-index`                      | Form label z-index.                            |
 | `--omni-number-field-font-color`                 | Number field font color.                       |
 | `--omni-number-field-font-family`                | Number field font family.                      |
 | `--omni-number-field-font-size`                  | Number field font size.                        |
@@ -103,6 +99,7 @@ import '@capitec/omni-components/number-field';
 | `--omni-number-field-height`                     | Number field height.                           |
 | `--omni-number-field-padding`                    | Number field width.                            |
 | `--omni-number-field-text-align`                 | Number field text align.                       |
+| `--omni-number-field-width`                      | Number field width.                            |
 | `--omni-theme-accent-active-color`               | Theme accent active color.                     |
 | `--omni-theme-accent-color`                      | Theme accent color.                            |
 | `--omni-theme-accent-hover-color`                | Theme accent hover color.                      |

@@ -1,7 +1,7 @@
-import packageJson from 'package-json';
 import { execSync } from 'child_process';
-import commandLineArgs from 'command-line-args';
 import * as fs from 'fs/promises';
+import commandLineArgs from 'command-line-args';
+import packageJson from 'package-json';
 
 let { version, tag } = commandLineArgs([
     { name: 'version', type: String },

@@ -1,11 +1,6 @@
 # omni-hyperlink
 
-A link control that allows a user to indicate an action to be executed. Typically used for navigational purposes.
-
-```js
-
-import '@capitec/omni-components/hyperlink';
-```
+Control to indicate an action to be executed. Typically used for navigational purposes.
 
 ## Example
 

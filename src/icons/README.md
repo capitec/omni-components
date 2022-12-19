@@ -1,11 +1,6 @@
 # omni-check-icon
 
-A check icon component.
-
-```js
-
-import '@capitec/omni-components/icons/Check.icon.js';
-```
+Check icon component.
 
 ## Example
 
@@ -26,14 +21,32 @@ import '@capitec/omni-components/icons/Check.icon.js';
 | `createRenderRoot` | `(): this` |
 
 
+# omni-chevron-down-icon
+
+Chevron down icon component.
+
+## Example
+
+```html
+<omni-chevron-down-icon></omni-chevron-down-icon>
+```
+
+## Properties
+
+| Property   |
+|------------|
+| `override` |
+
+## Methods
+
+| Method             | Type       |
+|--------------------|------------|
+| `createRenderRoot` | `(): this` |
+
+
 # omni-clear-icon
 
 A clear icon component.
-
-```js
-
-import '@capitec/omni-components/icons/Clear.icon.js';
-```
 
 ## Example
 
@@ -56,12 +69,7 @@ import '@capitec/omni-components/icons/Clear.icon.js';
 
 # omni-close-icon
 
-A Close icon component.
-
-```js
-
-import '@capitec/omni-components/icons/Close.icon.js';
-```
+Close icon component.
 
 ## Example
 
@@ -84,12 +92,7 @@ import '@capitec/omni-components/icons/Close.icon.js';
 
 # omni-eye-hidden-icon
 
-A hidden eye icon component
-
-```js
-
-import '@capitec/omni-components/icons/EyeHidden.icon.js';
-```
+Hidden eye icon component
 
 ## Example
 
@@ -112,12 +115,7 @@ import '@capitec/omni-components/icons/EyeHidden.icon.js';
 
 # omni-eye-visible-icon
 
-A visible eye icon component
-
-```js
-
-import '@capitec/omni-components/icons/EyeVisible.icon.js';
-```
+Visible eye icon component.
 
 ## Example
 
@@ -140,12 +138,7 @@ import '@capitec/omni-components/icons/EyeVisible.icon.js';
 
 # omni-indeterminate-icon
 
-An indeterminate icon component.
-
-```js
-
-import '@capitec/omni-components/icons/Indeterminate.icon.js';
-```
+Indeterminate icon component.
 
 ## Example
 
@@ -168,12 +161,7 @@ import '@capitec/omni-components/icons/Indeterminate.icon.js';
 
 # omni-loading-icon
 
-A loading icon component.
-
-```js
-
-import '@capitec/omni-components/icons/Loading.icon.js';
-```
+Loading icon component.
 
 ## Example
 
@@ -227,12 +215,7 @@ import '@capitec/omni-components/icons/Loading.icon.js';
 
 # omni-lock-closed-icon
 
-A closed lock icon component
-
-```js
-
-import '@capitec/omni-components/icons/LockClosed.icon.js';
-```
+Closed lock icon component.
 
 ## Example
 
@@ -255,12 +238,7 @@ import '@capitec/omni-components/icons/LockClosed.icon.js';
 
 # omni-lock-open-icon
 
-A open lock icon component
-
-```js
-
-import '@capitec/omni-components/icons/LockOpen.icon.js';
-```
+Open lock icon component.
 
 ## Example
 
@@ -283,11 +261,7 @@ import '@capitec/omni-components/icons/LockOpen.icon.js';
 
 # omni-minus-icon
 
-A minus icon component
-
-```js
-import '@capitec/omni-components/icons/Minus.icon.js';
-```
+Minus icon component.
 
 ## Example
 
@@ -308,13 +282,32 @@ import '@capitec/omni-components/icons/Minus.icon.js';
 | `createRenderRoot` | `(): this` |
 
 
+# omni-more-icon
+
+More icon component.
+
+## Example
+
+```html
+<omni-more-icon></omni-more-icon>
+```
+
+## Properties
+
+| Property   |
+|------------|
+| `override` |
+
+## Methods
+
+| Method             | Type       |
+|--------------------|------------|
+| `createRenderRoot` | `(): this` |
+
+
 # omni-plus-icon
 
-A plus icon component
-
-```js
-import '@capitec/omni-components/icons/Plus.icon.js';
-```
+Plus icon component.
 
 ## Example
 
@@ -338,11 +331,6 @@ import '@capitec/omni-components/icons/Plus.icon.js';
 # omni-search-icon
 
 A search icon component.
-
-```js
-
-import '@capitec/omni-components/icons/Search.icon.js';
-```
 
 ## Example
 

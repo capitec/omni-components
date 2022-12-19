@@ -15,8 +15,8 @@ export const CURRENCY_SEPARATOR = {
 /**
  * A currency input control that formats input based on currency and locale.
  *
+ * @import
  * ```js
- *
  * import '@capitec/omni-components/currency-field';
  * ```
  * @example
@@ -43,6 +43,7 @@ export const CURRENCY_SEPARATOR = {
  * @cssprop --omni-currency-field-font-weight - Currency field font weight.
  * @cssprop --omni-currency-field-height - Currency field height.
  * @cssprop --omni-currency-field-padding - Currency field padding.
+ * @cssprop --omni-currency-field-width - Currency field width.
  *
  * @cssprop --omni-currency-field-symbol-font-size - Currency field symbol font size.
  * @cssprop --omni-currency-field-symbol-color - Currency field symbol font color.
@@ -83,9 +84,15 @@ export class CurrencyField extends OmniFormElement {
 
     override connectedCallback(): void {
         super.connectedCallback();
-        this.addEventListener('input', this._keyInput.bind(this));
-        this.addEventListener('blur', this._blur.bind(this));
-        this.addEventListener('keydown', this._keyDown.bind(this));
+        this.addEventListener('input', this._keyInput.bind(this), {
+            capture: true
+        });
+        this.addEventListener('blur', this._blur.bind(this), {
+            capture: true
+        });
+        this.addEventListener('keydown', this._keyDown.bind(this), {
+            capture: true
+        });
     }
 
     override async attributeChangedCallback(name: string, _old: string | null, value: string | null): Promise<void> {
@@ -196,9 +203,7 @@ export class CurrencyField extends OmniFormElement {
     // Format the internal value to a float.
     _formatToFloat(formattedValue: string): string | number {
         if (formattedValue.length > 0) {
-            const preFloatReplaceAll = formattedValue
-                .replaceAll(this._currencyFormatSeparator, '')
-                .replace(this._currencyCentsSeparator, '.');
+            const preFloatReplaceAll = formattedValue.replaceAll(this._currencyFormatSeparator, '').replace(this._currencyCentsSeparator, '.');
             return parseFloat(preFloatReplaceAll);
         } else {
             return '';
@@ -248,9 +253,7 @@ export class CurrencyField extends OmniFormElement {
                     centsPart;
             } else {
                 this._stringValue = this._formatToCurrency(
-                    this._parseAmount(
-                        input.value.substring(0, caretPosition - 2) + input.value.substring(caretPosition, input.value.length + 1)
-                    )
+                    this._parseAmount(input.value.substring(0, caretPosition - 2) + input.value.substring(caretPosition, input.value.length + 1))
                 );
             }
 
@@ -270,6 +273,8 @@ export class CurrencyField extends OmniFormElement {
         if (input.value.charAt(caretPosition - 1) === this._currencyCentsSeparator && e.key.toLowerCase() === 'backspace') {
             this._stringValue = input.value.substring(0, input.value.indexOf(this._currencyCentsSeparator));
             e.preventDefault();
+            // Set value prop to float value
+            this.value = this._formatToFloat(this._stringValue);
             return;
         }
 
@@ -350,6 +355,7 @@ export class CurrencyField extends OmniFormElement {
                     font-weight: var(--omni-currency-field-font-weight, var(--omni-font-weight));
                     height: var(--omni-currency-field-height, 100%);
                     padding: var(--omni-currency-field-padding, 10px);
+                    width: var(--omni-currency-field-width);
                 }
 
                 .currency-symbol {

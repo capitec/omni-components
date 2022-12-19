@@ -1,7 +1,8 @@
 {
 	"bracketSameLine": true,
+    "embeddedLanguageFormatting": "off",
 	"endOfLine": "auto",
-	"printWidth": 140,
+	"printWidth": 150,
 	"tabWidth": 4,
 	"trailingComma": "none",
 	"htmlWhitespaceSensitivity": "strict",

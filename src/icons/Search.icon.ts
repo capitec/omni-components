@@ -5,8 +5,8 @@ import DOMTreeElement from '../core/DOMTreeElement.js';
 /**
  * A search icon component.
  *
+ * @import
  * ```js
- *
  * import '@capitec/omni-components/icons/Search.icon.js';
  * ```
  *

@@ -31,6 +31,7 @@ import OmniElement from './OmniElement.js';
  * @cssprop --omni-form-label-font-size - Form label font size.
  * @cssprop --omni-form-label-font-weight - Form label font weight.
  * @cssprop --omni-form-label-left - Form label left margin.
+ * @cssprop --omni-form-label-z-index - Form label z-index.
  *
  * @cssprop --omni-form-focussed-border-width - Form focussed border width.
  * @cssprop --omni-form-focussed-border-color - Form focussed border color.
@@ -76,7 +77,7 @@ export class OmniFormElement extends OmniElement {
      * The value entered into the form component.
      * @attr
      */
-    @property({ reflect: true }) value: string | number = null;
+    @property({ reflect: true }) value: string | number | Record<string, unknown> = null;
 
     /**
      * Data associated with the component.
@@ -142,7 +143,12 @@ export class OmniFormElement extends OmniElement {
                 ${super.styles}
 
                 :host {
-                    display: inline-flex;
+                    display: flex;
+                }
+
+                :host([disabled]),
+                :host([disabled]) > * {
+                    pointer-events: none;
                 }
 
                 /* CONTAINER STYLES */
@@ -168,6 +174,7 @@ export class OmniFormElement extends OmniElement {
                     flex-direction: row;
                     align-items: stretch;
                     justify-content: center;
+                    border-radius: var(--omni-form-border-radius, 4px);
                     background-color: var(--omni-form-field-background-color, var(--omni-background-color));
                 }
 
@@ -215,6 +222,8 @@ export class OmniFormElement extends OmniElement {
                     font-weight: var(--omni-form-label-font-weight, var(--omni-font-weight));
 
                     left: var(--omni-form-label-left, 10px);
+
+                    z-index: var(--omni-form-label-z-index, 410);
                 }
 
                 .layout > .label > span {
@@ -233,7 +242,7 @@ export class OmniFormElement extends OmniElement {
                 :host([value]) .layout > .form-container > .label::before,
                 :focus + .label::before {
                     content: '';
-                    background-color: var(--omni-label-focus-background-color, white);
+                    background-color: var(--omni-form-field-background-color, var(--omni-background-color));
                     position: absolute;
                     left: var(--omni-label-focus-left, -3px);
                     right: var(--omni-label-focus-right, -3px);
@@ -341,7 +350,7 @@ export class OmniFormElement extends OmniElement {
                     <slot name="prefix">${this.renderPrefix()}</slot>
                     <div class="form-container"> ${this.renderContent()} ${this.renderLabel()} </div>
                     <slot name="suffix"></slot>
-                    ${this.renderControl()}
+                    ${this.renderControl()} ${this.renderPicker()}
                 </div>
                 ${this.renderHint()} ${this.renderError()}
             </div>
@@ -356,10 +365,6 @@ export class OmniFormElement extends OmniElement {
         return nothing;
     }
 
-    protected renderControl(): typeof nothing | TemplateResult {
-        return nothing;
-    }
-
     protected renderLabel() {
         const labelClass: ClassInfo = {
             label: true,
@@ -368,6 +373,14 @@ export class OmniFormElement extends OmniElement {
         };
 
         return html`${this.label ? html`<div class=${classMap(labelClass)}><span>${this.label}</span></div>` : nothing}`;
+    }
+
+    protected renderControl(): typeof nothing | TemplateResult {
+        return nothing;
+    }
+
+    protected renderPicker(): typeof nothing | TemplateResult {
+        return nothing;
     }
 
     protected renderHint() {

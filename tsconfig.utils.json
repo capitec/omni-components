@@ -1,0 +1,15 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+      "outDir": "dist",
+      "rootDir": "./src"
+    },
+    "exclude": ["node_modules", "dist"],
+    "files": [
+        "src/utils/StoryUtils.ts",
+        "src/utils/CodeEditor.ts",
+    ]
+    // "include": [
+    //     "src/utils/*.ts"
+    // ]
+  }

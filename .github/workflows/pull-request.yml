@@ -21,7 +21,7 @@ jobs:
 
       - name: Install Package Dependencies 🔗
         run: |
-          npm ci
+          npm ci --force
 
       - name: Run Lint Checks
         run: |
@@ -41,7 +41,7 @@ jobs:
 
       - name: Install Package Dependencies 🔗
         run: |
-          npm ci
+          npm ci --force
 
       - name: Run Format Checks
         run: |
@@ -61,15 +61,21 @@ jobs:
           always-auth: true
 
       - name: Install Package Dependencies
-        run: npm ci
+        run: |
+          npm ci --force
 
-      - name: Install Playwright Webkit Dependencies
-        run: npx playwright install-deps webkit
+      - name: Install Playwright Chrome Dependencies
+        run: npx playwright install --with-deps
 
-      - name: Compile Code
-        run: npm run compile
-
-      - name: Run Storybook Tests
+      - name: Run Tests
         run: npm run test
         env:
           CI: true
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
+
