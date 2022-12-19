@@ -671,8 +671,8 @@ async function setupThemes() {
             themeStyle.innerHTML = '';
             document.documentElement.removeAttribute('theme');
         } else if (theme === customThemeKey) {
-            document.documentElement.setAttribute('theme',theme);
-            
+            document.documentElement.setAttribute('theme', theme);
+
             if (themeEdit) {
                 themeEdit.style.display = 'flex';
             }
@@ -688,10 +688,10 @@ async function setupThemes() {
                             customCss = windowAny.cssbeautify(customCss);
                         }
                         customCss = customCss.replace(':root', `:root[theme="${customThemeKey}"]`);
-                        window.sessionStorage.setItem(customThemeCssKey,customCss);
+                        window.sessionStorage.setItem(customThemeCssKey, customCss);
                         break;
                     }
-                }                
+                }
             }
             themeStyle.innerHTML = customCss;
             if (e) {
@@ -699,7 +699,7 @@ async function setupThemes() {
             }
         } else {
             themeStyle.innerHTML = '';
-            document.documentElement.setAttribute('theme',theme);
+            document.documentElement.setAttribute('theme', theme);
         }
         document.dispatchEvent(
             new CustomEvent<string>('omni-docs-theme-change', {
@@ -1047,28 +1047,29 @@ async function setupTheming() {
                     themes.push(theme);
                 }
             }
-        }    
-        
-        const themesSourcesHtml = themes.sort((t) => (t === darkThemeKey ? -1 : 0))
-        .map((theme: string) => {
-            const themeName = theme;
-            theme = '';
-            for (const key in link.sheet.cssRules) {
-                const rule = link.sheet.cssRules[key] as CSSStyleRule;
-                if (rule.selectorText /* && rule.selectorText.startsWith(':root') */ && rule.selectorText.includes(`theme="${themeName}"`)) {
-                    theme += `${rule.cssText} \n`;
-                }
-            }
+        }
 
-            const windowAny = window as any;
-            if (windowAny.cssbeautify) {
-                theme = windowAny.cssbeautify(theme);
-            }
-            return html` <div>
+        const themesSourcesHtml = themes
+            .sort((t) => (t === darkThemeKey ? -1 : 0))
+            .map((theme: string) => {
+                const themeName = theme;
+                theme = '';
+                for (const key in link.sheet.cssRules) {
+                    const rule = link.sheet.cssRules[key] as CSSStyleRule;
+                    if (rule.selectorText /* && rule.selectorText.startsWith(':root') */ && rule.selectorText.includes(`theme="${themeName}"`)) {
+                        theme += `${rule.cssText} \n`;
+                    }
+                }
+
+                const windowAny = window as any;
+                if (windowAny.cssbeautify) {
+                    theme = windowAny.cssbeautify(theme);
+                }
+                return html` <div>
         <h3 style="padding-top: 12px;">${titleCase(themeName)} Theme</h3>
         <code-editor .extensions="${() => [currentCodeTheme(), cssSupport()]}" .code="${theme}" read-only> </code-editor>
     </div>`;
-        });
+            });
         render(themesSourcesHtml, themeSources);
     }
 }
@@ -1077,7 +1078,7 @@ async function setupCustomTheming() {
     const customThemeSourceParent = document.getElementById('custom-theme-source');
     const themeStyle = document.getElementById('theme-styles') as HTMLStyleElement;
     let cssSource = window.sessionStorage.getItem(customThemeCssKey);
-    if (!cssSource) {        
+    if (!cssSource) {
         const link = document.getElementById('theme-styles-link') as HTMLLinkElement;
         for (const key in link.sheet.cssRules) {
             const rule = link.sheet.cssRules[key] as CSSStyleRule;
@@ -1088,16 +1089,16 @@ async function setupCustomTheming() {
                     cssSource = windowAny.cssbeautify(cssSource);
                 }
                 cssSource = cssSource.replace(':root', `:root[theme="${customThemeKey}"]`);
-                window.sessionStorage.setItem(customThemeCssKey,cssSource);
+                window.sessionStorage.setItem(customThemeCssKey, cssSource);
                 break;
             }
-        }  
+        }
     }
 
     const windowAny = window as any;
     if (windowAny.cssbeautify) {
         cssSource = windowAny.cssbeautify(cssSource);
-        window.sessionStorage.setItem(customThemeCssKey,cssSource);
+        window.sessionStorage.setItem(customThemeCssKey, cssSource);
     }
     const omniCompletions = cssLanguage.data.of({ autocomplete: await omniCssVariablesCompletionSource() });
     const cssLang = new LanguageSupport(cssLanguage, [cssLanguage.data.of({ autocomplete: cssCompletionSource }), omniCompletions]); //css();
@@ -1113,13 +1114,13 @@ async function setupCustomTheming() {
             cssSource = newSource;
             window.sessionStorage.setItem(customThemeCssKey, cssSource);
             if (window.sessionStorage.getItem(themeStorageKey) === customThemeKey) {
-                themeStyle.innerHTML = cssSource;                
+                themeStyle.innerHTML = cssSource;
                 const codeEditors = document.querySelectorAll<CodeEditor>('code-editor');
                 if (codeEditors) {
                     codeEditors.forEach((ce) => {
                         ce.updateExtensions();
                     });
-                }                
+                }
                 document.dispatchEvent(
                     new CustomEvent<string>('omni-docs-theme-change', {
                         detail: customThemeKey
@@ -1138,7 +1139,7 @@ async function setupCustomTheming() {
                     codeEditors.forEach((ce) => {
                         ce.updateExtensions();
                     });
-                }                
+                }
                 document.dispatchEvent(
                     new CustomEvent<string>('omni-docs-theme-change', {
                         detail: customThemeKey
