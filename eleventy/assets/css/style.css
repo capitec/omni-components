@@ -12,6 +12,14 @@ html {
 
 }
 
+a {
+    color: var(--docs-link-color);
+}
+
+a:visited {
+    color: var(--docs-link-visited-color);
+}
+
 body {
     scroll-behavior: smooth;
 }
@@ -996,6 +1004,209 @@ table th {
     font-weight: 500;
     margin-bottom: 20px;
 }
+
+/* PRISM */
+
+code[class*='language-'],
+pre[class*='language-'],
+code[class*='language-'] > span {
+    color: var(--omni-theme-font-color);
+    background: none;
+    text-shadow: var(--docs-prism-span-text-shadow);
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    font-size: 14px;
+    text-align: left;
+    white-space: pre-wrap;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+}
+
+pre[class*='language-']::-moz-selection,
+pre[class*='language-'] ::-moz-selection,
+code[class*='language-']::-moz-selection,
+code[class*='language-'] ::-moz-selection {
+    text-shadow: none;
+    background: var(--docs-prism-selection-color);
+}
+
+pre[class*='language-']::selection,
+pre[class*='language-'] ::selection,
+code[class*='language-']::selection,
+code[class*='language-'] ::selection {
+    text-shadow: none;
+    background: var(--docs-prism-selection-color);
+}
+
+@media print {
+    code[class*='language-'],
+    pre[class*='language-'] {
+        text-shadow: none;
+    }
+}
+
+/* Code blocks */
+pre[class*='language-'] {
+    /* padding: 1em; */
+    /* margin: .5em 0; */
+    overflow: auto;
+}
+ 
+.token.comment,
+.token.block-comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+    color: var(--docs-prism-comment-color);
+}
+
+.token.punctuation {
+    color: var(--docs-prism-punctuation-color);
+}
+
+.token.namespace {
+    opacity: var(--docs-prism-namespace-opacity);
+    color: var(--docs-prism-namespace-color);
+}
+
+.token.property{
+    color: var(--docs-prism-property-color);
+}
+
+.token.tag{
+    color: var(--docs-prism-tag-color);
+}
+
+.token.boolean{
+    color: var(--docs-prism-boolean-color);
+}
+
+.token.number{
+    color: var(--docs-prism-number-color);
+}
+
+.token.constant{
+    color: var(--docs-prism-constant-color);
+}
+
+.token.symbol{
+    color: var(--docs-prism-symbol-color);
+}
+
+.token.deleted {
+    color: var(--docs-prism-deleted-color);
+}
+
+.token.selector {
+    color: var(--docs-prism-selector-color);
+}
+
+.token.attr-name {
+    color: var(--docs-prism-attr-name-color);
+}
+
+.token.string {
+    color: var(--docs-prism-string-color);
+}
+
+.token.char {
+    color: var(--docs-prism-char-color);
+}
+
+.token.builtin {
+    color: var(--docs-prism-builtin-color);
+}
+
+.token.inserted {
+    color: var(--docs-prism-inserted-color);
+}
+
+.token.operator {
+    color: var(--docs-prism-operator-color);
+    background: var(--docs-prism-operator-background-color);
+}
+
+.token.entity {
+    color: var(--docs-prism-entity-color);
+    background: var(--docs-prism-entity-background-color);
+}
+
+.token.url {
+    color: var(--docs-prism-url-color);
+    background: var(--docs-prism-url-background-color);
+}
+
+.language-css .token.string {
+    color: var(--docs-prism-css-string-color);
+    background: var(--docs-prism-css-string-background-color);
+}
+
+.style .token.string {
+    color: var(--docs-prism-style-tag-string-color);
+    /* This background color was intended by the author of this theme. */
+    background: var(--docs-prism-style-tag-string-background-color);
+}
+
+.token.atrule {
+    color: var(--docs-prism-atrule-color);
+}
+
+.token.attr-value {
+    color: var(--docs-prism-attr-value-color);
+}
+
+.token.keyword {
+    color: var(--docs-prism-keyword-color);
+}
+
+.token.function {
+    color: var(--docs-prism-function-color);
+}
+
+.token.class-name {
+    color: var(--docs-prism-class-name-color);
+}
+
+.token.regex {
+    color: var(--docs-prism-regex-color);
+}
+
+.token.important {
+    color: var(--docs-prism-important-color);
+}
+
+.token.variable {
+    color: var(--docs-prism-variable-color);
+}
+ 
+.token.function-name {
+    color: var(--docs-prism-function-name-color);
+}
+
+.token.important,
+.token.bold {
+    font-weight: bold;
+}
+
+.token.italic {
+    font-style: italic;
+}
+
+.token.entity {
+    cursor: help;
+}
+
+/* FORM FACTORS */
 
 
 @media screen and (max-width: 1080px) {

@@ -1,6 +1,6 @@
 {
   "name": "@capitec/omni-components",
-  "version": "0.3.21",
+  "version": "0.3.24",
   "type": "module",
   "description": "Customizable web components for any application.",
   "scripts": {
@@ -17,7 +17,6 @@
     "docs:custom-elements": "npx cem analyze --litelement --globs src/**",
     "docs:ssg": "tsc -p tsconfig.utils.json && eleventy --config=.eleventy.cjs && npm run docs:copy-dist",
     "docs:copy-dist": "copyfiles -a \"./dist/*\" \"./dist/**/*\" \"./docs\"",
-    "docs:theme-list": "node scripts/themes-list.mjs",
     "docs:readme": "npx web-component-analyzer ./src/**/*.{js,ts} --outFiles {dir}/README.md",
     "docs:elements": "node scripts/elements-list.mjs",
     "serve": "npm run clean && tsc -p tsconfig.utils.json && eleventy --serve --config=.eleventy.cjs --port 6006",
