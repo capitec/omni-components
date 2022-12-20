@@ -1,42 +1,29 @@
-import { expect, jest } from '@storybook/jest';
-import { userEvent, within } from '@storybook/testing-library';
-import { Meta, StoryContext } from '@storybook/web-components';
+
+import { within } from '@testing-library/dom';
+import userEvent from '@testing-library/user-event';
+import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import {
-    LabelStory,
-    BaseArgTypes,
-    BaseArgTypeDefinitions,
-    HintStory,
-    ErrorStory,
-    PrefixStory,
-    SuffixStory
-} from '../core/OmniInputStories.js';
+import { LabelStory, BaseArgs, HintStory, ErrorStory, PrefixStory, SuffixStory } from '../core/OmniInputStories.js';
 import { RenderFunction } from '../render-element/RenderElement.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import { assignToSlot, loadCssPropertiesRemote} from '../utils/StoryUtils';
+import expect from '../utils/ExpectDOM.js';
+import { assignToSlot, ComponentStoryFormat, CSFIdentifier, querySelectorAsync, raw } from '../utils/StoryUtils.js';
 import { DatePicker } from './DatePicker';
 
 import './DatePicker.js';
 
 export default {
-    title: 'UI Components/DatePicker',
-    component: 'omni-date-picker',
-    argTypes: BaseArgTypeDefinitions,
-    parameters: {
-        cssprops: loadCssPropertiesRemote('omni-date-picker'),
-        actions: {
-            handles: ['input']
-        }
-    }
-} as Meta;
+    title: 'UI Components/Select',
+    component: 'omni-select'
+} as CSFIdentifier;
 
-interface ArgTypes extends BaseArgTypes {
-    loading_indicator: string;
+interface Args extends BaseArgs {
+    locale: string;
 }
 
-export const Interactive = {
-    render: (args: ArgTypes) => html`
+export const Interactive: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
         <omni-date-picker
             data-testid="test-date-picker"
             label="${ifNotEmpty(args.label)}"
@@ -44,17 +31,14 @@ export const Interactive = {
             .data="${args.data}"
             hint="${ifNotEmpty(args.hint)}"
             error="${ifNotEmpty(args.error)}"
+            locale="${args.locale}"
             ?disabled="${args.disabled}"
             >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${args.suffix
                 ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}`
-                : nothing}
-            ${args.loading_indicator
-                ? html`${'\r\n'}${unsafeHTML(assignToSlot('loading_indicator', args.loading_indicator))}${'\r\n'}`
                 : nothing}${args.prefix || args.suffix ? '\r\n' : nothing}</omni-date-picker
         >
     `,
     name: 'Interactive',
-    parameters: {},
     args: {
         label: 'Label',
         value: '',
@@ -64,8 +48,9 @@ export const Interactive = {
         disabled: false,
         prefix: '',
         suffix: '',
-    } as ArgTypes,
-    play: async (context: StoryContext) => {
+        locale: 'en-us'
+    } as Args,
+    play: async (context) => {
         const datePicker = within(context.canvasElement).getByTestId<DatePicker>('test-date-picker');
         const click = jest.fn();
         datePicker.addEventListener('click', click);
@@ -73,3 +58,39 @@ export const Interactive = {
         await userEvent.click(datePicker);
     }
 };
+
+export const Value: ComponentStoryFormat<Args>= {
+    render: (args: Args) => html`
+    <omni-date-picker
+        data-testid="test-date-picker"
+        label="${ifNotEmpty(args.label)}"
+        .value="${args.value}"
+        locale="${args.locale}"
+    >
+
+    </omni-date-picker>
+    `,
+    name: 'Value',
+    args: {
+        label: 'Value',
+        value: '',
+        locale: ''
+    } as Args,
+    play: async (content) => {
+        const datePicker = within(context.canvasElement).getByTestId<DatePicker>('test-date-picker');
+        const click = jest.fn();
+        datePicker.addEventListener('click', click);
+
+        await userEvent.click(datePicker);
+    }
+}
+
+export const Locale: ComponentStoryFormat<Args>= {
+    render: (args: Args) => html`
+    `,
+    name: 'Locale',
+    args: {
+        label: 'Locale',
+        locale: 'ja'
+    }
+}
