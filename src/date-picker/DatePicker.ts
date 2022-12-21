@@ -558,18 +558,12 @@ export class DatePicker extends OmniFormElement {
                 pointer-events: none;
             }
 
-            /* Review this can be implemented in the sub element instead of this*/
             .day.current {
                 text-align: center;
-                color: var(--omni-date-picker-day-current-color, #FFFFFF);
-                background-color: var(--omni-date-picker-day-selected-background-color, var(--omni-accent-color));
-                width: var(--omni-date-picker-day-selected-width, 20px);
-                height: var(--omni-date-picker-day-selected-height, 20px);
-                border-radius: var(--omni-date-picker-day-selected-border-radius, 35%);
-            }
-
-            .day.current:after {
-                /*border-bottom: 2px dotted blue;*/
+                border: 2px solid var(--omni-accent-color);
+                width: var(--omni-date-picker-day-selected-width, 24px);
+                height: var(--omni-date-picker-day-selected-height, 24px);
+                border-radius: var(--omni-date-picker-day-selected-border-radius, 50%);
             }
 
             .day.selected {
@@ -579,6 +573,11 @@ export class DatePicker extends OmniFormElement {
                 border-radius: var(--omni-date-picker-day-selected-border-radius, 20%);
                 background-color: var(--omni-date-picker-day-selected-background-color, var(--omni-primary-color));
             }
+
+            .divider {
+                background-color: var(--omni-numeric-input-divider-color, var(--omni-primary-color));
+                width: var(--omni-numeric-input-divider-width, 1px);
+              }
         `
         ];
     }
@@ -597,7 +596,9 @@ export class DatePicker extends OmniFormElement {
     }
 
     protected override renderControl() {
-        return html` <div id="control" class="control">
+        return html` 
+        <div class="divider"></div>
+        <div id="control" class="control">
             <omni-calendar-icon class="control-icon"></omni-calendar-icon>
         </div>`;
     }
