@@ -1,9 +1,9 @@
-
 import { within } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
+import { DateTime } from 'luxon';
 import { LabelStory, BaseArgs, HintStory, ErrorStory, PrefixStory, SuffixStory } from '../core/OmniInputStories.js';
 import { RenderFunction } from '../render-element/RenderElement.js';
 import { ifNotEmpty } from '../utils/Directives.js';
@@ -21,6 +21,9 @@ export default {
 interface Args extends BaseArgs {
     locale: string;
 }
+const localDate = DateTime.local();
+const isoDate = localDate.toISODate();
+const testLocale = localDate.locale;
 
 export const Interactive: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
@@ -33,9 +36,9 @@ export const Interactive: ComponentStoryFormat<Args> = {
             error="${ifNotEmpty(args.error)}"
             locale="${args.locale}"
             ?disabled="${args.disabled}"
-            >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${args.suffix
-                ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}`
-                : nothing}${args.prefix || args.suffix ? '\r\n' : nothing}</omni-date-picker
+            >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${
+        args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}` : nothing
+    }${args.prefix || args.suffix ? '\r\n' : nothing}</omni-date-picker
         >
     `,
     name: 'Interactive',
@@ -56,10 +59,72 @@ export const Interactive: ComponentStoryFormat<Args> = {
         datePicker.addEventListener('click', click);
 
         await userEvent.click(datePicker);
+        await userEvent.click(datePicker);
+
+        await expect(click).toBeCalledTimes(2);
+
+        const controlButton = datePicker.shadowRoot.getElementById('control');
+
+        await expect(controlButton).toBeTruthy();
+
+        await userEvent.click(datePicker);
+
+        const pickerContainer = await querySelectorAsync(datePicker.shadowRoot, '#picker-container');
+        await expect(pickerContainer).toBeTruthy();
+
+        const periodButton = await querySelectorAsync(datePicker.shadowRoot, '.month-year');
+        await expect(pickerContainer).toBeTruthy();
+        await userEvent.click(periodButton as HTMLDivElement);
+        await userEvent.click(periodButton as HTMLDivElement);
+
+        const yearScroller = await querySelectorAsync(datePicker.shadowRoot, '.year-scroller');
+        await expect(yearScroller).toBeTruthy();
+
+        const yearButton = await querySelectorAsync(datePicker.shadowRoot, '[label="2020"]');
+        await expect(yearButton).toBeTruthy();
+        await userEvent.click(yearButton);
+
+        const monthGrid = await querySelectorAsync(datePicker.shadowRoot, '.month-grid');
+        await expect(yearScroller).toBeTruthy();
+
+        const monthButton = await querySelectorAsync(datePicker.shadowRoot, '[label="Dec"]');
+        await expect(monthButton).toBeTruthy();
+        await userEvent.click(monthButton);
+
+        const daysGrid = await querySelectorAsync(datePicker.shadowRoot, '.days-grid');
+        await expect(daysGrid).toBeTruthy();
+
+        //Find the day button at the specified position
+        const dayButton = datePicker.shadowRoot.querySelectorAll('div.day > div.day-label')[15];
+        console.log(dayButton);
+        await expect(dayButton).toBeTruthy();
+        await userEvent.click(dayButton);
     }
 };
 
-export const Value: ComponentStoryFormat<Args>= {
+export const Value: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
+    <omni-date-picker
+        data-testid="test-date-picker"
+        label="${ifNotEmpty(args.label)}"
+        .value="${args.value}"
+    >
+
+    </omni-date-picker>
+    `,
+    name: 'Value',
+    args: {
+        label: 'Value',
+        value: isoDate
+    } as Args,
+    play: async (context) => {
+        const datePicker = within(context.canvasElement).getByTestId<DatePicker>('test-date-picker');
+        const date = DateTime.fromISO(isoDate);
+        await expect(datePicker).toHaveValue(date.toISODate());
+    }
+};
+
+export const Locale: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
     <omni-date-picker
         data-testid="test-date-picker"
@@ -70,27 +135,24 @@ export const Value: ComponentStoryFormat<Args>= {
 
     </omni-date-picker>
     `,
-    name: 'Value',
+    name: 'Locale',
     args: {
-        label: 'Value',
-        value: '',
-        locale: ''
+        label: 'Locale',
+        locale: testLocale
     } as Args,
-    play: async (content) => {
+    play: async (context) => {
         const datePicker = within(context.canvasElement).getByTestId<DatePicker>('test-date-picker');
         const click = jest.fn();
         datePicker.addEventListener('click', click);
 
         await userEvent.click(datePicker);
-    }
-}
+        const pickerContainer = await querySelectorAsync(datePicker.shadowRoot, '#picker-container');
+        await expect(pickerContainer).toBeTruthy();
 
-export const Locale: ComponentStoryFormat<Args>= {
-    render: (args: Args) => html`
-    `,
-    name: 'Locale',
-    args: {
-        label: 'Locale',
-        locale: 'ja'
+        const periodButton = await querySelectorAsync(datePicker.shadowRoot, '.month-year');
+        await expect(periodButton).toBeTruthy();
+
+        await expect(periodButton).toHaveTextContent(localDate.monthLong + ' ' + localDate.year);
+        await userEvent.click(datePicker);
     }
-}
+};
