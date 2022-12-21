@@ -5,7 +5,6 @@ import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { DateTime } from 'luxon';
 import { LabelStory, BaseArgs, HintStory, ErrorStory, PrefixStory, SuffixStory } from '../core/OmniInputStories.js';
-import { RenderFunction } from '../render-element/RenderElement.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
 import { assignToSlot, ComponentStoryFormat, CSFIdentifier, querySelectorAsync, raw } from '../utils/StoryUtils.js';
@@ -82,14 +81,14 @@ export const Interactive: ComponentStoryFormat<Args> = {
 
         const yearButton = await querySelectorAsync(datePicker.shadowRoot, '[label="2020"]');
         await expect(yearButton).toBeTruthy();
-        await userEvent.click(yearButton);
+        await userEvent.click(yearButton as HTMLElement);
 
         const monthGrid = await querySelectorAsync(datePicker.shadowRoot, '.month-grid');
-        await expect(yearScroller).toBeTruthy();
+        await expect(monthGrid).toBeTruthy();
 
         const monthButton = await querySelectorAsync(datePicker.shadowRoot, '[label="Dec"]');
         await expect(monthButton).toBeTruthy();
-        await userEvent.click(monthButton);
+        await userEvent.click(monthButton as HTMLElement);
 
         const daysGrid = await querySelectorAsync(datePicker.shadowRoot, '.days-grid');
         await expect(daysGrid).toBeTruthy();
@@ -156,3 +155,13 @@ export const Locale: ComponentStoryFormat<Args> = {
         await userEvent.click(datePicker);
     }
 };
+
+export const Label = LabelStory<DatePicker, BaseArgs>('omni-date-picker');
+
+export const Hint = HintStory<DatePicker, BaseArgs>('omni-date-picker');
+
+export const Error_Label = ErrorStory<DatePicker, BaseArgs>('omni-date-picker');
+
+export const Prefix = PrefixStory<DatePicker, BaseArgs>('omni-date-picker');
+
+export const Suffix = SuffixStory<DatePicker, BaseArgs>('omni-date-picker');

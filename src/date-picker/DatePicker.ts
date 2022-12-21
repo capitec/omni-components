@@ -407,7 +407,7 @@ export class DatePicker extends OmniFormElement {
                     right: var(--omni-date-picker-mobile-picker-container-right, 0px);
                     bottom: var(--omni-date-picker-mobile-picker-container-bottom, 0px);
                     top: none;
-                    box-shadow: var(--omni-date-picker-mobile-picker-container-box-shadow, 0 0 6px 0 rgba(0, 0, 0, 0.11));
+                    box-shadow: var(--omni-date-picker-mobile-picker-container-box-shadow, 0px 0px 2px 2px rgba(0, 0, 0, 0.11));
                 }
             }
 
@@ -561,9 +561,11 @@ export class DatePicker extends OmniFormElement {
             /* Review this can be implemented in the sub element instead of this*/
             .day.current {
                 text-align: center;
-                color: var(--omni-date-picker-day-current-color, var(--omni-primary-color));
-                font-weight: 800;
-                border-bottom: 2px dotted blue;
+                color: var(--omni-date-picker-day-current-color, #FFFFFF);
+                background-color: var(--omni-date-picker-day-selected-background-color, var(--omni-accent-color));
+                width: var(--omni-date-picker-day-selected-width, 20px);
+                height: var(--omni-date-picker-day-selected-height, 20px);
+                border-radius: var(--omni-date-picker-day-selected-border-radius, 35%);
             }
 
             .day.current:after {
@@ -628,7 +630,7 @@ export class DatePicker extends OmniFormElement {
         }
     }
 
-    // Render the period bar at the top of the container which will render the previous and next button along with the month and year depending on state or locale.
+    // Render the period bar displaying month and year or year depending on state or locale.
     _renderPeriod() {
         if (this._showState === 'years') {
             return nothing;
@@ -649,7 +651,7 @@ export class DatePicker extends OmniFormElement {
         return html`${this._days.map((day) => html`<div class="day-name">${day}</div>`)}`;
     }
 
-    // Render the individual days along with the period bar
+    // Render the calendar and period bar.
     _renderDaysGrid() {
         return html`
         <div class="days-grid">
@@ -741,8 +743,6 @@ export class DatePicker extends OmniFormElement {
 
         return yearButtons;
     }
-
-    //Adding to make class map testing
     _renderYearButton(year: Interval) {
         const yearStyles: ClassInfo = {
             year: true,
@@ -771,7 +771,6 @@ export class DatePicker extends OmniFormElement {
         });
     }
 
-    // Render specific month button
     _renderMonthButton(month: string, index: number) {
         const monthStyles: ClassInfo = {
             month: true,
