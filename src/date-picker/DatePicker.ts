@@ -44,7 +44,7 @@ import '../icons/ChevronRight.icon.js';
  *
  * @cssprop --omni-date-picker-control-width - Date picker control width.
  *
- * @cssprop --omni-date-picker-control-hover - Date picker control hover.
+ * @cssprop --omni-date-picker-control-hover-color - Date picker control hover.
  *
  * @cssprop --omni-date-picker-control-icon-width - Date picker control icon width.
  * @cssprop --omni-date-picker-control-icon-color - Date picker control icon color.
@@ -141,6 +141,7 @@ export class DatePicker extends OmniFormElement {
     @state() private _showCalendar: boolean = false;
     @state() private _selectedMonth: number = (this.date && this.date.isValid ? this.date : DateTime.local().setLocale(this.locale)).month;
     @state() private _selectedYear: number = (this.date && this.date.isValid ? this.date : DateTime.local().setLocale(this.locale)).year;
+    @state() private _selectedDecade: number[] = this._getDecadeInterval(this._selectedYear);
     @state() private _showState: 'days' | 'months' | 'years' = 'days';
 
     //Internal state properties for dimensions
@@ -286,6 +287,10 @@ export class DatePicker extends OmniFormElement {
     // Called when next button of the period bar is clicked.
     _nextClick() {
         switch (this._showState) {
+            case 'years':
+                this._selectedYear = this._selectedYear + 10;
+                this._selectedDecade = this._getDecadeInterval(this._selectedYear);
+                break;
             case 'months':
                 this._selectedYear = this._selectedYear + 1;
                 break;
@@ -306,6 +311,10 @@ export class DatePicker extends OmniFormElement {
     // Called when the previous button of the period bar is clicked.
     _previousClick() {
         switch (this._showState) {
+            case 'years':
+                this._selectedYear = this._selectedYear - 10;
+                this._selectedDecade = this._getDecadeInterval(this._selectedYear);
+                break; 
             case 'months':
                 this._selectedYear = this._selectedYear - 1;
                 break;
@@ -338,6 +347,25 @@ export class DatePicker extends OmniFormElement {
     // Return an array of numbers from start till end number.
     _getRange(start: number, end: number, step = 1) {
         return Array.from({ length: Math.ceil((end - start) / step) }, (_, k) => k * step + start);
+    }
+
+    // Build up an array of years per decade also will include the last year from the previous decade and the first year from a new one.
+    _getDecadeInterval(year: number) {
+        const decadeArray = [];
+        // Consider introducing array from for the following line of code.
+        const yearString = year.toString();
+        const currentYearPoint = yearString.charAt(yearString.length - 1);
+        const decadeStart = year - parseInt(currentYearPoint) - 1;
+
+        for (let index = 0; index < 12; index++) {
+            decadeArray.push(decadeStart + index);
+        }
+
+        return decadeArray
+
+        // Limitation might not be viable consider just building up an array as 
+        // const decadeInterval  = Interval.fromDateTimes({ year: decadeStart - 1}, { year: decadeStart + 10 });
+        // return decadeInterval;
     }
 
     static override get styles() {
@@ -384,7 +412,7 @@ export class DatePicker extends OmniFormElement {
             }
 
             .control:hover  {
-                background-color: var(--omni-date-picker-control-hover, var(--omni-accent-hover-color));
+                background-color: var(--omni-date-picker-control-hover-color, var(--omni-accent-hover-color));
             }
 
             .control-icon {
@@ -402,11 +430,10 @@ export class DatePicker extends OmniFormElement {
             @media screen and (max-width: 766px) {
                 .picker-container {
                     position: fixed;
-
+                    top: none;
                     left: var(--omni-date-picker-mobile-picker-container-left, 0px);
                     right: var(--omni-date-picker-mobile-picker-container-right, 0px);
                     bottom: var(--omni-date-picker-mobile-picker-container-bottom, 0px);
-                    top: none;
                     box-shadow: var(--omni-date-picker-mobile-picker-container-box-shadow, 0px 0px 2px 2px rgba(0, 0, 0, 0.11));
                 }
             }
@@ -427,6 +454,27 @@ export class DatePicker extends OmniFormElement {
                    top: var(--omni-date-picker-container-render-bottom-top, 0px);
                    transform: translateY(-100%);
                }
+            }
+
+            /* Should only display for mobile rendering */
+            .header {
+                position: relative;
+                left: var(--omni-select-item-header-left, 0px);
+                right: var(--omni-select-item-header-right, 0px);
+        
+                color: var(--omni-select-item-header-font-color, #ffffff);
+                font-family: var(--omni-select-item-header-font-family, var(--omni-font-family));
+                font-size: var(--omni-select-item-header-font-size, var(--omni-font-size));
+                font-weight: var(--omni-select-item-header-font-weight, var(--omni-font-weight));
+                background-color: var(--omni-select-item-header-background-color, var(--omni-primary-color));
+        
+                padding-top: var(--omni-select-item-header-padding-top, 14px);
+                padding-bottom: var(--omni-select-item-header-padding-bottom, 14px);
+                padding-right: var(--omni-select-item-header-padding-right, 10px);
+                padding-left: var(--omni-select-item-header-padding-left, 10px);
+        
+                border-top-left-radius: var(--omni-select-item-header-border-top-left-radius, 10px);
+                border-top-right-radius: var(--omni-select-item-header-border-top-right-radius, 10px);
             }
 
             .period {
@@ -481,37 +529,156 @@ export class DatePicker extends OmniFormElement {
                 justify-items: center;
                 text-align: center;
                 grid-template-columns: var(--omni-date-picker-month-grid-template-columns, 1fr 1fr 1fr);
+                /*
                 padding-top: var(--omni-date-picker-month-grid-padding-top, 15.72px);
-                padding-bottom: var(--omni-date-picker-month-grid-padding-bottom, 15.72px);
-                padding-right:var(--omni-date-picker-month-grid-padding-right, 32px);
-                padding-left: var(--omni-date-picker-month-grid-padding-left, 32px);
+                                */
+                padding-bottom: var(--omni-date-picker-month-grid-padding-bottom, 28px);
+                padding-right:var(--omni-date-picker-month-grid-padding-right, 28px);
+                padding-left: var(--omni-date-picker-month-grid-padding-left, 28px);
                 background-color: var(--omni-date-picker-months-grid-background-color, var(--omni-theme-background-color));
             }
 
             .month {
+                display: flex;
                 width: var(--omni-date-picker-month-button-width, 80px);
                 height: var(--omni-date-picker-month-button-height, 48px);
+                align-items: center;
+                justify-content: center;
+
+                font-family: var(--omni-button-font-family, var(--omni-font-family));
+                font-size: var(--omni-button-font-size, var(--omni-font-size));
+                font-weight: var(--omni-button-font-weight, bolder);
+                line-height: var(--omni-button-line-height);
+
+
+                background-color: var(--omni-button-clear-background-color, transparent);
+                border-color: var(--omni-button-clear-border-color, transparent);
+                border-width: var(--omni-button-clear-border-width, var(--omni-border-width));
+                color: var(--omni-button-clear-color, var(--omni-primary-color));
+
+                margin-left: 4px;
+                margin-right: 4px;
+                margin-top: 15.56px;
+                margin-bottom: 15.56px;
+            }
+
+            .month.current {
+                /*
+                background-color: var(--omni-button-secondary-background-color, var(--omni-background-color));
+                border-color: var(--omni-button-secondary-border-color, var(--omni-primary-color));
+                border-width: var(--omni-button-secondary-border-width, var(--omni-border-width));
+                color: var(--omni-button-secondary-color, var(--omni-primary-color));*/
+
+                background-color: var(--omni-button-secondary-background-color, var(--omni-background-color));
+                border-color: var(--omni-button-secondary-border-color,var(--omni-accent-color));
+                border-width: var(--omni-button-secondary-border-width, var(--omni-border-width));
+                color: var(--omni-button-secondary-color, var(--omni-accent-color));
+                border-style: solid;
+                border-radius: var(--omni-button-border-radius, var(--omni-border-radius));
+            }
+
+            .month.selected {
+                /*
+                background-color: var(--omni-date-picker-primary-background-color, var(--omni-primary-color));
+                border-color: var(--omni-button-primary-border-color, var(--omni-primary-color));
+                border-width: var(--omni-button-primary-border-width, var(--omni-border-width));
+                color: var(--omni-button-primary-color, var(--omni-background-color));*/
+
+                background-color: var(--omni-date-picker-primary-background-color, var(--omni-primary-color));
+                border-color: var(--omni-button-primary-border-color, var(--omni-primary-color));
+                border-width: var(--omni-button-primary-border-width, var(--omni-border-width));
+                color: var(--omni-button-primary-color, var(--omni-background-color));
+                border-style: solid;
+                border-radius: var(--omni-button-border-radius, var(--omni-border-radius));
+            }
+
+            .month:hover {
+
+            }
+            
+            /* Styles for year selector scrollbar */
+            .year-grid {
+                display: grid;
+                justify-content: center;
+                align-items: center;
+                align-items: center;
+                justify-items: center;
+                text-align: center;
+                grid-template-columns: var(--omni-date-picker-month-grid-template-columns, 1fr 1fr 1fr);
+                /*
+                padding-top: var(--omni-date-picker-month-grid-padding-top, 15.72px);
+                padding-bottom: var(--omni-date-picker-month-grid-padding-bottom, 15.72px);
+                padding-right:var(--omni-date-picker-month-grid-padding-right, 32px);
+                padding-left: var(--omni-date-picker-month-grid-padding-left, 32px);
+                background-color: var(--omni-date-picker-months-grid-background-color, var(--omni-theme-background-color));*/
+                overflow-x: hidden;
+                overflow-y: auto;
+
+
+                                /*
+                padding-top: var(--omni-date-picker-month-grid-padding-top, 15.72px);
+                                */
+                padding-bottom: var(--omni-date-picker-month-grid-padding-bottom, 28px);
+                padding-right:var(--omni-date-picker-month-grid-padding-right, 28px);
+                padding-left: var(--omni-date-picker-month-grid-padding-left, 28px);
+                background-color: var(--omni-date-picker-months-grid-background-color, var(--omni-theme-background-color));
             }
 
             .year-scroller {
                 justify-items: center;
                 overflow-x: hidden;
                 overflow-y: auto;
-                /* Update */
                 height: var(--omni-date-picker-year-scroller-height,340px);
                 background-color: var(--omni-date-picker-year-scroller-background-color, var(--omni-theme-background-color));
             }
 
             .year {
-                width: var(--omni-date-picker-year-button-width, 100%);
-                height: var(--omni-date-picker-year-button-height, 56px);
+                align-items: center;
+                justify-content: center;
+                display: flex;                
+                width: var(--omni-date-picker-year-button-width, 80px);
+                height: var(--omni-date-picker-year-button-height, 48px);
+
+
+                
+                font-family: var(--omni-button-font-family, var(--omni-font-family));
+                font-size: var(--omni-button-font-size, var(--omni-font-size));
+                font-weight: var(--omni-button-font-weight, bolder);
+                line-height: var(--omni-button-line-height);
+
+
+                background-color: var(--omni-button-clear-background-color, transparent);
+                border-color: var(--omni-button-clear-border-color, transparent);
+                border-width: var(--omni-button-clear-border-width, var(--omni-border-width));
+                color: var(--omni-button-clear-color, var(--omni-primary-color));
+
+                margin-left: 4px;
+                margin-right: 4px;
+                margin-top: 15.56px;
+                margin-bottom: 15.56px;
             }
 
+            .year.current {
+                background-color: var(--omni-button-secondary-background-color, var(--omni-background-color));
+                border-color: var(--omni-button-secondary-border-color, var(--omni-accent-color));
+                border-width: var(--omni-button-secondary-border-width, var(--omni-border-width));
+                color: var(--omni-button-secondary-color, var(--omni-primary-color));
+                border-style: solid;
+                border-radius: var(--omni-button-border-radius, var(--omni-border-radius));
+            }
+
+            .year.selected {
+                background-color: var(--omni-date-picker-primary-background-color, var(--omni-primary-color));
+                border-color: var(--omni-button-primary-border-color, var(--omni-primary-color));
+                border-width: var(--omni-button-primary-border-width, var(--omni-border-width));
+                color: var(--omni-button-primary-color, var(--omni-background-color));
+                border-style: solid;
+                border-radius: var(--omni-button-border-radius, var(--omni-border-radius));
+            }
+           
             .year:hover {
 
             }
-
-            /* Styles for year selector scrollbar */
 
             /* Scroll bar styles come back and update css variable names */
             .year-scroller::-webkit-scrollbar {
@@ -537,6 +704,32 @@ export class DatePicker extends OmniFormElement {
 
                 background-clip: padding-box;
             }
+
+            /**Scroller for year grid implementation */
+            .year-grid::-webkit-scrollbar {
+                width: calc(
+                    var(--omni-date-picker-scrollbar-thumb-width, 5px) + var(--omni-date-picker-scrollbar-track-padding-left, 2px) +
+                        var(--omni-date-picker-scrollbar-track-padding-right, 2px)
+                );
+            }
+
+            .year-grid::-webkit-scrollbar-track {
+                border-radius: var(--omni-date-picker-scrollbar-track-border-radius, 10px);
+                background-color: var(--omni-date-picker-scrollbar-track-background-color, transparent);
+            }
+
+            .year-grid::-webkit-scrollbar-thumb {
+                border-radius: var(--omni-date-picker-scrollbar-thumb-border-radius, 10px);
+                background-color: var(--omni-date-picker-scrollbar-thumb-background-color, #d9d9d9);
+
+                border-top: var(--omni-date-picker-scrollbar-track-padding-top, 2px) solid transparent;
+                border-bottom: var(--omni-date-picker-scrollbar-track-padding-bottom, 2px) solid transparent;
+                border-left: var(--omni-date-picker-scrollbar-track-padding-left, 2px) solid transparent;
+                border-right: var(--omni-date-picker-scrollbar-track-padding-right, 2px) solid transparent;
+
+                background-clip: padding-box;
+            }
+
 
             .day-name {
                 color: var(--omni-date-picker-day-name-font-color, var(--omni-font-color));
@@ -618,14 +811,18 @@ export class DatePicker extends OmniFormElement {
     _renderSelector() {
         switch (this._showState) {
             case 'months':
-                return html`
-            ${this._renderPeriod()}
-            ${this._renderMonthsGrid()}`;
+                return html`                
+                ${this._isMobile && this.label ? html`<div class="header">${this.label}</div>` : nothing}
+                ${this._renderPeriod()}
+                ${this._renderMonthsGrid()}`;
             case 'years':
-                return html`
-                ${this._renderYearsScroller()}`;
+                return html`          
+                ${this._isMobile && this.label ? html`<div class="header">${this.label}</div>` : nothing}
+                ${this._renderPeriod()}
+                ${this._renderYearGrid()}`;
             default:
-                return html`
+                return html`      
+                ${this._isMobile && this.label ? html`<div class="header">${this.label}</div>` : nothing}
                 ${this._renderPeriod()}
                 ${this._renderDaysGrid()}`;
         }
@@ -633,18 +830,28 @@ export class DatePicker extends OmniFormElement {
 
     // Render the period bar displaying month and year or year depending on state or locale.
     _renderPeriod() {
+        /*
         if (this._showState === 'years') {
             return nothing;
-        }
+            //            this._showState === 'years' ? this.selectedYear : `${this._selectedYear}`
+        }*/
 
         const periodDate = DateTime.local(this._selectedYear, this._selectedMonth, 1).setLocale(this.locale);
         return html`<span class="period">
             <div class="left-control" @click="${() => this._previousClick()}"><omni-chevron-left-icon></omni-chevron-left-icon></div>
             <div class="month-year" @click="${() => this._periodClick()}">${
-            this._showState === 'months' ? this._selectedYear : `${periodDate.monthLong} ${this._selectedYear}`
+            this._showState === 'years' ? `${this._selectedDecade[0]} - ${this._selectedDecade[this._selectedDecade.length - 1]}`: this._showState === 'months' ? this._selectedYear : `${periodDate.monthLong} ${this._selectedYear}`
         }</div>
             <div class="right-control" @click="${() => this._nextClick()}"><omni-chevron-right-icon></omni-chevron-right-icon></div>
         </span>`;
+    }
+
+    _renderMonthAndYear(period: DateTime) {
+        return `${period.monthLong} ${this._selectedYear}`;
+    }
+
+    _renderDecade(decade:  number[]) {
+        return `${decade[0]} - ${decade[decade.length - 1]}`;
     }
 
     // Render the day names in short notation.
@@ -734,25 +941,70 @@ export class DatePicker extends OmniFormElement {
         `;
     }
 
+    _renderYearGrid() {
+        return html`
+        <div class="year-grid">
+            ${this._renderYearButtons()}
+        </div>
+        `;
+    }
+
     // Render the year buttons in the scroller.
     _renderYearButtons() {
-        const yearButtons = Interval.fromDateTimes({ year: this._selectedYear - 5 }, { year: this._selectedYear + 5 })
+
+        const yearButtons = this._selectedDecade
+        .map((year) => {
+            return this._renderYearButton(year);
+        });
+
+        // const yearButtons = this._selectedDecade.splitBy(Duration.fromObject({ years: 1 }))
+
+        /*
+        const yearButtons = Interval.fromDateTimes({ year: this._selectedYear - 100 }, { year: this._selectedYear + 20 })
             .splitBy(Duration.fromObject({ years: 1 }))
             .map((year) => {
                 return this._renderYearButton(year);
-            });
+            });*/
 
         return yearButtons;
     }
-    _renderYearButton(year: Interval) {
+
+    _renderYearGridButton (year: Interval) {
         const yearStyles: ClassInfo = {
-            year: true,
-            current: this.date && this.date.isValid && this.date.year === DateTime.local(year.start.year).year
+            gridYear: true,
+            current: DateTime.local().year === year.start.year,
+            selected: this.date && this.date.isValid && this.date.year === year.start.year
         };
 
-        return html`<omni-button class=${classMap(yearStyles)} type="${yearStyles.current ? `primary` : `clear`}" label="${
+        return html`<omni-button class=${classMap(yearStyles)} type="${yearStyles.selected ? `primary` : yearStyles.current ? `secondary` : `clear`}" label="${
             year.start.year
         }" @click="${() => this._yearSelect(year.start.year)}"></omni-button>
+        `;
+    }
+    
+    _renderYearButton(year: number) {
+        const yearStyles: ClassInfo = {
+            year: true,
+            current: DateTime.local().year === year,
+            selected: this.date && this.date.isValid && this.date.year === year,
+            out: false
+        };
+
+        return html`<div class=${classMap(yearStyles)} @click="${() => this._yearSelect(year)}">${year}</div>`
+
+        //Remove the omni-button implementation.
+        /*
+        return html`<omni-button class=${classMap(yearStyles)} type="${yearStyles.selected ? `primary` : yearStyles.current ? `secondary` : `clear`}" label="${
+            year
+        }" @click="${() => this._yearSelect(year)}"></omni-button>
+        `;*/
+    }
+
+    _renderYearsGrid() {
+        return html`
+        <div class="year-grid">
+            ${this._renderYearButtons()}
+        </div>
         `;
     }
 
@@ -775,9 +1027,14 @@ export class DatePicker extends OmniFormElement {
     _renderMonthButton(month: string, index: number) {
         const monthStyles: ClassInfo = {
             month: true,
-            current: this.date && this.date.isValid && this.date.monthShort === month
+            current: DateTime.local().year === this._selectedYear && DateTime.local().monthShort === month,
+            selected: this.date && this.date.isValid && this.date.year === this._selectedYear && this.date.monthShort === month
         };
-        return html`<omni-button class=${classMap(monthStyles)} label="${month}" type="${monthStyles.current ? `primary` : `clear`}" @click="${() =>
-            this._monthSelect(index + 1)}"></omni-button>`;
+
+        return html`<div class=${classMap(monthStyles)} @click="${() =>
+            this._monthSelect(index + 1)}">${month}</div>`
+        /*
+        return html`<omni-button class=${classMap(monthStyles)} label="${month}" type="${monthStyles.current ? `secondary` : monthStyles.selected ? `primary` : `clear`}" @click="${() =>
+            this._monthSelect(index + 1)}"></omni-button>`;*/
     }
 }

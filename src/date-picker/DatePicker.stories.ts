@@ -42,7 +42,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
     `,
     name: 'Interactive',
     args: {
-        label: 'Label',
+        label: 'Select a Date',
         value: '',
         data: {},
         hint: '',
@@ -156,6 +156,7 @@ export const Locale: ComponentStoryFormat<Args> = {
     }
 };
 
+/*
 export const Label = LabelStory<DatePicker, BaseArgs>('omni-date-picker');
 
 export const Hint = HintStory<DatePicker, BaseArgs>('omni-date-picker');
@@ -165,3 +166,4 @@ export const Error_Label = ErrorStory<DatePicker, BaseArgs>('omni-date-picker');
 export const Prefix = PrefixStory<DatePicker, BaseArgs>('omni-date-picker');
 
 export const Suffix = SuffixStory<DatePicker, BaseArgs>('omni-date-picker');
+*/
