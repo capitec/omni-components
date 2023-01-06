@@ -52,13 +52,13 @@ Core features of the library include:
 
 ## Usage
 
-1️⃣ &nbsp; Install {{ template:projectName }} locally
+1️⃣ &nbsp; Install {{ template:projectName }} in your project.
 
 ```bash
 npm install {{ pkg.name }}
 ```
 
-2️⃣ &nbsp; Import the components you require and start to use them in your project. 
+2️⃣ &nbsp; Import the components you require. 
 
 See [`INSTALLATION.md`](./INSTALLATION.md) for more detail.
 
@@ -201,3 +201,5 @@ See the [`CONTRIBUTING.md`](./CONTRIBUTING.md) guide to get involved.
 <p align="center">
     <a href="https://www.capitecbank.co.za/about-us/careers">https://www.capitecbank.co.za/about-us/careers</a>
 </p>
+
+<br>
