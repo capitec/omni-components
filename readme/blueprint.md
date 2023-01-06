@@ -33,11 +33,13 @@
 
 ---
 
+<br />
+
+<p align="center">🚩 View our <a href="https://capitec.github.io/open-source/docs/Omni-Components">interactive documentation</a> for more info on component usage and live previews.</p>
+
 <br>
 
 ## Introduction
-
-> 🚩 View our <a href="https://capitec.github.io/open-source/docs/Omni-Components">interactive documentation</a> for more info on component usage and live previews.
 
 {{ template:projectName }} is a collection UI components for mobile and web that enable you to build omni-channel user experience that look great on every size of screen.
 
