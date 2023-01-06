@@ -60,9 +60,7 @@ Core features of the library include:
 npm install {{ pkg.name }}
 ```
 
-2️⃣ &nbsp; Import the components you require. 
-
-See [`INSTALLATION.md`](./INSTALLATION.md) for more detail.
+2️⃣ &nbsp; Import the components you require. See [`INSTALLATION.md`](./INSTALLATION.md) for more detail.
 
 ```js
 // JS import
