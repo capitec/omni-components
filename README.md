@@ -47,7 +47,7 @@
 Omni Components is a collection UI components for mobile and web that enable you to build omni-channel user experience that look great on every size of screen.
 
 Core features of the library include:
-- **Framework Agnostic** - Components are delivered as standard HTML web components, that can be used in VanillaJS or within any framework, e.g. Lit, React, Vue, Angular, etc.
+- **Framework Agnostic** - Components are delivered as standard HTML [web components](https://developer.mozilla.org/en-US/docs/Web/Web_Components), that can be used in VanillaJS or within any framework, e.g. Lit, React, Vue, Angular, etc.
 - **Theming** - Components can be styled globally and individually using CSS properties.
 - **Responsive** - The components adapt responsively to the device that they render on to provide contextual user experiences.
 - **Mobile Optimized** - We develop for mobile first, and scale up to larger screen sizes from there.
@@ -60,13 +60,13 @@ Core features of the library include:
 
 ## Usage
 
-1️⃣ &nbsp; Install Omni Components locally
+1️⃣ &nbsp; Install Omni Components in your project.
 
 ```bash
 npm install @capitec/omni-components
 ```
 
-2️⃣ &nbsp; Import the components you require and start to use them in your project. 
+2️⃣ &nbsp; Import the components you require. 
 
 See [`INSTALLATION.md`](./INSTALLATION.md) for more detail.
 
@@ -511,3 +511,7 @@ Licensed under [MIT](https://opensource.org/licenses/MIT).
 <p align="center">
     <a href="https://www.capitecbank.co.za/about-us/careers">https://www.capitecbank.co.za/about-us/careers</a>
 </p>
+
+<br>
+<br>
+<br>
