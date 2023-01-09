@@ -7,7 +7,7 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { LabelStory, BaseArgs, HintStory, ErrorStory, DisabledStory, ValueStory, PrefixStory, SuffixStory } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
-import { assignToSlot, ComponentStoryFormat, CSFIdentifier } from '../utils/StoryUtils.js';
+import { assignToSlot, ComponentStoryFormat, CSFIdentifier, raw } from '../utils/StoryUtils.js';
 import { CurrencyField } from './CurrencyField.js';
 
 import './CurrencyField.js';
@@ -22,7 +22,6 @@ interface Args extends BaseArgs {
     decimalSeparator: string;
     thousandsSeparator: string;
     currencySymbol: string;
-    currency: string;
     formatter: string;
 }
 
@@ -36,7 +35,6 @@ export const Interactive: ComponentStoryFormat<Args> = {
             hint="${ifNotEmpty(args.hint)}"
             error="${ifNotEmpty(args.error)}"
             ?disabled="${args.disabled}"
-            currency="${ifNotEmpty(args.currency)}"
             decimal-precision="${args.decimalPrecision}"
             decimal-separator="${ifNotEmpty(args.decimalSeparator)}"
             thousands-separator="${ifNotEmpty(args.thousandsSeparator)}"
@@ -57,7 +55,6 @@ export const Interactive: ComponentStoryFormat<Args> = {
         disabled: false,
         prefix: '',
         suffix: '',
-        currency: '',
         decimalPrecision: 2,
         decimalSeparator: '',
         thousandsSeparator: '',

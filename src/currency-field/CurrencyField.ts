@@ -54,32 +54,32 @@ export class CurrencyField extends OmniFormElement {
      * The currency symbol.
      * @attr [currency-symbol]
      */
-    @property({type: String, reflect: true, attribute: 'currency-symbol'}) currencySymbol: string = '$';
+    @property({ type: String, reflect: true, attribute: 'currency-symbol' }) currencySymbol: string = '$';
 
     /**
      * The thousands separator.
      * @attr [thousands-separator]
      */
-    @property({ type: String, reflect: true, attribute: 'thousands-separator'  }) thousandsSeparator: string = ',';
+    @property({ type: String, reflect: true, attribute: 'thousands-separator' }) thousandsSeparator: string = ',';
 
     /**
-     * The decimal separator. 
+     * The decimal separator.
      * @attr [decimal-separator]
      */
-    @property({type: String, reflect: true, attribute: 'decimal-separator' }) decimalSeparator: string = '.';
+    @property({ type: String, reflect: true, attribute: 'decimal-separator' }) decimalSeparator: string = '.';
 
     /**
      * The decimal precision.
      * @attr [decimal-precision]
      */
-    @property({type: Number, reflect: true, attribute: 'decimal-precision'})  decimalPrecision: number = 2; 
+    @property({ type: Number, reflect: true, attribute: 'decimal-precision' }) decimalPrecision: number = 2;
 
     /**
      * The formatter provided to format the value.
-     * @attr 
+     * @attr
      */
     // eslint-disable-next-line no-useless-escape
-    @property({type: String, reflect: true}) formatter: string = '\\B(?<!\\.\\d*)(?=(\\d{3})+(?!\\d))';
+    @property({ type: String, reflect: true }) formatter: string = '\\B(?<!\\.\\d*)(?=(\\d{3})+(?!\\d))';
 
     // Internal state properties
     @state() private _stringValue: string = '';
@@ -135,23 +135,22 @@ export class CurrencyField extends OmniFormElement {
 
     // Format the numeric value to a currency formatted string value.
     _formatToCurrency(preFormattedValue: number | string): string {
-
-        if(preFormattedValue === 0){
+        if (preFormattedValue === 0) {
             return preFormattedValue.toString();
         }
 
         if (!preFormattedValue) {
-            console.log('No value provided')
+            console.log('No value provided');
             return '';
         }
 
         const formattedValue = preFormattedValue.toString().replace(new RegExp(this.formatter, 'g'), this.thousandsSeparator);
 
-        if(formattedValue.includes(this.decimalSeparator)) {
+        if (formattedValue.includes(this.decimalSeparator)) {
             const amountPart = formattedValue.substring(0, formattedValue.indexOf(this.decimalSeparator));
 
             let centsPart = this._parseCents(formattedValue.substring(formattedValue.indexOf(this.decimalSeparator) + 1));
-            
+
             if (centsPart.length >= this.decimalPrecision) {
                 centsPart = centsPart.substring(0, this.decimalPrecision);
             }
@@ -232,7 +231,11 @@ export class CurrencyField extends OmniFormElement {
         }
 
         // If hitting backspace with the carat in the position of the first decimal then remove the entire cent value.
-        if(input.value.includes(this.decimalSeparator) && input.value.charAt(caretPosition - 2) === this.decimalSeparator && e.key.toLowerCase() === 'backspace') {
+        if (
+            input.value.includes(this.decimalSeparator) &&
+            input.value.charAt(caretPosition - 2) === this.decimalSeparator &&
+            e.key.toLowerCase() === 'backspace'
+        ) {
             this._stringValue = input.value.substring(0, input.value.indexOf(this.decimalSeparator));
             e.preventDefault();
             // Set value prop to float value
@@ -272,7 +275,7 @@ export class CurrencyField extends OmniFormElement {
             const amountPart = this._parseAmount(inputValue.substring(0, inputValue.indexOf(this.decimalSeparator)));
 
             let centsPart = this._parseCents(inputValue.substring(inputValue.indexOf(this.decimalSeparator) + 1));
-            
+
             if (centsPart.length >= this.decimalPrecision) {
                 centsPart = centsPart.substring(0, this.decimalPrecision);
             }

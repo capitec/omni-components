@@ -113,7 +113,6 @@ export class OmniFormElement extends OmniElement {
         super.connectedCallback();
         this.addEventListener('focus', this._focusGained.bind(this));
         this.addEventListener('focusout', this._focusLost.bind(this));
-        
     }
 
     protected override async firstUpdated(): Promise<void> {
@@ -126,11 +125,10 @@ export class OmniFormElement extends OmniElement {
             if (this.disabled) {
                 return;
             }
-    
+
             const formParentOffset = this._formContainerElement.offsetLeft;
-    
+
             if (this._labelElement) {
-                console.log('Label element exists')
                 this._labelElement.style.transform = `translateX(${formParentOffset * -1}px)  translateY(-37.5%) scale(95%)`;
             }
         }
