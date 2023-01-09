@@ -333,7 +333,7 @@ export class CurrencyField extends OmniFormElement {
                 }
 
                 .currency-symbol {
-                    font-size: var(--omni-currency-field-symbol-font-size, var(--omni-font-size));
+                    font-size: var(--omni-currency-field-symbol-font-size, 18px);
                     color: var(--omni-currency-field-symbol-color, var(--omni-font-color));
                     padding-left: var(--omni-currency-field-symbol-left-padding, 10px);
                     user-select: var(--omni-currency-field-symbol-select, text);
