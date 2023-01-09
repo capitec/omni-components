@@ -119,7 +119,15 @@ export class OmniFormElement extends OmniElement {
         this._setLabelPosition();
     }
 
-    //Set the label position if a value is preset.
+    override async attributeChangedCallback(name: string, _old: string | null, value: string | null): Promise<void> {
+        super.attributeChangedCallback(name, _old, value);
+
+        if (name === 'value') {
+            this._setLabelPosition();
+        }
+    }
+
+    // Set the label position in relation to the container element.
     _setLabelPosition() {
         if (this.value && this.label) {
             if (this.disabled) {

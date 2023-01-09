@@ -78,7 +78,6 @@ export class CurrencyField extends OmniFormElement {
      * The formatter provided to format the value.
      * @attr
      */
-    // eslint-disable-next-line no-useless-escape
     @property({ type: String, reflect: true }) formatter: string = '\\B(?<!\\.\\d*)(?=(\\d{3})+(?!\\d))';
 
     // Internal state properties
