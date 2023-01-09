@@ -79,12 +79,10 @@ export class CurrencyField extends OmniFormElement {
      * @attr 
      */
     // eslint-disable-next-line no-useless-escape
-    @property({type: String, reflect: true}) formatter: string = '/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g';
+    @property({type: String, reflect: true}) formatter: string = '\\B(?<!\\.\\d*)(?=(\\d{3})+(?!\\d))';
 
     // Internal state properties
     @state() private _stringValue: string = '';
-
-    //private _symbolAndFormateUpdate = debounce(() => this._updateSymbolAndFormat(), 800);
 
     override connectedCallback(): void {
         super.connectedCallback();
@@ -135,6 +133,7 @@ export class CurrencyField extends OmniFormElement {
         return cleanValue;
     }
 
+    // Format the numeric value to a currency formatted string value.
     _formatToCurrency(preFormattedValue: number | string): string {
 
         if(preFormattedValue === 0){
@@ -146,8 +145,8 @@ export class CurrencyField extends OmniFormElement {
             return '';
         }
 
-        const formattedValue = preFormattedValue.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, this.thousandsSeparator);
-       
+        const formattedValue = preFormattedValue.toString().replace(new RegExp(this.formatter, 'g'), this.thousandsSeparator);
+
         if(formattedValue.includes(this.decimalSeparator)) {
             const amountPart = formattedValue.substring(0, formattedValue.indexOf(this.decimalSeparator));
 
