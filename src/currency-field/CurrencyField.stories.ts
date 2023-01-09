@@ -18,8 +18,12 @@ export default {
 } as CSFIdentifier;
 
 interface Args extends BaseArgs {
+    decimalPrecision: number;
+    decimalSeparator: string;
+    thousandsSeparator: string;
+    currencySymbol: string;
     currency: string;
-    locale: string;
+    formatter: string;
 }
 
 export const Interactive: ComponentStoryFormat<Args> = {
@@ -33,7 +37,11 @@ export const Interactive: ComponentStoryFormat<Args> = {
             error="${ifNotEmpty(args.error)}"
             ?disabled="${args.disabled}"
             currency="${ifNotEmpty(args.currency)}"
-            locale="${ifNotEmpty(args.locale)}"
+            decimal-precision="${args.decimalPrecision}"
+            decimal-separator="${ifNotEmpty(args.decimalSeparator)}"
+            thousands-separator="${ifNotEmpty(args.thousandsSeparator)}"
+            currency-symbol="${ifNotEmpty(args.currencySymbol)}"
+            formatter="${ifNotEmpty(args.formatter)}"           
             >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${
         args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}` : nothing
     }${args.prefix || args.suffix ? '\r\n' : nothing}
@@ -50,7 +58,11 @@ export const Interactive: ComponentStoryFormat<Args> = {
         prefix: '',
         suffix: '',
         currency: '',
-        locale: ''
+        decimalPrecision: 2,
+        decimalSeparator: '',
+        thousandsSeparator: '',
+        currencySymbol: '$',
+        formatter: ''
     },
     play: async (context) => {
         const currencyField = within(context.canvasElement).getByTestId<CurrencyField>('test-currency-field');
@@ -94,9 +106,6 @@ export const Interactive: ComponentStoryFormat<Args> = {
         await waitFor(() => expect(inputField).toHaveValue('120,000'), {
             timeout: 3000
         });
-
-        // Set currency property to be invalid value.
-        currencyField.currency = 'cents';
     }
 };
 
