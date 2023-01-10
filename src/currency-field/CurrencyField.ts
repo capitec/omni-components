@@ -60,7 +60,7 @@ export class CurrencyField extends OmniFormElement {
      * The thousands separator.
      * @attr [thousands-separator]
      */
-    @property({ type: String, reflect: true, attribute: 'thousands-separator' }) thousandsSeparator: string = ',';
+    @property({ type: String, reflect: true, attribute: 'thousands-separator' }) thousandsSeparator: string = '';
 
     /**
      * The decimal separator.
@@ -333,7 +333,7 @@ export class CurrencyField extends OmniFormElement {
                 }
 
                 .currency-symbol {
-                    font-size: var(--omni-currency-field-symbol-font-size, 18px);
+                    font-size: var(--omni-currency-field-symbol-font-size, 16px);
                     color: var(--omni-currency-field-symbol-color, var(--omni-font-color));
                     padding-left: var(--omni-currency-field-symbol-left-padding, 10px);
                     user-select: var(--omni-currency-field-symbol-select, text);
@@ -343,7 +343,7 @@ export class CurrencyField extends OmniFormElement {
     }
 
     protected override renderPrefix() {
-        return html`<omni-label class="currency-symbol">${this.currencySymbol}</omni-label>`;
+        return html`<omni-label class="currency-symbol" label="${this.currencySymbol}"></omni-label>`;
     }
 
     protected override renderContent() {

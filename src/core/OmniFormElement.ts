@@ -1,4 +1,4 @@
-import { css, CSSResultGroup, html, nothing, TemplateResult } from 'lit';
+import { css, CSSResultGroup, html, nothing, ReactiveElement, TemplateResult } from 'lit';
 export { ifDefined } from 'lit/directives/if-defined.js';
 import { property, query } from 'lit/decorators.js';
 import { ClassInfo, classMap } from 'lit/directives/class-map.js';
@@ -109,6 +109,11 @@ export class OmniFormElement extends OmniElement {
     @query('.label')
     private _labelElement: HTMLElement;
 
+    @query('slot[name=prefix]')
+    private _prefixSlot: HTMLSlotElement;
+
+    protected hasFocus: boolean;
+
     override connectedCallback() {
         super.connectedCallback();
         this.addEventListener('focus', this._focusGained.bind(this));
@@ -116,21 +121,39 @@ export class OmniFormElement extends OmniElement {
     }
 
     protected override async firstUpdated(): Promise<void> {
+        if (this._prefixSlot) {
+            const customElements = this._prefixSlot
+                .assignedElements({
+                    flatten: true
+                })
+                .filter((e: Element) => (e as ReactiveElement).updateComplete) as ReactiveElement[];
+            await Promise.all(customElements.map((c) => c.updateComplete));
+        }
         this._setLabelPosition();
+    }
+
+    override async attributeChangedCallback(name: string, _old: string | null, value: string | null): Promise<void> {
+        super.attributeChangedCallback(name, _old, value);
+        if (name === 'value') {
+            this._setLabelPosition();
+        }
     }
 
     // Set the label position in relation to the container element.
     _setLabelPosition() {
-        if (this.value && this.label) {
+        if (this.value && this.label && this._formContainerElement) {
             if (this.disabled) {
                 return;
             }
 
             const formParentOffset = this._formContainerElement.offsetLeft;
+            const formParentHeight = this._formContainerElement.clientHeight;
 
             if (this._labelElement) {
-                this._labelElement.style.transform = `translateX(${formParentOffset * -1}px)  translateY(-37.5%) scale(95%)`;
+                this._labelElement.style.transform = `translateX(${formParentOffset * -1}px)  translateY(${formParentHeight * -3.3}%) scale(95%)`;
             }
+        } else if (!this.value && this.label && this._labelElement && !this.hasFocus) {
+            this._labelElement.style.transform = '';
         }
     }
 
@@ -138,15 +161,18 @@ export class OmniFormElement extends OmniElement {
         if (this.disabled) {
             return;
         }
+        this.hasFocus = true;
 
         const formParentOffset = this._formContainerElement.offsetLeft;
+        const formParentHeight = this._formContainerElement.clientHeight;
 
         if (!this.value && this._labelElement) {
-            this._labelElement.style.transform = `translateX(${formParentOffset * -1}px)  translateY(-37.5%) scale(95%)`;
+            this._labelElement.style.transform = `translateX(${formParentOffset * -1}px) translateY(${formParentHeight * -3.3}%) scale(95%)`;
         }
     }
 
     _focusLost() {
+        this.hasFocus = false;
         if (this.disabled) {
             return;
         }
@@ -253,8 +279,6 @@ export class OmniFormElement extends OmniElement {
 
                 :host([value]:not([value=''])) .layout > .form-container > .label,
                 :focus + .label {
-                    top: 0px;
-                    transform: translateY(-37.5%) scale(95%);
                     color: var(--omni-form-focussed-label-color, var(--omni-primary-color));
                 }
 
