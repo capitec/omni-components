@@ -1,31 +1,18 @@
 {
     "logo": {
-      "src": "https://raw.githubusercontent.com/capitec/omni-components/develop/eleventy/assets/images/logo.png",
-      "width": "150"
+      "src": "./readme/logos/omni.png",
+      "width": "128",
+      "height": "128"
     },
-	"ids": {
-		"npm": "@capitec/omni-components"
-	},
-    "badges": [
-        {
-            "alt": "Build",
-            "img": "https://github.com/capitec/omni-components/actions/workflows/build.yml/badge.svg",
-            "url": "https://github.com/capitec/omni-components/actions/workflows/build.yml"
-        },
-        {
-            "alt": "License",
-            "img": "https://img.shields.io/github/license/capitec/omni-components",
-            "url": "https://github.com/capitec/omni-components/blob/develop/LICENSE"
-        },
-        {
-            "alt": "Docs",
-            "img": "https://img.shields.io/badge/%20-Docs-blue",
-            "url": "https://capitec.github.io/open-source/?repo=Omni-Components"
-        }
-    ],
     "line": "none",
     "headingPrefix": {
       "1": "",
       "2": ""
-    }
+    },
+    "templates": [
+        {
+            "name": "projectName",
+            "template": "Omni Components"
+        }
+    ]
 }

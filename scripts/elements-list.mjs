@@ -47,8 +47,6 @@ const manifestRaw = fs.readFileSync('custom-elements.json', 'utf-8');
 const manifest = JSON.parse(manifestRaw);
 
 let markdown = '';
-markdown += '# UI Components';
-
 markdown += '\r\n';
 markdown += '<table style="max-width: 800px;">';
 markdown += '<thead>';

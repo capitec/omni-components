@@ -2,7 +2,7 @@
   "name": "@capitec/omni-components",
   "version": "0.3.24",
   "type": "module",
-  "description": "Customizable web components for any application.",
+  "description": "Modern UI component library for mobile and web",
   "scripts": {
     "clean": "npx rimraf dist docs",
     "lint": "eslint . --ext .ts --fix",
