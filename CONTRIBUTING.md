@@ -4,6 +4,7 @@ Welcome! We encourage contributions and here's a few important guidelines we wou
 
 * [Code of Conduct](#code-of-conduct)
 * [Issues](#issues)
+* [Vulnerabilities](#vulnerabilities)
 * [Development](#development)
 * [Pull Requests](#pull-requests)
 
@@ -38,7 +39,7 @@ A feature request is an improvement or new capability associated with *any part*
 
 > 💡 TIP: We suggest that you engage as much as possible within an Issue prior to proceeding with any contributions. 
 
-### Vulnerabilities
+## Vulnerabilities
 
 A vulnerability is typically a security-related risk associated with *any part* of the project (or any dependencies):
 
