@@ -5,7 +5,7 @@ import { OmniFormElement } from '../core/OmniFormElement.js';
 import '../label/Label.js';
 
 /**
- * A currency input control that formats input based on currency and locale.
+ * A input control to enter a formatted currency value.
  *
  * @import
  * ```js
@@ -98,9 +98,9 @@ export class CurrencyField extends OmniFormElement {
 
     override async attributeChangedCallback(name: string, _old: string | null, value: string | null): Promise<void> {
         super.attributeChangedCallback(name, _old, value);
-
         if (name === 'value') {
             this._stringValue = this._formatToCurrency(value);
+            super._setLabelPosition();
         }
     }
 

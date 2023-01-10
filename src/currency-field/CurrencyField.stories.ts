@@ -56,8 +56,8 @@ export const Interactive: ComponentStoryFormat<Args> = {
         prefix: '',
         suffix: '',
         decimalPrecision: 2,
-        decimalSeparator: '',
-        thousandsSeparator: '',
+        decimalSeparator: '.',
+        thousandsSeparator: ',',
         currencySymbol: '$',
         formatter: '\\B(?<!\\.\\d*)(?=(\\d{3})+(?!\\d))'
     },
@@ -110,7 +110,7 @@ export const Label = LabelStory<CurrencyField, BaseArgs>('omni-currency-field');
 
 export const Hint = HintStory<CurrencyField, BaseArgs>('omni-currency-field');
 
-export const ErrorLabel = ErrorStory<CurrencyField, BaseArgs>('omni-currency-field');
+export const Error_Label = ErrorStory<CurrencyField, BaseArgs>('omni-currency-field');
 
 export const Value = ValueStory<CurrencyField, BaseArgs>('omni-currency-field', '100.15');
 
