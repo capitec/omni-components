@@ -4,6 +4,7 @@ Welcome! We encourage contributions and here's a few important guidelines we wou
 
 * [Code of Conduct](#code-of-conduct)
 * [Issues](#issues)
+* [Vulnerabilities](#vulnerabilities)
 * [Development](#development)
 * [Pull Requests](#pull-requests)
 
@@ -37,6 +38,14 @@ A feature request is an improvement or new capability associated with *any part*
 * **Do not** submit multiple unrelated requests within one request.
 
 > 💡 TIP: We suggest that you engage as much as possible within an Issue prior to proceeding with any contributions. 
+
+## Vulnerabilities
+
+A vulnerability is typically a security-related risk associated with *any part* of the project (or any dependencies):
+
+* **Do** refer to our [Security Policy](https://github.com/capitec/omni-components/security/policy) for more info.
+* **Do** report vulnerabilities via this [link](https://github.com/capitec/omni-components/security/advisories/new). 
+* **Do not** report any Issues or mention in public Discussions for discretionary purposes.
 
 ## Development
 ### Branches
