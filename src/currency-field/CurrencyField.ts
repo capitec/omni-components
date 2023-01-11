@@ -229,6 +229,35 @@ export class CurrencyField extends OmniFormElement {
             }
         }
 
+        // When the delete key is pressed and the caret is positioned at the thousand separator
+        if (input.value.charAt(caretPosition) === this.thousandsSeparator && this.thousandsSeparator !== '' && e.key.toLowerCase() === 'delete') {
+            if (input.value.includes(this.decimalSeparator)) {
+                const centsPart = this._parseCents(input.value.substring(input.value.indexOf(this.decimalSeparator) + 1));
+                this._stringValue =
+                    this._formatToCurrency(
+                        this._parseAmount(
+                            input.value.substring(0, caretPosition) +
+                                input.value.substring(caretPosition + 2, input.value.indexOf(this.decimalSeparator))
+                        )
+                    ) +
+                    this.decimalSeparator +
+                    centsPart;
+            } else {
+                this._stringValue = this._formatToCurrency(
+                    this._parseAmount(input.value.substring(0, caretPosition) + input.value.substring(caretPosition + 2, input.value.length + 1))
+                );
+            }
+
+            e.preventDefault();
+            this.value = this._formatToFloat(this._stringValue);
+
+            await this.updateComplete;
+            // Set caret position after value is formatted.
+            if (input.value.length === this._stringValue.length) {
+                this._inputElement.setSelectionRange(caretPosition, caretPosition);
+            }
+        }
+
         // If hitting backspace with the carat in the position of the first decimal then remove the entire cent value.
         if (
             input.value.includes(this.decimalSeparator) &&
@@ -251,9 +280,22 @@ export class CurrencyField extends OmniFormElement {
             return;
         }
 
-        // Copy currency field selection to clipboard if ctrl + c is pressed on the keyboard.
+        // Delete cents if delete button is clicked.
+        if (input.value.charAt(caretPosition) === this.decimalSeparator && e.key.toLowerCase() === 'delete') {
+            this._stringValue = input.value.substring(0, input.value.indexOf(this.decimalSeparator));
+            this.value = this._formatToFloat(this._stringValue);
+            return;
+        }
+
+        // Copy currency field selection to clipboard.
         if (e.ctrlKey && e.key.toLowerCase() === 'c') {
             navigator.clipboard.writeText(this._stringValue);
+            return;
+        }
+
+        // Stop alpha keys from moving the caret position.
+        if (e.key >= 'a' && e.key <= 'z') {
+            e.preventDefault();
             return;
         }
     }

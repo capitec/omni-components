@@ -57,7 +57,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         suffix: '',
         decimalPrecision: 2,
         decimalSeparator: '.',
-        thousandsSeparator: '',
+        thousandsSeparator: ',',
         currencySymbol: '$',
         formatter: '\\B(?<!\\.\\d*)(?=(\\d{3})+(?!\\d))'
     },
