@@ -167,6 +167,7 @@ header {
 /* DOCS SPECIFIC */
 *[theme="dark"] {
 
+    --docs-color-scheme: dark;
     --docs-border-color: #373a40;
     --docs-secondary-background-color: #2C3136;
     --docs-home-header-title-font-color: #209cef;

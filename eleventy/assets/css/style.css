@@ -9,7 +9,7 @@ html {
 
     color: var(--omni-theme-font-color);
     background-color: var(--omni-theme-background-color);
-
+    color-scheme: var(--docs-color-scheme);
 }
 
 a {
