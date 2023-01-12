@@ -184,7 +184,7 @@ export class CurrencyField extends OmniFormElement {
             }
 
             // Format amount and fraction (cents) parts to currency string, ignoring fraction if still partially completed eg: just '.' is valid.
-            this._stringValue = this._formatToCurrency(amountPart) + (this.fractionalPrecision > 0  ? this.fractionalSeparator + fractionPart : '');
+            this._stringValue = this._formatToCurrency(amountPart) + (this.fractionalPrecision > 0 ? this.fractionalSeparator + fractionPart : '');
         } else {
             this._stringValue = this._formatToCurrency(this._parseAmount(inputValue));
         }
