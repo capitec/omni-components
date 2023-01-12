@@ -113,7 +113,7 @@ Here's a *non-exhaustive* list of requirements that are key to contributing to t
 * **Do** follow our [naming conventions](#naming-conventions).
 
 #### Components
-* **Do** base off [OmniElement]((https://github.com/capitec/omni-components/blob/develop/src/core/OmniElement.ts)).
+* **Do** base off [OmniElement](https://github.com/capitec/omni-components/blob/develop/src/core/OmniElement.ts).
 * **Do** implement "mobile first" templates, leveraging [Responsive Design](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design) layout and styling principles. 📱
 * **Do** utilize [LitElement's](https://lit.dev/) [decorators](https://lit.dev/docs/components/decorators/), required for element and property names.
 * **Do** ensure sufficient [JSDoc](https://jsdoc.app/) as well as general code comments are added.
