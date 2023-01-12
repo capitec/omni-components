@@ -78,7 +78,7 @@ export class Switch extends OmniElement {
     @property({ type: Object, reflect: true }) data: object;
 
     /**
-     * A hint message to assist the user.
+     * Hint message to assist the user.
      * @attr
      */
     @property({ type: String, reflect: true }) hint: string;

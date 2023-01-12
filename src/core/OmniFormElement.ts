@@ -74,7 +74,7 @@ export class OmniFormElement extends OmniElement {
     @property({ type: String, reflect: true }) label: string;
 
     /**
-     * The value entered into the form component.
+     * Value entered into the form component.
      * @attr
      */
     @property({ reflect: true }) value: string | number | Record<string, unknown> = null;
@@ -86,13 +86,13 @@ export class OmniFormElement extends OmniElement {
     @property({ type: Object, reflect: true }) data: object;
 
     /**
-     * A hint message to assist the user.
+     * Hint message to assist the user.
      * @attr
      */
     @property({ type: String, reflect: true }) hint: string;
 
     /**
-     * A error message guiding a user to correct a mistake.
+     * Error message guiding a user to correct a mistake.
      * @attr
      */
     @property({ type: String, reflect: true }) error: string;
