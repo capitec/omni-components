@@ -177,14 +177,14 @@ export class CurrencyField extends OmniFormElement {
             const amountPart = this._parseAmount(inputValue.substring(0, inputValue.indexOf(this.fractionalSeparator)));
 
             let fractionPart = this._parseFraction(inputValue.substring(inputValue.indexOf(this.fractionalSeparator) + 1));
-            if (fractionPart.length === 0) {
-                fractionPart = '00';
-            } else if (fractionPart.length === 1) {
-                fractionPart += '0';
+
+            const fractionalDifference = this.fractionalPrecision - fractionPart.length;
+            if (fractionalDifference > 0) {
+                fractionPart += '0'.repeat(fractionalDifference);
             }
 
             // Format amount and fraction (cents) parts to currency string, ignoring fraction if still partially completed eg: just '.' is valid.
-            this._stringValue = this._formatToCurrency(amountPart) + this.fractionalSeparator + fractionPart;
+            this._stringValue = this._formatToCurrency(amountPart) + (this.fractionalPrecision > 0  ? this.fractionalSeparator + fractionPart : '');
         } else {
             this._stringValue = this._formatToCurrency(this._parseAmount(inputValue));
         }

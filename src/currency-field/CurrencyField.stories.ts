@@ -18,8 +18,8 @@ export default {
 } as CSFIdentifier;
 
 interface Args extends BaseArgs {
-    decimalPrecision: number;
-    decimalSeparator: string;
+    fractionalPrecision: number;
+    fractionalSeparator: string;
     thousandsSeparator: string;
     currencySymbol: string;
     formatter: string;
@@ -35,8 +35,8 @@ export const Interactive: ComponentStoryFormat<Args> = {
             hint="${ifNotEmpty(args.hint)}"
             error="${ifNotEmpty(args.error)}"
             ?disabled="${args.disabled}"
-            decimal-precision="${args.decimalPrecision}"
-            decimal-separator="${ifNotEmpty(args.decimalSeparator)}"
+            fractional-precision="${args.fractionalPrecision}"
+            fractional-separator="${ifNotEmpty(args.fractionalSeparator)}"
             thousands-separator="${ifNotEmpty(args.thousandsSeparator)}"
             currency-symbol="${ifNotEmpty(args.currencySymbol)}"
             formatter="${ifNotEmpty(args.formatter)}"           
@@ -55,8 +55,8 @@ export const Interactive: ComponentStoryFormat<Args> = {
         disabled: false,
         prefix: '',
         suffix: '',
-        decimalPrecision: 2,
-        decimalSeparator: '.',
+        fractionalPrecision: 2,
+        fractionalSeparator: '.',
         thousandsSeparator: ',',
         currencySymbol: '$',
         formatter: '\\B(?<!\\.\\d*)(?=(\\d{3})+(?!\\d))'
