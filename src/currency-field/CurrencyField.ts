@@ -139,7 +139,6 @@ export class CurrencyField extends OmniFormElement {
         }
 
         if (!preFormattedValue) {
-            console.log('No value provided');
             return '';
         }
 
