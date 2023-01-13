@@ -219,7 +219,7 @@ Color input control.
 
 </td><td>
 
-A currency input control that formats input based on currency and locale.
+Control to enter a formatted currency value.
 
 </td></tr><tr><td>
 
@@ -259,7 +259,7 @@ Chevron down icon component.
 
 </td><td>
 
-A clear icon component.
+Clear icon component.
 
 </td></tr><tr><td>
 
@@ -347,7 +347,7 @@ Plus icon component.
 
 </td><td>
 
-A search icon component.
+Search icon component.
 
 </td></tr><tr><td>
 
@@ -364,14 +364,6 @@ Label component that renders styled text.
 </td><td>
 
 Input control to enter a single line of numbers.
-
-</td></tr><tr><td>
-
-[omni-numeric-field](src/numeric-field/README.md)
-
-</td><td>
-
-Input control to enter a single line of numbers with a stepper control.
 
 </td></tr><tr><td>
 
@@ -403,7 +395,7 @@ Element that defers content rendering to a provided function / promise.
 
 </td><td>
 
-A search input control.
+Search input control.
 
 </td></tr><tr><td>
 

@@ -24,7 +24,7 @@ Control that allows a selection to be made.
 | `dir`           |                 |           | `string`           |                                                  |
 | `disabled`      | `disabled`      |           | `boolean`          | Indicator if the component is disabled.          |
 | `error`         | `error`         |           | `string`           | An error message to guide users to correct a mistake. |
-| `hint`          | `hint`          |           | `string`           | A hint message to assist the user.               |
+| `hint`          | `hint`          |           | `string`           | Hint message to assist the user.                 |
 | `indeterminate` | `indeterminate` |           | `boolean`          | Indicator if the component is in and indeterminate state. |
 | `label`         | `label`         |           | `string`           | Text label.                                      |
 | `lang`          |                 |           | `string`           |                                                  |

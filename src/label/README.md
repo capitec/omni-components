@@ -20,7 +20,7 @@ Label component that renders styled text.
 | `lang`     |            |           | `string`                                         |           |                                                  |
 | `override` | `override` |           |                                                  |           | Used to set the base direction of text for display |
 | `styles`   |            | readonly  | `CSSResultGroup[]`                               |           |                                                  |
-| `type`     | `type`     |           | `"default" \| "title" \| "subtitle" \| "strong"` | "default" | The type of label to display.                    |
+| `type`     | `type`     |           | `"default" \| "title" \| "subtitle" \| "strong"` | "default" | Type of label to display.                        |
 
 ## Slots
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-prototype-builtins */
 import { html as langHtml } from '@codemirror/lang-html';
 import { githubDark as codeThemeDark } from '@ddietr/codemirror-themes/github-dark.js';
 import { githubLight as codeTheme } from '@ddietr/codemirror-themes/github-light.js';
@@ -253,7 +254,10 @@ export class LivePropertyEditor extends OmniElement {
                 }"
                 @value-change="${(e: CustomEvent) => {
                     this._propertyChanged({
-                        property: this.data && attribute.fieldName && this.data.args[attribute.fieldName] ? attribute.fieldName : attribute.name,
+                        property:
+                            this.data && attribute.fieldName && this.data.args.hasOwnProperty(attribute.fieldName)
+                                ? attribute.fieldName
+                                : attribute.name,
                         newValue: e.detail.new,
                         oldValue: e.detail.old
                     });
@@ -286,7 +290,10 @@ export class LivePropertyEditor extends OmniElement {
                 @change="${(e: Event) => {
                     const value = (e.target as HTMLSelectElement).value;
                     this._propertyChanged({
-                        property: this.data && attribute.fieldName && this.data.args[attribute.fieldName] ? attribute.fieldName : attribute.name,
+                        property:
+                            this.data && attribute.fieldName && this.data.args.hasOwnProperty(attribute.fieldName)
+                                ? attribute.fieldName
+                                : attribute.name,
                         newValue: value,
                         oldValue: this.data ? this.data.args[attribute.name] : undefined
                     });
@@ -329,7 +336,10 @@ export class LivePropertyEditor extends OmniElement {
                         value = JSON.parse(value);
                     }
                     this._propertyChanged({
-                        property: this.data && attribute.fieldName && this.data.args[attribute.fieldName] ? attribute.fieldName : attribute.name,
+                        property:
+                            this.data && attribute.fieldName && this.data.args.hasOwnProperty(attribute.fieldName)
+                                ? attribute.fieldName
+                                : attribute.name,
                         newValue: value,
                         oldValue: this.data ? this.data.args[attribute.name] ?? this.data.args[attribute.fieldName ?? attribute.name] : undefined
                     });
