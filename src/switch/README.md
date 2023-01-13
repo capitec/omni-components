@@ -23,7 +23,7 @@ Control to switch a value on or off.
 | `dir`      |            |           | `string`           |                                                  |
 | `disabled` | `disabled` |           | `boolean`          | Indicator if the component is disabled.          |
 | `error`    | `error`    |           | `string`           | An error message to guide users to correct a mistake. |
-| `hint`     | `hint`     |           | `string`           | A hint message to assist the user.               |
+| `hint`     | `hint`     |           | `string`           | Hint message to assist the user.                 |
 | `label`    | `label`    |           | `string`           | Text label.                                      |
 | `lang`     |            |           | `string`           |                                                  |
 | `override` | `override` |           |                    | Used to set the base direction of text for display |
