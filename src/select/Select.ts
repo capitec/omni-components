@@ -81,20 +81,6 @@ import '../icons/More.icon.js';
  * @cssprop --omni-select-items-height - Select items height.
  * @cssprop --omni-select-items-width - Select items width.
  *
- * @cssprop --omni-select-scrollbar-thumb-width - Select items scroll bar thumb width.
- * @cssprop --omni-select-scrollbar-track-padding-left -  Select items scroll bar track left padding.
- * @cssprop --omni-select-scrollbar-track-padding-right - Select items scroll bar track right padding.
- *
- * @cssprop --omni-select-scrollbar-track-border-radius - Select items scroll bar track border radius.
- * @cssprop --omni-select-scrollbar-track-background-color - Select items scroll bar track background color.
- *
- * @cssprop --omni-select-scrollbar-thumb-border-radius - Select items scroll bar thumb border radius.
- * @cssprop --omni-select-scrollbar-thumb-background-color - Select items scroll bar thumb background color.
- * @cssprop --omni-select-scrollbar-track-padding-top - Select items scroll bar thumb top padding.
- * @cssprop --omni-select-scrollbar-track-padding-bottom - Select items scroll bar thumb bottom padding.
- * @cssprop --omni-select-scrollbar-track-padding-left - Select items scroll bar thumb left padding.
- * @cssprop --omni-select-scrollbar-track-padding-right - Select items scroll bar thumb right padding.
- *
  * @cssprop --omni-select-item-font-color - Select item font color.
  * @cssprop --omni-select-item-font-family - Select item font family.
  * @cssprop --omni-select-item-font-weight - Select item font weight.
@@ -390,31 +376,6 @@ export class Select extends OmniFormElement {
 
                     height: var(--omni-select-items-height, auto);
                     width: var(--omni-select-items-width, 100%);
-                }
-
-                /* Scroll bar styles*/
-                .items::-webkit-scrollbar {
-                    width: calc(
-                        var(--omni-select-scrollbar-thumb-width, 10px) + var(--omni-select-scrollbar-track-padding-left, 2px) +
-                            var(--omni-select-scrollbar-track-padding-right, 2px)
-                    );
-                }
-
-                .items::-webkit-scrollbar-track {
-                    border-radius: var(--omni-select-scrollbar-track-border-radius, 10px);
-                    background-color: var(--omni-select-scrollbar-track-background-color, transparent);
-                }
-
-                .items::-webkit-scrollbar-thumb {
-                    border-radius: var(--omni-select-scrollbar-thumb-border-radius, 10px);
-                    background-color: var(--omni-select-scrollbar-thumb-background-color, #d9d9d9);
-
-                    border-top: var(--omni-select-scrollbar-track-padding-top, 2px) solid transparent;
-                    border-bottom: var(--omni-select-scrollbar-track-padding-bottom, 2px) solid transparent;
-                    border-left: var(--omni-select-scrollbar-track-padding-left, 2px) solid transparent;
-                    border-right: var(--omni-select-scrollbar-track-padding-right, 2px) solid transparent;
-
-                    background-clip: padding-box;
                 }
 
                 .item,
