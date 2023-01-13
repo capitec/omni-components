@@ -59,7 +59,6 @@ Note that some components may have dependencies that are automatically imported 
 <strong>Never cherry pick components or utilities from `omni-components.js` as this will still cause the browser to load the entire library. Instead, cherry pick from specific modules as shown above.</strong>
 
 <br/>
-<br/>
 <strong> You will see files named `chunk.[hash].js` in the `chunks-js` directory. Never import these files directly, as they are generated and change from version to version. </strong>
 
 ## Bundling 💼
