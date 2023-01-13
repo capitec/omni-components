@@ -46,7 +46,7 @@ Chevron down icon component.
 
 # omni-clear-icon
 
-A clear icon component.
+Clear icon component.
 
 ## Example
 
@@ -330,7 +330,7 @@ Plus icon component.
 
 # omni-search-icon
 
-A search icon component.
+Search icon component.
 
 ## Example
 
