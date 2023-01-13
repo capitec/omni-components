@@ -1,19 +1,11 @@
 import { html, css } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { live } from 'lit/directives/live.js';
-import { debounce } from 'lodash';
 import { OmniFormElement } from '../core/OmniFormElement.js';
 import '../label/Label.js';
 
-export const CURRENCY_SEPARATOR = {
-    AMOUNT: 1,
-    INVERSE_AMOUNT: 2,
-    CENTS: 3,
-    INVERSE_CENTS: 4
-};
-
 /**
- * A currency input control that formats input based on currency and locale.
+ * Control to enter a formatted currency value.
  *
  * @import
  * ```js
@@ -28,8 +20,10 @@ export const CURRENCY_SEPARATOR = {
  *  data="{id: 123, name: 'Debit'}"
  *  hint="Required"
  *  error="Please enter the correct amount"
- *  locale="en-US"
- *  currency="USD"
+ *  currency-symbol="$"
+ *  thousands-separator=","
+ *  fractional-separator="."
+ *  fractional-precision=2
  *  disabled>
  * </omni-currency-field>
  * ```
@@ -57,30 +51,37 @@ export class CurrencyField extends OmniFormElement {
     private _inputElement: HTMLInputElement;
 
     /**
-     * The currency for the input.
-     * @attr
+     * Currency symbol.
+     * @attr [currency-symbol]
      */
-    @property({ type: String, reflect: true }) currency: string = 'USD';
+    @property({ type: String, reflect: true, attribute: 'currency-symbol' }) currencySymbol: string = '$';
 
     /**
-     * The locale for the input.
+     * Thousands separator.
+     * @attr [thousands-separator]
+     */
+    @property({ type: String, reflect: true, attribute: 'thousands-separator' }) thousandsSeparator: string = '';
+
+    /**
+     * Fractional separator.
+     * @attr [fractional-separator]
+     */
+    @property({ type: String, reflect: true, attribute: 'fractional-separator' }) fractionalSeparator: string = '.';
+
+    /**
+     * Fractional precision.
+     * @attr [fractional-precision]
+     */
+    @property({ type: Number, reflect: true, attribute: 'fractional-precision' }) fractionalPrecision: number = 2;
+
+    /**
+     * Formatter provided to format the value.
      * @attr
      */
-    @property({ type: String, reflect: true }) locale: string = navigator.language;
+    @property({ type: String, reflect: true }) formatter: string = '\\B(?<!\\.\\d*)(?=(\\d{3})+(?!\\d))';
 
     // Internal state properties
-    @state() private _currencyFormat: Intl.NumberFormat;
-    @state() private _currencySymbol: string;
-    @state() private _currencyFormatSeparator: string;
-    @state() private _currencyCentsSeparator: string;
     @state() private _stringValue: string = '';
-
-    private _symbolAndFormateUpdate = debounce(() => this._updateSymbolAndFormat(), 800);
-
-    constructor() {
-        super();
-        this._updateSymbolAndFormat();
-    }
 
     override connectedCallback(): void {
         super.connectedCallback();
@@ -97,71 +98,9 @@ export class CurrencyField extends OmniFormElement {
 
     override async attributeChangedCallback(name: string, _old: string | null, value: string | null): Promise<void> {
         super.attributeChangedCallback(name, _old, value);
-
-        if (name === 'currency' || name === 'locale') {
-            await this.updateComplete;
-            this._symbolAndFormateUpdate();
-        }
-
         if (name === 'value') {
-            if (typeof value === 'string') {
-                this._stringValue = this._formatToCurrency(parseFloat(value));
-            } else {
-                this._stringValue = this._formatToCurrency(value);
-            }
-        }
-    }
-
-    _updateSymbolAndFormat(): void {
-        this._setSymbolAndSeparators();
-        this._setCurrencyFormat();
-    }
-
-    // Set the currency format that will be used to format the input value.
-    _setCurrencyFormat(): void {
-        try {
-            this._currencyFormat = new Intl.NumberFormat(this.locale, { currency: this.currency });
-        } catch (e) {
-            console.error('invalid locale or currency provided, falling back to default', e);
-            this._currencyFormat = new Intl.NumberFormat('en-US', { currency: 'USD' });
-        }
-    }
-
-    // Set the currency symbol and sets the currency format separator and cent separator depending on locale.
-    _setSymbolAndSeparators(): void {
-        /*
-         * Set the currency parts providing a default value of 1000.0 to return an array to get the currency separator and cents separator.
-         * Results can be the following based on the locale provided.
-         * ["$", "1", ",", "000", ".", "00"]
-         * ["1", ".", "000", ",", "00", " ", "$"]
-         */
-        let currencyPartsMap = [];
-        try {
-            currencyPartsMap = new Intl.NumberFormat(this.locale, {
-                style: 'currency',
-                currency: this.currency,
-                currencyDisplay: 'narrowSymbol'
-            })
-                .formatToParts(1000.0)
-                .map((c) => c.value);
-        } catch (e) {
-            console.error('invalid locale or currency provided, fallback will be used', e);
-            currencyPartsMap = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', currencyDisplay: 'narrowSymbol' })
-                .formatToParts(1000.0)
-                .map((c) => c.value);
-        }
-        // Get the currency symbol assuming it is the value at the first index of the array.
-        const currencySymbol = currencyPartsMap[0];
-
-        // Check to see if value at first index of the array is a number Some locales will have the currency symbol at the last index.
-        if (parseInt(currencySymbol)) {
-            this._currencyFormatSeparator = currencyPartsMap[CURRENCY_SEPARATOR.AMOUNT];
-            this._currencyCentsSeparator = currencyPartsMap[CURRENCY_SEPARATOR.CENTS];
-            this._currencySymbol = currencyPartsMap[currencyPartsMap.length - 1];
-        } else {
-            this._currencyFormatSeparator = currencyPartsMap[CURRENCY_SEPARATOR.INVERSE_AMOUNT];
-            this._currencyCentsSeparator = currencyPartsMap[CURRENCY_SEPARATOR.INVERSE_CENTS];
-            this._currencySymbol = currencySymbol;
+            this._stringValue = this._formatToCurrency(value);
+            super._setLabelPosition();
         }
     }
 
@@ -182,7 +121,7 @@ export class CurrencyField extends OmniFormElement {
         }
     }
 
-    _parseCents(value: string): string {
+    _parseFraction(value: string): string {
         let cleanValue = '';
         for (let i = 0; i < value.length; i++) {
             const character = value.charAt(i);
@@ -193,17 +132,37 @@ export class CurrencyField extends OmniFormElement {
         return cleanValue;
     }
 
-    _formatToCurrency(preFormattedValue: number): string {
+    // Format the numeric value to a currency formatted string value.
+    _formatToCurrency(preFormattedValue: number | string): string {
+        if (preFormattedValue === 0) {
+            return preFormattedValue.toString();
+        }
+
         if (!preFormattedValue) {
             return '';
         }
-        return this._currencyFormat.format(preFormattedValue);
+
+        const formattedValue = preFormattedValue.toString().replace(new RegExp(this.formatter, 'g'), this.thousandsSeparator);
+
+        if (formattedValue.includes(this.fractionalSeparator)) {
+            const amountPart = formattedValue.substring(0, formattedValue.indexOf(this.fractionalSeparator));
+
+            let fractionPart = this._parseFraction(formattedValue.substring(formattedValue.indexOf(this.fractionalSeparator) + 1));
+
+            if (fractionPart.length >= this.fractionalPrecision) {
+                fractionPart = fractionPart.substring(0, this.fractionalPrecision);
+            }
+            // Format amount and fraction (cents) part to currency string, ignoring fraction if still partially completed eg: just '.' is valid.
+            this._stringValue = amountPart + this.fractionalSeparator + fractionPart;
+            return amountPart + this.fractionalSeparator + fractionPart;
+        }
+        return formattedValue;
     }
 
     // Format the internal value to a float.
     _formatToFloat(formattedValue: string): string | number {
         if (formattedValue.length > 0) {
-            const preFloatReplaceAll = formattedValue.replaceAll(this._currencyFormatSeparator, '').replace(this._currencyCentsSeparator, '.');
+            const preFloatReplaceAll = formattedValue.replaceAll(this.thousandsSeparator, '').replace(this.fractionalSeparator, '.');
             return parseFloat(preFloatReplaceAll);
         } else {
             return '';
@@ -213,19 +172,19 @@ export class CurrencyField extends OmniFormElement {
     _blur(): void {
         const inputValue = this._inputElement.value;
 
-        if (inputValue.includes(this._currencyCentsSeparator)) {
-            // Split out the amount and cents parts of the input value
-            const amountPart = this._parseAmount(inputValue.substring(0, inputValue.indexOf(this._currencyCentsSeparator)));
+        if (inputValue.includes(this.fractionalSeparator)) {
+            // Split out the amount and fraction (cents) parts of the input value
+            const amountPart = this._parseAmount(inputValue.substring(0, inputValue.indexOf(this.fractionalSeparator)));
 
-            let centsPart = this._parseCents(inputValue.substring(inputValue.indexOf(this._currencyCentsSeparator) + 1));
-            if (centsPart.length === 0) {
-                centsPart = '00';
-            } else if (centsPart.length === 1) {
-                centsPart += '0';
+            let fractionPart = this._parseFraction(inputValue.substring(inputValue.indexOf(this.fractionalSeparator) + 1));
+
+            const fractionalDifference = this.fractionalPrecision - fractionPart.length;
+            if (fractionalDifference > 0) {
+                fractionPart += '0'.repeat(fractionalDifference);
             }
 
-            // Format amount and cents to currency string, ignoring cents if still partially completed eg: just '.' is valid.
-            this._stringValue = this._formatToCurrency(amountPart) + this._currencyCentsSeparator + centsPart;
+            // Format amount and fraction (cents) parts to currency string, ignoring fraction if still partially completed eg: just '.' is valid.
+            this._stringValue = this._formatToCurrency(amountPart) + (this.fractionalPrecision > 0 ? this.fractionalSeparator + fractionPart : '');
         } else {
             this._stringValue = this._formatToCurrency(this._parseAmount(inputValue));
         }
@@ -238,19 +197,19 @@ export class CurrencyField extends OmniFormElement {
         const caretPosition = input.selectionStart;
 
         // If the pointer is positioned after a currency separator remove the separator and the preceding number.
-        if (input.value.charAt(caretPosition - 1) === this._currencyFormatSeparator && e.key.toLowerCase() === 'backspace') {
-            // If the value includes a cents separator parse the cents and append it to the value.
-            if (input.value.includes(this._currencyCentsSeparator)) {
-                const centsPart = this._parseCents(input.value.substring(input.value.indexOf(this._currencyCentsSeparator) + 1));
+        if (input.value.charAt(caretPosition - 1) === this.thousandsSeparator && e.key.toLowerCase() === 'backspace') {
+            // If the value includes a fraction (cents) separator parse the fraction part and append it to the value.
+            if (input.value.includes(this.fractionalSeparator)) {
+                const fractionPart = this._parseFraction(input.value.substring(input.value.indexOf(this.fractionalSeparator) + 1));
                 this._stringValue =
                     this._formatToCurrency(
                         this._parseAmount(
                             input.value.substring(0, caretPosition - 2) +
-                                input.value.substring(caretPosition, input.value.indexOf(this._currencyCentsSeparator))
+                                input.value.substring(caretPosition, input.value.indexOf(this.fractionalSeparator))
                         )
                     ) +
-                    this._currencyCentsSeparator +
-                    centsPart;
+                    this.fractionalSeparator +
+                    fractionPart;
             } else {
                 this._stringValue = this._formatToCurrency(
                     this._parseAmount(input.value.substring(0, caretPosition - 2) + input.value.substring(caretPosition, input.value.length + 1))
@@ -269,18 +228,73 @@ export class CurrencyField extends OmniFormElement {
             }
         }
 
-        // If hitting backspace when the caret is after the cent separator remove the cents value completely.
-        if (input.value.charAt(caretPosition - 1) === this._currencyCentsSeparator && e.key.toLowerCase() === 'backspace') {
-            this._stringValue = input.value.substring(0, input.value.indexOf(this._currencyCentsSeparator));
+        // When the delete key is pressed and the caret is positioned at the thousand separator
+        if (input.value.charAt(caretPosition) === this.thousandsSeparator && this.thousandsSeparator !== '' && e.key.toLowerCase() === 'delete') {
+            if (input.value.includes(this.fractionalSeparator)) {
+                const fractionPart = this._parseFraction(input.value.substring(input.value.indexOf(this.fractionalSeparator) + 1));
+                this._stringValue =
+                    this._formatToCurrency(
+                        this._parseAmount(
+                            input.value.substring(0, caretPosition) +
+                                input.value.substring(caretPosition + 2, input.value.indexOf(this.fractionalSeparator))
+                        )
+                    ) +
+                    this.fractionalSeparator +
+                    fractionPart;
+            } else {
+                this._stringValue = this._formatToCurrency(
+                    this._parseAmount(input.value.substring(0, caretPosition) + input.value.substring(caretPosition + 2, input.value.length + 1))
+                );
+            }
+
+            e.preventDefault();
+            this.value = this._formatToFloat(this._stringValue);
+
+            await this.updateComplete;
+            // Set caret position after value is formatted.
+            if (input.value.length === this._stringValue.length) {
+                this._inputElement.setSelectionRange(caretPosition, caretPosition);
+            }
+        }
+
+        // If hitting backspace with the caret in the position of the first fractional (cents) separator then remove the entire fraction value.
+        if (
+            input.value.includes(this.fractionalSeparator) &&
+            input.value.charAt(caretPosition - 2) === this.fractionalSeparator &&
+            e.key.toLowerCase() === 'backspace'
+        ) {
+            this._stringValue = input.value.substring(0, input.value.indexOf(this.fractionalSeparator));
             e.preventDefault();
             // Set value prop to float value
             this.value = this._formatToFloat(this._stringValue);
             return;
         }
 
-        // Copy currency field selection to clipboard if ctrl + c is pressed on the keyboard.
+        // If hitting backspace when the caret is after the fraction (cents) separator remove the fraction value completely.
+        if (input.value.charAt(caretPosition - 1) === this.fractionalSeparator && e.key.toLowerCase() === 'backspace') {
+            this._stringValue = input.value.substring(0, input.value.indexOf(this.fractionalSeparator));
+            e.preventDefault();
+            // Set value prop to float value
+            this.value = this._formatToFloat(this._stringValue);
+            return;
+        }
+
+        // Delete fraction (cents) part if delete button is clicked.
+        if (input.value.charAt(caretPosition) === this.fractionalSeparator && e.key.toLowerCase() === 'delete') {
+            this._stringValue = input.value.substring(0, input.value.indexOf(this.fractionalSeparator));
+            this.value = this._formatToFloat(this._stringValue);
+            return;
+        }
+
+        // Copy currency field selection to clipboard.
         if (e.ctrlKey && e.key.toLowerCase() === 'c') {
             navigator.clipboard.writeText(this._stringValue);
+            return;
+        }
+
+        // Stop alpha keys from moving the caret position.
+        if (e.key >= 'a' && e.key <= 'z') {
+            e.preventDefault();
             return;
         }
     }
@@ -292,30 +306,31 @@ export class CurrencyField extends OmniFormElement {
         const caretPosition = this._inputElement.selectionStart;
         const inputValue = this._inputElement.value;
 
-        if (inputValue.includes(this._currencyFormatSeparator)) {
-            formatterCount = this._inputElement.value.match(new RegExp(this._currencyFormatSeparator, 'g')).length;
+        if (inputValue.includes(this.thousandsSeparator)) {
+            formatterCount = this._inputElement.value.match(new RegExp(this.thousandsSeparator, 'g')).length;
         }
 
-        if (inputValue.includes(this._currencyCentsSeparator)) {
-            // Split out the amount and cents parts of the input value
-            const amountPart = this._parseAmount(inputValue.substring(0, inputValue.indexOf(this._currencyCentsSeparator)));
+        if (inputValue.includes(this.fractionalSeparator)) {
+            // Split out the amount and fraction (cents) parts of the input value
+            const amountPart = this._parseAmount(inputValue.substring(0, inputValue.indexOf(this.fractionalSeparator)));
 
-            let centsPart = this._parseCents(inputValue.substring(inputValue.indexOf(this._currencyCentsSeparator) + 1));
+            let fractionPart = this._parseFraction(inputValue.substring(inputValue.indexOf(this.fractionalSeparator) + 1));
 
-            if (centsPart.length >= 2) {
-                centsPart = centsPart.substring(0, 2);
+            if (fractionPart.length >= this.fractionalPrecision) {
+                fractionPart = fractionPart.substring(0, this.fractionalPrecision);
             }
-            // Format amount and cents to currency string, ignoring cents if still partially completed eg: just '.' is valid.
-            this._stringValue = this._formatToCurrency(amountPart) + this._currencyCentsSeparator + centsPart;
+            // Format amount and fraction (cents) to currency string, ignoring fraction if still partially completed eg: just '.' is valid.
+            this._stringValue = this._formatToCurrency(amountPart) + this.fractionalSeparator + fractionPart;
         } else {
             this._stringValue = this._formatToCurrency(this._parseAmount(inputValue));
         }
 
         this.requestUpdate();
 
-        if (this._stringValue.includes(this._currencyFormatSeparator)) {
-            valueFormatterCount = this._stringValue.match(new RegExp(this._currencyFormatSeparator, 'g')).length;
+        if (this._stringValue.includes(this.thousandsSeparator)) {
+            valueFormatterCount = this._stringValue.match(new RegExp(this.thousandsSeparator, 'g')).length;
         }
+
         await this.updateComplete;
 
         // Set caret position after value is formatted into currency
@@ -359,7 +374,7 @@ export class CurrencyField extends OmniFormElement {
                 }
 
                 .currency-symbol {
-                    font-size: var(--omni-currency-field-symbol-font-size, var(--omni-font-size));
+                    font-size: var(--omni-currency-field-symbol-font-size, 16px);
                     color: var(--omni-currency-field-symbol-color, var(--omni-font-color));
                     padding-left: var(--omni-currency-field-symbol-left-padding, 10px);
                     user-select: var(--omni-currency-field-symbol-select, text);
@@ -369,7 +384,7 @@ export class CurrencyField extends OmniFormElement {
     }
 
     protected override renderPrefix() {
-        return html`<omni-label class="currency-symbol">${this._currencySymbol}</omni-label>`;
+        return html`<omni-label class="currency-symbol" label="${this.currencySymbol}"></omni-label>`;
     }
 
     protected override renderContent() {
