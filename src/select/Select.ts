@@ -125,25 +125,25 @@ export class Select extends OmniFormElement {
     @property({ type: Array, reflect: true }) items: SelectItems | (() => SelectItems);
 
     /**
-     * The field of the item to display as one of the selectable options.
+     * Field of the item to display as one of the selectable options.
      * @attr [display-field]
      */
     @property({ type: String, reflect: true, attribute: 'display-field' }) displayField: string;
 
     /**
-     * The id field of the items provided.
+     * Id field of the items provided.
      * @attr [id-field]
      */
     @property({ type: String, reflect: true, attribute: 'id-field' }) idField: string = 'id';
 
     /**
-     * The message displayed in the items container when no items are bound to the component.
+     * Message displayed in the items container when no items are bound to the component.
      * @attr [empty-message]
      */
     @property({ type: String, reflect: true, attribute: 'empty-message' }) emptyMessage: string = 'No items provided';
 
     /**
-     * The render function for each item.
+     * Render function for each item.
      * @no_attribute
      */
     @property({ type: Object, reflect: false }) renderItem: RenderFunction;

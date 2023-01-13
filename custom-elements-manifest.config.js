@@ -74,7 +74,7 @@ const plugins = {
                                 superModule.declarations.forEach((dec) => {
                                     let slots = dec.slots;
                                     if (slots) {
-                                        slots = JSON.parse(JSON.stringify(slots));
+                                        slots = JSON.parse(JSON.stringify(slots)).filter(s => !declaration.slots?.find(ds => ds.name === s.name));
                                         slots.forEach((slot) => {
                                             slot.inheritedFrom = {
                                                 name: dec.name,

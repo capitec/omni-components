@@ -3,7 +3,7 @@ import { customElement } from 'lit/decorators.js';
 import DOMTreeElement from '../core/DOMTreeElement.js';
 
 /**
- * A search icon component.
+ * Search icon component.
  *
  * @import
  * ```js
