@@ -158,15 +158,6 @@ Control to get / set a value within a list of options.
 | `--omni-select-mobile-items-container-bottom`    | Select item container for mobile bottom.         |
 | `--omni-select-mobile-items-container-left`      | Select item container for mobile left.           |
 | `--omni-select-mobile-items-container-right`     | Select item container for mobile right.          |
-| `--omni-select-scrollbar-thumb-background-color` | Select items scroll bar thumb background color.  |
-| `--omni-select-scrollbar-thumb-border-radius`    | Select items scroll bar thumb border radius.     |
-| `--omni-select-scrollbar-thumb-width`            | Select items scroll bar thumb width.             |
-| `--omni-select-scrollbar-track-background-color` | Select items scroll bar track background color.  |
-| `--omni-select-scrollbar-track-border-radius`    | Select items scroll bar track border radius.     |
-| `--omni-select-scrollbar-track-padding-bottom`   | Select items scroll bar thumb bottom padding.    |
-| `--omni-select-scrollbar-track-padding-left`     | Select items scroll bar track left padding.      |
-| `--omni-select-scrollbar-track-padding-right`    | Select items scroll bar track right padding.     |
-| `--omni-select-scrollbar-track-padding-top`      | Select items scroll bar thumb top padding.       |
 | `--omni-theme-accent-active-color`               | Theme accent active color.                       |
 | `--omni-theme-accent-color`                      | Theme accent color.                              |
 | `--omni-theme-accent-hover-color`                | Theme accent hover color.                        |
