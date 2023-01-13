@@ -72,10 +72,10 @@ export const Interactive: ComponentStoryFormat<Args> = {
             pointerEventsCheck: 0
         });
 
-        await userEvent.type(inputField, 'Value Update', {
+        await userEvent.type(inputField, '1234', {
             pointerEventsCheck: 0
         });
-        const value = 'Value Update';
+        const value = '1234';
 
         // TODO: Fix race conditions in tests
         if (navigator.userAgent === 'Test Runner') {

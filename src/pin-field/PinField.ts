@@ -64,6 +64,18 @@ export class PinField extends OmniFormElement {
         this.addEventListener('input', this._keyInput.bind(this), {
             capture: true
         });
+
+        this.addEventListener('keydown', this._keyDown.bind(this), {
+            capture: true
+        });
+    }
+
+    _keyDown(e: KeyboardEvent) {
+        // Stop alpha keys from moving the caret position.
+        if (e.key >= 'a' && e.key <= 'z') {
+            e.preventDefault();
+            return;
+        }
     }
 
     _keyInput() {
@@ -138,6 +150,18 @@ export class PinField extends OmniFormElement {
           height: var(--omni-pin-field-height, 100%);
           padding: var(--omni-pin-field-padding, 10px);
           width: var(--omni-pin-field-width);
+        }
+
+        /* Used to not display default stepper */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+          /* display: none; <- Crashes Chrome on hover */
+          -webkit-appearance: none;
+          margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+        }
+        
+        input[type='number'] {
+          -moz-appearance: textfield; /* Firefox */
         }
       `
         ];
