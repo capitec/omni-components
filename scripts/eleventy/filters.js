@@ -21,7 +21,7 @@ export function getImport(value, componentName) {
 
 export function getProperties(value, componentName) {
     const declaration = getComponentDeclaration(value, componentName);
-    return declaration.members?.filter(m => m.kind === 'field')?.map(a => {
+    return declaration.members?.filter(m => m.kind === 'field' && m.privacy !== 'private')?.map(a => {
         return {
             ...a,
             description: filterJsDocLinks(a.description)

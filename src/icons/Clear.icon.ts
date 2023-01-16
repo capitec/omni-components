@@ -3,7 +3,7 @@ import { customElement } from 'lit/decorators.js';
 import DOMTreeElement from '../core/DOMTreeElement.js';
 
 /**
- * A clear icon component.
+ * Clear icon component.
  *
  * @import
  * ```js

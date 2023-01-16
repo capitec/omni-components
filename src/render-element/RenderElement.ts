@@ -25,7 +25,7 @@ import '../icons/Loading.icon.js';
 @customElement('omni-render-element')
 export class RenderElement extends OmniElement {
     /**
-     * The renderer function
+     * Renderer function
      * @no_attribute
      */
     @property({ type: Object, reflect: false }) renderer: RenderFunction;

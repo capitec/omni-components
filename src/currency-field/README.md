@@ -1,6 +1,6 @@
 # omni-currency-field
 
-A currency input control that formats input based on currency and locale.
+Control to enter a formatted currency value.
 
 ## Example
 
@@ -11,28 +11,33 @@ A currency input control that formats input based on currency and locale.
  data="{id: 123, name: 'Debit'}"
  hint="Required"
  error="Please enter the correct amount"
- locale="en-US"
- currency="USD"
+ currency-symbol="$"
+ thousands-separator=","
+ fractional-separator="."
+ fractional-precision=2
  disabled>
 </omni-currency-field>
 ```
 
 ## Properties
 
-| Property   | Attribute  | Modifiers | Type                                          | Default    | Description                                      |
-|------------|------------|-----------|-----------------------------------------------|------------|--------------------------------------------------|
-| `currency` | `currency` |           | `string`                                      | "USD"      | The currency for the input.                      |
-| `data`     | `data`     |           | `object`                                      |            | Data associated with the component.              |
-| `dir`      |            |           | `string`                                      |            |                                                  |
-| `disabled` | `disabled` |           | `boolean`                                     | false      | Indicator if the component should be disabled.   |
-| `error`    | `error`    |           | `string`                                      |            | A error message guiding a user to correct a mistake. |
-| `hint`     | `hint`     |           | `string`                                      |            | A hint message to assist the user.               |
-| `label`    | `label`    |           | `string`                                      |            | Text label.                                      |
-| `lang`     |            |           | `string`                                      |            |                                                  |
-| `locale`   | `locale`   |           | `string`                                      | "language" | The locale for the input.                        |
-| `override` | `override` |           |                                               |            | Used to set the base direction of text for display |
-| `styles`   |            | readonly  | `CSSResultGroup[]`                            |            |                                                  |
-| `value`    | `value`    |           | `string \| number \| Record<string, unknown>` | null       | The value entered into the form component.       |
+| Property              | Attribute              | Modifiers | Type                                          | Default                               | Description                                      |
+|-----------------------|------------------------|-----------|-----------------------------------------------|---------------------------------------|--------------------------------------------------|
+| `currencySymbol`      | `currency-symbol`      |           | `string`                                      | "$"                                   | Currency symbol.                                 |
+| `data`                | `data`                 |           | `object`                                      |                                       | Data associated with the component.              |
+| `dir`                 |                        |           | `string`                                      |                                       |                                                  |
+| `disabled`            | `disabled`             |           | `boolean`                                     | false                                 | Indicator if the component should be disabled.   |
+| `error`               | `error`                |           | `string`                                      |                                       | Error message guiding a user to correct a mistake. |
+| `formatter`           | `formatter`            |           | `string`                                      | "\\B(?<!\\.\\d*)(?=(\\d{3})+(?!\\d))" | Formatter provided to format the value.          |
+| `fractionalPrecision` | `fractional-precision` |           | `number`                                      | 2                                     | Fractional precision.                            |
+| `fractionalSeparator` | `fractional-separator` |           | `string`                                      | "."                                   | Fractional separator.                            |
+| `hint`                | `hint`                 |           | `string`                                      |                                       | Hint message to assist the user.                 |
+| `label`               | `label`                |           | `string`                                      |                                       | Text label.                                      |
+| `lang`                |                        |           | `string`                                      |                                       |                                                  |
+| `override`            | `override`             |           |                                               |                                       | Used to set the base direction of text for display |
+| `styles`              |                        | readonly  | `CSSResultGroup[]`                            |                                       |                                                  |
+| `thousandsSeparator`  | `thousands-separator`  |           | `string`                                      | ""                                    | Thousands separator.                             |
+| `value`               | `value`                |           | `string \| number \| Record<string, unknown>` | null                                  | Value entered into the form component.           |
 
 ## Methods
 

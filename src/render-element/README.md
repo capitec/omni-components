@@ -16,7 +16,7 @@ Element that defers content rendering to a provided function / promise.
 | `dir`      |            |           | `string`                    |                                                  |
 | `lang`     |            |           | `string`                    |                                                  |
 | `override` | `override` |           |                             | Used to set the base direction of text for display |
-| `renderer` | `renderer` |           | `RenderFunction`            | The renderer function                            |
+| `renderer` | `renderer` |           | `RenderFunction`            | Renderer function                                |
 | `styles`   |            | readonly  | `CSSResultGroup[]`          |                                                  |
 
 ## Methods
