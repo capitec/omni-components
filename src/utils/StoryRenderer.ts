@@ -165,107 +165,116 @@ export class StoryRenderer extends LitElement {
         const storySource = this.story.source ? this.story.source() : this._getSourceFromLit(res);
 
         return html`
-      <div class="preview">
-        <div class="item">
-          <div class="${this.key}${this.interactive ? ' interactive-story' : ''}" .data=${this.story}>
-            ${this.overrideInteractive ? unsafeHTML(this._interactiveSrc) : res}
-          </div>
+        <div class="story-description">
+            ${this.story.description}
         </div>
+        <div class="story">
+            <div class="preview">
+                <div class="item">
+                <div class="${this.key}${this.interactive ? ' interactive-story' : ''}" .data=${this.story}>
+                    ${this.overrideInteractive ? unsafeHTML(this._interactiveSrc) : res}
+                </div>
+                </div>
 
-        ${
-            this.interactive
-                ? html`
-              <div class="interactive">
-                <span class="docs-omni-component interactive-reset" @click="${this._resetLivePropertyEditor}">
-                  <omni-icon class="docs-omni-component" style="cursor: pointer;" icon="@material/settings_backup_restore"></omni-icon>
-                </span>
-                <span class="docs-omni-component component-styles-btn" @click="${this._showComponentStyles}">
-                  <omni-icon class="docs-omni-component" style="cursor: pointer;" icon="@material/format_color_fill"></omni-icon>
-                </span>
-                <live-property-editor
-                  class="live-props docs-omni-component"
-                  ?disabled=${this.overrideInteractive}
-                  .data="${{ ...this.story }}"
-                  element="${this.tag}"
-                  ignore-attributes="dir,lang"
-                  @property-change="${async (e: CustomEvent<PropertyChangeEvent>) => {
-                      const changed = e.detail;
-                      let mustUpdate = false;
+                ${
+                    this.interactive
+                        ? html`
+                    <div class="interactive">
+                        <span class="docs-omni-component interactive-reset" @click="${this._resetLivePropertyEditor}">
+                        <omni-icon class="docs-omni-component" style="cursor: pointer;" icon="@material/settings_backup_restore"></omni-icon>
+                        </span>
+                        <span class="docs-omni-component component-styles-btn" @click="${this._showComponentStyles}">
+                        <omni-icon class="docs-omni-component" style="cursor: pointer;" icon="@material/format_color_fill"></omni-icon>
+                        </span>
+                        <live-property-editor
+                        class="live-props docs-omni-component"
+                        ?disabled=${this.overrideInteractive}
+                        .data="${{ ...this.story }}"
+                        element="${this.tag}"
+                        ignore-attributes="dir,lang"
+                        @property-change="${async (e: CustomEvent<PropertyChangeEvent>) => {
+                            const changed = e.detail;
+                            let mustUpdate = false;
 
-                      if (!changed.oldValue || !changed.newValue) {
-                          mustUpdate = true;
-                      } else if (
-                          typeof changed.newValue !== 'string' &&
-                          JSON.stringify(changed.oldValue).trim() !== JSON.stringify(changed.newValue).trim()
-                      ) {
-                          mustUpdate = true;
-                      } else if (changed.oldValue.toString().trim() !== changed.newValue.toString().trim()) {
-                          mustUpdate = true;
-                      }
+                            if (!changed.oldValue || !changed.newValue) {
+                                mustUpdate = true;
+                            } else if (
+                                typeof changed.newValue !== 'string' &&
+                                JSON.stringify(changed.oldValue).trim() !== JSON.stringify(changed.newValue).trim()
+                            ) {
+                                mustUpdate = true;
+                            } else if (changed.oldValue.toString().trim() !== changed.newValue.toString().trim()) {
+                                mustUpdate = true;
+                            }
 
-                      if (mustUpdate) {
-                          this.story.args[changed.property] = changed.newValue;
+                            if (mustUpdate) {
+                                this.story.args[changed.property] = changed.newValue;
 
-                          this.requestUpdate();
-                          await this.updateComplete;
+                                this.requestUpdate();
+                                await this.updateComplete;
 
-                          if (this.codeEditor && !this.story.source) {
-                              await this.codeEditor.refresh(() => this._getSourceFromLit(this.story.render(this.story.args)));
-                          }
-                      }
-                  }}"></live-property-editor>
-              </div>
-            `
-                : nothing
-        }
-      </div>
-      <!-- <div style="border-top: 1px solid #e1e1e1;max-width: 600px;"> -->
-      <div class="code-block">
-        <code-editor
-          class="source-code"
-          .transformSource="${(s: string) => this._transformSource(s)}"
-          .extensions="${async () => [this._currentCodeTheme(), langHtml(await loadCustomElementsCodeMirrorCompletionsRemote())]}"
-          .code="${live(storySource ?? '')}"
-          @codemirror-loaded="${(e: CustomEvent<CodeMirrorEditorEvent>) => {
-              const newSource = e.detail.source;
-              this.originalInteractiveSrc = newSource;
-              this._interactiveSrc = newSource;
-          }}"
-          @codemirror-source-change="${(e: CustomEvent<CodeMirrorSourceUpdateEvent>) => {
-              const newSource = e.detail.source;
-              this._interactiveSrc = newSource;
-              this.overrideInteractive = this._interactiveSrc !== this.originalInteractiveSrc && this._interactiveSrc !== storySource;
+                                if (this.codeEditor && !this.story.source) {
+                                    await this.codeEditor.refresh(() => this._getSourceFromLit(this.story.render(this.story.args)));
+                                }
+                            }
+                        }}"></live-property-editor>
+                    </div>
+                    `
+                        : nothing
+                }
+            </div>
+            <!-- <div style="border-top: 1px solid #e1e1e1;max-width: 600px;"> -->
+            <div class="code-block">
+                <code-editor
+                class="source-code"
+                .transformSource="${(s: string) => this._transformSource(s)}"
+                .extensions="${async () => [this._currentCodeTheme(), langHtml(await loadCustomElementsCodeMirrorCompletionsRemote())]}"
+                .code="${live(storySource ?? '')}"
+                @codemirror-loaded="${(e: CustomEvent<CodeMirrorEditorEvent>) => {
+                    const newSource = e.detail.source;
+                    this.originalInteractiveSrc = newSource;
+                    this._interactiveSrc = newSource;
+                }}"
+                @codemirror-source-change="${(e: CustomEvent<CodeMirrorSourceUpdateEvent>) => {
+                    const newSource = e.detail.source;
+                    this._interactiveSrc = newSource;
+                    this.overrideInteractive = this._interactiveSrc !== this.originalInteractiveSrc && this._interactiveSrc !== storySource;
 
-              this.requestUpdate();
-          }}"
-          ?read-only="${true /*!this.interactive*/}">
-        </code-editor>
-      </div>
-      <div class="play-tests">
-        <div style="display: flex; flex-direction: row;">
-          <omni-button
-            class="docs-omni-component"
-            label="Run Tests"
-            slot-position="left"
-            ?disabled=${
-                this.overrideInteractive ||
-                this._isBusyPlaying ||
-                JSON.stringify(this.story.originalArgs).replaceAll('\n', '').replaceAll('\\n', '').replaceAll('\t', '').replaceAll(' ', '') !==
-                    JSON.stringify(this.story.args).replaceAll('\n', '').replaceAll('\\n', '').replaceAll('\t', '').replaceAll(' ', '')
-            }
-            @click="${() => this._play(this.story, `.${this.key}`)}">
-            <omni-icon class="docs-omni-component" icon="@material/play_arrow" style="margin-right: 8px;"></omni-icon>
-          </omni-button>
-          <div class="${this.key + '-result'} success">
-            <span class="material-icons" style="color: #155724;">check</span>
-            <span style="margin-left: 8px;">Passed</span>
-          </div>
+                    this.requestUpdate();
+                }}"
+                ?read-only="${true /*!this.interactive*/}">
+                </code-editor>
+            </div>
+            <div class="play-tests">
+                <div style="display: flex; flex-direction: row;">
+                <omni-button
+                    class="docs-omni-component"
+                    label="Run Tests"
+                    slot-position="left"
+                    ?disabled=${
+                        this.overrideInteractive ||
+                        this._isBusyPlaying ||
+                        JSON.stringify(this.story.originalArgs)
+                            .replaceAll('\n', '')
+                            .replaceAll('\\n', '')
+                            .replaceAll('\t', '')
+                            .replaceAll(' ', '') !==
+                            JSON.stringify(this.story.args).replaceAll('\n', '').replaceAll('\\n', '').replaceAll('\t', '').replaceAll(' ', '')
+                    }
+                    @click="${() => this._play(this.story, `.${this.key}`)}">
+                    <omni-icon class="docs-omni-component" icon="@material/play_arrow" style="margin-right: 8px;"></omni-icon>
+                </omni-button>
+                <div class="${this.key + '-result'} success">
+                    <span class="material-icons" style="color: #155724;">check</span>
+                    <span style="margin-left: 8px;">Passed</span>
+                </div>
+                </div>
+                <div class="${this.key + '-result'} failure">
+                <span class="material-icons" style="color: #721c24;">close</span>
+                <span style="margin-left: 8px;"><pre>${this._playError}</pre></span>
+                </div>
+            </div>
         </div>
-        <div class="${this.key + '-result'} failure">
-          <span class="material-icons" style="color: #721c24;">close</span>
-          <span style="margin-left: 8px;"><pre>${this._playError}</pre></span>
-        </div>
-      </div>
     `;
     }
 
