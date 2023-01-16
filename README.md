@@ -223,6 +223,14 @@ Control to enter a formatted currency value.
 
 </td></tr><tr><td>
 
+[omni-email-field](src/email-field/README.md)
+
+</td><td>
+
+Control to input an email address.
+
+</td></tr><tr><td>
+
 [omni-hyperlink](src/hyperlink/README.md)
 
 </td><td>
@@ -372,6 +380,14 @@ Input control to enter a single line of numbers.
 </td><td>
 
 Password input control.
+
+</td></tr><tr><td>
+
+[omni-pin-field](src/pin-field/README.md)
+
+</td><td>
+
+Pin input control.
 
 </td></tr><tr><td>
 
