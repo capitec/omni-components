@@ -20,7 +20,7 @@
             <a class="menu-link {% if currentUrl.includes(component.name | slug) %}selected{% endif %}"
             {% if currentUrl.includes(component.name | slug) %}aria-current="page"{% endif %} 
             href="./components/{{ component.name | slug }}">
-                {{ component.name }}
+                {{ component.name | splitPascalCase() }}
             </a>
         </div>
         {%- endfor %}

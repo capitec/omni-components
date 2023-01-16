@@ -87,106 +87,118 @@ permalink: "components/{{ component.name | slug }}/"
             </div>
             <div class="component-tab" id="docs" role="tabpanel">
 
-                <h2 class="component-props-table-header" style="padding-top: 24px;">Properties</h2>
-                <div class="docs-search-area">
-                    <omni-search-field id="attribute-search"></omni-search-field>
-                </div>
-                <div class="component-props-table-wrapper">
-                    <table class="component-props-table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Attribute</th>
-                                <th scope="col">Type</th>
-                                <th scope="col">Description</th>
-                            </tr>
-                        </thead>
-                        <tbody id="component-attributes">
-                            {% for property in customElements | getProperties(component.name) %}
-                            <tr>
-                                <td data-label="Name" scope="row">{{property.name}}</td>
-                                <td data-label="Attribute" scope="row">{{ property.attribute }}&nbsp;</td>
-                                <td data-label="Type"><pre><code class="language-js">{{property.type.text}}</code></pre></td>
-                                <td data-label="Description">{{ property.description | safe }}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+                {% set properties = customElements | getProperties(component.name) %}
+                {% if properties.length > 0 %}
+                    <h2 class="component-props-table-header" style="padding-top: 24px;">Properties</h2>
+                    <div class="docs-search-area">
+                        <omni-search-field id="attribute-search"></omni-search-field>
+                    </div>
+                    <div class="component-props-table-wrapper">
+                        <table class="component-props-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Attribute</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody id="component-attributes">
+                                {% for property in properties %}
+                                <tr>
+                                    <td data-label="Name" scope="row">{{property.name}}</td>
+                                    <td data-label="Attribute" scope="row">{{ property.attribute }}&nbsp;</td>
+                                    <td data-label="Type"><pre><code class="language-js">{{property.type.text}}</code></pre></td>
+                                    <td data-label="Description">{{ property.description | safe }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
                 
-                <h2 class="component-props-table-header">Events</h2>
-                <div class="docs-search-area">
-                    <omni-search-field id="event-search"></omni-search-field>
-                </div>
-                <div class="component-props-table-wrapper">
-                    <table class="component-props-table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Type</th>
-                                <th scope="col">Description</th>
-                            </tr>
-                        </thead>
-                        <tbody id="component-events">
-                            {% for event in customElements | getEvents(component.name) %}
-                            <tr>
-                                <td data-label="Name" scope="row">{{event.name}}</td>
-                                <td data-label="Type"><pre><code class="language-js">{{event.type.text}}</code></pre></td>
-                                <td data-label="Description">{{ event.description | safe }}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-                
-                <h2 class="component-props-table-header">Slots</h2>
-                <div class="docs-search-area">
-                    <omni-search-field id="slot-search"></omni-search-field>
-                </div>
-                <div class="component-props-table-wrapper">
-                    <table class="component-props-table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Description</th>
-                            </tr>
-                        </thead>
-                        <tbody id="component-slots">
-                            {% for slot in customElements | getSlots(component.name) %}
-                            <tr>
-                                <td data-label="Name" scope="row"><pre><code class="language-js">{{slot.name}}</code></pre></td>
-                                <td data-label="Description">{{ slot.description | safe }}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+                {% set events = customElements | getEvents(component.name) %}
+                {% if events.length > 0 %}
+                    <h2 class="component-props-table-header">Events</h2>
+                    <div class="docs-search-area">
+                        <omni-search-field id="event-search"></omni-search-field>
+                    </div>
+                    <div class="component-props-table-wrapper">
+                        <table class="component-props-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody id="component-events">
+                                {% for event in events %}
+                                <tr>
+                                    <td data-label="Name" scope="row">{{event.name}}</td>
+                                    <td data-label="Type"><pre><code class="language-js">{{event.type.text}}</code></pre></td>
+                                    <td data-label="Description">{{ event.description | safe }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+                                
+                {% set slots = customElements | getSlots(component.name) %}
+                {% if slots.length > 0 %}
+                    <h2 class="component-props-table-header">Slots</h2>
+                    <div class="docs-search-area">
+                        <omni-search-field id="slot-search"></omni-search-field>
+                    </div>
+                    <div class="component-props-table-wrapper">
+                        <table class="component-props-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody id="component-slots">
+                                {% for slot in slots %}
+                                <tr>
+                                    <td data-label="Name" scope="row"><pre><code class="language-js">{{slot.name}}</code></pre></td>
+                                    <td data-label="Description">{{ slot.description | safe }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
             </div>
             <div class="component-tab" id="styles" role="tabpanel">
                 <div style="padding-top: 24px;"></div>
                 {% for cssCat in customElements | getCSSProperties(component.name) %}
-                <h2 class="component-props-table-header" >{{ cssCat.category }}</h2>
-                <div class="docs-search-area">
-                    <omni-search-field class="css-category" data-category="{{ cssCat.category }}"></omni-search-field>
-                </div>
-                <div class="component-props-table-wrapper">
-                    <table class="component-props-table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Description</th>
-                            </tr>
-                        </thead>
-                        <tbody data-category="{{ cssCat.category }}" class="component-css-props">
-                            {% for cssProp in cssCat.properties %}
-                            <tr>
-                                <td data-label="Name" scope="row"><pre><code class="language-css">{{cssProp.name}}</code></pre></td>
-                                <td data-label="Description">{{ cssProp.description | safe }}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+                    {% set cssProperties = cssCat.properties %}
+                    {% if cssProperties.length > 0 %}
+                        <h2 class="component-props-table-header" >{{ cssCat.category }}</h2>
+                        <div class="docs-search-area">
+                            <omni-search-field class="css-category" data-category="{{ cssCat.category }}"></omni-search-field>
+                        </div>
+                        <div class="component-props-table-wrapper">
+                            <table class="component-props-table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody data-category="{{ cssCat.category }}" class="component-css-props">
+                                    {% for cssProp in cssProperties %}
+                                    <tr>
+                                        <td data-label="Name" scope="row"><pre><code class="language-css">{{cssProp.name}}</code></pre></td>
+                                        <td data-label="Description">{{ cssProp.description | safe }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
                 {% endfor %}
             </div>
         </div>
