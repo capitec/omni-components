@@ -1041,21 +1041,7 @@ code[class*='language-'] > span {
     hyphens: none;
 }
 
-pre[class*='language-']::-moz-selection,
-pre[class*='language-'] ::-moz-selection,
-code[class*='language-']::-moz-selection,
-code[class*='language-'] ::-moz-selection {
-    text-shadow: none;
-    background: var(--docs-prism-selection-color);
-}
 
-pre[class*='language-']::selection,
-pre[class*='language-'] ::selection,
-code[class*='language-']::selection,
-code[class*='language-'] ::selection {
-    text-shadow: none;
-    background: var(--docs-prism-selection-color);
-}
 
 @media print {
     code[class*='language-'],

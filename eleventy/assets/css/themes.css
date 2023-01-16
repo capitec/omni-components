@@ -40,7 +40,6 @@ html {
     --code-editor-theme: light;
 
     --docs-prism-span-text-shadow: 0 1px var(--omni-theme-background-hover-color);
-    --docs-prism-selection-color: #b3d4fc;
     --docs-prism-comment-color: slategray;
     --docs-prism-punctuation-color: #999;
     --docs-prism-namespace-opacity: 0.7;
@@ -179,7 +178,6 @@ header {
     --docs-link-color: deepskyblue;
     --docs-link-visited-color: blueviolet;
     --docs-prism-span-text-shadow: inherit;
-    --docs-prism-selection-color: inherit;
     --docs-prism-comment-color: #999;
     --docs-prism-punctuation-color: #ccc;
     --docs-prism-namespace-opacity: initial;
