@@ -79,6 +79,11 @@ export function getCSSProperties(value, componentName) {
     })
 }
 
+export function splitPascalCase(word) {
+	var wordRe = /($[a-z])|[A-Z][^A-Z]+/g;
+	return word.match(wordRe).join(' ');
+}
+
 function distinct(value, index, self) {
     return self.indexOf(value) === index;
 }

@@ -24,9 +24,18 @@ body {
     scroll-behavior: smooth;
 }
 
-h1,
-h2 {
+h1, h2, h3 {
     padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+h1 {
+    border-bottom: 1px solid var(--docs-border-color);
+}
+
+p, ul {
+    padding-top: 10px;
+    /* padding-bottom: 10px; */
 }
 
 a,
