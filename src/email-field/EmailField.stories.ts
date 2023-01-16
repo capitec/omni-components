@@ -49,10 +49,10 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
 
         const inputField = textField.shadowRoot.getElementById('inputField');
 
-        await userEvent.type(inputField, 'Value Update', {
+        await userEvent.type(inputField, 'JohnDoe@gmail.com', {
             pointerEventsCheck: 0
         });
-        const value = 'Value Update';
+        const value = 'JohnDoe@gmail.com';
         await expect(inputField).toHaveValue(value);
 
         await expect(input).toBeCalledTimes(value.length);
