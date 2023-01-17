@@ -1,5 +1,6 @@
 import { waitFor, within } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
+import { setUIValueClean } from '@testing-library/user-event/dist/esm/document/UI.js';
 import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
@@ -53,11 +54,14 @@ export const Interactive: ComponentStoryFormat<Args> = {
     },
     play: async (context) => {
         const pinField = within(context.canvasElement).getByTestId<PinField>('test-pin-field');
+        // Required to clear userEvent Symbol that keeps hidden state of previously typed values via userEvent. If not cleared this cannot be run multiple times with the same results
+
         const interactions = jest.fn();
         pinField.addEventListener('input', interactions);
         pinField.addEventListener('click', interactions);
 
-        const inputField = pinField.shadowRoot.getElementById('inputField');
+        const inputField = pinField.shadowRoot.getElementById('inputField') as HTMLInputElement;
+        setUIValueClean(inputField);
 
         const showSlotElement = pinField.shadowRoot.querySelector<HTMLSlotElement>('slot[name=hide]');
         await expect(showSlotElement).toBeTruthy();
@@ -74,6 +78,9 @@ export const Interactive: ComponentStoryFormat<Args> = {
             pointerEventsCheck: 0
         });
         const value = 1234;
+
+        // Required to clear userEvent Symbol that keeps hidden state of previously typed values via userEvent. If not cleared this cannot be run multiple times with the same results
+        setUIValueClean(inputField);
 
         // TODO: Fix race conditions in tests
         if (navigator.userAgent === 'Test Runner') {
@@ -96,7 +103,7 @@ export const Hint = HintStory<PinField, BaseArgs>('omni-pin-field');
 
 export const Error_Label = ErrorStory<PinField, BaseArgs>('omni-pin-field');
 
-export const Value = ValueStory<PinField, BaseArgs>('omni-pin-field');
+export const Value = ValueStory<PinField, BaseArgs>('omni-pin-field', 123);
 
 export const Prefix = PrefixStory<PinField, BaseArgs>('omni-pin-field');
 
