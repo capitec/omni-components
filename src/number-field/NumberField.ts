@@ -44,6 +44,27 @@ export class NumberField extends OmniFormElement {
         this.addEventListener('input', this._keyInput.bind(this), {
             capture: true
         });
+        this.addEventListener('keydown', this._keyDown.bind(this), {
+            capture: true
+        });
+    }
+
+    // Added for browsers that allow text values entered into a input when type is set to number.
+    override async attributeChangedCallback(name: string, _old: string | null, value: string | null): Promise<void> {
+        super.attributeChangedCallback(name, _old, value);
+        if (name === 'value') {
+            if (new RegExp('^[0-9]+$').test(value) === false) {
+                return;
+            }
+        }
+    }
+
+    _keyDown(e: KeyboardEvent) {
+        // Stop alpha keys
+        if (e.key >= 'a' && e.key <= 'z') {
+            e.preventDefault();
+            return;
+        }
     }
 
     _keyInput() {
