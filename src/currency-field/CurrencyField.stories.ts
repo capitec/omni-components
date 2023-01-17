@@ -59,7 +59,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         fractionalSeparator: '.',
         thousandsSeparator: ',',
         currencySymbol: '$',
-        formatter: '\\B(?<!\\.\\d*)(?=(\\d{3})+(?!\\d))'
+        formatter: '\\B(?=(\\d{3})+(?!\\d))'
     },
     play: async (context) => {
         const currencyField = within(context.canvasElement).getByTestId<CurrencyField>('test-currency-field');

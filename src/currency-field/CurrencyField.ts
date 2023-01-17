@@ -78,7 +78,7 @@ export class CurrencyField extends OmniFormElement {
      * Formatter provided to format the value.
      * @attr
      */
-    @property({ type: String, reflect: true }) formatter: string = '\\B(?<!\\.\\d*)(?=(\\d{3})+(?!\\d))';
+    @property({ type: String, reflect: true }) formatter: string = '\\B(?=(\\d{3})+(?!\\d))';
 
     // Internal state properties
     @state() private _stringValue: string = '';
