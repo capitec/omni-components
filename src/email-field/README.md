@@ -1,6 +1,6 @@
 # omni-email-field
 
-Control to input an email address.
+Email input control, used in forms for input validation and to display correct virtual keyboard on mobile.
 
 ## Example
 
@@ -44,13 +44,13 @@ Control to input an email address.
 
 | Property                                         | Description                                    |
 |--------------------------------------------------|------------------------------------------------|
-| `--omni-email-field-email-align`                 | email field email align.                       |
-| `--omni-email-field-font-color`                  | email field font color.                        |
-| `--omni-email-field-font-family`                 | email field font family.                       |
-| `--omni-email-field-font-size`                   | email field font size.                         |
-| `--omni-email-field-font-weight`                 | email field font weight.                       |
-| `--omni-email-field-height`                      | email field height.                            |
-| `--omni-email-field-padding`                     | email field width.                             |
+| `--omni-email-field-font-color`                  | Email field font color.                        |
+| `--omni-email-field-font-family`                 | Email field font family.                       |
+| `--omni-email-field-font-size`                   | Email field font size.                         |
+| `--omni-email-field-font-weight`                 | Email field font weight.                       |
+| `--omni-email-field-height`                      | Email field height.                            |
+| `--omni-email-field-padding`                     | Email field width.                             |
+| `--omni-email-field-text-align`                  | Email field text align.                        |
 | `--omni-form-border-bottom`                      | Form border bottom.                            |
 | `--omni-form-border-color`                       | Form border color.                             |
 | `--omni-form-border-left`                        | Form border left.                              |

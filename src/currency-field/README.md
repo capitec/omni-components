@@ -8,7 +8,6 @@ Control to enter a formatted currency value.
 <omni-currency-field
  label="Enter currency value"
  value="100"
- data="{id: 123, name: 'Debit'}"
  hint="Required"
  error="Please enter the correct amount"
  currency-symbol="$"
