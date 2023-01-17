@@ -21,7 +21,7 @@ export function getImport(value, componentName) {
 
 export function getProperties(value, componentName) {
     const declaration = getComponentDeclaration(value, componentName);
-    return declaration.members?.filter(m => m.kind === 'field')?.map(a => {
+    return declaration.members?.filter(m => m.kind === 'field' && m.privacy !== 'private')?.map(a => {
         return {
             ...a,
             description: filterJsDocLinks(a.description)
@@ -77,6 +77,11 @@ export function getCSSProperties(value, componentName) {
             properties: properties.filter(p => p.category === c)
         }
     })
+}
+
+export function splitPascalCase(word) {
+	var wordRe = /($[a-z])|[A-Z][^A-Z]+/g;
+	return word.match(wordRe).join(' ');
 }
 
 function distinct(value, index, self) {

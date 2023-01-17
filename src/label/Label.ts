@@ -50,7 +50,7 @@ export class Label extends OmniElement {
     @property({ type: String, reflect: true }) label: string;
 
     /**
-     * The type of label to display.
+     * Type of label to display.
      * @attr [type="default"]
      */
     @property({ type: String, reflect: true }) type: 'default' | 'title' | 'subtitle' | 'strong' = 'default';

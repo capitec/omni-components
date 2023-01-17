@@ -1,3 +1,4 @@
+/* eslint-disable no-prototype-builtins */
 import { html as langHtml } from '@codemirror/lang-html';
 import { githubDark as codeThemeDark } from '@ddietr/codemirror-themes/github-dark.js';
 import { githubLight as codeTheme } from '@ddietr/codemirror-themes/github-light.js';
@@ -47,7 +48,7 @@ export class LivePropertyEditor extends OmniElement {
         this.customElements = await loadCustomElements(this.customElementsPath);
 
         document.addEventListener('omni-docs-theme-change', (e: Event) => {
-            this.theme = (e as CustomEvent<string>).detail;
+            this.theme = getComputedStyle(document.documentElement).getPropertyValue('--code-editor-theme')?.trim();
             const codeEditors = this.renderRoot.querySelectorAll<CodeEditor>('code-editor');
             if (codeEditors) {
                 codeEditors.forEach((ce) => {
@@ -56,8 +57,7 @@ export class LivePropertyEditor extends OmniElement {
             }
         });
 
-        const themeStorageKey = 'omni-docs-theme-selection';
-        this.theme = window.sessionStorage.getItem(themeStorageKey);
+        this.theme = getComputedStyle(document.documentElement).getPropertyValue('--code-editor-theme')?.trim();
     }
 
     static override get styles() {
@@ -254,7 +254,10 @@ export class LivePropertyEditor extends OmniElement {
                 }"
                 @value-change="${(e: CustomEvent) => {
                     this._propertyChanged({
-                        property: this.data && attribute.fieldName && this.data.args[attribute.fieldName] ? attribute.fieldName : attribute.name,
+                        property:
+                            this.data && attribute.fieldName && this.data.args.hasOwnProperty(attribute.fieldName)
+                                ? attribute.fieldName
+                                : attribute.name,
                         newValue: e.detail.new,
                         oldValue: e.detail.old
                     });
@@ -287,7 +290,10 @@ export class LivePropertyEditor extends OmniElement {
                 @change="${(e: Event) => {
                     const value = (e.target as HTMLSelectElement).value;
                     this._propertyChanged({
-                        property: this.data && attribute.fieldName && this.data.args[attribute.fieldName] ? attribute.fieldName : attribute.name,
+                        property:
+                            this.data && attribute.fieldName && this.data.args.hasOwnProperty(attribute.fieldName)
+                                ? attribute.fieldName
+                                : attribute.name,
                         newValue: value,
                         oldValue: this.data ? this.data.args[attribute.name] : undefined
                     });
@@ -330,7 +336,10 @@ export class LivePropertyEditor extends OmniElement {
                         value = JSON.parse(value);
                     }
                     this._propertyChanged({
-                        property: this.data && attribute.fieldName && this.data.args[attribute.fieldName] ? attribute.fieldName : attribute.name,
+                        property:
+                            this.data && attribute.fieldName && this.data.args.hasOwnProperty(attribute.fieldName)
+                                ? attribute.fieldName
+                                : attribute.name,
                         newValue: value,
                         oldValue: this.data ? this.data.args[attribute.name] ?? this.data.args[attribute.fieldName ?? attribute.name] : undefined
                     });
@@ -371,7 +380,7 @@ export class LivePropertyEditor extends OmniElement {
     }
 
     private _currentCodeTheme() {
-        if (this.theme?.toLowerCase() === 'dark-theme.css') {
+        if (this.theme?.toLowerCase() === 'dark') {
             return codeThemeDark;
         }
         return codeTheme;

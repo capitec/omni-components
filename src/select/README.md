@@ -25,18 +25,18 @@ Control to get / set a value within a list of options.
 | `data`         | `data`          |           | `object`                                         |                     | Data associated with the component.              |
 | `dir`          |                 |           | `string`                                         |                     |                                                  |
 | `disabled`     | `disabled`      |           | `boolean`                                        | false               | Indicator if the component should be disabled.   |
-| `displayField` | `display-field` |           | `string`                                         |                     | The field of the item to display as one of the selectable options. |
-| `emptyMessage` | `empty-message` |           | `string`                                         | "No items provided" | The message displayed in the items container when no items are bound to the component. |
-| `error`        | `error`         |           | `string`                                         |                     | A error message guiding a user to correct a mistake. |
-| `hint`         | `hint`          |           | `string`                                         |                     | A hint message to assist the user.               |
-| `idField`      | `id-field`      |           | `string`                                         | "id"                | The id field of the items provided.              |
+| `displayField` | `display-field` |           | `string`                                         |                     | Field of the item to display as one of the selectable options. |
+| `emptyMessage` | `empty-message` |           | `string`                                         | "No items provided" | Message displayed in the items container when no items are bound to the component. |
+| `error`        | `error`         |           | `string`                                         |                     | Error message guiding a user to correct a mistake. |
+| `hint`         | `hint`          |           | `string`                                         |                     | Hint message to assist the user.                 |
+| `idField`      | `id-field`      |           | `string`                                         | "id"                | Id field of the items provided.                  |
 | `items`        | `items`         |           | `string[] \| Record<string, unknown>[] \| Promise<SelectTypes> \| (() => SelectItems)` |                     | Selectable items of the select component.        |
 | `label`        | `label`         |           | `string`                                         |                     | Text label.                                      |
 | `lang`         |                 |           | `string`                                         |                     |                                                  |
 | `override`     | `override`      |           |                                                  |                     | Used to set the base direction of text for display |
-| `renderItem`   | `renderItem`    |           | `RenderFunction`                                 |                     | The render function for each item.               |
+| `renderItem`   | `renderItem`    |           | `RenderFunction`                                 |                     | Render function for each item.                   |
 | `styles`       |                 | readonly  | `CSSResultGroup[]`                               |                     |                                                  |
-| `value`        | `value`         |           | `string \| number \| Record<string, unknown>`    | null                | The value entered into the form component.       |
+| `value`        | `value`         |           | `string \| number \| Record<string, unknown>`    | null                | Value entered into the form component.           |
 
 ## Methods
 
@@ -158,15 +158,6 @@ Control to get / set a value within a list of options.
 | `--omni-select-mobile-items-container-bottom`    | Select item container for mobile bottom.         |
 | `--omni-select-mobile-items-container-left`      | Select item container for mobile left.           |
 | `--omni-select-mobile-items-container-right`     | Select item container for mobile right.          |
-| `--omni-select-scrollbar-thumb-background-color` | Select items scroll bar thumb background color.  |
-| `--omni-select-scrollbar-thumb-border-radius`    | Select items scroll bar thumb border radius.     |
-| `--omni-select-scrollbar-thumb-width`            | Select items scroll bar thumb width.             |
-| `--omni-select-scrollbar-track-background-color` | Select items scroll bar track background color.  |
-| `--omni-select-scrollbar-track-border-radius`    | Select items scroll bar track border radius.     |
-| `--omni-select-scrollbar-track-padding-bottom`   | Select items scroll bar thumb bottom padding.    |
-| `--omni-select-scrollbar-track-padding-left`     | Select items scroll bar track left padding.      |
-| `--omni-select-scrollbar-track-padding-right`    | Select items scroll bar track right padding.     |
-| `--omni-select-scrollbar-track-padding-top`      | Select items scroll bar thumb top padding.       |
 | `--omni-theme-accent-active-color`               | Theme accent active color.                       |
 | `--omni-theme-accent-color`                      | Theme accent color.                              |
 | `--omni-theme-accent-hover-color`                | Theme accent hover color.                        |

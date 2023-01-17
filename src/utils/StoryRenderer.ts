@@ -88,7 +88,7 @@ export class StoryRenderer extends LitElement {
             });
 
         document.addEventListener('omni-docs-theme-change', (e: Event) => {
-            this.theme = (e as CustomEvent<string>).detail;
+            this.theme = getComputedStyle(document.documentElement).getPropertyValue('--code-editor-theme')?.trim();
             const codeEditors = this.renderRoot.querySelectorAll<CodeEditor>('code-editor');
             if (codeEditors) {
                 codeEditors.forEach((ce) => {
@@ -96,8 +96,7 @@ export class StoryRenderer extends LitElement {
                 });
             }
         });
-        const themeStorageKey = 'omni-docs-theme-selection';
-        this.theme = window.sessionStorage.getItem(themeStorageKey);
+        this.theme = getComputedStyle(document.documentElement).getPropertyValue('--code-editor-theme')?.trim();
     }
 
     override disconnectedCallback() {
@@ -493,7 +492,7 @@ export class StoryRenderer extends LitElement {
     }
 
     private _currentCodeTheme() {
-        if (this.theme?.toLowerCase() === 'dark-theme.css') {
+        if (this.theme?.toLowerCase() === 'dark') {
             return codeThemeDark;
         }
         return codeTheme;

@@ -22,13 +22,13 @@ Control to input text.
 | `data`     | `data`     |           | `object`                                      |         | Data associated with the component.              |
 | `dir`      |            |           | `string`                                      |         |                                                  |
 | `disabled` | `disabled` |           | `boolean`                                     | false   | Indicator if the component should be disabled.   |
-| `error`    | `error`    |           | `string`                                      |         | A error message guiding a user to correct a mistake. |
-| `hint`     | `hint`     |           | `string`                                      |         | A hint message to assist the user.               |
+| `error`    | `error`    |           | `string`                                      |         | Error message guiding a user to correct a mistake. |
+| `hint`     | `hint`     |           | `string`                                      |         | Hint message to assist the user.                 |
 | `label`    | `label`    |           | `string`                                      |         | Text label.                                      |
 | `lang`     |            |           | `string`                                      |         |                                                  |
 | `override` | `override` |           |                                               |         | Used to set the base direction of text for display |
 | `styles`   |            | readonly  | `CSSResultGroup[]`                            |         |                                                  |
-| `value`    | `value`    |           | `string \| number \| Record<string, unknown>` | null    | The value entered into the form component.       |
+| `value`    | `value`    |           | `string \| number \| Record<string, unknown>` | null    | Value entered into the form component.           |
 
 ## Methods
 
