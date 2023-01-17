@@ -105,6 +105,7 @@ Password input control.
 | `--omni-password-field-font-weight`              | Password field font weight.                    |
 | `--omni-password-field-height`                   | Password field height.                         |
 | `--omni-password-field-icon-color`               | Password field slot icon color.                |
+| `--omni-password-field-icon-height`              | Password field slot height.                    |
 | `--omni-password-field-icon-width`               | Password field slot width.                     |
 | `--omni-password-field-padding`                  | Password field width.                          |
 | `--omni-password-field-text-align`               | Password field text align.                     |
