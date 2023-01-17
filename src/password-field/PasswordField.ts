@@ -38,6 +38,7 @@ import '../icons/EyeVisible.icon.js';
  *
  * @cssprop --omni-password-field-icon-color - Password field slot icon color.
  * @cssprop --omni-password-field-icon-width - Password field slot width.
+ * @cssprop --omni-password-field-icon-height - Password field slot height.
  *
  * @cssprop --omni-password-field-text-align - Password field text align.
  * @cssprop --omni-password-field-font-color - Password field font color.
@@ -111,6 +112,7 @@ export class PasswordField extends OmniFormElement {
         ::slotted([slot='show']),
         ::slotted([slot='hide']) {
           width: var(--omni-password-field-icon-width, 24px);
+          height: var(--omni-password-field-icon-height, 24px);
         }
 
         /* Prevent default icon from displaying in password field on Edge browser */

@@ -150,7 +150,7 @@ export class OmniFormElement extends OmniElement {
             const formParentHeight = this._formContainerElement.clientHeight;
 
             if (this._labelElement) {
-                this._labelElement.style.transform = `translateX(${formParentOffset * -1}px)  translateY(${formParentHeight * -3.3}%) scale(95%)`;
+                this._labelElement.style.transform = `translateX(${formParentOffset * -1}px)  translateY(${formParentHeight * -3.3}%) scale(0.95)`;
             }
         } else if (!this.value && this.label && this._labelElement && !this.hasFocus) {
             this._labelElement.style.transform = '';
@@ -167,7 +167,7 @@ export class OmniFormElement extends OmniElement {
         const formParentHeight = this._formContainerElement.clientHeight;
 
         if (!this.value && this._labelElement) {
-            this._labelElement.style.transform = `translateX(${formParentOffset * -1}px) translateY(${formParentHeight * -3.3}%) scale(95%)`;
+            this._labelElement.style.transform = `translateX(${formParentOffset * -1}px) translateY(${formParentHeight * -3.3}%) scale(0.95)`;
         }
     }
 

@@ -54,18 +54,31 @@ export class PinField extends OmniFormElement {
     /**
      * @ignore
      */
-    @state() protected type = 'number';
+    @state() protected type: 'password' | 'number' = 'number';
 
     @query('#inputField')
     private _inputElement: HTMLInputElement;
-
     private showPin: boolean;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    private isWebkit: boolean;
 
     override connectedCallback() {
         super.connectedCallback();
         this.addEventListener('input', this._keyInput.bind(this), {
             capture: true
         });
+        this.addEventListener('keydown', this._keyDown.bind(this), {
+            capture: true
+        });
+    }
+
+    //Added for non webkit supporting browsers
+    protected override async firstUpdated(): Promise<void> {
+        const style: any = window.getComputedStyle(this._inputElement);
+        this.isWebkit = style.webkitTextSecurity;
+        if (!this.isWebkit) {
+            this.type = 'password';
+        }
     }
 
     override async attributeChangedCallback(name: string, _old: string | null, value: string | null): Promise<void> {
@@ -74,6 +87,14 @@ export class PinField extends OmniFormElement {
             if (new RegExp('^[0-9]+$').test(value) === false) {
                 return;
             }
+        }
+    }
+
+    _keyDown(e: KeyboardEvent) {
+        // Stop alpha keys
+        if (e.key >= 'a' && e.key <= 'z') {
+            e.preventDefault();
+            return;
         }
     }
 
@@ -90,9 +111,17 @@ export class PinField extends OmniFormElement {
         if (this.showPin) {
             this.showPin = false;
             this._inputElement.classList.add('field-hide-pin');
+
+            if (!this.isWebkit) {
+                this.type = 'password';
+            }
         } else {
             this.showPin = true;
             this._inputElement.classList.remove('field-hide-pin');
+
+            if (!this.isWebkit) {
+                this.type = 'number';
+            }
         }
 
         this.requestUpdate();
@@ -126,6 +155,7 @@ export class PinField extends OmniFormElement {
         ::slotted([slot='show']),
         ::slotted([slot='hide']) {
           width: var(--omni-pin-field-icon-width, 24px);
+          height: var(--omni-pin-field-icon-height, 24px);
         }
 
         .field {
@@ -152,7 +182,6 @@ export class PinField extends OmniFormElement {
 
         .field-hide-pin {
             -webkit-text-security:disc;
-            -moz-appearance: password;
         }
 
         /* Used to not display default stepper */
@@ -161,12 +190,11 @@ export class PinField extends OmniFormElement {
           /* display: none; <- Crashes Chrome on hover */
           -webkit-appearance: none;
           margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
-        }
+        }   
         
         input[type='number'] {
-          -moz-appearance: textfield; /* Firefox */
-        }
-
+            -moz-appearance: textfield; /* Firefox */
+          }
       `
         ];
     }
