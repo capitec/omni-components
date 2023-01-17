@@ -29,8 +29,7 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
       ?disabled="${args.disabled}"
       >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${
         args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}` : nothing
-    }${args.prefix || args.suffix ? '\r\n' : nothing}
-    </omni-number-field>
+    }${args.prefix || args.suffix ? '\r\n' : nothing}</omni-number-field>
   `,
     name: 'Interactive',
     args: {
