@@ -29,8 +29,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
     <omni-pin-field
       data-testid="test-pin-field"
       label="${ifNotEmpty(args.label)}"
-      .value="${args.value}"
-      .data="${args.data}"
+      value="${args.value}"
       hint="${ifNotEmpty(args.hint)}"
       error="${ifNotEmpty(args.error)}"
       ?disabled="${args.disabled}">
@@ -44,7 +43,6 @@ export const Interactive: ComponentStoryFormat<Args> = {
     args: {
         label: 'Label',
         value: '',
-        data: {},
         hint: '',
         error: '',
         disabled: false,
@@ -61,12 +59,12 @@ export const Interactive: ComponentStoryFormat<Args> = {
 
         const inputField = pinField.shadowRoot.getElementById('inputField');
 
-        const showSlotElement = pinField.shadowRoot.querySelector<HTMLSlotElement>('slot[name=show]');
+        const showSlotElement = pinField.shadowRoot.querySelector<HTMLSlotElement>('slot[name=hide]');
         await expect(showSlotElement).toBeTruthy();
         await userEvent.click(showSlotElement, {
             pointerEventsCheck: 0
         });
-        const hideSlotElement = pinField.shadowRoot.querySelector<HTMLSlotElement>('slot[name=hide]');
+        const hideSlotElement = pinField.shadowRoot.querySelector<HTMLSlotElement>('slot[name=show]');
         await expect(hideSlotElement).toBeTruthy();
         await userEvent.click(hideSlotElement, {
             pointerEventsCheck: 0
@@ -75,7 +73,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         await userEvent.type(inputField, '1234', {
             pointerEventsCheck: 0
         });
-        const value = '1234';
+        const value = 1234;
 
         // TODO: Fix race conditions in tests
         if (navigator.userAgent === 'Test Runner') {
@@ -85,7 +83,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
                 timeout: 3000
             });
 
-            await waitFor(() => expect(interactions).toBeCalledTimes(value.length + 1), {
+            await waitFor(() => expect(interactions).toBeCalledTimes(value.toString().length + 1), {
                 timeout: 3000
             });
         }

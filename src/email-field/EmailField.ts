@@ -4,7 +4,7 @@ import { live } from 'lit/directives/live.js';
 import { OmniFormElement } from '../core/OmniFormElement.js';
 
 /**
- * Control to input an email address.
+ * Email input control, used in forms for input validation and to display correct virtual keyboard on mobile.
  *
  * @import
  * ```js
@@ -16,7 +16,6 @@ import { OmniFormElement } from '../core/OmniFormElement.js';
  * <omni-email-field
  *   label="Enter a value"
  *   value="JohnDoe@mail.com"
- *   data="{'id': 12345, 'name': 'Test'}"
  *   hint="Required"
  *   error="Field level error message"
  *   disabled>
@@ -25,13 +24,13 @@ import { OmniFormElement } from '../core/OmniFormElement.js';
  *
  * @element omni-email-field
  *
- * @cssprop --omni-email-field-email-align - email field email align.
- * @cssprop --omni-email-field-font-color - email field font color.
- * @cssprop --omni-email-field-font-family - email field font family.
- * @cssprop --omni-email-field-font-size - email field font size.
- * @cssprop --omni-email-field-font-weight - email field font weight.
- * @cssprop --omni-email-field-height - email field height.
- * @cssprop --omni-email-field-padding - email field width.
+ * @cssprop --omni-email-field-text-align - Email field text align.
+ * @cssprop --omni-email-field-font-color - Email field font color.
+ * @cssprop --omni-email-field-font-family - Email field font family.
+ * @cssprop --omni-email-field-font-size - Email field font size.
+ * @cssprop --omni-email-field-font-weight - Email field font weight.
+ * @cssprop --omni-email-field-height - Email field height.
+ * @cssprop --omni-email-field-padding - Email field width.
  *
  */
 @customElement('omni-email-field')

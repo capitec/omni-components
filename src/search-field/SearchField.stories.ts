@@ -21,8 +21,7 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
         <omni-search-field
             data-testid="test-search-field"
             label="${ifNotEmpty(args.label)}"
-            .value="${args.value}"
-            .data="${args.data}"
+            value="${args.value}"
             hint="${ifNotEmpty(args.hint)}"
             error="${ifNotEmpty(args.error)}"
             ?disabled="${args.disabled}">
@@ -35,7 +34,6 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
     args: {
         label: 'Label',
         value: '',
-        data: {},
         hint: '',
         error: '',
         disabled: false,

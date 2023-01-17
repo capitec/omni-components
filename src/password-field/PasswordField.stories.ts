@@ -29,8 +29,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
     <omni-password-field
       data-testid="test-password-field"
       label="${ifNotEmpty(args.label)}"
-      .value="${args.value}"
-      .data="${args.data}"
+      value="${args.value}"
       hint="${ifNotEmpty(args.hint)}"
       error="${ifNotEmpty(args.error)}"
       ?disabled="${args.disabled}">
@@ -44,7 +43,6 @@ export const Interactive: ComponentStoryFormat<Args> = {
     args: {
         label: 'Label',
         value: '',
-        data: {},
         hint: '',
         error: '',
         disabled: false,

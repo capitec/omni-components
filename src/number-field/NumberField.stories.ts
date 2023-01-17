@@ -33,7 +33,7 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
     name: 'Interactive',
     args: {
         label: 'Label',
-        value: '100',
+        value: '',
         hint: '',
         error: '',
         disabled: false,

@@ -22,8 +22,7 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
     <omni-color-field
       data-testid="test-color-field"
       label="${ifNotEmpty(args.label)}"
-      .value="${args.value}"
-      .data="${args.data}"
+      value="${args.value}"
       hint="${ifNotEmpty(args.hint)}"
       error="${ifNotEmpty(args.error)}"
       ?disabled="${args.disabled}"

@@ -31,22 +31,23 @@ import '../icons/EyeVisible.icon.js';
  * @slot hide - Replaces the icon for the pin value hidden state.
  * @slot show - Replaces the icon for the checked value visible state.
  *
- * @cssprop --omni-pin-field-control-padding-right - pin field control padding right.
- * @cssprop --omni-pin-field-control-padding-left - pin field control padding left.
- * @cssprop --omni-pin-field-control-padding-top - pin field control padding top.
- * @cssprop --omni-pin-field-control-padding-bottom - pin field control padding bottom.
+ * @cssprop --omni-pin-field-control-padding-right - Pin field control padding right.
+ * @cssprop --omni-pin-field-control-padding-left - Pin field control padding left.
+ * @cssprop --omni-pin-field-control-padding-top - Pin field control padding top.
+ * @cssprop --omni-pin-field-control-padding-bottom - Pin field control padding bottom.
  *
- * @cssprop --omni-pin-field-icon-color - pin field slot icon color.
- * @cssprop --omni-pin-field-icon-width - pin field slot width.
+ * @cssprop --omni-pin-field-icon-color - Pin field slot icon color.
+ * @cssprop --omni-pin-field-icon-width - Pin field slot width.
+ * @cssprop --omni-pin-field-icon-height - Pin field slot height.
  *
- * @cssprop --omni-pin-field-text-align - pin field text align.
- * @cssprop --omni-pin-field-font-color - pin field font color.
- * @cssprop --omni-pin-field-font-family - pin field font family.
- * @cssprop --omni-pin-field-font-size - pin field font size.
- * @cssprop --omni-pin-field-font-weight - pin field font weight.
- * @cssprop --omni-pin-field-height - pin field height.
- * @cssprop --omni-pin-field-padding - pin field width.
- * @cssprop --omni-pin-field-width - pin field width.
+ * @cssprop --omni-pin-field-text-align - Pin field text align.
+ * @cssprop --omni-pin-field-font-color - Pin field font color.
+ * @cssprop --omni-pin-field-font-family - Pin field font family.
+ * @cssprop --omni-pin-field-font-size - Pin field font size.
+ * @cssprop --omni-pin-field-font-weight - Pin field font weight.
+ * @cssprop --omni-pin-field-height - Pin field height.
+ * @cssprop --omni-pin-field-padding - Pin field width.
+ * @cssprop --omni-pin-field-width - Pin field width.
  *
  */
 @customElement('omni-pin-field')
