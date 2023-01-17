@@ -22,8 +22,7 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
     <omni-number-field
       data-testid="test-number-field"
       label="${ifNotEmpty(args.label)}"
-      .value="${args.value}"
-      .data="${args.data}"
+      value="${args.value}"
       hint="${ifNotEmpty(args.hint)}"
       error="${ifNotEmpty(args.error)}"
       ?disabled="${args.disabled}"
@@ -34,8 +33,7 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
     name: 'Interactive',
     args: {
         label: 'Label',
-        value: '',
-        data: {},
+        value: '100',
         hint: '',
         error: '',
         disabled: false,
