@@ -8,7 +8,6 @@ Input control to enter a single line of numbers.
 <omni-number-field
   label="Enter a value"
   value=12345
-  data="{'id': 12345, 'name': 'Test'}"
   hint="Required"
   error="Field level error message"
   disabled>

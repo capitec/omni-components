@@ -227,7 +227,7 @@ Control to enter a formatted currency value.
 
 </td><td>
 
-Control to input an email address.
+Email input control, used in forms for input validation and to display correct virtual keyboard on mobile.
 
 </td></tr><tr><td>
 

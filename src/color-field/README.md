@@ -8,7 +8,6 @@ Color input control.
 <omni-color-field
   label="Enter a value"
   value="#F6B73C"
-  data="{'id': 12345, 'name': 'Test'}"
   hint="Required"
   error="Field level error message"
   disabled>

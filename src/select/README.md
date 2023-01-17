@@ -8,7 +8,6 @@ Control to get / set a value within a list of options.
 <omni-select
   label="Enter a value"
   value="Hello World"
-  data="{'id': 12345, 'name': 'Test'}"
   hint="Required"
   error="Field level error message"
   items={'item1','item2','item3','item4'}

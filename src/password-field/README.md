@@ -8,7 +8,6 @@ Password input control.
 <omni-password-field
   label="Enter a value"
   value="Hello World"
-  data="{'id': 12345, 'name': 'Test'}"
   hint="Required"
   error="Field level error message"
   disabled>
