@@ -104,7 +104,7 @@ export class CurrencyField extends OmniFormElement {
             });
             super._setLabelPosition();
         } else if (name === 'thousands-separator' || name === 'fractional-separator') {
-            if(this.value){
+            if (this.value) {
                 await this._formatToCurrency(this.value.toString()).then((res) => {
                     this._stringValue = res;
                 });
