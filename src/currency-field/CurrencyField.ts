@@ -98,7 +98,15 @@ export class CurrencyField extends OmniFormElement {
     override async attributeChangedCallback(name: string, _old: string | null, value: string | null): Promise<void> {
         super.attributeChangedCallback(name, _old, value);
         if (name === 'value') {
-            this._stringValue = this._formatToCurrency(value);
+            // this._stringValue = this._formatToCurrency(value);
+            await this._formatToCurrency(value).then((res) => {
+                this._stringValue = res;
+            });
+            super._setLabelPosition();
+        } else if (name === 'thousands-separator' || name === 'fractional-separator') {
+            await this._formatToCurrency(this.value.toString()).then((res) => {
+                this._stringValue = res;
+            });
             super._setLabelPosition();
         }
     }
@@ -132,7 +140,7 @@ export class CurrencyField extends OmniFormElement {
     }
 
     // Format the numeric value to a currency formatted string value.
-    _formatToCurrency(preFormattedValue: number | string): string {
+    async _formatToCurrency(preFormattedValue: number | string): Promise<string> {
         if (preFormattedValue === 0) {
             return preFormattedValue.toString();
         }
@@ -141,7 +149,9 @@ export class CurrencyField extends OmniFormElement {
             return '';
         }
 
-        const formattedValue = preFormattedValue.toString().replace(new RegExp(this.formatter, 'g'), this.thousandsSeparator);
+        const formattedValue = preFormattedValue.toString().replace(new RegExp(this.formatter, 'g'), this.thousandsSeparator || '');
+        console.log('formatted value', formattedValue);
+        await this.updateComplete;
 
         if (formattedValue.includes(this.fractionalSeparator)) {
             const amountPart = formattedValue.substring(0, formattedValue.indexOf(this.fractionalSeparator));
@@ -155,6 +165,7 @@ export class CurrencyField extends OmniFormElement {
             this._stringValue = amountPart + this.fractionalSeparator + fractionPart;
             return amountPart + this.fractionalSeparator + fractionPart;
         }
+
         return formattedValue;
     }
 
@@ -168,7 +179,7 @@ export class CurrencyField extends OmniFormElement {
         }
     }
 
-    _blur(): void {
+    async _blur(): Promise<void> {
         const inputValue = this._inputElement.value;
 
         if (inputValue.includes(this.fractionalSeparator)) {
@@ -182,13 +193,15 @@ export class CurrencyField extends OmniFormElement {
                 fractionPart += '0'.repeat(fractionalDifference);
             }
 
-            // Format amount and fraction (cents) parts to currency string, ignoring fraction if still partially completed eg: just '.' is valid.
-            this._stringValue = this._formatToCurrency(amountPart) + (this.fractionalPrecision > 0 ? this.fractionalSeparator + fractionPart : '');
+            await this._formatToCurrency(amountPart).then((res) => {
+                this._stringValue = res + (this.fractionalPrecision > 0 ? this.fractionalSeparator + fractionPart : '');
+            });
         } else {
-            this._stringValue = this._formatToCurrency(this._parseAmount(inputValue));
+            await this._formatToCurrency(this._parseAmount(inputValue)).then((res) => {
+                this._stringValue = res;
+            });
         }
-        this._formatToFloat(this._stringValue);
-        this.requestUpdate();
+        this.value = this._formatToFloat(this._stringValue);
     }
 
     async _keyDown(e: KeyboardEvent): Promise<void> {
@@ -196,23 +209,25 @@ export class CurrencyField extends OmniFormElement {
         const caretPosition = input.selectionStart;
 
         // If the pointer is positioned after a currency separator remove the separator and the preceding number.
-        if (input.value.charAt(caretPosition - 1) === this.thousandsSeparator && e.key.toLowerCase() === 'backspace') {
+        if (input.value.charAt(caretPosition - 1) === this.thousandsSeparator && (e.key.toLowerCase() === 'backspace' || e.keyCode === 229)) {
             // If the value includes a fraction (cents) separator parse the fraction part and append it to the value.
             if (input.value.includes(this.fractionalSeparator)) {
                 const fractionPart = this._parseFraction(input.value.substring(input.value.indexOf(this.fractionalSeparator) + 1));
-                this._stringValue =
-                    this._formatToCurrency(
-                        this._parseAmount(
-                            input.value.substring(0, caretPosition - 2) +
-                                input.value.substring(caretPosition, input.value.indexOf(this.fractionalSeparator))
-                        )
-                    ) +
-                    this.fractionalSeparator +
-                    fractionPart;
+
+                await this._formatToCurrency(
+                    this._parseAmount(
+                        input.value.substring(0, caretPosition - 2) +
+                            input.value.substring(caretPosition, input.value.indexOf(this.fractionalSeparator))
+                    )
+                ).then((res) => {
+                    this._stringValue = res + this.fractionalSeparator + fractionPart;
+                });
             } else {
-                this._stringValue = this._formatToCurrency(
-                    this._parseAmount(input.value.substring(0, caretPosition - 2) + input.value.substring(caretPosition, input.value.length + 1))
-                );
+                await this._formatToCurrency(
+                    input.value.substring(0, caretPosition - 2) + input.value.substring(caretPosition, input.value.length + 1)
+                ).then((res) => {
+                    this._stringValue = res;
+                });
             }
 
             // Added so that the number before the separator is not removed.
@@ -229,21 +244,26 @@ export class CurrencyField extends OmniFormElement {
 
         // When the delete key is pressed and the caret is positioned at the thousand separator
         if (input.value.charAt(caretPosition) === this.thousandsSeparator && this.thousandsSeparator !== '' && e.key.toLowerCase() === 'delete') {
+            // Calculate the what values to remove from the input.
+            const diff = input.selectionEnd - input.selectionStart > 0 ? input.selectionEnd - input.selectionStart : 2;
+
             if (input.value.includes(this.fractionalSeparator)) {
                 const fractionPart = this._parseFraction(input.value.substring(input.value.indexOf(this.fractionalSeparator) + 1));
-                this._stringValue =
-                    this._formatToCurrency(
-                        this._parseAmount(
-                            input.value.substring(0, caretPosition) +
-                                input.value.substring(caretPosition + 2, input.value.indexOf(this.fractionalSeparator))
-                        )
-                    ) +
-                    this.fractionalSeparator +
-                    fractionPart;
+
+                await this._formatToCurrency(
+                    this._parseAmount(
+                        input.value.substring(0, caretPosition) +
+                            input.value.substring(caretPosition + diff, input.value.indexOf(this.fractionalSeparator))
+                    )
+                ).then((res) => {
+                    this._stringValue = res + this.fractionalSeparator + fractionPart;
+                });
             } else {
-                this._stringValue = this._formatToCurrency(
-                    this._parseAmount(input.value.substring(0, caretPosition) + input.value.substring(caretPosition + 2, input.value.length + 1))
-                );
+                await this._formatToCurrency(
+                    input.value.substring(0, caretPosition) + input.value.substring(caretPosition + diff, input.value.length + 1)
+                ).then((res) => {
+                    this._stringValue = res;
+                });
             }
 
             e.preventDefault();
@@ -260,7 +280,7 @@ export class CurrencyField extends OmniFormElement {
         if (
             input.value.includes(this.fractionalSeparator) &&
             input.value.charAt(caretPosition - 2) === this.fractionalSeparator &&
-            e.key.toLowerCase() === 'backspace'
+            (e.key.toLowerCase() === 'backspace' || e.keyCode === 229)
         ) {
             this._stringValue = input.value.substring(0, input.value.indexOf(this.fractionalSeparator));
             e.preventDefault();
@@ -270,7 +290,7 @@ export class CurrencyField extends OmniFormElement {
         }
 
         // If hitting backspace when the caret is after the fraction (cents) separator remove the fraction value completely.
-        if (input.value.charAt(caretPosition - 1) === this.fractionalSeparator && e.key.toLowerCase() === 'backspace') {
+        if (input.value.charAt(caretPosition - 1) === this.fractionalSeparator && (e.key.toLowerCase() === 'backspace' || e.keyCode === 229)) {
             this._stringValue = input.value.substring(0, input.value.indexOf(this.fractionalSeparator));
             e.preventDefault();
             // Set value prop to float value
@@ -319,9 +339,13 @@ export class CurrencyField extends OmniFormElement {
                 fractionPart = fractionPart.substring(0, this.fractionalPrecision);
             }
             // Format amount and fraction (cents) to currency string, ignoring fraction if still partially completed eg: just '.' is valid.
-            this._stringValue = this._formatToCurrency(amountPart) + this.fractionalSeparator + fractionPart;
+            await this._formatToCurrency(amountPart).then((res) => {
+                this._stringValue = res + this.fractionalSeparator + fractionPart;
+            });
         } else {
-            this._stringValue = this._formatToCurrency(this._parseAmount(inputValue));
+            await this._formatToCurrency(this._parseAmount(inputValue)).then((res) => {
+                this._stringValue = res;
+            });
         }
 
         this.requestUpdate();
@@ -393,6 +417,7 @@ export class CurrencyField extends OmniFormElement {
                 id="inputField"
                 type="text"
                 maxlength="21"
+                inputmode="numeric"
                 .value=${live(this._stringValue)}
                 ?readOnly=${this.disabled}
                 tabindex="${this.disabled ? -1 : 0}" />
