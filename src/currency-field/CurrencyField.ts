@@ -203,7 +203,9 @@ export class CurrencyField extends OmniFormElement {
 
             const fractionalDifference = this.fractionalPrecision - fractionPart.length;
             if (fractionalDifference > 0) {
-                fractionPart += '0'.repeat(fractionalDifference);
+                for (let index = 0; index < fractionalDifference; index++) {
+                    fractionPart += '0';
+                }
             }
 
             await this._formatToCurrency(amountPart).then((res) => {
