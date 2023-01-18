@@ -104,10 +104,12 @@ export class CurrencyField extends OmniFormElement {
             });
             super._setLabelPosition();
         } else if (name === 'thousands-separator' || name === 'fractional-separator') {
-            await this._formatToCurrency(this.value.toString()).then((res) => {
-                this._stringValue = res;
-            });
-            super._setLabelPosition();
+            if(this.value){
+                await this._formatToCurrency(this.value.toString()).then((res) => {
+                    this._stringValue = res;
+                });
+                super._setLabelPosition();
+            }
         }
     }
 
@@ -150,13 +152,24 @@ export class CurrencyField extends OmniFormElement {
         }
 
         const formattedValue = preFormattedValue.toString().replace(new RegExp(this.formatter, 'g'), this.thousandsSeparator || '');
-        console.log('formatted value', formattedValue);
         await this.updateComplete;
 
+        // decimal separator has to be resolved here.
         if (formattedValue.includes(this.fractionalSeparator)) {
             const amountPart = formattedValue.substring(0, formattedValue.indexOf(this.fractionalSeparator));
 
             let fractionPart = this._parseFraction(formattedValue.substring(formattedValue.indexOf(this.fractionalSeparator) + 1));
+
+            if (fractionPart.length >= this.fractionalPrecision) {
+                fractionPart = fractionPart.substring(0, this.fractionalPrecision);
+            }
+            // Format amount and fraction (cents) part to currency string, ignoring fraction if still partially completed eg: just '.' is valid.
+            this._stringValue = amountPart + this.fractionalSeparator + fractionPart;
+            return amountPart + this.fractionalSeparator + fractionPart;
+        } else if (formattedValue.includes('.')) {
+            const amountPart = formattedValue.substring(0, formattedValue.indexOf('.'));
+
+            let fractionPart = this._parseFraction(formattedValue.substring(formattedValue.indexOf('.') + 1));
 
             if (fractionPart.length >= this.fractionalPrecision) {
                 fractionPart = fractionPart.substring(0, this.fractionalPrecision);
