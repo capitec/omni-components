@@ -276,6 +276,10 @@ export class OmniFormElement extends OmniElement {
                 }
 
                 /* FOCUS STYLES */
+                :host([value]:not([value=''])) .layout > .form-container > .label.error,
+                :focus + .label.error {
+                    color: var(--omni-form-focussed-label-error-color, var(--omni-error-font-color));
+                }
 
                 :host([value]:not([value=''])) .layout > .form-container > .label,
                 :focus + .label {
