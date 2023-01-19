@@ -74,7 +74,8 @@ export class PinField extends OmniFormElement {
     }
 
     //Added for non webkit supporting browsers
-    protected override async updated(): Promise<void> {
+    protected override async firstUpdated(): Promise<void> {
+        super.firstUpdated();
         const style: any = window.getComputedStyle(this._inputElement);
         this.isWebkit = style.webkitTextSecurity;
         if (!this.isWebkit) {
