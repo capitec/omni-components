@@ -1,6 +1,6 @@
 {
   "name": "@capitec/omni-components",
-  "version": "0.3.44",
+  "version": "0.3.45",
   "type": "module",
   "description": "Modern UI component library for mobile and web",
   "scripts": {
