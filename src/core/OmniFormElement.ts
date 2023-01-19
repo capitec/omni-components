@@ -36,6 +36,7 @@ import OmniElement from './OmniElement.js';
  * @cssprop --omni-form-focussed-border-width - Form focussed border width.
  * @cssprop --omni-form-focussed-border-color - Form focussed border color.
  * @cssprop --omni-form-focussed-label-color - Form focussed label color.
+ * @cssprop --omni-form-focussed-label-error-color - Form focussed error label color.
  *
  * @cssprop --omni-form-error-label-color - Form error label color.
  * @cssprop --omni-form-error-border-color - Form error border color.
