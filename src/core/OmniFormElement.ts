@@ -11,6 +11,15 @@ import OmniElement from './OmniElement.js';
  * @slot suffix - Replaces the icon for the suffix slot.
  *
  * @csscat Base Form Variables
+ *
+ * @cssprop --omni-container-width - Container width.
+ * @cssprop --omni-container-height - Container height.
+ * 
+ * @cssprop --omni-form-layout-border-radius - Layout border radius.
+ * @cssprop --omni-form-layout-background-color - Layout background color.
+ * @cssprop --omni-form-layout-height - Layout height.
+ * @cssprop --omni-form-layout-width - Layout width.
+ *
  * @cssprop --omni-form-container-width - Form container width.
  * @cssprop --omni-form-container-font-family - Form container font family.
  *
@@ -151,7 +160,7 @@ export class OmniFormElement extends OmniElement {
             const formParentHeight = this._formContainerElement.clientHeight;
 
             if (this._labelElement) {
-                this._labelElement.style.transform = `translateX(${formParentOffset * -1}px)  translateY(${formParentHeight * -3.3}%) scale(0.95)`;
+                this._labelElement.style.transform = `translateX(${formParentOffset * -1}px)  translateY(${formParentHeight * -3.55}%) scale(0.95)`;
             }
         } else if (!this.value && this.label && this._labelElement && !this.hasFocus) {
             this._labelElement.style.transform = '';
@@ -168,7 +177,7 @@ export class OmniFormElement extends OmniElement {
         const formParentHeight = this._formContainerElement.clientHeight;
 
         if (!this.value && this._labelElement) {
-            this._labelElement.style.transform = `translateX(${formParentOffset * -1}px) translateY(${formParentHeight * -3.3}%) scale(0.95)`;
+            this._labelElement.style.transform = `translateX(${formParentOffset * -1}px) translateY(${formParentHeight * -3.55}%) scale(0.95)`;
         }
     }
 
@@ -205,10 +214,10 @@ export class OmniFormElement extends OmniElement {
                     align-items: stretch;
                     justify-content: flex-start;
 
-                    width: var(--omni-form-container-width, 100%);
-
                     /* added at a container level to apply to all child elements */
-                    font-family: var(--omni-form-container-font-family, var(--omni-font-family));
+                    font-family: var(--omni-container-font-family, var(--omni-font-family));
+                    width: var(--omni-container-width, 100%);
+                    height: var(--omni-container-height, 100%);
                 }
 
                 /* LAYOUT STYLES */
@@ -220,8 +229,10 @@ export class OmniFormElement extends OmniElement {
                     flex-direction: row;
                     align-items: stretch;
                     justify-content: center;
-                    border-radius: var(--omni-form-border-radius, 4px);
-                    background-color: var(--omni-form-field-background-color, var(--omni-background-color));
+                    border-radius: var(--omni-form-layout-border-radius, 4px);
+                    background-color: var(--omni-form-layout-background-color, var(--omni-background-color));
+                    height: var(--omni-form-layout-height, 100%);
+                    width: var(--omni-form-layout-width, 100%);
                 }
 
                 .border {
@@ -245,6 +256,7 @@ export class OmniFormElement extends OmniElement {
                     display: flex;
                     align-items: center;
                     width: var(--omni-form-container-width, 100%);
+                    height: var(--omni-form-container-height, 100%);
                 }
 
                 /* LABEL STYLES */

@@ -34,8 +34,8 @@ import '../label/Label.js';
  * @cssprop --omni-currency-field-font-family - Currency field font family.
  * @cssprop --omni-currency-field-font-size - Currency field font size.
  * @cssprop --omni-currency-field-font-weight - Currency field font weight.
- * @cssprop --omni-currency-field-height - Currency field height.
  * @cssprop --omni-currency-field-padding - Currency field padding.
+ * @cssprop --omni-currency-field-height - Currency field height.
  * @cssprop --omni-currency-field-width - Currency field width.
  *
  * @cssprop --omni-currency-field-symbol-font-size - Currency field symbol font size.
@@ -406,9 +406,9 @@ export class CurrencyField extends OmniFormElement {
                     font-family: var(--omni-currency-field-font-family, var(--omni-font-family));
                     font-size: var(--omni-currency-field-font-size, var(--omni-font-size));
                     font-weight: var(--omni-currency-field-font-weight, var(--omni-font-weight));
-                    height: var(--omni-currency-field-height, 100%);
                     padding: var(--omni-currency-field-padding, 10px);
-                    width: var(--omni-currency-field-width);
+                    height: var(--omni-currency-field-height, 100%);
+                    width: var(--omni-currency-field-width, 100%);
                 }
 
                 .currency-symbol {
@@ -432,7 +432,7 @@ export class CurrencyField extends OmniFormElement {
                 id="inputField"
                 type="text"
                 maxlength="21"
-                inputmode="numeric"
+                inputmode="decimal"
                 .value=${live(this._stringValue)}
                 ?readOnly=${this.disabled}
                 tabindex="${this.disabled ? -1 : 0}" />

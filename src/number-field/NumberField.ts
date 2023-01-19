@@ -28,8 +28,8 @@ import { OmniFormElement } from '../core/OmniFormElement.js';
  * @cssprop --omni-number-field-font-family - Number field font family.
  * @cssprop --omni-number-field-font-size - Number field font size.
  * @cssprop --omni-number-field-font-weight - Number field font weight.
+ * @cssprop --omni-number-field-padding - Number field padding.
  * @cssprop --omni-number-field-height - Number field height.
- * @cssprop --omni-number-field-padding - Number field width.
  * @cssprop --omni-number-field-width - Number field width.
  *
  */
@@ -91,9 +91,10 @@ export class NumberField extends OmniFormElement {
           font-family: var(--omni-number-field-font-family, var(--omni-font-family));
           font-size: var(--omni-number-field-font-size, var(--omni-font-size));
           font-weight: var(--omni-number-field-font-weight, var(--omni-font-weight));
-          height: var(--omni-number-field-height, 100%);
           padding: var(--omni-number-field-padding, 10px);
-          width: var(--omni-number-field-width);
+
+          height: var(--omni-number-field-height, 100%);
+          width: var(--omni-number-field-weight, 100%);
         }
 
         /* Used to not display default stepper */

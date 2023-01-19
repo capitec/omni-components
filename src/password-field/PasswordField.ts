@@ -44,8 +44,8 @@ import '../icons/EyeVisible.icon.js';
  * @cssprop --omni-password-field-font-family - Password field font family.
  * @cssprop --omni-password-field-font-size - Password field font size.
  * @cssprop --omni-password-field-font-weight - Password field font weight.
+ * @cssprop --omni-password-field-padding - Password field padding.
  * @cssprop --omni-password-field-height - Password field height.
- * @cssprop --omni-password-field-padding - Password field width.
  * @cssprop --omni-password-field-width - Password field width.
  *
  */
@@ -136,9 +136,10 @@ export class PasswordField extends OmniFormElement {
           font-family: var(--omni-password-field-font-family, var(--omni-font-family));
           font-size: var(--omni-password-field-font-size, var(--omni-font-size));
           font-weight: var(--omni-password-field-font-weight, var(--omni-font-weight));
-          height: var(--omni-password-field-height, 100%);
           padding: var(--omni-password-field-padding, 10px);
-          width: var(--omni-password-field-width);
+
+          height: var(--omni-password-field-height, 100%);
+          width: var(--omni-password-field-width, 100%);
         }
       `
         ];

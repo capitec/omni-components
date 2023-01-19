@@ -45,8 +45,8 @@ import '../icons/EyeVisible.icon.js';
  * @cssprop --omni-pin-field-font-family - Pin field font family.
  * @cssprop --omni-pin-field-font-size - Pin field font size.
  * @cssprop --omni-pin-field-font-weight - Pin field font weight.
+ * @cssprop --omni-pin-field-padding - Pin field padding.
  * @cssprop --omni-pin-field-height - Pin field height.
- * @cssprop --omni-pin-field-padding - Pin field width.
  * @cssprop --omni-pin-field-width - Pin field width.
  *
  */
@@ -176,9 +176,10 @@ export class PinField extends OmniFormElement {
           font-family: var(--omni-pin-field-font-family, var(--omni-font-family));
           font-size: var(--omni-pin-field-font-size, var(--omni-font-size));
           font-weight: var(--omni-pin-field-font-weight, var(--omni-font-weight));
-          height: var(--omni-pin-field-height, 100%);
           padding: var(--omni-pin-field-padding, 10px);
-          width: var(--omni-pin-field-width);
+
+          height: var(--omni-pin-field-height, 100%);
+          width: var(--omni-pin-field-width, 100%);
       
         }
 

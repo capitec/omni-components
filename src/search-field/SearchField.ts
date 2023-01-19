@@ -32,9 +32,9 @@ import '../icons/Search.icon';
  * @cssprop --omni-search-field-font-family - Search field font family.
  * @cssprop --omni-search-field-font-size - Search field font size.
  * @cssprop --omni-search-field-font-weight - Search field font weight.
- * @cssprop --omni-search-field-height - Search field height.
  * @cssprop --omni-search-field-padding - Search field padding.
- * @cssprop --omni-search-field-width - Search field width
+ * @cssprop --omni-search-field-height - Search field height.
+ * @cssprop --omni-search-field-width - Search field width.
  *
  * @cssprop --omni-search-field-control-margin-right - Search field control right margin.
  * @cssprop --omni-search-field-control-margin-left - Search field control left margin.
@@ -103,9 +103,9 @@ export class SearchField extends OmniFormElement {
                     font-family: var(--omni-search-field-font-family, var(--omni-font-family));
                     font-size: var(--omni-search-field-font-size, var(--omni-font-size));
                     font-weight: var(--omni-search-field-font-weight, var(--omni-font-weight));
-                    height: var(--omni-search-field-height, 100%);
                     padding: var(--omni-search-field-padding, 10px);
-                    width: var(--omni-search-field-width);
+                    height: var(--omni-search-field-height, 100%);
+                    width: var(--omni-search-field-width, 100%);
                 }
 
                 .control {

@@ -29,8 +29,9 @@ import { OmniFormElement } from '../core/OmniFormElement.js';
  * @cssprop --omni-text-field-font-family - Text field font family.
  * @cssprop --omni-text-field-font-size - Text field font size.
  * @cssprop --omni-text-field-font-weight - Text field font weight.
+ * @cssprop --omni-text-field-padding - Text field padding.
  * @cssprop --omni-text-field-height - Text field height.
- * @cssprop --omni-text-field-padding - Text field width.
+ * @cssprop --omni-text-field-width - Text field width.
  *
  */
 @customElement('omni-text-field')
@@ -70,9 +71,9 @@ export class TextField extends OmniFormElement {
           font-family: var(--omni-text-field-font-family, var(--omni-font-family));
           font-size: var(--omni-text-field-font-size, var(--omni-font-size));
           font-weight: var(--omni-text-field-font-weight, var(--omni-font-weight));
-          height: var(--omni-text-field-height, 100%);
           padding: var(--omni-text-field-padding, 10px);
-          width: var(--omni-text-field-width);
+          height: var(--omni-text-field-height, 100%);
+          width: var(--omni-text-field-width, 100%);
         }
       `
         ];

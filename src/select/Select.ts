@@ -39,8 +39,9 @@ import '../icons/More.icon.js';
  * @cssprop --omni-select-field-font-family - Select component input field font family.
  * @cssprop --omni-select-field-font-size - Select component input field font size.
  * @cssprop --omni-select-field-font-weight - Select component input field font weight.
- * @cssprop --omni-select-field-height - Select component input field height
  * @cssprop --omni-select-field-padding - Select component input field padding.
+ * @cssprop --omni-select-field-height - Select component input field height.
+ * @cssprop --omni-select-field-width - Select component input field width.
  *
  * @cssprop --omni-select-control-margin-right - Select control right margin.
  * @cssprop --omni-select-control-margin-left - Select control left margin.
@@ -266,12 +267,12 @@ export class Select extends OmniFormElement {
                     font-family: var(--omni-select-field-font-family, var(--omni-font-family));
                     font-size: var(--omni-select-field-font-size, var(--omni-font-size));
                     font-weight: var(--omni-select-field-font-weight, var(--omni-font-weight));
-                    height: var(--omni-select-field-height, 100%);
                     padding: var(--omni-select-field-padding, 10px);
 
                     /* Added to stop the transforming of the label when the input is clicked */
                     pointer-events: none;
-                    width: var(--omni-select-field-width);
+                    height: var(--omni-select-field-height, 100%);
+                    width: var(--omni-select-field-width, 100%);
                 }
 
                 .control {

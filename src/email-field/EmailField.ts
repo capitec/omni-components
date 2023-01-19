@@ -29,8 +29,9 @@ import { OmniFormElement } from '../core/OmniFormElement.js';
  * @cssprop --omni-email-field-font-family - Email field font family.
  * @cssprop --omni-email-field-font-size - Email field font size.
  * @cssprop --omni-email-field-font-weight - Email field font weight.
+ * @cssprop --omni-email-field-padding - Email field padding.
  * @cssprop --omni-email-field-height - Email field height.
- * @cssprop --omni-email-field-padding - Email field width.
+ * @cssprop --omni-email-field-width - Email field width.
  *
  */
 @customElement('omni-email-field')
@@ -70,9 +71,10 @@ export class EmailField extends OmniFormElement {
           font-family: var(--omni-email-field-font-family, var(--omni-font-family));
           font-size: var(--omni-email-field-font-size, var(--omni-font-size));
           font-weight: var(--omni-email-field-font-weight, var(--omni-font-weight));
-          height: var(--omni-email-field-height, 100%);
           padding: var(--omni-email-field-padding, 10px);
-          width: var(--omni-email-field-width);
+
+          height: var(--omni-email-field-height, 100%);
+          width: var(--omni-email-field-width, 100%);
         }
       `
         ];
