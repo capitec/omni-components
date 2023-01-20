@@ -616,9 +616,9 @@ async function setupThemes() {
         return option;
     }
 
-    function _checkCloseModal(e: any) {
+    function _checkCloseModal(e: Event) {
         const containerElement = themeModal.querySelector(`div.modal-container`);
-        if (!e.path.includes(containerElement)) {
+        if (!e.composedPath().includes(containerElement)) {
             document.body.removeChild(themeModal);
             themeModal = document.createElement('div');
             document.body.appendChild(themeModal);

@@ -1,4 +1,4 @@
-import { raw } from '../../dist/utils/StoryUtils.js';
+import { raw } from '../../../dist/utils/StoryUtils.js';
 
 export function baseHref() {
     const basePath = process.env.ELEVENTY_BASE_PATH;

@@ -52,12 +52,12 @@ export default async config => {
         config.addGlobalData(key, globalData[key]);
     }
 
-    config.addPassthroughCopy('./eleventy/assets/');
-    config.addPassthroughCopy('./eleventy/favicon.ico');
+    config.addPassthroughCopy('./.tooling/eleventy/assets/');
+    config.addPassthroughCopy('./.tooling/eleventy/favicon.ico');
     config.addPassthroughCopy('./custom-elements.json');
 
-    config.addWatchTarget('./scripts/');
-    config.addWatchTarget('./eleventy/assets/');
+    config.addWatchTarget('./.tooling/scripts/');
+    config.addWatchTarget('./.tooling/eleventy/assets/');
     config.addWatchTarget('./src/');
     config.addWatchTarget('./*.md');
 
@@ -104,7 +104,7 @@ export default async config => {
     return {
         dir: {
             includes: 'includes',
-            input: 'eleventy',
+            input: '.tooling/eleventy',
             output: 'docs',
         },
     };

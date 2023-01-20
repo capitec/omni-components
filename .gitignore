@@ -32,7 +32,28 @@ themes-list.json
 # General
 .DS_Store
 
-#Playwright
+# Playwright
 /test-results/
 /playwright-report/
 /playwright/.cache/
+
+# Components
+button
+check
+chip
+color-field
+core
+currency-field
+hyperlink
+icon
+icons
+label
+number-field
+password-field
+radio
+render-element
+search-field
+select
+switch
+text-field
+utils

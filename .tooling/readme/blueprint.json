@@ -1,6 +1,6 @@
 {
     "logo": {
-      "src": "./readme/logos/omni.png",
+      "src": "./.tooling/readme/logos/omni.png",
       "width": "128",
       "height": "128"
     },
