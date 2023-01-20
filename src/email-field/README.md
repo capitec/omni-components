@@ -44,13 +44,16 @@ Email input control, used in forms for input validation and to display correct v
 
 | Property                                         | Description                                    |
 |--------------------------------------------------|------------------------------------------------|
+| `--omni-container-height`                        | Container height.                              |
+| `--omni-container-width`                         | Container width.                               |
 | `--omni-email-field-font-color`                  | Email field font color.                        |
 | `--omni-email-field-font-family`                 | Email field font family.                       |
 | `--omni-email-field-font-size`                   | Email field font size.                         |
 | `--omni-email-field-font-weight`                 | Email field font weight.                       |
 | `--omni-email-field-height`                      | Email field height.                            |
-| `--omni-email-field-padding`                     | Email field width.                             |
+| `--omni-email-field-padding`                     | Email field padding.                           |
 | `--omni-email-field-text-align`                  | Email field text align.                        |
+| `--omni-email-field-width`                       | Email field width.                             |
 | `--omni-form-border-bottom`                      | Form border bottom.                            |
 | `--omni-form-border-color`                       | Form border color.                             |
 | `--omni-form-border-left`                        | Form border left.                              |
@@ -96,6 +99,10 @@ Email input control, used in forms for input validation and to display correct v
 | `--omni-form-label-text-align`                   | Form label text align.                         |
 | `--omni-form-label-transform-origin`             | Form label text align                          |
 | `--omni-form-label-z-index`                      | Form label z-index.                            |
+| `--omni-form-layout-background-color`            | Layout background color.                       |
+| `--omni-form-layout-border-radius`               | Layout border radius.                          |
+| `--omni-form-layout-height`                      | Layout height.                                 |
+| `--omni-form-layout-width`                       | Layout width.                                  |
 | `--omni-theme-accent-active-color`               | Theme accent active color.                     |
 | `--omni-theme-accent-color`                      | Theme accent color.                            |
 | `--omni-theme-accent-hover-color`                | Theme accent hover color.                      |

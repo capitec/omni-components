@@ -51,6 +51,8 @@ Pin input control.
 
 | Property                                         | Description                                    |
 |--------------------------------------------------|------------------------------------------------|
+| `--omni-container-height`                        | Container height.                              |
+| `--omni-container-width`                         | Container width.                               |
 | `--omni-form-border-bottom`                      | Form border bottom.                            |
 | `--omni-form-border-color`                       | Form border color.                             |
 | `--omni-form-border-left`                        | Form border left.                              |
@@ -96,6 +98,10 @@ Pin input control.
 | `--omni-form-label-text-align`                   | Form label text align.                         |
 | `--omni-form-label-transform-origin`             | Form label text align                          |
 | `--omni-form-label-z-index`                      | Form label z-index.                            |
+| `--omni-form-layout-background-color`            | Layout background color.                       |
+| `--omni-form-layout-border-radius`               | Layout border radius.                          |
+| `--omni-form-layout-height`                      | Layout height.                                 |
+| `--omni-form-layout-width`                       | Layout width.                                  |
 | `--omni-pin-field-control-padding-bottom`        | Pin field control padding bottom.              |
 | `--omni-pin-field-control-padding-left`          | Pin field control padding left.                |
 | `--omni-pin-field-control-padding-right`         | Pin field control padding right.               |
@@ -108,7 +114,7 @@ Pin input control.
 | `--omni-pin-field-icon-color`                    | Pin field slot icon color.                     |
 | `--omni-pin-field-icon-height`                   | Pin field slot height.                         |
 | `--omni-pin-field-icon-width`                    | Pin field slot width.                          |
-| `--omni-pin-field-padding`                       | Pin field width.                               |
+| `--omni-pin-field-padding`                       | Pin field padding.                             |
 | `--omni-pin-field-text-align`                    | Pin field text align.                          |
 | `--omni-pin-field-width`                         | Pin field width.                               |
 | `--omni-theme-accent-active-color`               | Theme accent active color.                     |

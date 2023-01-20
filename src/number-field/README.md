@@ -47,6 +47,8 @@ Input control to enter a single line of numbers.
 
 | Property                                         | Description                                    |
 |--------------------------------------------------|------------------------------------------------|
+| `--omni-container-height`                        | Container height.                              |
+| `--omni-container-width`                         | Container width.                               |
 | `--omni-form-border-bottom`                      | Form border bottom.                            |
 | `--omni-form-border-color`                       | Form border color.                             |
 | `--omni-form-border-left`                        | Form border left.                              |
@@ -92,12 +94,16 @@ Input control to enter a single line of numbers.
 | `--omni-form-label-text-align`                   | Form label text align.                         |
 | `--omni-form-label-transform-origin`             | Form label text align                          |
 | `--omni-form-label-z-index`                      | Form label z-index.                            |
+| `--omni-form-layout-background-color`            | Layout background color.                       |
+| `--omni-form-layout-border-radius`               | Layout border radius.                          |
+| `--omni-form-layout-height`                      | Layout height.                                 |
+| `--omni-form-layout-width`                       | Layout width.                                  |
 | `--omni-number-field-font-color`                 | Number field font color.                       |
 | `--omni-number-field-font-family`                | Number field font family.                      |
 | `--omni-number-field-font-size`                  | Number field font size.                        |
 | `--omni-number-field-font-weight`                | Number field font weight.                      |
 | `--omni-number-field-height`                     | Number field height.                           |
-| `--omni-number-field-padding`                    | Number field width.                            |
+| `--omni-number-field-padding`                    | Number field padding.                          |
 | `--omni-number-field-text-align`                 | Number field text align.                       |
 | `--omni-number-field-width`                      | Number field width.                            |
 | `--omni-theme-accent-active-color`               | Theme accent active color.                     |

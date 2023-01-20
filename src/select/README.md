@@ -64,6 +64,8 @@ Control to get / set a value within a list of options.
 
 | Property                                         | Description                                      |
 |--------------------------------------------------|--------------------------------------------------|
+| `--omni-container-height`                        | Container height.                                |
+| `--omni-container-width`                         | Container width.                                 |
 | `--omni-form-border-bottom`                      | Form border bottom.                              |
 | `--omni-form-border-color`                       | Form border color.                               |
 | `--omni-form-border-left`                        | Form border left.                                |
@@ -109,6 +111,10 @@ Control to get / set a value within a list of options.
 | `--omni-form-label-text-align`                   | Form label text align.                           |
 | `--omni-form-label-transform-origin`             | Form label text align                            |
 | `--omni-form-label-z-index`                      | Form label z-index.                              |
+| `--omni-form-layout-background-color`            | Layout background color.                         |
+| `--omni-form-layout-border-radius`               | Layout border radius.                            |
+| `--omni-form-layout-height`                      | Layout height.                                   |
+| `--omni-form-layout-width`                       | Layout width.                                    |
 | `--omni-select-control-icon-color`               | Select control icon color.                       |
 | `--omni-select-control-icon-width`               | Select control icon width.                       |
 | `--omni-select-control-margin-left`              | Select control left margin.                      |
@@ -118,9 +124,10 @@ Control to get / set a value within a list of options.
 | `--omni-select-field-font-family`                | Select component input field font family.        |
 | `--omni-select-field-font-size`                  | Select component input field font size.          |
 | `--omni-select-field-font-weight`                | Select component input field font weight.        |
-| `--omni-select-field-height`                     | Select component input field height              |
+| `--omni-select-field-height`                     | Select component input field height.             |
 | `--omni-select-field-padding`                    | Select component input field padding.            |
 | `--omni-select-field-text-align`                 | Select component input field text align.         |
+| `--omni-select-field-width`                      | Select component input field width.              |
 | `--omni-select-item-font-color`                  | Select item font color.                          |
 | `--omni-select-item-font-family`                 | Select item font family.                         |
 | `--omni-select-item-font-weight`                 | Select item font weight.                         |

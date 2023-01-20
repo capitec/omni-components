@@ -47,6 +47,8 @@ Control to input text.
 
 | Property                                         | Description                                    |
 |--------------------------------------------------|------------------------------------------------|
+| `--omni-container-height`                        | Container height.                              |
+| `--omni-container-width`                         | Container width.                               |
 | `--omni-form-border-bottom`                      | Form border bottom.                            |
 | `--omni-form-border-color`                       | Form border color.                             |
 | `--omni-form-border-left`                        | Form border left.                              |
@@ -92,13 +94,18 @@ Control to input text.
 | `--omni-form-label-text-align`                   | Form label text align.                         |
 | `--omni-form-label-transform-origin`             | Form label text align                          |
 | `--omni-form-label-z-index`                      | Form label z-index.                            |
+| `--omni-form-layout-background-color`            | Layout background color.                       |
+| `--omni-form-layout-border-radius`               | Layout border radius.                          |
+| `--omni-form-layout-height`                      | Layout height.                                 |
+| `--omni-form-layout-width`                       | Layout width.                                  |
 | `--omni-text-field-font-color`                   | Text field font color.                         |
 | `--omni-text-field-font-family`                  | Text field font family.                        |
 | `--omni-text-field-font-size`                    | Text field font size.                          |
 | `--omni-text-field-font-weight`                  | Text field font weight.                        |
 | `--omni-text-field-height`                       | Text field height.                             |
-| `--omni-text-field-padding`                      | Text field width.                              |
+| `--omni-text-field-padding`                      | Text field padding.                            |
 | `--omni-text-field-text-align`                   | Text field text align.                         |
+| `--omni-text-field-width`                        | Text field width.                              |
 | `--omni-theme-accent-active-color`               | Theme accent active color.                     |
 | `--omni-theme-accent-color`                      | Theme accent color.                            |
 | `--omni-theme-accent-hover-color`                | Theme accent hover color.                      |

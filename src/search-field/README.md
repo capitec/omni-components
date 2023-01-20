@@ -55,6 +55,8 @@ Search input control.
 
 | Property                                         | Description                                    |
 |--------------------------------------------------|------------------------------------------------|
+| `--omni-container-height`                        | Container height.                              |
+| `--omni-container-width`                         | Container width.                               |
 | `--omni-form-border-bottom`                      | Form border bottom.                            |
 | `--omni-form-border-color`                       | Form border color.                             |
 | `--omni-form-border-left`                        | Form border left.                              |
@@ -100,6 +102,10 @@ Search input control.
 | `--omni-form-label-text-align`                   | Form label text align.                         |
 | `--omni-form-label-transform-origin`             | Form label text align                          |
 | `--omni-form-label-z-index`                      | Form label z-index.                            |
+| `--omni-form-layout-background-color`            | Layout background color.                       |
+| `--omni-form-layout-border-radius`               | Layout border radius.                          |
+| `--omni-form-layout-height`                      | Layout height.                                 |
+| `--omni-form-layout-width`                       | Layout width.                                  |
 | `--omni-search-field-clear-icon-color`           | Search field clear icon color.                 |
 | `--omni-search-field-clear-icon-width`           | Search field clear icon width.                 |
 | `--omni-search-field-control-margin-left`        | Search field control left margin.              |
@@ -115,7 +121,7 @@ Search input control.
 | `--omni-search-field-search-icon-margin-left`    | Search field search icon left margin.          |
 | `--omni-search-field-search-icon-width`          | Search field search icon width.                |
 | `--omni-search-field-text-align`                 | Search field text align.                       |
-| `--omni-search-field-width`                      | Search field width                             |
+| `--omni-search-field-width`                      | Search field width.                            |
 | `--omni-theme-accent-active-color`               | Theme accent active color.                     |
 | `--omni-theme-accent-color`                      | Theme accent color.                            |
 | `--omni-theme-accent-hover-color`                | Theme accent hover color.                      |

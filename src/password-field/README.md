@@ -50,6 +50,8 @@ Password input control.
 
 | Property                                         | Description                                    |
 |--------------------------------------------------|------------------------------------------------|
+| `--omni-container-height`                        | Container height.                              |
+| `--omni-container-width`                         | Container width.                               |
 | `--omni-form-border-bottom`                      | Form border bottom.                            |
 | `--omni-form-border-color`                       | Form border color.                             |
 | `--omni-form-border-left`                        | Form border left.                              |
@@ -95,6 +97,10 @@ Password input control.
 | `--omni-form-label-text-align`                   | Form label text align.                         |
 | `--omni-form-label-transform-origin`             | Form label text align                          |
 | `--omni-form-label-z-index`                      | Form label z-index.                            |
+| `--omni-form-layout-background-color`            | Layout background color.                       |
+| `--omni-form-layout-border-radius`               | Layout border radius.                          |
+| `--omni-form-layout-height`                      | Layout height.                                 |
+| `--omni-form-layout-width`                       | Layout width.                                  |
 | `--omni-password-field-control-padding-bottom`   | Password field control padding bottom.         |
 | `--omni-password-field-control-padding-left`     | Password field control padding left.           |
 | `--omni-password-field-control-padding-right`    | Password field control padding right.          |
@@ -107,7 +113,7 @@ Password input control.
 | `--omni-password-field-icon-color`               | Password field slot icon color.                |
 | `--omni-password-field-icon-height`              | Password field slot height.                    |
 | `--omni-password-field-icon-width`               | Password field slot width.                     |
-| `--omni-password-field-padding`                  | Password field width.                          |
+| `--omni-password-field-padding`                  | Password field padding.                        |
 | `--omni-password-field-text-align`               | Password field text align.                     |
 | `--omni-password-field-width`                    | Password field width.                          |
 | `--omni-theme-accent-active-color`               | Theme accent active color.                     |
