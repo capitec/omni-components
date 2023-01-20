@@ -78,6 +78,7 @@ Password input control.
 | `--omni-form-focussed-border-color`              | Form focussed border color.                    |
 | `--omni-form-focussed-border-width`              | Form focussed border width.                    |
 | `--omni-form-focussed-label-color`               | Form focussed label color.                     |
+| `--omni-form-focussed-label-error-color`         | Form focussed error label color.               |
 | `--omni-form-hint-label-border-width`            | Form hint label border width.                  |
 | `--omni-form-hint-label-font-color`              | Form hint label font color.                    |
 | `--omni-form-hint-label-font-family`             | Form hint label font family.                   |
