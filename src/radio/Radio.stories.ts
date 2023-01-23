@@ -65,6 +65,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
 
 export const Label: ComponentStoryFormat<Args> = {
     render: (args: Args) => html` <omni-radio data-testid="test-radio" label="${args.label}"></omni-radio> `,
+    description: 'Set a text value to display next to the component',
     args: {
         label: 'Label'
     },
@@ -77,6 +78,7 @@ export const Label: ComponentStoryFormat<Args> = {
 
 export const Hint: ComponentStoryFormat<Args> = {
     render: (args: Args) => html` <omni-radio data-testid="test-radio" label="${args.label}" hint="${args.hint}"></omni-radio> `,
+    description: 'Set a text value to as a hint',
     args: {
         label: 'Hint',
         hint: 'This is a hint'
@@ -91,6 +93,7 @@ export const Hint: ComponentStoryFormat<Args> = {
 export const Error_Label: ComponentStoryFormat<Args> = {
     name: 'Error', // Explicitly named as error, the exported name cannot be 'Error' as that is reserved
     render: (args: Args) => html` <omni-radio data-testid="test-radio" label="${args.label}" error="${args.error}"></omni-radio> `,
+    description: 'Set a text value to display as an error',
     args: {
         label: 'Error',
         error: 'This is an error state'
@@ -104,6 +107,7 @@ export const Error_Label: ComponentStoryFormat<Args> = {
 
 export const Checked: ComponentStoryFormat<Args> = {
     render: (args: Args) => html` <omni-radio data-testid="test-radio" label="${args.label}" ?checked="${args.checked}"></omni-radio> `,
+    description: 'Set the component to a checked state',
     args: {
         label: 'Checked',
         checked: true
@@ -117,6 +121,7 @@ export const Checked: ComponentStoryFormat<Args> = {
 
 export const Disabled: ComponentStoryFormat<Args> = {
     render: (args: Args) => html` <omni-radio data-testid="test-radio" label="${args.label}" ?disabled="${args.disabled}"></omni-radio> `,
+    description: 'Prevent interaction (pointer events)',
     args: {
         label: 'Disabled',
         disabled: true

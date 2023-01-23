@@ -83,6 +83,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
 
 export const Label: ComponentStoryFormat<Args> = {
     render: (args: Args) => html` <omni-check data-testid="test-check" label="${args.label}"></omni-check> `,
+    description: 'Set text value to display next to the check box',
     args: {
         label: 'Label'
     },
@@ -96,6 +97,7 @@ export const Label: ComponentStoryFormat<Args> = {
 
 export const Hint: ComponentStoryFormat<Args> = {
     render: (args: Args) => html` <omni-check data-testid="test-check" label="${args.label}" hint="${args.hint}"></omni-check> `,
+    description: 'Set text value to display as hint',
     args: {
         label: 'Hint',
         hint: 'This is a hint'
@@ -111,6 +113,7 @@ export const Hint: ComponentStoryFormat<Args> = {
 export const Error_Label: ComponentStoryFormat<Args> = {
     name: 'Error', // Explicitly named as error, the exported name cannot be 'Error' as that is reserved
     render: (args: Args) => html` <omni-check data-testid="test-check" label="${args.label}" error="${args.error}"></omni-check> `,
+    description: 'Set text value to display as error',
     args: {
         label: 'Error',
         error: 'This is an error state'
@@ -125,6 +128,7 @@ export const Error_Label: ComponentStoryFormat<Args> = {
 
 export const Checked: ComponentStoryFormat<Args> = {
     render: (args: Args) => html` <omni-check data-testid="test-check" label="${args.label}" ?checked="${args.checked}"></omni-check> `,
+    description: 'Set the component to a checked state',
     args: {
         label: 'Checked',
         checked: true
@@ -138,6 +142,7 @@ export const Checked: ComponentStoryFormat<Args> = {
 
 export const Indeterminate: ComponentStoryFormat<Args> = {
     render: (args: Args) => html` <omni-check data-testid="test-check" label="${args.label}" ?indeterminate="${args.indeterminate}"></omni-check> `,
+    description: 'Set the component to an indeterminate/partial state',
     args: {
         label: 'Indeterminate',
         indeterminate: true
@@ -151,6 +156,7 @@ export const Indeterminate: ComponentStoryFormat<Args> = {
 
 export const Disabled: ComponentStoryFormat<Args> = {
     render: (args: Args) => html` <omni-check data-testid="test-check" label="${args.label}" ?disabled="${args.disabled}"></omni-check> `,
+    description: 'Prevent interaction (pointer events)',
     args: {
         label: 'Disabled',
         disabled: true
@@ -179,6 +185,7 @@ export const Custom_Check_Icon: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
     <omni-check data-testid="test-check" label="${args.label}" ?checked="${args.checked}"> ${unsafeHTML(args.check_icon)} </omni-check>
   `,
+    description: 'Set html content to render when the component is in a checked state',
     args: {
         label: 'Custom Check Icon',
         checked: true,
@@ -205,6 +212,7 @@ export const Custom_Indeterminate_Icon: ComponentStoryFormat<Args> = {
       ${unsafeHTML(args.indeterminate_icon)}
     </omni-check>
   `,
+    description: 'Set html content to render when the component is in an indeterminate state',
     args: {
         label: 'Custom Indeterminate Icon',
         indeterminate: true,

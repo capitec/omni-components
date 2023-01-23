@@ -26,6 +26,7 @@ export const LabelStory = <T extends HTMLElement, U extends BaseArgs>(tagName: s
     const Label: ComponentStoryFormat<U> = {
         render: (args: U) => html`${unsafeHTML(`<${tagName}  data-testid="test-field" label="${ifNotEmpty(args.label)}"></${tagName}>`)}`,
         name: 'Label',
+        description: 'Set a text value to display as a label',
         args: {
             label: 'The Label'
         } as U,
@@ -42,6 +43,7 @@ export const HintStory = <T extends HTMLElement, U extends BaseArgs>(tagName: st
         render: (args: U) =>
             html`${unsafeHTML(`<${tagName}  data-testid="test-field" label="${ifNotEmpty(args.label)}" hint="${args.hint}"></${tagName}>`)}`,
         name: 'Hint',
+        description: 'Set a text value to display as a hint',
         args: {
             label: 'Hint',
             hint: 'The Hint label'
@@ -61,6 +63,7 @@ export const ErrorStory = <T extends HTMLElement, U extends BaseArgs>(tagName: s
         render: (args: U) =>
             html`${unsafeHTML(`<${tagName} data-testid="test-field" label="${args.label}" error="${ifNotEmpty(args.error)}"></${tagName}>`)}`,
         name: 'Error',
+        description: 'Set a text value to display as an error',
         args: {
             label: 'Error',
             error: 'The Error label'
@@ -83,6 +86,7 @@ export const ValueStory = <T extends HTMLElement, U extends BaseArgs>(
         render: (args: U) =>
             html`${unsafeHTML(`<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}" value="${args.value}"></${tagName}>`)}`,
         name: 'Value',
+        description: 'Set the current value of the component',
         args: {
             label: 'Value',
             value: inputValue
@@ -102,6 +106,7 @@ export const PrefixStory = <T extends HTMLElement, U extends BaseArgs>(tagName: 
         render: (args: U) =>
             html`${unsafeHTML(`<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}">${args.prefix}</${tagName}>`)}`,
         name: 'Prefix',
+        description: 'Set html content to display as a prefix within the component',
         args: {
             label: 'Prefix',
             prefix: raw`<svg slot="prefix" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px"><path d="M12 2.25c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12 6.615 2.25 12 2.25Zm0 1.5a8.25 8.25 0 1 0 0 16.5 8.25 8.25 0 0 0 0-16.5ZM12 7a.75.75 0 0 1 .75.75v3.5h3.5a.75.75 0 0 1 .743.648L17 12a.75.75 0 0 1-.75.75h-3.5v3.5a.75.75 0 0 1-.648.743L12 17a.75.75 0 0 1-.75-.75v-3.5h-3.5a.75.75 0 0 1-.743-.648L7 12a.75.75 0 0 1 .75-.75h3.5v-3.5a.75.75 0 0 1 .648-.743Z"/></svg>`
@@ -124,6 +129,7 @@ export const SuffixStory = <T extends HTMLElement, U extends BaseArgs>(tagName: 
         render: (args: U) =>
             html`${unsafeHTML(`<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}">${args.suffix}</${tagName}>`)}`,
         name: 'Suffix',
+        description: 'Set html content to display as a suffix within the component',
         args: {
             label: 'Suffix',
             suffix: raw`<svg slot="suffix" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px"><path d="M12 2.25c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12 6.615 2.25 12 2.25Zm0 1.5a8.25 8.25 0 1 0 0 16.5 8.25 8.25 0 0 0 0-16.5ZM12 7a.75.75 0 0 1 .75.75v3.5h3.5a.75.75 0 0 1 .743.648L17 12a.75.75 0 0 1-.75.75h-3.5v3.5a.75.75 0 0 1-.648.743L12 17a.75.75 0 0 1-.75-.75v-3.5h-3.5a.75.75 0 0 1-.743-.648L7 12a.75.75 0 0 1 .75-.75h3.5v-3.5a.75.75 0 0 1 .648-.743Z"/></svg>`
@@ -145,6 +151,7 @@ export const DisabledStory = <T extends HTMLElement, U extends BaseArgs>(tagName
     const Disabled: ComponentStoryFormat<U> = {
         render: (args: U) => html`${unsafeHTML(`<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}" disabled></${tagName}>`)}`,
         name: 'Disabled',
+        description: 'Prevent interaction (pointer/input events)',
         args: {
             label: 'Disabled',
             disabled: true

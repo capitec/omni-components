@@ -11,19 +11,7 @@ const sizeOptions = ['default', 'extra-small', 'small', 'medium', 'large'] as co
 
 export default {
     title: 'UI Components/Icon',
-    component: 'omni-icon',
-    argTypes: {
-        size: {
-            control: 'radio',
-            options: sizeOptions
-        },
-        slot: {
-            control: 'text'
-        }
-    },
-    '[Default Slot]': {
-        control: 'text'
-    }
+    component: 'omni-icon'
 } as CSFIdentifier;
 
 interface Args {
@@ -67,9 +55,11 @@ export const Interactive: ComponentStoryFormat<Args> = {
 export const SVG: ComponentStoryFormat<Args> = {
     render: (args: Args) => html` <omni-icon data-testid="test-icon" size="${args.size}"> ${unsafeHTML(args['[Default Slot]'])} </omni-icon> `,
     name: 'SVG',
+    description: 'Set html/svg content to display as an icon',
     args: {
         size: 'large',
-        '[Default Slot]': `<svg
+        '[Default Slot]': raw`
+            <svg
                 version="1.1"
                 viewBox="0 0 16 16"
                 xmlns="http://www.w3.org/2000/svg"
@@ -79,7 +69,8 @@ export const SVG: ComponentStoryFormat<Args> = {
                 <g transform="translate(-2,-2)">
                   <path d="m8.229 14.062-3.521-3.541L5.75 9.479l2.479 2.459 6.021-6L15.292 7Z" />
                 </g>
-              </svg>`
+              </svg>
+              `
     },
     play: async (context) => {
         const icon = within(context.canvasElement).getByTestId<Icon>('test-icon');
@@ -96,6 +87,7 @@ export const Icon_Path: ComponentStoryFormat<Args> = {
     <omni-icon data-testid="test-icon" size="${args.size}" icon="${args.icon}"></omni-icon>
   `,
     name: 'Local Source',
+    description: 'Set the icon to display as a local source file',
     args: {
         size: 'default',
         icon: './assets/images/colors.svg'
@@ -115,6 +107,7 @@ export const URL: ComponentStoryFormat<Args> = {
     <omni-icon data-testid="test-icon" size="${args.size}" icon="${args.icon}"></omni-icon>
   `,
     name: 'Remote Source',
+    description: 'Set the icon to display as a remote file',
     args: {
         size: 'default',
         icon: 'https://img.shields.io/badge/Source-remote-lightgrey.svg'
@@ -135,6 +128,7 @@ export const Material: ComponentStoryFormat<Args> = {
 
     <omni-icon data-testid="test-icon" size="${args.size}" icon="${args.icon}"> </omni-icon>
   `,
+    description: 'Set the icon to display as a font icon from the Material Icons library',
     args: {
         size: 'default',
         icon: '@material/receipt_long'
