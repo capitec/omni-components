@@ -464,6 +464,7 @@ export class CurrencyField extends OmniFormElement {
                 id="inputField"
                 type="text"
                 maxlength="21"
+                inputmode="decimal"
                 .value=${live(this._stringValue)}
                 ?readOnly=${this.disabled}
                 tabindex="${this.disabled ? -1 : 0}" />
