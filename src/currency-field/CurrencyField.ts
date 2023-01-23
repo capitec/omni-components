@@ -290,9 +290,12 @@ export class CurrencyField extends OmniFormElement {
             await this.updateComplete;
 
             // Set caret position after value is formatted.
+            /*
             if (input.value.length === this._stringValue.length) {
                 this._inputElement.setSelectionRange(caretPosition - 1, caretPosition - 1);
-            }
+            }*/
+
+            this._inputElement.setSelectionRange(3, 3);
         }
 
         // When the delete key is pressed and the caret is positioned at the thousand separator
