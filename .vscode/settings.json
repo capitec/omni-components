@@ -36,6 +36,8 @@
 		"select": true,
 		"text-field": true,
 		"utils": true,
-		"switch": true
+		"switch": true,
+		"email-field": true,
+		"pin-field": true
 	}
 }

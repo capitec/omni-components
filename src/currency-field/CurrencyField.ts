@@ -278,7 +278,14 @@ export class CurrencyField extends OmniFormElement {
 
             // Added so that the number before the separator is not removed.
             e.preventDefault();
-            this.value = this._formatToFloat(this._stringValue);
+            const floatValue = this._formatToFloat(this._stringValue);
+
+            if (typeof floatValue === 'string') {
+                this.value = floatValue;
+            } else {
+                this.value = floatValue.toString();
+            }
+            //this.value = this._formatToFloat(this._stringValue);
 
             await this.updateComplete;
 

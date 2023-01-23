@@ -93,3 +93,9 @@ export class EmailField extends OmniFormElement {
     `;
     }
 }
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'omni-email-field': EmailField;
+    }
+}

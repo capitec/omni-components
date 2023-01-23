@@ -55,7 +55,9 @@
         "switch",
         "utils",
         "text-field",
-        "number-field"
+        "number-field",
+        "email-field",
+        "pin-field"
     ],
     "exports": {
         "./*": "./dist/*/index.js"

@@ -227,3 +227,9 @@ export class PinField extends OmniFormElement {
     `;
     }
 }
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'omni-pin-field': PinField;
+    }
+}
