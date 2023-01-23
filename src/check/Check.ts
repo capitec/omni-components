@@ -354,3 +354,9 @@ export class Check extends OmniElement {
     `;
     }
 }
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'omni-check': Check;
+    }
+}

@@ -29,3 +29,9 @@ export class MoreIcon extends DOMTreeElement {
         `;
     }
 }
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'omni-more-icon': MoreIcon;
+    }
+}
