@@ -113,6 +113,15 @@ export class CurrencyField extends OmniFormElement {
         }
     }
 
+    _isIOS() {
+        console.log('navigator platform', navigator.platform);
+        return (
+            ['iPad Simulator', 'iPhone Simulator', 'iPod Simulator', 'iPad', 'iPhone', 'iPod'].includes(navigator.platform) ||
+            // iPad on iOS 13 detection
+            navigator.userAgent.includes('Mac')
+        );
+    }
+
     _parseAmount(value: string): number {
         let cleanValue = '';
 
@@ -232,6 +241,14 @@ export class CurrencyField extends OmniFormElement {
     async _keyDown(e: KeyboardEvent): Promise<void> {
         const input = this._inputElement;
         const caretPosition = input.selectionStart;
+
+        console.log('navigator platform', navigator.platform);
+        console.log('keycode', e.keyCode);
+        //alert(`The following is the keycode from the comma on the virtual keyboard ${e.keyCode}`);
+        if (this._isIOS()) {
+            //alert('You are running a apple device');
+            alert(`The following is the keycode from the comma on the virtual keyboard ${e.keyCode}`);
+        }
 
         // If the pointer is positioned after a currency separator remove the separator and the preceding number.
         if (input.value.charAt(caretPosition - 1) === this.thousandsSeparator && (e.key.toLowerCase() === 'backspace' || e.keyCode === 229)) {
