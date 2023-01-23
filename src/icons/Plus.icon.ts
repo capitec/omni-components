@@ -30,7 +30,7 @@ export class PlusIcon extends DOMTreeElement {
 }
 
 declare global {
-	interface HTMLElementTagNameMap {
-		'omni-plus-icon': PlusIcon
-	}
+    interface HTMLElementTagNameMap {
+        'omni-plus-icon': PlusIcon;
+    }
 }

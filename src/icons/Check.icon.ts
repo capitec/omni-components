@@ -32,7 +32,7 @@ export class CheckIcon extends DOMTreeElement {
 }
 
 declare global {
-	interface HTMLElementTagNameMap {
-		'omni-check-icon': CheckIcon
-	}
+    interface HTMLElementTagNameMap {
+        'omni-check-icon': CheckIcon;
+    }
 }

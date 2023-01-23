@@ -29,7 +29,7 @@ export class LockOpenIcon extends DOMTreeElement {
 }
 
 declare global {
-	interface HTMLElementTagNameMap {
-		'omni-lock-open-icon': LockOpenIcon
-	}
+    interface HTMLElementTagNameMap {
+        'omni-lock-open-icon': LockOpenIcon;
+    }
 }

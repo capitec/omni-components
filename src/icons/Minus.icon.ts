@@ -28,7 +28,7 @@ export class MinusIcon extends DOMTreeElement {
 }
 
 declare global {
-	interface HTMLElementTagNameMap {
-		'omni-minus-icon': MinusIcon
-	}
+    interface HTMLElementTagNameMap {
+        'omni-minus-icon': MinusIcon;
+    }
 }

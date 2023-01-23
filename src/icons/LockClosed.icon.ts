@@ -29,7 +29,7 @@ export class LockClosedIcon extends DOMTreeElement {
 }
 
 declare global {
-	interface HTMLElementTagNameMap {
-		'omni-lock-closed-icon': LockClosedIcon
-	}
+    interface HTMLElementTagNameMap {
+        'omni-lock-closed-icon': LockClosedIcon;
+    }
 }

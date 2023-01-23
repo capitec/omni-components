@@ -93,7 +93,7 @@ export class Label extends OmniElement {
 }
 
 declare global {
-	interface HTMLElementTagNameMap {
-		'omni-label': Label
-	}
+    interface HTMLElementTagNameMap {
+        'omni-label': Label;
+    }
 }

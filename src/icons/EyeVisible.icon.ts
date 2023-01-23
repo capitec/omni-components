@@ -29,7 +29,7 @@ export class EyeVisibleIcon extends DOMTreeElement {
 }
 
 declare global {
-	interface HTMLElementTagNameMap {
-		'omni-eye-visible-icon': EyeVisibleIcon
-	}
+    interface HTMLElementTagNameMap {
+        'omni-eye-visible-icon': EyeVisibleIcon;
+    }
 }

@@ -166,7 +166,7 @@ export class Icon extends OmniElement {
 }
 
 declare global {
-	interface HTMLElementTagNameMap {
-		'omni-icon': Icon
-	}
+    interface HTMLElementTagNameMap {
+        'omni-icon': Icon;
+    }
 }

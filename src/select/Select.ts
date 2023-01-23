@@ -506,7 +506,7 @@ export type SelectTypes = string[] | Record<string, unknown>[];
 export type SelectItems = SelectTypes | Promise<SelectTypes>;
 
 declare global {
-	interface HTMLElementTagNameMap {
-		'omni-select': Select
-	}
+    interface HTMLElementTagNameMap {
+        'omni-select': Select;
+    }
 }

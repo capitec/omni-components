@@ -29,7 +29,7 @@ export class EyeHiddenIcon extends DOMTreeElement {
 }
 
 declare global {
-	interface HTMLElementTagNameMap {
-		'omni-eye-hidden-icon': EyeHiddenIcon
-	}
+    interface HTMLElementTagNameMap {
+        'omni-eye-hidden-icon': EyeHiddenIcon;
+    }
 }

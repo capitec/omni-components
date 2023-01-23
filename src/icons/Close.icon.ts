@@ -31,7 +31,7 @@ export class CloseIcon extends DOMTreeElement {
 }
 
 declare global {
-	interface HTMLElementTagNameMap {
-		'omni-close-icon': CloseIcon
-	}
+    interface HTMLElementTagNameMap {
+        'omni-close-icon': CloseIcon;
+    }
 }

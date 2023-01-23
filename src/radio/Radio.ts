@@ -302,7 +302,7 @@ export class Radio extends OmniElement {
 }
 
 declare global {
-	interface HTMLElementTagNameMap {
-		'omni-radio': Radio
-	}
+    interface HTMLElementTagNameMap {
+        'omni-radio': Radio;
+    }
 }

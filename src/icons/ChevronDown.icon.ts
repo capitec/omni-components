@@ -31,7 +31,7 @@ export class ChevronDownIcon extends DOMTreeElement {
 }
 
 declare global {
-	interface HTMLElementTagNameMap {
-		'omni-chevron-down-icon': ChevronDownIcon
-	}
+    interface HTMLElementTagNameMap {
+        'omni-chevron-down-icon': ChevronDownIcon;
+    }
 }

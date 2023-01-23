@@ -402,7 +402,7 @@ export class CurrencyField extends OmniFormElement {
 }
 
 declare global {
-	interface HTMLElementTagNameMap {
-		'omni-currency-field': CurrencyField
-	}
+    interface HTMLElementTagNameMap {
+        'omni-currency-field': CurrencyField;
+    }
 }

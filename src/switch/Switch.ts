@@ -284,7 +284,7 @@ export class Switch extends OmniElement {
 }
 
 declare global {
-	interface HTMLElementTagNameMap {
-		'omni-switch': Switch
-	}
+    interface HTMLElementTagNameMap {
+        'omni-switch': Switch;
+    }
 }
