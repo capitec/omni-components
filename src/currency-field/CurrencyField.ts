@@ -242,13 +242,17 @@ export class CurrencyField extends OmniFormElement {
         const input = this._inputElement;
         const caretPosition = input.selectionStart;
 
-        console.log('navigator platform', navigator.platform);
-        console.log('keycode', e.keyCode);
         //alert(`The following is the keycode from the comma on the virtual keyboard ${e.keyCode}`);
+        /*
         if (this._isIOS()) {
             //alert('You are running a apple device');
-            alert(`The following is the keycode from the comma on the virtual keyboard ${e.keyCode}`);
-        }
+            // alert(`The following is the keycode from the comma on the virtual keyboard ${e.keyCode}`);
+
+            if(e.keyCode === 188) {
+                //e.target.value = e.target.value + ".";
+                return;
+            }
+        }*/
 
         // If the pointer is positioned after a currency separator remove the separator and the preceding number.
         if (input.value.charAt(caretPosition - 1) === this.thousandsSeparator && (e.key.toLowerCase() === 'backspace' || e.keyCode === 229)) {
@@ -460,7 +464,6 @@ export class CurrencyField extends OmniFormElement {
                 id="inputField"
                 type="text"
                 maxlength="21"
-                inputmode="decimal"
                 .value=${live(this._stringValue)}
                 ?readOnly=${this.disabled}
                 tabindex="${this.disabled ? -1 : 0}" />
