@@ -1,8 +1,8 @@
-<!-- ⚠️ This README has been generated from the file(s) "readme/blueprint.md" ⚠️-->
+<!-- ⚠️ This README has been generated from the file(s) ".tooling/readme/blueprint.md" ⚠️-->
 <br>
 
 <p align="center">
-  <img src="./readme/logos/omni.png" alt="Logo" width="128" height="128" />
+  <img src="./.tooling/readme/logos/omni.png" alt="Logo" width="128" height="128" />
 </p>
 
 <h3 align="center">Omni Components</h3>
@@ -495,8 +495,8 @@ Licensed under [MIT](https://opensource.org/licenses/MIT).
 <br>
 <p align="center">
     <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="./readme/logos/capitec-logo-white.svg">
-        <img alt="Capitec Logo" src="./readme/logos/capitec-logo-color.svg" height="28">
+        <source media="(prefers-color-scheme: dark)" srcset="./.tooling/readme/logos/capitec-logo-white.svg">
+        <img alt="Capitec Logo" src="./.tooling/readme/logos/capitec-logo-color.svg" height="28">
     </picture>
 </p>
 <p align="center">We are hiring 🤝 Join us! 🇿🇦</p>

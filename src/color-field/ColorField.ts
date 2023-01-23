@@ -139,3 +139,9 @@ export class ColorField extends OmniFormElement {
     `;
     }
 }
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'omni-color-field': ColorField;
+    }
+}

@@ -32,7 +32,14 @@ themes-list.json
 # General
 .DS_Store
 
-#Playwright
+# Generated typings
+*.d.ts
+*.d.ts.map
+
+# Include typings from source
+!src/*.d.ts
+
+# Playwright
 /test-results/
 /playwright-report/
 /playwright/.cache/

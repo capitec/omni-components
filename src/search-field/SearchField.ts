@@ -169,3 +169,9 @@ export class SearchField extends OmniFormElement {
         `;
     }
 }
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'omni-search-field': SearchField;
+    }
+}

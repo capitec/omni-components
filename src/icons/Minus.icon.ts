@@ -26,3 +26,9 @@ export class MinusIcon extends DOMTreeElement {
     </svg>`;
     }
 }
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'omni-minus-icon': MinusIcon;
+    }
+}
