@@ -17,7 +17,7 @@
 		},
 		"editor.defaultFormatter": "esbenp.prettier-vscode"
 	},
-    "files.exclude": {
+	"files.exclude": {
 		"button": true,
 		"check": true,
 		"chip": true,
@@ -34,8 +34,8 @@
 		"render-element": true,
 		"search-field": true,
 		"select": true,
-		"switch": true,
-        "text-field": true,
-        "utils": true
+		"text-field": true,
+		"utils": true,
+		"switch": true
 	}
 }

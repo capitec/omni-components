@@ -46,6 +46,9 @@ let buildResult = null;
 
 await build();
 
+console.log(chalk.yellow('Updating components file lists...'));
+execSync('npm run ignore-typings');
+
 export default async config => {
 
     for (const key in globalData) {
