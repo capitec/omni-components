@@ -28,3 +28,9 @@ export class PlusIcon extends DOMTreeElement {
     </svg>`;
     }
 }
+
+declare global {
+	interface HTMLElementTagNameMap {
+		'omni-plus-icon': PlusIcon
+	}
+}

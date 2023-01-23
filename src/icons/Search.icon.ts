@@ -30,3 +30,9 @@ export class SearchIcon extends DOMTreeElement {
         `;
     }
 }
+
+declare global {
+	interface HTMLElementTagNameMap {
+		'omni-search-icon': SearchIcon
+	}
+}

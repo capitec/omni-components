@@ -91,3 +91,9 @@ export class Label extends OmniElement {
         return html`${this.label}<slot></slot>`;
     }
 }
+
+declare global {
+	interface HTMLElementTagNameMap {
+		'omni-label': Label
+	}
+}
