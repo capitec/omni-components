@@ -91,3 +91,9 @@ export class TextField extends OmniFormElement {
     `;
     }
 }
+
+declare global {
+	interface HTMLElementTagNameMap {
+		'omni-text-field': TextField
+	}
+}

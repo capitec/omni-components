@@ -27,3 +27,9 @@ export class EyeHiddenIcon extends DOMTreeElement {
     </svg>`;
     }
 }
+
+declare global {
+	interface HTMLElementTagNameMap {
+		'omni-eye-hidden-icon': EyeHiddenIcon
+	}
+}
