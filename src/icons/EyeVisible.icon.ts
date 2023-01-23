@@ -27,3 +27,9 @@ export class EyeVisibleIcon extends DOMTreeElement {
     </svg>`;
     }
 }
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'omni-eye-visible-icon': EyeVisibleIcon;
+    }
+}

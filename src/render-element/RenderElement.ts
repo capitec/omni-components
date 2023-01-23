@@ -110,3 +110,9 @@ export class RenderElement extends OmniElement {
 
 export type RenderResult = TemplateResult | typeof nothing | HTMLElement | string;
 export type RenderFunction = (...data: unknown[]) => RenderResult | Promise<RenderResult>;
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'omni-render-element': RenderElement;
+    }
+}

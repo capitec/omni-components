@@ -83,7 +83,7 @@ When adding or editing components, please note the following key directories:
 ├── ...
 ```
 
-* `src` - Contains all components in a flat structure, each named afer a component, e.g. `button`. Contents:
+* `src` - Contains all components in a flat structure, each named after a component, e.g. `button`. Contents:
   * `Button.stories.ts` - The stories for the component.
   * `Button.ts` - The component. *(NOTE: There might be multiple, depending on complexity and composition)*
   * `index.ts` - The directory-level index, containing one or more component exports.
@@ -117,6 +117,7 @@ Here's a *non-exhaustive* list of requirements that are key to contributing to t
 * **Do** implement "mobile first" templates, leveraging [Responsive Design](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design) layout and styling principles. 📱
 * **Do** utilize [LitElement's](https://lit.dev/) [decorators](https://lit.dev/docs/components/decorators/), required for element and property names.
 * **Do** ensure sufficient [JSDoc](https://jsdoc.app/) as well as general code comments are added.
+* **Do** add an `HTMLElementTagNameMap` entry as documented [here](https://lit.dev/docs/tools/publishing/#publish-typescript-typings).
 * **Do** use and extend existing shared CSS component and theme custom properties. (See [`src/core/OmniElement.ts`](https://github.com/capitec/omni-components/blob/develop/src/core/OmniElement.ts))
 * **Do** set suitable CSS custom property defaults, **avoid** hard-coding CSS property values directly within components, unless deemed required.
 * **Do** adhere to and leverage existing DOM standards when making use of [`<input>`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement) element.

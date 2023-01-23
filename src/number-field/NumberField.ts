@@ -103,3 +103,9 @@ export class NumberField extends OmniFormElement {
     `;
     }
 }
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'omni-number-field': NumberField;
+    }
+}
