@@ -32,7 +32,7 @@ themes-list.json
 # General
 .DS_Store
 
-# Components
+# Generated typings
 *.d.ts
 *.d.ts.map
 
