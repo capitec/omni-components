@@ -330,3 +330,9 @@ export class Button extends OmniElement {
     `;
     }
 }
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'omni-button': Button;
+    }
+}

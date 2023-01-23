@@ -83,3 +83,9 @@ export class LoadingIcon extends OmniElement {
         `;
     }
 }
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'omni-loading-icon': LoadingIcon;
+    }
+}

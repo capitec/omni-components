@@ -169,3 +169,9 @@ export class PasswordField extends OmniFormElement {
     `;
     }
 }
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'omni-password-field': PasswordField;
+    }
+}

@@ -1,4 +1,4 @@
-import { loadCustomElementsModuleByFileFor, loadCssProperties, filterJsDocLinks } from '../../dist/utils/StoryUtils.js';
+import { loadCustomElementsModuleByFileFor, loadCssProperties, filterJsDocLinks } from '../../../dist/utils/StoryUtils.js';
 
 export function getTagName(value, componentName) {
     const component = loadCustomElementsModuleByFileFor(componentName, value);

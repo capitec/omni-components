@@ -193,3 +193,9 @@ export class Chip extends OmniElement {
     `;
     }
 }
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'omni-chip': Chip;
+    }
+}
