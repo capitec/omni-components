@@ -185,8 +185,18 @@ export class CurrencyField extends OmniFormElement {
     // Format the internal value to a float.
     _formatToFloat(formattedValue: string): string | number {
         if (formattedValue.length > 0) {
-            const preFloatReplaceAll = formattedValue.replaceAll(this.thousandsSeparator, '').replace(this.fractionalSeparator, '.');
-            return parseFloat(preFloatReplaceAll);
+            let preFloatReplaceAll = '';
+            if (formattedValue.includes(this.fractionalSeparator) && this.fractionalPrecision > 0) {
+                preFloatReplaceAll = formattedValue.replaceAll(this.thousandsSeparator, '').replace(this.fractionalSeparator, '.');
+                return parseFloat(preFloatReplaceAll).toFixed(this.fractionalPrecision);
+            } else {
+                preFloatReplaceAll = formattedValue.replaceAll(this.thousandsSeparator, '');
+                return parseFloat(preFloatReplaceAll);
+            }
+
+            //const preFloatReplaceAll = formattedValue.replaceAll(this.thousandsSeparator, '').replace(this.fractionalSeparator, '.');
+            //console.log('parsed float', parseFloat(preFloatReplaceAll));
+            //return parseFloat(preFloatReplaceAll);
         } else {
             return '';
         }
@@ -292,6 +302,7 @@ export class CurrencyField extends OmniFormElement {
         }
 
         // If hitting backspace with the caret in the position of the first fractional (cents) separator then remove the entire fraction value.
+        /*
         if (
             input.value.includes(this.fractionalSeparator) &&
             input.value.charAt(caretPosition - 2) === this.fractionalSeparator &&
@@ -311,7 +322,7 @@ export class CurrencyField extends OmniFormElement {
             // Set value prop to float value
             this.value = this._formatToFloat(this._stringValue);
             return;
-        }
+        }*/
 
         // Delete fraction (cents) part if delete button is clicked.
         if (input.value.charAt(caretPosition) === this.fractionalSeparator && e.key.toLowerCase() === 'delete') {
@@ -384,7 +395,7 @@ export class CurrencyField extends OmniFormElement {
         }
 
         // Set value prop to float value
-        this.value = this._formatToFloat(this._stringValue);
+        //this.value = this._formatToFloat(this._stringValue);
     }
 
     static override get styles() {

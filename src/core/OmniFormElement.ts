@@ -14,7 +14,7 @@ import OmniElement from './OmniElement.js';
  *
  * @cssprop --omni-container-width - Container width.
  * @cssprop --omni-container-height - Container height.
- * 
+ *
  * @cssprop --omni-form-layout-border-radius - Layout border radius.
  * @cssprop --omni-form-layout-background-color - Layout background color.
  * @cssprop --omni-form-layout-height - Layout height.
