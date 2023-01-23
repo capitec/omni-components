@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { PlayFunction } from './PlayFunction.js';
 
 export type ComponentStoryFormat<T> = {
     render?: (args: T) => any;
     name?: string;
-    description?: string;
+    description?: string | (() => any);
     args?: Partial<T>;
     play?: PlayFunction<T>;
     source?: () => string;

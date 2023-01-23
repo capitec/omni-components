@@ -13,7 +13,7 @@ import { CodeMirrorSourceUpdateEvent, CodeMirrorEditorEvent } from './CodeEditor
 import { CodeEditor } from './CodeEditor.js';
 import { LivePropertyEditor, PropertyChangeEvent } from './LivePropertyEditor.js';
 import { StoryController } from './StoryController.js';
-import { loadCustomElementsCodeMirrorCompletionsRemote, loadCustomElements, loadCssProperties, Package } from './StoryUtils.js';
+import { loadCustomElementsCodeMirrorCompletionsRemote, loadCustomElements, loadCssProperties, Package, ComponentStoryFormat } from './StoryUtils.js';
 
 import '../label/Label.js';
 import '../button/Button';
@@ -46,7 +46,9 @@ export class StoryRenderer extends LitElement {
     private overrideInteractive: boolean;
     private controller: StoryController;
     private customCss: HTMLStyleElement;
-    private story: any;
+    private story: ComponentStoryFormat<any> & {
+        originalArgs: any
+    };
     private customElements: Package;
     private cssVariables: CSSVariable[];
 
@@ -166,7 +168,7 @@ export class StoryRenderer extends LitElement {
 
         return html`
         <div class="story-description">
-            ${this.story.description}
+            ${(this.story.description && typeof this.story.description === 'function' ? this.story.description() : this.story.description)}
         </div>
         <div class="story">
             <div class="preview">
