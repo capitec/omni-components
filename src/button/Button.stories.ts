@@ -1,5 +1,5 @@
 import { within } from '@testing-library/dom';
-import userEvent, { PointerEventsCheckLevel } from '@testing-library/user-event';
+import userEvent from '@testing-library/user-event';
 import * as jest from 'jest-mock';
 import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
@@ -139,6 +139,7 @@ export const Disabled = {
         await expect(foundDisabledClass).toBeTruthy(); // Test for not clickable.
 
         const click = jest.fn();
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         button.addEventListener('click', (e) => {
             click();
         });

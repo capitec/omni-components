@@ -191,7 +191,7 @@ export const Custom_Check_Icon: ComponentStoryFormat<Args> = {
         checked: true,
         check_icon: raw`<svg slot="check_icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 442.79 410.38" version="1.0" width="100%"
                       height="100%">
-                      <path style="stroke:#000;stroke-width:19.892;fill:#ffffff"
+                      <path style="stroke:#000;stroke-width:19.892;fill:lightgreen"
                         d="m-1747.2-549.3 287.72 333.9c146.6-298.83 326.06-573.74 614.52-834.75-215.89 121.82-453.86 353.14-657.14 639.38l-245.1-138.53z"
                         transform="translate(843.77 509.04) scale(.48018)" />
                     </svg>`
