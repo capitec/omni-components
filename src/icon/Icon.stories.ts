@@ -80,7 +80,7 @@ export const SVG: ComponentStoryFormat<Args> = {
     }
 };
 
-export const Icon_Path: ComponentStoryFormat<Args> = {
+export const Local_Source: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
     <!-- Icons loaded by content path instead of font-based or slotted content will not be able to be styled directly -->
 
@@ -96,11 +96,11 @@ export const Icon_Path: ComponentStoryFormat<Args> = {
         const icon = within(context.canvasElement).getByTestId<Icon>('test-icon');
         const imgElement = icon.shadowRoot.querySelector('img');
         await expect(imgElement).toBeTruthy();
-        await expect(imgElement.src.endsWith(Icon_Path.args.icon.replace('./', '/'))).toBeTruthy();
+        await expect(imgElement.src.endsWith(context.args.icon.replace('./', '/'))).toBeTruthy();
     }
 };
 
-export const URL: ComponentStoryFormat<Args> = {
+export const Remote_Source: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
     <!-- Icons loaded by content path instead of font-based or slotted content will not be able to be styled directly -->
 
@@ -116,7 +116,7 @@ export const URL: ComponentStoryFormat<Args> = {
         const icon = within(context.canvasElement).getByTestId<Icon>('test-icon');
         const imgElement = icon.shadowRoot.querySelector('img');
         await expect(imgElement).toBeTruthy();
-        await expect(imgElement.src).toEqual(URL.args.icon);
+        await expect(imgElement.src).toEqual(context.args.icon);
     }
 };
 
