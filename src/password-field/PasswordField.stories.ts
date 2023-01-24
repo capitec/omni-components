@@ -104,8 +104,8 @@ export const Disabled = DisabledStory<PasswordField, BaseArgs>('omni-password-fi
 export const Custom_Icon_Slot: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
     <omni-password-field data-testid="test-password-field" label="${ifNotEmpty(args.label)}" ?disabled="${args.disabled}">
-      <omni-lock-open-icon slot="show"></omni-lock-open-icon>
-      <omni-lock-closed-icon slot="hide"></omni-lock-closed-icon>
+      <omni-lock-open-icon style="fill: orange;" slot="show"></omni-lock-open-icon>
+      <omni-lock-closed-icon style="fill: lightgreen;" slot="hide"></omni-lock-closed-icon>
     </omni-password-field>
   `,
     name: 'Custom Icon Slot',
