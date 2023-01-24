@@ -408,7 +408,7 @@ header .header-version {
 
 .hidden,
 .hidden-until-760 {
-    display: none;
+    display: none !important;
 }
 
 .transparent {
@@ -1327,11 +1327,11 @@ pre[class*='language-'] {
     }
 
     .hidden-until-760 {
-        display: flex;
+        display: flex !important;
     }
 
     .hidden-after-760 {
-        display: none;
+        display: none !important;
     }
     
     .transparent-after-760 {
