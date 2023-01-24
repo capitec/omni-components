@@ -163,6 +163,7 @@ header {
     --omni-select-item-header-font-color: var(--omni-theme-background-color);
     --omni-hyperlink-color-active: white;
     --omni-hyperlink-color-disabled: #34393E;
+    --omni-hyperlink-color-visited: rgb(108 108 108);
 }
 
 /* DOCS SPECIFIC */
