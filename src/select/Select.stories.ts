@@ -297,8 +297,7 @@ export const Empty_Message: ComponentStoryFormat<Args> = {
         items: [],
         emptyMessage: 'No items provided',
         displayField: 'label',
-        idField: 'id',
-        
+        idField: 'id'
     } as Args,
     play: async (context) => {
         const select = within(context.canvasElement).getByTestId<Select>('test-select');

@@ -435,7 +435,7 @@ export class Select extends OmniFormElement {
     }
 
     protected override renderPicker() {
-        if (!this._popUp ) {
+        if (!this._popUp) {
             return nothing;
         }
         return html`

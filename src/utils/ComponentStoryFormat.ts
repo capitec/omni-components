@@ -6,19 +6,18 @@ import { PlayFunction } from './PlayFunction.js';
  * https://github.com/ComponentDriven/csf
  */
 export type ComponentStoryFormat<T> = {
-
-    /** 
-     * Custom render function for the story. (standard) 
+    /**
+     * Custom render function for the story. (standard)
      */
     render?: (args: T) => any;
 
-    /** 
-     * Suitable name for the story. (standard) 
+    /**
+     * Suitable name for the story. (standard)
      */
     name?: string;
 
-    /** 
-     * Suitable description for the story. (non-standard) 
+    /**
+     * Suitable description for the story. (non-standard)
      */
     description?: string | (() => any);
 

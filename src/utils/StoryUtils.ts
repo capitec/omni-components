@@ -573,16 +573,16 @@ async function setupThemes() {
             darkThemePreferred = event.matches;
             const storedTheme = window.sessionStorage.getItem(themeStorageKey);
             if (darkThemePreferred && storedTheme === lightThemeKey) {
-                const option = themeOptions?.find(t => t.value === darkThemeKey) || {
+                const option = themeOptions?.find((t) => t.value === darkThemeKey) || {
                     value: darkThemeKey,
                     label: `${titleCase(darkThemeKey)} Theme`
                 };
-                themeSelect.value =  option;
+                themeSelect.value = option;
                 themeNativeSelect.value = darkThemeKey;
                 window.sessionStorage.setItem(themeStorageKey, darkThemeKey);
                 changeTheme(event, darkThemeKey);
             } else if (!darkThemePreferred && storedTheme === darkThemeKey) {
-                const option = themeOptions?.find(t => t.value === lightThemeKey) || {
+                const option = themeOptions?.find((t) => t.value === lightThemeKey) || {
                     value: lightThemeKey,
                     label: `${titleCase(lightThemeKey)} Theme`
                 };
@@ -733,10 +733,10 @@ async function setupThemes() {
     themeNativeSelect.addEventListener('change', (e) => {
         const value = (e.target as HTMLSelectElement).value as any;
         window.sessionStorage.setItem(themeStorageKey, value);
-        const option = themeOptions.find(t => t.value === value) || {
+        const option = themeOptions.find((t) => t.value === value) || {
             value: value,
             label: `${titleCase(value)} Theme`
-        }
+        };
         themeSelect.value = option;
         changeTheme(e, value);
     });

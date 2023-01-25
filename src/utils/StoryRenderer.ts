@@ -47,7 +47,7 @@ export class StoryRenderer extends LitElement {
     private controller: StoryController;
     private customCss: HTMLStyleElement;
     private story: ComponentStoryFormat<any> & {
-        originalArgs: any
+        originalArgs: any;
     };
     private customElements: Package;
     private cssVariables: CSSVariable[];
@@ -168,7 +168,7 @@ export class StoryRenderer extends LitElement {
 
         return html`
         <div class="story-description">
-            ${(this.story.description && typeof this.story.description === 'function' ? this.story.description() : this.story.description)}
+            ${this.story.description && typeof this.story.description === 'function' ? this.story.description() : this.story.description}
         </div>
         <div class="story">
             <div class="preview">
