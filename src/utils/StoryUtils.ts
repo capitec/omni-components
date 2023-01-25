@@ -566,31 +566,33 @@ async function setupThemes() {
     const themeNativeSelect = document.getElementById('header-theme-native-select') as HTMLSelectElement;
     const themeStyle = document.getElementById('theme-styles') as HTMLStyleElement;
     let darkThemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const themeOptions: { value: string; label: string }[] = [];
+
     if (window.matchMedia) {
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
             darkThemePreferred = event.matches;
             const storedTheme = window.sessionStorage.getItem(themeStorageKey);
             if (darkThemePreferred && storedTheme === lightThemeKey) {
-                themeSelect.value = {
+                const option = themeOptions?.find((t) => t.value === darkThemeKey) || {
                     value: darkThemeKey,
                     label: `${titleCase(darkThemeKey)} Theme`
                 };
+                themeSelect.value = option;
                 themeNativeSelect.value = darkThemeKey;
                 window.sessionStorage.setItem(themeStorageKey, darkThemeKey);
                 changeTheme(event, darkThemeKey);
             } else if (!darkThemePreferred && storedTheme === darkThemeKey) {
-                themeSelect.value = {
+                const option = themeOptions?.find((t) => t.value === lightThemeKey) || {
                     value: lightThemeKey,
                     label: `${titleCase(lightThemeKey)} Theme`
                 };
+                themeSelect.value = option;
                 themeNativeSelect.value = lightThemeKey;
                 window.sessionStorage.setItem(themeStorageKey, lightThemeKey);
                 changeTheme(event, lightThemeKey);
             }
         });
     }
-
-    const themeOptions: { value: string; label: string }[] = [];
 
     function addOption(key: string) {
         const option = {
@@ -731,7 +733,11 @@ async function setupThemes() {
     themeNativeSelect.addEventListener('change', (e) => {
         const value = (e.target as HTMLSelectElement).value as any;
         window.sessionStorage.setItem(themeStorageKey, value);
-        themeSelect.value = value;
+        const option = themeOptions.find((t) => t.value === value) || {
+            value: value,
+            label: `${titleCase(value)} Theme`
+        };
+        themeSelect.value = option;
         changeTheme(e, value);
     });
 }

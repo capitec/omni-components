@@ -408,7 +408,7 @@ header .header-version {
 
 .hidden,
 .hidden-until-760 {
-    display: none;
+    display: none !important;
 }
 
 .transparent {
@@ -814,6 +814,10 @@ header .header-version {
     font-weight: 500;
 }
 
+.component-stories .story-description {
+    padding-top: 8px;
+}
+
 .component-stories .story {
     display: flex;
     flex-direction: column;
@@ -1041,21 +1045,7 @@ code[class*='language-'] > span {
     hyphens: none;
 }
 
-pre[class*='language-']::-moz-selection,
-pre[class*='language-'] ::-moz-selection,
-code[class*='language-']::-moz-selection,
-code[class*='language-'] ::-moz-selection {
-    text-shadow: none;
-    background: var(--docs-prism-selection-color);
-}
 
-pre[class*='language-']::selection,
-pre[class*='language-'] ::selection,
-code[class*='language-']::selection,
-code[class*='language-'] ::selection {
-    text-shadow: none;
-    background: var(--docs-prism-selection-color);
-}
 
 @media print {
     code[class*='language-'],
@@ -1341,11 +1331,11 @@ pre[class*='language-'] {
     }
 
     .hidden-until-760 {
-        display: flex;
+        display: flex !important;
     }
 
     .hidden-after-760 {
-        display: none;
+        display: none !important;
     }
     
     .transparent-after-760 {

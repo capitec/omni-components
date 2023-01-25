@@ -67,6 +67,7 @@ export const Suffix = SuffixStory<ColorField, BaseArgs>('omni-color-field');
 export const Disabled: ComponentStoryFormat<BaseArgs> = {
     render: (args: BaseArgs) => html`<omni-color-field data-testid="test-field" label="${ifNotEmpty(args.label)}" disabled></omni-color-field>`,
     name: 'Disabled',
+    description: 'Prevent interaction (pointer events).',
     args: {
         label: 'Disabled',
         disabled: true
