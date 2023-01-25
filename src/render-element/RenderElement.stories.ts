@@ -56,7 +56,7 @@ async function renderAsLit(data: object) {
 <omni-render-element .data="\${this.someData}" .renderer="\${this.renderAsLit}"></omni-render-element>
 `,
     name: 'Lit Template',
-    description: 'Render a lit template string from the renderer function',
+    description: 'Render a Lit template string from the renderer function.',
     render: (args: Args) => html`
     <omni-render-element data-testid="test-render" .data="${args.data}" .renderer="${args.renderer}"
       >${
@@ -120,7 +120,7 @@ export const HTML_Element_Instance: ComponentStoryFormat<Args> = {
         return html` <omni-render-element id="renderElI" data-testid="test-render"></omni-render-element> `;
     },
     name: 'HTML Element Instance',
-    description: 'Render a HTMLElement instance from the renderer function',
+    description: 'Render an HTMLElement instance from the renderer function.',
     source: () => `
 <omni-render-element id="renderElI"></omni-render-element>
 <script defer>
@@ -204,7 +204,7 @@ export const HTML_String: ComponentStoryFormat<Args> = {
         return html` <omni-render-element id="renderElS" data-testid="test-render"> </omni-render-element> `;
     },
     name: 'HTML String',
-    description: 'Render a string from the renderer function as html',
+    description: 'Render a string from the renderer function as html.',
     source: () => `
 <omni-render-element id="renderElS"></omni-render-element>
 <script defer>

@@ -68,7 +68,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
 export const Label: ComponentStoryFormat<Args> = {
     render: (args: Args) => html` <omni-chip data-testid="test-chip" label="${ifNotEmpty(args.label)}"> </omni-chip> `,
     name: 'Label',
-    description: 'Set a text value to display within',
+    description: 'Set a text value to display within.',
     args: {
         label: 'Label'
     },
@@ -81,7 +81,7 @@ export const Label: ComponentStoryFormat<Args> = {
 export const Closable: ComponentStoryFormat<Args> = {
     render: (args: Args) => html` <omni-chip data-testid="test-chip" label="${ifNotEmpty(args.label)}" ?closable=${args.closable}> </omni-chip> `,
     name: 'Closable',
-    description: 'Add a close icon to the component',
+    description: 'Add a close icon to the component.',
     args: {
         label: 'Closable',
         closable: true
@@ -106,7 +106,7 @@ export const Closable: ComponentStoryFormat<Args> = {
 export const Disabled: ComponentStoryFormat<Args> = {
     render: (args: Args) => html` <omni-chip data-testid="test-chip" label="${ifNotEmpty(args.label)}" ?disabled="${args.disabled}"> </omni-chip> `,
     name: 'Disabled',
-    description: 'Prevent interaction (pointer events)',
+    description: 'Prevent interaction (pointer events).',
     args: {
         label: 'Disabled',
         disabled: true
@@ -131,7 +131,7 @@ export const Chip_Slot_Icon: ComponentStoryFormat<Args> = {
     <omni-chip data-testid="test-chip" label="${ifNotEmpty(args.label)}" ?closable=${args.closable}> ${unsafeHTML(args.chip_icon)} </omni-chip>
   `,
     name: 'Chip Icon',
-    description: 'Set html content to display as an icon',
+    description: 'Set html content to display as an icon.',
     args: {
         label: 'Chip',
         closable: false,
@@ -154,7 +154,7 @@ export const Custom_Close_Icon: ComponentStoryFormat<Args> = {
     </omni-chip>
   `,
     name: 'Custom Close Icon',
-    description: 'Set html content to display as the close icon',
+    description: 'Set html content to display as the close icon.',
     args: {
         label: 'Close',
         closable: true,

@@ -814,6 +814,10 @@ header .header-version {
     font-weight: 500;
 }
 
+.component-stories .story-description {
+    padding-top: 8px;
+}
+
 .component-stories .story {
     display: flex;
     flex-direction: column;

@@ -41,7 +41,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
 
 export const Title: ComponentStoryFormat<Args> = {
     render: (args: Args) => html` <omni-label data-testid="test-label" label="${args.label}" type="${args.type}"> </omni-label> `,
-    description: 'Set the text to display with the styles of a title',
+    description: 'Set the text to display with the styles of a title.',
     args: {
         label: 'Title',
         type: 'title'
@@ -54,7 +54,7 @@ export const Title: ComponentStoryFormat<Args> = {
 
 export const Subtitle: ComponentStoryFormat<Args> = {
     render: (args: Args) => html` <omni-label data-testid="test-label" label="${args.label}" type="${args.type}"> </omni-label> `,
-    description: 'Set the text to display with the styles of a subtitle',
+    description: 'Set the text to display with the styles of a subtitle.',
     args: {
         label: 'Subtitle',
         type: 'subtitle'
@@ -67,7 +67,7 @@ export const Subtitle: ComponentStoryFormat<Args> = {
 
 export const Strong: ComponentStoryFormat<Args> = {
     render: (args: Args) => html` <omni-label data-testid="test-label" label="${args.label}" type="${args.type}"> </omni-label> `,
-    description: 'Set the text to display with a bold font style',
+    description: 'Set the text to display with a bold font style.',
     args: {
         label: 'Strong',
         type: 'strong'

@@ -109,7 +109,7 @@ export const Custom_Icon_Slot: ComponentStoryFormat<Args> = {
     </omni-password-field>
   `,
     name: 'Custom Icon Slot',
-    description: 'Set html content to display as the visibility indicators of the field',
+    description: 'Set html content to display as the visibility indicators of the field.',
     args: {
         label: 'Custom Icon Slot'
     },

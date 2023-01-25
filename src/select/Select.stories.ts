@@ -138,7 +138,7 @@ export const Async_Per_Item: ComponentStoryFormat<Args> = {
         </omni-select>
     `,
     name: 'Async',
-    description: 'Render each item from an async function',
+    description: 'Render each item from an async function.',
     args: {
         label: 'Async item renderer function',
         data: {},
@@ -196,7 +196,7 @@ export const Loading_Slot: ComponentStoryFormat<Args> = {
         </omni-select>
     `,
     name: 'Loading Slot',
-    description: 'Set html content to render while populating items list',
+    description: 'Set html content to render while populating items list.',
     args: {
         label: 'Loading Slot',
         data: {},
@@ -254,7 +254,7 @@ export const String_Array: ComponentStoryFormat<Args> = {
         </omni-select>
     `,
     name: 'String',
-    description: 'Use a string array as the items source',
+    description: 'Use a string array as the items source.',
     args: {
         label: 'String',
         data: {},
@@ -291,7 +291,7 @@ export const Empty_Message: ComponentStoryFormat<Args> = {
         </omni-select>
     `,
     name: 'Empty Message',
-    description: 'Set a text value to display when there are no items',
+    description: 'Set a text value to display when there are no items.',
     args: {
         label: 'Empty',
         items: [],
@@ -317,7 +317,7 @@ export const Disabled: ComponentStoryFormat<Args> = {
         </omni-select>
     `,
     name: 'Disabled',
-    description: 'Prevent interaction (pointer events)',
+    description: 'Prevent interaction (pointer events).',
     args: {
         label: 'Disabled',
         disabled: true,
