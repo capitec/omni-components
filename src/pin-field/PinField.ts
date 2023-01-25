@@ -71,6 +71,9 @@ export class PinField extends OmniFormElement {
         this.addEventListener('keydown', this._keyDown.bind(this), {
             capture: true
         });
+        this.addEventListener('keyup', this._blurOnEnter.bind(this), {
+            capture: true
+        });
     }
 
     //Added for non webkit supporting browsers
@@ -89,6 +92,12 @@ export class PinField extends OmniFormElement {
             if (new RegExp('^[0-9]+$').test(value) === false) {
                 return;
             }
+        }
+    }
+
+    _blurOnEnter(e: any) {
+        if (e.code === 'Enter' || e.keyCode === 13) {
+            e.currentTarget.blur();
         }
     }
 

@@ -44,6 +44,15 @@ export class EmailField extends OmniFormElement {
         this.addEventListener('input', this._keyInput.bind(this), {
             capture: true
         });
+        this.addEventListener('keyup', this._blurOnEnter.bind(this), {
+            capture: true
+        });
+    }
+
+    _blurOnEnter(e: any) {
+        if (e.code === 'Enter' || e.keyCode === 13) {
+            e.currentTarget.blur();
+        }
     }
 
     _keyInput() {
