@@ -46,7 +46,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
     name: 'Interactive',
     args: {
         label: 'Label',
-        value: '123456789.11',
+        value: '123456789',
         hint: '',
         error: '',
         disabled: false,
