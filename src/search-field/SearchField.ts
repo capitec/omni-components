@@ -3,8 +3,8 @@ import { customElement, query } from 'lit/decorators.js';
 import { live } from 'lit/directives/live.js';
 import { OmniFormElement } from '../core/OmniFormElement.js';
 
-import '../icons/Clear.icon';
-import '../icons/Search.icon';
+import '../icons/Clear.icon.js';
+import '../icons/Search.icon.js';
 
 /**
  * Search input control.
