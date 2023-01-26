@@ -184,10 +184,10 @@ export class CurrencyField extends OmniFormElement {
         if (formattedValue.length > 0) {
             let preFloatReplaceAll = '';
             if (formattedValue.includes(this.fractionalSeparator) && this.fractionalPrecision > 0) {
-                preFloatReplaceAll = formattedValue.replaceAll(this.thousandsSeparator, '').replace(this.fractionalSeparator, '.');
+                preFloatReplaceAll = formattedValue.replace(new RegExp(this.thousandsSeparator, 'g'), '').replace(this.fractionalSeparator, '.');
                 return Number(parseFloat(preFloatReplaceAll).toFixed(this.fractionalPrecision));
             } else {
-                preFloatReplaceAll = formattedValue.replaceAll(this.thousandsSeparator, '');
+                preFloatReplaceAll = formattedValue.replace(new RegExp(this.thousandsSeparator, 'g'), '');
                 return Number(parseFloat(preFloatReplaceAll).toFixed(0));
             }
         } else {
@@ -268,25 +268,18 @@ export class CurrencyField extends OmniFormElement {
                     });
                 }
             } else {
-                if(selection) {
-
+                if (selection) {
                     if (input.value.length === input.selectionEnd) {
-                        await this._formatToCurrency(
-                            this._parseAmount(
-                                input.value.substring(0, caretPosition - 1)
-                            )
-                        ).then((res) => {
+                        await this._formatToCurrency(this._parseAmount(input.value.substring(0, caretPosition - 1))).then((res) => {
                             this._inputElement.value = res;
                         });
                     } else {
-
                         console.log(input.value.substring(0, caretPosition - 1));
-                        console.log(input.value.substring(caretPosition + selection,  input.value.length + 1));
+                        console.log(input.value.substring(caretPosition + selection, input.value.length + 1));
 
                         await this._formatToCurrency(
                             this._parseAmount(
-                                input.value.substring(0, caretPosition - 1)
-                                + input.value.substring(input.selectionEnd, input.value.length + 1)
+                                input.value.substring(0, caretPosition - 1) + input.value.substring(input.selectionEnd, input.value.length + 1)
                             )
                         ).then((res) => {
                             this._inputElement.value = res;
@@ -302,7 +295,6 @@ export class CurrencyField extends OmniFormElement {
                         this._inputElement.value = res;
                     });
                 }
-
             }
 
             // Added so that the number before the separator is not removed.
