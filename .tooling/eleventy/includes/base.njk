@@ -81,15 +81,18 @@
                         menu
                     </span>
                 </div>
-                <div style="display: flex;">
+                <div style="display: flex; position: relative;">
                     <div class="header-logo">
                         <div class="header-container" id="header-container">
                             <img src="./assets/images/logo.png" width="30" height: "30" alt="logo">
                             <div class="header-text" style="padding-left: 10px; font-weight: bold">Omni Components</div>
                         </div>
                     </div>
-                    <div class="header-version">
-                        {% version %}
+                    <div class="header-version-section">
+                        <div class="header-version" id="header-version-indicator">
+                            {% version %}
+                        </div>
+                        <select class="docs-select header-version-select transparent" id="header-version-native-select"></select>
                     </div>
                 </div>
                 <div class="header-actions">

@@ -162,6 +162,16 @@ header .header-logo .header-container * {
     cursor: pointer;
 }
 
+header .header-version-section {
+    display: flex; 
+    position: relative;
+    cursor: pointer;
+}
+
+header .header-version-section:hover {
+    text-decoration: underline;
+}
+
 header .header-version {
     margin-right: 12px;
     background: var(--docs-border-color);
@@ -169,6 +179,13 @@ header .header-version {
     border-radius: 6px;
     font-weight: 600;
     font-size: 0.8em;
+}
+
+header .header-version-select {
+    width: 100%;
+    position: absolute;
+    height: 27px;
+    display: flex;
 }
 
 .header-actions {
