@@ -22,6 +22,7 @@ export default {
 interface Args extends BaseArgs {
     items: SelectItems | (() => SelectItems);
     displayField: string;
+    emptyMessage: string;
     idField: string;
     renderItem: RenderFunction;
     loading_indicator: string;
@@ -60,6 +61,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
             .renderItem="${args.renderItem}"
             idField="${args.idField}"
             ?disabled="${args.disabled}"
+            empty-message="${args.emptyMessage}"
             >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${
         args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}` : nothing
     }
@@ -80,7 +82,8 @@ export const Interactive: ComponentStoryFormat<Args> = {
         items: displayItems as Record<string, unknown>[],
         displayField: 'label',
         idField: 'id',
-        loading_indicator: ''
+        loading_indicator: '',
+        emptyMessage: 'No items provided'
     } as Args,
     play: async (context) => {
         const select = within(context.canvasElement).getByTestId<Select>('test-select');
@@ -133,6 +136,7 @@ export const Async_Per_Item: ComponentStoryFormat<Args> = {
         </omni-select>
     `,
     name: 'Async',
+    description: 'Render each item from an async function.',
     args: {
         label: 'Async item renderer function',
         data: {},
@@ -190,6 +194,7 @@ export const Loading_Slot: ComponentStoryFormat<Args> = {
         </omni-select>
     `,
     name: 'Loading Slot',
+    description: 'Set html content to render while populating items list.',
     args: {
         label: 'Loading Slot',
         data: {},
@@ -247,6 +252,7 @@ export const String_Array: ComponentStoryFormat<Args> = {
         </omni-select>
     `,
     name: 'String',
+    description: 'Use a string array as the items source.',
     args: {
         label: 'String',
         data: {},
@@ -271,20 +277,23 @@ export const String_Array: ComponentStoryFormat<Args> = {
     }
 };
 
-export const Empty: ComponentStoryFormat<Args> = {
+export const Empty_Message: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
         <omni-select
             data-testid="test-select"
             label="${ifNotEmpty(args.label)}"
             .items="${args.items}"
             display-field="${args.displayField}"
+            empty-message="${args.emptyMessage}"
             idField="${args.idField}">
         </omni-select>
     `,
-    name: 'Empty',
+    name: 'Empty Message',
+    description: 'Set a text value to display when there are no items.',
     args: {
         label: 'Empty',
         items: [],
+        emptyMessage: 'No items provided',
         displayField: 'label',
         idField: 'id'
     } as Args,
@@ -295,7 +304,7 @@ export const Empty: ComponentStoryFormat<Args> = {
         await userEvent.click(select);
 
         const item = await querySelectorAsync(select.shadowRoot, '.none');
-        await expect(item).toHaveTextContent('No items provided');
+        await expect(item).toHaveTextContent(context.args.emptyMessage);
     }
 };
 
@@ -305,6 +314,7 @@ export const Disabled: ComponentStoryFormat<Args> = {
         </omni-select>
     `,
     name: 'Disabled',
+    description: 'Prevent interaction (pointer events).',
     args: {
         label: 'Disabled',
         disabled: true,

@@ -64,6 +64,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
 export const Label: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`<omni-hyperlink data-testid="test-hyperlink" label="${args.label}"></omni-hyperlink>`,
     name: 'Label',
+    description: 'Set the text content of the component.',
     args: {
         label: 'Click'
     },
@@ -77,6 +78,7 @@ export const Label: ComponentStoryFormat<Args> = {
 export const Size: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`<omni-hyperlink data-testid="test-hyperlink" label="${args.label}" size="${args.size}"></omni-hyperlink>`,
     name: 'Size',
+    description: 'Set the component to a predefined size.',
     args: {
         label: 'Click',
         size: 'small'
@@ -92,6 +94,7 @@ export const Href: ComponentStoryFormat<Args> = {
     render: (args: Args) =>
         html`<omni-hyperlink data-testid="test-hyperlink" label="${args.label}" href="${args.href}" target="_blank"></omni-hyperlink>`,
     name: 'Href',
+    description: 'Set the hypertext reference.',
     args: {
         label: 'Click',
         href: 'https://example.com'
@@ -111,6 +114,7 @@ export const Disabled: ComponentStoryFormat<Args> = {
       label="${args.label}"
       ?disabled="${args.disabled}"></omni-hyperlink>`,
     name: 'Disabled',
+    description: 'Prevent interaction (pointer events).',
     args: {
         label: 'Click',
         disabled: true
@@ -137,6 +141,7 @@ export const Inline: ComponentStoryFormat<Args> = {
     render: (args: Args) =>
         html`<p data-testid="test-paragraph"> Inline <omni-hyperlink label="${args.label}" ?inline="${args.inline}"></omni-hyperlink> example </p>`,
     name: 'Inline',
+    description: 'Render the component using its inline styles.',
     args: {
         label: 'click',
         inline: true

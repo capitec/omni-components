@@ -40,7 +40,6 @@ html {
     --code-editor-theme: light;
 
     --docs-prism-span-text-shadow: 0 1px var(--omni-theme-background-hover-color);
-    --docs-prism-selection-color: #b3d4fc;
     --docs-prism-comment-color: slategray;
     --docs-prism-punctuation-color: #999;
     --docs-prism-namespace-opacity: 0.7;
@@ -143,12 +142,12 @@ header {
 
     --omni-theme-font-color:  white;
     --omni-theme-disabled-border-color:  #dedede44;
-    --omni-theme-disabled-background-color:  #dedede;
+    --omni-theme-disabled-background-color: var(--docs-secondary-background-color);
     --omni-theme-error-font-color:  red;
     --omni-theme-error-border-color:  red;
     --omni-theme-hint-font-color:  lightgrey;
     --omni-theme-inactive-color:  #7c7c7c;
-    --omni-theme-box-shadow-color:  #f2f2f2;
+    --omni-theme-box-shadow-color:  #4b5258;
 
     --omni-theme-font-family: 'Hind Vadodara';
     --omni-theme-font-size: 14px;
@@ -162,6 +161,9 @@ header {
     /* COMPONENT SPECIFIC STYLES */
     --omni-switch-knob-box-shadow: 0 2px 4px 0 rgb(255, 255, 255), 0 1px 3px rgb(255, 255, 255), 0 -1px 2px rgb(255, 255, 255);
     --omni-select-item-header-font-color: var(--omni-theme-background-color);
+    --omni-hyperlink-color-active: white;
+    --omni-hyperlink-color-disabled: #34393E;
+    --omni-hyperlink-color-visited: rgb(108 108 108);
 }
 
 /* DOCS SPECIFIC */
@@ -179,7 +181,6 @@ header {
     --docs-link-color: deepskyblue;
     --docs-link-visited-color: blueviolet;
     --docs-prism-span-text-shadow: inherit;
-    --docs-prism-selection-color: inherit;
     --docs-prism-comment-color: #999;
     --docs-prism-punctuation-color: #ccc;
     --docs-prism-namespace-opacity: initial;

@@ -79,7 +79,6 @@ When adding or editing components, please note the following key directories:
 │   │   ├── index.ts
 │   │   ├── README.md
 │   ├── ...
-├── themes
 ├── ...
 ```
 
@@ -88,7 +87,6 @@ When adding or editing components, please note the following key directories:
   * `Button.ts` - The component. *(NOTE: There might be multiple, depending on complexity and composition)*
   * `index.ts` - The directory-level index, containing one or more component exports.
   * `README.md` - The README for the component *(NOTE: Generated when Pull Request is merged)*.
-* `themes` - Basic built-in themes, viewable within the hosted documentation.
 
 ### Naming Conventions
 
@@ -127,8 +125,9 @@ Here's a *non-exhaustive* list of requirements that are key to contributing to t
 
 #### Stories
 * **Do** use [Component Story Format (CSF) 3](https://github.com/capitec/omni-components/blob/develop/src/utils/ComponentStoryFormat.ts).
-* **Do** implement a [play function](https://github.com/capitec/omni-components/blob/develop/src/utils/PlayFunction.ts) per story to test story-specific component state and event behaviors. 🛝
-  * **Do** set the `data-testid` within every story template.
+* **Do** implement a [play function](https://github.com/capitec/omni-components/blob/develop/src/utils/PlayFunction.ts) per story to test story-specific component state and event behaviors.
+* **Do** set the `data-testid` within every story template.
+* **Do** ensure that stories are authored to be both dark and light theme friendly (test via the hosted documentation).
 
 #### Themes
 * **Do** maintain each built-in theme, by ensuring all `--omni-theme-*` CSS custom properties are implemented.
@@ -144,5 +143,8 @@ Here's a *non-exhaustive* list of requirements that are key to contributing to t
 
 ### Checks
 
+* Code scanning passes.
+* Lint validation passes.
+* Format validation passes.
 * All story play function tests pass.
 <!--- * All story play function tests has at least 80% code coverage of components. --->
