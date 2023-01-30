@@ -781,7 +781,7 @@ async function setupVersions() {
     const versionSelect = document.getElementById('header-version-native-select') as HTMLSelectElement;
     const versionIndicator = document.getElementById('header-version-indicator') as HTMLDivElement;
     const basePath = (window as any).ELEVENTY_BASE_PATH ?? '/';
-    const currentVersion = versionIndicator?.textContent?.trim() ?? 'LOCAL';    
+    const currentVersion = versionIndicator?.textContent?.trim() ?? 'LOCAL';
     const storedVersionsString = window.sessionStorage.getItem(versionsStorageKey);
     let storedVersions: string[] = storedVersionsString ? JSON.parse(storedVersionsString) : undefined;
     if (!storedVersions) {
@@ -818,12 +818,10 @@ async function setupVersions() {
     versionSelect.addEventListener('change', (e) => {
         const value = (e.target as HTMLSelectElement).value;
         let path = window.location.href;
-        
+
         path = path.replace(
             `${window.origin}${basePath}`,
-            value === latestVersionName
-                ? docsHostedBasePath
-                : `${docsHostedBasePath}versions/${value}/`
+            value === latestVersionName ? docsHostedBasePath : `${docsHostedBasePath}versions/${value}/`
         );
         if (path !== window.location.href) {
             window.location.href = path;
