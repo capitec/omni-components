@@ -83,6 +83,7 @@ Email input control, used in forms for input validation and to display correct v
 | `--omni-form-focussed-border-width`              | Form focussed border width.                    |
 | `--omni-form-focussed-label-color`               | Form focussed label color.                     |
 | `--omni-form-focussed-label-error-color`         | Form focussed error label color.               |
+| `--omni-form-focussed-label-margin-left`         | Form focussed label left margin.               |
 | `--omni-form-hint-label-border-width`            | Form hint label border width.                  |
 | `--omni-form-hint-label-font-color`              | Form hint label font color.                    |
 | `--omni-form-hint-label-font-family`             | Form hint label font family.                   |
@@ -96,8 +97,9 @@ Email input control, used in forms for input validation and to display correct v
 | `--omni-form-label-font-size`                    | Form label font size.                          |
 | `--omni-form-label-font-weight`                  | Form label font weight.                        |
 | `--omni-form-label-left`                         | Form label left margin.                        |
+| `--omni-form-label-margin-left`                  | Form label margin left.                        |
 | `--omni-form-label-text-align`                   | Form label text align.                         |
-| `--omni-form-label-transform-origin`             | Form label text align                          |
+| `--omni-form-label-transform-origin`             | Form label text align.                         |
 | `--omni-form-label-z-index`                      | Form label z-index.                            |
 | `--omni-form-layout-background-color`            | Layout background color.                       |
 | `--omni-form-layout-border-radius`               | Layout border radius.                          |

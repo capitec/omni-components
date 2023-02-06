@@ -86,6 +86,7 @@ Search input control.
 | `--omni-form-focussed-border-width`              | Form focussed border width.                    |
 | `--omni-form-focussed-label-color`               | Form focussed label color.                     |
 | `--omni-form-focussed-label-error-color`         | Form focussed error label color.               |
+| `--omni-form-focussed-label-margin-left`         | Form focussed label left margin.               |
 | `--omni-form-hint-label-border-width`            | Form hint label border width.                  |
 | `--omni-form-hint-label-font-color`              | Form hint label font color.                    |
 | `--omni-form-hint-label-font-family`             | Form hint label font family.                   |
@@ -99,8 +100,9 @@ Search input control.
 | `--omni-form-label-font-size`                    | Form label font size.                          |
 | `--omni-form-label-font-weight`                  | Form label font weight.                        |
 | `--omni-form-label-left`                         | Form label left margin.                        |
+| `--omni-form-label-margin-left`                  | Form label margin left.                        |
 | `--omni-form-label-text-align`                   | Form label text align.                         |
-| `--omni-form-label-transform-origin`             | Form label text align                          |
+| `--omni-form-label-transform-origin`             | Form label text align.                         |
 | `--omni-form-label-z-index`                      | Form label z-index.                            |
 | `--omni-form-layout-background-color`            | Layout background color.                       |
 | `--omni-form-layout-border-radius`               | Layout border radius.                          |
@@ -116,7 +118,7 @@ Search input control.
 | `--omni-search-field-font-size`                  | Search field font size.                        |
 | `--omni-search-field-font-weight`                | Search field font weight.                      |
 | `--omni-search-field-height`                     | Search field height.                           |
-| `--omni-search-field-label-left-padding`         | Search field label left padding.               |
+| `--omni-search-field-label-left-margin`          | Search field label left margin.                |
 | `--omni-search-field-padding`                    | Search field padding.                          |
 | `--omni-search-field-search-icon-color`          | Search field search icon color.                |
 | `--omni-search-field-search-icon-margin-left`    | Search field search icon left margin.          |
