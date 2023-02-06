@@ -1,6 +1,6 @@
 # omni-pin-field
 
-Pin input control.
+Pin input control to enter masked numeric values.
 
 ## Example
 

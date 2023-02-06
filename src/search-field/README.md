@@ -116,6 +116,7 @@ Search input control.
 | `--omni-search-field-font-size`                  | Search field font size.                        |
 | `--omni-search-field-font-weight`                | Search field font weight.                      |
 | `--omni-search-field-height`                     | Search field height.                           |
+| `--omni-search-field-label-left-padding`         | Search field label left padding.               |
 | `--omni-search-field-padding`                    | Search field padding.                          |
 | `--omni-search-field-search-icon-color`          | Search field search icon color.                |
 | `--omni-search-field-search-icon-margin-left`    | Search field search icon left margin.          |

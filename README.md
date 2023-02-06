@@ -387,7 +387,7 @@ Password input control.
 
 </td><td>
 
-Pin input control.
+Pin input control to enter masked numeric values.
 
 </td></tr><tr><td>
 

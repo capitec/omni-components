@@ -64,6 +64,7 @@ Control to enter a formatted currency value.
 | `--omni-currency-field-font-size`                | Currency field font size.                      |
 | `--omni-currency-field-font-weight`              | Currency field font weight.                    |
 | `--omni-currency-field-height`                   | Currency field height.                         |
+| `--omni-currency-field-label-left-padding`       | Currency field label left padding.             |
 | `--omni-currency-field-padding`                  | Currency field padding.                        |
 | `--omni-currency-field-symbol-color`             | Currency field symbol font color.              |
 | `--omni-currency-field-symbol-font-size`         | Currency field symbol font size.               |
