@@ -47,7 +47,7 @@ import '../icons/Search.icon.js';
  * @cssprop --omni-search-field-search-icon-width - Search field search icon width.
  * @cssprop --omni-search-field-search-icon-margin-left - Search field search icon left margin.
  *
- * @cssprop --omni-search-field-label-left-padding - Search field label left padding.
+ * @cssprop --omni-search-field-label-left-margin - Search field label left margin.
  *
  */
 @customElement('omni-search-field')
@@ -135,7 +135,7 @@ export class SearchField extends OmniFormElement {
                 }
 
                 .label {
-                    padding-left: var(--omni-search-field-label-left-padding, 42px);
+                    margin-left: var(--omni-search-field-label-left-margin, 42px);
                 }
                 
                 /* Remove the default clear button from the input with type="search"*/

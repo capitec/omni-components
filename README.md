@@ -18,7 +18,7 @@
 	<a href="https://github.com/capitec/omni-components/blob/develop/LICENSE"><img alt="MIT License" src="https://img.shields.io/github/license/capitec/omni-components" height="20"/></a>
 </p>
 <p align="center">
-	<a href="https://capitec.github.io/open-source/docs/Omni-Components/"><img alt="Docs" src="https://img.shields.io/static/v1?label=docs&message=capitec.github.io/open-source&color=blue&style=flat-square" /></a>
+	<a href="https://capitec.github.io/open-source/docs/omni-components/"><img alt="Docs" src="https://img.shields.io/static/v1?label=docs&message=capitec.github.io/open-source&color=blue&style=flat-square" /></a>
 </p>
 
 <br/>
@@ -37,7 +37,7 @@
 
 <br />
 
-<p align="center">🚩 View our <a href="https://capitec.github.io/open-source/docs/Omni-Components">interactive documentation</a> for more info on component usage and live previews.</p>
+<p align="center">🚩 View our <a href="https://capitec.github.io/open-source/docs/omni-components">interactive documentation</a> for more info on component usage and live previews.</p>
 
 <br>
 

@@ -6,6 +6,8 @@ pagination:
     size: 1
     alias: component
 permalink: "components/{{ component.name | slug }}/"
+eleventyComputed:
+  title: "{{ component.name | splitPascalCase() }} - Omni Components"
 ---
 
 <div class="component-overlay">

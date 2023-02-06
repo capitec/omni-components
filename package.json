@@ -77,7 +77,7 @@
     "bugs": {
         "url": "https://github.com/capitec/omni-components/issues"
     },
-    "homepage": "https://capitec.github.io/open-source/docs/Omni-Components/",
+    "homepage": "https://capitec.github.io/open-source/docs/omni-components/",
     "devDependencies": {
         "@11ty/eleventy": "^1.0.2",
         "@appnest/readme": "^1.2.7",

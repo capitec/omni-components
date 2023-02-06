@@ -37,7 +37,7 @@ import '../label/Label.js';
  * @cssprop --omni-currency-field-height - Currency field height.
  * @cssprop --omni-currency-field-width - Currency field width.
  *
- * @cssprop --omni-currency-field-label-left-padding - Currency field label left padding.
+ * @cssprop --omni-currency-field-label-left-margin - Currency field label left margin.
  *
  * @cssprop --omni-currency-field-symbol-font-size - Currency field symbol font size.
  * @cssprop --omni-currency-field-symbol-color - Currency field symbol font color.
@@ -437,7 +437,7 @@ export class CurrencyField extends OmniFormElement {
                 }
 
                 .label {
-                    padding-left: var(--omni-currency-field-label-left-padding, 25px);
+                    margin-left: var(--omni-currency-field-label-left-margin, 25px);
                 }
 
                 .currency-symbol {

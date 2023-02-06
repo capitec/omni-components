@@ -28,7 +28,7 @@ const lightThemeKey = 'light';
 const darkThemeKey = 'dark';
 
 const versionsStorageKey = 'omni-docs-version-list';
-const docsHostedBasePath = 'https://capitec.github.io/open-source/docs/Omni-Components/';
+const docsHostedBasePath = 'https://capitec.github.io/open-source/docs/omni-components/';
 const latestVersionName = 'latest';
 
 function loadCssProperties(
@@ -790,7 +790,7 @@ async function setupVersions() {
             const response = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}{?ref}', {
                 owner: 'capitec',
                 repo: 'open-source',
-                path: 'docs/Omni-Components/versions'
+                path: 'docs/omni-components/versions'
             });
             storedVersions = response.data.map((d: any) => d.name);
             window.sessionStorage.setItem(versionsStorageKey, JSON.stringify(storedVersions));

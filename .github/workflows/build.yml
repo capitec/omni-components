@@ -16,7 +16,7 @@ on:
 permissions: write-all
 
 env:
-  DOCS_BASE_PATH: docs/Omni-Components
+  DOCS_BASE_PATH: docs/omni-components
   LOCAL_VERSION:   
 jobs:
   build-and-release:

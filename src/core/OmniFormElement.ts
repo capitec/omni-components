@@ -34,7 +34,8 @@ import OmniElement from './OmniElement.js';
  * @cssprop --omni-form-border-style - Form border style.
  * @cssprop --omni-form-border-color - Form border color.
  *
- * @cssprop --omni-form-label-transform-origin - Form label text align
+ * @cssprop --omni-form-label-transform-origin - Form label text align.
+ * @cssprop --omni-form-label-margin-left - Form label margin left.
  * @cssprop --omni-form-label-text-align - Form label text align.
  * @cssprop --omni-form-label-color - Form label color.
  * @cssprop --omni-form-label-font-size - Form label font size.
@@ -45,6 +46,7 @@ import OmniElement from './OmniElement.js';
  * @cssprop --omni-form-focussed-border-width - Form focussed border width.
  * @cssprop --omni-form-focussed-border-color - Form focussed border color.
  * @cssprop --omni-form-focussed-label-color - Form focussed label color.
+ * @cssprop --omni-form-focussed-label-margin-left - Form focussed label left margin.
  * @cssprop --omni-form-focussed-label-error-color - Form focussed error label color.
  *
  * @cssprop --omni-form-error-label-color - Form error label color.
@@ -192,7 +194,8 @@ export class OmniFormElement extends OmniElement {
                     /* Used to position the label in the middle of the y-axis*/
                     top:50%;
                     transform: translateY(-50%);
-                    padding-left: var(--omni-form-hint-label-padding-left,10px);
+                    margin-left: var(--omni-form-label-margin-left, 10px);
+                    /*padding-left: var(--omni-form-label-margin-left,10px);*/
                     
                     line-height: 100%;
                     text-align: var(--omni-form-label-text-align, left);
@@ -220,7 +223,7 @@ export class OmniFormElement extends OmniElement {
                     color: var(--omni-form-focussed-label-color, var(--omni-primary-color));
                     transition: all 150ms ease 0s;
                     top: -5px;
-                    padding-left: 10px;
+                    margin-left: var(--omni-form-focussed-label-margin-left, 10px);
                 }
 
                 :host([value]:not([value=''])) .layout  > .label.error,
@@ -236,7 +239,7 @@ export class OmniFormElement extends OmniElement {
 					height: 100%;
 					background-color: var(--omni-form-field-background-color, var(--omni-background-color));
 					position: absolute;
-					left: 6px;
+					left: -2px;
 					right: -3px;
     				height: 60%;
 					z-index: -1;
