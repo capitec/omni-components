@@ -1,6 +1,6 @@
-import { css, CSSResultGroup, html, nothing, ReactiveElement, TemplateResult } from 'lit';
+import { css, CSSResultGroup, html, nothing, TemplateResult } from 'lit';
 export { ifDefined } from 'lit/directives/if-defined.js';
-import { property, query } from 'lit/decorators.js';
+import { property } from 'lit/decorators.js';
 import { ClassInfo, classMap } from 'lit/directives/class-map.js';
 import OmniElement from './OmniElement.js';
 
@@ -113,92 +113,15 @@ export class OmniFormElement extends OmniElement {
      */
     @property({ type: Boolean, reflect: true }) disabled = false;
 
-    @query('.form-container')
-    private _formContainerElement: HTMLElement;
-
-    @query('.label')
-    private _labelElement: HTMLElement;
-
-    @query('slot[name=prefix]')
-    private _prefixSlot: HTMLSlotElement;
-
-    protected hasFocus: boolean;
-
-    override connectedCallback() {
-        super.connectedCallback();
-        this.addEventListener('focus', this._focusGained.bind(this));
-        this.addEventListener('focusout', this._focusLost.bind(this));
-    }
-
-    protected override async firstUpdated(): Promise<void> {
-        if (this._prefixSlot) {
-            const customElements = this._prefixSlot
-                .assignedElements({
-                    flatten: true
-                })
-                .filter((e: Element) => (e as ReactiveElement).updateComplete) as ReactiveElement[];
-            await Promise.all(customElements.map((c) => c.updateComplete));
-        }
-        this._setLabelPosition();
-    }
-
-    override async attributeChangedCallback(name: string, _old: string | null, value: string | null): Promise<void> {
-        super.attributeChangedCallback(name, _old, value);
-        if (name === 'value') {
-            this._setLabelPosition();
-        }
-    }
-
-    // Set the label position in relation to the container element.
-    _setLabelPosition() {
-        if (this.value && this.label && this._formContainerElement) {
-            if (this.disabled) {
-                return;
-            }
-
-            const formParentOffset = this._formContainerElement.offsetLeft;
-            const formParentHeight = this._formContainerElement.clientHeight;
-
-            if (this._labelElement) {
-                this._labelElement.style.transform = `translateX(${formParentOffset * -1}px)  translateY(${formParentHeight * -3.55}%) scale(0.95)`;
-            }
-        } else if (!this.value && this.label && this._labelElement && !this.hasFocus) {
-            this._labelElement.style.transform = '';
-        }
-    }
-
-    _focusGained() {
-        if (this.disabled) {
-            return;
-        }
-        this.hasFocus = true;
-
-        const formParentOffset = this._formContainerElement.offsetLeft;
-        const formParentHeight = this._formContainerElement.clientHeight;
-
-        if (!this.value && this._labelElement) {
-            this._labelElement.style.transform = `translateX(${formParentOffset * -1}px) translateY(${formParentHeight * -3.55}%) scale(0.95)`;
-        }
-    }
-
-    _focusLost() {
-        this.hasFocus = false;
-        if (this.disabled) {
-            return;
-        }
-
-        if (!this.value && this._labelElement) {
-            this._labelElement.style.transform = '';
-        }
-    }
-
     static override get styles(): CSSResultGroup {
         return [
             css`
                 ${super.styles}
 
                 :host {
-                    display: flex;
+                    display: flex;       
+                    --input-height: 100%;
+                    --input-width: 100%;
                 }
 
                 :host([disabled]),
@@ -228,7 +151,7 @@ export class OmniFormElement extends OmniElement {
                     display: flex;
                     flex-direction: row;
                     align-items: stretch;
-                    justify-content: center;
+                    /*justify-content: center; Remove this as it has a direct effect on the label positioning */ 
                     border-radius: var(--omni-form-layout-border-radius, 4px);
                     background-color: var(--omni-form-layout-background-color, var(--omni-background-color));
                     height: var(--omni-form-layout-height, 100%);
@@ -263,13 +186,15 @@ export class OmniFormElement extends OmniElement {
 
                 .label {
                     position: absolute;
-                    flex: 1 1 auto;
                     transform-origin: top var(--omni-form-label-transform-origin, left);
-
                     transition: all 150ms ease 0s;
 
+                    /* Used to position the label in the middle of the y-axis*/
+                    top:50%;
+                    transform: translateY(-50%);
+                    padding-left: var(--omni-form-hint-label-padding-left,10px);
+                    
                     line-height: 100%;
-
                     text-align: var(--omni-form-label-text-align, left);
 
                     pointer-events: none;
@@ -279,8 +204,6 @@ export class OmniFormElement extends OmniElement {
                     font-size: var(--omni-form-label-font-size, var(--omni-font-size));
                     font-weight: var(--omni-form-label-font-weight, var(--omni-font-weight));
 
-                    left: var(--omni-form-label-left, 10px);
-
                     z-index: var(--omni-form-label-z-index, 410);
                 }
 
@@ -289,26 +212,34 @@ export class OmniFormElement extends OmniElement {
                 }
 
                 /* FOCUS STYLES */
-                :host([value]:not([value=''])) .layout > .form-container > .label.error,
-                :focus + .label.error {
-                    color: var(--omni-form-focussed-label-error-color, var(--omni-error-font-color));
-                }
 
-                :host([value]:not([value=''])) .layout > .form-container > .label,
-                :focus + .label {
+                :host([value]:not([value=''])) .layout  > .label,
+                .layout:focus-within > .label
+                {
+                    transform: scale(0.90);
                     color: var(--omni-form-focussed-label-color, var(--omni-primary-color));
+                    transition: all 150ms ease 0s;
+                    top: -5px;
+                    padding-left: 10px;
                 }
 
-                :host([value]) .layout > .form-container > .label::before,
-                :focus + .label::before {
-                    content: '';
-                    background-color: var(--omni-form-field-background-color, var(--omni-background-color));
-                    position: absolute;
-                    left: var(--omni-label-focus-left, -3px);
-                    right: var(--omni-label-focus-right, -3px);
-                    top: 39%;
-                    height: 50%;
-                    z-index: -1;
+                :host([value]:not([value=''])) .layout  > .label.error,
+                .layout:focus-within > .label.error {
+                    color: var(--omni-form-focussed-error-label-color, var(--omni-error-font-color));
+                }
+            
+                :host([value]:not([value=''])) .layout  > .label::before,
+                .layout:focus-within > .label::before 
+                {
+                    content: "";
+					display: block;
+					height: 100%;
+					background-color: var(--omni-form-field-background-color, var(--omni-background-color));
+					position: absolute;
+					left: 6px;
+					right: -3px;
+    				height: 60%;
+					z-index: -1;
                 }
 
                 .layout:focus-within > .border {
@@ -373,6 +304,12 @@ export class OmniFormElement extends OmniElement {
 
                 /* HOVER STYLES */
 
+                .layout:focus-within:hover > .border,
+                .layout.error:focus-within:hover > .border,
+                .layout.disabled:focus-within:hover > .border {
+                    box-shadow: none;
+                }
+
                 .layout:hover > .border {
                     box-shadow: inset 0px 0px 0px 1px var(--omni-form-hover-color, var(--omni-primary-color));
                 }
@@ -408,7 +345,10 @@ export class OmniFormElement extends OmniElement {
                 <div class=${classMap(layout)}>
                     <div class="border"></div>
                     <slot name="prefix">${this.renderPrefix()}</slot>
-                    <div class="form-container"> ${this.renderContent()} ${this.renderLabel()} </div>
+                    <!-- <div class="form-container">  -->
+                        ${this.renderLabel()} 
+                        ${this.renderContent()} 
+                    <!-- </div> -->
                     <slot name="suffix"></slot>
                     ${this.renderControl()} ${this.renderPicker()}
                 </div>

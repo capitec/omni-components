@@ -7,7 +7,7 @@ import '../icons/EyeHidden.icon.js';
 import '../icons/EyeVisible.icon.js';
 
 /**
- * Pin input control.
+ * Pin input control to enter masked numeric values.
  *
  * @import
  * ```js
@@ -78,7 +78,6 @@ export class PinField extends OmniFormElement {
 
     //Added for non webkit supporting browsers
     protected override async firstUpdated(): Promise<void> {
-        super.firstUpdated();
         const style: any = window.getComputedStyle(this._inputElement);
         this.isWebkit = style.webkitTextSecurity;
         if (!this.isWebkit) {

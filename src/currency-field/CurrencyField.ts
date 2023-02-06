@@ -37,6 +37,8 @@ import '../label/Label.js';
  * @cssprop --omni-currency-field-height - Currency field height.
  * @cssprop --omni-currency-field-width - Currency field width.
  *
+ * @cssprop --omni-currency-field-label-left-padding - Currency field label left padding.
+ *
  * @cssprop --omni-currency-field-symbol-font-size - Currency field symbol font size.
  * @cssprop --omni-currency-field-symbol-color - Currency field symbol font color.
  * @cssprop --omni-currency-field-symbol-left-padding - Currency field symbol left padding.
@@ -91,14 +93,14 @@ export class CurrencyField extends OmniFormElement {
         });
     }
 
-    //Format the bound value.
+    // Format the bound value.
     protected override async firstUpdated(): Promise<void> {
-        super.firstUpdated();
+        /*super.firstUpdated();*/
         if (this.value) {
             await this._formatToCurrency(this.value.toString()).then((res) => {
                 this._inputElement.value = res;
             });
-            super._setLabelPosition();
+            // super._setLabelPosition();
         }
     }
 
@@ -242,9 +244,10 @@ export class CurrencyField extends OmniFormElement {
 
         // If the pointer is positioned after a currency separator remove the separator and the preceding number.
         if (input.value.charAt(caretPosition - 1) === this.thousandsSeparator && (e.key.toLowerCase() === 'backspace' || e.keyCode === 229)) {
-            // If the value includes a fraction (cents) separator parse the fraction part and append it to the value.
+            // Count of the thousand separators of the component.
             valueFormatterCount = input.value.match(new RegExp(this.thousandsSeparator, 'g')).length;
 
+            // If the value includes a fraction (cents) separator parse the fraction part and append it to the value.
             if (input.value.includes(this.fractionalSeparator)) {
                 const fractionPart = this._parseFraction(input.value.substring(input.value.indexOf(this.fractionalSeparator) + 1));
 
@@ -329,14 +332,12 @@ export class CurrencyField extends OmniFormElement {
                             input.value.substring(caretPosition + diff, input.value.indexOf(this.fractionalSeparator))
                     )
                 ).then((res) => {
-                    //this._stringValue = res + this.fractionalSeparator + fractionPart;
                     input.value = res + this.fractionalSeparator + fractionPart;
                 });
             } else {
                 await this._formatToCurrency(
                     input.value.substring(0, caretPosition) + input.value.substring(caretPosition + diff, input.value.length + 1)
                 ).then((res) => {
-                    //this._stringValue = res;
                     input.value = res;
                 });
             }
@@ -346,12 +347,6 @@ export class CurrencyField extends OmniFormElement {
 
             await this.updateComplete;
 
-            // Set caret position after value is formatted.
-            //This might not be required going forward check length of input before changes and then position.
-            /*
-            if (input.value.length === this._stringValue.length) {
-                this._inputElement.setSelectionRange(caretPosition, caretPosition);
-            }*/
             this._inputElement.setSelectionRange(caretPosition, caretPosition);
         }
 
@@ -365,7 +360,6 @@ export class CurrencyField extends OmniFormElement {
         // Copy currency field selection to clipboard.
         if (e.ctrlKey && e.key.toLowerCase() === 'c') {
             navigator.clipboard.writeText(input.value);
-            //navigator.clipboard.writeText(this._stringValue);
             return;
         }
 
@@ -400,7 +394,7 @@ export class CurrencyField extends OmniFormElement {
             });
         }
 
-        // Set the value to a number
+        // Set the value to a float value.
         this.value = this._formatToFloat(inputValue);
 
         await this.updateComplete;
@@ -440,6 +434,10 @@ export class CurrencyField extends OmniFormElement {
                     padding: var(--omni-currency-field-padding, 10px);
                     height: var(--omni-currency-field-height, 100%);
                     width: var(--omni-currency-field-width, 100%);
+                }
+
+                .label {
+                    padding-left: var(--omni-currency-field-label-left-padding, 25px);
                 }
 
                 .currency-symbol {

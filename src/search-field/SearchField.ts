@@ -47,6 +47,8 @@ import '../icons/Search.icon.js';
  * @cssprop --omni-search-field-search-icon-width - Search field search icon width.
  * @cssprop --omni-search-field-search-icon-margin-left - Search field search icon left margin.
  *
+ * @cssprop --omni-search-field-label-left-padding - Search field label left padding.
+ *
  */
 @customElement('omni-search-field')
 export class SearchField extends OmniFormElement {
@@ -72,7 +74,7 @@ export class SearchField extends OmniFormElement {
 
         this.value = '';
         // Moves the label back into position when clear button is clicked.
-        super._focusLost();
+        // super._focusLost();
 
         // Dispatch standard DOM event to cater for single clear.
         this.dispatchEvent(
@@ -130,6 +132,10 @@ export class SearchField extends OmniFormElement {
                     fill: var(--omni-search-field-search-icon-color, var(--omni-primary-color));
                     width: var(--omni-search-field-search-icon-width, 20px);   
                     margin-left: var(--omni-search-field-search-icon-margin-left,10px) !important;                                 
+                }
+
+                .label {
+                    padding-left: var(--omni-search-field-label-left-padding, 42px);
                 }
                 
                 /* Remove the default clear button from the input with type="search"*/
