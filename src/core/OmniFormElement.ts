@@ -254,7 +254,7 @@ export class OmniFormElement extends OmniElement {
                 }
 
                 .label.disabled {
-                    color: var(--omni-form-label-disabled-color, var(--omni-disabled-border-color));
+                    color: var(--omni-form-label-disabled-color, var(--omni-font-color));
                     pointer-events: none;
                 }
 
