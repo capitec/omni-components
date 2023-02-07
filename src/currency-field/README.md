@@ -102,6 +102,7 @@ Control to enter a formatted currency value.
 | `--omni-form-focussed-label-color`               | Form focussed label color.                     |
 | `--omni-form-focussed-label-margin-left`         | Form focussed label left margin.               |
 | `--omni-form-focussed-label-top`                 | Form focussed label top.                       |
+| `--omni-form-focussed-label-transform-scale`     | Form focussed label transform scale.           |
 | `--omni-form-hint-label-border-width`            | Form hint label border width.                  |
 | `--omni-form-hint-label-font-color`              | Form hint label font color.                    |
 | `--omni-form-hint-label-font-family`             | Form hint label font family.                   |
