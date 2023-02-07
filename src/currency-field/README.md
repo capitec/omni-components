@@ -64,7 +64,7 @@ Control to enter a formatted currency value.
 | `--omni-currency-field-font-size`                | Currency field font size.                      |
 | `--omni-currency-field-font-weight`              | Currency field font weight.                    |
 | `--omni-currency-field-height`                   | Currency field height.                         |
-| `--omni-currency-field-label-left-padding`       | Currency field label left padding.             |
+| `--omni-currency-field-label-left-margin`        | Currency field label left margin.              |
 | `--omni-currency-field-padding`                  | Currency field padding.                        |
 | `--omni-currency-field-symbol-color`             | Currency field symbol font color.              |
 | `--omni-currency-field-symbol-font-size`         | Currency field symbol font size.               |
@@ -101,6 +101,7 @@ Control to enter a formatted currency value.
 | `--omni-form-focussed-border-width`              | Form focussed border width.                    |
 | `--omni-form-focussed-label-color`               | Form focussed label color.                     |
 | `--omni-form-focussed-label-error-color`         | Form focussed error label color.               |
+| `--omni-form-focussed-label-margin-left`         | Form focussed label left margin.               |
 | `--omni-form-hint-label-border-width`            | Form hint label border width.                  |
 | `--omni-form-hint-label-font-color`              | Form hint label font color.                    |
 | `--omni-form-hint-label-font-family`             | Form hint label font family.                   |
@@ -114,8 +115,9 @@ Control to enter a formatted currency value.
 | `--omni-form-label-font-size`                    | Form label font size.                          |
 | `--omni-form-label-font-weight`                  | Form label font weight.                        |
 | `--omni-form-label-left`                         | Form label left margin.                        |
+| `--omni-form-label-margin-left`                  | Form label margin left.                        |
 | `--omni-form-label-text-align`                   | Form label text align.                         |
-| `--omni-form-label-transform-origin`             | Form label text align                          |
+| `--omni-form-label-transform-origin`             | Form label text align.                         |
 | `--omni-form-label-z-index`                      | Form label z-index.                            |
 | `--omni-form-layout-background-color`            | Layout background color.                       |
 | `--omni-form-layout-border-radius`               | Layout border radius.                          |
