@@ -215,8 +215,8 @@ export class PinField extends OmniFormElement {
       <div class="control-box" @click="${(e: MouseEvent) => this._iconClicked(e)}">
         ${
             !this.showPin
-                ? html` <slot name="hide"><omni-eye-hidden-icon class="hide-icon"></omni-eye-hidden-icon></slot> `
-                : html` <slot name="show"><omni-eye-visible-icon class="show-icon"></omni-eye-visible-icon></slot> `
+                ? html` <slot name="show"><omni-eye-visible-icon class="show-icon"></omni-eye-visible-icon></slot> `
+                : html` <slot name="hide"><omni-eye-hidden-icon class="hide-icon"></omni-eye-hidden-icon></slot> `
         }
       </div>
     `;
