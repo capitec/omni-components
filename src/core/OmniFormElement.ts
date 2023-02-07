@@ -12,6 +12,7 @@ import OmniElement from './OmniElement.js';
  *
  * @csscat Base Form Variables
  *
+ * @cssprop --omni-container-font-family -  Container font family.
  * @cssprop --omni-container-width - Container width.
  * @cssprop --omni-container-height - Container height.
  *
@@ -19,11 +20,6 @@ import OmniElement from './OmniElement.js';
  * @cssprop --omni-form-layout-background-color - Layout background color.
  * @cssprop --omni-form-layout-height - Layout height.
  * @cssprop --omni-form-layout-width - Layout width.
- *
- * @cssprop --omni-form-container-width - Form container width.
- * @cssprop --omni-form-container-font-family - Form container font family.
- *
- * @cssprop --omni-form-field-background-color - Form layout background color.
  *
  * @cssprop --omni-form-border-top - Form border top.
  * @cssprop --omni-form-border-bottom - Form border bottom.
@@ -40,14 +36,16 @@ import OmniElement from './OmniElement.js';
  * @cssprop --omni-form-label-color - Form label color.
  * @cssprop --omni-form-label-font-size - Form label font size.
  * @cssprop --omni-form-label-font-weight - Form label font weight.
- * @cssprop --omni-form-label-left - Form label left margin.
  * @cssprop --omni-form-label-z-index - Form label z-index.
  *
  * @cssprop --omni-form-focussed-border-width - Form focussed border width.
  * @cssprop --omni-form-focussed-border-color - Form focussed border color.
- * @cssprop --omni-form-focussed-label-color - Form focussed label color.
+ * @cssprop --omni-form-focussed-label-top - Form focussed label top.
  * @cssprop --omni-form-focussed-label-margin-left - Form focussed label left margin.
- * @cssprop --omni-form-focussed-label-error-color - Form focussed error label color.
+ * @cssprop --omni-form-focussed-label-color - Form focussed label color.
+ * @cssprop --omni-form-focussed-error-label-color - Form focussed error label color.
+ *
+ * @cssprop --omni-form-focussed-label-background-color - Form focussed label background color.
  *
  * @cssprop --omni-form-error-label-color - Form error label color.
  * @cssprop --omni-form-error-border-color - Form error border color.
@@ -71,7 +69,7 @@ import OmniElement from './OmniElement.js';
  * @cssprop --omni-form-error-label-font-weight - Form error label font weight.
  * @cssprop --omni-form-error-label-padding-top - Form error label top padding.
  * @cssprop --omni-form-error-label-padding-left - Form error label left padding.
- * @cssprop --omni-form-error-label-border-width
+ * @cssprop --omni-form-error-label-border-width - Form error label border width.
  *
  * @cssprop --omni-form-hover-color - Form hover color.
  * @cssprop --omni-form-disabled-hover-color - Form disabled hover color.
@@ -122,8 +120,6 @@ export class OmniFormElement extends OmniElement {
 
                 :host {
                     display: flex;       
-                    --input-height: 100%;
-                    --input-width: 100%;
                 }
 
                 :host([disabled]),
@@ -149,11 +145,10 @@ export class OmniFormElement extends OmniElement {
 
                 .layout {
                     position: relative;
-
                     display: flex;
                     flex-direction: row;
                     align-items: stretch;
-                    /*justify-content: center; Remove this as it has a direct effect on the label positioning */ 
+
                     border-radius: var(--omni-form-layout-border-radius, 4px);
                     background-color: var(--omni-form-layout-background-color, var(--omni-background-color));
                     height: var(--omni-form-layout-height, 100%);
@@ -174,34 +169,22 @@ export class OmniFormElement extends OmniElement {
                     pointer-events: none;
                 }
 
-                /* INPUT CONTAINER STYLES */
-
-                .form-container {
-                    position: relative;
-                    display: flex;
-                    align-items: center;
-                    width: var(--omni-form-container-width, 100%);
-                    height: var(--omni-form-container-height, 100%);
-                }
-
                 /* LABEL STYLES */
 
                 .label {
                     position: absolute;
                     transform-origin: top var(--omni-form-label-transform-origin, left);
                     transition: all 150ms ease 0s;
+                    pointer-events: none;
+                    user-select: none;
+                    line-height: 100%;
 
                     /* Used to position the label in the middle of the y-axis*/
                     top:50%;
                     transform: translateY(-50%);
-                    margin-left: var(--omni-form-label-margin-left, 10px);
-                    /*padding-left: var(--omni-form-label-margin-left,10px);*/
-                    
-                    line-height: 100%;
-                    text-align: var(--omni-form-label-text-align, left);
 
-                    pointer-events: none;
-                    user-select: none;
+                    margin-left: var(--omni-form-label-margin-left, 10px);          
+                    text-align: var(--omni-form-label-text-align, left);
 
                     color: var(--omni-form-label-color, var(--omni-font-color));
                     font-size: var(--omni-form-label-font-size, var(--omni-font-size));
@@ -216,14 +199,22 @@ export class OmniFormElement extends OmniElement {
 
                 /* FOCUS STYLES */
 
+                .layout:focus-within > .border {
+                    border-style: solid;
+                    border-width: var(--omni-form-focussed-border-width, 2px);
+                    border-color: var(--omni-form-focussed-border-color, var(--omni-primary-color));
+                }
+
                 :host([value]:not([value=''])) .layout  > .label,
                 .layout:focus-within > .label
                 {
                     transform: scale(0.90);
-                    color: var(--omni-form-focussed-label-color, var(--omni-primary-color));
-                    transition: all 150ms ease 0s;
-                    top: -5px;
+                    top: var(--omni-form-focussed-label-top, -5px);
                     margin-left: var(--omni-form-focussed-label-margin-left, 10px);
+                }
+
+                .layout:focus-within > .label {
+                    color: var(--omni-form-focussed-label-color, var(--omni-primary-color));
                 }
 
                 :host([value]:not([value=''])) .layout  > .label.error,
@@ -237,18 +228,12 @@ export class OmniFormElement extends OmniElement {
                     content: "";
 					display: block;
 					height: 100%;
-					background-color: var(--omni-form-field-background-color, var(--omni-background-color));
+					background-color: var(--omni-form-focussed-label-background-color, var(--omni-background-color));
 					position: absolute;
-					left: -2px;
+					left: -3px;
 					right: -3px;
     				height: 60%;
 					z-index: -1;
-                }
-
-                .layout:focus-within > .border {
-                    border-style: solid;
-                    border-width: var(--omni-form-focussed-border-width, 2px);
-                    border-color: var(--omni-form-focussed-border-color, var(--omni-primary-color));
                 }
 
                 /* ERROR STYLES */
@@ -268,7 +253,7 @@ export class OmniFormElement extends OmniElement {
                 }
 
                 .label.disabled {
-                    /*color: var(--omni-form-label-disabled-color, var(--omni-disabled-border-color));*/
+                    color: var(--omni-form-label-disabled-color, var(--omni-disabled-border-color));
                     pointer-events: none;
                 }
 
@@ -314,15 +299,15 @@ export class OmniFormElement extends OmniElement {
                 }
 
                 .layout:hover > .border {
-                    box-shadow: inset 0px 0px 0px 1px var(--omni-form-hover-color, var(--omni-primary-color));
+                    border-color: var(--omni-form-hover-color, var(--omni-primary-color));
                 }
 
                 .layout.disabled:hover > .border {
-                    box-shadow: inset 0px 0px 0px 1px var(--omni-form-disabled-hover-color, var(--omni-disabled-border-color));
+                    border-color: var(--omni-form-disabled-hover-color, var(--omni-disabled-border-color));
                 }
 
                 .layout.error:hover > .border {
-                    box-shadow: inset 0px 0px 0px 1px var(--omni-form-error-hover-color, var(--omni-error-border-color));
+                    border-color: var(--omni-form-error-hover-color, var(--omni-error-border-color));
                 }
 
                 slot[name='prefix'],
@@ -348,10 +333,8 @@ export class OmniFormElement extends OmniElement {
                 <div class=${classMap(layout)}>
                     <div class="border"></div>
                     <slot name="prefix">${this.renderPrefix()}</slot>
-                    <!-- <div class="form-container">  -->
-                        ${this.renderLabel()} 
-                        ${this.renderContent()} 
-                    <!-- </div> -->
+                    ${this.renderLabel()} 
+                    ${this.renderContent()} 
                     <slot name="suffix"></slot>
                     ${this.renderControl()} ${this.renderPicker()}
                 </div>
