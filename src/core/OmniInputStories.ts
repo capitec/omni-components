@@ -110,8 +110,7 @@ export const PrefixStory = <T extends HTMLElement, U extends BaseArgs>(tagName: 
             ${args.prefix}
             </${tagName}>`)}`,
         name: 'Prefix',
-        description:
-            'Set html content to display as a prefix within the component.',
+        description: 'Set html content to display as a prefix within the component.',
         args: {
             label: 'Prefix',
             prefix: raw`<svg slot="prefix" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px" style="fill: orange; margin-left: 10px;"><path d="M12 2.25c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12 6.615 2.25 12 2.25Zm0 1.5a8.25 8.25 0 1 0 0 16.5 8.25 8.25 0 0 0 0-16.5ZM12 7a.75.75 0 0 1 .75.75v3.5h3.5a.75.75 0 0 1 .743.648L17 12a.75.75 0 0 1-.75.75h-3.5v3.5a.75.75 0 0 1-.648.743L12 17a.75.75 0 0 1-.75-.75v-3.5h-3.5a.75.75 0 0 1-.743-.648L7 12a.75.75 0 0 1 .75-.75h3.5v-3.5a.75.75 0 0 1 .648-.743Z"/></svg>`
@@ -138,8 +137,7 @@ export const SuffixStory = <T extends HTMLElement, U extends BaseArgs>(tagName: 
             ${args.suffix}
             </${tagName}>`)}`,
         name: 'Suffix',
-        description:
-            'Set html content to display as a suffix within the component.',
+        description: 'Set html content to display as a suffix within the component.',
         args: {
             label: 'Suffix',
             suffix: raw`<svg slot="suffix" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px" style="fill: orange; margin-right:10px;"><path d="M12 2.25c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12 6.615 2.25 12 2.25Zm0 1.5a8.25 8.25 0 1 0 0 16.5 8.25 8.25 0 0 0 0-16.5ZM12 7a.75.75 0 0 1 .75.75v3.5h3.5a.75.75 0 0 1 .743.648L17 12a.75.75 0 0 1-.75.75h-3.5v3.5a.75.75 0 0 1-.648.743L12 17a.75.75 0 0 1-.75-.75v-3.5h-3.5a.75.75 0 0 1-.743-.648L7 12a.75.75 0 0 1 .75-.75h3.5v-3.5a.75.75 0 0 1 .648-.743Z"/></svg>`
@@ -159,9 +157,13 @@ export const SuffixStory = <T extends HTMLElement, U extends BaseArgs>(tagName: 
 
 export const DisabledStory = <T extends HTMLElement, U extends BaseArgs>(
     tagName: string,
-    inputValue: string | number | string[] = 'The input value') => {
+    inputValue: string | number | string[] = 'The input value'
+) => {
     const Disabled: ComponentStoryFormat<U> = {
-        render: (args: U) => html`${unsafeHTML(`<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}" value="${args.value}" disabled></${tagName}>`)}`,
+        render: (args: U) =>
+            html`${unsafeHTML(
+                `<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}" value="${args.value}" disabled></${tagName}>`
+            )}`,
         name: 'Disabled',
         description: 'Prevent interaction (pointer/input events).',
         args: {
