@@ -251,6 +251,7 @@ export class OmniFormElement extends OmniElement {
 
                 .layout.disabled {
                     pointer-events: none;
+                    background-color: var(--omni-form-disabled-background-color, var(--omni-disabled-background-color));
                 }
 
                 .label.disabled {
@@ -260,10 +261,9 @@ export class OmniFormElement extends OmniElement {
 
                 .layout.disabled > .border {
                     border-color: var(--omni-form-disabled-border-color, var(--omni-disabled-border-color));
-                    background-color: var(--omni-form-disabled-background-color, var(--omni-disabled-background-color));
                 }
 
-                :host([value]) .layout.disabled > .form-container > .label::before {
+                :host([value]) .layout.disabled  > .label::before {
                     background-color: var(--omni-form-disabled-focussed-label-background-color, var(--omni-disabled-background-color));
                 }
 

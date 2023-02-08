@@ -94,7 +94,7 @@ export class NumberField extends OmniFormElement {
           padding: var(--omni-number-field-padding, 10px);
 
           height: var(--omni-number-field-height, 100%);
-          width: var(--omni-number-field-weight, 100%);
+          width: var(--omni-number-field-width, 100%);
         }
 
         /* Used to not display default stepper */
