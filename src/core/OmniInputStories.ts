@@ -157,10 +157,7 @@ export const SuffixStory = <T extends HTMLElement, U extends BaseArgs>(tagName: 
 
 export const DisabledStory = <T extends HTMLElement, U extends BaseArgs>(tagName: string) => {
     const Disabled: ComponentStoryFormat<U> = {
-        render: (args: U) =>
-            html`${unsafeHTML(
-                `<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}" disabled></${tagName}>`
-            )}`,
+        render: (args: U) => html`${unsafeHTML(`<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}" disabled></${tagName}>`)}`,
         name: 'Disabled',
         description: 'Prevent interaction (pointer/input events).',
         args: {
