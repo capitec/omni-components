@@ -21,16 +21,16 @@ Control to get / set a value within a list of options.
 
 | Property       | Attribute       | Modifiers | Type                                             | Default             | Description                                      |
 |----------------|-----------------|-----------|--------------------------------------------------|---------------------|--------------------------------------------------|
-| `data`         | `data`          |           | `object`                                         |                     | Data associated with the component.              |
+| `data`         | `data`          |           | `object \| undefined`                            |                     | Data associated with the component.              |
 | `dir`          |                 |           | `string`                                         |                     |                                                  |
 | `disabled`     | `disabled`      |           | `boolean`                                        | false               | Indicator if the component should be disabled.   |
 | `displayField` | `display-field` |           | `string`                                         |                     | Field of the item to display as one of the selectable options. |
 | `emptyMessage` | `empty-message` |           | `string`                                         | "No items provided" | Message displayed in the items container when no items are bound to the component. |
-| `error`        | `error`         |           | `string`                                         |                     | Error message guiding a user to correct a mistake. |
-| `hint`         | `hint`          |           | `string`                                         |                     | Hint message to assist the user.                 |
+| `error`        | `error`         |           | `string \| undefined`                            |                     | Error message guiding a user to correct a mistake. |
+| `hint`         | `hint`          |           | `string \| undefined`                            |                     | Hint message to assist the user.                 |
 | `idField`      | `id-field`      |           | `string`                                         | "id"                | Id field of the items provided.                  |
 | `items`        | `items`         |           | `string[] \| Record<string, unknown>[] \| Promise<SelectTypes> \| (() => SelectItems)` |                     | Selectable items of the select component.        |
-| `label`        | `label`         |           | `string`                                         |                     | Text label.                                      |
+| `label`        | `label`         |           | `string \| undefined`                            |                     | Text label.                                      |
 | `lang`         |                 |           | `string`                                         |                     |                                                  |
 | `override`     | `override`      |           |                                                  |                     | Used to set the base direction of text for display |
 | `renderItem`   | `renderItem`    |           | `RenderFunction`                                 |                     | Render function for each item.                   |
