@@ -73,8 +73,6 @@ export class SearchField extends OmniFormElement {
         }
 
         this.value = '';
-        // Moves the label back into position when clear button is clicked.
-        // super._focusLost();
 
         // Dispatch standard DOM event to cater for single clear.
         this.dispatchEvent(
