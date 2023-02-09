@@ -82,7 +82,7 @@ export class OmniFormElement extends OmniElement {
      * Text label.
      * @attr
      */
-    @property({ type: String, reflect: true }) label: string;
+    @property({ type: String, reflect: true }) label?: string;
 
     /**
      * Value entered into the form component.
@@ -94,19 +94,19 @@ export class OmniFormElement extends OmniElement {
      * Data associated with the component.
      * @attr
      */
-    @property({ type: Object, reflect: true }) data: object;
+    @property({ type: Object, reflect: true }) data?: object;
 
     /**
      * Hint message to assist the user.
      * @attr
      */
-    @property({ type: String, reflect: true }) hint: string;
+    @property({ type: String, reflect: true }) hint?: string;
 
     /**
      * Error message guiding a user to correct a mistake.
      * @attr
      */
-    @property({ type: String, reflect: true }) error: string;
+    @property({ type: String, reflect: true }) error?: string;
 
     /**
      * Indicator if the component should be disabled.
@@ -265,6 +265,7 @@ export class OmniFormElement extends OmniElement {
 
                 :host([value]) .layout.disabled  > .label::before {
                     background-color: var(--omni-form-disabled-focussed-label-background-color, var(--omni-disabled-background-color));
+                    height: 0%;
                 }
 
                 /* HINT LABEL STYLES */
