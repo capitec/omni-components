@@ -88,7 +88,7 @@ export class OmniFormElement extends OmniElement {
      * Value entered into the form component.
      * @attr
      */
-    @property({ reflect: true }) value: string | number | Record<string, unknown> = null;
+    @property({ reflect: true }) value?: string | number | Record<string, unknown> = null as unknown as string;
 
     /**
      * Data associated with the component.
@@ -326,7 +326,7 @@ export class OmniFormElement extends OmniElement {
     protected override render() {
         const layout: ClassInfo = {
             layout: true,
-            error: this.error,
+            error: this.error ?? false,
             disabled: this.disabled
         };
 
@@ -356,7 +356,7 @@ export class OmniFormElement extends OmniElement {
     protected renderLabel() {
         const labelClass: ClassInfo = {
             label: true,
-            error: this.error,
+            error: this.error ?? false,
             disabled: this.disabled
         };
 

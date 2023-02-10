@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { CompletionSource, Completion } from '@codemirror/autocomplete';
 import { css as cssSupport, cssCompletionSource, cssLanguage } from '@codemirror/lang-css';
 import { html as langHtml, TagSpec } from '@codemirror/lang-html';
@@ -43,24 +44,24 @@ function loadCssProperties(
             subcategory: string;
             value: string;
         }
-    > = undefined
+    > = undefined as any
 ) {
     if (!cssDeclarations) {
         cssDeclarations = {};
     }
 
     const elementModule = JSON.parse(
-        JSON.stringify(customElements.modules.find((module) => module.exports.find((e: { name: string }) => e.name === element)))
+        JSON.stringify(customElements.modules.find((module) => module.exports?.find((e: { name: string }) => e.name === element)))
     );
 
     let superModule = elementModule;
     do {
         if (superModule.declarations.find((sd: any) => sd.superclass)) {
             superModule = customElements.modules.find((module) =>
-                module.exports.find(
+                module.exports?.find(
                     (e) =>
                         e.name ===
-                        (superModule.declarations.find((sd: Declaration) => (sd as ClassDeclaration).superclass) as ClassDeclaration).superclass.name
+                        (superModule.declarations?.find((sd: Declaration) => (sd as ClassDeclaration).superclass) as ClassDeclaration)?.superclass?.name
                 )
             );
         } else {
@@ -85,7 +86,7 @@ function loadCssProperties(
                             cssProperty.name.endsWith('color') || cssProperty.name.endsWith('colour') || cssProperty.name.endsWith('fill')
                                 ? 'color'
                                 : 'text',
-                        description: cssProperty.description,
+                        description: cssProperty.description as string,
                         category: 'CSS Variables',
                         subcategory: cssCategory ?? 'Component Variables',
                         value: ''
@@ -192,7 +193,7 @@ function loadSlotForModule(elementModule: any, slotName: string): { name: string
             };
         }
     }
-    return undefined;
+    return undefined as any;
 }
 
 function loadDefaultSlotFor(elementName: string, customElements: Package) {
@@ -329,7 +330,7 @@ function enhanceCodeBlocks(parent: Element) {
             }
         }
         const language = codeBlock.attributes.getNamedItem('data-language');
-        if (codeBlock.parentElement.tagName === `pre`) {
+        if (codeBlock.parentElement?.tagName === `pre`) {
             codeBlock = codeBlock.parentElement;
         }
         codeBlock.insertAdjacentHTML('beforebegin', '<div></div>');
@@ -346,7 +347,7 @@ function enhanceCodeBlocks(parent: Element) {
       </code-editor>`,
             codeContainer
         );
-        codeBlock.parentElement.removeChild(codeBlock);
+        codeBlock.parentElement?.removeChild(codeBlock);
     });
 }
 
@@ -359,16 +360,16 @@ let _completions: {
     Add additional completable attributes to all tags.
     */
     extraGlobalAttributes?: Record<string, null | readonly string[]>;
-} = null;
+} = null as any;
 function loadCustomElementsCodeMirrorCompletions(customElements: Package) {
     if (!_completions) {
         const extraTags: Record<string, TagSpec> = {};
         const extraGlobalAttributes: Record<string, null | string[]> = {};
 
         customElements.modules.forEach((module) => {
-            const elementExport = module.exports.find((e) => e.kind === 'custom-element-definition');
+            const elementExport = module.exports?.find((e) => e.kind === 'custom-element-definition');
             if (elementExport) {
-                module.declarations.forEach((d) => {
+                module.declarations?.forEach((d) => {
                     const declaration = d as CustomElement;
                     if (declaration.slots) {
                         declaration.slots.forEach((slot) => {
@@ -387,16 +388,16 @@ function loadCustomElementsCodeMirrorCompletions(customElements: Package) {
                         const attrs: Record<string, string[]> = {};
                         if (declaration.attributes) {
                             declaration.attributes.forEach((attribute) => {
-                                let attrValues: string[] = null;
+                                let attrValues: string[] = null as any;
                                 if (
-                                    attribute.type.text !== 'string' &&
-                                    attribute.type.text !== 'boolean' &&
-                                    !attribute.type.text.includes('Promise')
+                                    attribute.type?.text !== 'string' &&
+                                    attribute.type?.text !== 'boolean' &&
+                                    !attribute.type?.text.includes('Promise')
                                 ) {
-                                    const types = attribute.type.text.split(' | ');
+                                    const types = attribute.type?.text.split(' | ');
                                     attrValues = [];
                                     for (const type in types) {
-                                        const typeValue = types[type];
+                                        const typeValue = types[type as any];
                                         attrValues.push(typeValue.substring(1, typeValue.length - 1));
                                     }
                                 }
@@ -531,7 +532,7 @@ function querySelectorAsync(parent: Element | ShadowRoot, selector: any, checkFr
                                     } \n${parent.parentElement ? parent.parentElement.innerHTML : parent.textContent} \n${parent.innerHTML}`
                                 )
                             );
-                        } catch (_) {
+                        } catch (_: any) {
                             reject(new Error(`Timed out waiting for query (${selector}) in ${timeoutMs} ms \n${_.toString()}`));
                         }
                     } else {
@@ -559,7 +560,7 @@ async function setupThemes() {
     document.body.appendChild(themeModal);
 
     function uploadThemeClick() {
-        document.getElementById('cssValue').click();
+        document.getElementById('cssValue')?.click();
     }
 
     const themeEdit = document.getElementById('header-theme-edit-btn') as HTMLSpanElement;
@@ -616,7 +617,7 @@ async function setupThemes() {
             window.sessionStorage.setItem(themeStorageKey, key);
             themeSelect.value = option;
             nativeOption.selected = true;
-            changeTheme(null, key);
+            changeTheme(null as any, key);
         }
         themeOptions.push(option);
         themeNativeSelect.add(nativeOption);
@@ -625,7 +626,7 @@ async function setupThemes() {
 
     function _checkCloseModal(e: Event) {
         const containerElement = themeModal.querySelector(`div.modal-container`);
-        if (!e.composedPath().includes(containerElement)) {
+        if (!e.composedPath().includes(containerElement as HTMLElement)) {
             document.body.removeChild(themeModal);
             themeModal = document.createElement('div');
             document.body.appendChild(themeModal);
@@ -686,21 +687,21 @@ async function setupThemes() {
             let customCss = window.sessionStorage.getItem(customThemeCssKey);
             if (!customCss) {
                 const link = document.getElementById('theme-styles-link') as HTMLLinkElement;
-                for (const key in link.sheet.cssRules) {
-                    const rule = link.sheet.cssRules[key] as CSSStyleRule;
+                for (const key in link.sheet?.cssRules) {
+                    const rule = link.sheet?.cssRules[key as any] as CSSStyleRule;
                     if (rule.selectorText?.toLowerCase() === ':root') {
                         customCss = rule.cssText;
                         const windowAny = window as any;
                         if (windowAny.cssbeautify) {
                             customCss = windowAny.cssbeautify(customCss);
                         }
-                        customCss = customCss.replace(':root', `:root[theme="${customThemeKey}"]`);
+                        customCss = customCss?.replace(':root', `:root[theme="${customThemeKey}"]`) as string;
                         window.sessionStorage.setItem(customThemeCssKey, customCss);
                         break;
                     }
                 }
             }
-            themeStyle.innerHTML = customCss;
+            themeStyle.innerHTML = customCss as string;
             if (e) {
                 showCustomCssSource();
             }
@@ -831,7 +832,7 @@ async function setupVersions() {
 
 function setupLinks() {
     const logo = document.getElementById('header-container');
-    logo.addEventListener('click', () => {
+    logo?.addEventListener('click', () => {
         document.location = document.baseURI;
     });
 }
@@ -852,7 +853,7 @@ function openTab(target: Element, tabId: string) {
     }
 
     // Show the current tab, and add an "active" class to the button that opened the tab
-    document.getElementById(tabId).style.display = 'block';
+    document.getElementById(tabId)!.style!.display = 'block';
     target.classList.add('active');
 
     // Set nav state of tab.
@@ -865,22 +866,22 @@ function openTab(target: Element, tabId: string) {
 
 function copyToClipboard(id: string) {
     const range = document.createRange();
-    range.selectNode(document.getElementById(id));
-    window.getSelection().removeAllRanges();
-    window.getSelection().addRange(range);
+    range.selectNode(document.getElementById(id) as HTMLElement);
+    window.getSelection()?.removeAllRanges();
+    window.getSelection()?.addRange(range);
     document.execCommand('copy');
-    window.getSelection().removeAllRanges();
+    window.getSelection()?.removeAllRanges();
 }
 
 function setupMenu() {
     const menuButton = document.querySelector<HTMLElement>('.header-menu-button .material-icons');
-    menuButton.addEventListener('click', () => {
+    menuButton?.addEventListener('click', () => {
         const nav = document.querySelector('nav');
-        if (nav.classList.contains('mobile')) {
-            nav.classList.remove('mobile');
+        if (nav?.classList.contains('mobile')) {
+            nav?.classList.remove('mobile');
             menuButton.innerText = 'menu';
         } else {
-            nav.classList.add('mobile');
+            nav?.classList.add('mobile');
             menuButton.innerText = 'close';
         }
     });
@@ -899,7 +900,7 @@ function setupScroll() {
 
         if (window.srCount === window.srCompleteCount && document.location.hash) {
             setTimeout(() => {
-                document.querySelector(document.location.hash).scrollIntoView({
+                document.querySelector(document.location.hash)?.scrollIntoView({
                     behavior: 'auto'
                 });
             }, 200);
@@ -920,7 +921,7 @@ function setupScroll() {
                     a.classList.remove('active');
                 });
                 const active = document.querySelector(`.component-toc a[href*='${id}']`);
-                active.classList.add('active');
+                active?.classList.add('active');
 
                 // Only apply for the examples tab
                 if (!document.location.search) {
@@ -954,13 +955,13 @@ function setupScroll() {
             const id = a.id.substring(0, a.id.length - 2);
             const element = document.getElementById(id);
 
-            element.scrollIntoView({
+            element?.scrollIntoView({
                 behavior: 'smooth'
             });
 
             // Needs improvements.First scroll sometimes doesn't go all the way
             setTimeout(() => {
-                element.scrollIntoView({
+                element?.scrollIntoView({
                     behavior: 'smooth'
                 });
             }, 100);
@@ -985,7 +986,7 @@ function setupTabs() {
                 case 'tab': {
                     const id = param[1];
                     const target = document.querySelector(`[data-name="${id}"]`);
-                    openTab(target, id);
+                    openTab(target as Element, id);
                     break;
                 }
                 default:
@@ -1016,9 +1017,9 @@ function setupSearch() {
     }
 
     function handleAttributes() {
-        const filterValue = attributeSearch.value ?? '';
-        for (let index = 0; index < attributeRows.length; index++) {
-            const element = attributeRows[index] as HTMLElement;
+        const filterValue = attributeSearch?.value ?? '';
+        for (let index = 0; index < attributeRows!.length; index++) {
+            const element = attributeRows![index] as HTMLElement;
             if (element.innerText && element.innerText.toLowerCase().includes((<string>filterValue).toLowerCase())) {
                 element.classList.remove('hidden');
             } else {
@@ -1036,9 +1037,9 @@ function setupSearch() {
     }
 
     function handleEvents() {
-        const filterValue = eventSearch.value ?? '';
-        for (let index = 0; index < eventRows.length; index++) {
-            const element = eventRows[index] as HTMLElement;
+        const filterValue = eventSearch?.value ?? '';
+        for (let index = 0; index < eventRows!.length; index++) {
+            const element = eventRows![index] as HTMLElement;
             if (element.innerText && element.innerText.toLowerCase().includes((<string>filterValue).toLowerCase())) {
                 element.classList.remove('hidden');
             } else {
@@ -1056,9 +1057,9 @@ function setupSearch() {
     }
 
     function handleSlots() {
-        const filterValue = slotSearch.value ?? '';
-        for (let index = 0; index < slotRows.length; index++) {
-            const element = slotRows[index] as HTMLElement;
+        const filterValue = slotSearch?.value ?? '';
+        for (let index = 0; index < slotRows!.length; index++) {
+            const element = slotRows![index] as HTMLElement;
             if (element.innerText && element.innerText.toLowerCase().includes((<string>filterValue).toLowerCase())) {
                 element.classList.remove('hidden');
             } else {
@@ -1103,8 +1104,8 @@ async function setupTheming() {
     if (themeSources) {
         const link = document.getElementById('theme-styles-link') as HTMLLinkElement;
         const themes: string[] = [];
-        for (const key in link.sheet.cssRules) {
-            const rule = link.sheet.cssRules[key] as CSSStyleRule;
+        for (const key in link.sheet?.cssRules) {
+            const rule = link.sheet?.cssRules[key as any] as CSSStyleRule;
             const matches = [...(rule.selectorText?.toLowerCase()?.matchAll(/theme="(.*?)"/g) ?? [])];
             for (const index in matches) {
                 const match = matches[index];
@@ -1120,8 +1121,8 @@ async function setupTheming() {
             .map((theme: string) => {
                 const themeName = theme;
                 theme = '';
-                for (const key in link.sheet.cssRules) {
-                    const rule = link.sheet.cssRules[key] as CSSStyleRule;
+                for (const key in link.sheet?.cssRules) {
+                    const rule = link.sheet?.cssRules[key as any] as CSSStyleRule;
                     if (rule.selectorText /* && rule.selectorText.startsWith(':root') */ && rule.selectorText.includes(`theme="${themeName}"`)) {
                         theme += `${rule.cssText} \n`;
                     }
@@ -1146,15 +1147,15 @@ async function setupCustomTheming() {
     let cssSource = window.sessionStorage.getItem(customThemeCssKey);
     if (!cssSource) {
         const link = document.getElementById('theme-styles-link') as HTMLLinkElement;
-        for (const key in link.sheet.cssRules) {
-            const rule = link.sheet.cssRules[key] as CSSStyleRule;
+        for (const key in link.sheet?.cssRules) {
+            const rule = link.sheet?.cssRules[key as any] as CSSStyleRule;
             if (rule.selectorText?.toLowerCase() === ':root') {
                 cssSource = rule.cssText;
                 const windowAny = window as any;
                 if (windowAny.cssbeautify) {
                     cssSource = windowAny.cssbeautify(cssSource);
                 }
-                cssSource = cssSource.replace(':root', `:root[theme="${customThemeKey}"]`);
+                cssSource = cssSource?.replace(':root', `:root[theme="${customThemeKey}"]`) as string;
                 window.sessionStorage.setItem(customThemeCssKey, cssSource);
                 break;
             }
@@ -1164,7 +1165,7 @@ async function setupCustomTheming() {
     const windowAny = window as any;
     if (windowAny.cssbeautify) {
         cssSource = windowAny.cssbeautify(cssSource);
-        window.sessionStorage.setItem(customThemeCssKey, cssSource);
+        window.sessionStorage.setItem(customThemeCssKey, cssSource as string);
     }
     const omniCompletions = cssLanguage.data.of({ autocomplete: await omniCssVariablesCompletionSource() });
     const cssLang = new LanguageSupport(cssLanguage, [cssLanguage.data.of({ autocomplete: cssCompletionSource }), omniCompletions]); //css();
@@ -1174,7 +1175,7 @@ async function setupCustomTheming() {
         data-identifier="custom-theme-source-code"
         class="source-code"
         .extensions="${async () => [currentCodeTheme(), cssLang]}"
-        code="${cssSource}"
+        code="${cssSource as string}"
         @codemirror-loaded="${(e: CustomEvent<CodeMirrorEditorEvent>) => {
             const newSource = e.detail.source;
             cssSource = newSource;
@@ -1215,7 +1216,7 @@ async function setupCustomTheming() {
         }}">
       </code-editor>
     `,
-        customThemeSourceParent
+        customThemeSourceParent as HTMLElement
     );
 }
 
@@ -1224,7 +1225,7 @@ const omniCssVariablesCompletionSource: () => Promise<CompletionSource> = async 
 
     const customElements = await loadCustomElements();
     customElements.modules.forEach((m) => {
-        m.declarations.forEach((d) => {
+        m.declarations?.forEach((d) => {
             const declaration = d as CustomElementDeclaration &
                 CustomElement & {
                     cssCategory: string;
@@ -1275,14 +1276,14 @@ const omniCssVariablesCompletionSource: () => Promise<CompletionSource> = async 
 async function uploadTheme(e: Event) {
     const uploadInput = e.target as HTMLInputElement;
     const themeStyle = document.getElementById('theme-styles') as HTMLStyleElement;
-    if (uploadInput.files.length > 0) {
+    if (uploadInput.files!.length > 0) {
         const inputField = uploadInput;
-        const file = uploadInput.files[0];
+        const file = uploadInput.files![0];
 
         await new Promise<void>((resolve, reject) => {
             const reader = new FileReader();
             reader.onload = (evt) => {
-                const cssRaw = evt.target.result as string;
+                const cssRaw = evt.target?.result as string;
 
                 inputField.value = '';
 
@@ -1299,10 +1300,10 @@ async function uploadTheme(e: Event) {
                 resolve();
             };
             reader.onerror = (event) => {
-                reject(event.target.error);
+                reject(event.target?.error);
             };
             reader.onabort = (event) => {
-                reject(event.target.error);
+                reject(event.target?.error);
             };
             reader.readAsText(file);
         });

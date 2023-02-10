@@ -36,7 +36,7 @@ import { OmniFormElement } from '../core/OmniFormElement.js';
 @customElement('omni-number-field')
 export class NumberField extends OmniFormElement {
     @query('#inputField')
-    private _inputElement: HTMLInputElement;
+    private _inputElement?: HTMLInputElement;
 
     override connectedCallback() {
         super.connectedCallback();
@@ -52,7 +52,7 @@ export class NumberField extends OmniFormElement {
     override async attributeChangedCallback(name: string, _old: string | null, value: string | null): Promise<void> {
         super.attributeChangedCallback(name, _old, value);
         if (name === 'value') {
-            if (new RegExp('^[0-9]+$').test(value) === false) {
+            if (new RegExp('^[0-9]+$').test(value as string) === false) {
                 return;
             }
         }
@@ -67,8 +67,8 @@ export class NumberField extends OmniFormElement {
     }
 
     _keyInput() {
-        const input = this._inputElement;
-        this.value = input.value;
+        const input = this._inputElement as HTMLInputElement;
+        this.value = input?.value;
     }
 
     static override get styles() {

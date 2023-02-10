@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable lit/binding-positions */
 /* eslint-disable lit/no-invalid-html */
 import { within } from '@testing-library/dom';
@@ -32,7 +33,7 @@ export const LabelStory = <T extends HTMLElement, U extends BaseArgs>(tagName: s
         } as U,
         play: async (context) => {
             const input = within(context.canvasElement).getByTestId<T>('test-field');
-            await expect(input.shadowRoot.querySelector<HTMLElement>('.label > span')).toHaveTextContent(Label.args.label);
+            await expect(input.shadowRoot?.querySelector<HTMLElement>('.label > span')).toHaveTextContent(Label.args?.label as string);
         }
     };
     return Label;
@@ -50,9 +51,9 @@ export const HintStory = <T extends HTMLElement, U extends BaseArgs>(tagName: st
         } as U,
         play: async (context) => {
             const input = within(context.canvasElement).getByTestId<T>('test-field');
-            const hintElement = input.shadowRoot.querySelector<HTMLElement>('.hint-label');
+            const hintElement = input.shadowRoot!.querySelector<HTMLElement>('.hint-label');
             await expect(hintElement).toBeTruthy();
-            await expect(hintElement).toHaveTextContent(Hint.args.hint);
+            await expect(hintElement).toHaveTextContent(Hint.args?.hint as string);
         }
     };
     return Hint;
@@ -70,9 +71,9 @@ export const ErrorStory = <T extends HTMLElement, U extends BaseArgs>(tagName: s
         } as U,
         play: async (context) => {
             const input = within(context.canvasElement).getByTestId<T>('test-field');
-            const errorElement = input.shadowRoot.querySelector<HTMLElement>('.error-label');
+            const errorElement = input.shadowRoot!.querySelector<HTMLElement>('.error-label');
             await expect(errorElement).toBeTruthy();
-            await expect(errorElement).toHaveTextContent(Error.args.error);
+            await expect(errorElement).toHaveTextContent(Error.args?.error as string);
         }
     };
     return Error;
@@ -94,8 +95,8 @@ export const ValueStory = <T extends HTMLElement, U extends BaseArgs>(
         play: async (context) => {
             const input = within(context.canvasElement).getByTestId<T>('test-field');
 
-            const inputField = input.shadowRoot.getElementById('inputField');
-            await expect(inputField).toHaveValue(Value.args.value);
+            const inputField = input.shadowRoot?.getElementById('inputField');
+            await expect(inputField).toHaveValue(Value.args?.value as string);
         }
     };
     return Value;
@@ -118,10 +119,10 @@ export const PrefixStory = <T extends HTMLElement, U extends BaseArgs>(tagName: 
         play: async (context) => {
             const input = within(context.canvasElement).getByTestId<T>('test-field');
 
-            const slotElement = input.shadowRoot.querySelector<HTMLSlotElement>('slot[name=prefix]');
+            const slotElement = input.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=prefix]');
             await expect(slotElement).toBeTruthy();
 
-            const foundSlottedSvgElement = slotElement.assignedElements().find((e) => e.tagName.toLocaleLowerCase() === 'svg');
+            const foundSlottedSvgElement = slotElement?.assignedElements().find((e) => e.tagName.toLocaleLowerCase() === 'svg');
             await expect(foundSlottedSvgElement).toBeTruthy();
         }
     };
@@ -145,10 +146,10 @@ export const SuffixStory = <T extends HTMLElement, U extends BaseArgs>(tagName: 
         play: async (context) => {
             const input = within(context.canvasElement).getByTestId<T>('test-field');
 
-            const slotElement = input.shadowRoot.querySelector<HTMLSlotElement>('slot[name=suffix]');
+            const slotElement = input.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=suffix]');
             await expect(slotElement).toBeTruthy();
 
-            const foundSlottedSvgElement = slotElement.assignedElements().find((e) => e.tagName.toLocaleLowerCase() === 'svg');
+            const foundSlottedSvgElement = slotElement?.assignedElements().find((e) => e.tagName.toLocaleLowerCase() === 'svg');
             await expect(foundSlottedSvgElement).toBeTruthy();
         }
     };
@@ -175,7 +176,7 @@ export const DisabledStory = <T extends HTMLElement, U extends BaseArgs>(tagName
             const inputTest = jest.fn();
             input.addEventListener('input', inputTest);
 
-            const inputField = input.shadowRoot.getElementById('inputField') as OmniFormElement;
+            const inputField = input.shadowRoot?.getElementById('inputField') as OmniFormElement;
 
             await userEvent.type(inputField, 'Value Update 3', {
                 pointerEventsCheck: 0

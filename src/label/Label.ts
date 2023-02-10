@@ -47,7 +47,7 @@ export class Label extends OmniElement {
      * Text label.
      * @attr
      */
-    @property({ type: String, reflect: true }) label: string;
+    @property({ type: String, reflect: true }) label?: string;
 
     /**
      * Type of label to display.

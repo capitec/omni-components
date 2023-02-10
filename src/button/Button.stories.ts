@@ -86,8 +86,8 @@ export const Type = {
     },
     play: async (context) => {
         const button = within(context.canvasElement).getByTestId<Button>('test-button');
-        const buttonElement = button.shadowRoot.getElementById('button');
-        const foundPrimaryClass = buttonElement.classList.contains('primary');
+        const buttonElement = button.shadowRoot!.getElementById('button') as HTMLElement;
+        const foundPrimaryClass = buttonElement?.classList.contains('primary');
         await expect(foundPrimaryClass).toBeTruthy();
     }
 } as ComponentStoryFormat<Args>;
@@ -101,8 +101,8 @@ export const Label = {
     },
     play: async (context) => {
         const button = within(context.canvasElement).getByTestId<Button>('test-button');
-        const labelElement = button.shadowRoot.getElementById('label');
-        const labelMatches = labelElement.innerText === Label.args.label;
+        const labelElement = button.shadowRoot!.getElementById('label') as HTMLElement;
+        const labelMatches = labelElement?.innerText === Label.args?.label;
         await expect(labelMatches).toBeTruthy();
     }
 } as ComponentStoryFormat<Args>;
@@ -118,8 +118,8 @@ export const Slot = {
     args: {},
     play: async (context) => {
         const button = within(context.canvasElement).getByTestId<Button>('test-button');
-        const slotElement = button.shadowRoot.querySelector('slot');
-        const foundSlottedOmniIconElement = slotElement.assignedElements().find((e) => e.tagName.toLowerCase() === 'omni-icon');
+        const slotElement = button.shadowRoot?.querySelector('slot');
+        const foundSlottedOmniIconElement = slotElement?.assignedElements().find((e) => e.tagName.toLowerCase() === 'omni-icon');
         await expect(foundSlottedOmniIconElement).toBeTruthy();
     }
 } as ComponentStoryFormat<Args>;
@@ -134,8 +134,8 @@ export const Disabled = {
     play: async (context) => {
         const button = within(context.canvasElement).getByTestId<Button>('test-button'); // Test for disabled CSS.
 
-        const buttonElement = button.shadowRoot.getElementById('button');
-        const foundDisabledClass = buttonElement.classList.contains('disabled');
+        const buttonElement = button.shadowRoot?.getElementById('button');
+        const foundDisabledClass = buttonElement?.classList.contains('disabled');
         await expect(foundDisabledClass).toBeTruthy(); // Test for not clickable.
 
         const click = jest.fn();

@@ -44,7 +44,7 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
         const input = jest.fn();
         textField.addEventListener('input', input);
 
-        const inputField = textField.shadowRoot.getElementById('inputField');
+        const inputField = textField.shadowRoot?.getElementById('inputField') as HTMLElement;
 
         await userEvent.type(inputField, 'Value Update', {
             pointerEventsCheck: 0

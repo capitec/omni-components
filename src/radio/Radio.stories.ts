@@ -47,7 +47,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         const radio = within(context.canvasElement).getByTestId<Radio>('test-radio');
         radio.focus();
 
-        const content = radio.shadowRoot.getElementById('content');
+        const content = radio.shadowRoot?.getElementById('content') as HTMLElement;
         const valueChange = jest.fn();
         radio.addEventListener('value-change', valueChange);
 
@@ -71,8 +71,8 @@ export const Label: ComponentStoryFormat<Args> = {
     },
     play: async (context) => {
         const radio = within(context.canvasElement).getByTestId<Radio>('test-radio');
-        const labelElement = radio.shadowRoot.getElementById('label');
-        await expect(labelElement).toHaveTextContent(Label.args.label);
+        const labelElement = radio.shadowRoot?.getElementById('label') as HTMLElement;
+        await expect(labelElement).toHaveTextContent(Label.args?.label as string);
     }
 };
 
@@ -85,8 +85,8 @@ export const Hint: ComponentStoryFormat<Args> = {
     },
     play: async (context) => {
         const radio = within(context.canvasElement).getByTestId<Radio>('test-radio');
-        const element = radio.shadowRoot.querySelector<HTMLElement>('.hint');
-        await expect(element).toHaveTextContent(Hint.args.hint);
+        const element = radio.shadowRoot?.querySelector<HTMLElement>('.hint');
+        await expect(element).toHaveTextContent(Hint.args?.hint as string);
     }
 };
 
@@ -100,8 +100,8 @@ export const Error_Label: ComponentStoryFormat<Args> = {
     },
     play: async (context) => {
         const radio = within(context.canvasElement).getByTestId<Radio>('test-radio');
-        const element = radio.shadowRoot.querySelector<HTMLElement>('.error');
-        await expect(element).toHaveTextContent(Error_Label.args.error);
+        const element = radio.shadowRoot?.querySelector<HTMLElement>('.error');
+        await expect(element).toHaveTextContent(Error_Label.args?.error as string);
     }
 };
 
@@ -114,7 +114,7 @@ export const Checked: ComponentStoryFormat<Args> = {
     },
     play: async (context) => {
         const radio = within(context.canvasElement).getByTestId<Radio>('test-radio');
-        const checkedElement = radio.shadowRoot.querySelector<HTMLElement>('.checked');
+        const checkedElement = radio.shadowRoot?.querySelector<HTMLElement>('.checked');
         await expect(checkedElement).toBeTruthy();
     }
 };
@@ -131,10 +131,10 @@ export const Disabled: ComponentStoryFormat<Args> = {
         const valueChange = jest.fn();
         radio.addEventListener('value-change', valueChange);
 
-        const disabledElement = radio.shadowRoot.querySelector<HTMLElement>('.disabled');
+        const disabledElement = radio.shadowRoot?.querySelector<HTMLElement>('.disabled');
         await expect(disabledElement).toBeTruthy();
 
-        const content = radio.shadowRoot.getElementById('content');
+        const content = radio.shadowRoot?.getElementById('content') as HTMLElement;
         await userEvent.click(content, {
             pointerEventsCheck: 0
         });

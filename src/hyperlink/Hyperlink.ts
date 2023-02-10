@@ -49,13 +49,13 @@ export class Hyperlink extends OmniElement {
      * Text label.
      * @attr
      */
-    @property({ type: String, reflect: true }) label: string;
+    @property({ type: String, reflect: true }) label?: string;
 
     /**
      * URL to link to.
      * @attr
      */
-    @property({ type: String, reflect: true }) href: string;
+    @property({ type: String, reflect: true }) href?: string;
 
     /**
      * Where to load the URL specified in "href"
@@ -67,19 +67,19 @@ export class Hyperlink extends OmniElement {
      * Indicator if the component is disabled.
      * @attr
      */
-    @property({ type: Boolean, reflect: true }) disabled: boolean;
+    @property({ type: Boolean, reflect: true }) disabled?: boolean;
 
     /**
      * Indicator if the link is used as part of a sentence.
      * @attr
      */
-    @property({ type: Boolean, reflect: true }) inline: boolean;
+    @property({ type: Boolean, reflect: true }) inline?: boolean;
 
     /**
      * Size of the Hyperlink text.
      * @attr
      */
-    @property({ type: String, reflect: true }) size: string;
+    @property({ type: String, reflect: true }) size?: string;
 
     override connectedCallback() {
         super.connectedCallback();

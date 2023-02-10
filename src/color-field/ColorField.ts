@@ -41,7 +41,7 @@ import { OmniFormElement } from '../core/OmniFormElement.js';
 @customElement('omni-color-field')
 export class ColorField extends OmniFormElement {
     @query('#inputField')
-    private _inputElement: HTMLInputElement;
+    private _inputElement?: HTMLInputElement;
 
     override connectedCallback() {
         super.connectedCallback();
@@ -51,8 +51,8 @@ export class ColorField extends OmniFormElement {
     }
 
     _keyInput() {
-        const input = this._inputElement;
-        this.value = input.value;
+        const input = this._inputElement as HTMLInputElement;
+        this.value = input?.value;
     }
 
     static override get styles() {

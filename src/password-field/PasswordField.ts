@@ -57,7 +57,7 @@ export class PasswordField extends OmniFormElement {
     @state() protected type: 'password' | 'text' = 'password';
 
     @query('#inputField')
-    private _inputElement: HTMLInputElement;
+    private _inputElement?: HTMLInputElement;
 
     override connectedCallback() {
         super.connectedCallback();
@@ -68,7 +68,7 @@ export class PasswordField extends OmniFormElement {
 
     _keyInput() {
         const input = this._inputElement;
-        this.value = input.value;
+        this.value = input?.value;
     }
 
     _iconClicked(e: MouseEvent) {

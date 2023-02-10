@@ -37,7 +37,7 @@ import { OmniFormElement } from '../core/OmniFormElement.js';
 @customElement('omni-text-field')
 export class TextField extends OmniFormElement {
     @query('#inputField')
-    private _inputElement: HTMLInputElement;
+    private _inputElement?: HTMLInputElement;
 
     override connectedCallback() {
         super.connectedCallback();
@@ -48,7 +48,7 @@ export class TextField extends OmniFormElement {
 
     _keyInput() {
         const input = this._inputElement;
-        this.value = input.value;
+        this.value = input?.value;
     }
 
     static override get styles() {

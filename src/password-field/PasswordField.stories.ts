@@ -56,16 +56,16 @@ export const Interactive: ComponentStoryFormat<Args> = {
         passwordField.addEventListener('input', interactions);
         passwordField.addEventListener('click', interactions);
 
-        const inputField = passwordField.shadowRoot.getElementById('inputField');
+        const inputField = passwordField.shadowRoot?.getElementById('inputField') as HTMLInputElement;
 
-        const showSlotElement = passwordField.shadowRoot.querySelector<HTMLSlotElement>('slot[name=show]');
+        const showSlotElement = passwordField.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=show]');
         await expect(showSlotElement).toBeTruthy();
-        await userEvent.click(showSlotElement, {
+        await userEvent.click(showSlotElement as HTMLSlotElement, {
             pointerEventsCheck: 0
         });
-        const hideSlotElement = passwordField.shadowRoot.querySelector<HTMLSlotElement>('slot[name=hide]');
+        const hideSlotElement = passwordField.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=hide]');
         await expect(hideSlotElement).toBeTruthy();
-        await userEvent.click(hideSlotElement, {
+        await userEvent.click(hideSlotElement as HTMLSlotElement, {
             pointerEventsCheck: 0
         });
 
@@ -117,10 +117,10 @@ export const Custom_Icon_Slot: ComponentStoryFormat<Args> = {
     },
     play: async (context) => {
         const passwordField = within(context.canvasElement).getByTestId<PasswordField>('test-password-field');
-        const slotElement = passwordField.shadowRoot.querySelector<HTMLSlotElement>('slot[name=show]');
+        const slotElement = passwordField.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=show]');
         await expect(slotElement).toBeTruthy();
 
-        const foundSlottedSvgElement = slotElement.assignedElements().find((e) => e.tagName.toLocaleLowerCase() === 'omni-lock-open-icon');
+        const foundSlottedSvgElement = slotElement?.assignedElements().find((e) => e.tagName.toLocaleLowerCase() === 'omni-lock-open-icon');
         await expect(foundSlottedSvgElement).toBeTruthy();
     }
 };

@@ -53,7 +53,7 @@ import '../icons/Search.icon.js';
 @customElement('omni-search-field')
 export class SearchField extends OmniFormElement {
     @query('#inputField')
-    private _inputElement: HTMLInputElement;
+    private _inputElement?: HTMLInputElement;
 
     override connectedCallback() {
         super.connectedCallback();
@@ -64,7 +64,7 @@ export class SearchField extends OmniFormElement {
 
     _keyInput() {
         const input = this._inputElement;
-        this.value = input.value;
+        this.value = input?.value;
     }
 
     async _clearField(e: MouseEvent) {

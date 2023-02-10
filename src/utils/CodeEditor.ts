@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { closeBrackets, autocompletion, closeBracketsKeymap, completionKeymap } from '@codemirror/autocomplete';
 import { indentWithTab } from '@codemirror/commands';
 import { history, defaultKeymap, historyKeymap } from '@codemirror/commands';
@@ -26,15 +27,15 @@ import '../icon/Icon.js';
 export class CodeEditor extends LitElement {
     @property({ type: Object, reflect: false }) extensions: () => Extension | Promise<Extension> = () => [];
     @property({ type: Object, reflect: false }) transformSource: (source: string) => string | Promise<string> = (s) => s;
-    @property({ type: String, reflect: true }) code: string | Promise<string>;
-    @property({ type: Boolean, attribute: 'read-only', reflect: true }) readOnly: boolean;
-    @property({ type: Boolean, reflect: true }) disabled: boolean;
-    @property({ type: Boolean, attribute: 'no-tab', reflect: true }) noTab: boolean;
+    @property({ type: String, reflect: true }) code?: string | Promise<string>;
+    @property({ type: Boolean, attribute: 'read-only', reflect: true }) readOnly!: boolean;
+    @property({ type: Boolean, reflect: true }) disabled!: boolean;
+    @property({ type: Boolean, attribute: 'no-tab', reflect: true }) noTab!: boolean;
 
-    @query('.code-parent') codeParent: HTMLDivElement;
-    @query('slot') slotElement: HTMLSlotElement;
+    @query('.code-parent') codeParent?: HTMLDivElement;
+    @query('slot') slotElement?: HTMLSlotElement;
 
-    private editor: EditorView;
+    private editor?: EditorView;
     private readonlyOrDisabled = new Compartment();
     private userExtensions = new Compartment();
 
@@ -133,12 +134,12 @@ export class CodeEditor extends LitElement {
         ];
     }
 
-    public async refresh(getCode: () => string | Promise<string> = undefined) {
+    public async refresh(getCode: () => string | Promise<string> = undefined as any) {
         if (getCode) {
             this.code = await getCode();
         }
-        if (!this.disabled && this.editor && (this.code || this.slotElement.assignedNodes().length > 0)) {
-            const source = this.code ? await this.transformSource(await this.code) : await this.transformSource(this._readCode(this.slotElement));
+        if (!this.disabled && this.editor && (this.code || this.slotElement!.assignedNodes().length > 0)) {
+            const source = this.code ? await this.transformSource(await this.code) : await this.transformSource(this._readCode(this.slotElement as HTMLSlotElement));
             this.editor.dispatch({
                 changes: {
                     from: 0,
@@ -195,8 +196,8 @@ export class CodeEditor extends LitElement {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     protected override async updated(): Promise<void> {
-        if (!this.editor && this.codeParent && (this.code || this.slotElement.assignedNodes().length > 0)) {
-            let source = this.code ? await this.transformSource(await this.code) : await this.transformSource(this._readCode(this.slotElement));
+        if (!this.editor && this.codeParent && (this.code || this.slotElement!.assignedNodes().length > 0)) {
+            let source = this.code ? await this.transformSource(await this.code) : await this.transformSource(this._readCode(this.slotElement as HTMLSlotElement));
             this._clearElements(this.codeParent);
             this.editor = new EditorView({
                 doc: source,
@@ -230,7 +231,7 @@ export class CodeEditor extends LitElement {
                     EditorView.updateListener.of(async (update) => {
                         if (update.docChanged) {
                             const oldSource = source;
-                            source = this.editor.state.doc.toString();
+                            source = this.editor!.state.doc.toString();
                             this.code = source;
 
                             this.requestUpdate();
@@ -243,7 +244,7 @@ export class CodeEditor extends LitElement {
                                         detail: {
                                             update,
                                             editor: this.editor,
-                                            source: this.editor.state.doc.toString()
+                                            source: this.editor!.state.doc.toString()
                                         } as CodeMirrorUpdateEvent
                                     })
                                 );
@@ -264,7 +265,7 @@ export class CodeEditor extends LitElement {
                                     detail: {
                                         update,
                                         editor: this.editor,
-                                        source: this.editor.state.doc.toString()
+                                        source: this.editor!.state.doc.toString()
                                     } as CodeMirrorUpdateEvent
                                 })
                             );
@@ -293,7 +294,7 @@ export class CodeEditor extends LitElement {
     }
 
     private async _copyCode() {
-        this._copyTextToClipboard(await this.code);
+        this._copyTextToClipboard(await this.code!);
     }
 
     private _fallbackCopyTextToClipboard(text: string) {
@@ -334,7 +335,7 @@ export class CodeEditor extends LitElement {
             return;
         }
 
-        const source = this.code ? await this.transformSource(await this.code) : await this.transformSource(this._readCode(this.slotElement));
+        const source = this.code ? await this.transformSource(await this.code) : await this.transformSource(this._readCode(this.slotElement as HTMLSlotElement));
         if (!this.disabled && source !== this.editor.state.doc.toString()) {
             this.editor.dispatch({
                 changes: {
@@ -360,7 +361,7 @@ export class CodeEditor extends LitElement {
         return code;
     }
 
-    private _clearElements(el: Element | ShadowRoot = undefined) {
+    private _clearElements(el: Element | ShadowRoot = undefined as any) {
         if (!el) {
             el = this.renderRoot;
         }
@@ -374,7 +375,7 @@ export class CodeEditor extends LitElement {
         }
     }
 
-    private _clearOtherElements(el: Element | ShadowRoot = undefined, onlyChild: Element) {
+    private _clearOtherElements(el: Element | ShadowRoot = undefined as any, onlyChild: Element) {
         if (!el) {
             el = this.renderRoot;
         }

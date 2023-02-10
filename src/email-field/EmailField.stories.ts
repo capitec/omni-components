@@ -44,9 +44,9 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
         const input = jest.fn();
         emailField.addEventListener('input', input);
 
-        const inputField = emailField.shadowRoot.getElementById('inputField');
+        const inputField = emailField.shadowRoot?.getElementById('inputField');
 
-        await userEvent.type(inputField, 'JohnDoe@gmail.com', {
+        await userEvent.type(inputField as Element, 'JohnDoe@gmail.com', {
             pointerEventsCheck: 0
         });
         const value = 'JohnDoe@gmail.com';

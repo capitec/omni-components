@@ -19,7 +19,7 @@
       "experimentalDecorators": true,
       "forceConsistentCasingInFileNames": true,
       "noImplicitOverride": true,
-      "strictNullChecks": false,
+      "strictNullChecks": true,
       "plugins": [
         {
           "name": "ts-lit-plugin",

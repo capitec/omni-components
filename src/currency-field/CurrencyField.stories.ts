@@ -61,7 +61,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
     play: async (context) => {
         const currencyField = within(context.canvasElement).getByTestId<CurrencyField>('test-currency-field');
 
-        const inputField = currencyField.shadowRoot.getElementById('inputField') as HTMLInputElement;
+        const inputField = currencyField.shadowRoot?.getElementById('inputField') as HTMLInputElement;
         // Required to clear userEvent Symbol that keeps hidden state of previously typed values via userEvent. If not cleared this cannot be run multiple times with the same results
         setUIValueClean(inputField);
         inputField.value = '';

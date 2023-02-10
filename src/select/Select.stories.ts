@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { within } from '@testing-library/dom';
@@ -97,24 +98,24 @@ export const Interactive: ComponentStoryFormat<Args> = {
 
         await expect(click).toBeCalledTimes(2);
 
-        const controlButton = select.shadowRoot.getElementById('control');
+        const controlButton = select.shadowRoot?.getElementById('control');
 
         await expect(controlButton).toBeTruthy();
 
         await userEvent.click(select);
 
-        const itemContainer = await querySelectorAsync(select.shadowRoot, '#items-container');
+        const itemContainer = await querySelectorAsync(select!.shadowRoot!, '#items-container');
         await expect(itemContainer).toBeTruthy();
 
-        const items = select.shadowRoot.getElementById('items');
+        const items = select.shadowRoot?.getElementById('items');
         await expect(items).toBeTruthy();
 
-        const item = await querySelectorAsync(select.shadowRoot, '.item');
+        const item = await querySelectorAsync(select!.shadowRoot!, '.item');
 
         await expect(item).toBeTruthy();
         await userEvent.click(item as HTMLDivElement);
 
-        const selectField = select.shadowRoot.getElementById('select');
+        const selectField = select.shadowRoot?.getElementById('select');
         await expect(selectField).toHaveValue(displayItems[0].label);
 
         await expect(change).toBeCalledTimes(1);
@@ -167,13 +168,13 @@ export const Async_Per_Item: ComponentStoryFormat<Args> = {
         let item;
         // TODO: Fix race conditions in tests
         if (navigator.userAgent === 'Test Runner') {
-            item = await querySelectorAsync(select.shadowRoot, '.item', undefined, 3000);
+            item = await querySelectorAsync(select.shadowRoot!, '.item', undefined, 3000);
         } else {
-            item = await querySelectorAsync(select.shadowRoot, '.item', undefined, 5000);
+            item = await querySelectorAsync(select.shadowRoot!, '.item', undefined, 5000);
         }
         await userEvent.click(item as HTMLDivElement);
 
-        const selectField = select.shadowRoot.getElementById('select');
+        const selectField = select.shadowRoot?.getElementById('select');
         await expect(selectField).toHaveValue(displayItems[0].label);
     }
 };
@@ -226,13 +227,13 @@ export const Loading_Slot: ComponentStoryFormat<Args> = {
         let item;
         // TODO: Fix race conditions in tests
         if (navigator.userAgent === 'Test Runner') {
-            item = await querySelectorAsync(select.shadowRoot, '.item', undefined, 3000);
+            item = await querySelectorAsync(select.shadowRoot!, '.item', undefined, 3000);
         } else {
-            item = await querySelectorAsync(select.shadowRoot, '.item', undefined, 5000);
+            item = await querySelectorAsync(select.shadowRoot!, '.item', undefined, 5000);
         }
         await userEvent.click(item as HTMLDivElement);
 
-        const selectField = select.shadowRoot.getElementById('select');
+        const selectField = select.shadowRoot?.getElementById('select');
         await expect(selectField).toHaveValue(displayItems[0].label);
     }
 };
@@ -269,10 +270,10 @@ export const String_Array: ComponentStoryFormat<Args> = {
 
         await userEvent.click(select);
 
-        const item = await querySelectorAsync(select.shadowRoot, '.item');
+        const item = await querySelectorAsync(select.shadowRoot!, '.item');
         await userEvent.click(item as HTMLDivElement);
 
-        const selectField = select.shadowRoot.getElementById('select');
+        const selectField = select.shadowRoot?.getElementById('select');
         await expect(selectField).toHaveValue(stringItems[0]);
     }
 };
@@ -296,14 +297,14 @@ export const Empty_Message: ComponentStoryFormat<Args> = {
         emptyMessage: 'No items provided',
         displayField: 'label',
         idField: 'id'
-    } as Args,
+    } as Partial<Args>,
     play: async (context) => {
         const select = within(context.canvasElement).getByTestId<Select>('test-select');
         const click = jest.fn();
         select.addEventListener('click', click);
         await userEvent.click(select);
 
-        const item = await querySelectorAsync(select.shadowRoot, '.none');
+        const item = await querySelectorAsync(select.shadowRoot!, '.none');
         await expect(item).toHaveTextContent(context.args.emptyMessage);
     }
 };

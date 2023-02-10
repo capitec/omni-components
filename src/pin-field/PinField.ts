@@ -58,10 +58,10 @@ export class PinField extends OmniFormElement {
     @state() protected type: 'password' | 'number' = 'number';
 
     @query('#inputField')
-    private _inputElement: HTMLInputElement;
-    private showPin: boolean;
+    private _inputElement?: HTMLInputElement;
+    private showPin?: boolean;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    private isWebkit: boolean;
+    private isWebkit?: boolean;
 
     override connectedCallback() {
         super.connectedCallback();
@@ -78,7 +78,7 @@ export class PinField extends OmniFormElement {
 
     //Added for non webkit supporting browsers
     protected override async firstUpdated(): Promise<void> {
-        const style: any = window.getComputedStyle(this._inputElement);
+        const style: any = window.getComputedStyle(this._inputElement as HTMLInputElement);
         this.isWebkit = style.webkitTextSecurity;
         if (!this.isWebkit) {
             this.type = 'password';
@@ -88,7 +88,7 @@ export class PinField extends OmniFormElement {
     override async attributeChangedCallback(name: string, _old: string | null, value: string | null): Promise<void> {
         super.attributeChangedCallback(name, _old, value);
         if (name === 'value') {
-            if (new RegExp('^[0-9]+$').test(value) === false) {
+            if (new RegExp('^[0-9]+$').test(value as string) === false) {
                 return;
             }
         }
@@ -110,7 +110,7 @@ export class PinField extends OmniFormElement {
 
     _keyInput() {
         const input = this._inputElement;
-        this.value = input.value;
+        this.value = input?.value;
     }
 
     _iconClicked(e: MouseEvent) {
@@ -120,14 +120,14 @@ export class PinField extends OmniFormElement {
 
         if (this.showPin) {
             this.showPin = false;
-            this._inputElement.classList.add('field-hide-pin');
+            this._inputElement?.classList.add('field-hide-pin');
 
             if (!this.isWebkit) {
                 this.type = 'password';
             }
         } else {
             this.showPin = true;
-            this._inputElement.classList.remove('field-hide-pin');
+            this._inputElement?.classList.remove('field-hide-pin');
 
             if (!this.isWebkit) {
                 this.type = 'number';

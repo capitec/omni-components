@@ -45,7 +45,7 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
     play: async (context) => {
         const field = within(context.canvasElement).getByTestId<ColorField>('test-color-field');
 
-        const inputField = field.shadowRoot.getElementById('inputField') as HTMLInputElement;
+        const inputField = field.shadowRoot!.getElementById('inputField') as HTMLInputElement;
 
         await expect(inputField.type).toBe('color');
     }
@@ -82,7 +82,7 @@ export const Disabled: ComponentStoryFormat<BaseArgs> = {
         const inputTest = jest.fn();
         input.addEventListener('input', inputTest);
 
-        const inputField = input.shadowRoot.getElementById('inputField') as OmniFormElement;
+        const inputField = input.shadowRoot!.getElementById('inputField') as OmniFormElement;
 
         await userEvent.type(inputField, 'Value Update 3', {
             pointerEventsCheck: 0

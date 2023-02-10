@@ -101,20 +101,20 @@ import '../icons/More.icon.js';
 @customElement('omni-select')
 export class Select extends OmniFormElement {
     @query('#select')
-    private _selectElement: HTMLInputElement;
-    private _itemsContainer: HTMLDivElement;
+    private _selectElement?: HTMLInputElement;
+    private _itemsContainer?: HTMLDivElement;
 
     /**
      * Selectable items of the select component.
      * @attr
      */
-    @property({ type: Array, reflect: true }) items: SelectItems | (() => SelectItems);
+    @property({ type: Array, reflect: true }) items?: SelectItems | (() => SelectItems);
 
     /**
      * Field of the item to display as one of the selectable options.
      * @attr [display-field]
      */
-    @property({ type: String, reflect: true, attribute: 'display-field' }) displayField: string;
+    @property({ type: String, reflect: true, attribute: 'display-field' }) displayField?: string;
 
     /**
      * Id field of the items provided.
@@ -132,7 +132,7 @@ export class Select extends OmniFormElement {
      * Render function for each item.
      * @no_attribute
      */
-    @property({ type: Object, reflect: false }) renderItem: RenderFunction;
+    @property({ type: Object, reflect: false }) renderItem?: RenderFunction;
 
     // Internal state properties
     @state() private _popUp: boolean = false;
@@ -183,7 +183,7 @@ export class Select extends OmniFormElement {
         await this.updateComplete;
 
         //https://stackoverflow.com/a/36084475
-        this._selectElement.dispatchEvent(
+        this._selectElement?.dispatchEvent(
             new Event('change', {
                 bubbles: true,
                 composed: true
@@ -466,7 +466,7 @@ export class Select extends OmniFormElement {
         if (typeof this.items === 'function') {
             items = await this.items();
         } else {
-            items = await this.items;
+            items = await this.items as SelectTypes;
         }
 
         if (Array.isArray(items)) {
@@ -483,7 +483,7 @@ export class Select extends OmniFormElement {
     // Render the each option in the item container
     _renderOption(item: Record<string, unknown> | string) {
         return html` <div
-            class="item ${this.value === (typeof item === 'string' ? item : item[this.displayField]) || this.value === item ? `selected` : ``}"
+            class="item ${this.value === (typeof item === 'string' ? item : item[this.displayField as string]) || this.value === item ? `selected` : ``}"
             @click="${() => this._onItemClick(item)}">
             ${
                 this.renderItem

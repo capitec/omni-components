@@ -59,17 +59,17 @@ export const Interactive: ComponentStoryFormat<Args> = {
         pinField.addEventListener('input', interactions);
         pinField.addEventListener('click', interactions);
 
-        const inputField = pinField.shadowRoot.getElementById('inputField') as HTMLInputElement;
+        const inputField = pinField.shadowRoot?.getElementById('inputField') as HTMLInputElement;
         setUIValueClean(inputField);
 
-        const showSlotElement = pinField.shadowRoot.querySelector<HTMLSlotElement>('slot[name=show]');
+        const showSlotElement = pinField.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=show]');
         await expect(showSlotElement).toBeTruthy();
-        await userEvent.click(showSlotElement, {
+        await userEvent.click(showSlotElement as HTMLSlotElement, {
             pointerEventsCheck: 0
         });
-        const hideSlotElement = pinField.shadowRoot.querySelector<HTMLSlotElement>('slot[name=hide]');
+        const hideSlotElement = pinField.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=hide]');
         await expect(hideSlotElement).toBeTruthy();
-        await userEvent.click(hideSlotElement, {
+        await userEvent.click(hideSlotElement as HTMLSlotElement, {
             pointerEventsCheck: 0
         });
 

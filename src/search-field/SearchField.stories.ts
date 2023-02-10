@@ -45,7 +45,7 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
         searchField.addEventListener('input', interaction);
         searchField.addEventListener('click', click);
 
-        const inputField = searchField.shadowRoot.getElementById('inputField') as HTMLInputElement;
+        const inputField = searchField.shadowRoot?.getElementById('inputField') as HTMLInputElement;
         // Required to clear userEvent Symbol that keeps hidden state of previously typed values via userEvent. If not cleared this cannot be run multiple times with the same results
         setUIValueClean(inputField);
 
@@ -64,7 +64,7 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
             });
         }
 
-        const clearButton = searchField.shadowRoot.getElementById(`control`);
+        const clearButton = searchField.shadowRoot?.getElementById(`control`) as HTMLElement;
         await userEvent.click(clearButton);
 
         // TODO: Fix race conditions in tests
