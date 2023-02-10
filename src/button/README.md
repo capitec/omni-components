@@ -16,8 +16,8 @@ Control that allows an action to be executed.
 | Property       | Attribute       | Modifiers | Type                                             | Default     | Description                                      |
 |----------------|-----------------|-----------|--------------------------------------------------|-------------|--------------------------------------------------|
 | `dir`          |                 |           | `string`                                         |             |                                                  |
-| `disabled`     | `disabled`      |           | `boolean`                                        |             | Indicator if the component is disabled.          |
-| `label`        | `label`         |           | `string`                                         |             | Text label.                                      |
+| `disabled`     | `disabled`      |           | `boolean \| undefined`                           |             | Indicator if the component is disabled.          |
+| `label`        | `label`         |           | `string \| undefined`                            |             | Text label.                                      |
 | `lang`         |                 |           | `string`                                         |             |                                                  |
 | `override`     | `override`      |           |                                                  |             | Used to set the base direction of text for display |
 | `slotPosition` | `slot-position` |           | `"left" \| "top" \| "right" \| "bottom"`         | "left"      | Position of slotted content.                     |
