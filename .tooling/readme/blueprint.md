@@ -16,7 +16,7 @@
 	<a href="https://github.com/capitec/omni-components/blob/develop/LICENSE"><img alt="MIT License" src="https://img.shields.io/github/license/capitec/omni-components" height="20"/></a>
 </p>
 <p align="center">
-	<a href="https://capitec.github.io/open-source/?repo=Omni-Components"><img alt="Docs" src="https://img.shields.io/static/v1?label=docs&message=capitec.github.io/open-source&color=blue&style=flat-square" /></a>
+	<a href="https://capitec.github.io/open-source/docs/omni-components/"><img alt="Docs" src="https://img.shields.io/static/v1?label=docs&message=capitec.github.io/open-source&color=blue&style=flat-square" /></a>
 </p>
 
 <br/>
@@ -35,7 +35,7 @@
 
 <br />
 
-<p align="center">🚩 View our <a href="https://capitec.github.io/open-source/docs/Omni-Components">interactive documentation</a> for more info on component usage and live previews.</p>
+<p align="center">🚩 View our <a href="https://capitec.github.io/open-source/docs/omni-components">interactive documentation</a> for more info on component usage and live previews.</p>
 
 <br>
 
@@ -169,7 +169,7 @@ This example shows how to import and use a few common components. {{ template:pr
 
 ## API Reference
 
-{{ load:readme/LIST.md }}
+{{ load:.tooling/readme/LIST.md }}
 
 <br>
 
@@ -179,7 +179,7 @@ Made possible by these fantastic people. 💖
 
 See the [`CONTRIBUTING.md`](./CONTRIBUTING.md) guide to get involved.
 
-{{ load:readme/contributors.md }}
+{{ load:.tooling/readme/contributors.md }}
 
 <br>
 
@@ -193,8 +193,8 @@ See the [`CONTRIBUTING.md`](./CONTRIBUTING.md) guide to get involved.
 <br>
 <p align="center">
     <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="./readme/logos/capitec-logo-white.svg">
-        <img alt="Capitec Logo" src="./readme/logos/capitec-logo-color.svg" height="28">
+        <source media="(prefers-color-scheme: dark)" srcset="./.tooling/readme/logos/capitec-logo-white.svg">
+        <img alt="Capitec Logo" src="./.tooling/readme/logos/capitec-logo-color.svg" height="28">
     </picture>
 </p>
 <p align="center">We are hiring 🤝 Join us! 🇿🇦</p>

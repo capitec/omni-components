@@ -6,6 +6,8 @@ pagination:
     size: 1
     alias: component
 permalink: "components/{{ component.name | slug }}/"
+eleventyComputed:
+  title: "{{ component.name | splitPascalCase() }} - Omni Components"
 ---
 
 <div class="component-overlay">
@@ -63,14 +65,12 @@ permalink: "components/{{ component.name | slug }}/"
                         <div class="component-stories">
                             {% for story in component.stories %}
                             <div class="name" id="story-{{ story | replace("_", "-") | lower }}">{{ story | replace("_", " ") }}</div>
-                            <div class="story">
-                                <story-renderer 
-                                    path="{{ component.path }}" 
-                                    tag="{{ customElements | getTagName(component.name) }}" 
-                                    key="{{ story }}"
-                                    {% if story === 'Interactive' %}interactive{% endif %} >
-                                </story-renderer>
-                            </div>
+                            <story-renderer 
+                                path="{{ component.path }}" 
+                                tag="{{ customElements | getTagName(component.name) }}" 
+                                key="{{ story }}"
+                                {% if story === 'Interactive' %}interactive{% endif %} >
+                            </story-renderer>
                             {%- endfor %}
                         </div>
                         <div class="component-toc-wrapper">

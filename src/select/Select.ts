@@ -435,7 +435,7 @@ export class Select extends OmniFormElement {
     }
 
     protected override renderPicker() {
-        if (!this._popUp || !this.items) {
+        if (!this._popUp) {
             return nothing;
         }
         return html`
@@ -504,3 +504,9 @@ export class Select extends OmniFormElement {
 
 export type SelectTypes = string[] | Record<string, unknown>[];
 export type SelectItems = SelectTypes | Promise<SelectTypes>;
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'omni-select': Select;
+    }
+}

@@ -40,7 +40,7 @@ async function renderAsString(data: object) {
     return `<span>${JSON.stringify(data)}</span>`;
 }
 
-export const As_Lit: ComponentStoryFormat<Args> = {
+export const Lit_Template: ComponentStoryFormat<Args> = {
     source: () => `
                 
 <!-- Bound function used (<script> tags only for syntax highlighting) -->
@@ -55,7 +55,8 @@ async function renderAsLit(data: object) {
                 
 <omni-render-element .data="\${this.someData}" .renderer="\${this.renderAsLit}"></omni-render-element>
 `,
-    name: 'As Lit',
+    name: 'Lit Template',
+    description: 'Render a Lit template string from the renderer function.',
     render: (args: Args) => html`
     <omni-render-element data-testid="test-render" .data="${args.data}" .renderer="${args.renderer}"
       >${
@@ -103,7 +104,7 @@ async function renderAsLit(data: object) {
 };
 
 let clicked = () => alert('Clicked');
-export const As_HTML_Element: ComponentStoryFormat<Args> = {
+export const HTML_Element_Instance: ComponentStoryFormat<Args> = {
     render: (args: Args) => {
         const addValues = async () => {
             let renderEl: RenderElement = undefined;
@@ -118,7 +119,8 @@ export const As_HTML_Element: ComponentStoryFormat<Args> = {
         addValues();
         return html` <omni-render-element id="renderElI" data-testid="test-render"></omni-render-element> `;
     },
-    name: 'As HTML Element',
+    name: 'HTML Element Instance',
+    description: 'Render an HTMLElement instance from the renderer function.',
     source: () => `
 <omni-render-element id="renderElI"></omni-render-element>
 <script defer>
@@ -186,7 +188,7 @@ export const As_HTML_Element: ComponentStoryFormat<Args> = {
     }
 };
 
-export const As_String: ComponentStoryFormat<Args> = {
+export const HTML_String: ComponentStoryFormat<Args> = {
     render: (args: Args) => {
         const addValues = async () => {
             let renderEl: RenderElement = undefined;
@@ -201,7 +203,8 @@ export const As_String: ComponentStoryFormat<Args> = {
         addValues();
         return html` <omni-render-element id="renderElS" data-testid="test-render"> </omni-render-element> `;
     },
-    name: 'As String',
+    name: 'HTML String',
+    description: 'Render a string from the renderer function as html.',
     source: () => `
 <omni-render-element id="renderElS"></omni-render-element>
 <script defer>

@@ -5,6 +5,7 @@ import { javascript } from '@codemirror/lang-javascript';
 import { syntaxTree, LanguageSupport } from '@codemirror/language';
 import { githubDark as codeThemeDark } from '@ddietr/codemirror-themes/github-dark.js';
 import { githubLight as codeTheme } from '@ddietr/codemirror-themes/github-light.js';
+import { Octokit } from '@octokit/core';
 import { Package, ClassDeclaration, CustomElementDeclaration, Declaration, CustomElement } from 'custom-elements-manifest/schema';
 export { Package, ClassDeclaration, CustomElementDeclaration, Declaration, CustomElement } from 'custom-elements-manifest/schema';
 import { html } from 'lit';
@@ -25,6 +26,10 @@ const themeStorageKey = 'omni-docs-theme-selection';
 const customThemeKey = 'custom';
 const lightThemeKey = 'light';
 const darkThemeKey = 'dark';
+
+const versionsStorageKey = 'omni-docs-version-list';
+const docsHostedBasePath = 'https://capitec.github.io/open-source/docs/omni-components/';
+const latestVersionName = 'latest';
 
 function loadCssProperties(
     element: string,
@@ -566,31 +571,33 @@ async function setupThemes() {
     const themeNativeSelect = document.getElementById('header-theme-native-select') as HTMLSelectElement;
     const themeStyle = document.getElementById('theme-styles') as HTMLStyleElement;
     let darkThemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const themeOptions: { value: string; label: string }[] = [];
+
     if (window.matchMedia) {
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
             darkThemePreferred = event.matches;
             const storedTheme = window.sessionStorage.getItem(themeStorageKey);
             if (darkThemePreferred && storedTheme === lightThemeKey) {
-                themeSelect.value = {
+                const option = themeOptions?.find((t) => t.value === darkThemeKey) || {
                     value: darkThemeKey,
                     label: `${titleCase(darkThemeKey)} Theme`
                 };
+                themeSelect.value = option;
                 themeNativeSelect.value = darkThemeKey;
                 window.sessionStorage.setItem(themeStorageKey, darkThemeKey);
                 changeTheme(event, darkThemeKey);
             } else if (!darkThemePreferred && storedTheme === darkThemeKey) {
-                themeSelect.value = {
+                const option = themeOptions?.find((t) => t.value === lightThemeKey) || {
                     value: lightThemeKey,
                     label: `${titleCase(lightThemeKey)} Theme`
                 };
+                themeSelect.value = option;
                 themeNativeSelect.value = lightThemeKey;
                 window.sessionStorage.setItem(themeStorageKey, lightThemeKey);
                 changeTheme(event, lightThemeKey);
             }
         });
     }
-
-    const themeOptions: { value: string; label: string }[] = [];
 
     function addOption(key: string) {
         const option = {
@@ -616,9 +623,9 @@ async function setupThemes() {
         return option;
     }
 
-    function _checkCloseModal(e: any) {
+    function _checkCloseModal(e: Event) {
         const containerElement = themeModal.querySelector(`div.modal-container`);
-        if (!e.path.includes(containerElement)) {
+        if (!e.composedPath().includes(containerElement)) {
             document.body.removeChild(themeModal);
             themeModal = document.createElement('div');
             document.body.appendChild(themeModal);
@@ -731,7 +738,11 @@ async function setupThemes() {
     themeNativeSelect.addEventListener('change', (e) => {
         const value = (e.target as HTMLSelectElement).value as any;
         window.sessionStorage.setItem(themeStorageKey, value);
-        themeSelect.value = value;
+        const option = themeOptions.find((t) => t.value === value) || {
+            value: value,
+            label: `${titleCase(value)} Theme`
+        };
+        themeSelect.value = option;
         changeTheme(e, value);
     });
 }
@@ -741,6 +752,9 @@ async function setupEleventy() {
     const windowAny = window as any;
     windowAny.copyToClipboard = copyToClipboard;
     windowAny.openTab = openTab;
+
+    // Versions
+    setupVersions();
 
     // Links
     setupLinks();
@@ -761,6 +775,58 @@ async function setupEleventy() {
     setupSearch();
 
     await setupThemes();
+}
+
+async function setupVersions() {
+    const versionSelect = document.getElementById('header-version-native-select') as HTMLSelectElement;
+    const versionIndicator = document.getElementById('header-version-indicator') as HTMLDivElement;
+    const basePath = (window as any).ELEVENTY_BASE_PATH ?? '/';
+    const currentVersion = versionIndicator?.textContent?.trim() ?? 'LOCAL';
+    const storedVersionsString = window.sessionStorage.getItem(versionsStorageKey);
+    let storedVersions: string[] = storedVersionsString ? JSON.parse(storedVersionsString) : undefined;
+    if (!storedVersions) {
+        try {
+            const octokit = new Octokit({});
+            const response = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}{?ref}', {
+                owner: 'capitec',
+                repo: 'open-source',
+                path: 'docs/omni-components/versions'
+            });
+            storedVersions = response.data.map((d: any) => d.name);
+            window.sessionStorage.setItem(versionsStorageKey, JSON.stringify(storedVersions));
+            window.localStorage.setItem(versionsStorageKey, JSON.stringify(storedVersions));
+        } catch (error) {
+            const storedVersionsString = window.localStorage.getItem(versionsStorageKey);
+            storedVersions = storedVersionsString ? JSON.parse(storedVersionsString) : ['next', 'beta', 'alpha'];
+        }
+    }
+
+    storedVersions.unshift(latestVersionName);
+    if (!storedVersions.includes(currentVersion)) {
+        storedVersions.splice(1, 0, currentVersion);
+    }
+    storedVersions.forEach((v) => {
+        const nativeOption = document.createElement('option');
+        nativeOption.label = v;
+        nativeOption.value = v;
+        if (v === currentVersion) {
+            nativeOption.selected = true;
+        }
+        versionSelect.add(nativeOption);
+    });
+
+    versionSelect.addEventListener('change', (e) => {
+        const value = (e.target as HTMLSelectElement).value;
+        let path = window.location.href;
+
+        path = path.replace(
+            `${window.origin}${basePath}`,
+            value === latestVersionName ? docsHostedBasePath : `${docsHostedBasePath}versions/${value}/`
+        );
+        if (path !== window.location.href) {
+            window.location.href = path;
+        }
+    });
 }
 
 function setupLinks() {

@@ -16,5 +16,26 @@
 			"source.organizeImports": false
 		},
 		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"files.exclude": {
+		"button": true,
+		"check": true,
+		"chip": true,
+		"color-field": true,
+		"core": true,
+		"currency-field": true,
+		"hyperlink": true,
+		"icon": true,
+		"icons": true,
+		"label": true,
+		"number-field": true,
+		"password-field": true,
+		"radio": true,
+		"render-element": true,
+		"search-field": true,
+		"select": true,
+		"text-field": true,
+		"utils": true,
+		"switch": true
 	}
 }

@@ -79,16 +79,14 @@ When adding or editing components, please note the following key directories:
 │   │   ├── index.ts
 │   │   ├── README.md
 │   ├── ...
-├── themes
 ├── ...
 ```
 
-* `src` - Contains all components in a flat structure, each named afer a component, e.g. `button`. Contents:
+* `src` - Contains all components in a flat structure, each named after a component, e.g. `button`. Contents:
   * `Button.stories.ts` - The stories for the component.
   * `Button.ts` - The component. *(NOTE: There might be multiple, depending on complexity and composition)*
   * `index.ts` - The directory-level index, containing one or more component exports.
   * `README.md` - The README for the component *(NOTE: Generated when Pull Request is merged)*.
-* `themes` - Basic built-in themes, viewable within the hosted documentation.
 
 ### Naming Conventions
 
@@ -117,6 +115,7 @@ Here's a *non-exhaustive* list of requirements that are key to contributing to t
 * **Do** implement "mobile first" templates, leveraging [Responsive Design](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design) layout and styling principles. 📱
 * **Do** utilize [LitElement's](https://lit.dev/) [decorators](https://lit.dev/docs/components/decorators/), required for element and property names.
 * **Do** ensure sufficient [JSDoc](https://jsdoc.app/) as well as general code comments are added.
+* **Do** add an `HTMLElementTagNameMap` entry as documented [here](https://lit.dev/docs/tools/publishing/#publish-typescript-typings).
 * **Do** use and extend existing shared CSS component and theme custom properties. (See [`src/core/OmniElement.ts`](https://github.com/capitec/omni-components/blob/develop/src/core/OmniElement.ts))
 * **Do** set suitable CSS custom property defaults, **avoid** hard-coding CSS property values directly within components, unless deemed required.
 * **Do** adhere to and leverage existing DOM standards when making use of [`<input>`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement) element.
@@ -126,8 +125,9 @@ Here's a *non-exhaustive* list of requirements that are key to contributing to t
 
 #### Stories
 * **Do** use [Component Story Format (CSF) 3](https://github.com/capitec/omni-components/blob/develop/src/utils/ComponentStoryFormat.ts).
-* **Do** implement a [play function](https://github.com/capitec/omni-components/blob/develop/src/utils/PlayFunction.ts) per story to test story-specific component state and event behaviors. 🛝
-  * **Do** set the `data-testid` within every story template.
+* **Do** implement a [play function](https://github.com/capitec/omni-components/blob/develop/src/utils/PlayFunction.ts) per story to test story-specific component state and event behaviors.
+* **Do** set the `data-testid` within every story template.
+* **Do** ensure that stories are authored to be both dark and light theme friendly (test via the hosted documentation).
 
 #### Themes
 * **Do** maintain each built-in theme, by ensuring all `--omni-theme-*` CSS custom properties are implemented.
@@ -143,5 +143,8 @@ Here's a *non-exhaustive* list of requirements that are key to contributing to t
 
 ### Checks
 
+* Code scanning passes.
+* Lint validation passes.
+* Format validation passes.
 * All story play function tests pass.
 <!--- * All story play function tests has at least 80% code coverage of components. --->

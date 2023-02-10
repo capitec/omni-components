@@ -33,12 +33,11 @@ export const Interactive: ComponentStoryFormat<Args> = {
       .data="${args.data}"
       hint="${ifNotEmpty(args.hint)}"
       error="${ifNotEmpty(args.error)}"
-      ?disabled="${args.disabled}">
-      ${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}
-      ${args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}` : nothing}
-      ${args.hide ? html`${'\r\n'}${unsafeHTML(assignToSlot('hide', args.hide))}` : nothing}
-      ${args.show ? html`${'\r\n'}${unsafeHTML(assignToSlot('show', args.show))}` : nothing}</omni-password-field
-    >
+      ?disabled="${args.disabled}">${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${
+        args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}` : nothing
+    }${args.hide ? html`${'\r\n'}${unsafeHTML(assignToSlot('hide', args.hide))}` : nothing}${
+        args.show ? html`${'\r\n'}${unsafeHTML(assignToSlot('show', args.show))}` : nothing
+    }</omni-password-field>
   `,
     name: 'Interactive',
     args: {
@@ -109,11 +108,12 @@ export const Disabled = DisabledStory<PasswordField, BaseArgs>('omni-password-fi
 export const Custom_Icon_Slot: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
     <omni-password-field data-testid="test-password-field" label="${ifNotEmpty(args.label)}" ?disabled="${args.disabled}">
-      <omni-lock-open-icon slot="show"></omni-lock-open-icon>
-      <omni-lock-closed-icon slot="hide"></omni-lock-closed-icon>
+      <omni-lock-open-icon style="fill: orange;" slot="show"></omni-lock-open-icon>
+      <omni-lock-closed-icon style="fill: lightgreen;" slot="hide"></omni-lock-closed-icon>
     </omni-password-field>
   `,
     name: 'Custom Icon Slot',
+    description: 'Set html content to display as the visibility indicators of the field.',
     args: {
         label: 'Custom Icon Slot'
     },

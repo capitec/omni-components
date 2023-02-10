@@ -32,3 +32,9 @@ export class ClearIcon extends DOMTreeElement {
         `;
     }
 }
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'omni-clear-icon': ClearIcon;
+    }
+}

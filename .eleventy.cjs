@@ -1,5 +1,5 @@
 const deasync = require('deasync');
-const eleventyConfig = requireESM('./scripts/eleventy-config.mjs');
+const eleventyConfig = requireESM('./.tooling/scripts/eleventy-config.mjs');
 
 function requireESM(module) {
     let mod;

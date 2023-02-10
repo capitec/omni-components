@@ -49,18 +49,22 @@ export class CodeEditor extends LitElement {
           pointer-events: none;
         }
 
-       /*.cm-editor {
+       .cm-editor {
           background: var(--code-editor-background-color);
-          font-size: 16px;
+          /*font-size: 16px;
           padding: 12px;
           max-height: var(--code-editor-max-height);
           max-width: var(--code-editor-max-width);
           min-height: var(--code-editor-min-height);
-          min-width: var(--code-editor-min-width);
-        }*/
+          min-width: var(--code-editor-min-width);*/
+        }
 
         .cm-content {
           white-space: pre-wrap !important;
+        }
+
+        .cm-activeLine {
+            
         }
 
         .copy-code-wrap {

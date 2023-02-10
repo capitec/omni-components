@@ -1,5 +1,5 @@
 import { within } from '@testing-library/dom';
-import userEvent, { PointerEventsCheckLevel } from '@testing-library/user-event';
+import userEvent from '@testing-library/user-event';
 import * as jest from 'jest-mock';
 import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
@@ -79,6 +79,7 @@ export const Interactive = {
 export const Type = {
     render: (args: Args) => html` <omni-button type="${args.type}" label="${args.label}" data-testid="test-button"></omni-button> `,
     name: 'Type',
+    description: 'Set the type of button to render using different combinations of primary and alternate colours.',
     args: {
         type: 'primary',
         label: 'Click'
@@ -94,6 +95,7 @@ export const Type = {
 export const Label = {
     render: (args: Args) => html` <omni-button label="${args.label}" data-testid="test-button"></omni-button> `,
     name: 'Label',
+    description: 'Set a text value to display within.',
     args: {
         label: 'Click'
     },
@@ -112,6 +114,7 @@ export const Slot = {
     </omni-button>
   `,
     name: 'Slot',
+    description: 'Set html content to display within.',
     args: {},
     play: async (context) => {
         const button = within(context.canvasElement).getByTestId<Button>('test-button');
@@ -124,6 +127,7 @@ export const Slot = {
 export const Disabled = {
     render: (args: Args) => html` <omni-button disabled label="${args.label}" data-testid="test-button"></omni-button> `,
     name: 'Disabled',
+    description: 'Prevent interaction (pointer events).',
     args: {
         label: 'Disabled'
     },
@@ -135,6 +139,7 @@ export const Disabled = {
         await expect(foundDisabledClass).toBeTruthy(); // Test for not clickable.
 
         const click = jest.fn();
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         button.addEventListener('click', (e) => {
             click();
         });

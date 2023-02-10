@@ -1,6 +1,6 @@
 import { readFile } from 'fs/promises';
 import { globbySync } from 'globby';
-import { loadCustomElementsModuleByFileFor } from '../../dist/utils/StoryUtils.js';
+import { loadCustomElementsModuleByFileFor } from '../../../dist/utils/StoryUtils.js';
 
 export async function components() {
     const stories = globbySync('./dist/**/*.stories.js');

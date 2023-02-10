@@ -27,3 +27,9 @@ export class LockOpenIcon extends DOMTreeElement {
     </svg>`;
     }
 }
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'omni-lock-open-icon': LockOpenIcon;
+    }
+}
