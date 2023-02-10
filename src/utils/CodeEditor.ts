@@ -139,7 +139,9 @@ export class CodeEditor extends LitElement {
             this.code = await getCode();
         }
         if (!this.disabled && this.editor && (this.code || this.slotElement!.assignedNodes().length > 0)) {
-            const source = this.code ? await this.transformSource(await this.code) : await this.transformSource(this._readCode(this.slotElement as HTMLSlotElement));
+            const source = this.code
+                ? await this.transformSource(await this.code)
+                : await this.transformSource(this._readCode(this.slotElement as HTMLSlotElement));
             this.editor.dispatch({
                 changes: {
                     from: 0,
@@ -197,7 +199,9 @@ export class CodeEditor extends LitElement {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     protected override async updated(): Promise<void> {
         if (!this.editor && this.codeParent && (this.code || this.slotElement!.assignedNodes().length > 0)) {
-            let source = this.code ? await this.transformSource(await this.code) : await this.transformSource(this._readCode(this.slotElement as HTMLSlotElement));
+            let source = this.code
+                ? await this.transformSource(await this.code)
+                : await this.transformSource(this._readCode(this.slotElement as HTMLSlotElement));
             this._clearElements(this.codeParent);
             this.editor = new EditorView({
                 doc: source,
@@ -335,7 +339,9 @@ export class CodeEditor extends LitElement {
             return;
         }
 
-        const source = this.code ? await this.transformSource(await this.code) : await this.transformSource(this._readCode(this.slotElement as HTMLSlotElement));
+        const source = this.code
+            ? await this.transformSource(await this.code)
+            : await this.transformSource(this._readCode(this.slotElement as HTMLSlotElement));
         if (!this.disabled && source !== this.editor.state.doc.toString()) {
             this.editor.dispatch({
                 changes: {

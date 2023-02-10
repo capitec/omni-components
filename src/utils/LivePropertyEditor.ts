@@ -251,7 +251,9 @@ export class LivePropertyEditor extends OmniElement {
                 class="docs-select"
                 ?disabled=${this.disabled}
                 ?checked="${
-                    this.data ? this.data.args![attribute.name] ?? this.data.args![attribute.fieldName ?? attribute.name] : attribute.default === 'true'
+                    this.data
+                        ? this.data.args![attribute.name] ?? this.data.args![attribute.fieldName ?? attribute.name]
+                        : attribute.default === 'true'
                 }"
                 @value-change="${(e: CustomEvent) => {
                     this._propertyChanged({

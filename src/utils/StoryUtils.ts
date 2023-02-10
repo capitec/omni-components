@@ -61,7 +61,8 @@ function loadCssProperties(
                 module.exports?.find(
                     (e) =>
                         e.name ===
-                        (superModule.declarations?.find((sd: Declaration) => (sd as ClassDeclaration).superclass) as ClassDeclaration)?.superclass?.name
+                        (superModule.declarations?.find((sd: Declaration) => (sd as ClassDeclaration).superclass) as ClassDeclaration)?.superclass
+                            ?.name
                 )
             );
         } else {

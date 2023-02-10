@@ -466,7 +466,7 @@ export class Select extends OmniFormElement {
         if (typeof this.items === 'function') {
             items = await this.items();
         } else {
-            items = await this.items as SelectTypes;
+            items = (await this.items) as SelectTypes;
         }
 
         if (Array.isArray(items)) {
@@ -483,7 +483,9 @@ export class Select extends OmniFormElement {
     // Render the each option in the item container
     _renderOption(item: Record<string, unknown> | string) {
         return html` <div
-            class="item ${this.value === (typeof item === 'string' ? item : item[this.displayField as string]) || this.value === item ? `selected` : ``}"
+            class="item ${
+                this.value === (typeof item === 'string' ? item : item[this.displayField as string]) || this.value === item ? `selected` : ``
+            }"
             @click="${() => this._onItemClick(item)}">
             ${
                 this.renderItem

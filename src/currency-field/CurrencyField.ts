@@ -243,7 +243,10 @@ export class CurrencyField extends OmniFormElement {
         }
 
         // If the pointer is positioned after a currency separator remove the separator and the preceding number.
-        if (input.value.charAt(caretPosition as number - 1) === this.thousandsSeparator && (e.key.toLowerCase() === 'backspace' || e.keyCode === 229)) {
+        if (
+            input.value.charAt((caretPosition as number) - 1) === this.thousandsSeparator &&
+            (e.key.toLowerCase() === 'backspace' || e.keyCode === 229)
+        ) {
             // Count of the thousand separators of the component.
             valueFormatterCount = input.value.match(new RegExp(this.thousandsSeparator, 'g'))!.length;
 
@@ -282,7 +285,8 @@ export class CurrencyField extends OmniFormElement {
 
                         await this._formatToCurrency(
                             this._parseAmount(
-                                input.value.substring(0, caretPosition! - 1) + input.value.substring(input.selectionEnd as number, input.value.length + 1)
+                                input.value.substring(0, caretPosition! - 1) +
+                                    input.value.substring(input.selectionEnd as number, input.value.length + 1)
                             ) as number
                         ).then((res) => {
                             this._inputElement!.value = res;
@@ -403,7 +407,7 @@ export class CurrencyField extends OmniFormElement {
         const postValueLength = this._inputElement?.value.length;
 
         // Position the caret in the correct position.
-        if (postValueLength as number > preValueLength) {
+        if ((postValueLength as number) > preValueLength) {
             this._inputElement!.setSelectionRange(caretPosition! + 1, caretPosition! + 1);
         } else if (preValueLength > postValueLength!) {
             this._inputElement!.setSelectionRange(caretPosition! - 1, caretPosition! - 1);
