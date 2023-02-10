@@ -16,7 +16,7 @@ Label component that renders styled text.
 | Property   | Attribute  | Modifiers | Type                                             | Default   | Description                                      |
 |------------|------------|-----------|--------------------------------------------------|-----------|--------------------------------------------------|
 | `dir`      |            |           | `string`                                         |           |                                                  |
-| `label`    | `label`    |           | `string`                                         |           | Text label.                                      |
+| `label`    | `label`    |           | `string \| undefined`                            |           | Text label.                                      |
 | `lang`     |            |           | `string`                                         |           |                                                  |
 | `override` | `override` |           |                                                  |           | Used to set the base direction of text for display |
 | `styles`   |            | readonly  | `CSSResultGroup[]`                               |           |                                                  |

@@ -16,13 +16,13 @@ Control to indicate an action to be executed. Typically used for navigational pu
 | Property   | Attribute  | Modifiers | Type                                         | Default | Description                                      |
 |------------|------------|-----------|----------------------------------------------|---------|--------------------------------------------------|
 | `dir`      |            |           | `string`                                     |         |                                                  |
-| `disabled` | `disabled` |           | `boolean`                                    |         | Indicator if the component is disabled.          |
-| `href`     | `href`     |           | `string`                                     |         | URL to link to.                                  |
-| `inline`   | `inline`   |           | `boolean`                                    |         | Indicator if the link is used as part of a sentence. |
-| `label`    | `label`    |           | `string`                                     |         | Text label.                                      |
+| `disabled` | `disabled` |           | `boolean \| undefined`                       |         | Indicator if the component is disabled.          |
+| `href`     | `href`     |           | `string \| undefined`                        |         | URL to link to.                                  |
+| `inline`   | `inline`   |           | `boolean \| undefined`                       |         | Indicator if the link is used as part of a sentence. |
+| `label`    | `label`    |           | `string \| undefined`                        |         | Text label.                                      |
 | `lang`     |            |           | `string`                                     |         |                                                  |
 | `override` | `override` |           |                                              |         | Used to set the base direction of text for display |
-| `size`     | `size`     |           | `string`                                     |         | Size of the Hyperlink text.                      |
+| `size`     | `size`     |           | `string \| undefined`                        |         | Size of the Hyperlink text.                      |
 | `styles`   |            | readonly  | `CSSResultGroup[]`                           |         |                                                  |
 | `target`   | `target`   |           | `"_self" \| "_blank" \| "_parent" \| "_top"` | "_self" | Where to load the URL specified in "href"        |
 

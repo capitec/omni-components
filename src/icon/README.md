@@ -23,7 +23,7 @@ Component that displays an icon.
 | Property   | Attribute  | Modifiers | Type                                             | Default   | Description                                      |
 |------------|------------|-----------|--------------------------------------------------|-----------|--------------------------------------------------|
 | `dir`      |            |           | `string`                                         |           |                                                  |
-| `icon`     | `icon`     |           | `string`                                         |           | Name of the icon to display. Takes preference over the slotted icon. |
+| `icon`     | `icon`     |           | `string \| undefined`                            |           | Name of the icon to display. Takes preference over the slotted icon. |
 | `lang`     |            |           | `string`                                         |           |                                                  |
 | `override` | `override` |           |                                                  |           | Used to set the base direction of text for display |
 | `size`     | `size`     |           | `"default" \| "extra-small" \| "small" \| "medium" \| "large"` | "default" | Size to display the icon at                      |

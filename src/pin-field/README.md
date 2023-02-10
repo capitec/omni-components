@@ -17,18 +17,18 @@ Pin input control to enter masked numeric values.
 
 ## Properties
 
-| Property   | Attribute  | Modifiers | Type                                          | Default | Description                                      |
-|------------|------------|-----------|-----------------------------------------------|---------|--------------------------------------------------|
-| `data`     | `data`     |           | `object \| undefined`                         |         | Data associated with the component.              |
-| `dir`      |            |           | `string`                                      |         |                                                  |
-| `disabled` | `disabled` |           | `boolean`                                     | false   | Indicator if the component should be disabled.   |
-| `error`    | `error`    |           | `string \| undefined`                         |         | Error message guiding a user to correct a mistake. |
-| `hint`     | `hint`     |           | `string \| undefined`                         |         | Hint message to assist the user.                 |
-| `label`    | `label`    |           | `string \| undefined`                         |         | Text label.                                      |
-| `lang`     |            |           | `string`                                      |         |                                                  |
-| `override` | `override` |           |                                               |         | Used to set the base direction of text for display |
-| `styles`   |            | readonly  | `CSSResultGroup[]`                            |         |                                                  |
-| `value`    | `value`    |           | `string \| number \| Record<string, unknown>` | null    | Value entered into the form component.           |
+| Property   | Attribute  | Modifiers | Type                                             | Default | Description                                      |
+|------------|------------|-----------|--------------------------------------------------|---------|--------------------------------------------------|
+| `data`     | `data`     |           | `object \| undefined`                            |         | Data associated with the component.              |
+| `dir`      |            |           | `string`                                         |         |                                                  |
+| `disabled` | `disabled` |           | `boolean`                                        | false   | Indicator if the component should be disabled.   |
+| `error`    | `error`    |           | `string \| undefined`                            |         | Error message guiding a user to correct a mistake. |
+| `hint`     | `hint`     |           | `string \| undefined`                            |         | Hint message to assist the user.                 |
+| `label`    | `label`    |           | `string \| undefined`                            |         | Text label.                                      |
+| `lang`     |            |           | `string`                                         |         |                                                  |
+| `override` | `override` |           |                                                  |         | Used to set the base direction of text for display |
+| `styles`   |            | readonly  | `CSSResultGroup[]`                               |         |                                                  |
+| `value`    | `value`    |           | `string \| number \| Record<string, unknown> \| undefined` | null    | Value entered into the form component.           |
 
 ## Methods
 
