@@ -4,12 +4,14 @@ import { test, expect } from '@playwright/test';
 import { globbySync } from 'globby';
 import jsdom from 'jsdom';
 import XMLHttpRequest   from 'xhr2';
+import fetch from 'node-fetch'; 
 
 global.window = global.window || new jsdom.JSDOM().window;
 global.document = window.document;
 global.Document = window.Document;
 global.HTMLElement = window.HTMLElement;
 global.XMLHttpRequest = XMLHttpRequest;
+global.fetch = global.window.fetch = fetch;
 
 Object.keys(window).forEach((key) => {
     if (!global[key]) {

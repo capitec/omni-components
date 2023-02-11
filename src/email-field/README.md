@@ -1,17 +1,14 @@
-# omni-color-field
+# omni-email-field
 
-Color input control.
+Email input control, used in forms for input validation and to display correct virtual keyboard on mobile.
 
 ## Example
 
 ```html
-<omni-color-field
+```html
+<omni-email-field
   label="Enter a value"
-  value="#F6B73C"
-  hint="Required"
-  error="Field level error message"
-  disabled>
-</omni-color-field>
+  value="JohnDoe
 ```
 
 ## Properties
@@ -34,7 +31,6 @@ Color input control.
 | Method          | Type                    |
 |-----------------|-------------------------|
 | `renderContent` | `(): TemplateResult<1>` |
-| `renderControl` | `(): TemplateResult<1>` |
 
 ## Slots
 
@@ -48,21 +44,17 @@ Color input control.
 
 | Property                                         | Description                                    |
 |--------------------------------------------------|------------------------------------------------|
-| `--omni-color-field-font-color`                  | Color field font color.                        |
-| `--omni-color-field-font-family`                 | Color field font family.                       |
-| `--omni-color-field-font-size`                   | Color field font size.                         |
-| `--omni-color-field-font-weight`                 | Color field font weight.                       |
-| `--omni-color-field-height`                      | Color field height.                            |
-| `--omni-color-field-min-height`                  | Color field min height.                        |
-| `--omni-color-field-min-width`                   | Color field min width.                         |
-| `--omni-color-field-padding`                     | Color field width.                             |
-| `--omni-color-field-picker-height`               | Color field picker height.                     |
-| `--omni-color-field-picker-width`                | Color field picker width.                      |
-| `--omni-color-field-text-align`                  | Color field text align.                        |
-| `--omni-color-field-text-select`                 | Color field text selection.                    |
 | `--omni-container-font-family`                   | Container font family.                         |
 | `--omni-container-height`                        | Container height.                              |
 | `--omni-container-width`                         | Container width.                               |
+| `--omni-email-field-font-color`                  | Email field font color.                        |
+| `--omni-email-field-font-family`                 | Email field font family.                       |
+| `--omni-email-field-font-size`                   | Email field font size.                         |
+| `--omni-email-field-font-weight`                 | Email field font weight.                       |
+| `--omni-email-field-height`                      | Email field height.                            |
+| `--omni-email-field-padding`                     | Email field padding.                           |
+| `--omni-email-field-text-align`                  | Email field text align.                        |
+| `--omni-email-field-width`                       | Email field width.                             |
 | `--omni-form-border-bottom`                      | Form border bottom.                            |
 | `--omni-form-border-color`                       | Form border color.                             |
 | `--omni-form-border-left`                        | Form border left.                              |

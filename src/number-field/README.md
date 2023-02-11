@@ -8,7 +8,6 @@ Input control to enter a single line of numbers.
 <omni-number-field
   label="Enter a value"
   value=12345
-  data="{'id': 12345, 'name': 'Test'}"
   hint="Required"
   error="Field level error message"
   disabled>
@@ -17,18 +16,18 @@ Input control to enter a single line of numbers.
 
 ## Properties
 
-| Property   | Attribute  | Modifiers | Type                                          | Default | Description                                      |
-|------------|------------|-----------|-----------------------------------------------|---------|--------------------------------------------------|
-| `data`     | `data`     |           | `object`                                      |         | Data associated with the component.              |
-| `dir`      |            |           | `string`                                      |         |                                                  |
-| `disabled` | `disabled` |           | `boolean`                                     | false   | Indicator if the component should be disabled.   |
-| `error`    | `error`    |           | `string`                                      |         | Error message guiding a user to correct a mistake. |
-| `hint`     | `hint`     |           | `string`                                      |         | Hint message to assist the user.                 |
-| `label`    | `label`    |           | `string`                                      |         | Text label.                                      |
-| `lang`     |            |           | `string`                                      |         |                                                  |
-| `override` | `override` |           |                                               |         | Used to set the base direction of text for display |
-| `styles`   |            | readonly  | `CSSResultGroup[]`                            |         |                                                  |
-| `value`    | `value`    |           | `string \| number \| Record<string, unknown>` | null    | Value entered into the form component.           |
+| Property   | Attribute  | Modifiers | Type                                             | Default | Description                                      |
+|------------|------------|-----------|--------------------------------------------------|---------|--------------------------------------------------|
+| `data`     | `data`     |           | `object \| undefined`                            |         | Data associated with the component.              |
+| `dir`      |            |           | `string`                                         |         |                                                  |
+| `disabled` | `disabled` |           | `boolean`                                        | false   | Indicator if the component should be disabled.   |
+| `error`    | `error`    |           | `string \| undefined`                            |         | Error message guiding a user to correct a mistake. |
+| `hint`     | `hint`     |           | `string \| undefined`                            |         | Hint message to assist the user.                 |
+| `label`    | `label`    |           | `string \| undefined`                            |         | Text label.                                      |
+| `lang`     |            |           | `string`                                         |         |                                                  |
+| `override` | `override` |           |                                                  |         | Used to set the base direction of text for display |
+| `styles`   |            | readonly  | `CSSResultGroup[]`                               |         |                                                  |
+| `value`    | `value`    |           | `string \| number \| Record<string, unknown> \| undefined` | null    | Value entered into the form component.           |
 
 ## Methods
 
@@ -48,6 +47,9 @@ Input control to enter a single line of numbers.
 
 | Property                                         | Description                                    |
 |--------------------------------------------------|------------------------------------------------|
+| `--omni-container-font-family`                   | Container font family.                         |
+| `--omni-container-height`                        | Container height.                              |
+| `--omni-container-width`                         | Container width.                               |
 | `--omni-form-border-bottom`                      | Form border bottom.                            |
 | `--omni-form-border-color`                       | Form border color.                             |
 | `--omni-form-border-left`                        | Form border left.                              |
@@ -56,15 +58,13 @@ Input control to enter a single line of numbers.
 | `--omni-form-border-style`                       | Form border style.                             |
 | `--omni-form-border-top`                         | Form border top.                               |
 | `--omni-form-border-width`                       | Form border width.                             |
-| `--omni-form-container-font-family`              | Form container font family.                    |
-| `--omni-form-container-width`                    | Form container width.                          |
 | `--omni-form-disabled-background-color`          | Form disabled background color.                |
 | `--omni-form-disabled-border-color`              | Form disabled border color.                    |
 | `--omni-form-disabled-focussed-label-background-color` | Form disabled label focussed background color. |
 | `--omni-form-disabled-hover-color`               | Form disabled hover color.                     |
 | `--omni-form-error-border-color`                 | Form error border color.                       |
 | `--omni-form-error-hover-color`                  | Form error hover color.                        |
-| `--omni-form-error-label-border-width`           |                                                |
+| `--omni-form-error-label-border-width`           | Form error label border width.                 |
 | `--omni-form-error-label-color`                  | Form error label color.                        |
 | `--omni-form-error-label-font-color`             | Form error label font color.                   |
 | `--omni-form-error-label-font-family`            | Form error label font family.                  |
@@ -72,10 +72,14 @@ Input control to enter a single line of numbers.
 | `--omni-form-error-label-font-weight`            | Form error label font weight.                  |
 | `--omni-form-error-label-padding-left`           | Form error label left padding.                 |
 | `--omni-form-error-label-padding-top`            | Form error label top padding.                  |
-| `--omni-form-field-background-color`             | Form layout background color.                  |
 | `--omni-form-focussed-border-color`              | Form focussed border color.                    |
 | `--omni-form-focussed-border-width`              | Form focussed border width.                    |
+| `--omni-form-focussed-error-label-color`         | Form focussed error label color.               |
+| `--omni-form-focussed-label-background-color`    | Form focussed label background color.          |
 | `--omni-form-focussed-label-color`               | Form focussed label color.                     |
+| `--omni-form-focussed-label-margin-left`         | Form focussed label left margin.               |
+| `--omni-form-focussed-label-top`                 | Form focussed label top.                       |
+| `--omni-form-focussed-label-transform-scale`     | Form focussed label transform scale.           |
 | `--omni-form-hint-label-border-width`            | Form hint label border width.                  |
 | `--omni-form-hint-label-font-color`              | Form hint label font color.                    |
 | `--omni-form-hint-label-font-family`             | Form hint label font family.                   |
@@ -88,16 +92,20 @@ Input control to enter a single line of numbers.
 | `--omni-form-label-disabled-color`               | Form label disabled color.                     |
 | `--omni-form-label-font-size`                    | Form label font size.                          |
 | `--omni-form-label-font-weight`                  | Form label font weight.                        |
-| `--omni-form-label-left`                         | Form label left margin.                        |
+| `--omni-form-label-margin-left`                  | Form label margin left.                        |
 | `--omni-form-label-text-align`                   | Form label text align.                         |
-| `--omni-form-label-transform-origin`             | Form label text align                          |
+| `--omni-form-label-transform-origin`             | Form label text align.                         |
 | `--omni-form-label-z-index`                      | Form label z-index.                            |
+| `--omni-form-layout-background-color`            | Layout background color.                       |
+| `--omni-form-layout-border-radius`               | Layout border radius.                          |
+| `--omni-form-layout-height`                      | Layout height.                                 |
+| `--omni-form-layout-width`                       | Layout width.                                  |
 | `--omni-number-field-font-color`                 | Number field font color.                       |
 | `--omni-number-field-font-family`                | Number field font family.                      |
 | `--omni-number-field-font-size`                  | Number field font size.                        |
 | `--omni-number-field-font-weight`                | Number field font weight.                      |
 | `--omni-number-field-height`                     | Number field height.                           |
-| `--omni-number-field-padding`                    | Number field width.                            |
+| `--omni-number-field-padding`                    | Number field padding.                          |
 | `--omni-number-field-text-align`                 | Number field text align.                       |
 | `--omni-number-field-width`                      | Number field width.                            |
 | `--omni-theme-accent-active-color`               | Theme accent active color.                     |

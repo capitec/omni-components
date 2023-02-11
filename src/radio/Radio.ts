@@ -76,40 +76,40 @@ export class Radio extends OmniElement {
      * Text label.
      * @attr
      */
-    @property({ type: String, reflect: true }) label: string;
+    @property({ type: String, reflect: true }) label?: string;
 
     /**
      * Data associated with the component.
      * @attr
      */
-    @property({ type: Object, reflect: true }) data: object;
+    @property({ type: Object, reflect: true }) data?: object;
 
     /**
      * A hint message to assist the user.
      * @attr
      */
-    @property({ type: String, reflect: true }) hint: string;
+    @property({ type: String, reflect: true }) hint?: string;
 
     /**
      * An error message to guide users to correct a mistake.
      * @attr
      */
-    @property({ type: String, reflect: true }) error: string;
+    @property({ type: String, reflect: true }) error?: string;
 
     /**
      * Indicator if the component is checked or not.
      * @attr
      */
-    @property({ type: Boolean, reflect: true }) checked: boolean;
+    @property({ type: Boolean, reflect: true }) checked?: boolean;
 
     /**
      * Indicator if the component is disabled.
      * @attr
      */
-    @property({ type: Boolean, reflect: true }) disabled: boolean;
+    @property({ type: Boolean, reflect: true }) disabled?: boolean;
 
     override focus() {
-        this.shadowRoot.getElementById('content').focus();
+        this.shadowRoot?.getElementById('content')?.focus();
     }
 
     _click(event: MouseEvent): void {
@@ -286,8 +286,8 @@ export class Radio extends OmniElement {
       <div
         class=${classMap({
             container: true,
-            checked: this.checked,
-            disabled: this.disabled
+            checked: this.checked ?? false,
+            disabled: this.disabled ?? false
         })}>
         <div id="content" tabindex="${this.disabled ? '' : 0}" @click="${this._click}" @keydown="${this._keyDown}">
           ${this.checked ? html`<div class="indicator"></div>` : nothing}

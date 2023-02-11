@@ -23,7 +23,6 @@ import '../icons/More.icon.js';
  * <omni-select
  *   label="Enter a value"
  *   value="Hello World"
- *   data="{'id': 12345, 'name': 'Test'}"
  *   hint="Required"
  *   error="Field level error message"
  *   items={'item1','item2','item3','item4'}
@@ -40,8 +39,9 @@ import '../icons/More.icon.js';
  * @cssprop --omni-select-field-font-family - Select component input field font family.
  * @cssprop --omni-select-field-font-size - Select component input field font size.
  * @cssprop --omni-select-field-font-weight - Select component input field font weight.
- * @cssprop --omni-select-field-height - Select component input field height
  * @cssprop --omni-select-field-padding - Select component input field padding.
+ * @cssprop --omni-select-field-height - Select component input field height.
+ * @cssprop --omni-select-field-width - Select component input field width.
  *
  * @cssprop --omni-select-control-margin-right - Select control right margin.
  * @cssprop --omni-select-control-margin-left - Select control left margin.
@@ -101,20 +101,20 @@ import '../icons/More.icon.js';
 @customElement('omni-select')
 export class Select extends OmniFormElement {
     @query('#select')
-    private _selectElement: HTMLInputElement;
-    private _itemsContainer: HTMLDivElement;
+    private _selectElement?: HTMLInputElement;
+    private _itemsContainer?: HTMLDivElement;
 
     /**
      * Selectable items of the select component.
      * @attr
      */
-    @property({ type: Array, reflect: true }) items: SelectItems | (() => SelectItems);
+    @property({ type: Array, reflect: true }) items?: SelectItems | (() => SelectItems);
 
     /**
      * Field of the item to display as one of the selectable options.
      * @attr [display-field]
      */
-    @property({ type: String, reflect: true, attribute: 'display-field' }) displayField: string;
+    @property({ type: String, reflect: true, attribute: 'display-field' }) displayField?: string;
 
     /**
      * Id field of the items provided.
@@ -132,7 +132,7 @@ export class Select extends OmniFormElement {
      * Render function for each item.
      * @no_attribute
      */
-    @property({ type: Object, reflect: false }) renderItem: RenderFunction;
+    @property({ type: Object, reflect: false }) renderItem?: RenderFunction;
 
     // Internal state properties
     @state() private _popUp: boolean = false;
@@ -183,7 +183,7 @@ export class Select extends OmniFormElement {
         await this.updateComplete;
 
         //https://stackoverflow.com/a/36084475
-        this._selectElement.dispatchEvent(
+        this._selectElement?.dispatchEvent(
             new Event('change', {
                 bubbles: true,
                 composed: true
@@ -267,12 +267,12 @@ export class Select extends OmniFormElement {
                     font-family: var(--omni-select-field-font-family, var(--omni-font-family));
                     font-size: var(--omni-select-field-font-size, var(--omni-font-size));
                     font-weight: var(--omni-select-field-font-weight, var(--omni-font-weight));
-                    height: var(--omni-select-field-height, 100%);
                     padding: var(--omni-select-field-padding, 10px);
 
                     /* Added to stop the transforming of the label when the input is clicked */
                     pointer-events: none;
-                    width: var(--omni-select-field-width);
+                    height: var(--omni-select-field-height, 100%);
+                    width: var(--omni-select-field-width, 100%);
                 }
 
                 .control {
@@ -466,7 +466,7 @@ export class Select extends OmniFormElement {
         if (typeof this.items === 'function') {
             items = await this.items();
         } else {
-            items = await this.items;
+            items = (await this.items) as SelectTypes;
         }
 
         if (Array.isArray(items)) {
@@ -483,7 +483,9 @@ export class Select extends OmniFormElement {
     // Render the each option in the item container
     _renderOption(item: Record<string, unknown> | string) {
         return html` <div
-            class="item ${this.value === (typeof item === 'string' ? item : item[this.displayField]) || this.value === item ? `selected` : ``}"
+            class="item ${
+                this.value === (typeof item === 'string' ? item : item[this.displayField as string]) || this.value === item ? `selected` : ``
+            }"
             @click="${() => this._onItemClick(item)}">
             ${
                 this.renderItem

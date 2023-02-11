@@ -71,7 +71,7 @@ export const Label: ComponentStoryFormat<Args> = {
     play: async (context) => {
         const canvas = within(context.canvasElement);
         const Hyperlink = canvas.getByTestId('test-hyperlink');
-        await expect(Hyperlink.shadowRoot.querySelector('a')).toHaveTextContent(Label.args.label);
+        await expect(Hyperlink.shadowRoot?.querySelector('a')).toHaveTextContent(Label.args?.label as string);
     }
 };
 
@@ -86,7 +86,7 @@ export const Size: ComponentStoryFormat<Args> = {
     play: async (context) => {
         const canvas = within(context.canvasElement);
         const Hyperlink = canvas.getByTestId('test-hyperlink');
-        await expect(Hyperlink).toHaveAttribute('size', Size.args.size);
+        await expect(Hyperlink).toHaveAttribute('size', Size.args?.size as string);
     }
 };
 
@@ -102,7 +102,7 @@ export const Href: ComponentStoryFormat<Args> = {
     play: async (context) => {
         const canvas = within(context.canvasElement);
         const Hyperlink = canvas.getByTestId('test-hyperlink');
-        await expect(Hyperlink).toHaveAttribute('href', Href.args.href);
+        await expect(Hyperlink).toHaveAttribute('href', Href.args?.href as string);
     }
 };
 

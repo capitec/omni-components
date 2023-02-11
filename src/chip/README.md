@@ -13,15 +13,15 @@ Control that can be used for input, setting attributes, or performing actions.
 
 ## Properties
 
-| Property   | Attribute  | Modifiers | Type               | Description                                      |
-|------------|------------|-----------|--------------------|--------------------------------------------------|
-| `closable` | `closable` |           | `boolean`          | Sets if the chip has a close button.             |
-| `dir`      |            |           | `string`           |                                                  |
-| `disabled` | `disabled` |           | `boolean`          | Indicator if the component is disabled.          |
-| `label`    | `label`    |           | `string`           | Text label.                                      |
-| `lang`     |            |           | `string`           |                                                  |
-| `override` | `override` |           |                    | Used to set the base direction of text for display |
-| `styles`   |            | readonly  | `CSSResultGroup[]` |                                                  |
+| Property   | Attribute  | Modifiers | Type                   | Description                                      |
+|------------|------------|-----------|------------------------|--------------------------------------------------|
+| `closable` | `closable` |           | `boolean \| undefined` | Sets if the chip has a close button.             |
+| `dir`      |            |           | `string`               |                                                  |
+| `disabled` | `disabled` |           | `boolean \| undefined` | Indicator if the component is disabled.          |
+| `label`    | `label`    |           | `string \| undefined`  | Text label.                                      |
+| `lang`     |            |           | `string`               |                                                  |
+| `override` | `override` |           |                        | Used to set the base direction of text for display |
+| `styles`   |            | readonly  | `CSSResultGroup[]`     |                                                  |
 
 ## Events
 

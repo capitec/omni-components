@@ -22,8 +22,7 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
     <omni-color-field
       data-testid="test-color-field"
       label="${ifNotEmpty(args.label)}"
-      .value="${args.value}"
-      .data="${args.data}"
+      value="${args.value}"
       hint="${ifNotEmpty(args.hint)}"
       error="${ifNotEmpty(args.error)}"
       ?disabled="${args.disabled}"
@@ -46,7 +45,7 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
     play: async (context) => {
         const field = within(context.canvasElement).getByTestId<ColorField>('test-color-field');
 
-        const inputField = field.shadowRoot.getElementById('inputField') as HTMLInputElement;
+        const inputField = field.shadowRoot!.getElementById('inputField') as HTMLInputElement;
 
         await expect(inputField.type).toBe('color');
     }
@@ -83,7 +82,7 @@ export const Disabled: ComponentStoryFormat<BaseArgs> = {
         const inputTest = jest.fn();
         input.addEventListener('input', inputTest);
 
-        const inputField = input.shadowRoot.getElementById('inputField') as OmniFormElement;
+        const inputField = input.shadowRoot!.getElementById('inputField') as OmniFormElement;
 
         await userEvent.type(inputField, 'Value Update 3', {
             pointerEventsCheck: 0

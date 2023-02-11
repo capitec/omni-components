@@ -1,17 +1,18 @@
-# omni-color-field
+# omni-pin-field
 
-Color input control.
+Pin input control to enter masked numeric values.
 
 ## Example
 
 ```html
-<omni-color-field
+<omni-pin-field
   label="Enter a value"
-  value="#F6B73C"
+  value=1234
+  data="{'id': 12345, 'name': 'Test'}"
   hint="Required"
   error="Field level error message"
   disabled>
-</omni-color-field>
+</omni-pin-field>
 ```
 
 ## Properties
@@ -40,26 +41,16 @@ Color input control.
 
 | Name                | Description                                      |
 |---------------------|--------------------------------------------------|
+| `hide`              | Replaces the icon for the pin value hidden state. |
 | `loading_indicator` | Used to define content that is displayed while async rendering is awaiting, or when renderLoading() is implicitly called |
 | `prefix`            | Replaces the icon for the prefix slot.           |
+| `show`              | Replaces the icon for the checked value visible state. |
 | `suffix`            | Replaces the icon for the suffix slot.           |
 
 ## CSS Custom Properties
 
 | Property                                         | Description                                    |
 |--------------------------------------------------|------------------------------------------------|
-| `--omni-color-field-font-color`                  | Color field font color.                        |
-| `--omni-color-field-font-family`                 | Color field font family.                       |
-| `--omni-color-field-font-size`                   | Color field font size.                         |
-| `--omni-color-field-font-weight`                 | Color field font weight.                       |
-| `--omni-color-field-height`                      | Color field height.                            |
-| `--omni-color-field-min-height`                  | Color field min height.                        |
-| `--omni-color-field-min-width`                   | Color field min width.                         |
-| `--omni-color-field-padding`                     | Color field width.                             |
-| `--omni-color-field-picker-height`               | Color field picker height.                     |
-| `--omni-color-field-picker-width`                | Color field picker width.                      |
-| `--omni-color-field-text-align`                  | Color field text align.                        |
-| `--omni-color-field-text-select`                 | Color field text selection.                    |
 | `--omni-container-font-family`                   | Container font family.                         |
 | `--omni-container-height`                        | Container height.                              |
 | `--omni-container-width`                         | Container width.                               |
@@ -113,6 +104,21 @@ Color input control.
 | `--omni-form-layout-border-radius`               | Layout border radius.                          |
 | `--omni-form-layout-height`                      | Layout height.                                 |
 | `--omni-form-layout-width`                       | Layout width.                                  |
+| `--omni-pin-field-control-padding-bottom`        | Pin field control padding bottom.              |
+| `--omni-pin-field-control-padding-left`          | Pin field control padding left.                |
+| `--omni-pin-field-control-padding-right`         | Pin field control padding right.               |
+| `--omni-pin-field-control-padding-top`           | Pin field control padding top.                 |
+| `--omni-pin-field-font-color`                    | Pin field font color.                          |
+| `--omni-pin-field-font-family`                   | Pin field font family.                         |
+| `--omni-pin-field-font-size`                     | Pin field font size.                           |
+| `--omni-pin-field-font-weight`                   | Pin field font weight.                         |
+| `--omni-pin-field-height`                        | Pin field height.                              |
+| `--omni-pin-field-icon-color`                    | Pin field slot icon color.                     |
+| `--omni-pin-field-icon-height`                   | Pin field slot height.                         |
+| `--omni-pin-field-icon-width`                    | Pin field slot width.                          |
+| `--omni-pin-field-padding`                       | Pin field padding.                             |
+| `--omni-pin-field-text-align`                    | Pin field text align.                          |
+| `--omni-pin-field-width`                         | Pin field width.                               |
 | `--omni-theme-accent-active-color`               | Theme accent active color.                     |
 | `--omni-theme-accent-color`                      | Theme accent color.                            |
 | `--omni-theme-accent-hover-color`                | Theme accent hover color.                      |
