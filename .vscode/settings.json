@@ -36,6 +36,7 @@
 		"select": true,
 		"text-field": true,
 		"utils": true,
-		"switch": true
+		"switch": true,
+		"date-picker": true
 	}
 }

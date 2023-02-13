@@ -56,7 +56,8 @@
         "switch",
         "utils",
         "text-field",
-        "number-field"
+        "number-field",
+        "date-picker"
     ],
     "exports": {
         "./*": "./dist/*/index.js"
@@ -92,6 +93,7 @@
         "@testing-library/user-event": "^14.4.3",
         "@types/jest": "^29.2.3",
         "@types/lodash": "^4.14.189",
+        "@types/luxon": "^3.2.0",
         "@types/pretty": "^2.0.1",
         "@types/testing-library__jest-dom": "^5.14.5",
         "@types/uuid": "^8.3.4",
