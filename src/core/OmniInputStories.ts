@@ -156,14 +156,18 @@ export const SuffixStory = <T extends HTMLElement, U extends BaseArgs>(tagName: 
     return Suffix;
 };
 
-export const DisabledStory = <T extends HTMLElement, U extends BaseArgs>(tagName: string) => {
+export const DisabledStory = <T extends HTMLElement, U extends BaseArgs>(
+    tagName: string,
+    inputValue: string | number | string[] = 'The input value'
+    ) => {
     const Disabled: ComponentStoryFormat<U> = {
-        render: (args: U) => html`${unsafeHTML(`<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}" disabled></${tagName}>`)}`,
+        render: (args: U) => html`${unsafeHTML(`<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}" value="${args.value}" disabled></${tagName}>`)}`,
         name: 'Disabled',
         description: 'Prevent interaction (pointer/input events).',
         args: {
             label: 'Disabled',
-            disabled: true
+            disabled: true,
+            value: inputValue
         } as U,
         play: async (context) => {
             const input = within(context.canvasElement).getByTestId<T>('test-field');

@@ -127,9 +127,6 @@ import '../icons/ChevronRight.icon.js';
 @customElement('omni-date-picker')
 export class DatePicker extends OmniFormElement {
     private defaultLocale: string = 'en-US';
-    @query('#picker')
-    private _pickerElement: HTMLInputElement;
-
     /**
      * The locale used for formatting the output of the Date time picker.
      * @attr
@@ -137,7 +134,7 @@ export class DatePicker extends OmniFormElement {
     @property({ type: String, reflect: true }) locale: string = this.defaultLocale;
 
     // Internal state properties for date picker and
-    @state() private date: DateTime = this.value && typeof this.value === 'string' ? DateTime.fromISO(this.value).setLocale(this.locale) : undefined;
+    @state() private date: DateTime = this.value && typeof this.value === 'string' ? DateTime.fromISO(this.value).setLocale(this.locale): DateTime.local();
     @state() private _showCalendar: boolean = false;
     @state() private _selectedMonth: number = (this.date && this.date.isValid ? this.date : DateTime.local().setLocale(this.locale)).month;
     @state() private _selectedYear: number = (this.date && this.date.isValid ? this.date : DateTime.local().setLocale(this.locale)).year;
@@ -161,7 +158,7 @@ export class DatePicker extends OmniFormElement {
         window.addEventListener('click', this._windowClick.bind(this));
         this.date = (this.value && typeof this.value === 'string' ? DateTime.fromISO(this.value).setLocale(this.locale) : undefined)?.setLocale(
             this.locale
-        );
+        ) as DateTime;
 
         // Check for how to render the picker container based on screen dimensions.
     }
@@ -192,7 +189,7 @@ export class DatePicker extends OmniFormElement {
 
     // Check to see if the component is at the bottom of the viewport if true set the internal boolean value.
     async _bottomCheck() {
-        const distanceFromBottom = visualViewport.height - this.getBoundingClientRect().bottom;
+        const distanceFromBottom = visualViewport!.height - this.getBoundingClientRect().bottom;
         if (distanceFromBottom < 150) {
             this._bottomOfViewport = true;
         } else {
@@ -217,7 +214,7 @@ export class DatePicker extends OmniFormElement {
         this._days = Info.weekdays('short', { locale: this.locale ? this.locale : this.defaultLocale });
         this.date = (this.value && typeof this.value === 'string' ? DateTime.fromISO(this.value).setLocale(this.locale) : undefined)?.setLocale(
             this.locale ? this.locale : this.defaultLocale
-        );
+        ) as DateTime;
 
         this.requestUpdate();
     }
@@ -423,7 +420,7 @@ export class DatePicker extends OmniFormElement {
             /* Styles related to the picker container and its child elements */
 
             .picker-container {
-                z-index: var(--omni-date-picker-container-z-index, 420);;
+                z-index: var(--omni-date-picker-container-z-index, 420);
             }
 
             /* Picker container mobile*/
@@ -1036,5 +1033,11 @@ export class DatePicker extends OmniFormElement {
         /*
         return html`<omni-button class=${classMap(monthStyles)} label="${month}" type="${monthStyles.current ? `secondary` : monthStyles.selected ? `primary` : `clear`}" @click="${() =>
             this._monthSelect(index + 1)}"></omni-button>`;*/
+    }
+}
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'omni-date-picker': DatePicker;
     }
 }

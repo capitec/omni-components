@@ -59,7 +59,8 @@
         "number-field",
         "date-picker",
         "email-field",
-        "pin-field"
+        "pin-field",
+        "calendar"
     ],
     "exports": {
         "./*": "./dist/*/index.js"
