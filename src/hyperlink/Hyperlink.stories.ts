@@ -2,9 +2,10 @@ import { within } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import * as jest from 'jest-mock';
 import { html } from 'lit';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
-import { ComponentStoryFormat, CSFIdentifier } from '../utils/StoryUtils.js';
+import { ComponentStoryFormat, CSFIdentifier, raw } from '../utils/StoryUtils.js';
 import './Hyperlink.js';
 
 const linkTarget = ['_self', '_blank', '_parent', '_top'] as const;
@@ -14,7 +15,10 @@ export default {
     component: 'omni-hyperlink',
     argTypes: {
         size: { control: 'radio', options: ['default', 'small'] },
-        target: { control: 'radio', options: linkTarget }
+        target: { control: 'radio', options: linkTarget },
+        '[Default Slot]': {
+            control: 'text'
+        }
     }
 } as CSFIdentifier;
 
@@ -25,6 +29,7 @@ interface Args {
     disabled: boolean;
     inline: boolean;
     size: string;
+    '[Default Slot]': string;
 }
 
 export const Interactive: ComponentStoryFormat<Args> = {
@@ -36,7 +41,9 @@ export const Interactive: ComponentStoryFormat<Args> = {
       target="${ifNotEmpty(args.target)}"
       ?disabled="${args.disabled}"
       ?inline="${args.inline}"
-      size="${args.size}"></omni-hyperlink>
+      size="${args.size}">
+      ${unsafeHTML(args['[Default Slot]'])}
+    </omni-hyperlink>
   `,
     name: 'Interactive',
     args: {
@@ -44,7 +51,8 @@ export const Interactive: ComponentStoryFormat<Args> = {
         href: '',
         disabled: false,
         inline: false,
-        size: ''
+        size: '',
+        '[Default Slot]': undefined
     },
     play: async (context) => {
         const canvas = within(context.canvasElement);

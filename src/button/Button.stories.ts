@@ -86,7 +86,7 @@ export const Type = {
     },
     play: async (context) => {
         const button = within(context.canvasElement).getByTestId<Button>('test-button');
-        const buttonElement = button.shadowRoot!.getElementById('button') as HTMLElement;
+        const buttonElement = button.shadowRoot?.getElementById('button') as HTMLElement;
         const foundPrimaryClass = buttonElement?.classList.contains('primary');
         await expect(foundPrimaryClass).toBeTruthy();
     }
