@@ -63,19 +63,19 @@ export class Chip extends OmniElement {
      * Text label.
      * @attr
      */
-    @property({ type: String, reflect: true }) label: string;
+    @property({ type: String, reflect: true }) label?: string;
 
     /**
      * Sets if the chip has a close button.
      * @attr
      */
-    @property({ type: Boolean, reflect: true }) closable: boolean;
+    @property({ type: Boolean, reflect: true }) closable?: boolean;
 
     /**
      * Indicator if the component is disabled.
      * @attr
      */
-    @property({ type: Boolean, reflect: true }) disabled: boolean;
+    @property({ type: Boolean, reflect: true }) disabled?: boolean;
 
     _removeClicked(e: MouseEvent) {
         if (this.disabled) {
@@ -180,7 +180,7 @@ export class Chip extends OmniElement {
         id="chip"
         class=${classMap({
             chip: true,
-            disabled: this.disabled
+            disabled: this.disabled ?? false
         })}
         ?disabled=${this.disabled}
         aria-disabled=${this.disabled ? 'true' : 'false'}>

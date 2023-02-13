@@ -48,7 +48,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         const valueChange = jest.fn();
         switchElement.addEventListener('value-change', valueChange);
 
-        const content = switchElement.shadowRoot.getElementById('content');
+        const content = switchElement.shadowRoot?.getElementById('content') as HTMLElement;
         await userEvent.click(content, {
             pointerEventsCheck: 0
         });
@@ -69,8 +69,8 @@ export const Label: ComponentStoryFormat<Args> = {
     },
     play: async (context) => {
         const switchElement = within(context.canvasElement).getByTestId<Switch>('test-switch');
-        const labelElement = switchElement.shadowRoot.querySelector<HTMLElement>('.label');
-        await expect(labelElement).toHaveTextContent(Label.args.label);
+        const labelElement = switchElement.shadowRoot?.querySelector<HTMLElement>('.label');
+        await expect(labelElement).toHaveTextContent(Label.args?.label as string);
     }
 };
 
@@ -83,8 +83,8 @@ export const Hint: ComponentStoryFormat<Args> = {
     },
     play: async (context) => {
         const switchElement = within(context.canvasElement).getByTestId<Switch>('test-switch');
-        const element = switchElement.shadowRoot.querySelector<HTMLElement>('.hint');
-        await expect(element).toHaveTextContent(Hint.args.hint);
+        const element = switchElement.shadowRoot?.querySelector<HTMLElement>('.hint');
+        await expect(element).toHaveTextContent(Hint.args?.hint as string);
     }
 };
 
@@ -98,8 +98,8 @@ export const Error_Label: ComponentStoryFormat<Args> = {
     },
     play: async (context) => {
         const switchElement = within(context.canvasElement).getByTestId<Switch>('test-switch');
-        const element = switchElement.shadowRoot.querySelector<HTMLElement>('.error');
-        await expect(element).toHaveTextContent(Error_Label.args.error);
+        const element = switchElement.shadowRoot?.querySelector<HTMLElement>('.error');
+        await expect(element).toHaveTextContent(Error_Label.args?.error as string);
     }
 };
 
@@ -112,7 +112,7 @@ export const Checked: ComponentStoryFormat<Args> = {
     },
     play: async (context) => {
         const switchElement = within(context.canvasElement).getByTestId<Switch>('test-switch');
-        const checkedElement = switchElement.shadowRoot.querySelector<HTMLElement>('.checked');
+        const checkedElement = switchElement.shadowRoot?.querySelector<HTMLElement>('.checked');
         await expect(checkedElement).toBeTruthy();
     }
 };
@@ -129,10 +129,10 @@ export const Disabled: ComponentStoryFormat<Args> = {
         const valueChange = jest.fn();
         switchElement.addEventListener('value-change', valueChange);
 
-        const disabledElement = switchElement.shadowRoot.querySelector<HTMLElement>('.disabled');
+        const disabledElement = switchElement.shadowRoot?.querySelector<HTMLElement>('.disabled');
         await expect(disabledElement).toBeTruthy();
 
-        const content = switchElement.shadowRoot.getElementById('content');
+        const content = switchElement.shadowRoot?.getElementById('content') as HTMLElement;
         await userEvent.click(content, {
             pointerEventsCheck: 0
         });

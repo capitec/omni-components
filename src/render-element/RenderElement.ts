@@ -28,13 +28,13 @@ export class RenderElement extends OmniElement {
      * Renderer function
      * @no_attribute
      */
-    @property({ type: Object, reflect: false }) renderer: RenderFunction;
+    @property({ type: Object, reflect: false }) renderer?: RenderFunction;
 
     /**
      * Data associated with the component.
      * @attr
      */
-    @property({ type: Object, reflect: true }) data: object | Promise<object>;
+    @property({ type: Object, reflect: true }) data?: object | Promise<object>;
 
     override connectedCallback(): void {
         super.connectedCallback();
@@ -93,7 +93,7 @@ export class RenderElement extends OmniElement {
         }
     }
 
-    private _clearElements(el: Element | ShadowRoot = undefined) {
+    private _clearElements(el: Element | ShadowRoot = undefined as any) {
         if (!el) {
             el = this.renderRoot;
         }

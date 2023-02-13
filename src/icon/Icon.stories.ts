@@ -42,11 +42,11 @@ export const Interactive: ComponentStoryFormat<Args> = {
       <path d="m8.229 14.062-3.521-3.541L5.75 9.479l2.479 2.459 6.021-6L15.292 7Z" />
     </g>
   </svg>`,
-        icon: undefined as string
+        icon: undefined as unknown as string
     },
     play: async (context) => {
         const icon = within(context.canvasElement).getByTestId<Icon>('test-icon');
-        const slotElement = icon.shadowRoot.querySelector('slot');
+        const slotElement = icon.shadowRoot?.querySelector('slot') as HTMLSlotElement;
         const foundSlottedSvgElement = slotElement.assignedElements().find((e) => e.tagName.toLowerCase() === 'svg');
         await expect(foundSlottedSvgElement).toBeTruthy();
     }
@@ -74,7 +74,7 @@ export const SVG: ComponentStoryFormat<Args> = {
     },
     play: async (context) => {
         const icon = within(context.canvasElement).getByTestId<Icon>('test-icon');
-        const slotElement = icon.shadowRoot.querySelector('slot');
+        const slotElement = icon.shadowRoot?.querySelector('slot') as HTMLSlotElement;
         const foundSlottedSvgElement = slotElement.assignedElements().find((e) => e.tagName.toLowerCase() === 'svg');
         await expect(foundSlottedSvgElement).toBeTruthy();
     }
@@ -94,7 +94,7 @@ export const Local_Source: ComponentStoryFormat<Args> = {
     },
     play: async (context) => {
         const icon = within(context.canvasElement).getByTestId<Icon>('test-icon');
-        const imgElement = icon.shadowRoot.querySelector('img');
+        const imgElement = icon.shadowRoot?.querySelector('img') as HTMLImageElement;
         await expect(imgElement).toBeTruthy();
         await expect(imgElement.src.endsWith(context.args.icon.replace('./', '/'))).toBeTruthy();
     }
@@ -114,9 +114,9 @@ export const Remote_Source: ComponentStoryFormat<Args> = {
     },
     play: async (context) => {
         const icon = within(context.canvasElement).getByTestId<Icon>('test-icon');
-        const imgElement = icon.shadowRoot.querySelector('img');
+        const imgElement = icon.shadowRoot!.querySelector('img') as HTMLImageElement;
         await expect(imgElement).toBeTruthy();
-        await expect(imgElement.src).toEqual(context.args.icon);
+        await expect(imgElement?.src).toEqual(context.args.icon);
     }
 };
 
@@ -135,8 +135,8 @@ export const Material: ComponentStoryFormat<Args> = {
     },
     play: async (context) => {
         const icon = within(context.canvasElement).getByTestId<Icon>('test-icon');
-        const materialElement = icon.shadowRoot.querySelector<HTMLElement>('.material-icon');
+        const materialElement = icon.shadowRoot?.querySelector<HTMLElement>('.material-icon');
         await expect(materialElement).toBeTruthy();
-        await expect(materialElement.innerText).toEqual(Material.args.icon.replace('@material/', ''));
+        await expect(materialElement?.innerText).toEqual(Material.args?.icon?.replace('@material/', ''));
     }
 };

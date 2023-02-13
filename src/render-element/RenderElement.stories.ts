@@ -107,7 +107,7 @@ let clicked = () => alert('Clicked');
 export const HTML_Element_Instance: ComponentStoryFormat<Args> = {
     render: (args: Args) => {
         const addValues = async () => {
-            let renderEl: RenderElement = undefined;
+            let renderEl: RenderElement = undefined as any;
             while (!renderEl) {
                 await new Promise<void>((r) => setTimeout(() => r(), 200));
                 renderEl = document.getElementById('renderElI') as RenderElement;
@@ -191,7 +191,7 @@ export const HTML_Element_Instance: ComponentStoryFormat<Args> = {
 export const HTML_String: ComponentStoryFormat<Args> = {
     render: (args: Args) => {
         const addValues = async () => {
-            let renderEl: RenderElement = undefined;
+            let renderEl: RenderElement = undefined as any;
             while (!renderEl) {
                 renderEl = document.getElementById('renderElS') as RenderElement;
                 if (!renderEl) await new Promise<void>((r) => setTimeout(() => r(), 200));

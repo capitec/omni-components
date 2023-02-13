@@ -71,7 +71,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
             pointerEventsCheck: 0
         });
 
-        const content = check.shadowRoot.getElementById('content');
+        const content = check.shadowRoot!.getElementById('content') as HTMLElement;
 
         await fireEvent.keyDown(content, {
             key: ' ',
@@ -89,9 +89,9 @@ export const Label: ComponentStoryFormat<Args> = {
     },
     play: async (context) => {
         const check = within(context.canvasElement).getByTestId<Check>('test-check');
-        const labelElement = check.shadowRoot.querySelector('label');
+        const labelElement = check.shadowRoot?.querySelector('label');
         await expect(labelElement).toBeTruthy();
-        await expect(labelElement).toHaveTextContent(Label.args.label);
+        await expect(labelElement).toHaveTextContent(Label.args?.label as string);
     }
 };
 
@@ -104,9 +104,9 @@ export const Hint: ComponentStoryFormat<Args> = {
     },
     play: async (context) => {
         const check = within(context.canvasElement).getByTestId<Check>('test-check');
-        const hintElement = check.shadowRoot.querySelector<HTMLElement>('.hint');
+        const hintElement = check.shadowRoot!.querySelector<HTMLElement>('.hint');
         await expect(hintElement).toBeTruthy();
-        await expect(hintElement).toHaveTextContent(Hint.args.hint);
+        await expect(hintElement).toHaveTextContent(Hint.args?.hint as string);
     }
 };
 
@@ -120,9 +120,9 @@ export const Error_Label: ComponentStoryFormat<Args> = {
     },
     play: async (context) => {
         const check = within(context.canvasElement).getByTestId<Check>('test-check');
-        const errorElement = check.shadowRoot.querySelector<HTMLElement>('.error');
+        const errorElement = check.shadowRoot!.querySelector<HTMLElement>('.error');
         await expect(errorElement).toBeTruthy();
-        await expect(errorElement).toHaveTextContent(Error_Label.args.error);
+        await expect(errorElement).toHaveTextContent(Error_Label.args?.error as string);
     }
 };
 
@@ -135,7 +135,7 @@ export const Checked: ComponentStoryFormat<Args> = {
     },
     play: async (context) => {
         const check = within(context.canvasElement).getByTestId<Check>('test-check');
-        const checkedElement = check.shadowRoot.querySelector<HTMLElement>('.checked');
+        const checkedElement = check.shadowRoot!.querySelector<HTMLElement>('.checked');
         await expect(checkedElement).toBeTruthy();
     }
 };
@@ -149,7 +149,7 @@ export const Indeterminate: ComponentStoryFormat<Args> = {
     },
     play: async (context) => {
         const check = within(context.canvasElement).getByTestId<Check>('test-check');
-        const indeterminateElement = check.shadowRoot.querySelector<HTMLElement>('.indeterminate');
+        const indeterminateElement = check.shadowRoot!.querySelector<HTMLElement>('.indeterminate');
         await expect(indeterminateElement).toBeTruthy();
     }
 };
@@ -166,10 +166,10 @@ export const Disabled: ComponentStoryFormat<Args> = {
         const valueChange = jest.fn();
         check.addEventListener('value-change', valueChange);
 
-        const disabledElement = check.shadowRoot.querySelector<HTMLElement>('.disabled');
+        const disabledElement = check.shadowRoot!.querySelector<HTMLElement>('.disabled');
         await expect(disabledElement).toBeTruthy();
 
-        const content = check.shadowRoot.getElementById('content');
+        const content = check.shadowRoot!.getElementById('content') as HTMLElement;
         await userEvent.click(content, {
             pointerEventsCheck: 0
         });
@@ -198,10 +198,10 @@ export const Custom_Check_Icon: ComponentStoryFormat<Args> = {
     },
     play: async (context) => {
         const check = within(context.canvasElement).getByTestId<Check>('test-check');
-        const slotElement = check.shadowRoot.querySelector<HTMLSlotElement>('slot[name=check_icon]');
+        const slotElement = check.shadowRoot!.querySelector<HTMLSlotElement>('slot[name=check_icon]');
         await expect(slotElement).toBeTruthy();
 
-        const foundSlottedSvgElement = slotElement.assignedElements().find((e) => e.tagName.toLowerCase() === 'svg');
+        const foundSlottedSvgElement = slotElement?.assignedElements().find((e) => e.tagName.toLowerCase() === 'svg');
         await expect(foundSlottedSvgElement).toBeTruthy();
     }
 };
@@ -236,10 +236,10 @@ export const Custom_Indeterminate_Icon: ComponentStoryFormat<Args> = {
     },
     play: async (context) => {
         const check = within(context.canvasElement).getByTestId<Check>('test-check');
-        const slotElement = check.shadowRoot.querySelector<HTMLSlotElement>('slot[name=indeterminate_icon]');
+        const slotElement = check.shadowRoot!.querySelector<HTMLSlotElement>('slot[name=indeterminate_icon]');
         await expect(slotElement).toBeTruthy();
 
-        const foundSlottedSvgElement = slotElement.assignedElements().find((e) => e.tagName.toLowerCase() === 'svg');
+        const foundSlottedSvgElement = slotElement?.assignedElements().find((e) => e.tagName.toLowerCase() === 'svg');
         await expect(foundSlottedSvgElement).toBeTruthy();
     }
 };

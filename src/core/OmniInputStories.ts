@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable lit/binding-positions */
 /* eslint-disable lit/no-invalid-html */
 import { within } from '@testing-library/dom';
@@ -32,7 +33,7 @@ export const LabelStory = <T extends HTMLElement, U extends BaseArgs>(tagName: s
         } as U,
         play: async (context) => {
             const input = within(context.canvasElement).getByTestId<T>('test-field');
-            await expect(input.shadowRoot.querySelector<HTMLElement>('.label > span')).toHaveTextContent(Label.args.label);
+            await expect(input.shadowRoot?.querySelector<HTMLElement>('.label > span')).toHaveTextContent(Label.args?.label as string);
         }
     };
     return Label;
@@ -50,9 +51,9 @@ export const HintStory = <T extends HTMLElement, U extends BaseArgs>(tagName: st
         } as U,
         play: async (context) => {
             const input = within(context.canvasElement).getByTestId<T>('test-field');
-            const hintElement = input.shadowRoot.querySelector<HTMLElement>('.hint-label');
+            const hintElement = input.shadowRoot!.querySelector<HTMLElement>('.hint-label');
             await expect(hintElement).toBeTruthy();
-            await expect(hintElement).toHaveTextContent(Hint.args.hint);
+            await expect(hintElement).toHaveTextContent(Hint.args?.hint as string);
         }
     };
     return Hint;
@@ -70,9 +71,9 @@ export const ErrorStory = <T extends HTMLElement, U extends BaseArgs>(tagName: s
         } as U,
         play: async (context) => {
             const input = within(context.canvasElement).getByTestId<T>('test-field');
-            const errorElement = input.shadowRoot.querySelector<HTMLElement>('.error-label');
+            const errorElement = input.shadowRoot!.querySelector<HTMLElement>('.error-label');
             await expect(errorElement).toBeTruthy();
-            await expect(errorElement).toHaveTextContent(Error.args.error);
+            await expect(errorElement).toHaveTextContent(Error.args?.error as string);
         }
     };
     return Error;
@@ -94,8 +95,8 @@ export const ValueStory = <T extends HTMLElement, U extends BaseArgs>(
         play: async (context) => {
             const input = within(context.canvasElement).getByTestId<T>('test-field');
 
-            const inputField = input.shadowRoot.getElementById('inputField');
-            await expect(inputField).toHaveValue(Value.args.value);
+            const inputField = input.shadowRoot?.getElementById('inputField');
+            await expect(inputField).toHaveValue(Value.args?.value as string);
         }
     };
     return Value;
@@ -104,20 +105,24 @@ export const ValueStory = <T extends HTMLElement, U extends BaseArgs>(
 export const PrefixStory = <T extends HTMLElement, U extends BaseArgs>(tagName: string) => {
     const Prefix: ComponentStoryFormat<U> = {
         render: (args: U) =>
-            html`${unsafeHTML(`<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}">${args.prefix}</${tagName}>`)}`,
+            html`${unsafeHTML(`
+            <!-- Note that styles are applied to the slotted content via the style attribute and the --omni-form-label-margin-left css variable is overridden -->
+            <${tagName} data-testid="test-field" style="--omni-form-label-margin-left:40px;" label="${ifNotEmpty(args.label)}">
+            ${args.prefix}
+            </${tagName}>`)}`,
         name: 'Prefix',
         description: 'Set html content to display as a prefix within the component.',
         args: {
             label: 'Prefix',
-            prefix: raw`<svg slot="prefix" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px" style="fill: orange"><path d="M12 2.25c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12 6.615 2.25 12 2.25Zm0 1.5a8.25 8.25 0 1 0 0 16.5 8.25 8.25 0 0 0 0-16.5ZM12 7a.75.75 0 0 1 .75.75v3.5h3.5a.75.75 0 0 1 .743.648L17 12a.75.75 0 0 1-.75.75h-3.5v3.5a.75.75 0 0 1-.648.743L12 17a.75.75 0 0 1-.75-.75v-3.5h-3.5a.75.75 0 0 1-.743-.648L7 12a.75.75 0 0 1 .75-.75h3.5v-3.5a.75.75 0 0 1 .648-.743Z"/></svg>`
+            prefix: raw`<svg slot="prefix" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px" style="fill: orange; margin-left: 10px;"><path d="M12 2.25c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12 6.615 2.25 12 2.25Zm0 1.5a8.25 8.25 0 1 0 0 16.5 8.25 8.25 0 0 0 0-16.5ZM12 7a.75.75 0 0 1 .75.75v3.5h3.5a.75.75 0 0 1 .743.648L17 12a.75.75 0 0 1-.75.75h-3.5v3.5a.75.75 0 0 1-.648.743L12 17a.75.75 0 0 1-.75-.75v-3.5h-3.5a.75.75 0 0 1-.743-.648L7 12a.75.75 0 0 1 .75-.75h3.5v-3.5a.75.75 0 0 1 .648-.743Z"/></svg>`
         } as U,
         play: async (context) => {
             const input = within(context.canvasElement).getByTestId<T>('test-field');
 
-            const slotElement = input.shadowRoot.querySelector<HTMLSlotElement>('slot[name=prefix]');
+            const slotElement = input.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=prefix]');
             await expect(slotElement).toBeTruthy();
 
-            const foundSlottedSvgElement = slotElement.assignedElements().find((e) => e.tagName.toLocaleLowerCase() === 'svg');
+            const foundSlottedSvgElement = slotElement?.assignedElements().find((e) => e.tagName.toLocaleLowerCase() === 'svg');
             await expect(foundSlottedSvgElement).toBeTruthy();
         }
     };
@@ -127,20 +132,24 @@ export const PrefixStory = <T extends HTMLElement, U extends BaseArgs>(tagName: 
 export const SuffixStory = <T extends HTMLElement, U extends BaseArgs>(tagName: string) => {
     const Suffix: ComponentStoryFormat<U> = {
         render: (args: U) =>
-            html`${unsafeHTML(`<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}">${args.suffix}</${tagName}>`)}`,
+            html`${unsafeHTML(`
+            <!-- Note that styles are applied to the slotted content via the style attribute -->
+            <${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}">
+            ${args.suffix}
+            </${tagName}>`)}`,
         name: 'Suffix',
         description: 'Set html content to display as a suffix within the component.',
         args: {
             label: 'Suffix',
-            suffix: raw`<svg slot="suffix" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px" style="fill: orange"><path d="M12 2.25c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12 6.615 2.25 12 2.25Zm0 1.5a8.25 8.25 0 1 0 0 16.5 8.25 8.25 0 0 0 0-16.5ZM12 7a.75.75 0 0 1 .75.75v3.5h3.5a.75.75 0 0 1 .743.648L17 12a.75.75 0 0 1-.75.75h-3.5v3.5a.75.75 0 0 1-.648.743L12 17a.75.75 0 0 1-.75-.75v-3.5h-3.5a.75.75 0 0 1-.743-.648L7 12a.75.75 0 0 1 .75-.75h3.5v-3.5a.75.75 0 0 1 .648-.743Z"/></svg>`
+            suffix: raw`<svg slot="suffix" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px" style="fill: orange; margin-right:10px;"><path d="M12 2.25c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12 6.615 2.25 12 2.25Zm0 1.5a8.25 8.25 0 1 0 0 16.5 8.25 8.25 0 0 0 0-16.5ZM12 7a.75.75 0 0 1 .75.75v3.5h3.5a.75.75 0 0 1 .743.648L17 12a.75.75 0 0 1-.75.75h-3.5v3.5a.75.75 0 0 1-.648.743L12 17a.75.75 0 0 1-.75-.75v-3.5h-3.5a.75.75 0 0 1-.743-.648L7 12a.75.75 0 0 1 .75-.75h3.5v-3.5a.75.75 0 0 1 .648-.743Z"/></svg>`
         } as U,
         play: async (context) => {
             const input = within(context.canvasElement).getByTestId<T>('test-field');
 
-            const slotElement = input.shadowRoot.querySelector<HTMLSlotElement>('slot[name=suffix]');
+            const slotElement = input.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=suffix]');
             await expect(slotElement).toBeTruthy();
 
-            const foundSlottedSvgElement = slotElement.assignedElements().find((e) => e.tagName.toLocaleLowerCase() === 'svg');
+            const foundSlottedSvgElement = slotElement?.assignedElements().find((e) => e.tagName.toLocaleLowerCase() === 'svg');
             await expect(foundSlottedSvgElement).toBeTruthy();
         }
     };
@@ -167,7 +176,7 @@ export const DisabledStory = <T extends HTMLElement, U extends BaseArgs>(tagName
             const inputTest = jest.fn();
             input.addEventListener('input', inputTest);
 
-            const inputField = input.shadowRoot.getElementById('inputField') as OmniFormElement;
+            const inputField = input.shadowRoot?.getElementById('inputField') as OmniFormElement;
 
             await userEvent.type(inputField, 'Value Update 3', {
                 pointerEventsCheck: 0

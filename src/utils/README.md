@@ -4,14 +4,14 @@
 
 | Property          | Attribute         | Modifiers | Type                                             | Default    |
 |-------------------|-------------------|-----------|--------------------------------------------------|------------|
-| `code`            | `code`            |           | `string \| Promise<string>`                      |            |
-| `codeParent`      |                   |           | `HTMLDivElement`                                 |            |
+| `code`            | `code`            |           | `string \| Promise<string> \| undefined`         |            |
+| `codeParent`      |                   |           | `HTMLDivElement \| undefined`                    |            |
 | `disabled`        | `disabled`        |           | `boolean`                                        |            |
 | `extensions`      | `extensions`      |           | `() => { extension: Extension; } \| readonly Extension[] \| Promise<Extension>` | "() => []" |
 | `noTab`           | `no-tab`          |           | `boolean`                                        |            |
 | `override`        |                   |           |                                                  |            |
 | `readOnly`        | `read-only`       |           | `boolean`                                        |            |
-| `slotElement`     |                   |           | `HTMLSlotElement`                                |            |
+| `slotElement`     |                   |           | `HTMLSlotElement \| undefined`                   |            |
 | `styles`          |                   | readonly  | `CSSResult[]`                                    |            |
 | `transformSource` | `transformSource` |           | `(source: string) => string \| Promise<string>`  | "(s) => s" |
 
@@ -35,19 +35,19 @@
 
 ## Properties
 
-| Property             | Attribute           | Modifiers | Type                        | Default                  | Description                                      |
-|----------------------|---------------------|-----------|-----------------------------|--------------------------|--------------------------------------------------|
-| `customElements`     |                     |           | `Package`                   |                          |                                                  |
-| `customElementsPath` | `custom-elements`   |           | `string`                    | "./custom-elements.json" |                                                  |
-| `data`               | `data`              |           | `ComponentStoryFormat<any>` |                          |                                                  |
-| `dir`                |                     |           | `string`                    |                          |                                                  |
-| `disabled`           | `disabled`          |           | `boolean`                   |                          |                                                  |
-| `element`            | `element`           |           | `string`                    |                          |                                                  |
-| `ignoreAttributes`   | `ignore-attributes` |           | `string`                    |                          |                                                  |
-| `lang`               |                     |           | `string`                    |                          |                                                  |
-| `override`           | `override`          |           |                             |                          | Used to set the base direction of text for display |
-| `slotCodeEditors`    |                     |           | `NodeListOf<CodeEditor>`    |                          |                                                  |
-| `styles`             |                     | readonly  | `CSSResultGroup[]`          |                          |                                                  |
+| Property             | Attribute           | Modifiers | Type                                     | Default                  | Description                                      |
+|----------------------|---------------------|-----------|------------------------------------------|--------------------------|--------------------------------------------------|
+| `customElements`     |                     |           | `Package \| undefined`                   |                          |                                                  |
+| `customElementsPath` | `custom-elements`   |           | `string`                                 | "./custom-elements.json" |                                                  |
+| `data`               | `data`              |           | `ComponentStoryFormat<any> \| undefined` |                          |                                                  |
+| `dir`                |                     |           | `string`                                 |                          |                                                  |
+| `disabled`           | `disabled`          |           | `boolean`                                |                          |                                                  |
+| `element`            | `element`           |           | `string \| undefined`                    |                          |                                                  |
+| `ignoreAttributes`   | `ignore-attributes` |           | `string \| undefined`                    |                          |                                                  |
+| `lang`               |                     |           | `string`                                 |                          |                                                  |
+| `override`           | `override`          |           |                                          |                          | Used to set the base direction of text for display |
+| `slotCodeEditors`    |                     |           | `NodeListOf<CodeEditor> \| undefined`    |                          |                                                  |
+| `styles`             |                     | readonly  | `CSSResultGroup[]`                       |                          |                                                  |
 
 ## Methods
 
@@ -101,15 +101,15 @@
 
 ## Properties
 
-| Property         | Attribute     | Type                 |
-|------------------|---------------|----------------------|
-| `codeEditor`     |               | `CodeEditor`         |
-| `interactive`    | `interactive` | `boolean`            |
-| `key`            | `key`         | `string`             |
-| `override`       |               |                      |
-| `path`           | `path`        | `string`             |
-| `propertyEditor` |               | `LivePropertyEditor` |
-| `tag`            | `tag`         | `string`             |
+| Property         | Attribute     | Type                              |
+|------------------|---------------|-----------------------------------|
+| `codeEditor`     |               | `CodeEditor \| undefined`         |
+| `interactive`    | `interactive` | `boolean \| undefined`            |
+| `key`            | `key`         | `string \| undefined`             |
+| `override`       |               |                                   |
+| `path`           | `path`        | `string \| undefined`             |
+| `propertyEditor` |               | `LivePropertyEditor \| undefined` |
+| `tag`            | `tag`         | `string \| undefined`             |
 
 ## Methods
 

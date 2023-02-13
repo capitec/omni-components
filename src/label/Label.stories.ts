@@ -35,7 +35,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
     },
     play: async (context) => {
         const label = within(context.canvasElement).getByTestId<Label>('test-label');
-        await expect(label.shadowRoot).toHaveTextContent(Interactive.args.label);
+        await expect(label.shadowRoot).toHaveTextContent(Interactive.args?.label as string);
     }
 };
 
@@ -48,7 +48,7 @@ export const Title: ComponentStoryFormat<Args> = {
     },
     play: async (context) => {
         const label = within(context.canvasElement).getByTestId<Label>('test-label');
-        await expect(label.shadowRoot).toHaveTextContent(Title.args.label);
+        await expect(label.shadowRoot).toHaveTextContent(Title.args?.label as string);
     }
 };
 
@@ -61,7 +61,7 @@ export const Subtitle: ComponentStoryFormat<Args> = {
     },
     play: async (context) => {
         const label = within(context.canvasElement).getByTestId<Label>('test-label');
-        await expect(label.shadowRoot).toHaveTextContent(Subtitle.args.label);
+        await expect(label.shadowRoot).toHaveTextContent(Subtitle.args?.label as string);
     }
 };
 
@@ -74,6 +74,6 @@ export const Strong: ComponentStoryFormat<Args> = {
     },
     play: async (context) => {
         const label = within(context.canvasElement).getByTestId<Label>('test-label');
-        await expect(label.shadowRoot).toHaveTextContent(Strong.args.label);
+        await expect(label.shadowRoot).toHaveTextContent(Strong.args?.label as string);
     }
 };

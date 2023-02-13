@@ -17,18 +17,18 @@ Control to select a single value from a group of values.
 
 ## Properties
 
-| Property   | Attribute  | Modifiers | Type               | Description                                      |
-|------------|------------|-----------|--------------------|--------------------------------------------------|
-| `checked`  | `checked`  |           | `boolean`          | Indicator if the component is checked or not.    |
-| `data`     | `data`     |           | `object`           | Data associated with the component.              |
-| `dir`      |            |           | `string`           |                                                  |
-| `disabled` | `disabled` |           | `boolean`          | Indicator if the component is disabled.          |
-| `error`    | `error`    |           | `string`           | An error message to guide users to correct a mistake. |
-| `hint`     | `hint`     |           | `string`           | A hint message to assist the user.               |
-| `label`    | `label`    |           | `string`           | Text label.                                      |
-| `lang`     |            |           | `string`           |                                                  |
-| `override` | `override` |           |                    | Used to set the base direction of text for display |
-| `styles`   |            | readonly  | `CSSResultGroup[]` |                                                  |
+| Property   | Attribute  | Modifiers | Type                   | Description                                      |
+|------------|------------|-----------|------------------------|--------------------------------------------------|
+| `checked`  | `checked`  |           | `boolean \| undefined` | Indicator if the component is checked or not.    |
+| `data`     | `data`     |           | `object \| undefined`  | Data associated with the component.              |
+| `dir`      |            |           | `string`               |                                                  |
+| `disabled` | `disabled` |           | `boolean \| undefined` | Indicator if the component is disabled.          |
+| `error`    | `error`    |           | `string \| undefined`  | An error message to guide users to correct a mistake. |
+| `hint`     | `hint`     |           | `string \| undefined`  | A hint message to assist the user.               |
+| `label`    | `label`    |           | `string \| undefined`  | Text label.                                      |
+| `lang`     |            |           | `string`               |                                                  |
+| `override` | `override` |           |                        | Used to set the base direction of text for display |
+| `styles`   |            | readonly  | `CSSResultGroup[]`     |                                                  |
 
 ## Methods
 

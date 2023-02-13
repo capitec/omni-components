@@ -74,7 +74,7 @@ export const Label: ComponentStoryFormat<Args> = {
     },
     play: async (context) => {
         const chip = within(context.canvasElement).getByTestId<Chip>('test-chip');
-        await expect(chip.shadowRoot.getElementById('label')).toHaveTextContent(Label.args.label);
+        await expect(chip.shadowRoot!.getElementById('label')).toHaveTextContent(Label.args?.label as string);
     }
 };
 
@@ -91,7 +91,7 @@ export const Closable: ComponentStoryFormat<Args> = {
         const remove = jest.fn();
         chip.addEventListener('remove', remove);
 
-        const closeButton = chip.shadowRoot.getElementById('closeButton');
+        const closeButton = chip.shadowRoot!.getElementById('closeButton') as HTMLElement;
 
         await userEvent.click(closeButton, {
             pointerEventsCheck: 0
@@ -113,7 +113,7 @@ export const Disabled: ComponentStoryFormat<Args> = {
     },
     play: async (context) => {
         const chip = within(context.canvasElement).getByTestId<Chip>('test-chip');
-        const chipElement = chip.shadowRoot.getElementById('chip');
+        const chipElement = chip.shadowRoot!.getElementById('chip') as HTMLElement;
         const foundDisabledClass = chipElement.classList.contains('disabled');
         await expect(foundDisabledClass).toBeTruthy(); // Test for not clickable.
 
@@ -139,10 +139,10 @@ export const Chip_Slot_Icon: ComponentStoryFormat<Args> = {
     },
     play: async (context) => {
         const chip = within(context.canvasElement).getByTestId<Chip>('test-chip');
-        const slotElement = chip.shadowRoot.querySelector<HTMLSlotElement>('slot[name="chip_icon"]');
+        const slotElement = chip.shadowRoot!.querySelector<HTMLSlotElement>('slot[name="chip_icon"]');
         await expect(slotElement).toBeTruthy();
 
-        const foundSlottedSvgElement = slotElement.assignedElements().find((e) => e.tagName.toLowerCase() === 'svg');
+        const foundSlottedSvgElement = slotElement?.assignedElements().find((e) => e.tagName.toLowerCase() === 'svg');
         await expect(foundSlottedSvgElement).toBeTruthy();
     }
 };
@@ -162,10 +162,10 @@ export const Custom_Close_Icon: ComponentStoryFormat<Args> = {
     },
     play: async (context) => {
         const chip = within(context.canvasElement).getByTestId<Chip>('test-chip');
-        const slotElement = chip.shadowRoot.querySelector<HTMLSlotElement>('slot[name=close_icon]');
+        const slotElement = chip.shadowRoot!.querySelector<HTMLSlotElement>('slot[name=close_icon]');
         await expect(slotElement).toBeTruthy();
 
-        const foundSlottedSvgElement = slotElement.assignedElements().find((e) => e.tagName.toLocaleLowerCase() === 'svg');
+        const foundSlottedSvgElement = slotElement?.assignedElements().find((e) => e.tagName.toLocaleLowerCase() === 'svg');
         await expect(foundSlottedSvgElement).toBeTruthy();
     }
 };

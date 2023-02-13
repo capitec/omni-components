@@ -46,12 +46,12 @@ export abstract class OmniElement extends LitElement {
      * Used to set the base direction of text for display
      * @attr
      */
-    @property() override dir: string;
+    @property() override dir!: string;
     /**
      * Used to identify the language of text content on the web
      * @attr
      */
-    @property() override lang: string;
+    @property() override lang!: string;
 
     static override get styles(): CSSResultGroup {
         return css`

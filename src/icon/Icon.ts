@@ -53,7 +53,7 @@ export class Icon extends OmniElement {
      * Name of the icon to display. Takes preference over the slotted icon.
      * @attr
      */
-    @property({ type: String, reflect: true }) icon: string;
+    @property({ type: String, reflect: true }) icon?: string;
 
     static override get styles() {
         return [

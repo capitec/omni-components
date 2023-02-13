@@ -22,21 +22,18 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
     <omni-number-field
       data-testid="test-number-field"
       label="${ifNotEmpty(args.label)}"
-      .value="${args.value}"
-      .data="${args.data}"
+      value="${args.value}"
       hint="${ifNotEmpty(args.hint)}"
       error="${ifNotEmpty(args.error)}"
       ?disabled="${args.disabled}"
       >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${
         args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}` : nothing
-    }${args.prefix || args.suffix ? '\r\n' : nothing}
-    </omni-number-field>
+    }${args.prefix || args.suffix ? '\r\n' : nothing}</omni-number-field>
   `,
     name: 'Interactive',
     args: {
         label: 'Label',
         value: '',
-        data: {},
         hint: '',
         error: '',
         disabled: false,
@@ -50,7 +47,7 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
         const input = jest.fn();
         numberField.addEventListener('input', input);
 
-        const inputField = numberField.shadowRoot.getElementById('inputField') as HTMLInputElement;
+        const inputField = numberField.shadowRoot!.getElementById('inputField') as HTMLInputElement;
         // Required to clear userEvent Symbol that keeps hidden state of previously typed values via userEvent. If not cleared this cannot be run multiple times with the same results
         setUIValueClean(inputField);
 

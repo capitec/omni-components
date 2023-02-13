@@ -223,6 +223,14 @@ Control to enter a formatted currency value.
 
 </td></tr><tr><td>
 
+[omni-email-field](src/email-field/README.md)
+
+</td><td>
+
+Email input control, used in forms for input validation and to display correct virtual keyboard on mobile.
+
+</td></tr><tr><td>
+
 [omni-hyperlink](src/hyperlink/README.md)
 
 </td><td>
@@ -375,6 +383,14 @@ Password input control.
 
 </td></tr><tr><td>
 
+[omni-pin-field](src/pin-field/README.md)
+
+</td><td>
+
+Pin input control to enter masked numeric values.
+
+</td></tr><tr><td>
+
 [omni-radio](src/radio/README.md)
 
 </td><td>
@@ -448,17 +464,17 @@ See the [`CONTRIBUTING.md`](./CONTRIBUTING.md) guide to get involved.
         </a>
     </td>
     <td align="center">
-        <a href="https://github.com/stefan505">
-            <img src="https://avatars.githubusercontent.com/u/10812446?v=4" width="100;" alt="stefan505"/>
-            <br />
-            <sub><b>stefan505</b></sub>
-        </a>
-    </td>
-    <td align="center">
         <a href="https://github.com/chromaticWaster">
             <img src="https://avatars.githubusercontent.com/u/22874454?v=4" width="100;" alt="chromaticWaster"/>
             <br />
             <sub><b>chromaticWaster</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/stefan505">
+            <img src="https://avatars.githubusercontent.com/u/10812446?v=4" width="100;" alt="stefan505"/>
+            <br />
+            <sub><b>stefan505</b></sub>
         </a>
     </td>
     <td align="center">

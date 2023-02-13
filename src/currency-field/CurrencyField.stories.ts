@@ -31,7 +31,6 @@ export const Interactive: ComponentStoryFormat<Args> = {
             data-testId="test-currency-field"
             label="${ifNotEmpty(args.label)}"
             value="${ifNotEmpty(args.value)}"
-            .data="${args.data}"
             hint="${ifNotEmpty(args.hint)}"
             error="${ifNotEmpty(args.error)}"
             ?disabled="${args.disabled}"
@@ -42,14 +41,12 @@ export const Interactive: ComponentStoryFormat<Args> = {
             formatter="${ifNotEmpty(args.formatter)}"           
             >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${
         args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}` : nothing
-    }${args.prefix || args.suffix ? '\r\n' : nothing}
-        </omni-currency-field>
+    }${args.prefix || args.suffix ? '\r\n' : nothing}</omni-currency-field>
     `,
     name: 'Interactive',
     args: {
         label: 'Label',
-        value: '100.00',
-        data: {},
+        value: '123456789',
         hint: '',
         error: '',
         disabled: false,
@@ -59,12 +56,12 @@ export const Interactive: ComponentStoryFormat<Args> = {
         fractionalSeparator: '.',
         thousandsSeparator: ',',
         currencySymbol: '$',
-        formatter: '\\B(?<!\\.\\d*)(?=(\\d{3})+(?!\\d))'
+        formatter: '\\B(?=(\\d{3})+(?!\\d))'
     },
     play: async (context) => {
         const currencyField = within(context.canvasElement).getByTestId<CurrencyField>('test-currency-field');
 
-        const inputField = currencyField.shadowRoot.getElementById('inputField') as HTMLInputElement;
+        const inputField = currencyField.shadowRoot?.getElementById('inputField') as HTMLInputElement;
         // Required to clear userEvent Symbol that keeps hidden state of previously typed values via userEvent. If not cleared this cannot be run multiple times with the same results
         setUIValueClean(inputField);
         inputField.value = '';
