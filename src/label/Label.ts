@@ -19,7 +19,7 @@ import { OmniElement } from '../core/OmniElement.js';
  * ```
  *
  * @element omni-label
- * 
+ *
  * @slot - Content to render inside the component.
  *
  * Registry of all properties defined by the component.

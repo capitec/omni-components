@@ -25,7 +25,7 @@ export default {
 interface Args {
     label: string;
     href: string;
-    target: typeof linkTarget[number];
+    target: (typeof linkTarget)[number];
     disabled: boolean;
     inline: boolean;
     size: string;

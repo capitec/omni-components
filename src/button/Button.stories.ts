@@ -36,9 +36,9 @@ export default {
 } as CSFIdentifier;
 
 interface Args {
-    type: typeof buttonOptions[number];
+    type: (typeof buttonOptions)[number];
     label: string;
-    slotPosition: typeof slotPositionOptions[number];
+    slotPosition: (typeof slotPositionOptions)[number];
     disabled: boolean;
     '[Default Slot]': string;
 }
