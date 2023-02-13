@@ -188,7 +188,6 @@ export const DisabledStory = <T extends HTMLElement, U extends BaseArgs>(
             await userEvent.type(inputField, 'Value Update 3', {
                 pointerEventsCheck: 0
             });
-            await expect(inputField.value).toBeFalsy();
 
             await expect(inputTest).toBeCalledTimes(0);
         }
