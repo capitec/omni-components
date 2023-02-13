@@ -1,5 +1,6 @@
 import { html, css } from 'lit';
 import { customElement, query } from 'lit/decorators.js';
+import { ClassInfo, classMap } from 'lit/directives/class-map.js';
 import { live } from 'lit/directives/live.js';
 import { OmniFormElement } from '../core/OmniFormElement.js';
 
@@ -32,7 +33,9 @@ import { OmniFormElement } from '../core/OmniFormElement.js';
  * @cssprop --omni-email-field-padding - Email field padding.
  * @cssprop --omni-email-field-height - Email field height.
  * @cssprop --omni-email-field-width - Email field width.
- *
+ * 
+ * @cssprop --omni-email-field-disabled-font-color - Email field disabled font color.
+ * @cssprop --omni-email-field-error-font-color - Email field error font color.
  */
 @customElement('omni-email-field')
 export class EmailField extends OmniFormElement {
@@ -85,14 +88,27 @@ export class EmailField extends OmniFormElement {
           height: var(--omni-email-field-height, 100%);
           width: var(--omni-email-field-width, 100%);
         }
+        
+        .field.disabled {
+            color: var(--omni-email-field-disabled-font-color, #7C7C7C);
+        }
+
+        .field.error {
+            color: var(--omni-email-field-error-font-color);
+        }   
       `
         ];
     }
 
     protected override renderContent() {
+        const field: ClassInfo = {
+            field: true,
+            disabled: this.disabled,
+            error: this.error as string
+        };
         return html`
       <input
-        class="field"
+        class=${classMap(field)}
         id="inputField"
         inputmode="email"
         type="email"

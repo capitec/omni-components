@@ -69,10 +69,10 @@ export const Hint = HintStory<EmailField, BaseArgs>('omni-email-field');
 
 export const Error_Label = ErrorStory<EmailField, BaseArgs>('omni-email-field');
 
-export const Value = ValueStory<EmailField, BaseArgs>('omni-email-field');
+export const Value = ValueStory<EmailField, BaseArgs>('omni-email-field', 'JohnDoe@gmail.com');
 
 export const Prefix = PrefixStory<EmailField, BaseArgs>('omni-email-field');
 
 export const Suffix = SuffixStory<EmailField, BaseArgs>('omni-email-field');
 
-export const Disabled = DisabledStory<EmailField, BaseArgs>('omni-email-field');
+export const Disabled = DisabledStory<EmailField, BaseArgs>('omni-email-field', 'JohnDoe@gmail.com');

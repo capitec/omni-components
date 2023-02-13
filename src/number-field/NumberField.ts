@@ -1,5 +1,6 @@
 import { css, html } from 'lit';
 import { customElement, query } from 'lit/decorators.js';
+import { ClassInfo, classMap } from 'lit/directives/class-map.js';
 import { live } from 'lit/directives/live.js';
 import { OmniFormElement } from '../core/OmniFormElement.js';
 
@@ -31,6 +32,8 @@ import { OmniFormElement } from '../core/OmniFormElement.js';
  * @cssprop --omni-number-field-padding - Number field padding.
  * @cssprop --omni-number-field-height - Number field height.
  * @cssprop --omni-number-field-width - Number field width.
+ * 
+ * @cssprop --omni-number-field-disabled-font-color - Number field disabled font color.
  *
  */
 @customElement('omni-number-field')
@@ -97,6 +100,10 @@ export class NumberField extends OmniFormElement {
           width: var(--omni-number-field-width, 100%);
         }
 
+        .field.disabled {
+            color: var(--omni-number-field-disabled-font-color, #7C7C7C);
+        }
+
         /* Used to not display default stepper */
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
@@ -113,9 +120,13 @@ export class NumberField extends OmniFormElement {
     }
 
     protected override renderContent() {
+        const field: ClassInfo = {
+            field: true,
+            disabled: this.disabled
+        };
         return html`
       <input
-        class="field"
+        class=${classMap(field)}
         id="inputField"
         type="number"
         .value=${live(this.value as string)}

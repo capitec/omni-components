@@ -108,4 +108,4 @@ export const Prefix = PrefixStory<PinField, BaseArgs>('omni-pin-field');
 
 export const Suffix = SuffixStory<PinField, BaseArgs>('omni-pin-field');
 
-export const Disabled = DisabledStory<PinField, BaseArgs>('omni-pin-field');
+export const Disabled = DisabledStory<PinField, BaseArgs>('omni-pin-field', 123);

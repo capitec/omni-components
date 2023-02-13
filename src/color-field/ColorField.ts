@@ -92,6 +92,14 @@ export class ColorField extends OmniFormElement {
           user-select: var(--omni-color-field-text-select, text);
         }
 
+        .field.disabled {
+
+        }
+
+        .field.error {
+            
+        }
+
         .color-input {
           flex: 1 1 auto;
 

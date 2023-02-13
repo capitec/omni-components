@@ -95,13 +95,13 @@ export const Hint = HintStory<PasswordField, BaseArgs>('omni-password-field');
 
 export const Error_Label = ErrorStory<PasswordField, BaseArgs>('omni-password-field');
 
-export const Value = ValueStory<PasswordField, BaseArgs>('omni-password-field');
+export const Value = ValueStory<PasswordField, BaseArgs>('omni-password-field', 'Password123');
 
 export const Prefix = PrefixStory<PasswordField, BaseArgs>('omni-password-field');
 
 export const Suffix = SuffixStory<PasswordField, BaseArgs>('omni-password-field');
 
-export const Disabled = DisabledStory<PasswordField, BaseArgs>('omni-password-field');
+export const Disabled = DisabledStory<PasswordField, BaseArgs>('omni-password-field', 'Password123');
 
 export const Custom_Icon_Slot: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
