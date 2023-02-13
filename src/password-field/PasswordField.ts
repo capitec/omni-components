@@ -48,7 +48,7 @@ import '../icons/EyeVisible.icon.js';
  * @cssprop --omni-password-field-padding - Password field padding.
  * @cssprop --omni-password-field-height - Password field height.
  * @cssprop --omni-password-field-width - Password field width.
- * 
+ *
  * @cssprop --omni-password-field-disabled-color - Password field disabled font color.
  * @cssprop --omni-password-field-error-font-color - Password field error font color.
  *

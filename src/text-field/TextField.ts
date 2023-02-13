@@ -33,7 +33,7 @@ import { OmniFormElement } from '../core/OmniFormElement.js';
  * @cssprop --omni-text-field-padding - Text field padding.
  * @cssprop --omni-text-field-height - Text field height.
  * @cssprop --omni-text-field-width - Text field width.
- * 
+ *
  * @cssprop --omni-text-field-disabled-font-color - Text field disabled font color.
  * @cssprop  --omni-text-field-font-color - Text field error font color.
  *

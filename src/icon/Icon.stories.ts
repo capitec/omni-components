@@ -15,7 +15,7 @@ export default {
 } as CSFIdentifier;
 
 interface Args {
-    size: (typeof sizeOptions)[number];
+    size: typeof sizeOptions[number];
     icon: string;
     '[Default Slot]': string;
 }

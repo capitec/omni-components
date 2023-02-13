@@ -33,7 +33,7 @@ import { OmniFormElement } from '../core/OmniFormElement.js';
  * @cssprop --omni-email-field-padding - Email field padding.
  * @cssprop --omni-email-field-height - Email field height.
  * @cssprop --omni-email-field-width - Email field width.
- * 
+ *
  * @cssprop --omni-email-field-disabled-font-color - Email field disabled font color.
  * @cssprop --omni-email-field-error-font-color - Email field error font color.
  */

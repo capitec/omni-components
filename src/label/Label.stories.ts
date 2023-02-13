@@ -27,7 +27,7 @@ export default {
 
 interface Args {
     label: string;
-    type: (typeof labelOptions)[number];
+    type: typeof labelOptions[number];
     '[Default Slot]': string;
 }
 

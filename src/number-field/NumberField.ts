@@ -32,7 +32,7 @@ import { OmniFormElement } from '../core/OmniFormElement.js';
  * @cssprop --omni-number-field-padding - Number field padding.
  * @cssprop --omni-number-field-height - Number field height.
  * @cssprop --omni-number-field-width - Number field width.
- * 
+ *
  * @cssprop --omni-number-field-disabled-font-color - Number field disabled font color.
  *
  */

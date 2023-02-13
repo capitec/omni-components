@@ -43,10 +43,10 @@ import '../icons/More.icon.js';
  * @cssprop --omni-select-field-padding - Select component input field padding.
  * @cssprop --omni-select-field-height - Select component input field height.
  * @cssprop --omni-select-field-width - Select component input field width.
- * 
+ *
  * @cssprop --omni-select-field-disabled-font-color - Select component input field disabled font color.
  * @cssprop --omni-select-field-error-font-color - Select component input field error font color.
- * 
+ *
  * @cssprop --omni-select-control-margin-right - Select control right margin.
  * @cssprop --omni-select-control-margin-left - Select control left margin.
  * @cssprop --omni-select-control-width - Select control width.
@@ -204,7 +204,7 @@ export class Select extends OmniFormElement {
 
     // Check to see if the component is at the bottom of the viewport if true set the internal boolean value.
     async _bottomCheck() {
-        if(visualViewport) {
+        if (visualViewport) {
             const distanceFromBottom = visualViewport.height - this.getBoundingClientRect().bottom;
             if (distanceFromBottom < 150) {
                 this._bottomOfViewport = true;
@@ -232,7 +232,7 @@ export class Select extends OmniFormElement {
         }
         if (this._itemsContainer && !this._isMobile) {
             await this.updateComplete;
-            if(visualViewport){
+            if (visualViewport) {
                 if (this._bottomOfViewport) {
                     const newHeight =
                         visualViewport.height -
@@ -246,8 +246,7 @@ export class Select extends OmniFormElement {
                     this._itemsContainer.style.maxHeight = `var(--omni-select-items-max-height, ${newHeight})`;
                 }
             }
-            }
-
+        }
     }
 
     static override get styles() {

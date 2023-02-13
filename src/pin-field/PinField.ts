@@ -49,7 +49,7 @@ import '../icons/EyeVisible.icon.js';
  * @cssprop --omni-pin-field-padding - Pin field padding.
  * @cssprop --omni-pin-field-height - Pin field height.
  * @cssprop --omni-pin-field-width - Pin field width.
- * 
+ *
  * @cssprop --omni-pin-field-disabled-font-color - Pin field disabled font color.
  * @cssprop --omni-pin-field-error-font-color - Pin field error font color.
  */

@@ -37,8 +37,8 @@ import '../label/Label.js';
  * @cssprop --omni-currency-field-padding - Currency field padding.
  * @cssprop --omni-currency-field-height - Currency field height.
  * @cssprop --omni-currency-field-width - Currency field width.
- * 
- * @cssprop --omni-currency-field-disabled-font-color - 
+ *
+ * @cssprop --omni-currency-field-disabled-font-color -
  *
  * @cssprop --omni-currency-field-label-left-margin - Currency field label left margin.
  *
