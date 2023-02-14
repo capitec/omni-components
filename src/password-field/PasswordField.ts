@@ -172,7 +172,8 @@ export class PasswordField extends OmniFormElement {
     protected override renderContent() {
         const field: ClassInfo = {
             field: true,
-            disabled: this.disabled
+            disabled: this.disabled,
+            error: this.error as string
         };
         return html`
       <input

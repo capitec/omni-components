@@ -38,6 +38,7 @@ import '../icons/Search.icon.js';
  * @cssprop --omni-search-field-width - Search field width.
  *
  * @cssprop --omni-search-field-disabled-font-color - Search field disabled font color.
+ * @cssprop --omni-search-field-error-font-color - Search field error font color.
  *
  * @cssprop --omni-search-field-control-margin-right - Search field control right margin.
  * @cssprop --omni-search-field-control-margin-left - Search field control left margin.
