@@ -38,6 +38,7 @@
 		"utils": true,
 		"switch": true,
 		"email-field": true,
-		"pin-field": true
+		"pin-field": true,
+		"keyboard": true
 	}
 }

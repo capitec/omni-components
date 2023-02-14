@@ -58,7 +58,8 @@
         "text-field",
         "number-field",
         "email-field",
-        "pin-field"
+        "pin-field",
+        "keyboard"
     ],
     "exports": {
         "./*": "./dist/*/index.js"

@@ -327,6 +327,7 @@ export class LivePropertyEditor extends OmniElement {
                             attributeEditor = html`
               <omni-text-field
                 class="docs-text-field"
+                data-omni-keyboard-hidden
                 ?disabled=${this.disabled}
                 .value="${live(boundValue)}"
                 @input="${async (e: Event) => {
