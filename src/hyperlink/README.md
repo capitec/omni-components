@@ -30,6 +30,7 @@ Control to indicate an action to be executed. Typically used for navigational pu
 
 | Name                | Description                                      |
 |---------------------|--------------------------------------------------|
+|                     | Content to render inside the component.<br /><br />Registry of all properties defined by the component. |
 | `loading_indicator` | Used to define content that is displayed while async rendering is awaiting, or when renderLoading() is implicitly called |
 
 ## CSS Custom Properties
