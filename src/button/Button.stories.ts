@@ -101,7 +101,7 @@ export const Label = {
     },
     play: async (context) => {
         const button = within(context.canvasElement).getByTestId<Button>('test-button');
-        const labelElement = button.shadowRoot!.getElementById('label') as HTMLElement;
+        const labelElement = button.shadowRoot?.getElementById('label') as HTMLElement;
         const labelMatches = labelElement?.innerText === Label.args?.label;
         await expect(labelMatches).toBeTruthy();
     }
