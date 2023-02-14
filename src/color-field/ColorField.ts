@@ -121,6 +121,14 @@ export class ColorField extends OmniFormElement {
         ];
     }
 
+    override focus(options?: FocusOptions | undefined): void {
+        if (this._inputElement) {
+            this._inputElement.focus(options);
+        } else {
+            super.focus(options);
+        }
+    }
+
     protected override renderContent() {
         return html` <label for="inputField" class="field"> ${this.value?.toString()?.toUpperCase()} </label> `;
     }

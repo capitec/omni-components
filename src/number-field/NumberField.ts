@@ -58,6 +58,14 @@ export class NumberField extends OmniFormElement {
         }
     }
 
+    override focus(options?: FocusOptions | undefined): void {
+        if (this._inputElement) {
+            this._inputElement.focus(options);
+        } else {
+            super.focus(options);
+        }
+    }
+
     _keyDown(e: KeyboardEvent) {
         // Stop alpha keys
         if (e.key >= 'a' && e.key <= 'z') {

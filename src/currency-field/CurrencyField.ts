@@ -102,6 +102,14 @@ export class CurrencyField extends OmniFormElement {
         }
     }
 
+    override focus(options?: FocusOptions | undefined): void {
+        if (this._inputElement) {
+            this._inputElement.focus(options);
+        } else {
+            super.focus(options);
+        }
+    }
+
     // Check if the device is a Iphone or Ipad running IOS.
     _isIOS() {
         console.log('navigator platform', navigator.platform);
