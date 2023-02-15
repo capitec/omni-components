@@ -46,10 +46,10 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
 
         const inputField = emailField.shadowRoot?.getElementById('inputField');
 
-        await userEvent.type(inputField as Element, 'JohnDoe@gmail.com', {
+        await userEvent.type(inputField as Element, 'johndoe@gmail.com', {
             pointerEventsCheck: 0
         });
-        const value = 'JohnDoe@gmail.com';
+        const value = 'johndoe@gmail.com';
 
         // TODO: Fix race conditions in tests
         if (navigator.userAgent === 'Test Runner') {
@@ -69,10 +69,10 @@ export const Hint = HintStory<EmailField, BaseArgs>('omni-email-field');
 
 export const Error_Label = ErrorStory<EmailField, BaseArgs>('omni-email-field');
 
-export const Value = ValueStory<EmailField, BaseArgs>('omni-email-field');
+export const Value = ValueStory<EmailField, BaseArgs>('omni-email-field', 'johndoe@gmail.com');
 
 export const Prefix = PrefixStory<EmailField, BaseArgs>('omni-email-field');
 
 export const Suffix = SuffixStory<EmailField, BaseArgs>('omni-email-field');
 
-export const Disabled = DisabledStory<EmailField, BaseArgs>('omni-email-field');
+export const Disabled = DisabledStory<EmailField, BaseArgs>('omni-email-field', 'johndoe@gmail.com');

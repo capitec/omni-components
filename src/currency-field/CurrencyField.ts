@@ -1,5 +1,6 @@
 import { html, css } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
+import { ClassInfo, classMap } from 'lit/directives/class-map.js';
 import { OmniFormElement } from '../core/OmniFormElement.js';
 import '../label/Label.js';
 
@@ -36,6 +37,8 @@ import '../label/Label.js';
  * @cssprop --omni-currency-field-padding - Currency field padding.
  * @cssprop --omni-currency-field-height - Currency field height.
  * @cssprop --omni-currency-field-width - Currency field width.
+ *
+ * @cssprop --omni-currency-field-disabled-font-color -
  *
  * @cssprop --omni-currency-field-label-left-margin - Currency field label left margin.
  *
@@ -104,7 +107,6 @@ export class CurrencyField extends OmniFormElement {
 
     // Check if the device is a Iphone or Ipad running IOS.
     _isIOS() {
-        console.log('navigator platform', navigator.platform);
         return (
             ['iPad Simulator', 'iPhone Simulator', 'iPod Simulator', 'iPad', 'iPhone', 'iPod'].includes(navigator.platform) ||
             // iPad on iOS 13 detection
@@ -280,9 +282,6 @@ export class CurrencyField extends OmniFormElement {
                             this._inputElement!.value = res;
                         });
                     } else {
-                        console.log(input.value.substring(0, caretPosition! - 1));
-                        console.log(input.value.substring(caretPosition! + selection, input.value.length + 1));
-
                         await this._formatToCurrency(
                             this._parseAmount(
                                 input.value.substring(0, caretPosition! - 1) +
@@ -291,7 +290,6 @@ export class CurrencyField extends OmniFormElement {
                         ).then((res) => {
                             this._inputElement!.value = res;
                         });
-                        console.log('Selection made in position that is not at the end');
                     }
                 } else {
                     await this._formatToCurrency(
@@ -440,6 +438,14 @@ export class CurrencyField extends OmniFormElement {
                     width: var(--omni-currency-field-width, 100%);
                 }
 
+                .field.disabled {
+                    color: var(--omni-currency-field-disabled-font-color, #7C7C7C);
+                }
+
+                .field.error {
+                    color: var(--omni-currency-field-error-font-color);
+                }
+
                 .label {
                     margin-left: var(--omni-currency-field-label-left-margin, 25px);
                 }
@@ -459,9 +465,14 @@ export class CurrencyField extends OmniFormElement {
     }
 
     protected override renderContent() {
+        const field: ClassInfo = {
+            field: true,
+            disabled: this.disabled,
+            error: this.error as string
+        };
         return html`
             <input
-                class="field"
+                class=${classMap(field)}
                 id="inputField"
                 type="text"
                 maxlength="21"

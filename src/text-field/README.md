@@ -100,6 +100,7 @@ Control to input text.
 | `--omni-form-layout-border-radius`               | Layout border radius.                          |
 | `--omni-form-layout-height`                      | Layout height.                                 |
 | `--omni-form-layout-width`                       | Layout width.                                  |
+| `--omni-text-field-disabled-font-color`          | Text field disabled font color.                |
 | `--omni-text-field-font-color`                   | Text field font color.                         |
 | `--omni-text-field-font-family`                  | Text field font family.                        |
 | `--omni-text-field-font-size`                    | Text field font size.                          |

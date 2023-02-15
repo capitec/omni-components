@@ -122,6 +122,8 @@ Control to get / set a value within a list of options.
 | `--omni-select-control-margin-left`              | Select control left margin.                      |
 | `--omni-select-control-margin-right`             | Select control right margin.                     |
 | `--omni-select-control-width`                    | Select control width.                            |
+| `--omni-select-field-disabled-font-color`        | Select component input field disabled font color. |
+| `--omni-select-field-error-font-color`           | Select component input field error font color.   |
 | `--omni-select-field-font-color`                 | Select component input field font color.         |
 | `--omni-select-field-font-family`                | Select component input field font family.        |
 | `--omni-select-field-font-size`                  | Select component input field font size.          |

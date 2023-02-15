@@ -113,6 +113,8 @@ Search input control.
 | `--omni-search-field-control-margin-left`        | Search field control left margin.              |
 | `--omni-search-field-control-margin-right`       | Search field control right margin.             |
 | `--omni-search-field-control-width`              | Search field control width.                    |
+| `--omni-search-field-disabled-font-color`        | Search field disabled font color.              |
+| `--omni-search-field-error-font-color`           | Search field error font color.                 |
 | `--omni-search-field-font-color`                 | Search field font color.                       |
 | `--omni-search-field-font-family`                | Search field font family.                      |
 | `--omni-search-field-font-size`                  | Search field font size.                        |
