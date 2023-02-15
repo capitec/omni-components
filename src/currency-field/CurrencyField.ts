@@ -104,7 +104,6 @@ export class CurrencyField extends OmniFormElement {
 
     // Check if the device is a Iphone or Ipad running IOS.
     _isIOS() {
-        console.log('navigator platform', navigator.platform);
         return (
             ['iPad Simulator', 'iPhone Simulator', 'iPod Simulator', 'iPad', 'iPhone', 'iPod'].includes(navigator.platform) ||
             // iPad on iOS 13 detection
@@ -280,9 +279,6 @@ export class CurrencyField extends OmniFormElement {
                             this._inputElement!.value = res;
                         });
                     } else {
-                        console.log(input.value.substring(0, caretPosition! - 1));
-                        console.log(input.value.substring(caretPosition! + selection, input.value.length + 1));
-
                         await this._formatToCurrency(
                             this._parseAmount(
                                 input.value.substring(0, caretPosition! - 1) +
@@ -291,7 +287,6 @@ export class CurrencyField extends OmniFormElement {
                         ).then((res) => {
                             this._inputElement!.value = res;
                         });
-                        console.log('Selection made in position that is not at the end');
                     }
                 } else {
                     await this._formatToCurrency(
