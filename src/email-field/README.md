@@ -47,6 +47,8 @@ Email input control, used in forms for input validation and to display correct v
 | `--omni-container-font-family`                   | Container font family.                         |
 | `--omni-container-height`                        | Container height.                              |
 | `--omni-container-width`                         | Container width.                               |
+| `--omni-email-field-disabled-font-color`         | Email field disabled font color.               |
+| `--omni-email-field-error-font-color`            | Email field error font color.                  |
 | `--omni-email-field-font-color`                  | Email field font color.                        |
 | `--omni-email-field-font-family`                 | Email field font family.                       |
 | `--omni-email-field-font-size`                   | Email field font size.                         |

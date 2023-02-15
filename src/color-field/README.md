@@ -48,6 +48,8 @@ Color input control.
 
 | Property                                         | Description                                    |
 |--------------------------------------------------|------------------------------------------------|
+| `--omni-color-field-disabled-font-color`         | Color field disabled font color.               |
+| `--omni-color-field-error-font-color`            | Color field error font color.                  |
 | `--omni-color-field-font-color`                  | Color field font color.                        |
 | `--omni-color-field-font-family`                 | Color field font family.                       |
 | `--omni-color-field-font-size`                   | Color field font size.                         |

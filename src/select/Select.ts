@@ -1,5 +1,6 @@
 import { html, css, nothing } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
+import { ClassInfo, classMap } from 'lit/directives/class-map.js';
 import { live } from 'lit/directives/live.js';
 import { ref } from 'lit/directives/ref.js';
 import { until } from 'lit/directives/until.js';
@@ -42,6 +43,9 @@ import '../icons/More.icon.js';
  * @cssprop --omni-select-field-padding - Select component input field padding.
  * @cssprop --omni-select-field-height - Select component input field height.
  * @cssprop --omni-select-field-width - Select component input field width.
+ *
+ * @cssprop --omni-select-field-disabled-font-color - Select component input field disabled font color.
+ * @cssprop --omni-select-field-error-font-color - Select component input field error font color.
  *
  * @cssprop --omni-select-control-margin-right - Select control right margin.
  * @cssprop --omni-select-control-margin-left - Select control left margin.
@@ -200,11 +204,13 @@ export class Select extends OmniFormElement {
 
     // Check to see if the component is at the bottom of the viewport if true set the internal boolean value.
     async _bottomCheck() {
-        const distanceFromBottom = visualViewport.height - this.getBoundingClientRect().bottom;
-        if (distanceFromBottom < 150) {
-            this._bottomOfViewport = true;
-        } else {
-            this._bottomOfViewport = false;
+        if (visualViewport) {
+            const distanceFromBottom = visualViewport.height - this.getBoundingClientRect().bottom;
+            if (distanceFromBottom < 150) {
+                this._bottomOfViewport = true;
+            } else {
+                this._bottomOfViewport = false;
+            }
         }
     }
 
@@ -226,18 +232,19 @@ export class Select extends OmniFormElement {
         }
         if (this._itemsContainer && !this._isMobile) {
             await this.updateComplete;
-
-            if (this._bottomOfViewport) {
-                const newHeight =
-                    visualViewport.height -
-                    this.getBoundingClientRect().height -
-                    (visualViewport.height - this.getBoundingClientRect().top) -
-                    10 +
-                    'px';
-                this._itemsContainer.style.maxHeight = `var(--omni-select-items-max-height, ${newHeight})`;
-            } else {
-                const newHeight = visualViewport.height - this.getBoundingClientRect().bottom - 10 + 'px';
-                this._itemsContainer.style.maxHeight = `var(--omni-select-items-max-height, ${newHeight})`;
+            if (visualViewport) {
+                if (this._bottomOfViewport) {
+                    const newHeight =
+                        visualViewport.height -
+                        this.getBoundingClientRect().height -
+                        (visualViewport.height - this.getBoundingClientRect().top) -
+                        10 +
+                        'px';
+                    this._itemsContainer.style.maxHeight = `var(--omni-select-items-max-height, ${newHeight})`;
+                } else {
+                    const newHeight = visualViewport.height - this.getBoundingClientRect().bottom - 10 + 'px';
+                    this._itemsContainer.style.maxHeight = `var(--omni-select-items-max-height, ${newHeight})`;
+                }
             }
         }
     }
@@ -273,6 +280,14 @@ export class Select extends OmniFormElement {
                     pointer-events: none;
                     height: var(--omni-select-field-height, 100%);
                     width: var(--omni-select-field-width, 100%);
+                }
+
+                .field.disabled {
+                    color: var(--omni-select-field-disabled-font-color,  #7C7C7C);
+                }
+
+                .field.error {
+                    color: var(--omni-select-field-error-font-color);
                 }
 
                 .control {
@@ -418,9 +433,14 @@ export class Select extends OmniFormElement {
     }
 
     protected override renderContent() {
+        const field: ClassInfo = {
+            field: true,
+            disabled: this.disabled,
+            error: this.error as string
+        };
         return html`
             <input
-                class="field"
+                class=${classMap(field)}
                 id="select"
                 type="text"
                 readonly

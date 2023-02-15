@@ -107,6 +107,8 @@ Password input control.
 | `--omni-password-field-control-padding-left`     | Password field control padding left.           |
 | `--omni-password-field-control-padding-right`    | Password field control padding right.          |
 | `--omni-password-field-control-padding-top`      | Password field control padding top.            |
+| `--omni-password-field-disabled-color`           | Password field disabled font color.            |
+| `--omni-password-field-error-font-color`         | Password field error font color.               |
 | `--omni-password-field-font-color`               | Password field font color.                     |
 | `--omni-password-field-font-family`              | Password field font family.                    |
 | `--omni-password-field-font-size`                | Password field font size.                      |

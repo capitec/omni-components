@@ -82,4 +82,4 @@ export const Prefix = PrefixStory<NumberField, BaseArgs>('omni-number-field');
 
 export const Suffix = SuffixStory<NumberField, BaseArgs>('omni-number-field');
 
-export const Disabled = DisabledStory<NumberField, BaseArgs>('omni-number-field');
+export const Disabled = DisabledStory<NumberField, BaseArgs>('omni-number-field', 123);
