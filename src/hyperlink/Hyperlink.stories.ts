@@ -5,7 +5,7 @@ import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
-import { ComponentStoryFormat, CSFIdentifier, raw } from '../utils/StoryUtils.js';
+import { ComponentStoryFormat, CSFIdentifier } from '../utils/StoryUtils.js';
 import './Hyperlink.js';
 
 const linkTarget = ['_self', '_blank', '_parent', '_top'] as const;
