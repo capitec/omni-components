@@ -48,7 +48,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         const valueChange = jest.fn();
         switchElement.addEventListener('value-change', valueChange);
 
-        const content = switchElement.shadowRoot.getElementById('content');
+        const content = switchElement.shadowRoot?.getElementById('content') as HTMLElement;
         await userEvent.click(content, {
             pointerEventsCheck: 0
         });
@@ -63,58 +63,63 @@ export const Interactive: ComponentStoryFormat<Args> = {
 
 export const Label: ComponentStoryFormat<Args> = {
     render: (args: Args) => html` <omni-switch data-testid="test-switch" label="${args.label}"></omni-switch> `,
+    description: 'Set text content to display next to the component.',
     args: {
         label: 'Label'
     },
     play: async (context) => {
         const switchElement = within(context.canvasElement).getByTestId<Switch>('test-switch');
-        const labelElement = switchElement.shadowRoot.querySelector<HTMLElement>('.label');
-        await expect(labelElement).toHaveTextContent(Label.args.label);
+        const labelElement = switchElement.shadowRoot?.querySelector<HTMLElement>('.label');
+        await expect(labelElement).toHaveTextContent(Label.args?.label as string);
     }
 };
 
 export const Hint: ComponentStoryFormat<Args> = {
     render: (args: Args) => html` <omni-switch data-testid="test-switch" label="${args.label}" hint="${args.hint}"></omni-switch> `,
+    description: 'Set text content to display as a hint.',
     args: {
         label: 'Hint',
         hint: 'This is a hint'
     },
     play: async (context) => {
         const switchElement = within(context.canvasElement).getByTestId<Switch>('test-switch');
-        const element = switchElement.shadowRoot.querySelector<HTMLElement>('.hint');
-        await expect(element).toHaveTextContent(Hint.args.hint);
+        const element = switchElement.shadowRoot?.querySelector<HTMLElement>('.hint');
+        await expect(element).toHaveTextContent(Hint.args?.hint as string);
     }
 };
 
 export const Error_Label: ComponentStoryFormat<Args> = {
     name: 'Error', // Explicitly named as error, the exported name cannot be 'Error' as that is reserved
     render: (args: Args) => html` <omni-switch data-testid="test-switch" label="${args.label}" error="${args.error}"></omni-switch> `,
+    description: 'Set text content to display as an error.',
     args: {
         label: 'Error',
         error: 'This is an error state'
     },
     play: async (context) => {
         const switchElement = within(context.canvasElement).getByTestId<Switch>('test-switch');
-        const element = switchElement.shadowRoot.querySelector<HTMLElement>('.error');
-        await expect(element).toHaveTextContent(Error_Label.args.error);
+        const element = switchElement.shadowRoot?.querySelector<HTMLElement>('.error');
+        await expect(element).toHaveTextContent(Error_Label.args?.error as string);
     }
 };
 
 export const Checked: ComponentStoryFormat<Args> = {
     render: (args: Args) => html` <omni-switch data-testid="test-switch" label="${args.label}" ?checked="${args.checked}"></omni-switch> `,
+    description: 'Set the component to a checked state.',
     args: {
         label: 'Checked',
         checked: true
     },
     play: async (context) => {
         const switchElement = within(context.canvasElement).getByTestId<Switch>('test-switch');
-        const checkedElement = switchElement.shadowRoot.querySelector<HTMLElement>('.checked');
+        const checkedElement = switchElement.shadowRoot?.querySelector<HTMLElement>('.checked');
         await expect(checkedElement).toBeTruthy();
     }
 };
 
 export const Disabled: ComponentStoryFormat<Args> = {
     render: (args: Args) => html` <omni-switch data-testid="test-switch" label="${args.label}" ?disabled="${args.disabled}"></omni-switch> `,
+    description: 'Prevent interaction (pointer events).',
     args: {
         label: 'Disabled',
         disabled: true
@@ -124,10 +129,10 @@ export const Disabled: ComponentStoryFormat<Args> = {
         const valueChange = jest.fn();
         switchElement.addEventListener('value-change', valueChange);
 
-        const disabledElement = switchElement.shadowRoot.querySelector<HTMLElement>('.disabled');
+        const disabledElement = switchElement.shadowRoot?.querySelector<HTMLElement>('.disabled');
         await expect(disabledElement).toBeTruthy();
 
-        const content = switchElement.shadowRoot.getElementById('content');
+        const content = switchElement.shadowRoot?.getElementById('content') as HTMLElement;
         await userEvent.click(content, {
             pointerEventsCheck: 0
         });

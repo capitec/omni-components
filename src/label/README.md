@@ -16,16 +16,17 @@ Label component that renders styled text.
 | Property   | Attribute  | Modifiers | Type                                             | Default   | Description                                      |
 |------------|------------|-----------|--------------------------------------------------|-----------|--------------------------------------------------|
 | `dir`      |            |           | `string`                                         |           |                                                  |
-| `label`    | `label`    |           | `string`                                         |           | Text label.                                      |
+| `label`    | `label`    |           | `string \| undefined`                            |           | Text label.                                      |
 | `lang`     |            |           | `string`                                         |           |                                                  |
 | `override` | `override` |           |                                                  |           | Used to set the base direction of text for display |
 | `styles`   |            | readonly  | `CSSResultGroup[]`                               |           |                                                  |
-| `type`     | `type`     |           | `"default" \| "title" \| "subtitle" \| "strong"` | "default" | The type of label to display.                    |
+| `type`     | `type`     |           | `"default" \| "title" \| "subtitle" \| "strong"` | "default" | Type of label to display.                        |
 
 ## Slots
 
 | Name                | Description                                      |
 |---------------------|--------------------------------------------------|
+|                     | Content to render inside the component.<br /><br />Registry of all properties defined by the component. |
 | `loading_indicator` | Used to define content that is displayed while async rendering is awaiting, or when renderLoading() is implicitly called |
 
 ## CSS Custom Properties

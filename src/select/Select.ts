@@ -1,5 +1,6 @@
 import { html, css, nothing } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
+import { ClassInfo, classMap } from 'lit/directives/class-map.js';
 import { live } from 'lit/directives/live.js';
 import { ref } from 'lit/directives/ref.js';
 import { until } from 'lit/directives/until.js';
@@ -23,7 +24,6 @@ import '../icons/More.icon.js';
  * <omni-select
  *   label="Enter a value"
  *   value="Hello World"
- *   data="{'id': 12345, 'name': 'Test'}"
  *   hint="Required"
  *   error="Field level error message"
  *   items={'item1','item2','item3','item4'}
@@ -40,8 +40,12 @@ import '../icons/More.icon.js';
  * @cssprop --omni-select-field-font-family - Select component input field font family.
  * @cssprop --omni-select-field-font-size - Select component input field font size.
  * @cssprop --omni-select-field-font-weight - Select component input field font weight.
- * @cssprop --omni-select-field-height - Select component input field height
  * @cssprop --omni-select-field-padding - Select component input field padding.
+ * @cssprop --omni-select-field-height - Select component input field height.
+ * @cssprop --omni-select-field-width - Select component input field width.
+ *
+ * @cssprop --omni-select-field-disabled-font-color - Select component input field disabled font color.
+ * @cssprop --omni-select-field-error-font-color - Select component input field error font color.
  *
  * @cssprop --omni-select-control-margin-right - Select control right margin.
  * @cssprop --omni-select-control-margin-left - Select control left margin.
@@ -81,20 +85,6 @@ import '../icons/More.icon.js';
  * @cssprop --omni-select-items-height - Select items height.
  * @cssprop --omni-select-items-width - Select items width.
  *
- * @cssprop --omni-select-scrollbar-thumb-width - Select items scroll bar thumb width.
- * @cssprop --omni-select-scrollbar-track-padding-left -  Select items scroll bar track left padding.
- * @cssprop --omni-select-scrollbar-track-padding-right - Select items scroll bar track right padding.
- *
- * @cssprop --omni-select-scrollbar-track-border-radius - Select items scroll bar track border radius.
- * @cssprop --omni-select-scrollbar-track-background-color - Select items scroll bar track background color.
- *
- * @cssprop --omni-select-scrollbar-thumb-border-radius - Select items scroll bar thumb border radius.
- * @cssprop --omni-select-scrollbar-thumb-background-color - Select items scroll bar thumb background color.
- * @cssprop --omni-select-scrollbar-track-padding-top - Select items scroll bar thumb top padding.
- * @cssprop --omni-select-scrollbar-track-padding-bottom - Select items scroll bar thumb bottom padding.
- * @cssprop --omni-select-scrollbar-track-padding-left - Select items scroll bar thumb left padding.
- * @cssprop --omni-select-scrollbar-track-padding-right - Select items scroll bar thumb right padding.
- *
  * @cssprop --omni-select-item-font-color - Select item font color.
  * @cssprop --omni-select-item-font-family - Select item font family.
  * @cssprop --omni-select-item-font-weight - Select item font weight.
@@ -115,38 +105,38 @@ import '../icons/More.icon.js';
 @customElement('omni-select')
 export class Select extends OmniFormElement {
     @query('#select')
-    private _selectElement: HTMLInputElement;
-    private _itemsContainer: HTMLDivElement;
+    private _selectElement?: HTMLInputElement;
+    private _itemsContainer?: HTMLDivElement;
 
     /**
      * Selectable items of the select component.
      * @attr
      */
-    @property({ type: Array, reflect: true }) items: SelectItems | (() => SelectItems);
+    @property({ type: Array, reflect: true }) items?: SelectItems | (() => SelectItems);
 
     /**
-     * The field of the item to display as one of the selectable options.
+     * Field of the item to display as one of the selectable options.
      * @attr [display-field]
      */
-    @property({ type: String, reflect: true, attribute: 'display-field' }) displayField: string;
+    @property({ type: String, reflect: true, attribute: 'display-field' }) displayField?: string;
 
     /**
-     * The id field of the items provided.
+     * Id field of the items provided.
      * @attr [id-field]
      */
     @property({ type: String, reflect: true, attribute: 'id-field' }) idField: string = 'id';
 
     /**
-     * The message displayed in the items container when no items are bound to the component.
+     * Message displayed in the items container when no items are bound to the component.
      * @attr [empty-message]
      */
     @property({ type: String, reflect: true, attribute: 'empty-message' }) emptyMessage: string = 'No items provided';
 
     /**
-     * The render function for each item.
+     * Render function for each item.
      * @no_attribute
      */
-    @property({ type: Object, reflect: false }) renderItem: RenderFunction;
+    @property({ type: Object, reflect: false }) renderItem?: RenderFunction;
 
     // Internal state properties
     @state() private _popUp: boolean = false;
@@ -197,7 +187,7 @@ export class Select extends OmniFormElement {
         await this.updateComplete;
 
         //https://stackoverflow.com/a/36084475
-        this._selectElement.dispatchEvent(
+        this._selectElement?.dispatchEvent(
             new Event('change', {
                 bubbles: true,
                 composed: true
@@ -214,11 +204,13 @@ export class Select extends OmniFormElement {
 
     // Check to see if the component is at the bottom of the viewport if true set the internal boolean value.
     async _bottomCheck() {
-        const distanceFromBottom = visualViewport.height - this.getBoundingClientRect().bottom;
-        if (distanceFromBottom < 150) {
-            this._bottomOfViewport = true;
-        } else {
-            this._bottomOfViewport = false;
+        if (visualViewport) {
+            const distanceFromBottom = visualViewport.height - this.getBoundingClientRect().bottom;
+            if (distanceFromBottom < 150) {
+                this._bottomOfViewport = true;
+            } else {
+                this._bottomOfViewport = false;
+            }
         }
     }
 
@@ -240,18 +232,19 @@ export class Select extends OmniFormElement {
         }
         if (this._itemsContainer && !this._isMobile) {
             await this.updateComplete;
-
-            if (this._bottomOfViewport) {
-                const newHeight =
-                    visualViewport.height -
-                    this.getBoundingClientRect().height -
-                    (visualViewport.height - this.getBoundingClientRect().top) -
-                    10 +
-                    'px';
-                this._itemsContainer.style.maxHeight = `var(--omni-select-items-max-height, ${newHeight})`;
-            } else {
-                const newHeight = visualViewport.height - this.getBoundingClientRect().bottom - 10 + 'px';
-                this._itemsContainer.style.maxHeight = `var(--omni-select-items-max-height, ${newHeight})`;
+            if (visualViewport) {
+                if (this._bottomOfViewport) {
+                    const newHeight =
+                        visualViewport.height -
+                        this.getBoundingClientRect().height -
+                        (visualViewport.height - this.getBoundingClientRect().top) -
+                        10 +
+                        'px';
+                    this._itemsContainer.style.maxHeight = `var(--omni-select-items-max-height, ${newHeight})`;
+                } else {
+                    const newHeight = visualViewport.height - this.getBoundingClientRect().bottom - 10 + 'px';
+                    this._itemsContainer.style.maxHeight = `var(--omni-select-items-max-height, ${newHeight})`;
+                }
             }
         }
     }
@@ -281,12 +274,20 @@ export class Select extends OmniFormElement {
                     font-family: var(--omni-select-field-font-family, var(--omni-font-family));
                     font-size: var(--omni-select-field-font-size, var(--omni-font-size));
                     font-weight: var(--omni-select-field-font-weight, var(--omni-font-weight));
-                    height: var(--omni-select-field-height, 100%);
                     padding: var(--omni-select-field-padding, 10px);
 
                     /* Added to stop the transforming of the label when the input is clicked */
                     pointer-events: none;
-                    width: var(--omni-select-field-width);
+                    height: var(--omni-select-field-height, 100%);
+                    width: var(--omni-select-field-width, 100%);
+                }
+
+                .field.disabled {
+                    color: var(--omni-select-field-disabled-font-color,  #7C7C7C);
+                }
+
+                .field.error {
+                    color: var(--omni-select-field-error-font-color);
                 }
 
                 .control {
@@ -392,31 +393,6 @@ export class Select extends OmniFormElement {
                     width: var(--omni-select-items-width, 100%);
                 }
 
-                /* Scroll bar styles*/
-                .items::-webkit-scrollbar {
-                    width: calc(
-                        var(--omni-select-scrollbar-thumb-width, 10px) + var(--omni-select-scrollbar-track-padding-left, 2px) +
-                            var(--omni-select-scrollbar-track-padding-right, 2px)
-                    );
-                }
-
-                .items::-webkit-scrollbar-track {
-                    border-radius: var(--omni-select-scrollbar-track-border-radius, 10px);
-                    background-color: var(--omni-select-scrollbar-track-background-color, transparent);
-                }
-
-                .items::-webkit-scrollbar-thumb {
-                    border-radius: var(--omni-select-scrollbar-thumb-border-radius, 10px);
-                    background-color: var(--omni-select-scrollbar-thumb-background-color, #d9d9d9);
-
-                    border-top: var(--omni-select-scrollbar-track-padding-top, 2px) solid transparent;
-                    border-bottom: var(--omni-select-scrollbar-track-padding-bottom, 2px) solid transparent;
-                    border-left: var(--omni-select-scrollbar-track-padding-left, 2px) solid transparent;
-                    border-right: var(--omni-select-scrollbar-track-padding-right, 2px) solid transparent;
-
-                    background-clip: padding-box;
-                }
-
                 .item,
                 .none {
                     white-space: nowrap;
@@ -457,9 +433,14 @@ export class Select extends OmniFormElement {
     }
 
     protected override renderContent() {
+        const field: ClassInfo = {
+            field: true,
+            disabled: this.disabled,
+            error: this.error as string
+        };
         return html`
             <input
-                class="field"
+                class=${classMap(field)}
                 id="select"
                 type="text"
                 readonly
@@ -474,7 +455,7 @@ export class Select extends OmniFormElement {
     }
 
     protected override renderPicker() {
-        if (!this._popUp || !this.items) {
+        if (!this._popUp) {
             return nothing;
         }
         return html`
@@ -505,7 +486,7 @@ export class Select extends OmniFormElement {
         if (typeof this.items === 'function') {
             items = await this.items();
         } else {
-            items = await this.items;
+            items = (await this.items) as SelectTypes;
         }
 
         if (Array.isArray(items)) {
@@ -522,7 +503,9 @@ export class Select extends OmniFormElement {
     // Render the each option in the item container
     _renderOption(item: Record<string, unknown> | string) {
         return html` <div
-            class="item ${this.value === (typeof item === 'string' ? item : item[this.displayField]) || this.value === item ? `selected` : ``}"
+            class="item ${
+                this.value === (typeof item === 'string' ? item : item[this.displayField as string]) || this.value === item ? `selected` : ``
+            }"
             @click="${() => this._onItemClick(item)}">
             ${
                 this.renderItem
@@ -543,3 +526,9 @@ export class Select extends OmniFormElement {
 
 export type SelectTypes = string[] | Record<string, unknown>[];
 export type SelectItems = SelectTypes | Promise<SelectTypes>;
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'omni-select': Select;
+    }
+}

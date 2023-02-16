@@ -19,7 +19,7 @@
       "experimentalDecorators": true,
       "forceConsistentCasingInFileNames": true,
       "noImplicitOverride": true,
-      "strictNullChecks": false,
+      "strictNullChecks": true,
       "plugins": [
         {
           "name": "ts-lit-plugin",
@@ -27,8 +27,10 @@
         }
       ],
       "outDir": "dist",
-      "rootDir": "./src"
+      "rootDir": "./src",
+      "declarationDir": "."
     },
+    "include": ["src"],
     "exclude": ["node_modules", "dist"],
     "references": []
   }

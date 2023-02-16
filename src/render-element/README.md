@@ -10,14 +10,14 @@ Element that defers content rendering to a provided function / promise.
 
 ## Properties
 
-| Property   | Attribute  | Modifiers | Type                        | Description                                      |
-|------------|------------|-----------|-----------------------------|--------------------------------------------------|
-| `data`     | `data`     |           | `object \| Promise<object>` | Data associated with the component.              |
-| `dir`      |            |           | `string`                    |                                                  |
-| `lang`     |            |           | `string`                    |                                                  |
-| `override` | `override` |           |                             | Used to set the base direction of text for display |
-| `renderer` | `renderer` |           | `RenderFunction`            | The renderer function                            |
-| `styles`   |            | readonly  | `CSSResultGroup[]`          |                                                  |
+| Property   | Attribute  | Modifiers | Type                                     | Description                                      |
+|------------|------------|-----------|------------------------------------------|--------------------------------------------------|
+| `data`     | `data`     |           | `object \| Promise<object> \| undefined` | Data associated with the component.              |
+| `dir`      |            |           | `string`                                 |                                                  |
+| `lang`     |            |           | `string`                                 |                                                  |
+| `override` | `override` |           |                                          | Used to set the base direction of text for display |
+| `renderer` | `renderer` |           | `RenderFunction \| undefined`            | Renderer function                                |
+| `styles`   |            | readonly  | `CSSResultGroup[]`                       |                                                  |
 
 ## Methods
 

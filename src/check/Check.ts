@@ -80,43 +80,43 @@ export class Check extends OmniElement {
      * Text label.
      * @attr
      */
-    @property({ type: String, reflect: true }) label: string;
+    @property({ type: String, reflect: true }) label?: string;
 
     /**
      * Data associated with the component.
      * @attr
      */
-    @property({ type: Object, reflect: true }) data: object;
+    @property({ type: Object, reflect: true }) data?: object;
 
     /**
-     * A hint message to assist the user.
+     * Hint message to assist the user.
      * @attr
      */
-    @property({ type: String, reflect: true }) hint: string;
+    @property({ type: String, reflect: true }) hint?: string;
 
     /**
      * An error message to guide users to correct a mistake.
      * @attr
      */
-    @property({ type: String, reflect: true }) error: string;
+    @property({ type: String, reflect: true }) error?: string;
 
     /**
      * Indicator if the component is checked or not.
      * @attr
      */
-    @property({ type: Boolean, reflect: true }) checked: boolean;
+    @property({ type: Boolean, reflect: true }) checked?: boolean;
 
     /**
      * Indicator if the component is disabled.
      * @attr
      */
-    @property({ type: Boolean, reflect: true }) disabled: boolean;
+    @property({ type: Boolean, reflect: true }) disabled?: boolean;
 
     /**
      * Indicator if the component is in and indeterminate state.
      * @attr
      */
-    @property({ type: Boolean, reflect: true }) indeterminate: boolean;
+    @property({ type: Boolean, reflect: true }) indeterminate?: boolean;
 
     override connectedCallback(): void {
         super.connectedCallback();
@@ -125,7 +125,7 @@ export class Check extends OmniElement {
     }
 
     override focus() {
-        this.shadowRoot.getElementById('content').focus();
+        this.shadowRoot?.getElementById('content')?.focus();
     }
 
     _click(e: MouseEvent): void {
@@ -323,9 +323,9 @@ export class Check extends OmniElement {
       <div
         class=${classMap({
             container: true,
-            indeterminate: this.indeterminate,
-            checked: this.checked,
-            disabled: this.disabled
+            indeterminate: this.indeterminate ?? false,
+            checked: this.checked ?? false,
+            disabled: this.disabled ?? false
         })}>
         <div id="content" @keydown="${this._keyDown}">
           <div class="indicator">
@@ -352,5 +352,11 @@ export class Check extends OmniElement {
         </label>
       </div>
     `;
+    }
+}
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'omni-check': Check;
     }
 }

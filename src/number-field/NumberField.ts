@@ -1,5 +1,6 @@
 import { css, html } from 'lit';
 import { customElement, query } from 'lit/decorators.js';
+import { ClassInfo, classMap } from 'lit/directives/class-map.js';
 import { live } from 'lit/directives/live.js';
 import { OmniFormElement } from '../core/OmniFormElement.js';
 
@@ -15,7 +16,6 @@ import { OmniFormElement } from '../core/OmniFormElement.js';
  * <omni-number-field
  *   label="Enter a value"
  *   value=12345
- *   data="{'id': 12345, 'name': 'Test'}"
  *   hint="Required"
  *   error="Field level error message"
  *   disabled>
@@ -29,26 +29,49 @@ import { OmniFormElement } from '../core/OmniFormElement.js';
  * @cssprop --omni-number-field-font-family - Number field font family.
  * @cssprop --omni-number-field-font-size - Number field font size.
  * @cssprop --omni-number-field-font-weight - Number field font weight.
+ * @cssprop --omni-number-field-padding - Number field padding.
  * @cssprop --omni-number-field-height - Number field height.
- * @cssprop --omni-number-field-padding - Number field width.
  * @cssprop --omni-number-field-width - Number field width.
  *
+ * @cssprop --omni-number-field-disabled-font-color - Number field disabled font color.
+ * @cssprop --omni-number-field-error-font-color - Number field error font color.
  */
 @customElement('omni-number-field')
 export class NumberField extends OmniFormElement {
     @query('#inputField')
-    private _inputElement: HTMLInputElement;
+    private _inputElement?: HTMLInputElement;
 
     override connectedCallback() {
         super.connectedCallback();
         this.addEventListener('input', this._keyInput.bind(this), {
             capture: true
         });
+        this.addEventListener('keydown', this._keyDown.bind(this), {
+            capture: true
+        });
+    }
+
+    // Added for browsers that allow text values entered into a input when type is set to number.
+    override async attributeChangedCallback(name: string, _old: string | null, value: string | null): Promise<void> {
+        super.attributeChangedCallback(name, _old, value);
+        if (name === 'value') {
+            if (new RegExp('^[0-9]+$').test(value as string) === false) {
+                return;
+            }
+        }
+    }
+
+    _keyDown(e: KeyboardEvent) {
+        // Stop alpha keys
+        if (e.key >= 'a' && e.key <= 'z') {
+            e.preventDefault();
+            return;
+        }
     }
 
     _keyInput() {
-        const input = this._inputElement;
-        this.value = input.value;
+        const input = this._inputElement as HTMLInputElement;
+        this.value = input?.value;
     }
 
     static override get styles() {
@@ -71,9 +94,18 @@ export class NumberField extends OmniFormElement {
           font-family: var(--omni-number-field-font-family, var(--omni-font-family));
           font-size: var(--omni-number-field-font-size, var(--omni-font-size));
           font-weight: var(--omni-number-field-font-weight, var(--omni-font-weight));
-          height: var(--omni-number-field-height, 100%);
           padding: var(--omni-number-field-padding, 10px);
-          width: var(--omni-number-field-width);
+
+          height: var(--omni-number-field-height, 100%);
+          width: var(--omni-number-field-width, 100%);
+        }
+
+        .field.disabled {
+            color: var(--omni-number-field-disabled-font-color, #7C7C7C);
+        }
+
+        .field.error {
+            color: var(--omni-number-field-error-font-color)
         }
 
         /* Used to not display default stepper */
@@ -92,14 +124,25 @@ export class NumberField extends OmniFormElement {
     }
 
     protected override renderContent() {
+        const field: ClassInfo = {
+            field: true,
+            disabled: this.disabled,
+            error: this.error as string
+        };
         return html`
       <input
-        class="field"
+        class=${classMap(field)}
         id="inputField"
         type="number"
         .value=${live(this.value as string)}
         ?readOnly=${this.disabled}
         tabindex="${this.disabled ? -1 : 0}" />
     `;
+    }
+}
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'omni-number-field': NumberField;
     }
 }

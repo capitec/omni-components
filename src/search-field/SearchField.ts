@@ -1,13 +1,14 @@
 import { html, css } from 'lit';
 import { customElement, query } from 'lit/decorators.js';
+import { ClassInfo, classMap } from 'lit/directives/class-map.js';
 import { live } from 'lit/directives/live.js';
 import { OmniFormElement } from '../core/OmniFormElement.js';
 
-import '../icons/Clear.icon';
-import '../icons/Search.icon';
+import '../icons/Clear.icon.js';
+import '../icons/Search.icon.js';
 
 /**
- * A search input control.
+ * Search input control.
  *
  * @import
  * ```js
@@ -19,7 +20,6 @@ import '../icons/Search.icon';
  * <omni-search-field
  *   label="Enter a value"
  *   value="Hello World"
- *   data="{'id': 12345, 'name': 'Test'}"
  *   hint="Required"
  *   error="Field level error message"
  *   disabled>
@@ -33,9 +33,12 @@ import '../icons/Search.icon';
  * @cssprop --omni-search-field-font-family - Search field font family.
  * @cssprop --omni-search-field-font-size - Search field font size.
  * @cssprop --omni-search-field-font-weight - Search field font weight.
- * @cssprop --omni-search-field-height - Search field height.
  * @cssprop --omni-search-field-padding - Search field padding.
- * @cssprop --omni-search-field-width - Search field width
+ * @cssprop --omni-search-field-height - Search field height.
+ * @cssprop --omni-search-field-width - Search field width.
+ *
+ * @cssprop --omni-search-field-disabled-font-color - Search field disabled font color.
+ * @cssprop --omni-search-field-error-font-color - Search field error font color.
  *
  * @cssprop --omni-search-field-control-margin-right - Search field control right margin.
  * @cssprop --omni-search-field-control-margin-left - Search field control left margin.
@@ -48,11 +51,13 @@ import '../icons/Search.icon';
  * @cssprop --omni-search-field-search-icon-width - Search field search icon width.
  * @cssprop --omni-search-field-search-icon-margin-left - Search field search icon left margin.
  *
+ * @cssprop --omni-search-field-label-left-margin - Search field label left margin.
+ *
  */
 @customElement('omni-search-field')
 export class SearchField extends OmniFormElement {
     @query('#inputField')
-    private _inputElement: HTMLInputElement;
+    private _inputElement?: HTMLInputElement;
 
     override connectedCallback() {
         super.connectedCallback();
@@ -63,7 +68,7 @@ export class SearchField extends OmniFormElement {
 
     _keyInput() {
         const input = this._inputElement;
-        this.value = input.value;
+        this.value = input?.value;
     }
 
     async _clearField(e: MouseEvent) {
@@ -72,8 +77,6 @@ export class SearchField extends OmniFormElement {
         }
 
         this.value = '';
-        // Moves the label back into position when clear button is clicked.
-        super._focusLost();
 
         // Dispatch standard DOM event to cater for single clear.
         this.dispatchEvent(
@@ -104,9 +107,17 @@ export class SearchField extends OmniFormElement {
                     font-family: var(--omni-search-field-font-family, var(--omni-font-family));
                     font-size: var(--omni-search-field-font-size, var(--omni-font-size));
                     font-weight: var(--omni-search-field-font-weight, var(--omni-font-weight));
-                    height: var(--omni-search-field-height, 100%);
                     padding: var(--omni-search-field-padding, 10px);
-                    width: var(--omni-search-field-width);
+                    height: var(--omni-search-field-height, 100%);
+                    width: var(--omni-search-field-width, 100%);
+                }
+
+                .field.disabled {
+                    color: var(--omni-search-field-disabled-font-color, #7C7C7C);
+                }
+
+                .field.error {
+                    color: var(--omni-search-field-error-font-color);
                 }
 
                 .control {
@@ -131,6 +142,10 @@ export class SearchField extends OmniFormElement {
                     fill: var(--omni-search-field-search-icon-color, var(--omni-primary-color));
                     width: var(--omni-search-field-search-icon-width, 20px);   
                     margin-left: var(--omni-search-field-search-icon-margin-left,10px) !important;                                 
+                }
+
+                .label {
+                    margin-left: var(--omni-search-field-label-left-margin, 42px);
                 }
                 
                 /* Remove the default clear button from the input with type="search"*/
@@ -158,14 +173,25 @@ export class SearchField extends OmniFormElement {
     }
 
     protected override renderContent() {
+        const field: ClassInfo = {
+            field: true,
+            disabled: this.disabled,
+            error: this.error as string
+        };
         return html`
             <input
-                class="field"
+                class=${classMap(field)}
                 id="inputField"
                 type="search"
                 .value=${live(this.value as string)}
                 ?readOnly=${this.disabled}
                 tabindex="${this.disabled ? -1 : 0}" />
         `;
+    }
+}
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'omni-search-field': SearchField;
     }
 }

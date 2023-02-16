@@ -44,16 +44,16 @@ import { OmniElement } from '../core/OmniElement.js';
 @customElement('omni-icon')
 export class Icon extends OmniElement {
     /**
-     * The size to display the icon at
+     * Size to display the icon at
      * @attr [size="default"]
      */
     @property({ type: String, reflect: true }) size: 'default' | 'extra-small' | 'small' | 'medium' | 'large' = 'default';
 
     /**
-     * The name of the icon to display. Takes preference over the slotted icon.
+     * Name of the icon to display. Takes preference over the slotted icon.
      * @attr
      */
-    @property({ type: String, reflect: true }) icon: string;
+    @property({ type: String, reflect: true }) icon?: string;
 
     static override get styles() {
         return [
@@ -162,5 +162,11 @@ export class Icon extends OmniElement {
         <slot></slot>
       </div>
     `;
+    }
+}
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'omni-icon': Icon;
     }
 }

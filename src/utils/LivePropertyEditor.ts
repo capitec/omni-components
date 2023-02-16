@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable no-prototype-builtins */
 import { html as langHtml } from '@codemirror/lang-html';
 import { githubDark as codeThemeDark } from '@ddietr/codemirror-themes/github-dark.js';
 import { githubLight as codeTheme } from '@ddietr/codemirror-themes/github-light.js';
@@ -28,18 +30,18 @@ import './CodeEditor.js';
  */
 @customElement('live-property-editor')
 export class LivePropertyEditor extends OmniElement {
-    @property({ type: Object, reflect: false }) data: ComponentStoryFormat<any>;
-    @property({ type: String, reflect: true }) element: string;
-    @property({ type: Boolean, reflect: true }) disabled: boolean;
-    @property({ type: String, attribute: 'ignore-attributes', reflect: true }) ignoreAttributes: string;
+    @property({ type: Object, reflect: false }) data?: ComponentStoryFormat<any>;
+    @property({ type: String, reflect: true }) element?: string;
+    @property({ type: Boolean, reflect: true }) disabled!: boolean;
+    @property({ type: String, attribute: 'ignore-attributes', reflect: true }) ignoreAttributes?: string;
     @property({ type: String, attribute: 'custom-elements', reflect: true }) customElementsPath: string = './custom-elements.json';
 
-    @state() customElements: Package;
+    @state() customElements?: Package;
 
-    @queryAll('.slot-code') slotCodeEditors: NodeListOf<CodeEditor>;
+    @queryAll('.slot-code') slotCodeEditors?: NodeListOf<CodeEditor>;
 
-    private _firstRenderCompleted: boolean;
-    private theme: string;
+    private _firstRenderCompleted!: boolean;
+    private theme?: string;
 
     override async connectedCallback() {
         super.connectedCallback();
@@ -187,7 +189,7 @@ export class LivePropertyEditor extends OmniElement {
             this.slotCodeEditors.forEach(async (codeEditor) => {
                 const slotName = codeEditor.getAttribute('data-slot-name');
                 if (slotName) {
-                    const newCode = this.data && this.data.args[slotName] ? this.data.args[slotName] : undefined;
+                    const newCode = this.data && this.data.args![slotName] ? this.data.args![slotName] : undefined;
                     await codeEditor.refresh(() => newCode);
                 }
             });
@@ -199,11 +201,11 @@ export class LivePropertyEditor extends OmniElement {
             return html`<omni-loading-icon class="loading"></omni-loading-icon>`;
         }
 
-        const module = loadCustomElementsModuleFor(this.element, this.customElements);
+        const module = loadCustomElementsModuleFor(this.element as string, this.customElements);
         const attributes: { html: TemplateResult; name: string }[] = [];
         const slots: { html: TemplateResult; name: string }[] = [];
 
-        module.declarations.forEach((d) => {
+        module?.declarations?.forEach((d) => {
             const declaration = d as unknown as CustomElement & { cssCategory: string };
             if (declaration.slots) {
                 declaration.slots.forEach((slot) => {
@@ -219,7 +221,7 @@ export class LivePropertyEditor extends OmniElement {
                 data-slot-name="${slot.name}"
                 ?disabled=${this.disabled}
                 .extensions="${async () => [this._currentCodeTheme(), langHtml(await loadCustomElementsCodeMirrorCompletionsRemote())]}"
-                .code="${ifNotEmpty(this.data && this.data.args[slot.name] ? this.data.args[slot.name] : undefined)}"
+                .code="${ifNotEmpty(this.data && this.data.args![slot.name] ? this.data.args![slot.name] : undefined)}"
                 @codemirror-source-change="${(e: CustomEvent<CodeMirrorSourceUpdateEvent>) => {
                     this._propertyChanged({
                         property: slot.name,
@@ -241,19 +243,24 @@ export class LivePropertyEditor extends OmniElement {
                     )
                         return;
 
-                    let attributeEditor: TemplateResult = undefined;
+                    let attributeEditor: TemplateResult = undefined as any;
                     try {
-                        if (attribute.type.text === 'boolean') {
+                        if (attribute?.type?.text === 'boolean') {
                             attributeEditor = html`
               <omni-switch
                 class="docs-select"
                 ?disabled=${this.disabled}
                 ?checked="${
-                    this.data ? this.data.args[attribute.name] ?? this.data.args[attribute.fieldName ?? attribute.name] : attribute.default === 'true'
+                    this.data
+                        ? this.data.args![attribute.name] ?? this.data.args![attribute.fieldName ?? attribute.name]
+                        : attribute.default === 'true'
                 }"
                 @value-change="${(e: CustomEvent) => {
                     this._propertyChanged({
-                        property: this.data && attribute.fieldName && this.data.args[attribute.fieldName] ? attribute.fieldName : attribute.name,
+                        property:
+                            this.data && attribute.fieldName && this.data.args?.hasOwnProperty(attribute.fieldName)
+                                ? attribute.fieldName
+                                : attribute.name,
                         newValue: e.detail.new,
                         oldValue: e.detail.old
                     });
@@ -261,20 +268,20 @@ export class LivePropertyEditor extends OmniElement {
               </omni-switch>
             `;
                         } else if (
-                            attribute.type.text !== 'object' &&
-                            attribute.type.text !== 'string' &&
-                            attribute.type.text !== 'boolean' &&
-                            !attribute.type.text.includes('Promise') &&
-                            attribute.type.text.includes("'")
+                            attribute.type?.text !== 'object' &&
+                            attribute.type?.text !== 'string' &&
+                            attribute.type?.text !== 'boolean' &&
+                            !attribute.type?.text.includes('Promise') &&
+                            attribute.type?.text.includes("'")
                         ) {
-                            const typesRaw = attribute.type.text.split(' | ');
+                            const typesRaw = attribute.type?.text.split(' | ');
                             const types = [];
                             for (const type in typesRaw) {
                                 const typeValue = typesRaw[type];
                                 types.push(typeValue.substring(1, typeValue.length - 1));
                             }
                             const startValue = this.data
-                                ? this.data.args[attribute.name] ?? this.data.args[attribute.fieldName ?? attribute.name]
+                                ? this.data.args![attribute.name] ?? this.data.args![attribute.fieldName ?? attribute.name]
                                 : undefined;
 
                             attributeEditor = html`
@@ -286,9 +293,12 @@ export class LivePropertyEditor extends OmniElement {
                 @change="${(e: Event) => {
                     const value = (e.target as HTMLSelectElement).value;
                     this._propertyChanged({
-                        property: this.data && attribute.fieldName && this.data.args[attribute.fieldName] ? attribute.fieldName : attribute.name,
+                        property:
+                            this.data && attribute.fieldName && this.data.args?.hasOwnProperty(attribute.fieldName)
+                                ? attribute.fieldName
+                                : attribute.name,
                         newValue: value,
-                        oldValue: this.data ? this.data.args[attribute.name] : undefined
+                        oldValue: this.data ? this.data.args![attribute.name] : undefined
                     });
                 }}"
             >
@@ -297,8 +307,8 @@ export class LivePropertyEditor extends OmniElement {
 
             `;
                         } else if (
-                            attribute.type.text === 'object' ||
-                            attribute.type.text.includes('Promise') ||
+                            attribute.type?.text === 'object' ||
+                            attribute.type?.text.includes('Promise') ||
                             (this.data?.args &&
                                 this.data.args[attribute.name] &&
                                 (typeof this.data.args[attribute.name] === 'function' || typeof this.data.args[attribute.name].then === 'function'))
@@ -306,7 +316,7 @@ export class LivePropertyEditor extends OmniElement {
                             return;
                         } else {
                             const val = this.data
-                                ? this.data.args[attribute.name] ?? this.data.args[attribute.fieldName ?? attribute.name] ?? ''
+                                ? this.data.args![attribute.name] ?? this.data.args![attribute.fieldName ?? attribute.name] ?? ''
                                 : '';
                             let boundValue = '';
                             if (typeof val === 'string') {
@@ -324,14 +334,17 @@ export class LivePropertyEditor extends OmniElement {
                     // textField.requestUpdate();
                     // await textField.updateComplete;
 
-                    let value = (textField.shadowRoot.getElementById('inputField') as HTMLInputElement).value;
+                    let value = (textField.shadowRoot?.getElementById('inputField') as HTMLInputElement).value;
                     if (typeof val !== 'string') {
                         value = JSON.parse(value);
                     }
                     this._propertyChanged({
-                        property: this.data && attribute.fieldName && this.data.args[attribute.fieldName] ? attribute.fieldName : attribute.name,
+                        property:
+                            this.data && attribute.fieldName && this.data.args?.hasOwnProperty(attribute.fieldName)
+                                ? attribute.fieldName
+                                : attribute.name,
                         newValue: value,
-                        oldValue: this.data ? this.data.args[attribute.name] ?? this.data.args[attribute.fieldName ?? attribute.name] : undefined
+                        oldValue: this.data ? this.data.args![attribute.name] ?? this.data.args![attribute.fieldName ?? attribute.name] : undefined
                     });
                 }}">
               </omni-text-field>

@@ -20,6 +20,8 @@ import { OmniElement } from '../core/OmniElement.js';
  *
  * @element omni-label
  *
+ * @slot - Content to render inside the component.
+ *
  * Registry of all properties defined by the component.
  *
  * @cssprop --omni-label-font-color - Label font color.
@@ -47,10 +49,10 @@ export class Label extends OmniElement {
      * Text label.
      * @attr
      */
-    @property({ type: String, reflect: true }) label: string;
+    @property({ type: String, reflect: true }) label?: string;
 
     /**
-     * The type of label to display.
+     * Type of label to display.
      * @attr [type="default"]
      */
     @property({ type: String, reflect: true }) type: 'default' | 'title' | 'subtitle' | 'strong' = 'default';
@@ -89,5 +91,11 @@ export class Label extends OmniElement {
 
     override render(): TemplateResult {
         return html`${this.label}<slot></slot>`;
+    }
+}
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'omni-label': Label;
     }
 }

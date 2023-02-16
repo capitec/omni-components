@@ -47,7 +47,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         const radio = within(context.canvasElement).getByTestId<Radio>('test-radio');
         radio.focus();
 
-        const content = radio.shadowRoot.getElementById('content');
+        const content = radio.shadowRoot?.getElementById('content') as HTMLElement;
         const valueChange = jest.fn();
         radio.addEventListener('value-change', valueChange);
 
@@ -65,58 +65,63 @@ export const Interactive: ComponentStoryFormat<Args> = {
 
 export const Label: ComponentStoryFormat<Args> = {
     render: (args: Args) => html` <omni-radio data-testid="test-radio" label="${args.label}"></omni-radio> `,
+    description: 'Set a text value to display next to the component.',
     args: {
         label: 'Label'
     },
     play: async (context) => {
         const radio = within(context.canvasElement).getByTestId<Radio>('test-radio');
-        const labelElement = radio.shadowRoot.getElementById('label');
-        await expect(labelElement).toHaveTextContent(Label.args.label);
+        const labelElement = radio.shadowRoot?.getElementById('label') as HTMLElement;
+        await expect(labelElement).toHaveTextContent(Label.args?.label as string);
     }
 };
 
 export const Hint: ComponentStoryFormat<Args> = {
     render: (args: Args) => html` <omni-radio data-testid="test-radio" label="${args.label}" hint="${args.hint}"></omni-radio> `,
+    description: 'Set a text value to as a hint.',
     args: {
         label: 'Hint',
         hint: 'This is a hint'
     },
     play: async (context) => {
         const radio = within(context.canvasElement).getByTestId<Radio>('test-radio');
-        const element = radio.shadowRoot.querySelector<HTMLElement>('.hint');
-        await expect(element).toHaveTextContent(Hint.args.hint);
+        const element = radio.shadowRoot?.querySelector<HTMLElement>('.hint');
+        await expect(element).toHaveTextContent(Hint.args?.hint as string);
     }
 };
 
 export const Error_Label: ComponentStoryFormat<Args> = {
     name: 'Error', // Explicitly named as error, the exported name cannot be 'Error' as that is reserved
     render: (args: Args) => html` <omni-radio data-testid="test-radio" label="${args.label}" error="${args.error}"></omni-radio> `,
+    description: 'Set a text value to display as an error.',
     args: {
         label: 'Error',
         error: 'This is an error state'
     },
     play: async (context) => {
         const radio = within(context.canvasElement).getByTestId<Radio>('test-radio');
-        const element = radio.shadowRoot.querySelector<HTMLElement>('.error');
-        await expect(element).toHaveTextContent(Error_Label.args.error);
+        const element = radio.shadowRoot?.querySelector<HTMLElement>('.error');
+        await expect(element).toHaveTextContent(Error_Label.args?.error as string);
     }
 };
 
 export const Checked: ComponentStoryFormat<Args> = {
     render: (args: Args) => html` <omni-radio data-testid="test-radio" label="${args.label}" ?checked="${args.checked}"></omni-radio> `,
+    description: 'Set the component to a checked state.',
     args: {
         label: 'Checked',
         checked: true
     },
     play: async (context) => {
         const radio = within(context.canvasElement).getByTestId<Radio>('test-radio');
-        const checkedElement = radio.shadowRoot.querySelector<HTMLElement>('.checked');
+        const checkedElement = radio.shadowRoot?.querySelector<HTMLElement>('.checked');
         await expect(checkedElement).toBeTruthy();
     }
 };
 
 export const Disabled: ComponentStoryFormat<Args> = {
     render: (args: Args) => html` <omni-radio data-testid="test-radio" label="${args.label}" ?disabled="${args.disabled}"></omni-radio> `,
+    description: 'Prevent interaction (pointer events).',
     args: {
         label: 'Disabled',
         disabled: true
@@ -126,10 +131,10 @@ export const Disabled: ComponentStoryFormat<Args> = {
         const valueChange = jest.fn();
         radio.addEventListener('value-change', valueChange);
 
-        const disabledElement = radio.shadowRoot.querySelector<HTMLElement>('.disabled');
+        const disabledElement = radio.shadowRoot?.querySelector<HTMLElement>('.disabled');
         await expect(disabledElement).toBeTruthy();
 
-        const content = radio.shadowRoot.getElementById('content');
+        const content = radio.shadowRoot?.getElementById('content') as HTMLElement;
         await userEvent.click(content, {
             pointerEventsCheck: 0
         });

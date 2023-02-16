@@ -1,5 +1,6 @@
 import { html, css } from 'lit';
 import { customElement, query } from 'lit/decorators.js';
+import { ClassInfo, classMap } from 'lit/directives/class-map.js';
 import { live } from 'lit/directives/live.js';
 import { OmniFormElement } from '../core/OmniFormElement.js';
 
@@ -16,7 +17,6 @@ import { OmniFormElement } from '../core/OmniFormElement.js';
  * <omni-text-field
  *   label="Enter a value"
  *   value="Hello World"
- *   data="{'id': 12345, 'name': 'Test'}"
  *   hint="Required"
  *   error="Field level error message"
  *   disabled>
@@ -30,14 +30,18 @@ import { OmniFormElement } from '../core/OmniFormElement.js';
  * @cssprop --omni-text-field-font-family - Text field font family.
  * @cssprop --omni-text-field-font-size - Text field font size.
  * @cssprop --omni-text-field-font-weight - Text field font weight.
+ * @cssprop --omni-text-field-padding - Text field padding.
  * @cssprop --omni-text-field-height - Text field height.
- * @cssprop --omni-text-field-padding - Text field width.
+ * @cssprop --omni-text-field-width - Text field width.
+ *
+ * @cssprop --omni-text-field-disabled-font-color - Text field disabled font color.
+ * @cssprop --omni-text-field-font-color - Text field error font color.
  *
  */
 @customElement('omni-text-field')
 export class TextField extends OmniFormElement {
     @query('#inputField')
-    private _inputElement: HTMLInputElement;
+    private _inputElement?: HTMLInputElement;
 
     override connectedCallback() {
         super.connectedCallback();
@@ -48,7 +52,7 @@ export class TextField extends OmniFormElement {
 
     _keyInput() {
         const input = this._inputElement;
-        this.value = input.value;
+        this.value = input?.value;
     }
 
     static override get styles() {
@@ -71,23 +75,42 @@ export class TextField extends OmniFormElement {
           font-family: var(--omni-text-field-font-family, var(--omni-font-family));
           font-size: var(--omni-text-field-font-size, var(--omni-font-size));
           font-weight: var(--omni-text-field-font-weight, var(--omni-font-weight));
-          height: var(--omni-text-field-height, 100%);
           padding: var(--omni-text-field-padding, 10px);
-          width: var(--omni-text-field-width);
+          height: var(--omni-text-field-height, 100%);
+          width: var(--omni-text-field-width, 100%);
+        }
+
+        .field.disabled {
+            color: var(--omni-text-field-disabled-font-color, #7C7C7C);
+        }
+
+        .field.error {
+            color: var(--omni-text-field-font-color);
         }
       `
         ];
     }
 
     protected override renderContent() {
+        const field: ClassInfo = {
+            field: true,
+            disabled: this.disabled,
+            error: this.error as string
+        };
         return html`
       <input
-        class="field"
+        class=${classMap(field)}
         id="inputField"
         type="text"
         .value=${live(this.value as string)}
         ?readOnly=${this.disabled}
         tabindex="${this.disabled ? -1 : 0}" />
     `;
+    }
+}
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'omni-text-field': TextField;
     }
 }

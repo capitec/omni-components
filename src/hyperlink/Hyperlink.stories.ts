@@ -2,6 +2,7 @@ import { within } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import * as jest from 'jest-mock';
 import { html } from 'lit';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
 import { ComponentStoryFormat, CSFIdentifier } from '../utils/StoryUtils.js';
@@ -14,17 +15,21 @@ export default {
     component: 'omni-hyperlink',
     argTypes: {
         size: { control: 'radio', options: ['default', 'small'] },
-        target: { control: 'radio', options: linkTarget }
+        target: { control: 'radio', options: linkTarget },
+        '[Default Slot]': {
+            control: 'text'
+        }
     }
 } as CSFIdentifier;
 
 interface Args {
     label: string;
     href: string;
-    target: typeof linkTarget[number];
+    target: (typeof linkTarget)[number];
     disabled: boolean;
     inline: boolean;
     size: string;
+    '[Default Slot]': string;
 }
 
 export const Interactive: ComponentStoryFormat<Args> = {
@@ -36,7 +41,9 @@ export const Interactive: ComponentStoryFormat<Args> = {
       target="${ifNotEmpty(args.target)}"
       ?disabled="${args.disabled}"
       ?inline="${args.inline}"
-      size="${args.size}"></omni-hyperlink>
+      size="${args.size}">
+      ${unsafeHTML(args['[Default Slot]'])}
+    </omni-hyperlink>
   `,
     name: 'Interactive',
     args: {
@@ -44,7 +51,8 @@ export const Interactive: ComponentStoryFormat<Args> = {
         href: '',
         disabled: false,
         inline: false,
-        size: ''
+        size: '',
+        '[Default Slot]': undefined
     },
     play: async (context) => {
         const canvas = within(context.canvasElement);
@@ -64,19 +72,21 @@ export const Interactive: ComponentStoryFormat<Args> = {
 export const Label: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`<omni-hyperlink data-testid="test-hyperlink" label="${args.label}"></omni-hyperlink>`,
     name: 'Label',
+    description: 'Set the text content of the component.',
     args: {
         label: 'Click'
     },
     play: async (context) => {
         const canvas = within(context.canvasElement);
         const Hyperlink = canvas.getByTestId('test-hyperlink');
-        await expect(Hyperlink.shadowRoot.querySelector('a')).toHaveTextContent(Label.args.label);
+        await expect(Hyperlink.shadowRoot?.querySelector('a')).toHaveTextContent(Label.args?.label as string);
     }
 };
 
 export const Size: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`<omni-hyperlink data-testid="test-hyperlink" label="${args.label}" size="${args.size}"></omni-hyperlink>`,
     name: 'Size',
+    description: 'Set the component to a predefined size.',
     args: {
         label: 'Click',
         size: 'small'
@@ -84,7 +94,7 @@ export const Size: ComponentStoryFormat<Args> = {
     play: async (context) => {
         const canvas = within(context.canvasElement);
         const Hyperlink = canvas.getByTestId('test-hyperlink');
-        await expect(Hyperlink).toHaveAttribute('size', Size.args.size);
+        await expect(Hyperlink).toHaveAttribute('size', Size.args?.size as string);
     }
 };
 
@@ -92,6 +102,7 @@ export const Href: ComponentStoryFormat<Args> = {
     render: (args: Args) =>
         html`<omni-hyperlink data-testid="test-hyperlink" label="${args.label}" href="${args.href}" target="_blank"></omni-hyperlink>`,
     name: 'Href',
+    description: 'Set the hypertext reference.',
     args: {
         label: 'Click',
         href: 'https://example.com'
@@ -99,7 +110,7 @@ export const Href: ComponentStoryFormat<Args> = {
     play: async (context) => {
         const canvas = within(context.canvasElement);
         const Hyperlink = canvas.getByTestId('test-hyperlink');
-        await expect(Hyperlink).toHaveAttribute('href', Href.args.href);
+        await expect(Hyperlink).toHaveAttribute('href', Href.args?.href as string);
     }
 };
 
@@ -111,6 +122,7 @@ export const Disabled: ComponentStoryFormat<Args> = {
       label="${args.label}"
       ?disabled="${args.disabled}"></omni-hyperlink>`,
     name: 'Disabled',
+    description: 'Prevent interaction (pointer events).',
     args: {
         label: 'Click',
         disabled: true
@@ -137,6 +149,7 @@ export const Inline: ComponentStoryFormat<Args> = {
     render: (args: Args) =>
         html`<p data-testid="test-paragraph"> Inline <omni-hyperlink label="${args.label}" ?inline="${args.inline}"></omni-hyperlink> example </p>`,
     name: 'Inline',
+    description: 'Render the component using its inline styles.',
     args: {
         label: 'click',
         inline: true

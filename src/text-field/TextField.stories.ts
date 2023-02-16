@@ -21,21 +21,18 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
     <omni-text-field
       data-testid="test-text-field"
       label="${ifNotEmpty(args.label)}"
-      .value="${args.value}"
-      .data="${args.data}"
+      value="${args.value}"
       hint="${ifNotEmpty(args.hint)}"
       error="${ifNotEmpty(args.error)}"
       ?disabled="${args.disabled}"
       >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${
         args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}` : nothing
-    }${args.prefix || args.suffix ? '\r\n' : nothing}</omni-text-field
-    >
+    }${args.prefix || args.suffix ? '\r\n' : nothing}</omni-text-field>
   `,
     name: 'Interactive',
     args: {
         label: 'Label',
         value: '',
-        data: {},
         hint: '',
         error: '',
         disabled: false,
@@ -47,7 +44,7 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
         const input = jest.fn();
         textField.addEventListener('input', input);
 
-        const inputField = textField.shadowRoot.getElementById('inputField');
+        const inputField = textField.shadowRoot?.getElementById('inputField') as HTMLElement;
 
         await userEvent.type(inputField, 'Value Update', {
             pointerEventsCheck: 0

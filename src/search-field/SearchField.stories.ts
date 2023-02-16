@@ -21,21 +21,17 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
         <omni-search-field
             data-testid="test-search-field"
             label="${ifNotEmpty(args.label)}"
-            .value="${args.value}"
-            .data="${args.data}"
+            value="${args.value}"
             hint="${ifNotEmpty(args.hint)}"
             error="${ifNotEmpty(args.error)}"
-            ?disabled="${args.disabled}">
-            ${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${
+            ?disabled="${args.disabled}">${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${
         args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}` : nothing
-    }${args.prefix || args.suffix ? '\r\n' : nothing}
-        </omni-search-field>
+    }${args.prefix || args.suffix ? '\r\n' : nothing}</omni-search-field>
     `,
     name: 'Interactive',
     args: {
         label: 'Label',
         value: '',
-        data: {},
         hint: '',
         error: '',
         disabled: false,
@@ -49,7 +45,7 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
         searchField.addEventListener('input', interaction);
         searchField.addEventListener('click', click);
 
-        const inputField = searchField.shadowRoot.getElementById('inputField') as HTMLInputElement;
+        const inputField = searchField.shadowRoot?.getElementById('inputField') as HTMLInputElement;
         // Required to clear userEvent Symbol that keeps hidden state of previously typed values via userEvent. If not cleared this cannot be run multiple times with the same results
         setUIValueClean(inputField);
 
@@ -68,7 +64,7 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
             });
         }
 
-        const clearButton = searchField.shadowRoot.getElementById(`control`);
+        const clearButton = searchField.shadowRoot?.getElementById(`control`) as HTMLElement;
         await userEvent.click(clearButton);
 
         // TODO: Fix race conditions in tests

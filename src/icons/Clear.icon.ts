@@ -3,7 +3,7 @@ import { customElement } from 'lit/decorators.js';
 import DOMTreeElement from '../core/DOMTreeElement.js';
 
 /**
- * A clear icon component.
+ * Clear icon component.
  *
  * @import
  * ```js
@@ -30,5 +30,11 @@ export class ClearIcon extends DOMTreeElement {
                 </g>
             </svg>
         `;
+    }
+}
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'omni-clear-icon': ClearIcon;
     }
 }

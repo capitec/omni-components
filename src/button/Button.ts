@@ -78,7 +78,7 @@ export class Button extends OmniElement {
      * Text label.
      * @attr
      */
-    @property({ type: String, reflect: true }) label: string;
+    @property({ type: String, reflect: true }) label?: string;
 
     /**
      * Position of slotted content.
@@ -90,7 +90,7 @@ export class Button extends OmniElement {
      * Indicator if the component is disabled.
      * @attr
      */
-    @property({ type: Boolean, reflect: true }) disabled: boolean;
+    @property({ type: Boolean, reflect: true }) disabled?: boolean;
 
     static override get styles() {
         return [
@@ -319,7 +319,7 @@ export class Button extends OmniElement {
             button: true,
             [`slot-${this.slotPosition}`]: this.slotPosition,
             [`${this.type}`]: this.type,
-            disabled: this.disabled
+            disabled: this.disabled ?? false
         })}
         ?disabled=${this.disabled}
         aria-disabled=${this.disabled ? 'true' : 'false'}
@@ -328,5 +328,11 @@ export class Button extends OmniElement {
         ${this.label ? html`<label id="label" class="label">${this.label}</label>` : nothing}
       </button>
     `;
+    }
+}
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'omni-button': Button;
     }
 }

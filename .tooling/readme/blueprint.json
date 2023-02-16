@@ -1,0 +1,18 @@
+{
+    "logo": {
+      "src": "./.tooling/readme/logos/omni.png",
+      "width": "128",
+      "height": "128"
+    },
+    "line": "none",
+    "headingPrefix": {
+      "1": "",
+      "2": ""
+    },
+    "templates": [
+        {
+            "name": "projectName",
+            "template": "Omni Components"
+        }
+    ]
+}

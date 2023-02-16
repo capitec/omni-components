@@ -1,5 +1,6 @@
 import { html, css } from 'lit';
 import { customElement, query } from 'lit/decorators.js';
+import { ClassInfo, classMap } from 'lit/directives/class-map.js';
 import { live } from 'lit/directives/live.js';
 import { OmniFormElement } from '../core/OmniFormElement.js';
 
@@ -16,7 +17,6 @@ import { OmniFormElement } from '../core/OmniFormElement.js';
  * <omni-color-field
  *   label="Enter a value"
  *   value="#F6B73C"
- *   data="{'id': 12345, 'name': 'Test'}"
  *   hint="Required"
  *   error="Field level error message"
  *   disabled>
@@ -38,11 +38,13 @@ import { OmniFormElement } from '../core/OmniFormElement.js';
  * @cssprop --omni-color-field-min-width - Color field min width.
  * @cssprop --omni-color-field-text-select - Color field text selection.
  *
+ * @cssprop --omni-color-field-disabled-font-color - Color field disabled font color.
+ * @cssprop --omni-color-field-error-font-color - Color field error font color.
  */
 @customElement('omni-color-field')
 export class ColorField extends OmniFormElement {
     @query('#inputField')
-    private _inputElement: HTMLInputElement;
+    private _inputElement?: HTMLInputElement;
 
     override connectedCallback() {
         super.connectedCallback();
@@ -52,8 +54,8 @@ export class ColorField extends OmniFormElement {
     }
 
     _keyInput() {
-        const input = this._inputElement;
-        this.value = input.value;
+        const input = this._inputElement as HTMLInputElement;
+        this.value = input?.value;
     }
 
     static override get styles() {
@@ -93,7 +95,7 @@ export class ColorField extends OmniFormElement {
           user-select: var(--omni-color-field-text-select, text);
         }
 
-        .color-input {
+        .input {
           flex: 1 1 auto;
 
           border: none;
@@ -114,6 +116,14 @@ export class ColorField extends OmniFormElement {
           padding: var(--omni-color-field-padding, 10px);
         }
 
+        .input.disabled {
+            color: var(--omni-color-field-disabled-font-color, #7C7C7C);
+        }
+
+        .input.error {
+            color: var(--omni-color-field-error-font-color);
+        }
+
         :host(:not([value])) input[type='color']::-webkit-color-swatch,
         :host([value='']) input[type='color']::-webkit-color-swatch {
           background-color: transparent !important;
@@ -127,9 +137,14 @@ export class ColorField extends OmniFormElement {
     }
 
     protected override renderControl() {
+        const input: ClassInfo = {
+            input: true,
+            disabled: this.disabled,
+            error: this.error as string
+        };
         return html`
       <input
-        class="color-input"
+        class=${classMap(input)}
         id="inputField"
         type="color"
         .value=${live(this.value as string)}
@@ -137,5 +152,11 @@ export class ColorField extends OmniFormElement {
         ?readOnly=${this.disabled}
         tabindex="${this.disabled ? -1 : 0}" />
     `;
+    }
+}
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'omni-color-field': ColorField;
     }
 }

@@ -30,3 +30,9 @@ export class IndeterminateIcon extends DOMTreeElement {
     `;
     }
 }
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'omni-indeterminate-icon': IndeterminateIcon;
+    }
+}

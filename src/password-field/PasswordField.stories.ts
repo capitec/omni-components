@@ -29,22 +29,19 @@ export const Interactive: ComponentStoryFormat<Args> = {
     <omni-password-field
       data-testid="test-password-field"
       label="${ifNotEmpty(args.label)}"
-      .value="${args.value}"
-      .data="${args.data}"
+      value="${args.value}"
       hint="${ifNotEmpty(args.hint)}"
       error="${ifNotEmpty(args.error)}"
-      ?disabled="${args.disabled}">
-      ${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}
-      ${args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}` : nothing}
-      ${args.hide ? html`${'\r\n'}${unsafeHTML(assignToSlot('hide', args.hide))}` : nothing}
-      ${args.show ? html`${'\r\n'}${unsafeHTML(assignToSlot('show', args.show))}` : nothing}</omni-password-field
-    >
+      ?disabled="${args.disabled}">${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${
+        args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}` : nothing
+    }${args.hide ? html`${'\r\n'}${unsafeHTML(assignToSlot('hide', args.hide))}` : nothing}${
+        args.show ? html`${'\r\n'}${unsafeHTML(assignToSlot('show', args.show))}` : nothing
+    }</omni-password-field>
   `,
     name: 'Interactive',
     args: {
         label: 'Label',
         value: '',
-        data: {},
         hint: '',
         error: '',
         disabled: false,
@@ -59,16 +56,16 @@ export const Interactive: ComponentStoryFormat<Args> = {
         passwordField.addEventListener('input', interactions);
         passwordField.addEventListener('click', interactions);
 
-        const inputField = passwordField.shadowRoot.getElementById('inputField');
+        const inputField = passwordField.shadowRoot?.getElementById('inputField') as HTMLInputElement;
 
-        const showSlotElement = passwordField.shadowRoot.querySelector<HTMLSlotElement>('slot[name=show]');
+        const showSlotElement = passwordField.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=show]');
         await expect(showSlotElement).toBeTruthy();
-        await userEvent.click(showSlotElement, {
+        await userEvent.click(showSlotElement as HTMLSlotElement, {
             pointerEventsCheck: 0
         });
-        const hideSlotElement = passwordField.shadowRoot.querySelector<HTMLSlotElement>('slot[name=hide]');
+        const hideSlotElement = passwordField.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=hide]');
         await expect(hideSlotElement).toBeTruthy();
-        await userEvent.click(hideSlotElement, {
+        await userEvent.click(hideSlotElement as HTMLSlotElement, {
             pointerEventsCheck: 0
         });
 
@@ -98,31 +95,32 @@ export const Hint = HintStory<PasswordField, BaseArgs>('omni-password-field');
 
 export const Error_Label = ErrorStory<PasswordField, BaseArgs>('omni-password-field');
 
-export const Value = ValueStory<PasswordField, BaseArgs>('omni-password-field');
+export const Value = ValueStory<PasswordField, BaseArgs>('omni-password-field', 'Password123');
 
 export const Prefix = PrefixStory<PasswordField, BaseArgs>('omni-password-field');
 
 export const Suffix = SuffixStory<PasswordField, BaseArgs>('omni-password-field');
 
-export const Disabled = DisabledStory<PasswordField, BaseArgs>('omni-password-field');
+export const Disabled = DisabledStory<PasswordField, BaseArgs>('omni-password-field', 'Password123');
 
 export const Custom_Icon_Slot: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
     <omni-password-field data-testid="test-password-field" label="${ifNotEmpty(args.label)}" ?disabled="${args.disabled}">
-      <omni-lock-open-icon slot="show"></omni-lock-open-icon>
-      <omni-lock-closed-icon slot="hide"></omni-lock-closed-icon>
+      <omni-lock-open-icon style="fill: orange;" slot="show"></omni-lock-open-icon>
+      <omni-lock-closed-icon style="fill: lightgreen;" slot="hide"></omni-lock-closed-icon>
     </omni-password-field>
   `,
     name: 'Custom Icon Slot',
+    description: 'Set html content to display as the visibility indicators of the field.',
     args: {
         label: 'Custom Icon Slot'
     },
     play: async (context) => {
         const passwordField = within(context.canvasElement).getByTestId<PasswordField>('test-password-field');
-        const slotElement = passwordField.shadowRoot.querySelector<HTMLSlotElement>('slot[name=show]');
+        const slotElement = passwordField.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=show]');
         await expect(slotElement).toBeTruthy();
 
-        const foundSlottedSvgElement = slotElement.assignedElements().find((e) => e.tagName.toLocaleLowerCase() === 'omni-lock-open-icon');
+        const foundSlottedSvgElement = slotElement?.assignedElements().find((e) => e.tagName.toLocaleLowerCase() === 'omni-lock-open-icon');
         await expect(foundSlottedSvgElement).toBeTruthy();
     }
 };
