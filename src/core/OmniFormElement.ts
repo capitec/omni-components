@@ -209,8 +209,7 @@ export class OmniFormElement extends OmniElement {
                 :host([value]:not([value=''])) .layout  > .label,
                 .layout:focus-within > .label
                 {
-                    transform: scale(var(--omni-form-focussed-label-transform-scale), 0.90);
-                    top: var(--omni-form-focussed-label-top, -5px);
+                    top: var(--omni-form-focussed-label-top, 0px);
                     margin-left: var(--omni-form-focussed-label-margin-left, 10px);
                 }
 
@@ -228,13 +227,14 @@ export class OmniFormElement extends OmniElement {
                 {
                     content: "";
 					display: block;
-					height: 100%;
+                    transform: scale(var(--omni-form-focussed-label-transform-scale), 0.90);
 					background-color: var(--omni-form-focussed-label-background-color, var(--omni-background-color));
 					position: absolute;
 					left: -3px;
 					right: -3px;
-    				height: 60%;
+    				height: 50%;
 					z-index: -1;
+                    top:50%;
                 }
 
                 /* ERROR STYLES */
