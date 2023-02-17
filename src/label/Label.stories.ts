@@ -1,5 +1,6 @@
 import { within } from '@testing-library/dom';
 import { html } from 'lit';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
 import { ComponentStoryFormat, CSFIdentifier } from '../utils/StoryUtils.js';
@@ -16,6 +17,9 @@ export default {
             control: {
                 type: 'radio',
                 options: labelOptions
+            },
+            '[Default Slot]': {
+                control: 'text'
             }
         }
     }
@@ -23,15 +27,20 @@ export default {
 
 interface Args {
     label: string;
-    type: typeof labelOptions[number];
+    type: (typeof labelOptions)[number];
+    '[Default Slot]': string;
 }
 
 export const Interactive: ComponentStoryFormat<Args> = {
-    render: (args: Args) => html` <omni-label data-testid="test-label" label="${ifNotEmpty(args.label)}" type="${args.type}"> </omni-label> `,
+    render: (args: Args) =>
+        html`<omni-label data-testid="test-label" label="${ifNotEmpty(args.label)}" type="${args.type}">${unsafeHTML(
+            args['[Default Slot]']
+        )}</omni-label> `,
     name: 'Interactive',
     args: {
         label: 'Label',
-        type: 'default'
+        type: 'default',
+        '[Default Slot]': undefined
     },
     play: async (context) => {
         const label = within(context.canvasElement).getByTestId<Label>('test-label');

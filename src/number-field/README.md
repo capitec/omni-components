@@ -100,6 +100,8 @@ Input control to enter a single line of numbers.
 | `--omni-form-layout-border-radius`               | Layout border radius.                          |
 | `--omni-form-layout-height`                      | Layout height.                                 |
 | `--omni-form-layout-width`                       | Layout width.                                  |
+| `--omni-number-field-disabled-font-color`        | Number field disabled font color.              |
+| `--omni-number-field-error-font-color`           | Number field error font color.                 |
 | `--omni-number-field-font-color`                 | Number field font color.                       |
 | `--omni-number-field-font-family`                | Number field font family.                      |
 | `--omni-number-field-font-size`                  | Number field font size.                        |

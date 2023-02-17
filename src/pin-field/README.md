@@ -108,6 +108,8 @@ Pin input control to enter masked numeric values.
 | `--omni-pin-field-control-padding-left`          | Pin field control padding left.                |
 | `--omni-pin-field-control-padding-right`         | Pin field control padding right.               |
 | `--omni-pin-field-control-padding-top`           | Pin field control padding top.                 |
+| `--omni-pin-field-disabled-font-color`           | Pin field disabled font color.                 |
+| `--omni-pin-field-error-font-color`              | Pin field error font color.                    |
 | `--omni-pin-field-font-color`                    | Pin field font color.                          |
 | `--omni-pin-field-font-family`                   | Pin field font family.                         |
 | `--omni-pin-field-font-size`                     | Pin field font size.                           |

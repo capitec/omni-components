@@ -132,4 +132,4 @@ export const Prefix = PrefixStory<CurrencyField, BaseArgs>('omni-currency-field'
 
 export const Suffix = SuffixStory<CurrencyField, BaseArgs>('omni-currency-field');
 
-export const Disabled = DisabledStory<CurrencyField, BaseArgs>('omni-currency-field');
+export const Disabled = DisabledStory<CurrencyField, BaseArgs>('omni-currency-field', '100.15');

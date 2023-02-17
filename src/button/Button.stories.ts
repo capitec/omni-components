@@ -36,9 +36,9 @@ export default {
 } as CSFIdentifier;
 
 interface Args {
-    type: typeof buttonOptions[number];
+    type: (typeof buttonOptions)[number];
     label: string;
-    slotPosition: typeof slotPositionOptions[number];
+    slotPosition: (typeof slotPositionOptions)[number];
     disabled: boolean;
     '[Default Slot]': string;
 }
@@ -86,7 +86,7 @@ export const Type = {
     },
     play: async (context) => {
         const button = within(context.canvasElement).getByTestId<Button>('test-button');
-        const buttonElement = button.shadowRoot!.getElementById('button') as HTMLElement;
+        const buttonElement = button.shadowRoot?.getElementById('button') as HTMLElement;
         const foundPrimaryClass = buttonElement?.classList.contains('primary');
         await expect(foundPrimaryClass).toBeTruthy();
     }
@@ -101,7 +101,7 @@ export const Label = {
     },
     play: async (context) => {
         const button = within(context.canvasElement).getByTestId<Button>('test-button');
-        const labelElement = button.shadowRoot!.getElementById('label') as HTMLElement;
+        const labelElement = button.shadowRoot?.getElementById('label') as HTMLElement;
         const labelMatches = labelElement?.innerText === Label.args?.label;
         await expect(labelMatches).toBeTruthy();
     }

@@ -15,7 +15,7 @@ export default {
 } as CSFIdentifier;
 
 interface Args {
-    size: typeof sizeOptions[number];
+    size: (typeof sizeOptions)[number];
     icon: string;
     '[Default Slot]': string;
 }
@@ -114,7 +114,7 @@ export const Remote_Source: ComponentStoryFormat<Args> = {
     },
     play: async (context) => {
         const icon = within(context.canvasElement).getByTestId<Icon>('test-icon');
-        const imgElement = icon.shadowRoot!.querySelector('img') as HTMLImageElement;
+        const imgElement = icon.shadowRoot?.querySelector('img') as HTMLImageElement;
         await expect(imgElement).toBeTruthy();
         await expect(imgElement?.src).toEqual(context.args.icon);
     }

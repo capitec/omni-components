@@ -1,5 +1,6 @@
 import { html, css } from 'lit';
 import { customElement, query } from 'lit/decorators.js';
+import { ClassInfo, classMap } from 'lit/directives/class-map.js';
 import { live } from 'lit/directives/live.js';
 import { OmniFormElement } from '../core/OmniFormElement.js';
 
@@ -35,6 +36,9 @@ import '../icons/Search.icon.js';
  * @cssprop --omni-search-field-padding - Search field padding.
  * @cssprop --omni-search-field-height - Search field height.
  * @cssprop --omni-search-field-width - Search field width.
+ *
+ * @cssprop --omni-search-field-disabled-font-color - Search field disabled font color.
+ * @cssprop --omni-search-field-error-font-color - Search field error font color.
  *
  * @cssprop --omni-search-field-control-margin-right - Search field control right margin.
  * @cssprop --omni-search-field-control-margin-left - Search field control left margin.
@@ -108,6 +112,14 @@ export class SearchField extends OmniFormElement {
                     width: var(--omni-search-field-width, 100%);
                 }
 
+                .field.disabled {
+                    color: var(--omni-search-field-disabled-font-color, #7C7C7C);
+                }
+
+                .field.error {
+                    color: var(--omni-search-field-error-font-color);
+                }
+
                 .control {
                     display: flex;
                   
@@ -161,9 +173,14 @@ export class SearchField extends OmniFormElement {
     }
 
     protected override renderContent() {
+        const field: ClassInfo = {
+            field: true,
+            disabled: this.disabled,
+            error: this.error as string
+        };
         return html`
             <input
-                class="field"
+                class=${classMap(field)}
                 id="inputField"
                 type="search"
                 .value=${live(this.value as string)}
