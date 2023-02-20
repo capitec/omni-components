@@ -205,7 +205,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
                 <li><span class="desc-line-item"><strong>inputmode="none"</strong><omni-label label=": Disables the Keyboard for that component unless input-mode-none='show' on the Keyboard."></omni-label></span></li>
                 <li><span class="desc-line-item"><strong>data-omni-keyboard-hidden</strong><omni-label label=": Disables the Keyboard for that component unless input-mode-none='show' on the Keyboard."></omni-label></span></li>
                 <li><span class="desc-line-item"><strong>data-omni-keyboard-mask</strong><omni-label label=": Indicates that the display label on the Keyboard may only display a masked value."></omni-label></span></li>
-                <li><span class="desc-line-item"><strong>data-omni-keyboard-multi-line</strong><omni-label label=": Indicates that call to action button ('Enter') should insert a new line instead of closing the Keyboard. This is the default behaviour for &lt;textarea&gt;"></omni-label></span></li>
+                <li><span class="desc-line-item"><strong>data-omni-keyboard-multi-line</strong><omni-label label=": Indicates that call to action button ('Enter') should insert a new line instead of closing the Keyboard. This is the default behaviour for &lt;textarea&gt;."></omni-label></span></li>
             </ul>
         `,
     args: {
