@@ -6,7 +6,7 @@ import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
-import { assignToSlot, ComponentStoryFormat, CSFIdentifier } from '../utils/StoryUtils.js';
+import { assignToSlot, ComponentStoryFormat, CSFIdentifier, raw } from '../utils/StoryUtils.js';
 import { Keyboard } from './Keyboard.js';
 
 import './Keyboard.js';
@@ -30,14 +30,33 @@ interface Args {
     ctaLabel: string;
     closeLabel: string;
     inputModeNone: 'hide' | 'show';
-    attachMode: 'all' | 'attribute';
+    attachMode: 'all' | 'attribute' | 'id';
+    'caps-off': string;
+    'caps-on': string;
+    'caps-on-permanent': string;
+    'close': string;
+    'backspace': string;
+    'cta-done': string;
+    'cta-go': string;
+    'cta-next': string;
+    'cta-previous': string;
+    'cta-search': string;
+    'cta-send': string;
+    'cta-enter': string;
 } 
 
 export const Interactive: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
 
     <!-- Add the Keyboard once to the DOM -->    
-    <omni-keyboard attach-mode="${args.attachMode}" clear-label="${args.clearLabel}" space-label="${args.spaceLabel}" cta-label="${args.ctaLabel}" close-label="${args.closeLabel}" input-mode-none="${args.inputModeNone}"></omni-keyboard>
+    <omni-keyboard id="keyboard-1" 
+        attach-mode="${args.attachMode}" 
+        clear-label="${args.clearLabel}" 
+        space-label="${args.spaceLabel}" 
+        cta-label="${args.ctaLabel}" 
+        close-label="${args.closeLabel}" 
+        input-mode-none="${args.inputModeNone}">${args['caps-off'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-off', args['caps-off']))}` : nothing}${args['caps-on'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-on', args['caps-on']))}` : nothing}${args['caps-on-permanent'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-on-permanent', args['caps-on-permanent']))}` : nothing}${args['close'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('close', args['close']))}` : nothing}${args['backspace'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('backspace', args['backspace']))}` : nothing}${args['cta-done'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-done', args['cta-done']))}` : nothing}${args['cta-go'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-go', args['cta-go']))}` : nothing}${args['cta-next'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-next', args['cta-next']))}` : nothing}${args['cta-previous'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-previous', args['cta-previous']))}` : nothing}${args['cta-search'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-search', args['cta-search']))}` : nothing}${args['cta-send'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-send', args['cta-send']))}` : nothing}${args['cta-enter'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-enter', args['cta-enter']))}` : nothing}
+    </omni-keyboard>
 
 
 
@@ -149,6 +168,10 @@ export const Interactive: ComponentStoryFormat<Args> = {
         <input type="text" enterkeyhint="search" tabindex="34" />
         input with type="number" and enterkeyhint="search"
         <input type="number" enterkeyhint="search" tabindex="35" />
+        input with type="text" and enterkeyhint="send"
+        <input type="text" enterkeyhint="send" tabindex="36" />
+        input with type="number" and enterkeyhint="send"
+        <input type="number" enterkeyhint="send" tabindex="37" />
 
     </div>
     <br/>
@@ -157,11 +180,11 @@ export const Interactive: ComponentStoryFormat<Args> = {
         <omni-label type="subtitle" label="Hide Keyboard"></omni-label>
         <!-- Hide Keyboard -->
         input with type="text" and data-omni-keyboard-hidden
-        <input data-omni-keyboard-hidden type="text" tabindex="36" />
+        <input data-omni-keyboard-hidden type="text" tabindex="38" />
         input with type="text", data-omni-keyboard-hidden and inputmode="none" (See variation when Keyboard input-mode-none="show")
-        <input data-omni-keyboard-hidden type="text" inputmode="none" tabindex="37" />
+        <input data-omni-keyboard-hidden type="text" inputmode="none" tabindex="39" />
         Omni Example with data-omni-keyboard-hidden
-        <omni-text-field data-omni-keyboard-hidden label="Text Field" tabindex="38" ></omni-text-field>
+        <omni-text-field data-omni-keyboard-hidden label="Text Field" tabindex="40" ></omni-text-field>
 
     </div>
     <br/>
@@ -170,9 +193,9 @@ export const Interactive: ComponentStoryFormat<Args> = {
         <omni-label type="subtitle" label="Hide Display Value"></omni-label>
         <!-- Hide Display Value -->
         input with type="text" and data-omni-keyboard-no-display
-        <input data-omni-keyboard-no-display type="text" tabindex="39" />
+        <input data-omni-keyboard-no-display type="text" tabindex="41" />
         Omni Example with data-omni-keyboard-no-display
-        <omni-text-field data-omni-keyboard-no-display label="Text Field" tabindex="40" ></omni-text-field>
+        <omni-text-field data-omni-keyboard-no-display label="Text Field" tabindex="42" ></omni-text-field>
 
     </div>
     <br/>
@@ -181,9 +204,22 @@ export const Interactive: ComponentStoryFormat<Args> = {
         <omni-label type="subtitle" label="Opt In Attach (Test with attach-mode='attribute' on Keyboard)"></omni-label>
         <!-- Opt In Attach -->
         input with type="text" and data-omni-keyboard-attach
-        <input data-omni-keyboard-attach type="text" tabindex="41" />
+        <input data-omni-keyboard-attach type="text" tabindex="43" />
         Omni Example with data-omni-keyboard-attach
-        <omni-text-field data-omni-keyboard-attach label="Text Field" tabindex="42" ></omni-text-field>
+        <omni-text-field data-omni-keyboard-attach label="Text Field" tabindex="44" ></omni-text-field>
+
+    </div>
+    <br/>
+    <div class="keyboard-showcase">
+
+        <omni-label type="subtitle" label="Opt In Attach for specific Keyboard (Test with attach-mode='id' on Keyboard)"></omni-label>
+        <!-- Opt In Attach -->
+        input with type="text" with no attach opt in attribute
+        <input type="text" tabindex="45" />
+        input with type="text" and data-omni-keyboard-attach but no specified id
+        <input data-omni-keyboard-attach type="text" tabindex="46" />
+        input with type="text" and data-omni-keyboard-attach for current keyboard id
+        <input data-omni-keyboard-attach="keyboard-1" type="text" tabindex="47" />
 
     </div>
 
@@ -214,7 +250,19 @@ export const Interactive: ComponentStoryFormat<Args> = {
         closeLabel: 'Close',
         spaceLabel: 'Space',
         inputModeNone: 'hide',
-        attachMode: 'all'
+        attachMode: 'all',
+        'caps-off': raw`<omni-caps-off-icon style="display: inherit;"></omni-caps-off-icon>`,
+        'caps-on': raw`<omni-caps-on-icon style="display: inherit;"></omni-caps-on-icon>`,
+        'caps-on-permanent': raw`<omni-caps-on-permanent-icon style="display: inherit;"></omni-caps-on-permanent-icon>`,
+        'cta-done': raw`<omni-check-icon style="display: inherit;"></omni-check-icon>`,
+        'cta-enter': raw`<span>Enter</span>`,
+        'cta-go': raw`<omni-arrow-right-icon style="display: inherit;"></omni-arrow-right-icon>`,
+        'cta-next': raw`<omni-next-icon style="display: inherit;"></omni-next-icon>`,
+        'cta-previous': raw`<omni-previous-icon style="display: inherit;"></omni-previous-icon>`,
+        'cta-search': raw`<omni-search-icon style="display: inherit;"></omni-search-icon>`,
+        'cta-send': raw`<omni-send-icon style="display: inherit;"></omni-send-icon>`,
+        'backspace': raw`<omni-backspace-icon style="display: inherit;"></omni-backspace-icon>`,
+        'close': raw`<omni-chevron-down-icon style="display: inherit;"></omni-chevron-down-icon>`
     },
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     play: async (context) => {}

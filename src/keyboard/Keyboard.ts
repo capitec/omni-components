@@ -55,7 +55,7 @@ export class Keyboard extends OmniElement {
      * * `attribute` - The Keyboard will only show on focus for input related components with the `data-omni-keyboard-attach` attribute
      * @attr [attach-mode="all"]
      */
-    @property({ type: String, attribute: 'attach-mode', reflect: true }) attachMode: 'all' | 'attribute' = 'all';
+    @property({ type: String, attribute: 'attach-mode', reflect: true }) attachMode: 'all' | 'attribute' | 'id' = 'all';
 
     /**
      * The text label to display by the close button.
@@ -535,7 +535,9 @@ export class Keyboard extends OmniElement {
                 (this.inputModeNone === 'hide' && (active.getAttribute('inputmode') === 'none' || input.inputMode === 'none')) ||
                 active.hasAttribute(hiddenAttribute) ||
                 input.hasAttribute(hiddenAttribute) ||
-                (this.attachMode === 'attribute' && !(input.hasAttribute(attachAttribute) || active.hasAttribute(attachAttribute)))
+                (this.attachMode === 'attribute' && !(input.hasAttribute(attachAttribute) || active.hasAttribute(attachAttribute))) ||
+                (this.attachMode === 'id' &&
+                    !(this.id && (input.getAttribute(attachAttribute) === this.id || active.getAttribute(attachAttribute) === this.id)))
             ) {
                 return;
             }
@@ -775,6 +777,12 @@ export class Keyboard extends OmniElement {
                 }
                 .stretch-icon {
                     height: 100%;
+                }
+                .flex-text-center {                    
+                    align-items: center;
+                    justify-content: center;
+                    text-align: center;
+                    display: flex;
                 }
 			`
         ];
@@ -1095,25 +1103,31 @@ export class Keyboard extends OmniElement {
         return this.currentCase === 'lower'
             ? html`
                 <omni-icon size="medium" class="themed-icon">
-                    <slot name="caps-off">
-                        <omni-caps-off-icon class="stretch-icon"></omni-caps-off-icon>
-                    </slot>
+                    <div class="stretch-icon">
+                        <slot name="caps-off">
+                            <omni-caps-off-icon style="display: unset;"></omni-caps-off-icon>
+                        </slot>
+                    </div>
                 </omni-icon>           
             `
             : this.currentCase === 'upper-single'
             ? html`
                 <omni-icon size="medium" class="themed-icon">
-                    <slot name="caps-on">
-                        <omni-caps-on-icon class="stretch-icon"></omni-caps-on-icon>
-                    </slot>
+                    <div class="stretch-icon">
+                        <slot name="caps-on">
+                            <omni-caps-on-icon style="display: unset;"></omni-caps-on-icon>
+                        </slot>
+                    </div>
                 </omni-icon>
             `
             : this.currentCase === 'upper'
             ? html`
                 <omni-icon size="medium" class="themed-icon">
-                    <slot name="caps-on-permanent">
-                        <omni-caps-on-permanent-icon class="stretch-icon"></omni-caps-on-permanent-icon>
-                    </slot>
+                    <div class="stretch-icon">
+                        <slot name="caps-on-permanent">
+                            <omni-caps-on-permanent-icon style="display: unset;"></omni-caps-on-permanent-icon>
+                        </slot>
+                    </div>
                 </omni-icon>
             `
             : nothing;
@@ -1121,17 +1135,21 @@ export class Keyboard extends OmniElement {
 
     renderClose() {
         return html`
-        <slot name="close">
-            <omni-chevron-down-icon  class="close-icon"></omni-chevron-down-icon>
-        </slot>
+        <div class="close-icon">
+            <slot name="close">
+                <omni-chevron-down-icon style="display: unset;"></omni-chevron-down-icon>
+            </slot>
+        </div>
         `;
     }
 
     renderBackspace() {
         return html`
-            <slot name="backspace">
-                <omni-backspace-icon class="stretch-icon"></omni-backspace-icon>
-            </slot>
+            <div class="stretch-icon">
+                <slot name="backspace">
+                    <omni-backspace-icon style="display: unset;"></omni-backspace-icon>
+                </slot>
+            </div>
         `;
     }
 
@@ -1142,38 +1160,66 @@ export class Keyboard extends OmniElement {
                 ${
                     enterKeyHint === 'done'
                         ? html`
-                    <slot name="cta-done">
-                        <omni-icon size="medium" class="cta-icon"><omni-check-icon class="stretch-icon"></omni-check-icon></omni-icon>
-                    </slot>`
+                        <omni-icon size="medium" class="cta-icon">
+                            <div class="stretch-icon">
+                                <slot name="cta-done">
+                                    <omni-check-icon  style="display: unset;"></omni-check-icon>
+                                </slot>
+                            </div>
+                        </omni-icon>`
                         : enterKeyHint === 'go'
                         ? html`
-                    <slot name="cta-go">
-                        <omni-icon size="medium" class="cta-icon"><omni-arrow-right-icon class="stretch-icon"></omni-arrow-right-icon></omni-icon>
-                    </slot>`
+                        <omni-icon size="medium" class="cta-icon">
+                            <div class="stretch-icon">
+                                <slot name="cta-go">
+                                    <omni-arrow-right-icon style="display: unset;"></omni-arrow-right-icon>
+                                </slot>
+                            </div>
+                        </omni-icon>`
                         : enterKeyHint === 'next'
                         ? html`
-                    <slot name="cta-next">
-                        <omni-icon size="medium" class="cta-icon"><omni-next-icon class="stretch-icon"></omni-next-icon></omni-icon>
-                    </slot>`
+                        <omni-icon size="medium" class="cta-icon">
+                            <div class="stretch-icon">
+                                <slot name="cta-next">
+                                    <omni-next-icon  style="display: unset;"></omni-next-icon>
+                                </slot>
+                            </div>
+                        </omni-icon>`
                         : enterKeyHint === 'previous'
                         ? html`
-                    <slot name="cta-previous">
-                        <omni-icon size="medium" class="cta-icon"><omni-previous-icon class="stretch-icon"></omni-previous-icon></omni-icon>
-                    </slot>`
+                        <omni-icon size="medium" class="cta-icon">
+                            <div class="stretch-icon">
+                                <slot name="cta-previous">
+                                    <omni-previous-icon  style="display: unset;"></omni-previous-icon>
+                                </slot>
+                            </div>
+                        </omni-icon>`
                         : enterKeyHint === 'search'
                         ? html`
-                    <slot name="cta-search">
-                        <omni-icon size="medium" class="cta-icon"><omni-search-icon class="stretch-icon"></omni-search-icon></omni-icon>
-                    </slot>`
+                        <omni-icon size="medium" class="cta-icon">
+                            <div class="stretch-icon">
+                                <slot name="cta-search">
+                                    <omni-search-icon  style="display: unset;"></omni-search-icon>
+                                </slot>
+                            </div>
+                        </omni-icon>`
                         : enterKeyHint === 'send'
                         ? html`
-                    <slot name="cta-send">
-                        <omni-icon size="medium" class="cta-icon"><omni-send-icon class="stretch-icon"></omni-send-icon></omni-icon>
-                    </slot>`
+                        <omni-icon size="medium" class="cta-icon">
+                            <div class="stretch-icon">
+                                <slot name="cta-send">
+                                    <omni-send-icon  style="display: unset;"></omni-send-icon>
+                                </slot>
+                            </div>
+                        </omni-icon>`
                         : html`
-                    <slot name="cta-enter">
-                        ${this.ctaLabel}
-                    </slot>`
+                        <omni-icon size="medium" class="cta-icon">
+                            <div class="stretch-icon flex-text-center">
+                                <slot name="cta-enter">
+                                    ${this.ctaLabel}
+                                </slot>
+                            </div>
+                        </omni-icon>`
                 }
             </button>
         `;
