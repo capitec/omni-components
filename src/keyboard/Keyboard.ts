@@ -31,6 +31,21 @@ import './KeyboardButton.js';
  *
  * @element omni-keyboard
  *
+ *
+ * @slot caps-off - Content to display on case change button when in a lowercase state.
+ * @slot caps-on - Content to display on case change button when in a single uppercase state.
+ * @slot caps-on-permanent - Content to display on case change button when in a permanent uppercase state.
+ * @slot close - Content to display next to close label.
+ * @slot backspace - Content to display on backspace button.
+ * @slot cta-done - Content to display on call to action button ('Enter') when target component has enterkeyhint="done".
+ * @slot cta-go - Content to display on call to action button ('Enter') when target component has enterkeyhint="go".
+ * @slot cta-next - Content to display on call to action button ('Enter') when target component has enterkeyhint="next".
+ * @slot cta-previous - Content to display on call to action button ('Enter') when target component has enterkeyhint="previous".
+ * @slot cta-search - Content to display on call to action button ('Enter') when target component has enterkeyhint="search".
+ * @slot cta-send - Content to display on call to action button ('Enter') when target component has enterkeyhint="send".
+ * @slot cta-enter - Content to display on call to action button ('Enter') when target component has enterkeyhint="enter" or enterkeyhint is not set.
+ *
+ *
  */
 @customElement('omni-keyboard')
 export class Keyboard extends OmniElement {
@@ -75,7 +90,7 @@ export class Keyboard extends OmniElement {
     @property({ type: String, attribute: 'input-mode-none', reflect: true }) inputModeNone: 'hide' | 'show' = 'hide';
 
     @state() private mode: KeyboardMode = 'none';
-    @state() private currentCase: string = 'lower';
+    @state() private currentCase: 'lower' | 'upper' | 'upper-single' = 'lower';
     @state() private state: KeyboardMode | 'special' = 'none';
 
     @state() private target?: HTMLInputElement | HTMLTextAreaElement;
@@ -150,6 +165,7 @@ export class Keyboard extends OmniElement {
             this.target.dispatchEvent(
                 new Event('change', {
                     bubbles: true,
+                    cancelable: true,
                     composed: true
                 })
             );
@@ -264,18 +280,72 @@ export class Keyboard extends OmniElement {
                 start: this.target.selectionStart ?? this.target.value.length,
                 end: this.target.selectionEnd ?? this.target.value.length
             };
+            let allowContinue = false;
             if (event.detail) {
                 if (event.detail.value === 'return') {
+                    const keyInfo: KeyboardEventInit = {
+                        shiftKey: this.currentCase === 'upper-single',
+                        modifierCapsLock: this.currentCase === 'upper',
+                        key: 'Enter',
+                        bubbles: true,
+                        cancelable: true,
+                        composed: true
+                    };
+                    const keyDownEvent = new KeyboardEvent('keydown', keyInfo);
+                    allowContinue = this.target.dispatchEvent(keyDownEvent);
+                    if (allowContinue) {
+                        await this.waitForAsyncHandlers();
+                        allowContinue = !keyDownEvent.defaultPrevented;
+                    }
+
                     // Enter/return key pressed
                     if (this.returnMode === 'change-value') {
+                        this.target.dispatchEvent(new KeyboardEvent('keyup', keyInfo));
                         // If returnMode is 'change-value', the keyboard will close when enter is pressed and focus on the element with the next tabIndex, if any.
                         this._close(true, true);
                         return;
                     } else if (this.returnMode === 'multi-line') {
+                        if (!allowContinue) {
+                            this.target.dispatchEvent(new KeyboardEvent('keyup', keyInfo));
+                            return;
+                        }
                         // If returnMode is 'multi-line', the keyboard insert a new line into the value when enter is pressed
                         event.detail.value = '\r\n';
                     }
                 } else if (event.detail.value === 'backspace') {
+                    const keyInfo: KeyboardEventInit = {
+                        shiftKey: this.currentCase === 'upper-single',
+                        modifierCapsLock: this.currentCase === 'upper',
+                        key: 'Backspace',
+                        bubbles: true,
+                        cancelable: true,
+                        composed: true
+                    };
+                    const inputInfo: InputEventInitWithType = {
+                        inputType: 'deleteContentBackward',
+
+                        bubbles: true,
+                        cancelable: true,
+                        composed: true
+                    };
+                    const keyDownEvent = new KeyboardEvent('keydown', keyInfo);
+                    allowContinue = this.target.dispatchEvent(keyDownEvent);
+                    if (allowContinue) {
+                        await this.waitForAsyncHandlers();
+                        allowContinue = !keyDownEvent.defaultPrevented;
+                    }
+                    if (allowContinue) {
+                        const beforeInputEvent = new InputEvent('beforeinput', inputInfo);
+                        allowContinue = this.target.dispatchEvent(beforeInputEvent);
+                        if (allowContinue) {
+                            await this.waitForAsyncHandlers();
+                            allowContinue = !beforeInputEvent.defaultPrevented;
+                        }
+                    }
+                    if (!allowContinue) {
+                        this.target.dispatchEvent(new KeyboardEvent('keyup', keyInfo));
+                        return;
+                    }
                     // Backspace key pressed
                     const old = this.target.value;
 
@@ -295,13 +365,9 @@ export class Keyboard extends OmniElement {
 
                     // Notify the input that its value is updated via a keyboard press by raising its input event
                     this.target.value = newVal;
-                    this.target.dispatchEvent(
-                        new Event('input', {
-                            bubbles: true,
-                            composed: true
-                        })
-                    );
+                    this.target.dispatchEvent(new InputEvent('input', inputInfo));
                     this.target.focus();
+                    this.target.dispatchEvent(new KeyboardEvent('keyup', keyInfo));
 
                     // Re-render for the changes to be visible, and set the caret position to its position relative to the new changes
                     this.requestUpdate();
@@ -317,7 +383,14 @@ export class Keyboard extends OmniElement {
                     this.target.focus();
                     this.requestUpdate();
                     return;
-                } else if (event.detail.value === `clear`) {
+                } else if (event.detail.value === 'clear') {
+                    const inputInfo: InputEventInitWithType = {
+                        inputType: 'deleteContent',
+
+                        bubbles: true,
+                        cancelable: true,
+                        composed: true
+                    };
                     // Clear button pressed
                     const old = this.target.value;
 
@@ -326,21 +399,63 @@ export class Keyboard extends OmniElement {
 
                     // Notify the input that its value is updated
                     this.target.value = newVal;
-                    this.target.dispatchEvent(
-                        new Event('input', {
-                            bubbles: true,
-                            composed: true
-                        })
-                    );
+                    const beforeInputEvent = new InputEvent('beforeinput', inputInfo);
+                    allowContinue = this.target.dispatchEvent(beforeInputEvent);
+                    if (allowContinue) {
+                        await this.waitForAsyncHandlers();
+                        allowContinue = !beforeInputEvent.defaultPrevented;
+                    }
+                    if (allowContinue) {
+                        this.target.dispatchEvent(new InputEvent('input', inputInfo));
+                    }
                     this.target.dispatchEvent(
                         new Event('change', {
                             bubbles: true,
+                            cancelable: true,
                             composed: true
                         })
                     );
 
                     // Re-render for the changes to be visible
                     this.requestUpdate();
+                    return;
+                }
+
+                const keyInfo: KeyboardEventInit = {
+                    shiftKey: this.currentCase === 'upper-single',
+                    modifierCapsLock: this.currentCase === 'upper',
+                    key: event.detail.value === 'return' ? 'Enter' : event.detail.value,
+                    bubbles: true,
+                    cancelable: true,
+                    composed: true
+                };
+                const inputInfo: InputEventInitWithType = {
+                    inputType: 'insertText',
+                    data: event.detail.value === 'return' ? null : event.detail.value?.toString(),
+                    bubbles: true,
+                    cancelable: true,
+                    composed: true
+                };
+                if (!allowContinue) {
+                    const keyDownEvent = new KeyboardEvent('keydown', keyInfo);
+                    // Keydown has not yet been fired (This may be already set if Enter key was pressed as multi-line)
+                    allowContinue = this.target.dispatchEvent(keyDownEvent);
+                    if (allowContinue) {
+                        await this.waitForAsyncHandlers();
+                        allowContinue = !keyDownEvent.defaultPrevented;
+                    }
+                }
+
+                if (allowContinue) {
+                    const beforeInputEvent = new InputEvent('beforeinput', inputInfo);
+                    allowContinue = this.target.dispatchEvent(beforeInputEvent);
+                    if (allowContinue) {
+                        await this.waitForAsyncHandlers();
+                        allowContinue = !beforeInputEvent.defaultPrevented;
+                    }
+                }
+                if (!allowContinue) {
+                    this.target.dispatchEvent(new KeyboardEvent('keyup', keyInfo));
                     return;
                 }
 
@@ -358,12 +473,8 @@ export class Keyboard extends OmniElement {
 
                 // Notify the input that its value is updated via a keyboard press by raising its input event
                 this.target.value = newVal;
-                this.target.dispatchEvent(
-                    new Event('input', {
-                        bubbles: true,
-                        composed: true
-                    })
-                );
+                this.target.dispatchEvent(new InputEvent('input', inputInfo));
+                this.target.dispatchEvent(new KeyboardEvent('keyup', keyInfo));
 
                 // Re-render for the changes to be visible, and set the caret position to its position relative to the new changes
                 this.requestUpdate();
@@ -383,10 +494,21 @@ export class Keyboard extends OmniElement {
         }
     }
 
+    private async waitForAsyncHandlers(asyncLevel = 5) {
+        let waitFor = Promise.resolve();
+        // Chain promises up to `asyncLevel` times
+        for (let index = 0; index < asyncLevel; index++) {
+            // Defer execution to the next asynchronous execution
+            // console.log('Waiting', index, asyncLevel);
+            // await Promise.resolve().then();
+            waitFor = waitFor.then();
+        }
+        await waitFor;
+    }
+
     async _globalClick(e: MouseEvent) {
         await this.updateComplete;
 
-        //console.log('click', e, e.composedPath());
         if (e.composedPath()) {
             if (e.composedPath().includes(this)) {
                 this.target?.focus();
@@ -397,7 +519,6 @@ export class Keyboard extends OmniElement {
     }
 
     _globalFocus(event: FocusEvent) {
-        // console.log(event);
         const active = this._findActiveElement();
         if (
             active &&
@@ -406,7 +527,6 @@ export class Keyboard extends OmniElement {
                 active?.shadowRoot?.activeElement instanceof HTMLInputElement ||
                 active?.shadowRoot?.activeElement instanceof HTMLTextAreaElement)
         ) {
-            // console.log('Input', active, active?.shadowRoot?.activeElement);
             const input = (active?.shadowRoot?.activeElement ?? active) as HTMLInputElement | HTMLTextAreaElement;
 
             if (
@@ -452,8 +572,6 @@ export class Keyboard extends OmniElement {
             this.state = this.mode;
             this.returnMode =
                 this.targetComponent.hasAttribute(multiLineAttribute) || input instanceof HTMLTextAreaElement ? 'multi-line' : 'change-value';
-        } else {
-            // console.log('Other', active);
         }
     }
 
@@ -663,7 +781,6 @@ export class Keyboard extends OmniElement {
     }
 
     protected override render(): TemplateResult | typeof nothing {
-        //console.log('Render');
         if (this.mode === 'alpha-numeric' && this.state === 'alpha-numeric') {
             return html`
 			<div class="footer">
@@ -673,7 +790,7 @@ export class Keyboard extends OmniElement {
 							<omni-label label="${this.displayValue}"></omni-label>
 							<div class="closer" @click="${this._close}">
 								<omni-label class="closeButton" label="${this.closeLabel}"></omni-label>
-								<omni-icon size="medium" class="themed-icon"><omni-chevron-down-icon  class="close-icon"></omni-chevron-down-icon></omni-icon>
+								<omni-icon size="medium" class="themed-icon">${this.renderClose()}</omni-icon>
 							</div>
 						</div>
 						<div class="wrapper">
@@ -775,15 +892,7 @@ export class Keyboard extends OmniElement {
 							</div>
 							<div class="keyrow">
 								<omni-keyboard-button @keyboard-click="${this._toggleCase}" mode="action"
-									character="caps" case="custom">${
-                                        this.currentCase === 'lower'
-                                            ? html`<omni-icon size="medium" class="themed-icon"><omni-caps-off-icon class="stretch-icon"></omni-caps-off-icon></omni-icon>`
-                                            : this.currentCase === 'upper-single'
-                                            ? html`<omni-icon size="medium"  class="themed-icon"><omni-caps-on-icon class="stretch-icon"></omni-caps-on-icon></omni-icon>`
-                                            : this.currentCase === 'upper'
-                                            ? html`<omni-icon size="medium"  class="themed-icon"><omni-caps-on-permanent-icon class="stretch-icon"></omni-caps-on-permanent-icon></omni-icon>`
-                                            : nothing
-                                    }</omni-keyboard-button>
+									character="caps" case="custom">${this.renderCaps()}</omni-keyboard-button>
 								<omni-keyboard-button @keyboard-click="${this._keypress}" mode="alpha" label="x"
 									case="${this.displayCase}">
 								</omni-keyboard-button>
@@ -803,7 +912,7 @@ export class Keyboard extends OmniElement {
 									case="${this.displayCase}">
 								</omni-keyboard-button>
 								<omni-keyboard-button @keyboard-click="${this._keypress}" mode="action" character="backspace" case="custom">                                    
-                                    <omni-icon size="medium"  class="themed-icon"><omni-backspace-icon class="stretch-icon"></omni-backspace-icon></omni-icon>
+                                    <omni-icon size="medium"  class="themed-icon">${this.renderBackspace()}</omni-icon>
                                 </omni-keyboard-button>
 							</div>
 							<div class="keyrow pad-bottom" >
@@ -838,7 +947,7 @@ export class Keyboard extends OmniElement {
 							<omni-label label="${this.displayValue}"></omni-label>
 							<div class="closer" @click="${this._close}">
 								<omni-label class="closeButton" label="${this.closeLabel}"></omni-label>
-								<omni-icon size="medium" class="themed-icon"><omni-chevron-down-icon class="close-icon"></omni-chevron-down-icon></omni-icon>
+								<omni-icon size="medium" class="themed-icon">${this.renderClose()}</omni-icon>
 							</div>
 						</div>
 						<div class="wrapper">
@@ -854,7 +963,7 @@ export class Keyboard extends OmniElement {
 										<omni-keyboard-button @keyboard-click="${this._keypress}" mode="numeric" label="_">
 										</omni-keyboard-button>
 										<omni-keyboard-button @keyboard-click="${this._keypress}" mode="numeric" character="backspace" case="custom">
-                                            <omni-icon size="medium"  class="themed-icon"><omni-backspace-icon class="stretch-icon"></omni-backspace-icon></omni-icon>
+                                            <omni-icon size="medium"  class="themed-icon">${this.renderBackspace()}</omni-icon>
 										</omni-keyboard-button>
 									</div>
 									<div class="keyrow">
@@ -927,7 +1036,7 @@ export class Keyboard extends OmniElement {
 							<omni-label label="${this.displayValue}"></omni-label>
 							<div class="closer" @click="${this._close}">
 								<omni-label class="closeButton" label="${this.closeLabel}"></omni-label>
-								<omni-icon size="medium" class="themed-icon"><omni-chevron-down-icon  class="close-icon"></omni-chevron-down-icon></omni-icon>
+								<omni-icon size="medium" class="themed-icon">${this.renderClose()}</omni-icon>
 							</div>
 						</div>
 						<div class="wrapper">
@@ -963,7 +1072,7 @@ export class Keyboard extends OmniElement {
 										<omni-keyboard-button @keyboard-click="${this._keypress}" mode="numeric" label="0">
 										</omni-keyboard-button>
 										<omni-keyboard-button @keyboard-click="${this._keypress}" mode="alpha" character="backspace" case="custom">            
-                                            <omni-icon size="medium" class="themed-icon"><omni-backspace-icon class="stretch-icon"></omni-backspace-icon></omni-icon>
+                                            <omni-icon size="medium" class="themed-icon">${this.renderBackspace()}</omni-icon>
                                         </omni-keyboard-button>
 									</div>
 								</div>
@@ -980,6 +1089,50 @@ export class Keyboard extends OmniElement {
         }
 
         return nothing;
+    }
+
+    renderCaps() {
+        return this.currentCase === 'lower'
+            ? html`
+                <omni-icon size="medium" class="themed-icon">
+                    <slot name="caps-off">
+                        <omni-caps-off-icon class="stretch-icon"></omni-caps-off-icon>
+                    </slot>
+                </omni-icon>           
+            `
+            : this.currentCase === 'upper-single'
+            ? html`
+                <omni-icon size="medium" class="themed-icon">
+                    <slot name="caps-on">
+                        <omni-caps-on-icon class="stretch-icon"></omni-caps-on-icon>
+                    </slot>
+                </omni-icon>
+            `
+            : this.currentCase === 'upper'
+            ? html`
+                <omni-icon size="medium" class="themed-icon">
+                    <slot name="caps-on-permanent">
+                        <omni-caps-on-permanent-icon class="stretch-icon"></omni-caps-on-permanent-icon>
+                    </slot>
+                </omni-icon>
+            `
+            : nothing;
+    }
+
+    renderClose() {
+        return html`
+        <slot name="close">
+            <omni-chevron-down-icon  class="close-icon"></omni-chevron-down-icon>
+        </slot>
+        `;
+    }
+
+    renderBackspace() {
+        return html`
+            <slot name="backspace">
+                <omni-backspace-icon class="stretch-icon"></omni-backspace-icon>
+            </slot>
+        `;
     }
 
     renderCallToAction() {
@@ -1052,8 +1205,60 @@ export const attachAttribute = 'data-omni-keyboard-attach';
 const supportedTypes = ['number', 'email', 'tel', 'password', 'search', 'text', 'url', 'textarea'];
 const selectionSupportedTypes = ['tel', 'password', 'search', 'text', 'url', 'textarea'];
 
+export type InputEventTypes =
+    | 'insertText'
+    | 'insertReplacementText'
+    | 'insertLineBreak'
+    | 'insertParagraph'
+    | 'insertOrderedList'
+    | 'insertUnorderedList'
+    | 'insertHorizontalRule'
+    | 'insertFromYank'
+    | 'insertFromDrop'
+    | 'insertFromPaste'
+    | 'insertFromPasteAsQuotation'
+    | 'insertTranspose'
+    | 'insertCompositionText'
+    | 'insertLink'
+    | 'deleteWordBackward'
+    | 'deleteWordForward'
+    | 'deleteSoftLineBackward'
+    | 'deleteSoftLineForward'
+    | 'deleteEntireSoftLine'
+    | 'deleteHardLineBackward'
+    | 'deleteHardLineForward'
+    | 'deleteByDrag'
+    | 'deleteByCut'
+    | 'deleteContent'
+    | 'deleteContentBackward'
+    | 'deleteContentForward'
+    | 'historyUndo'
+    | 'historyRedo'
+    | 'formatBold'
+    | 'formatItalic'
+    | 'formatUnderline'
+    | 'formatStrikeThrough'
+    | 'formatSuperscript'
+    | 'formatSubscript'
+    | 'formatJustifyFull'
+    | 'formatJustifyCenter'
+    | 'formatJustifyRight'
+    | 'formatJustifyLeft'
+    | 'formatIndent'
+    | 'formatOutdent'
+    | 'formatRemove'
+    | 'formatSetBlockTextDirection'
+    | 'formatSetInlineTextDirection'
+    | 'formatBackColor'
+    | 'formatFontColor'
+    | 'formatFontName';
 export type EnterKeyHint = 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send' | undefined;
 export type KeyboardMode = 'numeric' | 'alpha-numeric' | 'none';
+export type InputEventInitWithType =
+    | InputEventInit
+    | {
+          inputType: InputEventTypes;
+      };
 
 declare global {
     interface HTMLElementTagNameMap {
