@@ -4,7 +4,7 @@ import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { DateTime } from 'luxon';
-import { LabelStory, BaseArgs, HintStory, ErrorStory, PrefixStory, SuffixStory } from '../core/OmniInputStories.js';
+import { LabelStory, BaseArgs, HintStory, ErrorStory, PrefixStory, SuffixStory, DisabledStory } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
 import { assignToSlot, ComponentStoryFormat, CSFIdentifier, querySelectorAsync, raw } from '../utils/StoryUtils.js';
@@ -112,6 +112,7 @@ export const Value: ComponentStoryFormat<Args> = {
     </omni-date-picker>
     `,
     name: 'Value',
+    description: 'Set the current value of the Date picker component.',
     args: {
         label: 'Value',
         value: isoDate
@@ -135,6 +136,7 @@ export const Locale: ComponentStoryFormat<Args> = {
     </omni-date-picker>
     `,
     name: 'Locale',
+    description: 'Set the current locale of the Date picker component.',
     args: {
         label: 'Locale',
         locale: testLocale
@@ -156,7 +158,6 @@ export const Locale: ComponentStoryFormat<Args> = {
     }
 };
 
-/*
 export const Label = LabelStory<DatePicker, BaseArgs>('omni-date-picker');
 
 export const Hint = HintStory<DatePicker, BaseArgs>('omni-date-picker');
@@ -166,4 +167,5 @@ export const Error_Label = ErrorStory<DatePicker, BaseArgs>('omni-date-picker');
 export const Prefix = PrefixStory<DatePicker, BaseArgs>('omni-date-picker');
 
 export const Suffix = SuffixStory<DatePicker, BaseArgs>('omni-date-picker');
-*/
+
+export const Disabled = DisabledStory<DatePicker, BaseArgs>('omni-date-picker');

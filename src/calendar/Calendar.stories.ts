@@ -45,3 +45,18 @@ export const Interactive: ComponentStoryFormat<Args> = {
         calendar.addEventListener('click', click);
     }
 }
+
+export const Value: ComponentStoryFormat<Args> = {
+    render:(args: Args)=>html`
+    `,
+    name: 'Value',
+    description: 'Set the current value of the Calendar.',
+    args: {
+        value: ''
+    } as Args,
+    play: async (context)=> {
+        const calendar = within(context.canvasElement).getByTestId<Calendar>('test-calendar');
+        const click = jest.fn();
+        calendar.addEventListener('click', click);
+    }
+}

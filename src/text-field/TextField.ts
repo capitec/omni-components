@@ -85,7 +85,7 @@ export class TextField extends OmniFormElement {
         }
 
         .field.error {
-            color: var(--omni-text-field-font-color);
+            color: var(--omni-text-field-error-font-color);
         }
       `
         ];

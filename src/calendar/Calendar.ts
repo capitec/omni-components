@@ -19,11 +19,8 @@ import '../icons/ChevronRight.icon.js';
  * ```html
  * <omni-calendar
  * value="Hello World"
- * hint="Required"
- * error="Select a valid date"
- * locale="en-US"
- * disabled>
- * </omni-date-picker>
+ * locale="en-US">
+ * </omni-calendar>
  * ```
  * @element omni-calendar
  *
@@ -32,8 +29,97 @@ import '../icons/ChevronRight.icon.js';
  * @cssprop --omni-calendar-mobile-picker-container-bottom - Calendar mobile picker container bottom.
  * @cssprop --omni-calendar-mobile-picker-container-box-shadow - Calendar mobile picker container box shadow.
  *
- * @cssprop --omni-calendar-container-width -
- *
+ * @cssprop --omni-calendar-container-min-width - Calendar container minimum width.
+ * @cssprop --omni-calendar-container-min-height - Calendar container min height.
+ * @cssprop --omni-calendar-container-width - Calendar container width.
+ * @cssprop --omni-calendar-container-border-bottom - Calendar container border bottom.
+ * 
+ * @cssprop --omni-calendar-period-bar-padding - Calendar period container padding.
+ * @cssprop --omni-calendar-period-bar-border-bottom - Calendar period container border bottom.
+ * @cssprop --omni-calendar-period-bar-background-color - Calendar period container background color.
+ * @cssprop --omni-calendar-period-container-min-height - Calendar period container minimum height.
+ * 
+ * @cssprop --omni-calendar-period-bar-control-color - Calendar period bar control color.
+ * @cssprop --omni-calendar-period-bar-control-width- Calendar period bar control width.
+ * 
+ * @cssprop --omni-calendar-days-grid-template-columns - Calendar days grid template columns.
+ * @cssprop --omni-calendar-days-grid-auto-rows - Calendar days grid auto rows.
+ * @cssprop --omni-calendar-days-grid-font-size - Calendar days grid font size.
+ * @cssprop --omni-calendar-days-grid-font-weight - Calendar days grid font weight.
+ * @cssprop --omni-calendar-days-grid-width - Calendar days grid width.
+ * @cssprop --omni-calendar-days-grid-padding - Calendar days grid padding.
+ * @cssprop --omni-calendar-days-grid-line-height - Calendar days grid line height.
+ * @cssprop --omni-calendar-days-grid-background-color - Calendar days grid background color.
+ * 
+ * @cssprop --omni-calendar-month-grid-template-columns - Calendar month grid template columns.
+ * @cssprop --omni-calendar-month-grid-auto-rows - Calendar month grid auto rows.
+ * @cssprop --omni-calendar-months-grid-padding - Calendar month grid padding.
+ * @cssprop --omni-calendar-months-grid-background-color - Calendar month grid background color.
+ * 
+ * @cssprop --omni-calendar-year-grid-template-columns - Calendar year grid template columns.
+ * @cssprop --omni-calendar-year-grid-auto-rows - Calendar year grid auto rows.
+ * @cssprop --omni-calendar-year-grid-padding - Calendar year grid padding.
+ * @cssprop --omni-calendar-year-grid-background-color - Calendar year grid background color.
+ * 
+ * @cssprop --omni-calendar-month-button-width - Calendar month button width.
+ * @cssprop --omni-calendar-month-button-height - Calendar month button height.
+ * @cssprop --omni-calendar-month-button-font-family - Calendar month button font family.
+ * @cssprop --omni-calendar-month-button-font-size - Calendar month button font size.
+ * @cssprop --omni-calendar-month-button-font-weight - Calendar month button font weight.
+ * @cssprop --omni-calendar-month-button-line-height - Calendar month button line height.
+ * @cssprop --omni-calendar-month-button-background-color - Calendar month button background color.
+ * @cssprop --omni-calendar-month-button-border-color - Calendar month button border color.
+ * @cssprop --omni-calendar-month-button-border-width - Calendar month button border width.
+ * @cssprop --omni-calendar-month-button-color - Calendar month button color.
+ * @cssprop --omni-calendar-month-button-margin-left - Calendar month button margin left.
+ * @cssprop --omni-calendar-month-button-margin-right - Calendar month button margin right.
+ * 
+ * @cssprop --omni-calendar-month-button-selected-background-color - Calendar month button selected background color.
+ * @cssprop --omni-calendar-month-button-selected-border-color - Calendar month button selected border color.
+ * @cssprop --omni-calendar-month-button-selected-border-width - Calendar month selected border width.
+ * @cssprop --omni-calendar-month-button-selected-color - Calendar month selected color.
+ * @cssprop --omni-calendar-month-button-selected-border-radius - Calendar month selected border radius.
+ * 
+ * @cssprop --omni-calendar-year-button-width - Calendar year button width.
+ * @cssprop --omni-calendar-year-button-height - Calendar year button height.
+ * @cssprop --omni-calendar-year-button-font-family - Calendar year button font family.
+ * @cssprop --omni-calendar-year-button-font-size - Calendar year button font size.
+ * @cssprop --omni-calendar-year-button-line-height - Calendar year button line height.
+ * @cssprop --omni-calendar-year-button-background-color - Calendar year button background color.
+ * @cssprop --omni-calendar-year-button-border-color - Calendar year button border color.
+ * @cssprop --omni-calendar-year-button-border-width - Calendar year button border width.
+ * @cssprop --omni-calendar-year-button-color - Calendar year button color.
+ * @cssprop --omni-calendar-year-button-margin-left - Calendar year button margin left.
+ * @cssprop --omni-calendar-year-button-margin-right - Calendar year button margin right.
+ * @cssprop --omni-calendar-year-button-margin-top - Calendar year button margin top.
+ * @cssprop --omni-calendar-year-button-margin-bottom - Calendar year button margin bottom.
+ * 
+ * @cssprop --omni-calendar-year-button-selected-background-color - Calendar year button selected background color.
+ * @cssprop --omni-calendar-year-button-selected-border-color - Calendar year button selected border color.
+ * @cssprop --omni-calendar-year-button-selected-border-width - Calendar year button selected border width.
+ * @cssprop --omni-calendar-year-button-selected-color - Calendar year button selected color.
+ * @cssprop --omni-calendar-year-button-selected-border-radius - Calendar year button selected border radius.
+ * 
+ * @cssprop --omni-calendar-day-name-font-color - Calendar day name font color.
+ * @cssprop --omni-calendar-day-name-font-weight - Calendar day name font weight.
+ * @cssprop --omni-calendar-day-name-font-size - Calendar day name font size.
+ * 
+ * @cssprop --omni-calendar-day-button-width - Calendar day button width.
+ * @cssprop --omni-calendar-day-button-height - Calendar day button height.
+ * 
+ * @cssprop --omni-calendar-day-button-excluded-font-color - Calendar day button excluded color.
+ * 
+ * @cssprop --omni-calendar-day-current-button-border - Calendar day button current border.
+ * @cssprop --omni-calendar-day-current-button-width - Calendar day button current width.
+ * @cssprop --omni-calendar-day-current-button-height - Calendar day button current height.
+ * @cssprop --omni-calendar-day-current-button-border-radius - Calendar day button current border radius.
+ * 
+ * @cssprop --omni-calendar-day-selected-button-color - Calendar day button selected color.
+ * @cssprop --omni-calendar-day-selected-button-width - Calendar day button selected width.
+ * @cssprop --omni-calendar-day-selected-button-height - Calendar day button selected height.
+ * @cssprop --omni-calendar-day-selected-button-border-radius - Calendar day button selected border radius.
+ * @cssprop --omni-calendar-day-selected-button-background-color - Calendar day button selected background color.
+ * 
  */
 @customElement('omni-calendar')
 export class Calendar extends OmniElement {
@@ -52,8 +138,7 @@ export class Calendar extends OmniElement {
     @property({ type: String, reflect: true }) value?: string;
 
     // Internal state properties for date picker and
-    @state() private date: DateTime =
-        this.value && typeof this.value === 'string' ? DateTime.fromISO(this.value).setLocale(this.locale) : DateTime.local();
+    @state() private date: DateTime = this.value && typeof this.value === 'string' ? DateTime.fromISO(this.value).setLocale(this.locale) : DateTime.local();
 
     @state() private _selectedMonth: number = (this.date && this.date.isValid ? this.date : DateTime.local().setLocale(this.locale)).month;
     @state() private _selectedYear: number = (this.date && this.date.isValid ? this.date : DateTime.local().setLocale(this.locale)).year;
@@ -213,13 +298,14 @@ export class Calendar extends OmniElement {
             css`
             /* Styles related to the picker container and its child elements */
 
+            /* Is this still needed
             .picker-container {
                 z-index: var(--omni-calendar-container-z-index, 420);
-            }
+            }*/
 
-            /* Picker container mobile*/
+            /* Picker container mobile
             @media screen and (max-width: 766px) {
-                .picker-container {
+                .calendar-container {
                     position: fixed;
                     top: none;
                     left: var(--omni-calendar-mobile-picker-container-left, 0px);
@@ -227,18 +313,27 @@ export class Calendar extends OmniElement {
                     bottom: var(--omni-calendar-mobile-picker-container-bottom, 0px);
                     box-shadow: var(--omni-calendar-mobile-picker-container-box-shadow, 0px 0px 2px 2px rgba(0, 0, 0, 0.11));
                 }
-            }
+            }*/
         
-            /* Desktop and landscape tablet device styling, if element is at the bottom of the screen make items render above the input */
+            /* Desktop and landscape tablet device styling, if element is at the bottom of the screen make items render above the input 
             @media screen and (min-width: 767px) {
                 .calendar-container {
                     cursor: default;
                     transition: 1s;
-                    min-width: 320px; /* Come back and review*/
-                    min-height: 286px;
+                    min-width: var(--omni-calendar-container-min-width, 320px); 
+                    min-height: var(--omni-calendar-container-min-height,286px);
                     width: var(--omni-calendar-container-width, 100%);
-                    border: var(--omni-calendar-period-container-border-bottom, 1px solid grey);
+                    border: var(--omni-calendar-container-border-bottom, 1px solid grey);
                 }
+            }*/
+
+            .calendar-container {
+                cursor: default;
+                /*min-width: var(--omni-calendar-container-min-width, 320px); */
+                min-width: var(--omni-calendar-container-min-height, 280px);
+                min-height: var(--omni-calendar-container-min-height,286px);
+                border: var(--omni-calendar-container-border, 1px solid grey);
+                border-radius: var(--omni-calendar-container-border-radius, 2px);
             }
 
             /* Styles for period bar */
@@ -247,29 +342,44 @@ export class Calendar extends OmniElement {
                 flex-direction: row;
                 justify-content: space-between;
                 align-items: center;
-                padding:var(--omni-calendar-period-container-padding, 4px 8px);
-                border-bottom: var(--omni-calendar-period-container-border-bottom, 1px solid #e1e1e1);
-                background-color: var(--omni-calendar-period-background-color, var(--omni-background-color));
-                min-height: 56px;
+                padding:var(--omni-calendar-period-bar-padding, 4px 8px);
+                border-bottom: var(--omni-calendar-period-bar-border-bottom, 1px solid #e1e1e1);
+                background-color: var(--omni-calendar-period-bar-background-color, var(--omni-background-color));
+                min-height: var(--omni-calendar-period-container-min-height,56px);
 
             }
 
+            .left-control,
+            .right-control{
+                cursor: pointer;
+                fill: var(--omni-calendar-period-bar-control-color, black);
+                width: var(--omni-calendar-period-bar-control-width, 23px);
+            }
+
+            /*
             .left-control {
                 cursor: pointer;
-                /*padding-top: var(--omni-calendar-period-bar-previous-control-padding-top, 5px);*/
+                fill: var();
+                padding-top: var(--omni-calendar-period-bar-previous-control-padding-top, 5px);
                 width: var(--omni-calendar-period-bar-previous-control-width, 23px);
             }
 
             .right-control {
                 cursor: pointer;
-                /*padding-top: var(--omni-calendar-period-bar-next-control-padding-top, 5px);*/
+                padding-top: var(--omni-calendar-period-bar-next-control-padding-top, 5px);
                 width: var(--omni-calendar-period-bar-next-control-width, 23px);
-            }
+            }*/
 
             /*Consider renaming this*/
             .month-year {
                 cursor: pointer;
-                width: var(--omni-date-picker-period-center-button);
+                width: var(--omni-calendar-period-center-button , 112px);
+                text-align: center;
+
+            }
+
+            .month-year:hover {
+                background-color: var(--omni-calendar-period-center-button-hover-background-color, var(--omni-background-hover-color));
             }
 
             /* Grid styles for days, months and years */
@@ -279,32 +389,32 @@ export class Calendar extends OmniElement {
                 align-items: center;
                 justify-items: center;
                 text-align: center;
-                grid-template-columns: var(--omni-date-picker-days-grid-template-columns, 1fr 1fr 1fr 1fr 1fr 1fr 1fr);
-                grid-auto-rows: var(--omni-date-picker-days-grid-auto-rows, 40px);
-                font-size: var(--omni-date-picker-days-grid-font-size, 14px);
-                font-weight: var(--omni-date-picker-days-grid-font-weight, 500);
-                width: var(--omni-date-picker-days-grid-width, 100%);
-                padding: var(--omni-date-picker-days-grid-padding,19.75px 20px);
-                line-height: var(--omni-date-picker-days-grid-line-height, 18px);
-                background-color: var(--omni-date-picker-days-grid-background-color, var(--omni-theme-background-color));
+                grid-template-columns: var(--omni-calendar-days-grid-template-columns, 1fr 1fr 1fr 1fr 1fr 1fr 1fr);
+                grid-auto-rows: var(--omni-calendar-days-grid-auto-rows, 40px);
+                font-size: var(--omni-calendar-days-grid-font-size, 14px); /* Check this*/
+                font-weight: var(--omni-calendar-days-grid-font-weight, 500);  /* Check this*/
+                /*width: var(--omni-calendar-days-grid-width, 100%);*/
+                padding: var(--omni-calendar-days-grid-padding,10px 10px);
+                line-height: var(--omni-calendar-days-grid-line-height, 18px);
+                background-color: var(--omni-calendar-days-grid-background-color, var(--omni-theme-background-color));
             }
 
             .month-grid {
                 display: grid;
                 justify-content: center;
                 align-items: center;
-                align-items: center;
                 justify-items: center;
                 text-align: center;
-                grid-template-columns: var(--omni-date-picker-month-grid-template-columns, 1fr 1fr 1fr);
+                grid-template-columns: var(--omni-calendar-month-grid-template-columns, 1fr 1fr 1fr);
+                grid-auto-rows: var(--omni-calendar-month-grid-auto-rows, 60px);
                 /*
                 padding-top: var(--omni-date-picker-month-grid-padding-top, 15.72px);
                 padding-bottom: var(--omni-date-picker-month-grid-padding-bottom, 28px);
                 padding-right:var(--omni-date-picker-month-grid-padding-right, 28px);
                 padding-left: var(--omni-date-picker-month-grid-padding-left, 28px);
                                 */
-
-                background-color: var(--omni-date-picker-months-grid-background-color, var(--omni-theme-background-color));
+                padding: var(--omni-calendar-months-grid-padding,10px 10px);
+                background-color: var(--omni-calendar-months-grid-background-color, var(--omni-theme-background-color));
             }
 
             .year-grid {
@@ -314,7 +424,9 @@ export class Calendar extends OmniElement {
                 align-items: center;
                 justify-items: center;
                 text-align: center;
-                grid-template-columns: var(--omni-date-picker-month-grid-template-columns, 1fr 1fr 1fr);
+                grid-template-columns: var(--omni-calendar-year-grid-template-columns, 1fr 1fr 1fr);
+                grid-auto-rows: var(--omni-calendar-year-grid-auto-rows, 60px);
+                padding: var(--omni-calendar-year-grid-padding,10px 10px);
                 /*
                 padding-top: var(--omni-date-picker-month-grid-padding-top, 15.72px);
                 padding-bottom: var(--omni-date-picker-month-grid-padding-bottom, 15.72px);
@@ -332,47 +444,43 @@ export class Calendar extends OmniElement {
                 padding-left: var(--omni-date-picker-month-grid-padding-left, 28px);
                 */
 
-                background-color: var(--omni-date-picker-months-grid-background-color, var(--omni-theme-background-color));
+                background-color: var(--omni-calendar-year-grid-background-color, var(--omni-theme-background-color));
             }
 
             /* Month Button styles */
             .month {
                 display: flex;
-                width: var(--omni-date-picker-month-button-width, 80px);
-                height: var(--omni-date-picker-month-button-height, 48px);
+                width: var(--omni-calendar-month-button-width, 73px);
+                height: var(--omni-calendar-month-button-height, 48px);
                 align-items: center;
                 justify-content: center;
 
-                font-family: var(--omni-button-font-family, var(--omni-font-family));
-                font-size: var(--omni-button-font-size, var(--omni-font-size));
-                font-weight: var(--omni-button-font-weight, bolder);
-                line-height: var(--omni-button-line-height);
+                font-family: var(--omni-calendar-month-button-font-family, var(--omni-font-family));
+                font-size: var(--omni-calendar-month-button-font-size, var(--omni-font-size));
+                font-weight: var(--omni-calendar-month-button-font-weight, bolder);
+                line-height: var(--omni-calendar-month-button-line-height);
 
-
-                background-color: var(--omni-button-clear-background-color, transparent);
-                border-color: var(--omni-button-clear-border-color, transparent);
-                border-width: var(--omni-button-clear-border-width, var(--omni-border-width));
-                color: var(--omni-button-clear-color, var(--omni-primary-color));
-
-                margin-left: 4px;
-                margin-right: 4px;
-                margin-top: 15.56px;
-                margin-bottom: 15.56px;
-            }
-
-            .month.current {
                 /*
-                background-color: var(--omni-button-secondary-background-color, var(--omni-background-color));
-                border-color: var(--omni-button-secondary-border-color, var(--omni-primary-color));
-                border-width: var(--omni-button-secondary-border-width, var(--omni-border-width));
-                color: var(--omni-button-secondary-color, var(--omni-primary-color));*/
+                background-color: var(--omni-calendar-month-button-background-color, transparent);
+                border-color: var(--omni-calendar-month-button-border-color, transparent);
+                border-width: var(--omni-calendar-month-button-border-width, var(--omni-border-width));
+                color: var(--omni-calendar-month-button-color, var(--omni-primary-color));*/
 
-                background-color: var(--omni-button-secondary-background-color, var(--omni-background-color));
-                border-color: var(--omni-button-secondary-border-color,var(--omni-accent-color));
-                border-width: var(--omni-button-secondary-border-width, var(--omni-border-width));
-                color: var(--omni-button-secondary-color, var(--omni-accent-color));
-                border-style: solid;
-                border-radius: var(--omni-button-border-radius, var(--omni-border-radius));
+                background-color: var(--omni-calendar-month-button-background-color, var(--omni-background-color));
+                /*
+                border-color: var(--omni-calendar-month-button-border-color, var(--omni-primary-color));
+                border-width: var(--omni-calendar-month-button-border-width, var(--omni-border-width));
+                border-style: solid;*/
+                border-radius: var(--omni-calendar-month-button-border-radius, 5px);
+
+                color: var(--omni-calendar-month-button-color, var(--omni-primary-color));
+
+                margin-left: var(--omni-calendar-month-button-margin-left,2px);
+                margin-right: var(--omni-calendar-month-button-margin-right,2px);
+                /*
+                margin-top: 15.56px;
+                margin-bottom: 15.56px;*/
+                cursor: pointer;
             }
 
             .month.selected {
@@ -382,16 +490,16 @@ export class Calendar extends OmniElement {
                 border-width: var(--omni-button-primary-border-width, var(--omni-border-width));
                 color: var(--omni-button-primary-color, var(--omni-background-color));*/
 
-                background-color: var(--omni-date-picker-primary-background-color, var(--omni-primary-color));
-                border-color: var(--omni-button-primary-border-color, var(--omni-primary-color));
-                border-width: var(--omni-button-primary-border-width, var(--omni-border-width));
-                color: var(--omni-button-primary-color, var(--omni-background-color));
+                background-color: var(--omni-calendar-month-button-selected-background-color, var(--omni-primary-color));
+                border-color: var(--omni-calendar-month-button-selected-border-color, var(--omni-primary-color));
+                border-width: var(--omni-calendar-month-button-selected-border-width, var(--omni-border-width));
+                color: var(--omni-calendar-month-button-selected-color, var(--omni-background-color));
                 border-style: solid;
-                border-radius: var(--omni-button-border-radius, var(--omni-border-radius));
+                border-radius: var(--omni-calendar-month-button-selected-border-radius, var(--omni-border-radius));
             }
 
             .month:hover {
-
+                background-color: var(--omni-calendar-period-center-button-hover-background-color, var(--omni-accent-hover-color));
             }
 
             /* Year button styles */
@@ -399,55 +507,61 @@ export class Calendar extends OmniElement {
                 align-items: center;
                 justify-content: center;
                 display: flex;                
-                width: var(--omni-date-picker-year-button-width, 80px);
-                height: var(--omni-date-picker-year-button-height, 48px);
+                width: var(--omni-calendar-year-button-width, 73px);
+                height: var(--omni-calendar-year-button-height, 48px);
 
 
                 
-                font-family: var(--omni-button-font-family, var(--omni-font-family));
-                font-size: var(--omni-button-font-size, var(--omni-font-size));
-                font-weight: var(--omni-button-font-weight, bolder);
-                line-height: var(--omni-button-line-height);
+                font-family: var(--omni-calendar-year-button-font-family, var(--omni-font-family));
+                font-size: var(--omni-calendar-year-button-font-size, var(--omni-font-size));
+                font-weight: var(--omni-calendar-year-button-font-weight, bolder);
+                line-height: var(--omni-calendar-year-button-line-height);
 
+                /*
+                background-color: var(--omni-calendar-year-button-background-color, transparent);
+                border-color: var(--omni-calendar-year-button-border-color, transparent);
+                border-width: var(--omni-calendar-year-button-border-width, var(--omni-border-width));
+                color: var(--omni-calendar-year-button-color, var(--omni-primary-color));*/
 
-                background-color: var(--omni-button-clear-background-color, transparent);
-                border-color: var(--omni-button-clear-border-color, transparent);
-                border-width: var(--omni-button-clear-border-width, var(--omni-border-width));
-                color: var(--omni-button-clear-color, var(--omni-primary-color));
+                background-color: var(--omni-calendar-year-button-background-color, var(--omni-background-color));
+                border-color: var(--omni-calendar-year-button-border-color, var(--omni-primary-color));
+                border-width: var(--omni-calendar-year-button-border-width, var(--omni-border-width));
+                /*border-style: solid;*/
+                border-radius: var(--omni-calendar-year-button-border-radius, 5px);
 
-                margin-left: 4px;
-                margin-right: 4px;
-                margin-top: 15.56px;
-                margin-bottom: 15.56px;
-            }
+                color: var(--omni-calendar-month-button-color, var(--omni-primary-color));
 
-            .year.current {
-                background-color: var(--omni-button-secondary-background-color, var(--omni-background-color));
-                border-color: var(--omni-button-secondary-border-color, var(--omni-accent-color));
-                border-width: var(--omni-button-secondary-border-width, var(--omni-border-width));
-                color: var(--omni-button-secondary-color, var(--omni-primary-color));
-                border-style: solid;
-                border-radius: var(--omni-button-border-radius, var(--omni-border-radius));
+                margin-left: var(--omni-calendar-year-button-margin-left,2px);
+                margin-right: var(--omni-calendar-year-button-margin-right,2px);
+                /*
+                margin-top: var(--omni-calendar-year-button-margin-top,15.56px);
+                margin-bottom: var(--omni-calendar-year-button-margin-bottom,15.56px);*/
+                cursor: pointer;
             }
 
             .year.selected {
-                background-color: var(--omni-date-picker-primary-background-color, var(--omni-primary-color));
-                border-color: var(--omni-button-primary-border-color, var(--omni-primary-color));
-                border-width: var(--omni-button-primary-border-width, var(--omni-border-width));
-                color: var(--omni-button-primary-color, var(--omni-background-color));
+                background-color: var(--omni-calendar-year-button-selected-background-color, var(--omni-primary-color));
+                border-color: var(--omni-calendar-year-button-selected-border-color, var(--omni-primary-color));
+                border-width: var(--omni-calendar-year-button-selected-border-width, var(--omni-border-width));
+                color: var(--omni-calendar-year-button-selected-color, var(--omni-background-color));
                 border-style: solid;
-                border-radius: var(--omni-button-border-radius, var(--omni-border-radius));
+                border-radius: var(--omni-calendar-year-button-selected-border-radius, var(--omni-border-radius));
             }
            
             .year:hover {
-
+                background-color: var(--omni-calendar-period-center-button-hover-background-color, var(--omni-accent-hover-color));
             }
 
             /* Day button styles*/
             .day-name {
-                color: var(--omni-date-picker-day-name-font-color, var(--omni-font-color));
-                font-weight: var(--omni-date-picker-day-name-font-weight, 500);
-                font-size: var(--omni-date-picker-day-name-font-size, );
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: var(--omni-calendar-day-name-font-color, var(--omni-font-color));
+                font-weight: var(--omni-calendar-day-name-font-weight, 500);
+                font-size: var(--omni-calendar-day-name-font-size, );
+                width: 33px;
+                height: 40px;
             }
           
             .day {
@@ -455,29 +569,39 @@ export class Calendar extends OmniElement {
                 cursor: pointer;
                 justify-content: center;
                 align-items: center;
-                width: var(--omni-date-picker-day-button-width, 100%);
-                height: var(--omni-date-picker-day-button-height, 100%);
+                /*
+                width: var(--omni-calendar-day-button-width, 100%);
+                height: var(--omni-calendar-day-button-height, 100%);*/
+                /*
+                width: var(--omni-calendar-day-current-button-width, 24px);
+                height: var(--omni-calendar-day-current-button-height, 24px);*/
+                width: 33px;
+                height: 40px;
+            }
+
+            .day:hover {
+                background-color: var(--omni-calendar-period-center-button-hover-background-color, var(--omni-accent-hover-color));
             }
 
             .day.excluded {
-                color: var(--omni-date-picker-day-excluded-color, grey);
+                color: var(--omni-calendar-day-button-excluded-font-color, grey);
                 pointer-events: none;
             }
 
             .day.current {
                 text-align: center;
-                border: 2px solid var(--omni-accent-color);
-                width: var(--omni-date-picker-day-selected-width, 24px);
-                height: var(--omni-date-picker-day-selected-height, 24px);
-                border-radius: var(--omni-date-picker-day-selected-border-radius, 50%);
+                border: var(--omni-calendar-day-current-button-border,2px solid var(--omni-accent-color));
+                width: var(--omni-calendar-day-current-button-width, 24px);
+                height: var(--omni-calendar-day-current-button-height, 24px);
+                border-radius: var(--omni-calendar-day-current-button-border-radius, 50%);
             }
 
             .day.selected {
-                color: var(--omni-date-picker-day-selected-color, #FFFFFF);
-                width: var(--omni-date-picker-day-selected-width, 24px);
-                height: var(--omni-date-picker-day-selected-height, 24px);
-                border-radius: var(--omni-date-picker-day-selected-border-radius, 20%);
-                background-color: var(--omni-date-picker-day-selected-background-color, var(--omni-primary-color));
+                color: var(--omni-calendar-day-selected-button-color, #FFFFFF);
+                width: var(--omni-calendar-day-selected-button-width, 24px);
+                height: var(--omni-calendar-day-selected-button-height, 24px);
+                border-radius: var(--omni-calendar-day-selected-button-border-radius, 20%);
+                background-color: var(--omni-calendar-day-selected-button-background-color, var(--omni-primary-color));
             }
 
 
@@ -630,7 +754,6 @@ export class Calendar extends OmniElement {
     _renderMonthButton(month: string, index: number) {
         const monthStyles: ClassInfo = {
             month: true,
-            current: DateTime.local().year === this._selectedYear && DateTime.local().monthShort === month,
             selected: this.date && this.date.isValid && this.date.year === this._selectedYear && this.date.monthShort === month
         };
 
@@ -661,7 +784,6 @@ export class Calendar extends OmniElement {
     _renderYearButton(year: number) {
         const yearStyles: ClassInfo = {
             year: true,
-            current: DateTime.local().year === year,
             selected: this.date && this.date.isValid && this.date.year === year,
             out: false
         };
