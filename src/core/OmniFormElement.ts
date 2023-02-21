@@ -47,6 +47,8 @@ import OmniElement from './OmniElement.js';
  * @cssprop --omni-form-focussed-error-label-color - Form focussed error label color.
  *
  * @cssprop --omni-form-focussed-label-background-color - Form focussed label background color.
+ * @cssprop --omni-form-focussed-label-left - Form focussed label left.
+ * @cssprop --omni-form-focussed-label-right - Form focussed label right.
  *
  * @cssprop --omni-form-error-label-color - Form error label color.
  * @cssprop --omni-form-error-border-color - Form error border color.
@@ -230,8 +232,8 @@ export class OmniFormElement extends OmniElement {
                     transform: scale(var(--omni-form-focussed-label-transform-scale), 0.90);
 					background-color: var(--omni-form-focussed-label-background-color, var(--omni-background-color));
 					position: absolute;
-					left: -3px;
-					right: -3px;
+					left: var(--omni-form-focussed-label-left,-3px);
+					right: var(--omni-form-focussed-label-right,-3px);
     				height: 50%;
 					z-index: -1;
                     top:50%;
