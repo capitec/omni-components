@@ -16,14 +16,14 @@ export default {
     component: 'omni-calendar'
 } as CSFIdentifier;
 
-const localDate = DateTime.local();
-const isoDate = localDate.toISODate();
-const testLocale = localDate.locale;
-
 interface Args {
     locale: string;
     value: string;
 }
+
+const localDate = DateTime.local();
+const isoDate = localDate.toISODate();
+const testLocale = localDate.locale;
 
 export const Interactive: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
@@ -47,12 +47,37 @@ export const Interactive: ComponentStoryFormat<Args> = {
 }
 
 export const Value: ComponentStoryFormat<Args> = {
-    render:(args: Args)=>html`
+    render: (args: Args) =>html`
+    <omni-calendar
+        data-testid="test-calendar"
+        .value="${args.value}"
+        >
+    </omni-calendar>
     `,
     name: 'Value',
     description: 'Set the current value of the Calendar.',
     args: {
-        value: ''
+        value: isoDate
+    } as Args,
+    play: async (context)=> {
+        const calendar = within(context.canvasElement).getByTestId<Calendar>('test-calendar');
+        const click = jest.fn();
+        calendar.addEventListener('click', click);
+    }
+}
+
+export const Locale: ComponentStoryFormat<Args> = {
+    render: (args: Args) =>html`
+    <omni-calendar
+        data-testid="test-calendar"
+        locale="${args.locale}"
+        >
+    </omni-calendar>
+    `,
+    name: 'Locale',
+    description: 'Set the locale of the Calendar.',
+    args: {
+        locale: 'ja-JP'
     } as Args,
     play: async (context)=> {
         const calendar = within(context.canvasElement).getByTestId<Calendar>('test-calendar');

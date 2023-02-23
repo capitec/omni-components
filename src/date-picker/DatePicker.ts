@@ -269,7 +269,7 @@ export class DatePicker extends OmniFormElement {
                     transition: 1s;
                     width: var(--omni-date-picker-container-width, 100%);
                     top: var(--omni-date-picker-container-top, 100%);
-                    border: var(--omni-date-picker-period-container-border-bottom, 1px solid #e1e1e1);
+                    /*border: var(--omni-date-picker-period-container-border-bottom, 1px solid #e1e1e1);*/
                 }
 
                /* Styles if the element is at the bottom of the screen then render the picker on top of the element */

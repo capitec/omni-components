@@ -1,4 +1,4 @@
-import { css, html, nothing, TemplateResult } from 'lit';
+import { css, html, nothing, PropertyValueMap, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { ClassInfo, classMap } from 'lit/directives/class-map.js';
 import { debounce } from 'lodash';
@@ -130,6 +130,7 @@ export class Calendar extends OmniElement {
      * @attr
      */
     @property({ type: String, reflect: true }) locale: string = this.defaultLocale;
+    /*@property({ type: String, reflect: true }) locale: string = this.defaultLocale;*/
 
     /**
      * The value of the Calendar component
@@ -138,7 +139,7 @@ export class Calendar extends OmniElement {
     @property({ type: String, reflect: true }) value?: string;
 
     // Internal state properties for date picker and
-    @state() private date: DateTime = this.value && typeof this.value === 'string' ? DateTime.fromISO(this.value).setLocale(this.locale) : DateTime.local();
+    @state() private date: DateTime = this.value && typeof this.value === 'string' ? DateTime.fromISO(this.value).setLocale(this.locale) : DateTime.local().setLocale(this.locale);
 
     @state() private _selectedMonth: number = (this.date && this.date.isValid ? this.date : DateTime.local().setLocale(this.locale)).month;
     @state() private _selectedYear: number = (this.date && this.date.isValid ? this.date : DateTime.local().setLocale(this.locale)).year;
@@ -155,14 +156,28 @@ export class Calendar extends OmniElement {
 
     private _updateDateVariablesUpdate = debounce(() => this._updateDateVariables(), 800);
 
+    /*
     override connectedCallback() {
         super.connectedCallback();
-        /*this._mobileCheck();*/
+
+        this._mobileCheck();
+        
         this.date = (this.value && typeof this.value === 'string' ? DateTime.fromISO(this.value).setLocale(this.locale) : undefined)?.setLocale(
             this.locale
         ) as DateTime;
-
         // Check for how to render the picker container based on screen dimensions.
+    }*/
+
+    // Update properties of the Date picker component if user provides a value to the value property or if the locale property is updated.
+    protected override shouldUpdate(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): boolean {
+        if (_changedProperties.has('value')) {
+            this.date = DateTime.fromISO(<string>this.value).setLocale(this.locale);
+        }
+        if (_changedProperties.has('locale')) {
+            this._updateDateVariablesUpdate();
+            return false;
+        }
+        return true;
     }
 
     // Updates the internal months, days and date with the updated locale if a valid locale is not provided it will use the default.
@@ -330,20 +345,22 @@ export class Calendar extends OmniElement {
             .calendar-container {
                 cursor: default;
                 /*min-width: var(--omni-calendar-container-min-width, 320px); */
-                min-width: var(--omni-calendar-container-min-height, 280px);
-                min-height: var(--omni-calendar-container-min-height,286px);
-                border: var(--omni-calendar-container-border, 1px solid grey);
-                border-radius: var(--omni-calendar-container-border-radius, 2px);
+                /*min-width: var(--omni-calendar-container-min-height, 280px);
+                min-height: var(--omni-calendar-container-min-height, 286px);*/
+                box-shadow: 0 0 0 1px var(--omni-primary-color); /* added this */
+                /*border: var(--omni-calendar-container-border, 1px solid grey);*/
+                border-radius: var(--omni-calendar-container-border-radius, 4px);
             }
 
             /* Styles for period bar */
             .period {
+                border-radius: inherit;
                 display: flex;
                 flex-direction: row;
                 justify-content: space-between;
                 align-items: center;
                 padding:var(--omni-calendar-period-bar-padding, 4px 8px);
-                border-bottom: var(--omni-calendar-period-bar-border-bottom, 1px solid #e1e1e1);
+                border-bottom: var(--omni-calendar-period-bar-border-bottom, 1px solid var(--omni-primary-color));
                 background-color: var(--omni-calendar-period-bar-background-color, var(--omni-background-color));
                 min-height: var(--omni-calendar-period-container-min-height,56px);
 
@@ -352,7 +369,7 @@ export class Calendar extends OmniElement {
             .left-control,
             .right-control{
                 cursor: pointer;
-                fill: var(--omni-calendar-period-bar-control-color, black);
+                fill: var(--omni-calendar-period-bar-control-color, var(--omni-primary-color));
                 width: var(--omni-calendar-period-bar-control-width, 23px);
             }
 
@@ -375,11 +392,19 @@ export class Calendar extends OmniElement {
                 cursor: pointer;
                 width: var(--omni-calendar-period-center-button , 112px);
                 text-align: center;
-
+                color: var(--omni-calendar-period-color, var(--omni-primary-color));
+                font-size: var(--omni-calendar-period-font-size, var(--omni-font-size));
+                font-weight: var(--omni-calendar-period-font-weight, 500);
             }
 
             .month-year:hover {
                 background-color: var(--omni-calendar-period-center-button-hover-background-color, var(--omni-background-hover-color));
+            }
+
+            .days-grid,
+            .month-grid,
+            .year-grid {
+                border-radius: inherit;
             }
 
             /* Grid styles for days, months and years */
@@ -391,8 +416,8 @@ export class Calendar extends OmniElement {
                 text-align: center;
                 grid-template-columns: var(--omni-calendar-days-grid-template-columns, 1fr 1fr 1fr 1fr 1fr 1fr 1fr);
                 grid-auto-rows: var(--omni-calendar-days-grid-auto-rows, 40px);
-                font-size: var(--omni-calendar-days-grid-font-size, 14px); /* Check this*/
-                font-weight: var(--omni-calendar-days-grid-font-weight, 500);  /* Check this*/
+                /*font-size: var(--omni-calendar-days-grid-font-size, 14px);  Check this*/
+                /*font-weight: var(--omni-calendar-days-grid-font-weight, 500);   Check this*/
                 /*width: var(--omni-calendar-days-grid-width, 100%);*/
                 padding: var(--omni-calendar-days-grid-padding,10px 10px);
                 line-height: var(--omni-calendar-days-grid-line-height, 18px);
@@ -559,7 +584,7 @@ export class Calendar extends OmniElement {
                 align-items: center;
                 color: var(--omni-calendar-day-name-font-color, var(--omni-font-color));
                 font-weight: var(--omni-calendar-day-name-font-weight, 500);
-                font-size: var(--omni-calendar-day-name-font-size, );
+                font-size: var(--omni-calendar-day-name-font-size, var(--omni-font-size));
                 width: 33px;
                 height: 40px;
             }
