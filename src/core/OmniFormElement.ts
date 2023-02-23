@@ -221,8 +221,8 @@ export class OmniFormElement extends OmniElement {
                     color: var(--omni-form-focussed-error-label-color, var(--omni-error-font-color));
                 }
             
-                :host([value]:not([value=''])) .layout  > .label::before,
-                .layout:focus-within > .label::before 
+                :host([value]:not([value=''])) .layout  > .label > div::before,
+                .layout:focus-within > .label > div::before 
                 {
                     content: "";
 					display: block;           
@@ -239,7 +239,7 @@ export class OmniFormElement extends OmniElement {
                 :host([value]:not([value=''])) .layout  > .label > div,
                 .layout:focus-within > .label > div {
                     transform: scale(var(--omni-form-focussed-label-transform-scale), 0.9);
-                    transform-origin: top center;
+                    transform-origin: center left;
                 }
 
                 /* ERROR STYLES */
