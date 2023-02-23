@@ -33,7 +33,7 @@ export const LabelStory = <T extends HTMLElement, U extends BaseArgs>(tagName: s
         } as U,
         play: async (context) => {
             const input = within(context.canvasElement).getByTestId<T>('test-field');
-            await expect(input.shadowRoot?.querySelector<HTMLElement>('.label > span')).toHaveTextContent(Label.args?.label as string);
+            await expect(input.shadowRoot?.querySelector<HTMLElement>('.label > div')).toHaveTextContent(Label.args?.label as string);
         }
     };
     return Label;
