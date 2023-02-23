@@ -156,4 +156,3 @@ declare global {
         'omni-hyperlink': Hyperlink;
     }
 }
-
