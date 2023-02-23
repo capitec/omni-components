@@ -30,7 +30,6 @@ import OmniElement from './OmniElement.js';
  * @cssprop --omni-form-border-style - Form border style.
  * @cssprop --omni-form-border-color - Form border color.
  *
- * @cssprop --omni-form-label-transform-origin - Form label text align.
  * @cssprop --omni-form-label-margin-left - Form label margin left.
  * @cssprop --omni-form-label-text-align - Form label text align.
  * @cssprop --omni-form-label-color - Form label color.
@@ -175,7 +174,6 @@ export class OmniFormElement extends OmniElement {
 
                 .label {
                     position: absolute;
-                    transform-origin: top var(--omni-form-label-transform-origin, left);
                     transition: all 150ms ease 0s;
                     pointer-events: none;
                     user-select: none;
@@ -227,8 +225,7 @@ export class OmniFormElement extends OmniElement {
                 .layout:focus-within > .label::before 
                 {
                     content: "";
-					display: block;
-                    transform: scale(var(--omni-form-focussed-label-transform-scale), 0.90);
+					display: block;           
 					background-color: var(--omni-form-focussed-label-background-color, var(--omni-background-color));
 					position: absolute;
 					left: calc(var(--omni-form-focussed-label-padding-left, 3px) * -1);
@@ -237,6 +234,12 @@ export class OmniFormElement extends OmniElement {
 					z-index: -1;
                     top:50%;
                     width: calc(100% + var(--omni-form-focussed-label-padding-left, 3px) + var(--omni-form-focussed-label-padding-right, 3px));
+                }
+
+                :host([value]:not([value=''])) .layout  > .label > div,
+                .layout:focus-within > .label > div {
+                    transform: scale(var(--omni-form-focussed-label-transform-scale), 0.75);
+                    transform-origin: center left;
                 }
 
                 /* ERROR STYLES */
@@ -362,7 +365,7 @@ export class OmniFormElement extends OmniElement {
             disabled: this.disabled
         };
 
-        return html`${this.label ? html`<div class=${classMap(labelClass)}><span>${this.label}</span></div>` : nothing}`;
+        return html`${this.label ? html`<div class=${classMap(labelClass)}><div>${this.label}</div></div>` : nothing}`;
     }
 
     protected renderControl(): typeof nothing | TemplateResult {
