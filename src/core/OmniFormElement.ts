@@ -41,14 +41,13 @@ import OmniElement from './OmniElement.js';
  * @cssprop --omni-form-focussed-border-width - Form focussed border width.
  * @cssprop --omni-form-focussed-border-color - Form focussed border color.
  * @cssprop --omni-form-focussed-label-transform-scale - Form focussed label transform scale.
- * @cssprop --omni-form-focussed-label-top - Form focussed label top.
  * @cssprop --omni-form-focussed-label-margin-left - Form focussed label left margin.
  * @cssprop --omni-form-focussed-label-color - Form focussed label color.
  * @cssprop --omni-form-focussed-error-label-color - Form focussed error label color.
  *
  * @cssprop --omni-form-focussed-label-background-color - Form focussed label background color.
- * @cssprop --omni-form-focussed-label-left - Form focussed label left.
- * @cssprop --omni-form-focussed-label-right - Form focussed label right.
+ * @cssprop --omni-form-focussed-label-padding-left - Form focussed label left.
+ * @cssprop --omni-form-focussed-label-padding-right - Form focussed label right.
  *
  * @cssprop --omni-form-error-label-color - Form error label color.
  * @cssprop --omni-form-error-border-color - Form error border color.
@@ -211,7 +210,7 @@ export class OmniFormElement extends OmniElement {
                 :host([value]:not([value=''])) .layout  > .label,
                 .layout:focus-within > .label
                 {
-                    top: var(--omni-form-focussed-label-top, 0px);
+                    top: 0px;
                     margin-left: var(--omni-form-focussed-label-margin-left, 10px);
                 }
 
@@ -232,11 +231,12 @@ export class OmniFormElement extends OmniElement {
                     transform: scale(var(--omni-form-focussed-label-transform-scale), 0.90);
 					background-color: var(--omni-form-focussed-label-background-color, var(--omni-background-color));
 					position: absolute;
-					left: var(--omni-form-focussed-label-left,-3px);
-					right: var(--omni-form-focussed-label-right,-3px);
+					left: calc(var(--omni-form-focussed-label-padding-left, 3px) * -1);
+					right: calc(var(--omni-form-focussed-label-padding-right, 3px) * -1);
     				height: 50%;
 					z-index: -1;
                     top:50%;
+                    width: calc(100% + var(--omni-form-focussed-label-padding-left, 3px) + var(--omni-form-focussed-label-padding-right, 3px));
                 }
 
                 /* ERROR STYLES */
