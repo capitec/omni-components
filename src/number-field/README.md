@@ -95,7 +95,6 @@ Input control to enter a single line of numbers.
 | `--omni-form-label-font-weight`                  | Form label font weight.                        |
 | `--omni-form-label-margin-left`                  | Form label margin left.                        |
 | `--omni-form-label-text-align`                   | Form label text align.                         |
-| `--omni-form-label-transform-origin`             | Form label text align.                         |
 | `--omni-form-label-z-index`                      | Form label z-index.                            |
 | `--omni-form-layout-background-color`            | Layout background color.                       |
 | `--omni-form-layout-border-radius`               | Layout border radius.                          |
