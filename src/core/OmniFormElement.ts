@@ -238,8 +238,8 @@ export class OmniFormElement extends OmniElement {
 
                 :host([value]:not([value=''])) .layout  > .label > div,
                 .layout:focus-within > .label > div {
-                    transform: scale(var(--omni-form-focussed-label-transform-scale), 0.75);
-                    transform-origin: center left;
+                    transform: scale(var(--omni-form-focussed-label-transform-scale), 0.9);
+                    transform-origin: top center;
                 }
 
                 /* ERROR STYLES */
