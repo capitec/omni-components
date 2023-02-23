@@ -151,6 +151,7 @@ export class Hyperlink extends OmniElement {
         `;
     }
 }
+
 declare global {
     interface HTMLElementTagNameMap {
         'omni-hyperlink': Hyperlink;
