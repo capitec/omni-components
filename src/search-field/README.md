@@ -85,7 +85,9 @@ Search input control.
 | `--omni-form-focussed-error-label-color`         | Form focussed error label color.               |
 | `--omni-form-focussed-label-background-color`    | Form focussed label background color.          |
 | `--omni-form-focussed-label-color`               | Form focussed label color.                     |
+| `--omni-form-focussed-label-left`                | Form focussed label left.                      |
 | `--omni-form-focussed-label-margin-left`         | Form focussed label left margin.               |
+| `--omni-form-focussed-label-right`               | Form focussed label right.                     |
 | `--omni-form-focussed-label-top`                 | Form focussed label top.                       |
 | `--omni-form-focussed-label-transform-scale`     | Form focussed label transform scale.           |
 | `--omni-form-hint-label-border-width`            | Form hint label border width.                  |
