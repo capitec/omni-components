@@ -24,29 +24,27 @@ import '../icons/ChevronRight.icon.js';
  * ```
  * @element omni-calendar
  *
- * @cssprop --omni-calendar-mobile-picker-container-left - Calendar mobile picker container left.
- * @cssprop --omni-calendar-mobile-picker-container-right - Calendar mobile picker container right.
- * @cssprop --omni-calendar-mobile-picker-container-bottom - Calendar mobile picker container bottom.
- * @cssprop --omni-calendar-mobile-picker-container-box-shadow - Calendar mobile picker container box shadow.
- *
- * @cssprop --omni-calendar-container-min-width - Calendar container minimum width.
- * @cssprop --omni-calendar-container-min-height - Calendar container min height.
- * @cssprop --omni-calendar-container-width - Calendar container width.
- * @cssprop --omni-calendar-container-border-bottom - Calendar container border bottom.
+ * @cssprop --omni-calendar-container-box-shadow - Calendar container box shadow.
+ * @cssprop --omni-calendar-container-border-radius - Calendar container border radius.
+ * @cssprop --omni-calendar-container-z-index - Calendar container z-index.
  * 
  * @cssprop --omni-calendar-period-bar-padding - Calendar period container padding.
  * @cssprop --omni-calendar-period-bar-border-bottom - Calendar period container border bottom.
  * @cssprop --omni-calendar-period-bar-background-color - Calendar period container background color.
- * @cssprop --omni-calendar-period-container-min-height - Calendar period container minimum height.
+ * @cssprop --omni-calendar-period-bar-min-height - Calendar period container minimum height.
  * 
  * @cssprop --omni-calendar-period-bar-control-color - Calendar period bar control color.
- * @cssprop --omni-calendar-period-bar-control-width- Calendar period bar control width.
+ * @cssprop --omni-calendar-period-bar-control-width - Calendar period bar control width.
+ * 
+ * @cssprop --omni-calendar-month-year-display-width - Calender month/year display width.
+ * @cssprop --omni-calendar-month-year-display-color - Calendar month/year display color.
+ * @cssprop --omni-calendar-month-year-display-font-size - Calendar month/year display font size.
+ * @cssprop --omni-calendar-month-year-display-font-weight - Calendar month/year display font weight.
+ * 
+ * @cssprop --omni-calendar-month-year-display-hover-background-color - Calendar month/year display background color.
  * 
  * @cssprop --omni-calendar-days-grid-template-columns - Calendar days grid template columns.
  * @cssprop --omni-calendar-days-grid-auto-rows - Calendar days grid auto rows.
- * @cssprop --omni-calendar-days-grid-font-size - Calendar days grid font size.
- * @cssprop --omni-calendar-days-grid-font-weight - Calendar days grid font weight.
- * @cssprop --omni-calendar-days-grid-width - Calendar days grid width.
  * @cssprop --omni-calendar-days-grid-padding - Calendar days grid padding.
  * @cssprop --omni-calendar-days-grid-line-height - Calendar days grid line height.
  * @cssprop --omni-calendar-days-grid-background-color - Calendar days grid background color.
@@ -63,62 +61,71 @@ import '../icons/ChevronRight.icon.js';
  * 
  * @cssprop --omni-calendar-month-button-width - Calendar month button width.
  * @cssprop --omni-calendar-month-button-height - Calendar month button height.
+ * @cssprop --omni-calendar-month-button-background-color - Calendar month button background color.
+ * @cssprop --omni-calendar-month-button-border-color - Calendar month button border color.
+ * @cssprop --omni-calendar-month-button-border-width - Calendar month button border width.
+ * @cssprop --omni-calendar-month-button-border-radius - Calendar month button border radius.
+ * @cssprop --omni-calendar-month-button-margin-left - Calendar month button margin left.
+ * @cssprop --omni-calendar-month-button-margin-right - Calendar month button margin right.
+ * @cssprop --omni-calendar-month-button-color - Calendar month button color
  * @cssprop --omni-calendar-month-button-font-family - Calendar month button font family.
  * @cssprop --omni-calendar-month-button-font-size - Calendar month button font size.
  * @cssprop --omni-calendar-month-button-font-weight - Calendar month button font weight.
  * @cssprop --omni-calendar-month-button-line-height - Calendar month button line height.
- * @cssprop --omni-calendar-month-button-background-color - Calendar month button background color.
- * @cssprop --omni-calendar-month-button-border-color - Calendar month button border color.
- * @cssprop --omni-calendar-month-button-border-width - Calendar month button border width.
- * @cssprop --omni-calendar-month-button-color - Calendar month button color.
- * @cssprop --omni-calendar-month-button-margin-left - Calendar month button margin left.
- * @cssprop --omni-calendar-month-button-margin-right - Calendar month button margin right.
  * 
+ * @cssprop --omni-calendar-month-button-selected-border-radius - Calendar month selected border radius.
  * @cssprop --omni-calendar-month-button-selected-background-color - Calendar month button selected background color.
  * @cssprop --omni-calendar-month-button-selected-border-color - Calendar month button selected border color.
  * @cssprop --omni-calendar-month-button-selected-border-width - Calendar month selected border width.
  * @cssprop --omni-calendar-month-button-selected-color - Calendar month selected color.
- * @cssprop --omni-calendar-month-button-selected-border-radius - Calendar month selected border radius.
+ * 
+ * @cssprop --omni-calendar-month-button-hover-background-color - Calendar month button hover background color.
  * 
  * @cssprop --omni-calendar-year-button-width - Calendar year button width.
  * @cssprop --omni-calendar-year-button-height - Calendar year button height.
- * @cssprop --omni-calendar-year-button-font-family - Calendar year button font family.
- * @cssprop --omni-calendar-year-button-font-size - Calendar year button font size.
- * @cssprop --omni-calendar-year-button-line-height - Calendar year button line height.
  * @cssprop --omni-calendar-year-button-background-color - Calendar year button background color.
  * @cssprop --omni-calendar-year-button-border-color - Calendar year button border color.
  * @cssprop --omni-calendar-year-button-border-width - Calendar year button border width.
- * @cssprop --omni-calendar-year-button-color - Calendar year button color.
+ * @cssprop --omni-calendar-year-button-border-radius -  Calendar year button border radius.
  * @cssprop --omni-calendar-year-button-margin-left - Calendar year button margin left.
  * @cssprop --omni-calendar-year-button-margin-right - Calendar year button margin right.
- * @cssprop --omni-calendar-year-button-margin-top - Calendar year button margin top.
- * @cssprop --omni-calendar-year-button-margin-bottom - Calendar year button margin bottom.
+ * @cssprop --omni-calendar-year-button-color - Calendar year button color.
+ * @cssprop --omni-calendar-year-button-font-family - Calendar year button font family.
+ * @cssprop --omni-calendar-year-button-font-size - Calendar year button font size.
+ * @cssprop --omni-calendar-year-button-font-weight - Calendar year button font weight.
+ * @cssprop --omni-calendar-year-button-line-height - Calendar year button line height.
  * 
- * @cssprop --omni-calendar-year-button-selected-background-color - Calendar year button selected background color.
- * @cssprop --omni-calendar-year-button-selected-border-color - Calendar year button selected border color.
- * @cssprop --omni-calendar-year-button-selected-border-width - Calendar year button selected border width.
+ * @cssprop --omni-calendar-year-button-selected-border-radius - Calendar selected year button border radius.
+ * @cssprop --omni-calendar-year-button-selected-background-color - Calendar selected year button background color.
+ * @cssprop --omni-calendar-year-button-selected-border-color - Calendar selected year button border color.
+ * @cssprop --omni-calendar-year-button-selected-border-width - Calendar selected year button border width.
  * @cssprop --omni-calendar-year-button-selected-color - Calendar year button selected color.
- * @cssprop --omni-calendar-year-button-selected-border-radius - Calendar year button selected border radius.
+ * 
+ * @cssprop --omni-calendar-year-button-hover-background-color - Calendar year button hover background color.
  * 
  * @cssprop --omni-calendar-day-name-font-color - Calendar day name font color.
  * @cssprop --omni-calendar-day-name-font-weight - Calendar day name font weight.
  * @cssprop --omni-calendar-day-name-font-size - Calendar day name font size.
+ * @cssprop --omni-calendar-day-name-width - Calendar day name width.
+ * @cssprop --omni-calendar-day-name-height - Calendar day name height.
  * 
  * @cssprop --omni-calendar-day-button-width - Calendar day button width.
  * @cssprop --omni-calendar-day-button-height - Calendar day button height.
  * 
+ * @cssprop --omni-calendar-day-button-hover-background-color - Calendar day button hover background color.
+ * 
  * @cssprop --omni-calendar-day-button-excluded-font-color - Calendar day button excluded color.
  * 
  * @cssprop --omni-calendar-day-current-button-border - Calendar day button current border.
+ * @cssprop --omni-calendar-day-current-button-border-radius - Calendar day button current border radius.
  * @cssprop --omni-calendar-day-current-button-width - Calendar day button current width.
  * @cssprop --omni-calendar-day-current-button-height - Calendar day button current height.
- * @cssprop --omni-calendar-day-current-button-border-radius - Calendar day button current border radius.
  * 
  * @cssprop --omni-calendar-day-selected-button-color - Calendar day button selected color.
- * @cssprop --omni-calendar-day-selected-button-width - Calendar day button selected width.
- * @cssprop --omni-calendar-day-selected-button-height - Calendar day button selected height.
  * @cssprop --omni-calendar-day-selected-button-border-radius - Calendar day button selected border radius.
  * @cssprop --omni-calendar-day-selected-button-background-color - Calendar day button selected background color.
+ * @cssprop --omni-calendar-day-selected-button-width - Calendar day button selected width.
+ * @cssprop --omni-calendar-day-selected-button-height - Calendar day button selected height.
  * 
  */
 @customElement('omni-calendar')
@@ -415,9 +422,10 @@ export class Calendar extends OmniElement {
                 height: var(--omni-calendar-month-button-height, 48px);
 
                 background-color: var(--omni-calendar-month-button-background-color, var(--omni-background-color));
-                border-color: var(--omni-calendar-year-button-border-color); 
-                border-width: var(--omni-calendar-year-button-border-width);
+                border-color: var(--omni-calendar-month-button-border-color); 
+                border-width: var(--omni-calendar-month-button-border-width);
                 border-radius: var(--omni-calendar-month-button-border-radius, 5px);
+
                 margin-left: var(--omni-calendar-month-button-margin-left,2px);
                 margin-right: var(--omni-calendar-month-button-margin-right,2px);
 
@@ -429,7 +437,6 @@ export class Calendar extends OmniElement {
             }
 
             .month.selected {
-
                 border-style: solid;
                 border-radius: var(--omni-calendar-month-button-selected-border-radius, var(--omni-border-radius));
                 background-color: var(--omni-calendar-month-button-selected-background-color, var(--omni-primary-color));
@@ -441,7 +448,7 @@ export class Calendar extends OmniElement {
             }
 
             .month:hover {
-                background-color: var(--omni-calendar-period-center-button-hover-background-color, var(--omni-accent-hover-color));
+                background-color: var(--omni-calendar-month-button-hover-background-color, var(--omni-accent-hover-color));
             }
 
             /* Year button styles */
@@ -462,7 +469,7 @@ export class Calendar extends OmniElement {
                 margin-left: var(--omni-calendar-year-button-margin-left,2px);
                 margin-right: var(--omni-calendar-year-button-margin-right,2px);
 
-                color: var(--omni-calendar-month-button-color, var(--omni-font-color));
+                color: var(--omni-calendar-year-button-color, var(--omni-font-color));
                 font-family: var(--omni-calendar-year-button-font-family, var(--omni-font-family));
                 font-size: var(--omni-calendar-year-button-font-size, var(--omni-font-size));
                 font-weight: var(--omni-calendar-year-button-font-weight, 600);
@@ -472,15 +479,15 @@ export class Calendar extends OmniElement {
 
             .year.selected {
                 border-style: solid;
-                color: var(--omni-calendar-year-button-selected-color, var(--omni-background-color));
+                border-radius: var(--omni-calendar-year-button-selected-border-radius, var(--omni-border-radius));
                 background-color: var(--omni-calendar-year-button-selected-background-color, var(--omni-primary-color));
                 border-color: var(--omni-calendar-year-button-selected-border-color, var(--omni-primary-color));
                 border-width: var(--omni-calendar-year-button-selected-border-width, var(--omni-border-width));
-                border-radius: var(--omni-calendar-year-button-selected-border-radius, var(--omni-border-radius));
+                color: var(--omni-calendar-year-button-selected-color, var(--omni-background-color));
             }
            
             .year:hover {
-                background-color: var(--omni-calendar-period-center-button-hover-background-color, var(--omni-accent-hover-color));
+                background-color: var(--omni-calendar-year-button-hover-background-color, var(--omni-accent-hover-color));
             }
 
             /* Day name grid item styles*/
@@ -508,28 +515,28 @@ export class Calendar extends OmniElement {
             }
 
             .day:hover {
-                background-color: var(--omni-calendar-period-center-button-hover-background-color, var(--omni-accent-hover-color));
+                background-color: var(--omni-calendar-day-button-hover-background-color, var(--omni-accent-hover-color));
             }
 
             .day.excluded {
-                color: var(--omni-calendar-day-button-excluded-font-color, grey);
                 pointer-events: none;
+                color: var(--omni-calendar-day-button-excluded-font-color, grey);
             }
 
             .day.current {
                 text-align: center;
                 border: var(--omni-calendar-day-current-button-border,2px solid var(--omni-primary-color));
+                border-radius: var(--omni-calendar-day-current-button-border-radius, 50%);
                 width: var(--omni-calendar-day-current-button-width, 24px);
                 height: var(--omni-calendar-day-current-button-height, 24px);
-                border-radius: var(--omni-calendar-day-current-button-border-radius, 50%);
             }
 
             .day.selected {
                 color: var(--omni-calendar-day-selected-button-color, #FFFFFF);
-                width: var(--omni-calendar-day-selected-button-width, 24px);
-                height: var(--omni-calendar-day-selected-button-height, 24px);
                 border-radius: var(--omni-calendar-day-selected-button-border-radius, 20%);
                 background-color: var(--omni-calendar-day-selected-button-background-color, var(--omni-primary-color));
+                width: var(--omni-calendar-day-selected-button-width, 24px);
+                height: var(--omni-calendar-day-selected-button-height, 24px);
             }
 
 
