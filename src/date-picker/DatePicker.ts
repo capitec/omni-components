@@ -40,6 +40,10 @@ import '../icons/ChevronRight.icon.js';
  * @cssprop --omni-date-picker-padding - Date picker input padding.
  * @cssprop --omni-date-picker-width - Date picker width.
  * @cssprop --omni-date-picker-min-width - Date picker min width.
+ * 
+ * @cssprop --omni-date-picker-disabled-font-color - Date picker disabled font color.
+ * 
+ * @cssprop --omni-date-picker-error-font-color - Date picker error font color.
  *
  * @cssprop --omni-date-picker-control-width - Date picker control width.
  * @cssprop --omni-date-picker-control-hover-color - Date picker control hover.
