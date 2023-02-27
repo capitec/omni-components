@@ -681,6 +681,8 @@ export class Keyboard extends OmniElement {
 					background: var(--omni-keyboard-bottom-bar-background-color,var(--omni-background-active-color));
 					border-top: var(--omni-keyboard-bottom-bar-border-top,3px solid var(--omni-accent-color));
 				}
+
+                /*
 				.cta-button {
 					height: var(--omni-keyboard-cta-button-height,56px);
 					width: var(--omni-keyboard-cta-button-width,184px);
@@ -698,7 +700,9 @@ export class Keyboard extends OmniElement {
                     justify-content: center;
                     align-items: center;
                     flex-direction: row;
-				}
+				}*/
+
+
                 .cta-icon {
                     --omni-icon-fill: var(--omni-keyboard-cta-button-color,var(--omni-background-color));
                 }
@@ -784,6 +788,254 @@ export class Keyboard extends OmniElement {
                     text-align: center;
                     display: flex;
                 }
+
+                /* Desktop and landscape tablet device styling */
+                @media screen and (min-width: 767px) {
+
+                    .cta-button {
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        color: var(--omni-keyboard-cta-button-color,var(--omni-background-color));
+                        background-color: var(--omni-keyboard-cta-button-background-color,var(--omni-primary-color));
+                        border: none;
+                        text-align: center;
+
+                        height: var(--omni-keyboard-cta-button-height,56px);
+                        width: var(--omni-keyboard-cta-button-width,100px);
+						
+						
+                        font-size: var(--omni-keyboard-cta-button-font-size,20px);
+                        font-weight: var(--omni-keyboard-cta-button-font-weight,600);
+                        margin: var(--omni-keyboard-cta-button-margin,6px 7px);
+
+                        border-radius: var(--omni-keyboard-cta-button-border-radius,8px);
+                        box-shadow: 2px 2px 5px 0 rgba(109,109,109,0.35), -10px -10px 20px -10px rgba(255,255,255,0.5);
+
+                        transition:
+                        opacity .1s ease,
+                        background-color .1s ease,
+                        border .1s ease,
+                        color .1s ease,
+                        box-shadow .1s ease,
+                        background .1s ease,
+                        -webkit-box-shadow .1s ease;
+                    }
+
+                }
+            
+                /* Mobile device styling */
+                @media screen and (max-width: 766px) {
+                    .topbar,
+                    .bottomBar {
+                        display: none;
+                    }
+
+                    :host {
+                        /* Keyboard needs to have a very high z index in order to be always on top */
+                        z-index: var(--omni-keyboard-z-index, 9999);
+                        position: fixed;
+
+                        /*
+                        left: var(--omni-select-mobile-items-container-left, 0px);
+                        right: var(--omni-select-mobile-items-container-right, 0px);
+                        bottom: var(--omni-select-mobile-items-container-bottom, 0px);*/
+                    }
+
+                    .wrapper {
+                        width: var(--omni-keyboard-wrapper-width,auto);
+                        background: var(--omni-keyboard-input-background-color,var(--omni-background-color));
+                        border-top: 3px solid var(--omni-accent-color);
+                    }
+
+                    .keyrow {
+                        margin: var(--omni-keyboard-key-row-margin,8px 8px);
+                        width: var(--omni-keyboard-key-row-width,auto);
+                    }
+
+                    .pad-top {
+                        padding-top: var(--omni-keyboard-row-padding-top, 6px);
+                    }
+
+                    .pad-bottom {
+                        padding-bottom: var(--omni-keyboard-row-padding-bottom, 6px);
+                    }
+
+                    .shadow {
+                        box-shadow: -5px 0px 30px var(--omni-box-shadow-color);
+                        border-radius: var(--omni-keyboard-shadow-border-radius,16px 16px 0px 0px);
+                        padding-bottom: var(--omni-keyboard-shadow-padding-bottom,-10px);
+                        width:100%
+                    }
+
+                    /*
+                    .cta-button {
+                        
+                        height: var(--omni-keyboard-cta-button-height,56px);
+                        width: var(--omni-keyboard-cta-button-width,184px);
+                        color: var(--omni-keyboard-cta-button-color,var(--omni-background-color));
+                        background-color: var(--omni-keyboard-cta-button-background-color,var(--omni-primary-color));
+                        border: none;
+                        text-align: center;
+                        font-size: var(--omni-keyboard-cta-button-font-size,20px);
+                        font-weight: var(--omni-keyboard-cta-button-font-weight,600);
+                        border-radius: var(--omni-keyboard-cta-button-border-radius,8px);
+                        margin: var(--omni-keyboard-cta-button-margin,24px);
+                        float: var(--omni-keyboard-cta-button-float, right);
+                        cursor: pointer;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        flex-direction: row;
+                    }*/
+
+                    .cta-button {
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        color: var(--omni-keyboard-cta-button-color,var(--omni-background-color));
+                        background-color: var(--omni-keyboard-cta-button-background-color,var(--omni-primary-color));
+                        border: none;
+                        text-align: center;
+
+                        transition:
+                        opacity .1s ease,
+                        background-color .1s ease,
+                        border .1s ease,
+                        color .1s ease,
+                        box-shadow .1s ease,
+                        background .1s ease,
+                        -webkit-box-shadow .1s ease;
+                    }
+                }
+
+                /* Mobile device styling */
+                @media screen and (max-width: 766px) {
+                        .cta-button {
+                            display: inline-flex;
+                            align-items: center;
+                            justify-content: center;
+    
+                            color: var(--omni-keyboard-cta-button-color,var(--omni-background-color));
+                            background-color: var(--omni-keyboard-cta-button-background-color,var(--omni-primary-color));
+                            border: none;
+                            text-align: center;
+                            font-size: var(--omni-keyboard-cta-button-font-size,18px);
+                            font-weight: var(--omni-keyboard-cta-button-font-weight,600);
+                            border-radius: var(--omni-keyboard-cta-button-border-radius,8px);
+                            /*margin: var(--omni-keyboard-cta-button-margin,24px);*/
+                            /*float: var(--omni-keyboard-cta-button-float, right);*/
+                            cursor: pointer;
+    
+                            margin: var(--omni-keyboard-button-margin, 2px 2px);
+                            height: 30px;
+                            width: 70px;
+    
+                            transition:
+                            opacity .1s ease,
+                            background-color .1s ease,
+                            border .1s ease,
+                            color .1s ease,
+                            box-shadow .1s ease,
+                            background .1s ease,
+                            -webkit-box-shadow .1s ease;
+
+                            box-shadow: 2px 2px 5px 0 rgba(109,109,109,0.35), -10px -10px 20px -10px rgba(255,255,255,0.5);
+                        }
+                    
+                }
+
+                /* Small mobile device */
+                @media screen and (max-width: 320px) {
+                    /*
+                    .button {
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+                        
+                        font-family: var(--omni-button-font-family, var(--omni-font-family));
+                        color: var(--omni-keyboard-button-font-color, var(--omni-font-color));
+    
+                        background-color: var(--omni-keyboard-button-background-color, var(--omni-background-color));
+                        border: var(--omni-keyboard-button-border, 1.5px solid var(--omni-background-color));
+                        margin: var(--omni-keyboard-button-margin, 6px 7px);
+                        font-weight: var(--omni-keyboard-font-weight, 600);
+                        height: var(--omni-keyboard-button-height, 80px);
+                        width: var(--omni-keyboard-button-width, 80px);
+                        
+                        font-size: var(--omni-keyboard-button-font-size, 20px);
+                        line-height: var(--omni-keyboard-button-line-height, 30px);
+                        border-radius: var(--omni-keyboard-button-border-radius, 8px);
+    
+                        box-shadow: 2px 2px 5px 0 rgba(109,109,109,0.35), -10px -10px 20px -10px rgba(255,255,255,0.5);
+                        border-style: solid;
+    
+                        cursor: pointer;
+                        
+                        transition:
+                            opacity .1s ease,
+                            background-color .1s ease,
+                            border .1s ease,
+                            color .1s ease,
+                            box-shadow .1s ease,
+                            background .1s ease,
+                            -webkit-box-shadow .1s ease;
+                    }
+                    
+                    .cta-button {
+                        
+                        height: var(--omni-keyboard-cta-button-height,56px);
+                        width: var(--omni-keyboard-cta-button-width,184px);
+                        color: var(--omni-keyboard-cta-button-color,var(--omni-background-color));
+                        background-color: var(--omni-keyboard-cta-button-background-color,var(--omni-primary-color));
+                        border: none;
+                        text-align: center;
+                        font-size: var(--omni-keyboard-cta-button-font-size,20px);
+                        font-weight: var(--omni-keyboard-cta-button-font-weight,600);
+                        border-radius: var(--omni-keyboard-cta-button-border-radius,8px);
+                        margin: var(--omni-keyboard-cta-button-margin,24px);
+                        float: var(--omni-keyboard-cta-button-float, right);
+                        cursor: pointer;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        flex-direction: row;
+                    }
+                    
+                    */
+                    /* height: 22px;
+                       width: 45px; */
+                    .cta-button {
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        color: var(--omni-keyboard-cta-button-color,var(--omni-background-color));
+                        background-color: var(--omni-keyboard-cta-button-background-color,var(--omni-primary-color));
+                        border: none;
+                        text-align: center;
+                        font-size: var(--omni-keyboard-cta-button-font-size,20px);
+                        font-weight: var(--omni-keyboard-cta-button-font-weight,600);
+                        border-radius: var(--omni-keyboard-cta-button-border-radius,8px);
+                        /*margin: var(--omni-keyboard-cta-button-margin,24px);*/
+                        /*float: var(--omni-keyboard-cta-button-float, right);*/
+                        cursor: pointer;
+
+                        margin: var(--omni-keyboard-button-margin, 2px 2px);
+
+                        transition:
+                        opacity .1s ease,
+                        background-color .1s ease,
+                        border .1s ease,
+                        color .1s ease,
+                        box-shadow .1s ease,
+                        background .1s ease,
+                        -webkit-box-shadow .1s ease;
+                    }
+                }
+
 			`
         ];
     }
@@ -936,10 +1188,11 @@ export class Keyboard extends OmniElement {
 									character=" " case="custom"></omni-keyboard-button>
 								<omni-keyboard-button @keyboard-click="${this._keypress}" mode="return" label="${this.clearLabel}"
 									character="clear" case="custom"></omni-keyboard-button>
+                                    ${this.renderCallToAction()}
 							</div>
+                            <!--
 							<div class="bottomBar">
-                                ${this.renderCallToAction()}
-							</div>
+							</div>-->
 						</div>
 					</div>
 				</div>
@@ -1014,7 +1267,7 @@ export class Keyboard extends OmniElement {
 										${
                                             this.mode === 'alpha-numeric'
                                                 ? html`<omni-keyboard-button
-											@keyboard-click="${this._toggleState}" mode="alpha" label="abc" case="custom">
+											@keyboard-click="${this._toggleState}" mode="numeric" label="abc" case="custom">
 										</omni-keyboard-button>`
                                                 : nothing
                                         }
@@ -1022,14 +1275,16 @@ export class Keyboard extends OmniElement {
 										</omni-keyboard-button>
 										<omni-keyboard-button @keyboard-click="${this._keypress}" mode="numeric" label=".">
 										</omni-keyboard-button>
-										<omni-keyboard-button @keyboard-click="${this._keypress}" mode="return" label="${this.clearLabel}"
+										<omni-keyboard-button @keyboard-click="${this._keypress}" mode="numeric" label="${this.clearLabel}"
 											character="clear" case="custom"></omni-keyboard-button>
+                                            ${this.renderCallToAction()}
 									</div>
 								</div>
 							</div>
+                            <!--
 							<div class="bottomBar">
-							${this.renderCallToAction()}
-							</div>
+							
+							</div>-->
 						</div>
 					</div>
 				</div>
@@ -1079,16 +1334,18 @@ export class Keyboard extends OmniElement {
 											character="clear" case="custom"></omni-keyboard-button>
 										<omni-keyboard-button @keyboard-click="${this._keypress}" mode="numeric" label="0">
 										</omni-keyboard-button>
-										<omni-keyboard-button @keyboard-click="${this._keypress}" mode="alpha" character="backspace" case="custom">            
+										<omni-keyboard-button @keyboard-click="${this._keypress}" mode="numeric" character="backspace" case="custom">            
                                             <omni-icon size="medium" class="themed-icon">${this.renderBackspace()}</omni-icon>
                                         </omni-keyboard-button>
+                                        ${this.renderCallToAction()}
 									</div>
 								</div>
 							</div>
 						</div>
+                        <!--
 						<div class="bottomBar">
-							${this.renderCallToAction()}
-						</div>
+							
+						</div>-->
 					</div>
 				</div>
 			</div>
