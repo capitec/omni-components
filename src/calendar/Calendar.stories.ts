@@ -25,6 +25,8 @@ const localDate = DateTime.local();
 const isoDate = localDate.toISODate();
 const testLocale = localDate.locale;
 
+console.log(isoDate);
+
 export const Interactive: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
     <omni-calendar
@@ -55,7 +57,7 @@ export const Value: ComponentStoryFormat<Args> = {
     </omni-calendar>
     `,
     name: 'Value',
-    description: 'Set the current value of the Calendar.',
+    description: 'Set the value of the Calendar component, this has to be a valid date in ISOformat',
     args: {
         value: isoDate
     } as Args,
