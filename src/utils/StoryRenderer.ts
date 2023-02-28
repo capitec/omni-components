@@ -191,7 +191,7 @@ export class StoryRenderer extends LitElement {
                         </span>
                         <live-property-editor
                         class="live-props docs-omni-component"
-                        ?disabled=${this.overrideInteractive}
+                        ?disabled=${this.overrideInteractive && false}
                         .data="${{ ...this.story }}"
                         element="${this.tag as string}"
                         ignore-attributes="dir,lang"
