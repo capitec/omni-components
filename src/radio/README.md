@@ -60,9 +60,6 @@ Control to select a single value from a group of values.
 | `--omni-input-hint-label-font-family`    | Hint Font Family.                |
 | `--omni-input-hint-label-font-size`      | Hint Font Size.                  |
 | `--omni-input-hint-label-font-weight`    | Hint Font Weight.                |
-| `--omni-label-font-color`                | Label Font Color.                |
-| `--omni-label-font-family`               | Label Font Family.               |
-| `--omni-label-font-size`                 | Label Font Size.                 |
 | `--omni-radio-background-color`          | Background Color.                |
 | `--omni-radio-border-color`              | Border Color.                    |
 | `--omni-radio-border-radius`             | Border Radius.                   |
@@ -77,6 +74,9 @@ Control to select a single value from a group of values.
 | `--omni-radio-indicator-border-color`    | Indicator Border Color.          |
 | `--omni-radio-indicator-border-width`    | Indicator Border Width.          |
 | `--omni-radio-indicator-color`           | Indicator Color.                 |
+| `--omni-radio-label-font-color`          | Label Font Color.                |
+| `--omni-radio-label-font-family`         | Label Font Family.               |
+| `--omni-radio-label-font-size`           | Label Font Size.                 |
 | `--omni-radio-label-font-weight`         | Label Font Weight.               |
 | `--omni-radio-label-line-height`         | Label Line Height.               |
 | `--omni-radio-label-spacing`             | Label Spacing.                   |
