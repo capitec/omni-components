@@ -47,19 +47,22 @@ import { OmniElement } from '../core/OmniElement.js';
  * @cssprop --omni-switch-track-width - Track width.
  * @cssprop --omni-switch-track-height - Track height.
  * @cssprop --omni-switch-track-background-color - Track background color.
- * @cssprop --omni-switch-checked-track-background-color - Track checked background color.
- * @cssprop --omni-switch-disabled-track-background-color - Track disabled background color.
  * @cssprop --omni-switch-track-border-radius - Track border radius.
  * @cssprop --omni-switch-track-inset - Track inset margins.
  *
  * @cssprop --omni-switch-knob-height - Knob height.
  * @cssprop --omni-switch-knob-width - Knob width.
  * @cssprop --omni-switch-knob-background-color - Knob background color.
- * @cssprop --omni-switch-checked-knob-background-color - Knob checked background color.
- * @cssprop --omni-switch-disabled-knob-background-color - Knob disabled background color.
  * @cssprop --omni-switch-knob-box-shadow - Knob box shadow.
+ * 
  * @cssprop --omni-switch-knob-hover-box-shadow - Knob hover box shadow.
+ * 
+ * @cssprop --omni-switch-checked-track-background-color - Track checked background color.
  * @cssprop --omni-switch-checked-hover-knob-box-shadow - Knob checked hover box shadow.
+ * @cssprop --omni-switch-disabled-track-background-color - Track disabled background color.
+ * @cssprop --omni-switch-checked-knob-background-color - Knob checked background color.
+ * 
+ * @cssprop --omni-switch-disabled-knob-background-color - Knob disabled background color..
  * @cssprop --omni-switch-disabled-knob-box-shadow - Knob disabled hover box shadow.
  *
  */
