@@ -37,12 +37,12 @@ Control to indicate an action to be executed. Typically used for navigational pu
 
 | Property                                  | Description                                   |
 |-------------------------------------------|-----------------------------------------------|
-| `--omni-font-family-small`                | Hyperlink small font family variation         |
 | `--omni-hyperlink-color`                  | Hyperlink color.                              |
 | `--omni-hyperlink-color-active`           | Hyperlink color when in an active state.      |
 | `--omni-hyperlink-color-disabled`         | Hyperlink disabled color.                     |
 | `--omni-hyperlink-color-visited`          | Hyperlink color when visited                  |
 | `--omni-hyperlink-font-family`            | Hyperlink font weight.                        |
+| `--omni-hyperlink-font-family-small`      | Hyperlink small font family variation         |
 | `--omni-hyperlink-font-size`              | Hyperlink font size.                          |
 | `--omni-hyperlink-font-size-small`        | Hyperlink small font size variation           |
 | `--omni-hyperlink-font-weight`            | Hyperlink font weight.                        |

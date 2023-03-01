@@ -33,7 +33,7 @@ import { OmniElement } from '../core/OmniElement.js';
  * @cssprop --omni-hyperlink-text-decorator - Hyperlink text decorator
  *
  * @cssprop --omni-hyperlink-font-size-small - Hyperlink small font size variation
- * @cssprop --omni-font-family-small - Hyperlink small font family variation
+ * @cssprop --omni-hyperlink-font-family-small - Hyperlink small font family variation
  * @cssprop --omni-hyperlink-font-weight-small - Hyperlink small font weight
  *
  * @cssprop --omni-hyperlink-color-active - Hyperlink color when in an active state.
@@ -122,7 +122,7 @@ export class Hyperlink extends OmniElement {
 
                 :host([size='small']) .hyperlink {
                 font-size: var(--omni-hyperlink-font-size-small, 0.87em);
-                font-family: var(--omni-font-family-small, var(--omni-font-family));
+                font-family: var(--omni-hyperlink-font-family-small, var(--omni-font-family));
                 font-weight: var(--omni-hyperlink-font-weight-small, var(--omni-font-weight));
                 }
 
