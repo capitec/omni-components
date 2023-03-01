@@ -16,8 +16,8 @@
         </div>
         <div class="menu-item separator"><div class="line"></div></div>
         {% for component in components %}
-        <div class="menu-item {% if currentUrl.includes(component.name | slug) %}selected{% endif %}">
-            <a class="menu-link {% if currentUrl.includes(component.name | slug) %}selected{% endif %}"
+        <div class="menu-item {% if currentUrl.endsWith((component.name | slug) + '/') %}selected{% endif %}">
+            <a class="menu-link {% if currentUrl.endsWith((component.name | slug) + '/') %}selected{% endif %}"
             {% if currentUrl.includes(component.name | slug) %}aria-current="page"{% endif %} 
             href="./components/{{ component.name | slug }}">
                 {{ component.name | splitPascalCase() }}
