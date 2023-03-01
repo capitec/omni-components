@@ -39,6 +39,11 @@ export function getEvents(value, componentName) {
     });
 }
 
+export function getTypes(value, componentName) {
+    const component = loadCustomElementsModuleByFileFor(componentName, value);
+    return component.typeAliases;
+}
+
 export function getSlots(value, componentName) {
     const declaration = getComponentDeclaration(value, componentName);
     return declaration.slots?.map(s => {

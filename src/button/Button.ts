@@ -32,16 +32,19 @@ import { OmniElement } from '../core/OmniElement.js';
  * @cssprop --omni-button-padding-bottom - Component padding bottom.
  * @cssprop --omni-button-padding-left - Component padding left.
  * @cssprop --omni-button-padding-right - Component padding right.
+ *
  * @cssprop --omni-button-primary-background-color - Primary "type" background color.
  * @cssprop --omni-button-primary-border-color - Primary "type" border color.
  * @cssprop --omni-button-primary-border-width - Primary "type" border width.
  * @cssprop --omni-button-primary-color - Primary "type" color.
  * @cssprop --omni-button-primary-active-background-color - Primary "type" active back color.
+ *
  * @cssprop --omni-button-secondary-background-color - Secondary "type" background color.
  * @cssprop --omni-button-secondary-border-color - Secondary "type" border color.
  * @cssprop --omni-button-secondary-border-width - Secondary "type" border width.
  * @cssprop --omni-button-secondary-color - Secondary "type" color.
  * @cssprop --omni-button-secondary-active-background-color - Secondary "type" active background color.
+ *
  * @cssprop --omni-button-clear-background-color - Clear "type" background color.
  * @cssprop --omni-button-clear-border-color - Clear "type" border color.
  * @cssprop --omni-button-clear-border-width - Clear "type" border width.
@@ -50,6 +53,7 @@ import { OmniElement } from '../core/OmniElement.js';
  * @cssprop --omni-button-clear-active-background-color - Clear "type" active background color.
  * @cssprop --omni-button-clear-active-border-color - Clear "type" active border color.
  * @cssprop --omni-button-clear-active-border-width - Clear "type" active border width.
+ *
  * @cssprop --omni-button-white-background-color - White "type" background color.
  * @cssprop --omni-button-white-border-color - White "type" border color.
  * @cssprop --omni-button-white-border-width - White "type" border width.

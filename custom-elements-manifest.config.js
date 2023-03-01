@@ -36,6 +36,40 @@ const plugins = {
                 },
             };
         }(),
+        function typesPlugin() {
+            const exportedTypes = {};
+            return {
+                // Runs for each module
+                analyzePhase({ ts, node, moduleDoc }) {
+                    switch (node.kind) {
+                        case ts.SyntaxKind.TypeAliasDeclaration:
+                            const typeName = node.name.getText();
+                            const type = node.type.getText();
+                            const file = node.parent.fileName;
+                            if (!exportedTypes[file]) {
+                                exportedTypes[file] = [];
+                            }
+                            exportedTypes[file].push({
+                                alias: typeName,
+                                type: type
+                            });
+
+                            break;
+                    }
+                },
+                // Runs for each module, after analyzing, all information about your module should now be available
+                moduleLinkPhase({ moduleDoc }) {
+                    // console.log(moduleDoc);
+                    if (exportedTypes[moduleDoc.path]) {
+                        moduleDoc.typeAliases = exportedTypes[moduleDoc.path];
+                    }
+                },
+                // Runs after all modules have been parsed, and after post processing
+                packageLinkPhase(customElementsManifest) {
+                    // console.log(customElementsManifest);
+                },
+            };
+        }(),
         function slotFixPlugin() {
             return {
                 // Runs for each module
