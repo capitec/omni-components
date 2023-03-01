@@ -28,7 +28,7 @@ const dynamicTests = async () => {
 
     for (let index = 0; index < stories.length; index++) {
         const storyImport = path.join(process.cwd(), stories[index]);
-        const storyName = path.basename(path.dirname(stories[index]));
+        const storyName = path.basename(stories[index].toLowerCase().replace('.stories.js',''));
         const storyPath = `http://localhost:6006/components/${storyName.replaceAll('-','')}/`;
         let storyObj;
         try {
