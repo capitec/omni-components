@@ -27,7 +27,9 @@ interface Args {
 
 export const Interactive: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
-    <omni-radio-group data-testid="test-radio-group" label="${ifNotEmpty(args.label)}" ?allow-deselect="${args['allow-deselect']}" ?horizontal="${args.horizontal}">
+    <omni-radio-group data-testid="test-radio-group" label="${ifNotEmpty(args.label)}" ?allow-deselect="${args['allow-deselect']}" ?horizontal="${
+        args.horizontal
+    }">
       ${unsafeHTML(args['[Default Slot]'])}
     </omni-radio-group>
   `,
@@ -57,8 +59,8 @@ export const Interactive: ComponentStoryFormat<Args> = {
         const radioChange = (e: CustomEvent<RadioChangeEventDetail>) => {
             selected = e.detail.current;
             radioChangeCounter();
-        }
-        radioGroup.addEventListener('radio-change',(e: Event) =>  radioChange(e as CustomEvent<RadioChangeEventDetail>));
+        };
+        radioGroup.addEventListener('radio-change', (e: Event) => radioChange(e as CustomEvent<RadioChangeEventDetail>));
 
         await userEvent.click(content, {
             pointerEventsCheck: 0
@@ -123,7 +125,7 @@ export const Allow_Deselect: ComponentStoryFormat<Args> = {
     description: 'Allow radios in the group to be deselected.',
     args: {
         label: 'Allow Deselect',
-        'allow-deselect': true         
+        'allow-deselect': true
     },
     play: async (context) => {
         const radioGroup = within(context.canvasElement).getByTestId<RadioGroup>('test-radio-group');
@@ -144,8 +146,8 @@ export const Allow_Deselect: ComponentStoryFormat<Args> = {
             selected = e.detail.current;
             previous = e.detail.previous;
             radioChangeCounter();
-        }
-        radioGroup.addEventListener('radio-change',(e: Event) =>  radioChange(e as CustomEvent<RadioChangeEventDetail>));
+        };
+        radioGroup.addEventListener('radio-change', (e: Event) => radioChange(e as CustomEvent<RadioChangeEventDetail>));
 
         await userEvent.click(content, {
             pointerEventsCheck: 0
@@ -172,9 +174,12 @@ export const Native_Radio_Input: ComponentStoryFormat<Args> = {
                 <omni-radio label="Four"></omni-radio> 
             </omni-radio-group>
         `,
-    description: 'Grouping supports native input with type="radio" as well as omni-radio (and any other element that is driven by a checked attribute).',
+    description:
+        'Grouping supports native input with type="radio" as well as omni-radio (and any other element that is driven by a checked attribute).',
     args: {
         label: 'Group with alternate elements'
     },
-    play: async (context) => { /* Nothing to test */ }
+    play: async (context) => {
+        /* Nothing to test */
+    }
 };

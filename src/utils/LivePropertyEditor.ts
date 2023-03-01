@@ -245,7 +245,7 @@ export class LivePropertyEditor extends OmniElement {
 
                     let attributeEditor: TemplateResult = undefined as any;
                     try {
-                        if (attribute?.type?.text?.replace('| undefined','')?.trim() === 'boolean') {
+                        if (attribute?.type?.text?.replace('| undefined', '')?.trim() === 'boolean') {
                             attributeEditor = html`
               <omni-switch
                 class="docs-select"
@@ -268,11 +268,11 @@ export class LivePropertyEditor extends OmniElement {
               </omni-switch>
             `;
                         } else if (
-                            attribute.type?.text?.replace('| undefined','')?.trim() !== 'object' &&
-                            attribute.type?.text?.replace('| undefined','')?.trim() !== 'string' &&
-                            attribute.type?.text?.replace('| undefined','')?.trim() !== 'boolean' &&
-                            !attribute.type?.text?.replace('| undefined','')?.trim().includes('Promise') &&
-                            attribute.type?.text?.replace('| undefined','')?.trim().includes("'")
+                            attribute.type?.text?.replace('| undefined', '')?.trim() !== 'object' &&
+                            attribute.type?.text?.replace('| undefined', '')?.trim() !== 'string' &&
+                            attribute.type?.text?.replace('| undefined', '')?.trim() !== 'boolean' &&
+                            !attribute.type?.text?.replace('| undefined', '')?.trim().includes('Promise') &&
+                            attribute.type?.text?.replace('| undefined', '')?.trim().includes("'")
                         ) {
                             const typesRaw = attribute.type?.text.split(' | ');
                             const types = [];
@@ -307,8 +307,8 @@ export class LivePropertyEditor extends OmniElement {
 
             `;
                         } else if (
-                            attribute.type?.text?.replace('| undefined','')?.trim() === 'object' ||
-                            attribute.type?.text?.replace('| undefined','')?.trim().includes('Promise') ||
+                            attribute.type?.text?.replace('| undefined', '')?.trim() === 'object' ||
+                            attribute.type?.text?.replace('| undefined', '')?.trim().includes('Promise') ||
                             (this.data?.args &&
                                 this.data.args[attribute.name] &&
                                 (typeof this.data.args[attribute.name] === 'function' || typeof this.data.args[attribute.name].then === 'function'))

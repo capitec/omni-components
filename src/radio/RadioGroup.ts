@@ -21,13 +21,13 @@ import '../label/';
  * ```
  *
  * @element omni-radio-group
- * 
+ *
  * @slot - Content to manage in the radio group, typically &lt;input type="radio" /&gt; and/or &lt;omni-radio&gt;&lt;/omni-radio&gt;.
  *
  * @fires {CustomEvent<RadioChangeEventDetail>} radio-change - Dispatched when a radio selection is changed.
  *
  * @csspart radios - Container element for slotted radio elements
- * 
+ *
  * @cssprop --omni-radio-group-label-font-size - Label font size.
  * @cssprop --omni-radio-group-label-font-weight - Label font weight.
  * @cssprop --omni-radio-group-label-margin-bottom - Label bottom margin.

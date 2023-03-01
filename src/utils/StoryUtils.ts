@@ -1036,7 +1036,7 @@ function setupSearch() {
         eventSearch.addEventListener('input', handleEvents);
         eventSearch.addEventListener('change', handleEvents);
     }
-    
+
     function handleEvents() {
         const filterValue = eventSearch?.value ?? '';
         for (let index = 0; index < eventRows!.length; index++) {
@@ -1056,7 +1056,7 @@ function setupSearch() {
         typeSearch.addEventListener('input', handleTypes);
         typeSearch.addEventListener('change', handleTypes);
     }
-    
+
     function handleTypes() {
         const filterValue = typeSearch?.value ?? '';
         for (let index = 0; index < typeRows!.length; index++) {
