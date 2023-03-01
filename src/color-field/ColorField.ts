@@ -30,13 +30,15 @@ import { OmniFormElement } from '../core/OmniFormElement.js';
  * @cssprop --omni-color-field-font-family - Color field font family.
  * @cssprop --omni-color-field-font-size - Color field font size.
  * @cssprop --omni-color-field-font-weight - Color field font weight.
- * @cssprop --omni-color-field-picker-height - Color field picker height.
- * @cssprop --omni-color-field-picker-width - Color field picker width.
  * @cssprop --omni-color-field-height - Color field height.
- * @cssprop --omni-color-field-padding - Color field width.
  * @cssprop --omni-color-field-min-height - Color field min height.
  * @cssprop --omni-color-field-min-width - Color field min width.
+ * @cssprop --omni-color-field-padding - Color field width.
+ *
  * @cssprop --omni-color-field-text-select - Color field text selection.
+ *
+ * @cssprop --omni-color-field-picker-height - Color field picker height.
+ * @cssprop --omni-color-field-picker-width - Color field picker width.
  *
  * @cssprop --omni-color-field-disabled-font-color - Color field disabled font color.
  * @cssprop --omni-color-field-error-font-color - Color field error font color.

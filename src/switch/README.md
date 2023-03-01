@@ -54,7 +54,7 @@ Control to switch a value on or off.
 | `--omni-switch-checked-hover-knob-box-shadow`   | Knob checked hover box shadow.   |
 | `--omni-switch-checked-knob-background-color`   | Knob checked background color.   |
 | `--omni-switch-checked-track-background-color`  | Track checked background color.  |
-| `--omni-switch-disabled-knob-background-color`  | Knob disabled background color.  |
+| `--omni-switch-disabled-knob-background-color`  | Knob disabled background color.. |
 | `--omni-switch-disabled-knob-box-shadow`        | Knob disabled hover box shadow.  |
 | `--omni-switch-disabled-track-background-color` | Track disabled background color. |
 | `--omni-switch-input-error-label-font-color`    | Error text font color.           |

@@ -98,7 +98,7 @@ export class CurrencyField extends OmniFormElement {
 
     // Format the bound value.
     protected override async firstUpdated(): Promise<void> {
-        if (this.value) {
+        if (this.value !== null && this.value !== undefined) {
             await this._formatToCurrency(this.value.toString()).then((res) => {
                 this._inputElement!.value = res;
             });
