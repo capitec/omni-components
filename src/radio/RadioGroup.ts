@@ -26,9 +26,13 @@ import '../label/';
  *
  * @fires {CustomEvent<RadioChangeEventDetail>} radio-change - Dispatched when a radio selection is changed.
  *
+ * @csspart radios - Container element for slotted radio elements
+ * 
  * @cssprop --omni-radio-group-label-font-size - Label font size.
  * @cssprop --omni-radio-group-label-font-weight - Label font weight.
  * @cssprop --omni-radio-group-label-margin-bottom - Label bottom margin.
+ * @cssprop --omni-radio-group-vertical-margin - Margin in between radio elements when arranged vertically.
+ * @cssprop --omni-radio-group-horizontal-margin - Margin in between radio elements when arranged horizontally.
  *
  */
 @customElement('omni-radio-group')
@@ -43,6 +47,11 @@ export class RadioGroup extends OmniElement {
      * @attr [allow-deselect]
      */
     @property({ type: Boolean, attribute: 'allow-deselect', reflect: true }) allowDeselect?: boolean;
+    /**
+     * Arrange radio elements horizontally.
+     * @attr
+     */
+    @property({ type: Boolean, reflect: true }) horizontal?: boolean;
 
     /**
      * Data associated with the component.
@@ -197,6 +206,20 @@ export class RadioGroup extends OmniElement {
 					--omni-label-default-font-weight: var(--omni-radio-group-label-font-weight, 400);
 					margin-bottom: var(--omni-radio-group-label-margin-bottom, 6px);
 				}
+
+                .radios:not([data-horizontal]) ::slotted(:not(:last-child)) {
+                    margin-bottom: var(--omni-radio-group-vertical-margin, 10px) !important;
+                }
+
+                .radios[data-horizontal] {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                }
+
+                .radios[data-horizontal] ::slotted(:not(:last-child)) {
+                    margin-right: var(--omni-radio-group-horizontal-margin, 10px) !important;
+                }
 			`
         ];
     }
@@ -204,7 +227,7 @@ export class RadioGroup extends OmniElement {
     override render(): TemplateResult {
         return html`
         ${this.label ? html`<omni-label class="label" label="${this.label}" type="default"></omni-label>` : nothing}
-        <div>
+        <div class="radios" part="radios" ?data-horizontal="${this.horizontal}">
             <slot></slot>
         </div>
     `;

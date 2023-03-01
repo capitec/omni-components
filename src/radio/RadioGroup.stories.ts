@@ -21,12 +21,13 @@ export default {
 interface Args {
     label: string;
     'allow-deselect': boolean;
+    horizontal: boolean;
     '[Default Slot]': string;
 }
 
 export const Interactive: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
-    <omni-radio-group data-testid="test-radio-group" label="${ifNotEmpty(args.label)}" ?allow-deselect="${args['allow-deselect']}" >
+    <omni-radio-group data-testid="test-radio-group" label="${ifNotEmpty(args.label)}" ?allow-deselect="${args['allow-deselect']}" ?horizontal="${args.horizontal}">
       ${unsafeHTML(args['[Default Slot]'])}
     </omni-radio-group>
   `,
@@ -34,6 +35,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
     args: {
         label: 'Radio Group',
         'allow-deselect': false,
+        horizontal: false,
         '[Default Slot]': raw`<omni-radio label="One" data-testid="test-radio"></omni-radio> 
 <omni-radio label="Two" disabled></omni-radio> 
 <omni-radio label="Three"></omni-radio>`
@@ -88,6 +90,25 @@ export const Label: ComponentStoryFormat<Args> = {
         const radioGroup = within(context.canvasElement).getByTestId<RadioGroup>('test-radio-group');
         const labelElement = radioGroup.shadowRoot?.querySelector('.label') as OmniLabel;
         await expect(labelElement.label).toBe(context.args?.label as string);
+    }
+};
+
+export const Horizontal: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
+    <omni-radio-group data-testid="test-radio-group" label="${args.label}" ?horizontal="${args.horizontal}">
+        <omni-radio label="One" ></omni-radio> 
+        <omni-radio label="Two" ></omni-radio> 
+        <omni-radio label="Three"></omni-radio> 
+    </omni-radio-group>`,
+    description: 'Arrange radio elements horizontally.',
+    args: {
+        label: 'Horizontal',
+        horizontal: true
+    },
+    play: async (context) => {
+        const radioGroup = within(context.canvasElement).getByTestId<RadioGroup>('test-radio-group');
+        const radiosElement = radioGroup.shadowRoot?.querySelector('.radios') as HTMLDivElement;
+        await expect(radiosElement).toHaveAttribute('data-horizontal');
     }
 };
 
