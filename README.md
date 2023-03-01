@@ -399,6 +399,14 @@ Control to select a single value from a group of values.
 
 </td></tr><tr><td>
 
+[omni-radio-group](src/radio/README.md)
+
+</td><td>
+
+Control to group radio components for single selection
+
+</td></tr><tr><td>
+
 [omni-render-element](src/render-element/README.md)
 
 </td><td>
