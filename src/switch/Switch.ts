@@ -54,14 +54,14 @@ import { OmniElement } from '../core/OmniElement.js';
  * @cssprop --omni-switch-knob-width - Knob width.
  * @cssprop --omni-switch-knob-background-color - Knob background color.
  * @cssprop --omni-switch-knob-box-shadow - Knob box shadow.
- * 
+ *
  * @cssprop --omni-switch-knob-hover-box-shadow - Knob hover box shadow.
- * 
+ *
  * @cssprop --omni-switch-checked-track-background-color - Track checked background color.
  * @cssprop --omni-switch-checked-hover-knob-box-shadow - Knob checked hover box shadow.
  * @cssprop --omni-switch-disabled-track-background-color - Track disabled background color.
  * @cssprop --omni-switch-checked-knob-background-color - Knob checked background color.
- * 
+ *
  * @cssprop --omni-switch-disabled-knob-background-color - Knob disabled background color..
  * @cssprop --omni-switch-disabled-knob-box-shadow - Knob disabled hover box shadow.
  *

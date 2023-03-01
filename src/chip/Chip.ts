@@ -47,9 +47,9 @@ import '../icons/Close.icon.js';
  * @cssprop --omni-chip-label-font-size - Component label font size.
  * @cssprop --omni-chip-label-font-weight - Component label font weight.
  * @cssprop --omni-chip-label-line-height - Component label line height.
- * 
+ *
  * @cssprop --omni-chip-icon-width - Component slotted icon width.
- * 
+ *
  * @cssprop --omni-chip-close-icon-width - Component close icon width.
  * @cssprop --omni-chip-close-icon-color - Component close icon color.
  *
