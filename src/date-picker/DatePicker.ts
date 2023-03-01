@@ -105,7 +105,7 @@ export class DatePicker extends OmniFormElement {
         }
         /*
         if (_changedProperties.has('locale')) {
-            this._updateDateVariablesUpdate();
+            this._updateDateVariables();
             return false;
         }*/
         return true;
@@ -272,13 +272,13 @@ export class DatePicker extends OmniFormElement {
                     cursor: default;
                     transition: 1s;
                     width: var(--omni-date-picker-container-width, 100%);
-                    top: var(--omni-date-picker-container-top, 100%);
+                    top: var(--omni-date-picker-container-top, 102%);
                     /*border: var(--omni-date-picker-period-container-border-bottom, 1px solid #e1e1e1);*/
                 }
 
                /* Styles if the element is at the bottom of the screen then render the picker on top of the element */
                .picker-container.bottom {
-                   top: var(--omni-date-picker-container-render-bottom-top, 0px);
+                   top: var(--omni-date-picker-container-render-bottom-top, -1%);
                    transform: translateY(-100%);
                }
             }
