@@ -25,8 +25,6 @@ const localDate = DateTime.local();
 const isoDate = localDate.toISODate();
 const testLocale = localDate.locale;
 
-console.log(isoDate);
-
 export const Interactive: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
     <omni-calendar
@@ -46,10 +44,10 @@ export const Interactive: ComponentStoryFormat<Args> = {
         const click = jest.fn();
         calendar.addEventListener('click', click);
     }
-}
+};
 
 export const Value: ComponentStoryFormat<Args> = {
-    render: (args: Args) =>html`
+    render: (args: Args) => html`
     <omni-calendar
         data-testid="test-calendar"
         .value="${args.value}"
@@ -61,15 +59,15 @@ export const Value: ComponentStoryFormat<Args> = {
     args: {
         value: isoDate
     } as Args,
-    play: async (context)=> {
+    play: async (context) => {
         const calendar = within(context.canvasElement).getByTestId<Calendar>('test-calendar');
         const click = jest.fn();
         calendar.addEventListener('click', click);
     }
-}
+};
 
 export const Locale: ComponentStoryFormat<Args> = {
-    render: (args: Args) =>html`
+    render: (args: Args) => html`
     <omni-calendar
         data-testid="test-calendar"
         locale="${args.locale}"
@@ -81,9 +79,9 @@ export const Locale: ComponentStoryFormat<Args> = {
     args: {
         locale: 'ja-JP'
     } as Args,
-    play: async (context)=> {
+    play: async (context) => {
         const calendar = within(context.canvasElement).getByTestId<Calendar>('test-calendar');
         const click = jest.fn();
         calendar.addEventListener('click', click);
     }
-}
+};

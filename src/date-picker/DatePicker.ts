@@ -2,7 +2,7 @@ import { html, css, nothing, PropertyValueMap } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { ClassInfo, classMap } from 'lit/directives/class-map.js';
 import { live } from 'lit/directives/live.js';
-import { DateTime} from 'luxon';
+import { DateTime } from 'luxon';
 import { OmniFormElement } from '../core/OmniFormElement.js';
 import '../calendar/Calendar.js';
 import '../icons/Calendar.icon.js';
@@ -40,9 +40,9 @@ import '../icons/ChevronRight.icon.js';
  * @cssprop --omni-date-picker-padding - Date picker input padding.
  * @cssprop --omni-date-picker-width - Date picker width.
  * @cssprop --omni-date-picker-min-width - Date picker min width.
- * 
+ *
  * @cssprop --omni-date-picker-disabled-font-color - Date picker disabled font color.
- * 
+ *
  * @cssprop --omni-date-picker-error-font-color - Date picker error font color.
  *
  * @cssprop --omni-date-picker-control-width - Date picker control width.
@@ -63,7 +63,7 @@ import '../icons/ChevronRight.icon.js';
  * @cssprop --omni-date-picker-period-container-border-bottom - Date picker container border bottom.
  *
  * @cssprop --omni-date-picker-container-render-bottom-top - Date picker container render bottom top.
- * 
+ *
  */
 @customElement('omni-date-picker')
 export class DatePicker extends OmniFormElement {
@@ -76,7 +76,8 @@ export class DatePicker extends OmniFormElement {
     @property({ type: String, reflect: true }) locale: string = this.defaultLocale;
 
     // Internal state properties for date picker and
-    @state() private date: DateTime = this.value && typeof this.value === 'string' ? DateTime.fromISO(this.value).setLocale(this.locale): DateTime.local();
+    @state() private date: DateTime =
+        this.value && typeof this.value === 'string' ? DateTime.fromISO(this.value).setLocale(this.locale) : DateTime.local();
     @state() private _showCalendar: boolean = false;
 
     //Internal state properties for dimensions
@@ -162,19 +163,10 @@ export class DatePicker extends OmniFormElement {
     }
 
     _dateSelected(e: Event) {
-        console.log('date before setting', this.date);
-        /*
-        console.log('Calender change event emitted');
-        console.log(e);*/
-        
-        //e.preventDefault();
-        //e.stopImmediatePropagation();
-
         this.date = DateTime.fromJSDate((<CustomEvent>e).detail.date);
 
-        //this.date = (<CustomEvent>e).detail.date as DateTime;
         this.value = this.date.toISODate();
-        
+
         this.dispatchEvent(
             new CustomEvent('change', {
                 detail: {
@@ -182,7 +174,7 @@ export class DatePicker extends OmniFormElement {
                     ISO: (<CustomEvent>e).detail.ISO
                 }
             })
-        )
+        );
 
         this._toggleCalendar();
     }
@@ -290,7 +282,7 @@ export class DatePicker extends OmniFormElement {
         return html`
             <input
                 class="field"
-                id="picker"
+                id="inputField"
                 type="text"
                 readonly
                 ?disabled=${this.disabled}
@@ -313,7 +305,8 @@ export class DatePicker extends OmniFormElement {
         }
         return html`
             <div id="picker-container" class="picker-container ${this._bottomOfViewport ? `bottom` : ``}">
-                <omni-calendar locale=${this.locale} .value=${this.value as string} @change=${(e: Event) => this._dateSelected(e)}></omni-calendar>
+                <omni-calendar id="calendar" locale=${this.locale} .value=${this.value as string} @change=${(e: Event) =>
+            this._dateSelected(e)}></omni-calendar>
             </div>
         `;
     }

@@ -68,34 +68,45 @@ export const Interactive: ComponentStoryFormat<Args> = {
 
         await userEvent.click(datePicker);
 
-        const pickerContainer = await querySelectorAsync(datePicker.shadowRoot as ShadowRoot, '#picker-container');
-        await expect(pickerContainer).toBeTruthy();
+        const calendar = (await querySelectorAsync(datePicker.shadowRoot as ShadowRoot, '#calendar')) as HTMLElement;
+        await expect(calendar).toBeTruthy();
 
-        const periodButton = await querySelectorAsync(datePicker.shadowRoot as ShadowRoot, '.month-year');
-        await expect(pickerContainer).toBeTruthy();
-        await userEvent.click(periodButton as HTMLDivElement);
-        await userEvent.click(periodButton as HTMLDivElement);
+        const controlLabel = await querySelectorAsync(calendar.shadowRoot as ShadowRoot, '.control-label');
+        await expect(controlLabel).toBeTruthy();
+        await userEvent.click(controlLabel as HTMLDivElement);
+        await userEvent.click(controlLabel as HTMLDivElement);
 
-        const yearScroller = await querySelectorAsync(datePicker.shadowRoot as ShadowRoot, '.year-scroller');
-        await expect(yearScroller).toBeTruthy();
+        const yearGrid = (await querySelectorAsync(calendar.shadowRoot as ShadowRoot, '.year-grid')) as HTMLElement;
+        await expect(yearGrid).toBeTruthy();
 
-        const yearButton = await querySelectorAsync(datePicker.shadowRoot as ShadowRoot, '[label="2020"]');
+        /*
+        const yearButton = await querySelectorAsync(calendar.shadowRoot as ShadowRoot, '[label="2020"]');
         await expect(yearButton).toBeTruthy();
-        await userEvent.click(yearButton as HTMLElement);
+        await userEvent.click(yearButton as HTMLElement);*/
 
-        const monthGrid = await querySelectorAsync(datePicker.shadowRoot as ShadowRoot, '.month-grid');
+        const yearButtons = yearGrid.querySelectorAll('.year');
+        const yearButtonArray = [...yearButtons];
+        const yearButton = yearButtonArray.filter((year) => year.textContent === '2020');
+        await expect(yearButton[0]).toBeTruthy();
+        await userEvent.click(yearButton[0]);
+
+        const monthGrid = (await querySelectorAsync(calendar.shadowRoot as ShadowRoot, '.month-grid')) as HTMLElement;
         await expect(monthGrid).toBeTruthy();
 
-        const monthButton = await querySelectorAsync(datePicker.shadowRoot as ShadowRoot, '[label="Dec"]');
+        const monthButtons = monthGrid.querySelectorAll('.month');
+        const monthButtonsArray = [...monthButtons];
+        const monthButton = monthButtonsArray.filter((month) => month.textContent === 'Dec');
+        await expect(monthButton[0]).toBeTruthy();
+        await userEvent.click(monthButton[0]);
+        /*const monthButton = await querySelectorAsync(calendar.shadowRoot as ShadowRoot, '[label="Dec"]');
         await expect(monthButton).toBeTruthy();
-        await userEvent.click(monthButton as HTMLElement);
+        await userEvent.click(monthButton as HTMLElement);*/
 
-        const daysGrid = await querySelectorAsync(datePicker.shadowRoot as ShadowRoot, '.days-grid');
+        const daysGrid = await querySelectorAsync(calendar.shadowRoot as ShadowRoot, '.day-grid');
         await expect(daysGrid).toBeTruthy();
 
         //Find the day button at the specified position
-        const dayButton = datePicker.shadowRoot!.querySelectorAll('div.day > div.day-label')[15];
-        console.log(dayButton);
+        const dayButton = calendar.shadowRoot!.querySelectorAll('div.day > div.day-label')[15];
         await expect(dayButton).toBeTruthy();
         await userEvent.click(dayButton);
     }
@@ -132,7 +143,6 @@ export const Locale: ComponentStoryFormat<Args> = {
         .value="${args.value}"
         locale="${args.locale}"
     >
-
     </omni-date-picker>
     `,
     name: 'Locale',
@@ -147,13 +157,14 @@ export const Locale: ComponentStoryFormat<Args> = {
         datePicker.addEventListener('click', click);
 
         await userEvent.click(datePicker);
-        const pickerContainer = await querySelectorAsync(datePicker.shadowRoot as ShadowRoot, '#picker-container');
-        await expect(pickerContainer).toBeTruthy();
+        const calendar = (await querySelectorAsync(datePicker.shadowRoot as ShadowRoot, '#calendar')) as HTMLElement;
+        //const calendar = await querySelectorAsync(datePicker.shadowRoot as ShadowRoot, '.calendar');
+        await expect(calendar).toBeTruthy();
 
-        const periodButton = await querySelectorAsync(datePicker.shadowRoot as ShadowRoot, '.month-year');
-        await expect(periodButton).toBeTruthy();
+        const controlLabel = await querySelectorAsync(calendar.shadowRoot as ShadowRoot, '.control-label');
+        await expect(controlLabel).toBeTruthy();
 
-        await expect(periodButton).toHaveTextContent(localDate.monthLong + ' ' + localDate.year);
+        await expect(controlLabel).toHaveTextContent(localDate.monthLong + ' ' + localDate.year);
         await userEvent.click(datePicker);
     }
 };
