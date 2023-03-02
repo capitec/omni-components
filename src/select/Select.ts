@@ -483,7 +483,7 @@ export class Select extends OmniFormElement {
         return html` <div id="control" class="control ${this._popUp ? `expanded` : `collapsed`}" @click="${() => this._controlClick()}">
             ${
                 this._isMobile
-                    ? html`<omni-more-icon class="control-icon"></omni-more-icon>`
+                    ? html`<omni-more-icon class=${classMap(controlIcon)}></omni-more-icon>`
                     : html`<omni-chevron-down-icon class=${classMap(controlIcon)}></omni-chevron-down-icon>`
             }
         </div>`;
