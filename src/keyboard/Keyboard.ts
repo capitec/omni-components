@@ -13,8 +13,8 @@ import '../icons/Next.icon.js';
 import '../icons/Previous.icon.js';
 import '../icons/Search.icon.js';
 import '../icons/Send.icon.js';
-import '../label';
-import '../icon';
+import '../label/Label.js';
+import '../icon/Icon.js';
 import './KeyboardButton.js';
 
 /**
