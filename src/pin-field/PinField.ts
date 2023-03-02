@@ -189,6 +189,8 @@ export class PinField extends OmniFormElement {
 
           height: var(--omni-pin-field-height, 100%);
           width: var(--omni-pin-field-width, 100%);
+
+          -webkit-text-security:disc;
       
         }
 
@@ -201,7 +203,7 @@ export class PinField extends OmniFormElement {
         }
 
         .show {
-            -webkit-text-security:disc;
+            -webkit-text-security:none;
         }
 
         /* Used to not display default stepper */

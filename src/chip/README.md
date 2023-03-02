@@ -42,6 +42,7 @@ Control that can be used for input, setting attributes, or performing actions.
 | Property                                      | Description                          |
 |-----------------------------------------------|--------------------------------------|
 | `--omni-chip-background-color`                | Component background color.          |
+| `--omni-chip-border`                          | Component border.                    |
 | `--omni-chip-border-radius`                   | Component border radius.             |
 | `--omni-chip-close-icon-color`                | Component close icon color.          |
 | `--omni-chip-close-icon-width`                | Component close icon width.          |

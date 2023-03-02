@@ -1049,6 +1049,26 @@ function setupSearch() {
         }
     }
 
+    //Type search
+    const typeSearch = document.querySelector<SearchField>('#type-search');
+    const typeRows = document.querySelector<HTMLTableSectionElement>('#component-types')?.children;
+    if (typeSearch && typeRows) {
+        typeSearch.addEventListener('input', handleTypes);
+        typeSearch.addEventListener('change', handleTypes);
+    }
+
+    function handleTypes() {
+        const filterValue = typeSearch?.value ?? '';
+        for (let index = 0; index < typeRows!.length; index++) {
+            const element = typeRows![index] as HTMLElement;
+            if (element.innerText && element.innerText.toLowerCase().includes((<string>filterValue).toLowerCase())) {
+                element.classList.remove('hidden');
+            } else {
+                element.classList.add('hidden');
+            }
+        }
+    }
+
     //Slot search
     const slotSearch = document.querySelector<SearchField>('#slot-search');
     const slotRows = document.querySelector<HTMLTableSectionElement>('#component-slots')?.children;

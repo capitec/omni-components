@@ -144,6 +144,32 @@ eleventyComputed:
                         </table>
                     </div>
                 {% endif %}
+                
+                {% set types = customElements | getTypes(component.name) %}
+                {% if types.length > 0 %}
+                    <h2 class="component-props-table-header">Types</h2>
+                    <div class="docs-search-area">
+                        <omni-search-field id="type-search"></omni-search-field>
+                    </div>
+                    <div class="component-props-table-wrapper">
+                        <table class="component-props-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Type</th>
+                                </tr>
+                            </thead>
+                            <tbody id="component-types">
+                                {% for type in types %}
+                                <tr>
+                                    <td data-label="Name" scope="row">{{type.alias}}</td>
+                                    <td data-label="Type"><pre><code class="language-js">{{type.type}}</code></pre></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
                                 
                 {% set slots = customElements | getSlots(component.name) %}
                 {% if slots.length > 0 %}

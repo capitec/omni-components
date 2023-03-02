@@ -32,6 +32,7 @@ import '../icons/Close.icon.js';
  *
  * @cssprop --omni-chip-height - Component height.
  * @cssprop --omni-chip-max-height - Component maximum height.
+ * @cssprop --omni-chip-border - Component border.
  * @cssprop --omni-chip-border-radius - Component border radius.
  * @cssprop --omni-chip-background-color - Component background color.
  * @cssprop --omni-chip-padding - Component padding.
@@ -47,14 +48,14 @@ import '../icons/Close.icon.js';
  * @cssprop --omni-chip-label-font-weight - Component label font weight.
  * @cssprop --omni-chip-label-line-height - Component label line height.
  *
- * @cssprop --omni-chip-disabled-border-color - Component disabled border color.
- * @cssprop --omni-chip-disabled-background-color - Component disabled background color.
- * @cssprop --omni-chip-disabled-hover-background-color - Component icon left padding.
- *
  * @cssprop --omni-chip-icon-width - Component slotted icon width.
  *
  * @cssprop --omni-chip-close-icon-width - Component close icon width.
  * @cssprop --omni-chip-close-icon-color - Component close icon color.
+ *
+ * @cssprop --omni-chip-disabled-border-color - Component disabled border color.
+ * @cssprop --omni-chip-disabled-background-color - Component disabled background color.
+ * @cssprop --omni-chip-disabled-hover-background-color - Component icon left padding.
  *
  */
 @customElement('omni-chip')
@@ -112,17 +113,20 @@ export class Chip extends OmniElement {
         }
 
         .chip {
-          height: var(--omni-chip-height, 32px);
-          max-height: var(--omni-chip-max-height, 32px);
-          box-sizing: border-box;
-          border: var(--omni-chip-border, 1px solid #e1e1e1);
-          border-radius: var(--omni-chip-border-radius, 16px);
-          background-color: var(--omni-chip-background-color, var(--omni-background-color));
-          padding: var(--omni-chip-padding, 4px);
           cursor: pointer;
           display: flex;
           flex-direction: row;
           align-items: center;
+          box-sizing: border-box;
+
+          height: var(--omni-chip-height, 32px);
+          max-height: var(--omni-chip-max-height, 32px);
+
+          border: var(--omni-chip-border, 1px solid #e1e1e1);
+          border-radius: var(--omni-chip-border-radius, 16px);
+          background-color: var(--omni-chip-background-color, var(--omni-background-color));
+          padding: var(--omni-chip-padding, 4px);
+
         }
 
         .chip:hover {
