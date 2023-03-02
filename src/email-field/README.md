@@ -47,6 +47,8 @@ Email input control, used in forms for input validation and to display correct v
 | `--omni-container-font-family`                   | Container font family.                         |
 | `--omni-container-height`                        | Container height.                              |
 | `--omni-container-width`                         | Container width.                               |
+| `--omni-email-field-disabled-font-color`         | Email field disabled font color.               |
+| `--omni-email-field-error-font-color`            | Email field error font color.                  |
 | `--omni-email-field-font-color`                  | Email field font color.                        |
 | `--omni-email-field-font-family`                 | Email field font family.                       |
 | `--omni-email-field-font-size`                   | Email field font size.                         |
@@ -83,7 +85,8 @@ Email input control, used in forms for input validation and to display correct v
 | `--omni-form-focussed-label-background-color`    | Form focussed label background color.          |
 | `--omni-form-focussed-label-color`               | Form focussed label color.                     |
 | `--omni-form-focussed-label-margin-left`         | Form focussed label left margin.               |
-| `--omni-form-focussed-label-top`                 | Form focussed label top.                       |
+| `--omni-form-focussed-label-padding-left`        | Form focussed label left.                      |
+| `--omni-form-focussed-label-padding-right`       | Form focussed label right.                     |
 | `--omni-form-focussed-label-transform-scale`     | Form focussed label transform scale.           |
 | `--omni-form-hint-label-border-width`            | Form hint label border width.                  |
 | `--omni-form-hint-label-font-color`              | Form hint label font color.                    |
@@ -99,7 +102,6 @@ Email input control, used in forms for input validation and to display correct v
 | `--omni-form-label-font-weight`                  | Form label font weight.                        |
 | `--omni-form-label-margin-left`                  | Form label margin left.                        |
 | `--omni-form-label-text-align`                   | Form label text align.                         |
-| `--omni-form-label-transform-origin`             | Form label text align.                         |
 | `--omni-form-label-z-index`                      | Form label z-index.                            |
 | `--omni-form-layout-background-color`            | Layout background color.                       |
 | `--omni-form-layout-border-radius`               | Layout border radius.                          |

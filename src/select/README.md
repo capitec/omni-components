@@ -95,7 +95,8 @@ Control to get / set a value within a list of options.
 | `--omni-form-focussed-label-background-color`    | Form focussed label background color.            |
 | `--omni-form-focussed-label-color`               | Form focussed label color.                       |
 | `--omni-form-focussed-label-margin-left`         | Form focussed label left margin.                 |
-| `--omni-form-focussed-label-top`                 | Form focussed label top.                         |
+| `--omni-form-focussed-label-padding-left`        | Form focussed label left.                        |
+| `--omni-form-focussed-label-padding-right`       | Form focussed label right.                       |
 | `--omni-form-focussed-label-transform-scale`     | Form focussed label transform scale.             |
 | `--omni-form-hint-label-border-width`            | Form hint label border width.                    |
 | `--omni-form-hint-label-font-color`              | Form hint label font color.                      |
@@ -111,7 +112,6 @@ Control to get / set a value within a list of options.
 | `--omni-form-label-font-weight`                  | Form label font weight.                          |
 | `--omni-form-label-margin-left`                  | Form label margin left.                          |
 | `--omni-form-label-text-align`                   | Form label text align.                           |
-| `--omni-form-label-transform-origin`             | Form label text align.                           |
 | `--omni-form-label-z-index`                      | Form label z-index.                              |
 | `--omni-form-layout-background-color`            | Layout background color.                         |
 | `--omni-form-layout-border-radius`               | Layout border radius.                            |
@@ -122,6 +122,8 @@ Control to get / set a value within a list of options.
 | `--omni-select-control-margin-left`              | Select control left margin.                      |
 | `--omni-select-control-margin-right`             | Select control right margin.                     |
 | `--omni-select-control-width`                    | Select control width.                            |
+| `--omni-select-field-disabled-font-color`        | Select component input field disabled font color. |
+| `--omni-select-field-error-font-color`           | Select component input field error font color.   |
 | `--omni-select-field-font-color`                 | Select component input field font color.         |
 | `--omni-select-field-font-family`                | Select component input field font family.        |
 | `--omni-select-field-font-size`                  | Select component input field font size.          |

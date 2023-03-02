@@ -33,9 +33,9 @@ import { OmniElement } from '../core/OmniElement.js';
  * @cssprop --omni-radio-height - Height.
  * @cssprop --omni-radio-padding - Padding.
  *
- * @cssprop --omni-label-font-color - Label Font Color.
- * @cssprop --omni-label-font-family - Label Font Family.
- * @cssprop --omni-label-font-size - Label Font Size.
+ * @cssprop --omni-radio-label-font-color - Label Font Color.
+ * @cssprop --omni-radio-label-font-family - Label Font Family.
+ * @cssprop --omni-radio-label-font-size - Label Font Size.
  * @cssprop --omni-radio-label-font-weight - Label Font Weight.
  * @cssprop --omni-radio-label-line-height - Label Line Height.
  * @cssprop --omni-radio-label-spacing - Label Spacing.
@@ -173,9 +173,9 @@ export class Radio extends OmniElement {
         }
 
         .container > .label {
-          color: var(--omni-label-font-color, var(--omni-font-color));
-          font-family: var(--omni-label-font-family, var(--omni-font-family));
-          font-size: var(--omni-label-font-size, var(--omni-font-size));
+          color: var(--omni-radio-label-font-color, var(--omni-font-color));
+          font-family: var(--omni-radio-label-font-family, var(--omni-font-family));
+          font-size: var(--omni-radio-label-font-size, var(--omni-font-size));
           font-weight: var(--omni-radio-label-font-weight, var(--omni-font-weight));
           line-height: var(--omni-radio-label-line-height, 20px);
 

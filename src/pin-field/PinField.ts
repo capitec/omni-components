@@ -1,5 +1,6 @@
 import { css, html } from 'lit';
 import { customElement, query, state } from 'lit/decorators.js';
+import { ClassInfo, classMap } from 'lit/directives/class-map.js';
 import { live } from 'lit/directives/live.js';
 import { OmniFormElement } from '../core/OmniFormElement.js';
 
@@ -49,6 +50,8 @@ import '../icons/EyeVisible.icon.js';
  * @cssprop --omni-pin-field-height - Pin field height.
  * @cssprop --omni-pin-field-width - Pin field width.
  *
+ * @cssprop --omni-pin-field-disabled-font-color - Pin field disabled font color.
+ * @cssprop --omni-pin-field-error-font-color - Pin field error font color.
  */
 @customElement('omni-pin-field')
 export class PinField extends OmniFormElement {
@@ -59,7 +62,7 @@ export class PinField extends OmniFormElement {
 
     @query('#inputField')
     private _inputElement?: HTMLInputElement;
-    private showPin?: boolean;
+    private showPin?: boolean = false;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private isWebkit?: boolean;
 
@@ -196,11 +199,21 @@ export class PinField extends OmniFormElement {
 
           height: var(--omni-pin-field-height, 100%);
           width: var(--omni-pin-field-width, 100%);
+
+          -webkit-text-security:disc;
       
         }
 
-        .field-hide-pin {
-            -webkit-text-security:disc;
+        .field.disabled {
+            color: var(--omni-pin-field-disabled-font-color, #7C7C7C);
+        }
+
+        .field.error {
+            color: var(--omni-pin-field-error-font-color);
+        }
+
+        .show {
+            -webkit-text-security:none;
         }
 
         /* Used to not display default stepper */
@@ -231,9 +244,15 @@ export class PinField extends OmniFormElement {
     }
 
     protected override renderContent() {
+        const field: ClassInfo = {
+            field: true,
+            disabled: this.disabled,
+            show: this.showPin as boolean,
+            error: this.error as string
+        };
         return html`
       <input
-        class="field ${!this.showPin ? 'field-hide-pin' : ''}"
+        class=${classMap(field)}
         id="inputField"
         inputmode="numeric"
         .type="${this.type}"

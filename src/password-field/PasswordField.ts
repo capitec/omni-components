@@ -1,5 +1,6 @@
 import { css, html } from 'lit';
 import { customElement, query, state } from 'lit/decorators.js';
+import { ClassInfo, classMap } from 'lit/directives/class-map.js';
 import { live } from 'lit/directives/live.js';
 import { OmniFormElement } from '../core/OmniFormElement.js';
 
@@ -47,6 +48,9 @@ import '../icons/EyeVisible.icon.js';
  * @cssprop --omni-password-field-padding - Password field padding.
  * @cssprop --omni-password-field-height - Password field height.
  * @cssprop --omni-password-field-width - Password field width.
+ *
+ * @cssprop --omni-password-field-disabled-color - Password field disabled font color.
+ * @cssprop --omni-password-field-error-font-color - Password field error font color.
  *
  */
 @customElement('omni-password-field')
@@ -149,6 +153,14 @@ export class PasswordField extends OmniFormElement {
           height: var(--omni-password-field-height, 100%);
           width: var(--omni-password-field-width, 100%);
         }
+
+        .field.disabled {
+            color: var(--omni-password-field-disabled-font-color, #7C7C7C);
+        }
+
+        .field.error {
+            color: var(--omni-password-field-error-font-color);
+        }
       `
         ];
     }
@@ -166,9 +178,14 @@ export class PasswordField extends OmniFormElement {
     }
 
     protected override renderContent() {
+        const field: ClassInfo = {
+            field: true,
+            disabled: this.disabled,
+            error: this.error as string
+        };
         return html`
       <input
-        class="field"
+        class=${classMap(field)}
         id="inputField"
         .type="${this.type}"
         .value=${live(this.value as string)}

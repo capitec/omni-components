@@ -20,6 +20,8 @@ import { OmniElement } from '../core/OmniElement.js';
  *
  * @element omni-hyperlink
  *
+ * @slot - Content to render inside the component.
+ *
  * Registry of all properties defined by the component.
  *
  * @cssprop --omni-hyperlink-color-disabled - Hyperlink disabled color.
@@ -31,7 +33,7 @@ import { OmniElement } from '../core/OmniElement.js';
  * @cssprop --omni-hyperlink-text-decorator - Hyperlink text decorator
  *
  * @cssprop --omni-hyperlink-font-size-small - Hyperlink small font size variation
- * @cssprop --omni-font-family-small - Hyperlink small font family variation
+ * @cssprop --omni-hyperlink-font-family-small - Hyperlink small font family variation
  * @cssprop --omni-hyperlink-font-weight-small - Hyperlink small font weight
  *
  * @cssprop --omni-hyperlink-color-active - Hyperlink color when in an active state.
@@ -96,55 +98,57 @@ export class Hyperlink extends OmniElement {
         return [
             super.styles,
             css`
-        :host {
-          display: inline-block;
-        }
+                :host {
+                display: inline-block;
+                }
 
-        :host([disabled]) a {
-          pointer-events: none;
-          color: var(--omni-hyperlink-color-disabled, var(--omni-disabled-background-color));
-        }
+                :host([disabled]) a {
+                pointer-events: none;
+                color: var(--omni-hyperlink-color-disabled, var(--omni-disabled-background-color));
+                }
 
-        :host([inline]) {
-          text-decoration: underline;
-        }
+                :host([inline]) {
+                text-decoration: underline;
+                }
 
-        .hyperlink {
-          font-size: var(--omni-hyperlink-font-size, var(--omni-font-size));
-          font-family: var(--omni-hyperlink-font-family, var(--omni-font-family));
-          font-weight: var(--omni-hyperlink-font-weight, var(--omni-font-weight));
-          color: var(--omni-hyperlink-color, var(--omni-primary-color));
-          text-decoration: var(--omni-hyperlink-text-decorator, none);
-          outline: none;
-        }
+                .hyperlink {
+                font-size: var(--omni-hyperlink-font-size, var(--omni-font-size));
+                font-family: var(--omni-hyperlink-font-family, var(--omni-font-family));
+                font-weight: var(--omni-hyperlink-font-weight, var(--omni-font-weight));
+                color: var(--omni-hyperlink-color, var(--omni-primary-color));
+                text-decoration: var(--omni-hyperlink-text-decorator, none);
+                outline: none;
+                }
 
-        :host([size='small']) .hyperlink {
-          font-size: var(--omni-hyperlink-font-size-small, 0.87em);
-          font-family: var(--omni-font-family-small, var(--omni-font-family));
-          font-weight: var(--omni-hyperlink-font-weight-small, var(--omni-font-weight));
-        }
+                :host([size='small']) .hyperlink {
+                font-size: var(--omni-hyperlink-font-size-small, 0.87em);
+                font-family: var(--omni-hyperlink-font-family-small, var(--omni-font-family));
+                font-weight: var(--omni-hyperlink-font-weight-small, var(--omni-font-weight));
+                }
 
-        .hyperlink:active {
-          color: var(--omni-hyperlink-color-active, #3a3a3a);
-          text-decoration: var(--omni-hyperlink-text-decorator-active, underline);
-        }
+                .hyperlink:active {
+                color: var(--omni-hyperlink-color-active, #3a3a3a);
+                text-decoration: var(--omni-hyperlink-text-decorator-active, underline);
+                }
 
-        .hyperlink:hover {
-          text-decoration: var(--omni-hyperlink-text-decorator-hover, underline);
-        }
+                .hyperlink:hover {
+                text-decoration: var(--omni-hyperlink-text-decorator-hover, underline);
+                }
 
-        .hyperlink:visited {
-          color: var(--omni-hyperlink-color-visited, #3a3a3a);
-          text-decoration: var(--omni-hyperlink-text-decorator-visited, none);
-        }
-      `
+                .hyperlink:visited {
+                color: var(--omni-hyperlink-color-visited, #3a3a3a);
+                text-decoration: var(--omni-hyperlink-text-decorator-visited, none);
+                }
+            `
         ];
     }
 
     protected override render(): TemplateResult {
-        return html` <a class="hyperlink" href="${this.href ? this.href : 'javascript:void(0)'}" .target="${this.target}" tabindex="0">
-      ${this.label}
-    </a>`;
+        return html`
+            <a class="hyperlink" href="${this.href ? this.href : 'javascript:void(0)'}" .target="${this.target}" tabindex="0">
+                ${this.label}<slot></slot>
+            </a>
+        `;
     }
 }
 
