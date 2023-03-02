@@ -104,11 +104,6 @@ export class DatePicker extends OmniFormElement {
         if (_changedProperties.has('value')) {
             this.date = DateTime.fromISO(<string>this.value).setLocale(this.locale);
         }
-        /*
-        if (_changedProperties.has('locale')) {
-            this._updateDateVariables();
-            return false;
-        }*/
         return true;
     }
 
@@ -239,8 +234,7 @@ export class DatePicker extends OmniFormElement {
                 fill: var(--omni-date-picker-control-icon-color, var(--omni-primary-color));
             }
 
-            /* Styles related to the picker container and its child elements */
-
+            /* Styles related to the picker container*/
             .picker-container {
                 z-index: var(--omni-date-picker-container-z-index, 420);
             }
@@ -265,12 +259,11 @@ export class DatePicker extends OmniFormElement {
                     transition: 1s;
                     width: var(--omni-date-picker-container-width, 100%);
                     top: var(--omni-date-picker-container-top, 102%);
-                    /*border: var(--omni-date-picker-period-container-border-bottom, 1px solid #e1e1e1);*/
                 }
 
                /* Styles if the element is at the bottom of the screen then render the picker on top of the element */
                .picker-container.bottom {
-                   top: var(--omni-date-picker-container-render-bottom-top, -1%);
+                   top: var(--omni-date-picker-container-render-bottom-top, -2%);
                    transform: translateY(-100%);
                }
             }
