@@ -59,8 +59,7 @@ import '../icons/ChevronRight.icon.js';
  * @cssprop --omni-calendar-year-grid-padding - Calendar year grid padding.
  * @cssprop --omni-calendar-year-grid-background-color - Calendar year grid background color.
  *
- * @cssprop --omni-calendar-month-button-width - Calendar month button width.
- * @cssprop --omni-calendar-month-button-height - Calendar month button height.
+ * @cssprop --omni-calendar-month-button-padding - Calendar month button padding.
  * @cssprop --omni-calendar-month-button-background-color - Calendar month button background color.
  * @cssprop --omni-calendar-month-button-border-color - Calendar month button border color.
  * @cssprop --omni-calendar-month-button-border-width - Calendar month button border width.
@@ -81,8 +80,7 @@ import '../icons/ChevronRight.icon.js';
  *
  * @cssprop --omni-calendar-month-button-hover-background-color - Calendar month button hover background color.
  *
- * @cssprop --omni-calendar-year-button-width - Calendar year button width.
- * @cssprop --omni-calendar-year-button-height - Calendar year button height.
+ * @cssprop --omni-calendar-year-button-padding - Calendar year button padding.
  * @cssprop --omni-calendar-year-button-background-color - Calendar year button background color.
  * @cssprop --omni-calendar-year-button-border-color - Calendar year button border color.
  * @cssprop --omni-calendar-year-button-border-width - Calendar year button border width.
@@ -338,7 +336,6 @@ export class Calendar extends OmniElement {
                 width: var(--omni-calendar-control-width, 23px);
             }
 
-            /*Consider renaming this*/
             /* omni calendar controls label*/
             .control-bar > .control-label {
                 cursor: pointer;
@@ -431,24 +428,21 @@ export class Calendar extends OmniElement {
                 text-align: center;
 
                 grid-template-columns: 1fr 1fr 1fr;
-                grid-gap: 8px 3px;
-                /*grid-row-gap: var(--omni-calendar-month-grid-row-gap, 8px);*/
+                grid-gap: 9px 4px;
 
-                padding: var(--omni-calendar-months-grid-padding,12px 12px);
+
+                padding: var(--omni-calendar-months-grid-padding,12.5px 13px);
                 background-color: var(--omni-calendar-months-grid-background-color, var(--omni-background-color));
             }
 
             /* Month Button styles */
-            /* Rename variables to "grid type" button*/
             .month-grid  > .month {
                 display: flex;
                 cursor: pointer;
                 align-items: center;
                 justify-content: center;
 
-                /* Dont have width and height rather introduce padding*/
-                width: var(--omni-calendar-month-button-width, 75px);
-                height: var(--omni-calendar-month-button-height, 54px);
+                padding: var(--omni-calendar-month-button-padding, 16px 24px);
 
                 background-color: var(--omni-calendar-month-button-background-color, var(--omni-background-color));
                 border-color: var(--omni-calendar-month-button-border-color); 
@@ -463,15 +457,8 @@ export class Calendar extends OmniElement {
             }
 
             .month-grid  > .month.selected {
-
-                border-style: solid;
-                border-radius: var(--omni-calendar-month-button-selected-border-radius, var(--omni-border-radius));
                 background-color: var(--omni-calendar-month-button-selected-background-color, var(--omni-primary-color));
-                border-color: var(--omni-calendar-month-button-selected-border-color, var(--omni-primary-color));
-                border-width: var(--omni-calendar-month-button-selected-border-width, var(--omni-border-width));
                 color: var(--omni-calendar-month-button-selected-color, var(--omni-background-color));
-
-
             }
 
             .month-grid > .month.selected:hover {
@@ -495,32 +482,26 @@ export class Calendar extends OmniElement {
                 /* Remove template columns as variables*/
                  /*Remove the row height and set height variables in the item itself */
                 grid-template-columns: 1fr 1fr 1fr;
+                grid-gap: 9px 5px;
 
-                grid-gap: 8px 3px;
-
-                padding: var(--omni-calendar-year-grid-padding,12px 12px);
+                padding: var(--omni-calendar-year-grid-padding, 12.5px 13px);
                 background-color: var(--omni-calendar-year-grid-background-color, var(--omni-background-color));
             }
 
-
-
             /* Year button styles */
-            /* Rename variables to "grid type" button*/
             .year-grid > .year {
                 display: flex;
                 cursor: pointer; 
                 align-items: center;
                 justify-content: center;
 
-                /* Dont have width and height rather introduce padding*/
-                width: var(--omni-calendar-year-button-width, 75px);
-                height: var(--omni-calendar-year-button-height, 54px);
+                padding: var(--omni-calendar-year-button-padding, 16px 22px);
 
                 background-color: var(--omni-calendar-year-button-background-color, var(--omni-background-color));
                 border-color: var(--omni-calendar-year-button-border-color, var(--omni-primary-color));               
                 border-width: var(--omni-calendar-year-button-border-width, var(--omni-border-width));
-                border-radius: var(--omni-calendar-year-button-border-radius, 5px);
 
+                border-radius: var(--omni-calendar-year-button-selected-border-radius, var(--omni-border-radius));
                 color: var(--omni-calendar-year-button-color, var(--omni-font-color));
                 font-family: var(--omni-calendar-year-button-font-family, var(--omni-font-family));
                 font-size: var(--omni-calendar-year-button-font-size, var(--omni-font-size));
@@ -530,11 +511,7 @@ export class Calendar extends OmniElement {
             }
 
             .year-grid > .year.selected {
-                border-style: solid;
-                border-radius: var(--omni-calendar-year-button-selected-border-radius, var(--omni-border-radius));
                 background-color: var(--omni-calendar-year-button-selected-background-color, var(--omni-primary-color));
-                border-color: var(--omni-calendar-year-button-selected-border-color, var(--omni-primary-color));
-                border-width: var(--omni-calendar-year-button-selected-border-width, var(--omni-border-width));
                 color: var(--omni-calendar-year-button-selected-color, var(--omni-background-color));
             }
 
