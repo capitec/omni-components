@@ -39,6 +39,7 @@ import OmniElement from './OmniElement.js';
  *
  * @cssprop --omni-form-focussed-border-width - Form focussed border width.
  * @cssprop --omni-form-focussed-border-color - Form focussed border color.
+ * @cssprop --omni-form-focussed-label-disabled-background-color - Form focussed label disabled background color.
  * @cssprop --omni-form-focussed-label-transform-scale - Form focussed label transform scale.
  * @cssprop --omni-form-focussed-label-margin-left - Form focussed label left margin.
  * @cssprop --omni-form-focussed-label-color - Form focussed label color.
@@ -234,6 +235,12 @@ export class OmniFormElement extends OmniElement {
 					z-index: -1;
                     top:50%;
                     width: calc(100% + var(--omni-form-focussed-label-padding-left, 3px) + var(--omni-form-focussed-label-padding-right, 3px));
+                }
+
+                :host([value]:not([value=''])) .layout.disabled  > .label > div::before,
+                .layout.disabled:focus-within > .label > div::before 
+                {
+                    background-color: var(--omni-form-focussed-label-disabled-background-color, var(--omni-disabled-background-color));
                 }
 
                 :host([value]:not([value=''])) .layout  > .label > div,

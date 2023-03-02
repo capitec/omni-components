@@ -53,6 +53,7 @@ import '../icons/More.icon.js';
  *
  * @cssprop --omni-select-control-icon-width - Select control icon width.
  * @cssprop --omni-select-control-icon-color - Select control icon color.
+ * @cssprop --omni-select-control-icon-error-color - Select control error icon color.
  *
  * @cssprop --omni-select-items-container-box-shadow - Select items container box shadow.
  * @cssprop --omni-select-items-container-background-color - Select items container background color.
@@ -301,9 +302,13 @@ export class Select extends OmniFormElement {
                     pointer-events: none;
                 }
 
-                .control-icon {
+                .icon {
                     width: var(--omni-select-control-icon-width, 20px);
                     fill: var(--omni-select-control-icon-color, var(--omni-primary-color));
+                }
+
+                .icon.error {
+                    fill: var(--omni-select-control-icon-error-color, var(--omni-error-font-color));
                 }
 
                 /* Default item container styles*/
@@ -470,11 +475,16 @@ export class Select extends OmniFormElement {
     }
 
     protected override renderControl() {
+        const controlIcon: ClassInfo = {
+            icon: true,
+            disabled: this.disabled,
+            error: this.error as string
+        }
         return html` <div id="control" class="control ${this._popUp ? `expanded` : `collapsed`}" @click="${() => this._controlClick()}">
             ${
                 this._isMobile
                     ? html`<omni-more-icon class="control-icon"></omni-more-icon>`
-                    : html`<omni-chevron-down-icon class="control-icon"></omni-chevron-down-icon>`
+                    : html`<omni-chevron-down-icon class=${classMap(controlIcon)}></omni-chevron-down-icon>`
             }
         </div>`;
     }
