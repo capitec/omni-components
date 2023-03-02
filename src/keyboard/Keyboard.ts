@@ -1,5 +1,6 @@
 import { css, html, nothing, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import { ClassInfo, classMap } from 'lit-html/directives/class-map.js';
 import OmniElement from '../core/OmniElement.js';
 import '../icons/ArrowRight.icon.js';
 import '../icons/Backspace.icon.js';
@@ -45,7 +46,86 @@ import './KeyboardButton.js';
  * @slot cta-send - Content to display on call to action button ('Enter') when target component has enterkeyhint="send".
  * @slot cta-enter - Content to display on call to action button ('Enter') when target component has enterkeyhint="enter" or enterkeyhint is not set.
  *
- *
+ * @cssprop --omni-keyboard-button-icon-max-height - Max height for slotted content in keyboard buttons.
+ * @cssprop --omni-keyboard-button-icon-max-width - Max width for slotted content in keyboard buttons.
+ * @cssprop --omni-keyboard-button-font-family - Font family for text in keyboard buttons.
+ * @cssprop --omni-keyboard-button-font-color - Font color for text in keyboard buttons.
+ * @cssprop --omni-keyboard-button-font-size - Font size for text in keyboard buttons.
+ * @cssprop --omni-keyboard-button-background-color - Background color for keyboard buttons.
+ * @cssprop --omni-keyboard-button-border - Border for keyboard buttons.
+ * @cssprop --omni-keyboard-button-margin - Margin for keyboard buttons.
+ * @cssprop --omni-keyboard-button-font-weight - Font weight for text in keyboard buttons.
+ * @cssprop --omni-keyboard-button-height - Height for keyboard buttons.
+ * @cssprop --omni-keyboard-button-width - Width for keyboard buttons.
+ * @cssprop --omni-keyboard-button-line-height - Line height for keyboard buttons.
+ * @cssprop --omni-keyboard-button-border-radius - Border radius for keyboard buttons.
+ * 
+ * @cssprop --omni-keyboard-button-mobile-margin - Margin for keyboard buttons in mobile viewports.
+ * @cssprop --omni-keyboard-button-mobile-height - Height for keyboard buttons in mobile viewports.
+ * @cssprop --omni-keyboard-button-mobile-width - Width for keyboard buttons in mobile viewports.
+ * @cssprop --omni-return-keyboard-button-mobile-width - Width for return keyboard buttons in mobile viewports.
+ * @cssprop --omni-numeric-keyboard-button-mobile-width - Width for numeric keyboard buttons in mobile viewports.
+ * 
+ * @cssprop --omni-keyboard-button-mobile-small-height - Height for keyboard buttons in small mobile viewports.
+ * @cssprop --omni-keyboard-button-mobile-small-width - Width for keyboard buttons in small mobile viewports.
+ * @cssprop --omni-keyboard-button-mobile-small-font-size - Font size for text in keyboard buttons in small mobile viewports.
+ * @cssprop --omni-keyboard-button-mobile-small-border-radius - Border radius for keyboard buttons in small mobile viewports.
+ * @cssprop --omni-return-keyboard-button-mobile-small-width - Width for return keyboard buttons in small mobile viewports.
+ * @cssprop --omni-numeric-keyboard-button-mobile-small-width - Width for numeric keyboard buttons in small mobile viewports.
+ * 
+ * @cssprop --omni-keyboard-shadow-border-radius - Border radius for keyboard shadow.
+ * @cssprop --omni-keyboard-shadow-padding-bottom - Bottom padding for keyboard shadow.
+ * @cssprop --omni-keyboard-shadow-background-color - Background color for keyboard shadow.
+ * 
+ * @cssprop --omni-keyboard-top-bar-width - Width for keyboard top bar.
+ * @cssprop --omni-keyboard-top-bar-padding-left - Left padding for keyboard top bar.
+ * @cssprop --omni-keyboard-top-bar-padding-right - Right padding for keyboard top bar.
+ * @cssprop --omni-keyboard-top-bar-background-color - Background color for keyboard top bar.
+ * @cssprop --omni-keyboard-top-bar-border-radius - Border radius for keyboard top bar.
+ * @cssprop --omni-keyboard-top-bar-border-bottom-color - Border bottom color for keyboard top bar.
+ * 
+ * @cssprop --omni-keyboard-cta-button-width - Width for keyboard call to action button.
+ * @cssprop --omni-keyboard-cta-button-max-width - Max width for keyboard call to action button.
+ * @cssprop --omni-keyboard-cta-button-color - Font or icon colour for keyboard call to action button.
+ * @cssprop --omni-keyboard-cta-button-background-color - Background colour for keyboard call to action button.
+ * @cssprop --omni-keyboard-cta-button-font-size - Font size for keyboard call to action button.
+ * @cssprop --omni-keyboard-cta-button-font-weight - Font weight for keyboard call to action button.
+ * @cssprop --omni-keyboard-cta-button-border-radius - Border radius for keyboard call to action button.
+ * @cssprop --omni-keyboard-cta-button-margin - Margin for keyboard call to action button.
+ * 
+ * @cssprop --omni-keyboard-close-icon-width - Width for keyboard close button icon.
+ * @cssprop --omni-keyboard-close-button-font-weight - Font weight for keyboard close button.
+ * @cssprop --omni-keyboard-close-button-color - Font colour for keyboard close button.
+ * @cssprop --omni-keyboard-close-button-font-size - Font size for keyboard close button.
+ * @cssprop --omni-keyboard-closer-width - Width for keyboard close button area.
+ * @cssprop --omni-keyboard-closer-padding-right - Right padding for keyboard close button area.
+ * 
+ * @cssprop --omni-keyboard-background-color - Background color for keyboard.
+ * 
+ * @cssprop --omni-keyboard-key-row-margin - Margin for keyboard rows.
+ * @cssprop --omni-keyboard-key-row-width - Width for keyboard rows.
+ * @cssprop --omni-keyboard-row-padding-top - Top padding for first keyboard row.
+ * @cssprop --omni-keyboard-row-padding-bottom - Bottom padding for last keyboard row.
+ * 
+ * @cssprop --omni-keyboard-icons-color - Colour for keyboard icons.
+ * 
+ * @cssprop --omni-keyboard-top-bar-mobile-height - Height for keyboard top bar in mobile viewports.
+ * @cssprop --omni-keyboard-top-bar-mobile-border-radius - Border radius for keyboard top bar in mobile viewports.
+ * 
+ * @cssprop --omni-keyboard-mobile-key-row-margin - Margin for keyboard rows in mobile viewports.
+ * @cssprop --omni-keyboard-mobile-special-key-row-margin - Margin for special keyboard rows in mobile viewports.
+ * @cssprop --omni-keyboard-mobile-key-row-width - Width for keyboard rows in mobile viewports.
+ * 
+ * @cssprop --omni-keyboard-mobile-cta-button-height - Height for keyboard call to action button in mobile viewports.
+ * @cssprop --omni-keyboard-mobile-cta-button-margin - Margin for keyboard call to action button in mobile viewports.
+ * 
+ * @cssprop --omni-keyboard-mobile-close-icon-width - Width for keyboard close button icon in mobile viewports.
+ * @cssprop --omni-keyboard-mobile-close-icon-width - Width for keyboard close button icon in mobile viewports.
+ * 
+ * @cssprop --omni-keyboard-mobile-small-key-row-margin - Margin for keyboard rows in small mobile viewports.
+ * @cssprop --omni-keyboard-mobile-small-key-row-margin - Margin for special keyboard rows in small mobile viewports.
+ * 
+ * @cssprop --omni-keyboard-mobile-small-cta-button-height - Height for keyboard call to action button in small mobile viewports.
  */
 @customElement('omni-keyboard')
 export class Keyboard extends OmniElement {
@@ -653,84 +733,94 @@ export class Keyboard extends OmniElement {
 					color: white;
 					text-align: center;
 				}
+
 				.shadow {
 					box-shadow: -5px 0px 30px var(--omni-box-shadow-color);
 					border-radius: var(--omni-keyboard-shadow-border-radius,16px 16px 0px 0px);
 					padding-bottom: var(--omni-keyboard-shadow-padding-bottom,-10px);
-					background: var(--omni-keyboard-input-background-color,var(--omni-background-color));
+					background: var(--omni-keyboard-shadow-background-color,var(--omni-background-color));
+
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
 				}
 
 				.topbar{
-					height: var(--omni-keyboard-top-bar-height, 48px);
-					width: var(--omni-keyboard-top-bar-width, auto);
-					padding-left: var(--omni-keyboard-top-bar-padding-left, 24px); 
-					padding-right: var(--omni-keyboard-top-bar-padding-right, 41px); 
+					width: var(--omni-keyboard-top-bar-width, 100%);
+                    padding-left: var(--omni-keyboard-top-bar-padding-left, 12px);
+                    padding-right: var(--omni-keyboard-top-bar-padding-right, 5px);
 					background-color: var(--omni-keyboard-top-bar-background-color,var(--omni-background-active-color));
 					list-style: none;
-					display: var(--omni-keyboard-flex-display, flex);
-					border-radius: var(--omni-keyboard-top-bar-border-radius,16px 16px 0px 0px);
+					display: flex;
+					border-radius: var(--omni-keyboard-top-bar-border-radius,10px 10px 0px 0px);
 					align-items: center;
 					justify-content: space-between;
+					border-bottom: 3px solid var(--omni-keyboard-top-bar-border-bottom-color,var(--omni-accent-color));
 				}
 
-				.bottomBar {
-					height: var(--omni-keyboard-bottom-bar-height,104px);
-					width: var(--omni-keyboard-bottom-bar-width, auto);
-					padding: var(--omni-keyboard-bottom-bar-padding, 0px 24px);
-					background-color: var(--omni-keyboard-bottom-bar-background-color,var(--omni-background-active-color));
-					background: var(--omni-keyboard-bottom-bar-background-color,var(--omni-background-active-color));
-					border-top: var(--omni-keyboard-bottom-bar-border-top,3px solid var(--omni-accent-color));
-				}
-
-                /*
+                
 				.cta-button {
-					height: var(--omni-keyboard-cta-button-height,56px);
-					width: var(--omni-keyboard-cta-button-width,184px);
+					width: var(--omni-keyboard-cta-button-width, 100%);
+                    max-width: var(--omni-keyboard-cta-button-max-width,114px);
 					color: var(--omni-keyboard-cta-button-color,var(--omni-background-color));
 					background-color: var(--omni-keyboard-cta-button-background-color,var(--omni-primary-color));
 					border: none;
 					text-align: center;
-					font-size: var(--omni-keyboard-cta-button-font-size,20px);
+					font-size: var(--omni-keyboard-cta-button-font-size,15px);
 					font-weight: var(--omni-keyboard-cta-button-font-weight,600);
 					border-radius: var(--omni-keyboard-cta-button-border-radius,8px);
-					margin: var(--omni-keyboard-cta-button-margin,24px);
-					float: var(--omni-keyboard-cta-button-float, right);
+					margin: var(--omni-keyboard-cta-button-margin,var(--omni-keyboard-button-margin, 6px 7px));
+					float: right;
                     cursor: pointer;
                     display: flex;
                     justify-content: center;
                     align-items: center;
                     flex-direction: row;
-				}*/
+				}
+
+                .cta-fill {
+                    height: var(--omni-keyboard-button-height, 40px);
+                    margin: var(--omni-keyboard-button-margin, 6px 7px);
+                    max-width: unset;
+                }
 
 
                 .cta-icon {
                     --omni-icon-fill: var(--omni-keyboard-cta-button-color,var(--omni-background-color));
                 }
+
+                .fill-space {
+                    width: 100%;
+                }
+
                 .close-icon {
                     width: var(--omni-keyboard-close-icon-width, 32px);
                 }
+
 				.closeButton{
 					cursor: pointer; 
 					font-weight: var(--omni-keyboard-close-button-font-weight,600); 
 					color: var(--omni-keyboard-close-button-color,var(--omni-primary-color)); 
-					font-size: var(--omni-keyboard-close-button-font-size,18px);
+					font-size: var(--omni-keyboard-close-button-font-size,16px);
 				}
 				
 				.closer{
-					display: var(--omni-keyboard-flex-display, flex);
+					display: flex;
 					flex-direction: row; 
 					align-items: center;
 					justify-content: space-between;
 					width: var(--omni-keyboard-closer-width,68px);
 					padding-right: var(--omni-keyboard-closer-padding-right,81px);
                     cursor: pointer;
+                    box-sizing: border-box;
 				}
 
-				.items{
+				.items {
 					padding: 0;
 					margin: 0;
 					list-style: none;
-					display: var(--omni-keyboard-flex-display, flex);
+					display: flex;
 				}
 
 				.firstItem{
@@ -755,10 +845,22 @@ export class Keyboard extends OmniElement {
 				}
 
 				.wrapper {
-					width: var(--omni-keyboard-wrapper-width,auto);
-					background: var(--omni-keyboard-input-background-color,var(--omni-background-color));
-					border-top: 3px solid var(--omni-accent-color);
+                    width: 672px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: stretch;
+
+					background: var(--omni-keyboard-background-color,var(--omni-background-color));
 				}
+
+                .special-wrapper {
+                    width: 355px;
+                }
+
+                .numeric-wrapper {
+                    width: 224px;
+                }
 
 				.wrapper:first-child {
 					margin-top: 0;
@@ -766,273 +868,113 @@ export class Keyboard extends OmniElement {
 				
 				.keyrow {
 					display: flex; 
-					justify-content: center;
-					margin: var(--omni-keyboard-key-row-margin,14px 53px);
+					justify-content: center; /* space-between ? */
+					margin: var(--omni-keyboard-key-row-margin, 0px 15px);
 					width: var(--omni-keyboard-key-row-width,auto);
+                    align-items: stretch;
 				}
+
                 .pad-top {
-                    padding-top: var(--omni-keyboard-row-padding-top, 24px);
+                    padding-top: var(--omni-keyboard-row-padding-top, 10px);
                 }
+
                 .pad-bottom {
-                    padding-bottom: var(--omni-keyboard-row-padding-bottom, 24px);
+                    padding-bottom: var(--omni-keyboard-row-padding-bottom, 10px);
                 }
+
                 .themed-icon {
-                    --omni-icon-fill: var(--omni-primary-color, currentColor);
+                    --omni-icon-fill: var(--omni-keyboard-icons-color,var(--omni-primary-color, currentColor));
                 }
+
                 .stretch-icon {
                     height: 100%;
                 }
+
                 .flex-text-center {                    
                     align-items: center;
                     justify-content: center;
                     text-align: center;
                     display: flex;
                 }
-
-                /* Desktop and landscape tablet device styling */
-                @media screen and (min-width: 767px) {
-
-                    .cta-button {
-                        display: inline-flex;
-                        align-items: center;
-                        justify-content: center;
-
-                        color: var(--omni-keyboard-cta-button-color,var(--omni-background-color));
-                        background-color: var(--omni-keyboard-cta-button-background-color,var(--omni-primary-color));
-                        border: none;
-                        text-align: center;
-
-                        height: var(--omni-keyboard-cta-button-height,56px);
-                        width: var(--omni-keyboard-cta-button-width,100px);
-						
-						
-                        font-size: var(--omni-keyboard-cta-button-font-size,20px);
-                        font-weight: var(--omni-keyboard-cta-button-font-weight,600);
-                        margin: var(--omni-keyboard-cta-button-margin,6px 7px);
-
-                        border-radius: var(--omni-keyboard-cta-button-border-radius,8px);
-                        box-shadow: 2px 2px 5px 0 rgba(109,109,109,0.35), -10px -10px 20px -10px rgba(255,255,255,0.5);
-
-                        transition:
-                        opacity .1s ease,
-                        background-color .1s ease,
-                        border .1s ease,
-                        color .1s ease,
-                        box-shadow .1s ease,
-                        background .1s ease,
-                        -webkit-box-shadow .1s ease;
-                    }
-
-                }
             
                 /* Mobile device styling */
                 @media screen and (max-width: 766px) {
-                    .topbar,
-                    .bottomBar {
-                        display: none;
+
+                    .topbar{
+                        height: var(--omni-keyboard-top-bar-mobile-height, 24px);
+                        border-radius: var(--omni-keyboard-top-bar-mobile-border-radius,8px 8px 0px 0px);
+                        padding-right: 0px;
                     }
 
                     :host {
-                        /* Keyboard needs to have a very high z index in order to be always on top */
-                        z-index: var(--omni-keyboard-z-index, 9999);
-                        position: fixed;
-
-                        /*
-                        left: var(--omni-select-mobile-items-container-left, 0px);
-                        right: var(--omni-select-mobile-items-container-right, 0px);
-                        bottom: var(--omni-select-mobile-items-container-bottom, 0px);*/
+                        --omni-icon-size-medium: 20px;
                     }
 
                     .wrapper {
                         width: var(--omni-keyboard-wrapper-width,auto);
-                        background: var(--omni-keyboard-input-background-color,var(--omni-background-color));
-                        border-top: 3px solid var(--omni-accent-color);
+                        background: var(--omni-keyboard-background-color,var(--omni-background-color));
                     }
 
                     .keyrow {
-                        margin: var(--omni-keyboard-key-row-margin,8px 8px);
+                        margin: var(--omni-keyboard-mobile-key-row-margin,8px 36px);
                         width: var(--omni-keyboard-key-row-width,auto);
+                        align-items: center;
                     }
 
                     .pad-top {
-                        padding-top: var(--omni-keyboard-row-padding-top, 6px);
+                        padding-top: 0px;
                     }
 
                     .pad-bottom {
-                        padding-bottom: var(--omni-keyboard-row-padding-bottom, 6px);
+                        padding-bottom: 0px;
+                    }
+
+                    .special-row {
+                        margin: var(--omni-keyboard-mobile-special-key-row-margin,8px 59px);
                     }
 
                     .shadow {
-                        box-shadow: -5px 0px 30px var(--omni-box-shadow-color);
-                        border-radius: var(--omni-keyboard-shadow-border-radius,16px 16px 0px 0px);
-                        padding-bottom: var(--omni-keyboard-shadow-padding-bottom,-10px);
                         width:100%
                     }
 
-                    /*
-                    .cta-button {
-                        
-                        height: var(--omni-keyboard-cta-button-height,56px);
-                        width: var(--omni-keyboard-cta-button-width,184px);
-                        color: var(--omni-keyboard-cta-button-color,var(--omni-background-color));
-                        background-color: var(--omni-keyboard-cta-button-background-color,var(--omni-primary-color));
-                        border: none;
-                        text-align: center;
-                        font-size: var(--omni-keyboard-cta-button-font-size,20px);
-                        font-weight: var(--omni-keyboard-cta-button-font-weight,600);
-                        border-radius: var(--omni-keyboard-cta-button-border-radius,8px);
-                        margin: var(--omni-keyboard-cta-button-margin,24px);
-                        float: var(--omni-keyboard-cta-button-float, right);
-                        cursor: pointer;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        flex-direction: row;
-                    }*/
+                   .cta-button {
+                        height: var(--omni-keyboard-mobile-cta-button-height, 26px);
+                        margin: var(--omni-keyboard-mobile-cta-button-margin, 2px);
+                   }
 
-                    .cta-button {
-                        display: inline-flex;
-                        align-items: center;
-                        justify-content: center;
+                   .close-icon {
+                        width: var(--omni-keyboard-mobile-close-icon-width, 24px);
+                   }
 
-                        color: var(--omni-keyboard-cta-button-color,var(--omni-background-color));
-                        background-color: var(--omni-keyboard-cta-button-background-color,var(--omni-primary-color));
-                        border: none;
-                        text-align: center;
-
-                        transition:
-                        opacity .1s ease,
-                        background-color .1s ease,
-                        border .1s ease,
-                        color .1s ease,
-                        box-shadow .1s ease,
-                        background .1s ease,
-                        -webkit-box-shadow .1s ease;
+                   .closeButton {
+                        font-size: var(--omni-keyboard-close-button-font-size,16px);
                     }
-                }
-
-                /* Mobile device styling */
-                @media screen and (max-width: 766px) {
-                        .cta-button {
-                            display: inline-flex;
-                            align-items: center;
-                            justify-content: center;
-    
-                            color: var(--omni-keyboard-cta-button-color,var(--omni-background-color));
-                            background-color: var(--omni-keyboard-cta-button-background-color,var(--omni-primary-color));
-                            border: none;
-                            text-align: center;
-                            font-size: var(--omni-keyboard-cta-button-font-size,18px);
-                            font-weight: var(--omni-keyboard-cta-button-font-weight,600);
-                            border-radius: var(--omni-keyboard-cta-button-border-radius,8px);
-                            /*margin: var(--omni-keyboard-cta-button-margin,24px);*/
-                            /*float: var(--omni-keyboard-cta-button-float, right);*/
-                            cursor: pointer;
-    
-                            margin: var(--omni-keyboard-button-margin, 2px 2px);
-                            height: 30px;
-                            width: 70px;
-    
-                            transition:
-                            opacity .1s ease,
-                            background-color .1s ease,
-                            border .1s ease,
-                            color .1s ease,
-                            box-shadow .1s ease,
-                            background .1s ease,
-                            -webkit-box-shadow .1s ease;
-
-                            box-shadow: 2px 2px 5px 0 rgba(109,109,109,0.35), -10px -10px 20px -10px rgba(255,255,255,0.5);
-                        }
-                    
+                
                 }
 
                 /* Small mobile device */
-                @media screen and (max-width: 320px) {
-                    /*
-                    .button {
-                        display: inline-flex;
-                        align-items: center;
-                        justify-content: center;
-                        
-                        font-family: var(--omni-button-font-family, var(--omni-font-family));
-                        color: var(--omni-keyboard-button-font-color, var(--omni-font-color));
-    
-                        background-color: var(--omni-keyboard-button-background-color, var(--omni-background-color));
-                        border: var(--omni-keyboard-button-border, 1.5px solid var(--omni-background-color));
-                        margin: var(--omni-keyboard-button-margin, 6px 7px);
-                        font-weight: var(--omni-keyboard-font-weight, 600);
-                        height: var(--omni-keyboard-button-height, 80px);
-                        width: var(--omni-keyboard-button-width, 80px);
-                        
-                        font-size: var(--omni-keyboard-button-font-size, 20px);
-                        line-height: var(--omni-keyboard-button-line-height, 30px);
-                        border-radius: var(--omni-keyboard-button-border-radius, 8px);
-    
-                        box-shadow: 2px 2px 5px 0 rgba(109,109,109,0.35), -10px -10px 20px -10px rgba(255,255,255,0.5);
-                        border-style: solid;
-    
-                        cursor: pointer;
-                        
-                        transition:
-                            opacity .1s ease,
-                            background-color .1s ease,
-                            border .1s ease,
-                            color .1s ease,
-                            box-shadow .1s ease,
-                            background .1s ease,
-                            -webkit-box-shadow .1s ease;
+                @media screen and (max-width: 355px) {
+
+                    :host {
+                        --omni-icon-size-medium: 20px;
                     }
                     
-                    .cta-button {
-                        
-                        height: var(--omni-keyboard-cta-button-height,56px);
-                        width: var(--omni-keyboard-cta-button-width,184px);
-                        color: var(--omni-keyboard-cta-button-color,var(--omni-background-color));
-                        background-color: var(--omni-keyboard-cta-button-background-color,var(--omni-primary-color));
-                        border: none;
-                        text-align: center;
-                        font-size: var(--omni-keyboard-cta-button-font-size,20px);
-                        font-weight: var(--omni-keyboard-cta-button-font-weight,600);
-                        border-radius: var(--omni-keyboard-cta-button-border-radius,8px);
-                        margin: var(--omni-keyboard-cta-button-margin,24px);
-                        float: var(--omni-keyboard-cta-button-float, right);
-                        cursor: pointer;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        flex-direction: row;
+                    .keyrow {
+                        margin: var(--omni-keyboard-mobile-small-key-row-margin,8px 9px);
                     }
-                    
-                    */
-                    /* height: 22px;
-                       width: 45px; */
+
+                    .special-row {
+                        margin: var(--omni-keyboard-mobile-small-key-row-margin,8px 17px);
+                    }
+
                     .cta-button {
-                        display: inline-flex;
-                        align-items: center;
-                        justify-content: center;
+                        font-size: x-small;
+                        height: var(--omni-keyboard-mobile-small-cta-button-height, 22px);
+                        --omni-icon-size-medium: 15px;
+                    }
 
-                        color: var(--omni-keyboard-cta-button-color,var(--omni-background-color));
-                        background-color: var(--omni-keyboard-cta-button-background-color,var(--omni-primary-color));
-                        border: none;
-                        text-align: center;
-                        font-size: var(--omni-keyboard-cta-button-font-size,20px);
-                        font-weight: var(--omni-keyboard-cta-button-font-weight,600);
-                        border-radius: var(--omni-keyboard-cta-button-border-radius,8px);
-                        /*margin: var(--omni-keyboard-cta-button-margin,24px);*/
-                        /*float: var(--omni-keyboard-cta-button-float, right);*/
-                        cursor: pointer;
-
-                        margin: var(--omni-keyboard-button-margin, 2px 2px);
-
-                        transition:
-                        opacity .1s ease,
-                        background-color .1s ease,
-                        border .1s ease,
-                        color .1s ease,
-                        box-shadow .1s ease,
-                        background .1s ease,
-                        -webkit-box-shadow .1s ease;
+                    .topbar > omni-label {
+                        --omni-label-default-font-size: x-small;
                     }
                 }
 
@@ -1151,7 +1093,7 @@ export class Keyboard extends OmniElement {
 								</omni-keyboard-button>
 							</div>
 							<div class="keyrow">
-								<omni-keyboard-button @keyboard-click="${this._toggleCase}" mode="action"
+								<omni-keyboard-button class="fill-space" @keyboard-click="${this._toggleCase}" mode="action"
 									character="caps" case="custom">${this.renderCaps()}</omni-keyboard-button>
 								<omni-keyboard-button @keyboard-click="${this._keypress}" mode="alpha" label="x"
 									case="${this.displayCase}">
@@ -1171,7 +1113,9 @@ export class Keyboard extends OmniElement {
 								<omni-keyboard-button @keyboard-click="${this._keypress}" mode="alpha" label="m"
 									case="${this.displayCase}">
 								</omni-keyboard-button>
-								<omni-keyboard-button @keyboard-click="${this._keypress}" mode="action" character="backspace" case="custom">                                    
+								<omni-keyboard-button class="fill-space" @keyboard-click="${
+                                    this._keypress
+                                }" mode="action" character="backspace" case="custom">                                    
                                     <omni-icon size="medium"  class="themed-icon">${this.renderBackspace()}</omni-icon>
                                 </omni-keyboard-button>
 							</div>
@@ -1184,15 +1128,11 @@ export class Keyboard extends OmniElement {
 								</omni-keyboard-button>
 								<omni-keyboard-button @keyboard-click="${this._toggleState}" mode="alpha" label="!#$"
 									case="custom"></omni-keyboard-button>
-								<omni-keyboard-button @keyboard-click="${this._keypress}" mode="space" label="${this.spaceLabel}"
+								<omni-keyboard-button class="fill-space" @keyboard-click="${this._keypress}" mode="space" label="${this.spaceLabel}"
 									character=" " case="custom"></omni-keyboard-button>
-								<omni-keyboard-button @keyboard-click="${this._keypress}" mode="return" label="${this.clearLabel}"
-									character="clear" case="custom"></omni-keyboard-button>
-                                    ${this.renderCallToAction()}
+								${this.renderClear()}
+                                ${this.renderCallToAction()}
 							</div>
-                            <!--
-							<div class="bottomBar">
-							</div>-->
 						</div>
 					</div>
 				</div>
@@ -1211,10 +1151,10 @@ export class Keyboard extends OmniElement {
 								<omni-icon size="medium" class="themed-icon">${this.renderClose()}</omni-icon>
 							</div>
 						</div>
-						<div class="wrapper">
+						<div class="wrapper special-wrapper">
 							<div>
 								<div>
-									<div class="keyrow pad-top" >
+									<div class="keyrow pad-top special-row" >
 										<omni-keyboard-button @keyboard-click="${this._keypress}" mode="numeric" label="!">
 										</omni-keyboard-button>
 										<omni-keyboard-button @keyboard-click="${this._keypress}" mode="numeric" label="|">
@@ -1227,7 +1167,7 @@ export class Keyboard extends OmniElement {
                                             <omni-icon size="medium"  class="themed-icon">${this.renderBackspace()}</omni-icon>
 										</omni-keyboard-button>
 									</div>
-									<div class="keyrow">
+									<div class="keyrow special-row">
 										<omni-keyboard-button @keyboard-click="${this._keypress}" mode="numeric" label="%">
 										</omni-keyboard-button>
 										<omni-keyboard-button @keyboard-click="${this._keypress}" mode="numeric" label="&gt;">
@@ -1239,7 +1179,7 @@ export class Keyboard extends OmniElement {
 										<omni-keyboard-button @keyboard-click="${this._keypress}" mode="numeric" label="$">
 										</omni-keyboard-button>
 									</div>
-									<div class="keyrow">
+									<div class="keyrow special-row">
 										<omni-keyboard-button @keyboard-click="${this._keypress}" mode="numeric" label="*">
 										</omni-keyboard-button>
 										<omni-keyboard-button @keyboard-click="${this._keypress}" mode="numeric" label="+">
@@ -1251,7 +1191,7 @@ export class Keyboard extends OmniElement {
 										<omni-keyboard-button @keyboard-click="${this._keypress}" mode="numeric" label="~">
 										</omni-keyboard-button>
 									</div>
-									<div class="keyrow">
+									<div class="keyrow special-row">
 										<omni-keyboard-button @keyboard-click="${this._keypress}" mode="numeric" label="/">
 										</omni-keyboard-button>
 										<omni-keyboard-button @keyboard-click="${this._keypress}" mode="numeric" label="=">
@@ -1263,7 +1203,7 @@ export class Keyboard extends OmniElement {
 										<omni-keyboard-button @keyboard-click="${this._keypress}" mode="numeric" label="}">
 										</omni-keyboard-button>
 									</div>
-									<div class="keyrow pad-bottom">
+									<div class="keyrow pad-bottom special-row">
 										${
                                             this.mode === 'alpha-numeric'
                                                 ? html`<omni-keyboard-button
@@ -1275,16 +1215,11 @@ export class Keyboard extends OmniElement {
 										</omni-keyboard-button>
 										<omni-keyboard-button @keyboard-click="${this._keypress}" mode="numeric" label=".">
 										</omni-keyboard-button>
-										<omni-keyboard-button @keyboard-click="${this._keypress}" mode="numeric" label="${this.clearLabel}"
-											character="clear" case="custom"></omni-keyboard-button>
-                                            ${this.renderCallToAction()}
+										${this.renderClear('numeric')}
+                                        ${this.renderCallToAction()}
 									</div>
 								</div>
 							</div>
-                            <!--
-							<div class="bottomBar">
-							
-							</div>-->
 						</div>
 					</div>
 				</div>
@@ -1302,7 +1237,7 @@ export class Keyboard extends OmniElement {
 								<omni-icon size="medium" class="themed-icon">${this.renderClose()}</omni-icon>
 							</div>
 						</div>
-						<div class="wrapper">
+						<div class="wrapper numeric-wrapper">
 							<div>
 								<div>
 									<div class="keyrow pad-top" >
@@ -1329,23 +1264,22 @@ export class Keyboard extends OmniElement {
 										<omni-keyboard-button @keyboard-click="${this._keypress}" mode="numeric" label="9">
 										</omni-keyboard-button>
 									</div>
-									<div class="keyrow" style="margin-bottom:0px; padding-bottom: 24px">
-										<omni-keyboard-button @keyboard-click="${this._keypress}" mode="numeric" label="${this.clearLabel}"
-											character="clear" case="custom"></omni-keyboard-button>
+									<div class="keyrow">
+										${this.renderClear('numeric')}
 										<omni-keyboard-button @keyboard-click="${this._keypress}" mode="numeric" label="0">
 										</omni-keyboard-button>
 										<omni-keyboard-button @keyboard-click="${this._keypress}" mode="numeric" character="backspace" case="custom">            
                                             <omni-icon size="medium" class="themed-icon">${this.renderBackspace()}</omni-icon>
                                         </omni-keyboard-button>
-                                        ${this.renderCallToAction()}
+									</div>
+									<div class="keyrow pad-bottom numeric-row">
+                                        ${this.renderCallToAction({
+                                            'cta-fill': true
+                                        })}
 									</div>
 								</div>
 							</div>
 						</div>
-                        <!--
-						<div class="bottomBar">
-							
-						</div>-->
 					</div>
 				</div>
 			</div>
@@ -1410,10 +1344,25 @@ export class Keyboard extends OmniElement {
         `;
     }
 
-    renderCallToAction() {
-        const enterKeyHint = this.currentEnterKeyHint;
+    renderClear(mode: 'return' | 'numeric' = 'return') {
         return html`
-            <button class="cta-button" @click="${() => this._keypress({ detail: { value: 'return' } } as CustomEvent<any>)}" mode="action">
+        <omni-keyboard-button @keyboard-click="${this._keypress}" 
+            mode="${mode}" 
+            label="${this.clearLabel}"
+            character="clear" 
+            case="custom">
+        </omni-keyboard-button>
+        `;
+    }
+
+    renderCallToAction(extraClasses: ClassInfo | undefined = undefined) {
+        const enterKeyHint = this.currentEnterKeyHint;
+        const classes: ClassInfo = {
+            'cta-button': true,
+            ...extraClasses
+        };
+        return html`
+            <button class="${classMap(classes)}" @click="${() => this._keypress({ detail: { value: 'return' } } as CustomEvent<any>)}" mode="action">
                 ${
                     enterKeyHint === 'done'
                         ? html`
