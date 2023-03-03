@@ -84,6 +84,7 @@ Email input control, used in forms for input validation and to display correct v
 | `--omni-form-focussed-error-label-color`         | Form focussed error label color.               |
 | `--omni-form-focussed-label-background-color`    | Form focussed label background color.          |
 | `--omni-form-focussed-label-color`               | Form focussed label color.                     |
+| `--omni-form-focussed-label-disabled-background-color` | Form focussed label disabled background color. |
 | `--omni-form-focussed-label-margin-left`         | Form focussed label left margin.               |
 | `--omni-form-focussed-label-padding-left`        | Form focussed label left.                      |
 | `--omni-form-focussed-label-padding-right`       | Form focussed label right.                     |

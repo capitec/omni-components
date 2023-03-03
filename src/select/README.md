@@ -94,6 +94,7 @@ Control to get / set a value within a list of options.
 | `--omni-form-focussed-error-label-color`         | Form focussed error label color.                 |
 | `--omni-form-focussed-label-background-color`    | Form focussed label background color.            |
 | `--omni-form-focussed-label-color`               | Form focussed label color.                       |
+| `--omni-form-focussed-label-disabled-background-color` | Form focussed label disabled background color.   |
 | `--omni-form-focussed-label-margin-left`         | Form focussed label left margin.                 |
 | `--omni-form-focussed-label-padding-left`        | Form focussed label left.                        |
 | `--omni-form-focussed-label-padding-right`       | Form focussed label right.                       |
@@ -118,6 +119,7 @@ Control to get / set a value within a list of options.
 | `--omni-form-layout-height`                      | Layout height.                                   |
 | `--omni-form-layout-width`                       | Layout width.                                    |
 | `--omni-select-control-icon-color`               | Select control icon color.                       |
+| `--omni-select-control-icon-error-color`         | Select control error icon color.                 |
 | `--omni-select-control-icon-width`               | Select control icon width.                       |
 | `--omni-select-control-margin-left`              | Select control left margin.                      |
 | `--omni-select-control-margin-right`             | Select control right margin.                     |
