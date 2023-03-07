@@ -43,7 +43,7 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
     play: async (context) => {
         const emailField = within(context.canvasElement).getByTestId<EmailField>('test-email-field');
         emailField.value = '';
-        
+
         const input = jest.fn();
         emailField.addEventListener('input', input);
 

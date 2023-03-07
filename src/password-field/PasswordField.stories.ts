@@ -62,7 +62,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         const inputField = passwordField.shadowRoot?.getElementById('inputField') as HTMLInputElement;
         // Required to clear userEvent Symbol that keeps hidden state of previously typed values via userEvent. If not cleared this cannot be run multiple times with the same results
         setUIValueClean(inputField);
-        
+
         const showSlotElement = passwordField.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=show]');
         await expect(showSlotElement).toBeTruthy();
         await userEvent.click(showSlotElement as HTMLSlotElement, {
