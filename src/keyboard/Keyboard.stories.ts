@@ -107,6 +107,21 @@ export const Interactive: ComponentStoryFormat<Args> = {
                 .keyboard-showcase > * {
                     margin: 10px;
                 }
+
+                .center-inline {
+                    height: 100%;
+                    display: inline-flex;
+                    align-items: center;
+                }
+
+                .example-icon-preview {
+                    flex-direction: row !important;
+                    width: 20px;
+                    height: 20px;
+                    display: inline-flex !important;
+                    color: var(--omni-theme-primary-color);
+                    fill: currentColor;
+                }
             </style>
             <span>The Keyboard supports <strong>input</strong> and <strong>textarea</strong> elements as well as custom web components that internally utilise those elements.</span>
         `,
@@ -227,16 +242,6 @@ export const Web_Components: ComponentStoryFormat<Args> = {
 export const Enter_Key_Hint_Variations: ComponentStoryFormat<Args> = {
     ...Interactive,
     description: () => html`
-    <style>
-        .example-icon-preview {
-            flex-direction: row !important;
-            width: 20px;
-            height: 20px;
-            display: inline-flex !important;
-            color: var(--omni-theme-primary-color);
-            fill: currentColor;
-        }
-    </style>
     <span>When the '<strong>enterkeyhint</strong>' attribute is set on a supported input, the Keyboard's call to action button will react to it accordingly.</span>
     <br/>
     <span>The '<strong>enterkeyhint</strong>' attribute is supported as follows:
@@ -396,15 +401,6 @@ export const Slotted_Content: ComponentStoryFormat<Args> = {
     </omni-keyboard>
 
 
-    
-    <style>
-
-        .center-inline {
-            height: 100%;
-            display: inline-flex;
-            align-items: center;
-        }
-    </style>
     <div class="keyboard-showcase">
 
         <omni-label type="subtitle" label="Slotted Enter Key Variations"></omni-label>
@@ -508,7 +504,7 @@ export const Via_Script: ComponentStoryFormat<Args> = {
         closeLabel: 'Close',
         spaceLabel: 'Space'
     },
-    source: () => `
+    source: () => raw`
 <!-- Add an input that targets the keyboard id created from script -->
 <input data-omni-keyboard-attach="keyboard-script-generated"  type="text" tabindex="61" />
 
