@@ -120,6 +120,7 @@ header {
     --omni-select-field-padding: 8px;
     --omni-text-field-padding: 8px;
     --omni-select-field-width: 110px;
+    --omni-switch-checked-track-background-color: var(--omni-accent-color);
 }
 
 

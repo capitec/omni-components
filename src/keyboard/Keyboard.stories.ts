@@ -6,7 +6,7 @@ import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
-import { assignToSlot, ComponentStoryFormat, CSFIdentifier, raw } from '../utils/StoryUtils.js';
+import { assignToSlot, ComponentStoryFormat, CSFIdentifier, raw, getSourceFromLit } from '../utils/StoryUtils.js';
 import { Keyboard } from './Keyboard.js';
 
 import './Keyboard.js';
@@ -18,6 +18,8 @@ import '../pin-field';
 import '../search-field';
 import '../text-field';
 import '../label';
+import '../button';
+import '../switch';
 
 export default {
     title: 'UI Components/Keyboard',
@@ -74,28 +76,34 @@ export const Interactive: ComponentStoryFormat<Args> = {
     </omni-keyboard>
     
     <!-- Examples -->
-    <div class="keyboard-showcase">
-
-        <omni-label type="subtitle" label="Vanilla Element Types"></omni-label>
-        <!-- Vanilla Element Types -->
-        text
-        <input type="text" tabindex="1" />
-        tel
-        <input type="tel" tabindex="2" />
-        number
-        <input type="number" tabindex="3" />
-        email
-        <input type="email" tabindex="4" />
-        password
-        <input type="password" tabindex="5" />
-        search
-        <input type="search" tabindex="6" />
-        url
-        <input type="url" tabindex="7" />
-        textarea
-        <textarea tabindex="8"></textarea>
-
-    </div>
+    ${
+        args.attachMode === 'all'
+            ? html`
+        <div class="keyboard-showcase">
+    
+            <omni-label type="subtitle" label="Vanilla Element Types"></omni-label>
+            <!-- Vanilla Element Types -->
+            <span>text</span>
+            <input type="text" tabindex="1" />
+            <span>tel</span>
+            <input type="tel" tabindex="2" />
+            <span>number</span>
+            <input type="number" tabindex="3" />
+            <span>email</span>
+            <input type="email" tabindex="4" />
+            <span>password</span>
+            <input type="password" tabindex="5" />
+            <span>search</span>
+            <input type="search" tabindex="6" />
+            <span>url</span>
+            <input type="url" tabindex="7" />
+            <span>textarea</span>
+            <textarea tabindex="8"></textarea>
+    
+        </div>
+        `
+            : html`<span>To illustrate this, update the <strong>Interactive</strong> Keyboard properties to have '<strong>attach-mode</strong>' attribute set to '<strong>all</strong>'.</span>`
+    }
      
   `,
     name: 'Interactive',
@@ -170,23 +178,47 @@ export const Input_Modes: ComponentStoryFormat<Args> = {
     <span>When the '<strong>input-mode</strong>' attribute is set to '<strong>none</strong>' on a supported input, the Keyboard will not apply to that input unless '<strong>input-mode-none</strong>' is set to '<strong>show</strong>' on the Keyboard.</span>
     <br/>
     <span>To illustrate this, update the <strong>Interactive</strong> Keyboard to have the '<strong>input-mode-none</strong>' attribute toggled between '<strong>show</strong>' and '<strong>hide</strong>'.</span>
+    <omni-switch class="docs-omni-component" label="Show Keyboard when 'inputmode' attribute is set to 'none'." ?checked="${Interactive.args!.inputModeNone === 'show'}" @value-change="${() => {
+        Interactive.args!.inputModeNone = Interactive.args!.inputModeNone === 'hide' ? 'show' : 'hide';
+        document.dispatchEvent(
+            new CustomEvent('story-renderer-interactive-update', {
+                bubbles: true,
+                composed: true
+            })
+        );
+    }}"></omni-switch>
     `,
-    render: (args: Args) => html`
+    render: (args: Args) =>
+        args.attachMode === 'all'
+            ? html`
         <div class="keyboard-showcase">
             <omni-label type="subtitle" label="Input Modes"></omni-label>
             <!-- Vanilla Input Modes -->
-            input with type="text" and inputmode="numeric"
+            <span>input with type="text" and inputmode="numeric"</span>
             <input type="text" inputmode="numeric" tabindex="9" />
-            input with type="text" and inputmode="decimal"
+            <span>input with type="text" and inputmode="decimal"</span>
             <input type="text" inputmode="decimal" tabindex="10" />
-            input with type="text" and inputmode="tel"
+            <span>input with type="text" and inputmode="tel"</span>
             <input type="text" inputmode="tel" tabindex="11" />
-            input with type="text" and inputmode="none" 
+            <span>input with type="text" and inputmode="none" </span>
             <input type="text" inputmode="none" tabindex="12" />
-            input with type="number" and inputmode="none"
+            <span>input with type="number" and inputmode="none"</span>
             <input type="number" inputmode="none" tabindex="13" />
         </div>
-  `,
+  `
+            : html`
+            <div class="keyboard-showcase">
+                <span>To illustrate this, update the <strong>Interactive</strong> Keyboard properties to have '<strong>attach-mode</strong>' attribute set to '<strong>all</strong>'.</span>
+                <omni-button @click="${() => {
+                    Interactive.args!.attachMode = 'all';
+                    document.dispatchEvent(
+                        new CustomEvent('story-renderer-interactive-update', {
+                            bubbles: true,
+                            composed: true
+                        })
+                    );
+                }}" class="docs-omni-component"><span>Update <strong>attach-mode</strong> to <strong>all</strong></span></omni-button>
+            </div>`,
     name: 'Input Modes'
 };
 
@@ -203,20 +235,35 @@ export const Masked_Values: ComponentStoryFormat<Args> = {
         </ul>
     </span>
     `,
-    render: (args: Args) => html`
+    render: (args: Args) =>
+        args.attachMode === 'all'
+            ? html`
         <div class="keyboard-showcase">
             <omni-label type="subtitle" label="Masked Values"></omni-label>
             <!-- Masked Values -->
-            input with type="password"
+            <span>input with type="password"</span>
             <input type="password" tabindex="14" value="Mask This" />
-            input with type="text" and data-omni-keyboard-mask attribute
+            <span>input with type="text" and data-omni-keyboard-mask attribute</span>
             <input type="text" data-omni-keyboard-mask tabindex="15" value="Mask This" />
-            omni-password-field (Utilises type="password" internally)
+            <span>omni-password-field (Utilises type="password" internally)</span>
             <omni-password-field tabindex="16" value="Mask This"></omni-password-field>
-            omni-pin-field (Utilises data-omni-keyboard-mask internally)
+            <span>omni-pin-field (Utilises data-omni-keyboard-mask internally)</span>
             <omni-pin-field tabindex="17" value="1234"></omni-pin-field>
         </div>
-  `,
+  `
+            : html`
+            <div class="keyboard-showcase">
+                <span>To illustrate this, update the <strong>Interactive</strong> Keyboard properties to have '<strong>attach-mode</strong>' attribute set to '<strong>all</strong>'.</span>
+                <omni-button @click="${() => {
+                    Interactive.args!.attachMode = 'all';
+                    document.dispatchEvent(
+                        new CustomEvent('story-renderer-interactive-update', {
+                            bubbles: true,
+                            composed: true
+                        })
+                    );
+                }}" class="docs-omni-component"><span>Update <strong>attach-mode</strong> to <strong>all</strong></span></omni-button>
+            </div>`,
     name: 'Masked Values'
 };
 
@@ -227,7 +274,9 @@ export const Web_Components: ComponentStoryFormat<Args> = {
     <br/>
     <span>All Omni Components input fields are fully supported.</span>
     `,
-    render: (args: Args) => html`
+    render: (args: Args) =>
+        args.attachMode === 'all'
+            ? html`
         <div class="keyboard-showcase">
 
             <omni-label type="subtitle" label="Omni Component Input Fields"></omni-label>
@@ -241,7 +290,20 @@ export const Web_Components: ComponentStoryFormat<Args> = {
             <omni-text-field label="Text Field" tabindex="24"></omni-text-field>
 
         </div>
-  `,
+  `
+            : html`
+            <div class="keyboard-showcase">
+                <span>To illustrate this, update the <strong>Interactive</strong> Keyboard properties to have '<strong>attach-mode</strong>' attribute set to '<strong>all</strong>'.</span>
+                <omni-button @click="${() => {
+                    Interactive.args!.attachMode = 'all';
+                    document.dispatchEvent(
+                        new CustomEvent('story-renderer-interactive-update', {
+                            bubbles: true,
+                            composed: true
+                        })
+                    );
+                }}" class="docs-omni-component"><span>Update <strong>attach-mode</strong> to <strong>all</strong></span></omni-button>
+            </div>`,
     name: 'Web Components'
 };
 
@@ -262,38 +324,53 @@ export const Enter_Key_Hint_Variations: ComponentStoryFormat<Args> = {
         </ul>
     </span>
     `,
-    render: (args: Args) => html`
+    render: (args: Args) =>
+        args.attachMode === 'all'
+            ? html`
         <div class="keyboard-showcase">
             <omni-label type="subtitle" label="Enter Key Variations"></omni-label>
             <!-- Enter Key Variations -->
-            input with type="text" and enterkeyhint="enter"
+            <span>input with type="text" and enterkeyhint="enter"</span>
             <input type="text" enterkeyhint="enter" tabindex="25" />
-            input with type="text" and enterkeyhint="go"
+            <span>input with type="text" and enterkeyhint="go"</span>
             <input type="text" enterkeyhint="go" tabindex="26" />
-            input with type="number" and enterkeyhint="go"
+            <span>input with type="number" and enterkeyhint="go"</span>
             <input type="number" enterkeyhint="go" tabindex="27" />
-            input with type="text" and enterkeyhint="done"
+            <span>input with type="text" and enterkeyhint="done"</span>
             <input type="text" enterkeyhint="done" tabindex="28" />
-            input with type="number" and enterkeyhint="done"
+            <span>input with type="number" and enterkeyhint="done"</span>
             <input type="number" enterkeyhint="done" tabindex="29" />
-            input with type="text" and enterkeyhint="next"
+            <span>input with type="text" and enterkeyhint="next"</span>
             <input type="text" enterkeyhint="next" tabindex="30" />
-            input with type="number" and enterkeyhint="next"
+            <span>input with type="number" and enterkeyhint="next"</span>
             <input type="number" enterkeyhint="next" tabindex="31" />
-            input with type="text" and enterkeyhint="previous"
+            <span>input with type="text" and enterkeyhint="previous"</span>
             <input type="text" enterkeyhint="previous" tabindex="32" />
-            input with type="number" and enterkeyhint="previous"
+            <span>input with type="number" and enterkeyhint="previous"</span>
             <input type="number" enterkeyhint="previous" tabindex="33" />
-            input with type="text" and enterkeyhint="search"
+            <span>input with type="text" and enterkeyhint="search"</span>
             <input type="text" enterkeyhint="search" tabindex="34" />
-            input with type="number" and enterkeyhint="search"
+            <span>input with type="number" and enterkeyhint="search"</span>
             <input type="number" enterkeyhint="search" tabindex="35" />
-            input with type="text" and enterkeyhint="send"
+            <span>input with type="text" and enterkeyhint="send"</span>
             <input type="text" enterkeyhint="send" tabindex="36" />
-            input with type="number" and enterkeyhint="send"
+            <span>input with type="number" and enterkeyhint="send"</span>
             <input type="number" enterkeyhint="send" tabindex="37" />
         </div>
-  `,
+  `
+            : html`
+            <div class="keyboard-showcase">
+                <span>To illustrate this, update the <strong>Interactive</strong> Keyboard properties to have '<strong>attach-mode</strong>' attribute set to '<strong>all</strong>'.</span>
+                <omni-button @click="${() => {
+                    Interactive.args!.attachMode = 'all';
+                    document.dispatchEvent(
+                        new CustomEvent('story-renderer-interactive-update', {
+                            bubbles: true,
+                            composed: true
+                        })
+                    );
+                }}" class="docs-omni-component"><span>Update <strong>attach-mode</strong> to <strong>all</strong></span></omni-button>
+            </div>`,
     name: 'Enter Key Hint Variations'
 };
 
@@ -305,16 +382,25 @@ export const Hide_Keyboard: ComponentStoryFormat<Args> = {
     <span>When the '<strong>input-mode</strong>' attribute is set to '<strong>none</strong>' on a supported input, the Keyboard will not apply to that input unless '<strong>input-mode-none</strong>' is set to '<strong>show</strong>' on the Keyboard.</span>
     <br/>
     <span>To illustrate this, update the <strong>Interactive</strong> Keyboard to have the '<strong>input-mode-none</strong>' attribute toggled between '<strong>show</strong>' and '<strong>hide</strong>'.</span>
+    <omni-switch class="docs-omni-component" label="Show Keyboard when 'inputmode' attribute is set to 'none'." ?checked="${Interactive.args!.inputModeNone === 'show'}" @value-change="${() => {
+        Interactive.args!.inputModeNone = Interactive.args!.inputModeNone === 'hide' ? 'show' : 'hide';
+        document.dispatchEvent(
+            new CustomEvent('story-renderer-interactive-update', {
+                bubbles: true,
+                composed: true
+            })
+        );
+    }}"></omni-switch>
     `,
     render: (args: Args) => html`
         <div class="keyboard-showcase">
             <omni-label type="subtitle" label="Hide Keyboard"></omni-label>
             <!-- Hide Keyboard -->
-            input with type="text" and data-omni-keyboard-hidden
+            <span>input with type="text" and data-omni-keyboard-hidden</span>
             <input data-omni-keyboard-hidden type="text" tabindex="38" />
-            input with type="text" and inputmode="none" (See variation when Keyboard input-mode-none="show")
+            <span>input with type="text" and inputmode="none" (See variation when Keyboard input-mode-none="show")</span>
             <input type="text" inputmode="none" tabindex="39" />
-            input with type="text", data-omni-keyboard-hidden and inputmode="none" (See variation when Keyboard input-mode-none="show")
+            <span>input with type="text", data-omni-keyboard-hidden and inputmode="none" (See variation when Keyboard input-mode-none="show")</span>
             <input data-omni-keyboard-hidden type="text" inputmode="none" tabindex="40" />
         </div>  
   `,
@@ -326,60 +412,107 @@ export const Hide_Display_Value: ComponentStoryFormat<Args> = {
     description: () => html`
     <span>When the '<strong>data-omni-keyboard-no-display</strong>' attribute is set on a supported input, the display preview on the Keyboard header will not be visible.</span>
     `,
-    render: (args: Args) => html`
+    render: (args: Args) =>
+        args.attachMode === 'all'
+            ? html`
     <div class="keyboard-showcase">
         <omni-label type="subtitle" label="Hide Display Value"></omni-label>
         <!-- Hide Display Value -->
-        input with type="text" with a value and no data-omni-keyboard-no-display attribute
+        <span>input with type="text" with a value and no data-omni-keyboard-no-display attribute</span>
         <input  value="Some Value" type="text" tabindex="41" />
-        input with type="text" with a value and data-omni-keyboard-no-display attribute
+        <span>input with type="text" with a value and data-omni-keyboard-no-display attribute</span>
         <input data-omni-keyboard-no-display  value="Some Value" type="text" tabindex="42" />
     </div>  
-  `,
+  `
+            : html`
+            <div class="keyboard-showcase">
+                <span>To illustrate this, update the <strong>Interactive</strong> Keyboard properties to have '<strong>attach-mode</strong>' attribute set to '<strong>all</strong>'.</span>
+                <omni-button @click="${() => {
+                    Interactive.args!.attachMode = 'all';
+                    document.dispatchEvent(
+                        new CustomEvent('story-renderer-interactive-update', {
+                            bubbles: true,
+                            composed: true
+                        })
+                    );
+                }}" class="docs-omni-component"><span>Update <strong>attach-mode</strong> to <strong>all</strong></span></omni-button>
+            </div>`,
     name: 'Hide Display Value'
 };
 
+const attachByAttribute = html`
+<div class="keyboard-showcase">
+    <omni-label type="subtitle" label="Opt In Attach (Test with attach-mode='attribute' on Keyboard)"></omni-label>
+    <!-- Opt In Attach -->
+    <span>input with type="text" with no data-omni-keyboard-attach attribute</span>
+    <input data-omni-keyboard-attach type="text" tabindex="43" />
+    <span>input with type="text" with data-omni-keyboard-attach attribute</span>
+    <input data-omni-keyboard-attach type="text" tabindex="44" />
+</div>
+`;
 export const Attach_By_Attribute: ComponentStoryFormat<Args> = {
     ...Interactive,
     description: () => html`
     <span>When the '<strong>attach-mode</strong>' attribute is set to '<strong>attribute</strong>' on the Keyboard, then the Keyboard will only react to supported inputs with the '<strong>data-omni-keyboard-attach</strong>' attribute without a value.</span>
-    <br/>
-    <span>To illustrate this, update the <strong>Interactive</strong> Keyboard properties to have '<strong>attach-mode</strong>' attribute set to '<strong>attribute</strong>'.</span>
     `,
-    render: (args: Args) => html`
-    <div class="keyboard-showcase">
-        <omni-label type="subtitle" label="Opt In Attach (Test with attach-mode='attribute' on Keyboard)"></omni-label>
-        <!-- Opt In Attach -->
-        input with type="text" with no data-omni-keyboard-attach attribute
-        <input data-omni-keyboard-attach type="text" tabindex="43" />
-        input with type="text" with data-omni-keyboard-attach attribute
-        <input data-omni-keyboard-attach type="text" tabindex="44" />
-    </div>
-  `,
+    source: () => getSourceFromLit(attachByAttribute),
+    render: (args: Args) =>
+        args.attachMode === 'attribute'
+            ? attachByAttribute
+            : html`
+        <div class="keyboard-showcase">
+            <span>To illustrate this, update the <strong>Interactive</strong> Keyboard properties to have '<strong>attach-mode</strong>' attribute set to '<strong>attribute</strong>'.</span>
+            <omni-button @click="${() => {
+                Interactive.args!.attachMode = 'attribute';
+                document.dispatchEvent(
+                    new CustomEvent('story-renderer-interactive-update', {
+                        bubbles: true,
+                        composed: true
+                    })
+                );
+            }}" class="docs-omni-component"><span>Update <strong>attach-mode</strong> to <strong>attribute</strong></span></omni-button>
+        </div>
+        `,
     name: 'Attach By Attribute'
 };
 
+const attachById = html`
+<div class="keyboard-showcase">
+
+    <omni-label type="subtitle" label="Opt In Attach for specific Keyboard (Test with attach-mode='id' on the Interactive Keyboard)"></omni-label>
+    <!-- Opt In Attach -->
+    <span>input with type="text" with no attach opt in attribute</span>
+    <input type="text" tabindex="45" />
+    <span>input with type="text" and data-omni-keyboard-attach but no specified id</span>
+    <input data-omni-keyboard-attach type="text" tabindex="46" />
+    <span>input with type="text" and data-omni-keyboard-attach for interactive keyboard id</span>
+    <input data-omni-keyboard-attach="keyboard-interactive" type="text" tabindex="47" />
+
+</div>
+`;
 export const Attach_By_Id: ComponentStoryFormat<Args> = {
     ...Interactive,
     description: () => html`
     <span>When the '<strong>attach-mode</strong>' attribute is set to '<strong>id</strong>' on the Keyboard, then the Keyboard will only react to supported inputs with the '<strong>data-omni-keyboard-attach</strong>' attribute set equal to the Keyboard id.</span>
-    <br/>
-    <span>To illustrate this, update the <strong>Interactive</strong> Keyboard properties to have '<strong>attach-mode</strong>' attribute set to '<strong>id</strong>'.</span>
     `,
-    render: (args: Args) => html`
+    render: (args: Args) =>
+        args.attachMode === 'id'
+            ? attachByAttribute
+            : html`
     <div class="keyboard-showcase">
-
-        <omni-label type="subtitle" label="Opt In Attach for specific Keyboard (Test with attach-mode='id' on the Interactive Keyboard)"></omni-label>
-        <!-- Opt In Attach -->
-        input with type="text" with no attach opt in attribute
-        <input type="text" tabindex="45" />
-        input with type="text" and data-omni-keyboard-attach but no specified id
-        <input data-omni-keyboard-attach type="text" tabindex="46" />
-        input with type="text" and data-omni-keyboard-attach for interactive keyboard id
-        <input data-omni-keyboard-attach="keyboard-interactive" type="text" tabindex="47" />
-
+    <span>To illustrate this, update the <strong>Interactive</strong> Keyboard properties to have '<strong>attach-mode</strong>' attribute set to '<strong>id</strong>'.</span>
+        <omni-button @click="${() => {
+            Interactive.args!.attachMode = 'id';
+            document.dispatchEvent(
+                new CustomEvent('story-renderer-interactive-update', {
+                    bubbles: true,
+                    composed: true
+                })
+            );
+        }}" class="docs-omni-component"><span>Update <strong>attach-mode</strong> to <strong>id</strong></span></omni-button>
     </div>
-  `,
+    `,
+    source: () => getSourceFromLit(attachById),
     name: 'Attach By Id'
 };
 
@@ -415,31 +548,31 @@ export const Slotted_Content: ComponentStoryFormat<Args> = {
 
         <omni-label type="subtitle" label="Slotted Enter Key Variations"></omni-label>
         <!-- Enter Key Variations -->
-        input with type="text" and enterkeyhint="enter"
+        <span>input with type="text" and enterkeyhint="enter"</span>
         <input data-omni-keyboard-attach="keyboard-slots" type="text" enterkeyhint="enter" tabindex="48" />
-        input with type="text" and enterkeyhint="go"
+        <span>input with type="text" and enterkeyhint="go"</span>
         <input data-omni-keyboard-attach="keyboard-slots" type="text" enterkeyhint="go" tabindex="49" />
-        input with type="number" and enterkeyhint="go"
+        <span>input with type="number" and enterkeyhint="go"</span>
         <input data-omni-keyboard-attach="keyboard-slots" type="number" enterkeyhint="go" tabindex="50" />
-        input with type="text" and enterkeyhint="done"
+        <span>input with type="text" and enterkeyhint="done"</span>
         <input data-omni-keyboard-attach="keyboard-slots" type="text" enterkeyhint="done" tabindex="51" />
-        input with type="number" and enterkeyhint="done"
+        <span>input with type="number" and enterkeyhint="done"</span>
         <input data-omni-keyboard-attach="keyboard-slots" type="number" enterkeyhint="done" tabindex="52" />
-        input with type="text" and enterkeyhint="next"
+        <span>input with type="text" and enterkeyhint="next"</span>
         <input data-omni-keyboard-attach="keyboard-slots" type="text" enterkeyhint="next" tabindex="53" />
-        input with type="number" and enterkeyhint="next"
+        <span>input with type="number" and enterkeyhint="next"</span>
         <input data-omni-keyboard-attach="keyboard-slots" type="number" enterkeyhint="next" tabindex="54" />
-        input with type="text" and enterkeyhint="previous"
+        <span>input with type="text" and enterkeyhint="previous"</span>
         <input data-omni-keyboard-attach="keyboard-slots" type="text" enterkeyhint="previous" tabindex="55" />
-        input with type="number" and enterkeyhint="previous"
+        <span>input with type="number" and enterkeyhint="previous"</span>
         <input data-omni-keyboard-attach="keyboard-slots" type="number" enterkeyhint="previous" tabindex="56" />
-        input with type="text" and enterkeyhint="search"
+        <span>input with type="text" and enterkeyhint="search"</span>
         <input data-omni-keyboard-attach="keyboard-slots" type="text" enterkeyhint="search" tabindex="57" />
-        input with type="number" and enterkeyhint="search"
+        <span>input with type="number" and enterkeyhint="search"</span>
         <input data-omni-keyboard-attach="keyboard-slots" type="number" enterkeyhint="search" tabindex="58" />
-        input with type="text" and enterkeyhint="send"
+        <span>input with type="text" and enterkeyhint="send"</span>
         <input data-omni-keyboard-attach="keyboard-slots" type="text" enterkeyhint="send" tabindex="59" />
-        input with type="number" and enterkeyhint="send"
+        <span>input with type="number" and enterkeyhint="send"</span>
         <input data-omni-keyboard-attach="keyboard-slots" type="number" enterkeyhint="send" tabindex="60" />
 
     </div>

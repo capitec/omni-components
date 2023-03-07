@@ -106,6 +106,9 @@ export class StoryRenderer extends LitElement {
                 });
             }
         });
+        document.addEventListener(interactiveUpdate, () => {
+            this.requestUpdate();
+        });
         this.theme = getComputedStyle(document.documentElement).getPropertyValue('--code-editor-theme')?.trim();
     }
 
@@ -221,6 +224,12 @@ export class StoryRenderer extends LitElement {
                                 this.story!.args![changed.property] = changed.newValue;
 
                                 this.requestUpdate();
+                                this.dispatchEvent(
+                                    new CustomEvent(interactiveUpdate, {
+                                        bubbles: true,
+                                        composed: true
+                                    })
+                                );
                                 await this.updateComplete;
 
                                 if (this.codeEditor && !this.story?.source) {
@@ -251,6 +260,12 @@ export class StoryRenderer extends LitElement {
                     this.overrideInteractive = this._interactiveSrc !== this.originalInteractiveSrc && this._interactiveSrc !== storySource;
 
                     this.requestUpdate();
+                    this.dispatchEvent(
+                        new CustomEvent(interactiveUpdate, {
+                            bubbles: true,
+                            composed: true
+                        })
+                    );
                 }}"
                 ?read-only="${true /*!this.interactive*/}">
                 </code-editor>
@@ -449,6 +464,12 @@ export class StoryRenderer extends LitElement {
         sessionStorage.removeItem(`custom-css-${this.tag}`);
 
         this.requestUpdate();
+        this.dispatchEvent(
+            new CustomEvent(interactiveUpdate, {
+                bubbles: true,
+                composed: true
+            })
+        );
 
         await this.updateComplete;
 
@@ -495,6 +516,8 @@ export class StoryRenderer extends LitElement {
         return codeTheme;
     }
 }
+
+const interactiveUpdate = 'story-renderer-interactive-update';
 
 type CSSVariable = {
     control: 'text' | 'color';
