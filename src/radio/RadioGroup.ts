@@ -2,7 +2,7 @@ import { html, css, TemplateResult, nothing, PropertyValueMap } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { OmniElement } from '../core/OmniElement.js';
 
-import '../label/';
+import '../label/Label.js';
 
 /**
  * Control to group radio components for single selection

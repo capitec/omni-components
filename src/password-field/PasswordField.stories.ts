@@ -1,5 +1,6 @@
 import { waitFor, within } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
+import { setUIValueClean } from '@testing-library/user-event/dist/esm/document/UI.js';
 import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
@@ -52,11 +53,15 @@ export const Interactive: ComponentStoryFormat<Args> = {
     },
     play: async (context) => {
         const passwordField = within(context.canvasElement).getByTestId<PasswordField>('test-password-field');
+        passwordField.value = '';
+
         const interactions = jest.fn();
         passwordField.addEventListener('input', interactions);
         passwordField.addEventListener('click', interactions);
 
         const inputField = passwordField.shadowRoot?.getElementById('inputField') as HTMLInputElement;
+        // Required to clear userEvent Symbol that keeps hidden state of previously typed values via userEvent. If not cleared this cannot be run multiple times with the same results
+        setUIValueClean(inputField);
 
         const showSlotElement = passwordField.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=show]');
         await expect(showSlotElement).toBeTruthy();
