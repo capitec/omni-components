@@ -230,92 +230,101 @@ export class Keyboard extends OmniElement {
         super();
     }
 
+    /**
+     * Creates a new Keyboard element with the provided context and appends it to the DOM (either to document body or to provided target parent element).
+     * @param init Initialisation context for Keyboard element that will be created.
+     * @returns Keyboard element that was created.
+     */
     static create(init: KeyboardInit) {
         if (!init.parent) {
+            // If no parent element is specified, the Keyboard will be appended to an empty div directly on the document body.
             init.parent = document.createElement('div');
             document.body.appendChild(init.parent);
         }
+
         if (typeof init.parent === 'string') {
+            // If a parent element is specified as a string, find the actual parent element instance using the provided string as an id.
             init.parent = document.getElementById(init.parent);
             if (!init.parent) {
                 return undefined;
             }
         }
-        const refToElement: Ref<Keyboard> = createRef();
-        renderToElement(
-            html`
-        
-        <omni-keyboard ${ref(refToElement)} id="${ifDefined(init.id)}"
-            attach-mode="${ifDefined(init.attachMode)}" 
-            clear-label="${ifDefined(init.clearLabel)}" 
-            space-label="${ifDefined(init.spaceLabel)}" 
-            cta-label="${ifDefined(init.ctaLabel)}" 
-            close-label="${ifDefined(init.closeLabel)}" 
-            input-mode-none="${ifDefined(init.inputModeNone)}">
-            <omni-render-element slot="clear" .renderer="${init.clear ? init.clear : () => html`${init.clearLabel}`}"></omni-render-element>
-            ${
-                init.capsOff
-                    ? html`<omni-render-element  slot="caps-off" .renderer="${init.capsOff}"></omni-render-element>`
-                    : html`<omni-caps-off-icon style="display: inherit;" slot="caps-off"></omni-caps-off-icon>`
-            }
-            ${
-                init.capsOn
-                    ? html`<omni-render-element slot="caps-on" .renderer="${init.capsOn}"></omni-render-element>`
-                    : html`<omni-caps-on-icon style="display: inherit;" slot="caps-on"></omni-caps-on-icon>`
-            }
-            ${
-                init.capsOnPermanent
-                    ? html`<omni-render-element slot="caps-on-permanent" .renderer="${init.capsOnPermanent}"></omni-render-element>`
-                    : html`<omni-caps-on-permanent-icon style="display: inherit;" slot="caps-on-permanent"></omni-caps-on-permanent-icon>`
-            }
-            ${
-                init.backspace
-                    ? html`<omni-render-element slot="backspace" .renderer="${init.backspace}"></omni-render-element>`
-                    : html`<omni-backspace-icon style="display: inherit;" slot="backspace"></omni-backspace-icon>`
-            }
-            ${
-                init.close
-                    ? html`<omni-render-element slot="close" .renderer="${init.close}"></omni-render-element>`
-                    : html`<omni-chevron-down-icon style="display: inherit;" slot="close"></omni-chevron-down-icon>`
-            }
-            <omni-render-element slot="cta-enter" .renderer="${init.ctaEnter ? init.ctaEnter : () => html`${init.ctaLabel}`}"></omni-render-element>
-            ${
-                init.ctaDone
-                    ? html`<omni-render-element slot="cta-done" .renderer="${init.ctaDone}"></omni-render-element>`
-                    : html`<omni-check-icon style="display: inherit;"  slot="cta-done"></omni-check-icon>`
-            }
-            ${
-                init.ctaGo
-                    ? html`<omni-render-element slot="cta-go" .renderer="${init.ctaGo}"></omni-render-element>`
-                    : html`<omni-arrow-right-icon style="display: inherit;" slot="cta-go"></omni-arrow-right-icon>`
-            }
-            ${
-                init.ctaNext
-                    ? html`<omni-render-element slot="cta-next" .renderer="${init.ctaNext}"></omni-render-element>`
-                    : html`<omni-next-icon style="display: inherit;"  slot="cta-next"></omni-next-icon>`
-            }
-            ${
-                init.ctaPrevious
-                    ? html`<omni-render-element slot="cta-previous" .renderer="${init.ctaPrevious}"></omni-render-element>`
-                    : html`<omni-previous-icon style="display: inherit;" slot="cta-previous"></omni-previous-icon>`
-            }
-            ${
-                init.ctaSearch
-                    ? html`<omni-render-element slot="cta-search" .renderer="${init.ctaSearch}"></omni-render-element>`
-                    : html`<omni-search-icon style="display: inherit;" slot="cta-search"></omni-search-icon>`
-            }
-            ${
-                init.ctaSend
-                    ? html`<omni-render-element slot="cta-send" .renderer="${init.ctaSend}"></omni-render-element>`
-                    : html`<omni-send-icon style="display: inherit;" slot="cta-send"></omni-send-icon>`
-            }
-        </omni-keyboard>
 
-        `,
+        const refToKeyboard: Ref<Keyboard> = createRef();
+        renderToElement(
+            html`        
+                <omni-keyboard ${ref(refToKeyboard)} id="${ifDefined(init.id)}"
+                    attach-mode="${ifDefined(init.attachMode)}" 
+                    clear-label="${ifDefined(init.clearLabel)}" 
+                    space-label="${ifDefined(init.spaceLabel)}" 
+                    cta-label="${ifDefined(init.ctaLabel)}" 
+                    close-label="${ifDefined(init.closeLabel)}" 
+                    input-mode-none="${ifDefined(init.inputModeNone)}">
+                    <omni-render-element slot="clear" .renderer="${init.clear ? init.clear : () => html`${init.clearLabel}`}"></omni-render-element>
+                    ${
+                        init.capsOff
+                            ? html`<omni-render-element  slot="caps-off" .renderer="${init.capsOff}"></omni-render-element>`
+                            : html`<omni-caps-off-icon style="display: inherit;" slot="caps-off"></omni-caps-off-icon>`
+                    }
+                    ${
+                        init.capsOn
+                            ? html`<omni-render-element slot="caps-on" .renderer="${init.capsOn}"></omni-render-element>`
+                            : html`<omni-caps-on-icon style="display: inherit;" slot="caps-on"></omni-caps-on-icon>`
+                    }
+                    ${
+                        init.capsOnPermanent
+                            ? html`<omni-render-element slot="caps-on-permanent" .renderer="${init.capsOnPermanent}"></omni-render-element>`
+                            : html`<omni-caps-on-permanent-icon style="display: inherit;" slot="caps-on-permanent"></omni-caps-on-permanent-icon>`
+                    }
+                    ${
+                        init.backspace
+                            ? html`<omni-render-element slot="backspace" .renderer="${init.backspace}"></omni-render-element>`
+                            : html`<omni-backspace-icon style="display: inherit;" slot="backspace"></omni-backspace-icon>`
+                    }
+                    ${
+                        init.close
+                            ? html`<omni-render-element slot="close" .renderer="${init.close}"></omni-render-element>`
+                            : html`<omni-chevron-down-icon style="display: inherit;" slot="close"></omni-chevron-down-icon>`
+                    }
+                    <omni-render-element slot="cta-enter" .renderer="${
+                        init.ctaEnter ? init.ctaEnter : () => html`${init.ctaLabel}`
+                    }"></omni-render-element>
+                    ${
+                        init.ctaDone
+                            ? html`<omni-render-element slot="cta-done" .renderer="${init.ctaDone}"></omni-render-element>`
+                            : html`<omni-check-icon style="display: inherit;"  slot="cta-done"></omni-check-icon>`
+                    }
+                    ${
+                        init.ctaGo
+                            ? html`<omni-render-element slot="cta-go" .renderer="${init.ctaGo}"></omni-render-element>`
+                            : html`<omni-arrow-right-icon style="display: inherit;" slot="cta-go"></omni-arrow-right-icon>`
+                    }
+                    ${
+                        init.ctaNext
+                            ? html`<omni-render-element slot="cta-next" .renderer="${init.ctaNext}"></omni-render-element>`
+                            : html`<omni-next-icon style="display: inherit;"  slot="cta-next"></omni-next-icon>`
+                    }
+                    ${
+                        init.ctaPrevious
+                            ? html`<omni-render-element slot="cta-previous" .renderer="${init.ctaPrevious}"></omni-render-element>`
+                            : html`<omni-previous-icon style="display: inherit;" slot="cta-previous"></omni-previous-icon>`
+                    }
+                    ${
+                        init.ctaSearch
+                            ? html`<omni-render-element slot="cta-search" .renderer="${init.ctaSearch}"></omni-render-element>`
+                            : html`<omni-search-icon style="display: inherit;" slot="cta-search"></omni-search-icon>`
+                    }
+                    ${
+                        init.ctaSend
+                            ? html`<omni-render-element slot="cta-send" .renderer="${init.ctaSend}"></omni-render-element>`
+                            : html`<omni-send-icon style="display: inherit;" slot="cta-send"></omni-send-icon>`
+                    }
+                </omni-keyboard>
+            `,
             init.parent
         );
 
-        return refToElement.value;
+        return refToKeyboard.value;
     }
 
     override connectedCallback(): void {
@@ -347,10 +356,14 @@ export class Keyboard extends OmniElement {
                 })
             );
         }
-        const focusReverse = this.currentEnterKeyHint === 'previous';
-        this.target?.blur();
-        const previous = (this.targetComponent?.hasAttribute('tabindex') ? this.targetComponent : this.target) as Element;
 
+        // When the 'enterkeyhint' attribute is 'previous' the tabIndex to be focused must be searched in reverse
+        const focusReverse = this.currentEnterKeyHint === 'previous';
+
+        const previous = (this.targetComponent?.hasAttribute('tabindex') ? this.targetComponent : this.target) as Element;
+        this.target?.blur();
+
+        // Reset all states as the Keyboard has no current target input after a close
         this.target = undefined;
         this.targetObserver?.disconnect();
         this.targetObserver = undefined;
@@ -366,6 +379,11 @@ export class Keyboard extends OmniElement {
         }
     }
 
+    /**
+     * Focuses the next highest tabIndex from the previous element's tabIndex. If `reverse` is true, will focus the next smallest tabIndex instead.
+     *
+     * @ignore
+     */
     _focusNext(fromInput: Element, reverse: boolean = false) {
         const elem = fromInput;
         const tidx = Number(elem.getAttribute('tabindex'));
@@ -448,10 +466,9 @@ export class Keyboard extends OmniElement {
     /**
      * Handles component key down events.
      *
-     * @param {KeyboardEvent} event - The event details.
+     * @param event - The event details.
      *
      * @ignore
-     * @returns {void}
      */
     async _keypress(event: CustomEvent<{ value: string }>) {
         if (this.target) {
@@ -462,6 +479,7 @@ export class Keyboard extends OmniElement {
             let allowContinue = false;
             if (event.detail) {
                 if (event.detail.value === 'return') {
+                    // Call to action was clicked, treat as 'Enter' key being pressed
                     const keyInfo: KeyboardEventInit = {
                         shiftKey: this.currentCase === 'upper-single',
                         modifierCapsLock: this.currentCase === 'upper',
@@ -489,10 +507,11 @@ export class Keyboard extends OmniElement {
                             this.target.dispatchEvent(new KeyboardEvent('keyup', keyInfo));
                             return;
                         }
-                        // If returnMode is 'multi-line', the keyboard insert a new line into the value when enter is pressed
+                        // If returnMode is 'multi-line', the keyboard inserts a new line into the value when enter is pressed.
                         event.detail.value = '\r\n';
                     }
                 } else if (event.detail.value === 'backspace') {
+                    // Backspace was clicked
                     const keyInfo: KeyboardEventInit = {
                         shiftKey: this.currentCase === 'upper-single',
                         modifierCapsLock: this.currentCase === 'upper',
@@ -528,7 +547,6 @@ export class Keyboard extends OmniElement {
                         this.target.dispatchEvent(new KeyboardEvent('keyup', keyInfo));
                         return;
                     }
-                    // Backspace key pressed
                     const old = this.target.value;
 
                     if (selection.start === 0) {
@@ -620,7 +638,7 @@ export class Keyboard extends OmniElement {
                 };
                 if (!allowContinue) {
                     const keyDownEvent = new KeyboardEvent('keydown', keyInfo);
-                    // Keydown has not yet been fired (This may be already set if Enter key was pressed as multi-line)
+                    // Keydown has not yet been fired (This may be already set if call to action button was clicked as multi-line)
                     allowContinue = this.target.dispatchEvent(keyDownEvent);
                     // // Uncomment if support for async event handlers are required
                     // if (allowContinue) {
@@ -673,6 +691,7 @@ export class Keyboard extends OmniElement {
         }
 
         if (this.currentCase === 'upper-single') {
+            // Imitate 'Shift' key behaviour, after the keypress the characters revert to lowercase.
             this.currentCase = 'lower';
         }
     }
@@ -695,8 +714,10 @@ export class Keyboard extends OmniElement {
 
         if (e.composedPath()) {
             if (e.composedPath().includes(this)) {
+                // Clicking anywhere in the Keyboard should refocus to the target element.
                 this.target?.focus();
             } else if (this.target && !e.composedPath().includes(this.target) && this.targetComponent !== this._findActiveElement()) {
+                // When clicking outside both the Keyboard and the target element, the Keyboard should auto close.
                 this._close();
             }
         }
@@ -711,17 +732,25 @@ export class Keyboard extends OmniElement {
                 active?.shadowRoot?.activeElement instanceof HTMLInputElement ||
                 active?.shadowRoot?.activeElement instanceof HTMLTextAreaElement)
         ) {
+            // Current active element is supported.
             const input = (active?.shadowRoot?.activeElement ?? active) as HTMLInputElement | HTMLTextAreaElement;
 
             if (
+                // When the focused element is already the target, no more action is required.
                 this.target === input ||
+                // When the focused input has an unsupported type (e.g. 'color' or 'date'), treat as ignored.
                 !supportedTypes.includes(input.type) ||
+                // When the focused input has inputmode="none" and the Keyboard is not set to show in that state, treat as ignored.
                 (this.inputModeNone === 'hide' && (active.getAttribute('inputmode') === 'none' || input.inputMode === 'none')) ||
+                // When either the active component or the innermost focused element has 'data-omni-keyboard-hidden' attribute, treat as ignored.
                 active.hasAttribute(hiddenAttribute) ||
                 input.hasAttribute(hiddenAttribute) ||
+                // When the Keyboard attach mode requires the 'data-omni-keyboard-attach' attribute and it is not present on either the active component or innermost focused element, treat as ignored.
                 (this.attachMode === 'attribute' && !(input.hasAttribute(attachAttribute) || active.hasAttribute(attachAttribute))) ||
+                // When the Keyboard attach mode requires the 'data-omni-keyboard-attach' attribute to be equal to its id and it is not present and set to the correct id on either the active component or innermost focused element, treat as ignored.
                 (this.attachMode === 'id' &&
                     !(this.id && (input.getAttribute(attachAttribute) === this.id || active.getAttribute(attachAttribute) === this.id))) ||
+                // When either the active component or innermost focused element has the 'data-omni-keyboard-attach' attribute set to a value and that value does not equal the Keyboard id, treat as ignored.
                 (input.getAttribute(attachAttribute) && input.getAttribute(attachAttribute) !== this.id) ||
                 (active.getAttribute(attachAttribute) && active.getAttribute(attachAttribute) !== this.id)
             ) {
@@ -732,6 +761,7 @@ export class Keyboard extends OmniElement {
             this.targetComponent = active as HTMLElement;
 
             if ('MutationObserver' in window) {
+                // If the browser supports 'MutationObserver', watch for the 'type' or 'data-omni-keyboard-mask' attribute changing on both the active component as well as the innermost focused element.
                 this.targetObserver = new MutationObserver((mutations) => {
                     if (
                         mutations.filter((m) => m.type === 'attributes').find((m) => m.attributeName === 'type' || m.attributeName === maskAttribute)
@@ -763,6 +793,10 @@ export class Keyboard extends OmniElement {
         }
     }
 
+    /**
+     * Finds the current innermost active component or element.
+     * @ignore
+     */
     _findActiveElement(innerElement: boolean = false) {
         let active = document.activeElement;
 
