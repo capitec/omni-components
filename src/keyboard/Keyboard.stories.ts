@@ -189,7 +189,7 @@ export const Input_Modes: ComponentStoryFormat<Args> = {
     }}"></omni-switch>
     `,
     render: (args: Args) =>
-        args.attachMode === 'all'
+        Interactive.args!.attachMode === 'all'
             ? html`
         <div class="keyboard-showcase">
             <omni-label type="subtitle" label="Input Modes"></omni-label>
@@ -236,7 +236,7 @@ export const Masked_Values: ComponentStoryFormat<Args> = {
     </span>
     `,
     render: (args: Args) =>
-        args.attachMode === 'all'
+        Interactive.args!.attachMode === 'all'
             ? html`
         <div class="keyboard-showcase">
             <omni-label type="subtitle" label="Masked Values"></omni-label>
@@ -275,7 +275,7 @@ export const Web_Components: ComponentStoryFormat<Args> = {
     <span>All Omni Components input fields are fully supported.</span>
     `,
     render: (args: Args) =>
-        args.attachMode === 'all'
+        Interactive.args!.attachMode === 'all'
             ? html`
         <div class="keyboard-showcase">
 
@@ -325,7 +325,7 @@ export const Enter_Key_Hint_Variations: ComponentStoryFormat<Args> = {
     </span>
     `,
     render: (args: Args) =>
-        args.attachMode === 'all'
+        Interactive.args!.attachMode === 'all'
             ? html`
         <div class="keyboard-showcase">
             <omni-label type="subtitle" label="Enter Key Variations"></omni-label>
@@ -413,7 +413,7 @@ export const Hide_Display_Value: ComponentStoryFormat<Args> = {
     <span>When the '<strong>data-omni-keyboard-no-display</strong>' attribute is set on a supported input, the display preview on the Keyboard header will not be visible.</span>
     `,
     render: (args: Args) =>
-        args.attachMode === 'all'
+        Interactive.args!.attachMode === 'all'
             ? html`
     <div class="keyboard-showcase">
         <omni-label type="subtitle" label="Hide Display Value"></omni-label>
@@ -445,7 +445,7 @@ const attachByAttribute = html`
     <omni-label type="subtitle" label="Opt In Attach (Test with attach-mode='attribute' on Keyboard)"></omni-label>
     <!-- Opt In Attach -->
     <span>input with type="text" with no data-omni-keyboard-attach attribute</span>
-    <input data-omni-keyboard-attach type="text" tabindex="43" />
+    <input type="text" tabindex="43" />
     <span>input with type="text" with data-omni-keyboard-attach attribute</span>
     <input data-omni-keyboard-attach type="text" tabindex="44" />
 </div>
@@ -457,7 +457,7 @@ export const Attach_By_Attribute: ComponentStoryFormat<Args> = {
     `,
     source: () => getSourceFromLit(attachByAttribute),
     render: (args: Args) =>
-        args.attachMode === 'attribute'
+        Interactive.args!.attachMode === 'attribute'
             ? attachByAttribute
             : html`
         <div class="keyboard-showcase">
@@ -496,8 +496,8 @@ export const Attach_By_Id: ComponentStoryFormat<Args> = {
     <span>When the '<strong>attach-mode</strong>' attribute is set to '<strong>id</strong>' on the Keyboard, then the Keyboard will only react to supported inputs with the '<strong>data-omni-keyboard-attach</strong>' attribute set equal to the Keyboard id.</span>
     `,
     render: (args: Args) =>
-        args.attachMode === 'id'
-            ? attachByAttribute
+        Interactive.args!.attachMode === 'id'
+            ? attachById
             : html`
     <div class="keyboard-showcase">
     <span>To illustrate this, update the <strong>Interactive</strong> Keyboard properties to have '<strong>attach-mode</strong>' attribute set to '<strong>id</strong>'.</span>
