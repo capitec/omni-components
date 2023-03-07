@@ -470,6 +470,18 @@ function filterJsDocLinks(jsdoc: string) {
     return jsdoc;
 }
 
+function transformFromJsdoc(jsdoc: string) {
+    if (!jsdoc) return jsdoc;
+
+    const newline = '\r\n';
+
+    jsdoc = filterJsDocLinks(jsdoc);
+    jsdoc = jsdoc.replace(new RegExp(newline, 'g'), raw`<br/>`);
+    jsdoc = jsdoc.replace(new RegExp(/\*/, 'g'), '•');
+
+    return jsdoc;
+}
+
 /**
  * Interprets a template literal as a raw HTML string.
  *
@@ -1361,6 +1373,7 @@ export {
     markdownCode,
     asRenderString,
     filterJsDocLinks,
+    transformFromJsdoc,
     formatMarkdownCodeElements,
     markdownCodeToHtml,
     assignToSlot,
