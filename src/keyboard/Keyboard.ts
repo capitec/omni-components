@@ -125,6 +125,7 @@ import './KeyboardButton.js';
  * @cssprop --omni-keyboard-mobile-key-row-width - Width for keyboard rows in mobile viewports.
  *
  * @cssprop --omni-keyboard-mobile-cta-button-height - Height for keyboard call to action button in mobile viewports.
+ * @cssprop --omni-keyboard-mobile-cta-button-max-width - Max width for keyboard call to action button in mobile viewports.
  * @cssprop --omni-keyboard-mobile-cta-button-margin - Margin for keyboard call to action button in mobile viewports.
  *
  * @cssprop --omni-keyboard-mobile-close-icon-width - Width for keyboard close button icon in mobile viewports.
@@ -134,6 +135,7 @@ import './KeyboardButton.js';
  * @cssprop --omni-keyboard-mobile-small-key-row-margin - Margin for special keyboard rows in small mobile viewports.
  *
  * @cssprop --omni-keyboard-mobile-small-cta-button-height - Height for keyboard call to action button in small mobile viewports.
+ * @cssprop --omni-keyboard-mobile-small-cta-button-max-width - Max width for keyboard call to action button in small mobile viewports.
  */
 @customElement('omni-keyboard')
 export class Keyboard extends OmniElement {
@@ -870,7 +872,7 @@ export class Keyboard extends OmniElement {
                 .cta-fill {
                     height: var(--omni-keyboard-button-height, 40px);
                     margin: var(--omni-keyboard-button-margin, 6px 7px);
-                    max-width: unset;
+                    max-width: unset !important;
                 }
 
 
@@ -1026,8 +1028,10 @@ export class Keyboard extends OmniElement {
                     }
 
                    .cta-button {
-                        height: var(--omni-keyboard-mobile-cta-button-height, 26px);
+                        height: var(--omni-keyboard-mobile-cta-button-height, 28px);
                         margin: var(--omni-keyboard-mobile-cta-button-margin, 2px);
+                        max-width: var(--omni-keyboard-mobile-cta-button-max-width, 60px);
+                        
                    }
 
                    .close-icon {
@@ -1057,7 +1061,8 @@ export class Keyboard extends OmniElement {
 
                     .cta-button {
                         font-size: x-small;
-                        height: var(--omni-keyboard-mobile-small-cta-button-height, 22px);
+                        height: var(--omni-keyboard-mobile-small-cta-button-height, 20px);
+                        max-width: var(--omni-keyboard-mobile-small-cta-button-max-width, 36px);
                         --omni-icon-size-medium: 15px;
                     }
 
@@ -1304,7 +1309,9 @@ export class Keyboard extends OmniElement {
 										<omni-keyboard-button @keyboard-click="${this._keypress}" mode="numeric" label=".">
 										</omni-keyboard-button>
 										${this.renderClear('numeric')}
-                                        ${this.renderCallToAction()}
+                                        ${this.renderCallToAction({
+                                            'cta-fill': true
+                                        })}
 									</div>
 								</div>
 							</div>

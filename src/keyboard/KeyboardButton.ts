@@ -186,7 +186,7 @@ export class KeyboardButton extends OmniElement {
 
                     .return{
                         height: var(--omni-keyboard-button-mobile-height, 30px);
-                        width: var(--omni-return-keyboard-button-mobile-width, 80px);
+                        width: var(--omni-return-keyboard-button-mobile-width, 60px);
                     }
 
                     .numeric {
@@ -228,7 +228,6 @@ export class KeyboardButton extends OmniElement {
                     .return {
                         height: var(--omni-keyboard-button-mobile-small-height, 22px);
                         width: var(--omni-return-keyboard-button-mobile-small-width, 36px);
-                        width: 36px;
                     }
                 }
 			`
