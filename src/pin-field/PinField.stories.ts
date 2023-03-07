@@ -53,13 +53,14 @@ export const Interactive: ComponentStoryFormat<Args> = {
     },
     play: async (context) => {
         const pinField = within(context.canvasElement).getByTestId<PinField>('test-pin-field');
-        // Required to clear userEvent Symbol that keeps hidden state of previously typed values via userEvent. If not cleared this cannot be run multiple times with the same results
+        pinField.value = '';
 
         const interactions = jest.fn();
         pinField.addEventListener('input', interactions);
         pinField.addEventListener('click', interactions);
 
         const inputField = pinField.shadowRoot?.getElementById('inputField') as HTMLInputElement;
+        // Required to clear userEvent Symbol that keeps hidden state of previously typed values via userEvent. If not cleared this cannot be run multiple times with the same results
         setUIValueClean(inputField);
 
         const showSlotElement = pinField.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=show]');

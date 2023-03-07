@@ -86,15 +86,17 @@ export const Interactive: ComponentStoryFormat<Args> = {
         }
 
         // Backspacing to cover the removal of cents and cents separator
-        const backspace = '{Backspace}';
+        const backspace = '{Backspace>2/}';
         // Required to clear userEvent Symbol that keeps hidden state of previously typed values via userEvent. If not cleared this cannot be run multiple times with the same results
         setUIValueClean(inputField);
         await userEvent.type(inputField, backspace, {
-            initialSelectionStart: 10,
-            initialSelectionEnd: 10
+            initialSelectionStart: 12,
+            initialSelectionEnd: 12
         });
 
         await currencyField.updateComplete;
+
+        console.log('After backspacing', inputField.value);
 
         // TODO: Fix race conditions in tests
         if (navigator.userAgent === 'Test Runner') {
