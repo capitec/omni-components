@@ -23,7 +23,7 @@ Element that defers content rendering to a provided function / promise.
 
 | Method          | Type                                             |
 |-----------------|--------------------------------------------------|
-| `renderAsync`   | `(): Promise<TemplateResult<ResultType> \| unique symbol>` |
+| `renderAsync`   | `(): Promise<unique symbol \| TemplateResult<ResultType>>` |
 | `renderLoading` | `(): TemplateResult<1>`                          |
 
 ## Slots

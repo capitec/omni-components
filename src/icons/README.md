@@ -1,3 +1,31 @@
+# omni-calendar-icon
+
+A calendar icon component.
+
+```js
+
+import '@capitec/omni-components/icons/Calendar.icon.js';
+```
+
+## Example
+
+```html
+<omni-calendar-icon></omni-calendar-icon>
+```
+
+## Properties
+
+| Property   |
+|------------|
+| `override` |
+
+## Methods
+
+| Method             | Type       |
+|--------------------|------------|
+| `createRenderRoot` | `(): this` |
+
+
 # omni-check-icon
 
 Check icon component.
@@ -29,6 +57,62 @@ Chevron down icon component.
 
 ```html
 <omni-chevron-down-icon></omni-chevron-down-icon>
+```
+
+## Properties
+
+| Property   |
+|------------|
+| `override` |
+
+## Methods
+
+| Method             | Type       |
+|--------------------|------------|
+| `createRenderRoot` | `(): this` |
+
+
+# omni-chevron-left-icon
+
+Chevron left icon component.
+
+```js
+
+import '@capitec/omni-components/icons/ChevronLeft.icon.js';
+```
+
+## Example
+
+```html
+<omni-chevron-left-icon></omni-chevron-left-icon>
+```
+
+## Properties
+
+| Property   |
+|------------|
+| `override` |
+
+## Methods
+
+| Method             | Type       |
+|--------------------|------------|
+| `createRenderRoot` | `(): this` |
+
+
+# omni-chevron-right-icon
+
+Chevron right icon component.
+
+```js
+
+import '@capitec/omni-components/icons/ChevronRight.icon.js';
+```
+
+## Example
+
+```html
+<omni-chevron-right-icon></omni-chevron-right-icon>
 ```
 
 ## Properties

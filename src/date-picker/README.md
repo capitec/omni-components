@@ -1,49 +1,57 @@
-# omni-password-field
+# omni-date-picker
 
-Password input control.
+Control that allows you to select a specific date
 
 ## Example
 
 ```html
-<omni-password-field
-  label="Enter a value"
-  value="Hello World"
-  hint="Required"
-  error="Field level error message"
-  disabled>
-</omni-password-field>
+<omni-date-picker
+label="Enter a value"
+value="Hello World"
+data="{'id': 12345, 'name': 'Test'}
+hint="Required"
+error="Select a valid date"
+locale="en-US"
+disabled>
+</omni-date-picker>
 ```
 
 ## Properties
 
-| Property   | Attribute  | Modifiers | Type                                             | Default | Description                                      |
-|------------|------------|-----------|--------------------------------------------------|---------|--------------------------------------------------|
-| `data`     | `data`     |           | `object \| undefined`                            |         | Data associated with the component.              |
-| `dir`      |            |           | `string`                                         |         |                                                  |
-| `disabled` | `disabled` |           | `boolean`                                        | false   | Indicator if the component should be disabled.   |
-| `error`    | `error`    |           | `string \| undefined`                            |         | Error message guiding a user to correct a mistake. |
-| `hint`     | `hint`     |           | `string \| undefined`                            |         | Hint message to assist the user.                 |
-| `label`    | `label`    |           | `string \| undefined`                            |         | Text label.                                      |
-| `lang`     |            |           | `string`                                         |         |                                                  |
-| `override` | `override` |           |                                                  |         | Used to set the base direction of text for display |
-| `styles`   |            | readonly  | `CSSResultGroup[]`                               |         |                                                  |
-| `value`    | `value`    |           | `string \| number \| Record<string, unknown> \| undefined` | null    | Value entered into the form component.           |
+| Property   | Attribute  | Modifiers | Type                                             | Default         | Description                                      |
+|------------|------------|-----------|--------------------------------------------------|-----------------|--------------------------------------------------|
+| `data`     | `data`     |           | `object \| undefined`                            |                 | Data associated with the component.              |
+| `dir`      |            |           | `string`                                         |                 |                                                  |
+| `disabled` | `disabled` |           | `boolean`                                        | false           | Indicator if the component should be disabled.   |
+| `error`    | `error`    |           | `string \| undefined`                            |                 | Error message guiding a user to correct a mistake. |
+| `hint`     | `hint`     |           | `string \| undefined`                            |                 | Hint message to assist the user.                 |
+| `label`    | `label`    |           | `string \| undefined`                            |                 | Text label.                                      |
+| `lang`     |            |           | `string`                                         |                 |                                                  |
+| `locale`   | `locale`   |           | `string`                                         | "defaultLocale" | The locale used for formatting the output of the Date time picker. |
+| `override` | `override` |           |                                                  |                 | Used to set the base direction of text for display |
+| `styles`   |            | readonly  | `CSSResultGroup[]`                               |                 |                                                  |
+| `value`    | `value`    |           | `string \| number \| Record<string, unknown> \| undefined` | null            | Value entered into the form component.           |
 
 ## Methods
 
-| Method          | Type                    |
-|-----------------|-------------------------|
-| `renderContent` | `(): TemplateResult<1>` |
-| `renderControl` | `(): TemplateResult<1>` |
+| Method          | Type                                     |
+|-----------------|------------------------------------------|
+| `renderContent` | `(): TemplateResult<1>`                  |
+| `renderControl` | `(): TemplateResult<1>`                  |
+| `renderPicker`  | `(): TemplateResult<1> \| unique symbol` |
+
+## Events
+
+| Event    | Type                                    |
+|----------|-----------------------------------------|
+| `change` | `CustomEvent<{ date: any; ISO: any; }>` |
 
 ## Slots
 
 | Name                | Description                                      |
 |---------------------|--------------------------------------------------|
-| `hide`              | Replaces the icon for the password value hidden state. |
 | `loading_indicator` | Used to define content that is displayed while async rendering is awaiting, or when renderLoading() is implicitly called |
 | `prefix`            | Replaces the icon for the prefix slot.           |
-| `show`              | Replaces the icon for the checked value visible state. |
 | `suffix`            | Replaces the icon for the suffix slot.           |
 
 ## CSS Custom Properties
@@ -53,6 +61,30 @@ Password input control.
 | `--omni-container-font-family`                   | Container font family.                         |
 | `--omni-container-height`                        | Container height.                              |
 | `--omni-container-width`                         | Container width.                               |
+| `--omni-date-picker-container-render-bottom-top` | Date picker container render bottom top.       |
+| `--omni-date-picker-container-top`               | Date picker container top.                     |
+| `--omni-date-picker-container-width`             | Date picker container width.                   |
+| `--omni-date-picker-container-z-index`           | Date picker container z-index.                 |
+| `--omni-date-picker-control-hover-color`         | Date picker control hover.                     |
+| `--omni-date-picker-control-icon-color`          | Date picker control icon color.                |
+| `--omni-date-picker-control-icon-width`          | Date picker control icon width.                |
+| `--omni-date-picker-control-width`               | Date picker control width.                     |
+| `--omni-date-picker-disabled-font-color`         | Date picker disabled font color.               |
+| `--omni-date-picker-error-font-color`            | Date picker error font color.                  |
+| `--omni-date-picker-font-color`                  | Date picker input font color.                  |
+| `--omni-date-picker-font-family`                 | Date picker input font family.                 |
+| `--omni-date-picker-font-size`                   | Date picker input font size.                   |
+| `--omni-date-picker-font-weight`                 | Date picker input font weight.                 |
+| `--omni-date-picker-height`                      | Date picker input height.                      |
+| `--omni-date-picker-min-width`                   | Date picker min width.                         |
+| `--omni-date-picker-mobile-picker-container-bottom` | Date picker container mobile bottom.           |
+| `--omni-date-picker-mobile-picker-container-box-shadow` | Date picker container mobile box shadow.       |
+| `--omni-date-picker-mobile-picker-container-left` | Date picker container mobile left.             |
+| `--omni-date-picker-mobile-picker-container-right` | Date picker container mobile right.            |
+| `--omni-date-picker-padding`                     | Date picker input padding.                     |
+| `--omni-date-picker-period-container-border-bottom` | Date picker container border bottom.           |
+| `--omni-date-picker-text-align`                  | Date picker input text align.                  |
+| `--omni-date-picker-width`                       | Date picker width.                             |
 | `--omni-form-border-bottom`                      | Form border bottom.                            |
 | `--omni-form-border-color`                       | Form border color.                             |
 | `--omni-form-border-left`                        | Form border left.                              |
@@ -104,23 +136,6 @@ Password input control.
 | `--omni-form-layout-border-radius`               | Layout border radius.                          |
 | `--omni-form-layout-height`                      | Layout height.                                 |
 | `--omni-form-layout-width`                       | Layout width.                                  |
-| `--omni-password-field-control-padding-bottom`   | Password field control padding bottom.         |
-| `--omni-password-field-control-padding-left`     | Password field control padding left.           |
-| `--omni-password-field-control-padding-right`    | Password field control padding right.          |
-| `--omni-password-field-control-padding-top`      | Password field control padding top.            |
-| `--omni-password-field-disabled-color`           | Password field disabled font color.            |
-| `--omni-password-field-error-font-color`         | Password field error font color.               |
-| `--omni-password-field-font-color`               | Password field font color.                     |
-| `--omni-password-field-font-family`              | Password field font family.                    |
-| `--omni-password-field-font-size`                | Password field font size.                      |
-| `--omni-password-field-font-weight`              | Password field font weight.                    |
-| `--omni-password-field-height`                   | Password field height.                         |
-| `--omni-password-field-icon-color`               | Password field slot icon color.                |
-| `--omni-password-field-icon-height`              | Password field slot height.                    |
-| `--omni-password-field-icon-width`               | Password field slot width.                     |
-| `--omni-password-field-padding`                  | Password field padding.                        |
-| `--omni-password-field-text-align`               | Password field text align.                     |
-| `--omni-password-field-width`                    | Password field width.                          |
 | `--omni-theme-accent-active-color`               | Theme accent active color.                     |
 | `--omni-theme-accent-color`                      | Theme accent color.                            |
 | `--omni-theme-accent-hover-color`                | Theme accent hover color.                      |

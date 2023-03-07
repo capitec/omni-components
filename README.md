@@ -191,6 +191,14 @@ Control that allows an action to be executed.
 
 </td></tr><tr><td>
 
+[omni-calendar](src/calendar/README.md)
+
+</td><td>
+
+Calendar component to set specific date.
+
+</td></tr><tr><td>
+
 [omni-check](src/check/README.md)
 
 </td><td>
@@ -223,6 +231,14 @@ Control to enter a formatted currency value.
 
 </td></tr><tr><td>
 
+[omni-date-picker](src/date-picker/README.md)
+
+</td><td>
+
+Control that allows you to select a specific date
+
+</td></tr><tr><td>
+
 [omni-email-field](src/email-field/README.md)
 
 </td><td>
@@ -247,6 +263,22 @@ Component that displays an icon.
 
 </td></tr><tr><td>
 
+[omni-calendar-icon](src/icons/README.md)
+
+</td><td>
+
+A calendar icon component.
+
+
+```js
+
+
+import '@capitec/omni-components/icons/Calendar.icon.js';
+
+```
+
+</td></tr><tr><td>
+
 [omni-check-icon](src/icons/README.md)
 
 </td><td>
@@ -260,6 +292,38 @@ Check icon component.
 </td><td>
 
 Chevron down icon component.
+
+</td></tr><tr><td>
+
+[omni-chevron-left-icon](src/icons/README.md)
+
+</td><td>
+
+Chevron left icon component.
+
+
+```js
+
+
+import '@capitec/omni-components/icons/ChevronLeft.icon.js';
+
+```
+
+</td></tr><tr><td>
+
+[omni-chevron-right-icon](src/icons/README.md)
+
+</td><td>
+
+Chevron right icon component.
+
+
+```js
+
+
+import '@capitec/omni-components/icons/ChevronRight.icon.js';
+
+```
 
 </td></tr><tr><td>
 
