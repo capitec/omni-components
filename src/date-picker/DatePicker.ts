@@ -46,6 +46,7 @@ import '../icons/ChevronRight.icon.js';
  * @cssprop --omni-date-picker-error-font-color - Date picker error font color.
  *
  * @cssprop --omni-date-picker-control-width - Date picker control width.
+ * @cssprop --omni-date-picker-control-left-border - Date picker control left border.
  * @cssprop --omni-date-picker-control-hover-color - Date picker control hover.
  *
  * @cssprop --omni-date-picker-control-icon-width - Date picker control icon width.
@@ -223,11 +224,21 @@ export class DatePicker extends OmniFormElement {
                 justify-content: center;
 
                 width: var(--omni-date-picker-control-width, 40px);
+                border-left: var(--omni-date-picker-control-left-border, solid 1px var(--omni-primary-color));
+            }
+
+            .control.error {
+                border-left: var(--omni-date-picker-control-left-border, solid 1px var(--omni-error-font-color));
+            }
+
+            .control.error > .control-icon {
+                fill: var(--omni-date-picker-control-icon-color, var(--omni-error-font-color));
             }
 
             .control:hover  {
                 background-color: var(--omni-date-picker-control-hover-color, var(--omni-accent-hover-color));
             }
+            
 
             .control-icon {
                 width: var(--omni-date-picker-control-icon-width, 20px);
@@ -272,9 +283,14 @@ export class DatePicker extends OmniFormElement {
     }
 
     protected override renderContent() {
+        const field: ClassInfo = {
+            field: true,
+            disabled: this.disabled,
+            error: this.error as string
+        };
         return html`
             <input
-                class="field"
+                class=${classMap(field)}
                 id="inputField"
                 type="text"
                 readonly
@@ -285,9 +301,13 @@ export class DatePicker extends OmniFormElement {
     }
 
     protected override renderControl() {
+        const control: ClassInfo = {
+            control: true,
+            disabled: this.disabled,
+            error: this.error as string
+        }
         return html` 
-        <div class="divider"></div>
-        <div id="control" class="control">
+        <div id="control" class=${classMap(control)}>
             <omni-calendar-icon class="control-icon"></omni-calendar-icon>
         </div>`;
     }
