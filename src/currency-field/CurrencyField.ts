@@ -112,7 +112,7 @@ export class CurrencyField extends OmniFormElement {
             super.focus(options);
         }
     }
-    
+
     override async attributeChangedCallback(name: string, _old: string | null, value: string | null): Promise<void> {
         super.attributeChangedCallback(name, _old, value);
         if (name === 'value') {

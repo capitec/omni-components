@@ -22,7 +22,7 @@ import OmniElement from '../core/OmniElement.js';
  * ```
  *
  * @slot - Content to render inside button
- * 
+ *
  * @fires {CustomEvent<{ value: string; }>} keyboard-click - Dispatched when the keyboard button is clicked.
  *
  * @ignore

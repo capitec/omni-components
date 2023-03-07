@@ -34,9 +34,9 @@ interface Args {
     'caps-off': string;
     'caps-on': string;
     'caps-on-permanent': string;
-    'close': string;
-    'clear': string;
-    'backspace': string;
+    close: string;
+    clear: string;
+    backspace: string;
     'cta-done': string;
     'cta-go': string;
     'cta-next': string;
@@ -44,7 +44,7 @@ interface Args {
     'cta-search': string;
     'cta-send': string;
     'cta-enter': string;
-} 
+}
 
 export const Interactive: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
@@ -56,7 +56,21 @@ export const Interactive: ComponentStoryFormat<Args> = {
         space-label="${args.spaceLabel}" 
         cta-label="${args.ctaLabel}" 
         close-label="${args.closeLabel}" 
-        input-mode-none="${args.inputModeNone}">${args['caps-off'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-off', args['caps-off']))}` : nothing}${args['caps-on'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-on', args['caps-on']))}` : nothing}${args['caps-on-permanent'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-on-permanent', args['caps-on-permanent']))}` : nothing}${args['close'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('close', args['close']))}` : nothing}${args['clear'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('clear', args['clear']))}` : nothing}${args['backspace'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('backspace', args['backspace']))}` : nothing}${args['cta-done'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-done', args['cta-done']))}` : nothing}${args['cta-go'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-go', args['cta-go']))}` : nothing}${args['cta-next'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-next', args['cta-next']))}` : nothing}${args['cta-previous'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-previous', args['cta-previous']))}` : nothing}${args['cta-search'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-search', args['cta-search']))}` : nothing}${args['cta-send'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-send', args['cta-send']))}` : nothing}${args['cta-enter'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-enter', args['cta-enter']))}` : nothing}
+        input-mode-none="${args.inputModeNone}">${
+        args['caps-off'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-off', args['caps-off']))}` : nothing
+    }${args['caps-on'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-on', args['caps-on']))}` : nothing}${
+        args['caps-on-permanent'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-on-permanent', args['caps-on-permanent']))}` : nothing
+    }${args['close'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('close', args['close']))}` : nothing}${
+        args['clear'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('clear', args['clear']))}` : nothing
+    }${args['backspace'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('backspace', args['backspace']))}` : nothing}${
+        args['cta-done'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-done', args['cta-done']))}` : nothing
+    }${args['cta-go'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-go', args['cta-go']))}` : nothing}${
+        args['cta-next'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-next', args['cta-next']))}` : nothing
+    }${args['cta-previous'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-previous', args['cta-previous']))}` : nothing}${
+        args['cta-search'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-search', args['cta-search']))}` : nothing
+    }${args['cta-send'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-send', args['cta-send']))}` : nothing}${
+        args['cta-enter'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-enter', args['cta-enter']))}` : nothing
+    }
     </omni-keyboard>
     
     <!-- Examples -->
@@ -142,9 +156,9 @@ export const Interactive: ComponentStoryFormat<Args> = {
         'cta-previous': raw`<omni-previous-icon style="display: inherit;"></omni-previous-icon>`,
         'cta-search': raw`<omni-search-icon style="display: inherit;"></omni-search-icon>`,
         'cta-send': raw`<omni-send-icon style="display: inherit;"></omni-send-icon>`,
-        'backspace': raw`<omni-backspace-icon style="display: inherit;"></omni-backspace-icon>`,
-        'clear': '',
-        'close': raw`<omni-chevron-down-icon style="display: inherit;"></omni-chevron-down-icon>`
+        backspace: raw`<omni-backspace-icon style="display: inherit;"></omni-backspace-icon>`,
+        clear: '',
+        close: raw`<omni-chevron-down-icon style="display: inherit;"></omni-chevron-down-icon>`
     }
 };
 
@@ -379,7 +393,21 @@ export const Slotted_Content: ComponentStoryFormat<Args> = {
         space-label="${args.spaceLabel}" 
         cta-label="${args.ctaLabel}" 
         close-label="${args.closeLabel}" 
-        input-mode-none="${args.inputModeNone}">${args['caps-off'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-off', args['caps-off']))}` : nothing}${args['caps-on'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-on', args['caps-on']))}` : nothing}${args['caps-on-permanent'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-on-permanent', args['caps-on-permanent']))}` : nothing}${args['close'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('close', args['close']))}` : nothing}${args['clear'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('clear', args['clear']))}` : nothing}${args['backspace'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('backspace', args['backspace']))}` : nothing}${args['cta-done'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-done', args['cta-done']))}` : nothing}${args['cta-go'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-go', args['cta-go']))}` : nothing}${args['cta-next'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-next', args['cta-next']))}` : nothing}${args['cta-previous'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-previous', args['cta-previous']))}` : nothing}${args['cta-search'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-search', args['cta-search']))}` : nothing}${args['cta-send'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-send', args['cta-send']))}` : nothing}${args['cta-enter'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-enter', args['cta-enter']))}` : nothing}
+        input-mode-none="${args.inputModeNone}">${
+        args['caps-off'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-off', args['caps-off']))}` : nothing
+    }${args['caps-on'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-on', args['caps-on']))}` : nothing}${
+        args['caps-on-permanent'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-on-permanent', args['caps-on-permanent']))}` : nothing
+    }${args['close'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('close', args['close']))}` : nothing}${
+        args['clear'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('clear', args['clear']))}` : nothing
+    }${args['backspace'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('backspace', args['backspace']))}` : nothing}${
+        args['cta-done'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-done', args['cta-done']))}` : nothing
+    }${args['cta-go'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-go', args['cta-go']))}` : nothing}${
+        args['cta-next'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-next', args['cta-next']))}` : nothing
+    }${args['cta-previous'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-previous', args['cta-previous']))}` : nothing}${
+        args['cta-search'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-search', args['cta-search']))}` : nothing
+    }${args['cta-send'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-send', args['cta-send']))}` : nothing}${
+        args['cta-enter'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-enter', args['cta-enter']))}` : nothing
+    }
     </omni-keyboard>
 
 
@@ -435,9 +463,9 @@ export const Slotted_Content: ComponentStoryFormat<Args> = {
         'cta-previous': raw`<span class="center-inline">←</span>`,
         'cta-search': raw`<span class="center-inline">Search</span>`,
         'cta-send': raw`<span class="center-inline">Send</span>`,
-        'backspace': raw`<span class="center-inline">⌫</span>`,
-        'clear': raw`<span class="center-inline">(X)</span>`,
-        'close': raw`<span class="center-inline">^</span>`
+        backspace: raw`<span class="center-inline">⌫</span>`,
+        clear: raw`<span class="center-inline">(X)</span>`,
+        close: raw`<span class="center-inline">^</span>`
     }
 };
 
@@ -469,7 +497,6 @@ export const Via_Script: ComponentStoryFormat<Args> = {
 
                     return elm;
                 }
-
             });
         }
         return html`

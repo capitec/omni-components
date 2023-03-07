@@ -13,7 +13,15 @@ import { CodeMirrorSourceUpdateEvent, CodeMirrorEditorEvent } from './CodeEditor
 import { CodeEditor } from './CodeEditor.js';
 import { LivePropertyEditor, PropertyChangeEvent } from './LivePropertyEditor.js';
 import { StoryController } from './StoryController.js';
-import { loadCustomElementsCodeMirrorCompletionsRemote, loadCustomElements, loadCssProperties, Package, ComponentStoryFormat, transformSource, getSourceFromLit } from './StoryUtils.js';
+import {
+    loadCustomElementsCodeMirrorCompletionsRemote,
+    loadCustomElements,
+    loadCssProperties,
+    Package,
+    ComponentStoryFormat,
+    transformSource,
+    getSourceFromLit
+} from './StoryUtils.js';
 
 import '../label/Label.js';
 import '../button/Button';
@@ -247,37 +255,41 @@ export class StoryRenderer extends LitElement {
                 ?read-only="${true /*!this.interactive*/}">
                 </code-editor>
             </div>
-            ${this.story?.play ? html`
-            <div class="play-tests">
-                <div style="display: flex; flex-direction: row;">
-                <omni-button
-                    class="docs-omni-component"
-                    label="Run Tests"
-                    slot-position="left"
-                    ?disabled=${
-                        this.overrideInteractive ||
-                        this._isBusyPlaying ||
-                        JSON.stringify(this.story?.originalArgs)
-                            .replaceAll('\n', '')
-                            .replaceAll('\\n', '')
-                            .replaceAll('\t', '')
-                            .replaceAll(' ', '') !==
-                            JSON.stringify(this.story?.args).replaceAll('\n', '').replaceAll('\\n', '').replaceAll('\t', '').replaceAll(' ', '')
-                    }
-                    @click="${() => this._play(this.story, `.${this.key}`)}">
-                    <omni-icon class="docs-omni-component" icon="@material/play_arrow" style="margin-right: 8px;"></omni-icon>
-                </omni-button>
-                <div class="${this.key + '-result'} success">
-                    <span class="material-icons" style="color: #155724;">check</span>
-                    <span style="margin-left: 8px;">Passed</span>
-                </div>
-                </div>
-                <div class="${this.key + '-result'} failure">
-                <span class="material-icons" style="color: #721c24;">close</span>
-                <span style="margin-left: 8px;"><pre>${this._playError}</pre></span>
-                </div>
-            </div>            
-            ` : nothing}
+            ${
+                this.story?.play
+                    ? html`
+                <div class="play-tests">
+                    <div style="display: flex; flex-direction: row;">
+                    <omni-button
+                        class="docs-omni-component"
+                        label="Run Tests"
+                        slot-position="left"
+                        ?disabled=${
+                            this.overrideInteractive ||
+                            this._isBusyPlaying ||
+                            JSON.stringify(this.story?.originalArgs)
+                                .replaceAll('\n', '')
+                                .replaceAll('\\n', '')
+                                .replaceAll('\t', '')
+                                .replaceAll(' ', '') !==
+                                JSON.stringify(this.story?.args).replaceAll('\n', '').replaceAll('\\n', '').replaceAll('\t', '').replaceAll(' ', '')
+                        }
+                        @click="${() => this._play(this.story, `.${this.key}`)}">
+                        <omni-icon class="docs-omni-component" icon="@material/play_arrow" style="margin-right: 8px;"></omni-icon>
+                    </omni-button>
+                    <div class="${this.key + '-result'} success">
+                        <span class="material-icons" style="color: #155724;">check</span>
+                        <span style="margin-left: 8px;">Passed</span>
+                    </div>
+                    </div>
+                    <div class="${this.key + '-result'} failure">
+                    <span class="material-icons" style="color: #721c24;">close</span>
+                    <span style="margin-left: 8px;"><pre>${this._playError}</pre></span>
+                    </div>
+                </div>            
+            `
+                    : nothing
+            }
         </div>
     `;
     }
