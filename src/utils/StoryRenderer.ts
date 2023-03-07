@@ -6,7 +6,6 @@ import { html, LitElement, nothing, render, TemplateResult } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { live } from 'lit/directives/live.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import pretty from 'pretty';
 import { ColorField } from '../color-field/ColorField.js';
 import { SearchField } from '../search-field/SearchField.js';
 import { TextField } from '../text-field/TextField.js';
@@ -14,7 +13,7 @@ import { CodeMirrorSourceUpdateEvent, CodeMirrorEditorEvent } from './CodeEditor
 import { CodeEditor } from './CodeEditor.js';
 import { LivePropertyEditor, PropertyChangeEvent } from './LivePropertyEditor.js';
 import { StoryController } from './StoryController.js';
-import { loadCustomElementsCodeMirrorCompletionsRemote, loadCustomElements, loadCssProperties, Package, ComponentStoryFormat } from './StoryUtils.js';
+import { loadCustomElementsCodeMirrorCompletionsRemote, loadCustomElements, loadCssProperties, Package, ComponentStoryFormat, transformSource, getSourceFromLit } from './StoryUtils.js';
 
 import '../label/Label.js';
 import '../button/Button';
@@ -165,7 +164,7 @@ export class StoryRenderer extends LitElement {
         this.story!.originalArgs = this.story?.originalArgs ?? JSON.parse(JSON.stringify(this.story?.args));
 
         const res = this.story!.render!(this.story!.args);
-        const storySource = this.story!.source ? this.story!.source() : this._getSourceFromLit(res);
+        const storySource = this.story!.source ? this.story!.source() : getSourceFromLit(res);
 
         return html`
         <div class="story-description">
@@ -217,7 +216,7 @@ export class StoryRenderer extends LitElement {
                                 await this.updateComplete;
 
                                 if (this.codeEditor && !this.story?.source) {
-                                    await this.codeEditor.refresh(() => this._getSourceFromLit(this.story!.render!(this.story!.args)));
+                                    await this.codeEditor.refresh(() => getSourceFromLit(this.story!.render!(this.story!.args)));
                                 }
                             }
                         }}"></live-property-editor>
@@ -230,7 +229,7 @@ export class StoryRenderer extends LitElement {
             <div class="code-block">
                 <code-editor
                 class="source-code"
-                .transformSource="${(s: string) => this._transformSource(s)}"
+                .transformSource="${(s: string) => transformSource(s)}"
                 .extensions="${async () => [this._currentCodeTheme(), langHtml(await loadCustomElementsCodeMirrorCompletionsRemote())]}"
                 .code="${live(storySource ?? '')}"
                 @codemirror-loaded="${(e: CustomEvent<CodeMirrorEditorEvent>) => {
@@ -248,6 +247,7 @@ export class StoryRenderer extends LitElement {
                 ?read-only="${true /*!this.interactive*/}">
                 </code-editor>
             </div>
+            ${this.story?.play ? html`
             <div class="play-tests">
                 <div style="display: flex; flex-direction: row;">
                 <omni-button
@@ -276,7 +276,8 @@ export class StoryRenderer extends LitElement {
                 <span class="material-icons" style="color: #721c24;">close</span>
                 <span style="margin-left: 8px;"><pre>${this._playError}</pre></span>
                 </div>
-            </div>
+            </div>            
+            ` : nothing}
         </div>
     `;
     }
@@ -440,24 +441,12 @@ export class StoryRenderer extends LitElement {
         await this.updateComplete;
 
         if (this.codeEditor && !this.story?.source) {
-            await this.codeEditor.refresh(() => this._getSourceFromLit(this.story!.render!(this.story!.args)));
+            await this.codeEditor.refresh(() => getSourceFromLit(this.story!.render!(this.story!.args)));
         }
 
         if (this.propertyEditor) {
             this.propertyEditor.resetSlots();
         }
-    }
-
-    private _getSourceFromLit(res: TemplateResult): string {
-        let tempContainer = document.createElement('div');
-        render(res, tempContainer);
-        const source = this._transformSource(tempContainer.innerHTML);
-
-        //Cleanup
-        tempContainer.innerHTML = '';
-        tempContainer = null as any;
-
-        return source;
     }
 
     private async _play(story: any, canvasElementQuery: string) {
@@ -485,22 +474,6 @@ export class StoryRenderer extends LitElement {
             args: story.args,
             canvasElement: this.querySelector(canvasElementQuery)
         };
-    }
-
-    private _transformSource(input: string) {
-        // Remove test ids from displayed source
-        input = input
-            .replace(/<!--\?lit\$[0-9]+\$-->|<!--\??-->/g, '')
-            .replace(new RegExp('data-testid=("([^"]|"")*")'), '')
-            // Update any object references to curly braces for easier reading
-            .replaceAll('[object Object]', '{}')
-            // Remove empty string assignments to fix boolean attributes
-            .replaceAll('=""', '');
-        // Remove any properties with empty string assignments at the end of the html tag
-        // 			 .replace(new RegExp("(([\\r\\n]+| )([^ \\r\\n])*)=(\"([^\"]|\"\"){0}\")>"), " >")
-        // Remove any properties with empty string assignments within the tag
-        // 			 .replace(new RegExp("(([\\r\\n]+| )([^ \\r\\n])*)=(\"([^\"]|\"\"){0}\")"), " ");
-        return pretty(input);
     }
 
     private _currentCodeTheme() {

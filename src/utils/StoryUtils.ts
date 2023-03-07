@@ -9,8 +9,9 @@ import { githubLight as codeTheme } from '@ddietr/codemirror-themes/github-light
 import { Octokit } from '@octokit/core';
 import { Package, ClassDeclaration, CustomElementDeclaration, Declaration, CustomElement } from 'custom-elements-manifest/schema';
 export { Package, ClassDeclaration, CustomElementDeclaration, Declaration, CustomElement } from 'custom-elements-manifest/schema';
-import { html } from 'lit';
+import { html, TemplateResult } from 'lit';
 import { render } from 'lit-html';
+import pretty from 'pretty';
 import { SearchField } from '../search-field/SearchField.js';
 import { Select } from '../select/Select.js';
 import { CodeEditor, CodeMirrorEditorEvent, CodeMirrorSourceUpdateEvent } from './CodeEditor.js';
@@ -1351,6 +1352,34 @@ function currentCodeTheme() {
     return codeTheme;
 }
 
+function getSourceFromLit(res: TemplateResult): string {
+    let tempContainer = document.createElement('div');
+    render(res, tempContainer);
+    const source = transformSource(tempContainer.innerHTML);
+
+    //Cleanup
+    tempContainer.innerHTML = '';
+    tempContainer = null as any;
+
+    return source;
+}
+
+function transformSource(input: string) {
+    // Remove test ids from displayed source
+    input = input
+        .replace(/<!--\?lit\$[0-9]+\$-->|<!--\??-->/g, '')
+        .replace(new RegExp('data-testid=("([^"]|"")*")'), '')
+        // Update any object references to curly braces for easier reading
+        .replaceAll('[object Object]', '{}')
+        // Remove empty string assignments to fix boolean attributes
+        .replaceAll('=""', '');
+    // Remove any properties with empty string assignments at the end of the html tag
+    // 			 .replace(new RegExp("(([\\r\\n]+| )([^ \\r\\n])*)=(\"([^\"]|\"\"){0}\")>"), " >")
+    // Remove any properties with empty string assignments within the tag
+    // 			 .replace(new RegExp("(([\\r\\n]+| )([^ \\r\\n])*)=(\"([^\"]|\"\"){0}\")"), " ");
+    return pretty(input);
+}
+
 declare global {
     interface Window {
         srCount: number;
@@ -1383,5 +1412,7 @@ export {
     setupThemes,
     setupEleventy,
     setupTheming,
-    uploadTheme
+    uploadTheme,
+    transformSource,
+    getSourceFromLit
 };

@@ -145,9 +145,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         'backspace': raw`<omni-backspace-icon style="display: inherit;"></omni-backspace-icon>`,
         'clear': '',
         'close': raw`<omni-chevron-down-icon style="display: inherit;"></omni-chevron-down-icon>`
-    },
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    play: async (context) => {}
+    }
 };
 
 export const Input_Modes: ComponentStoryFormat<Args> = {
@@ -175,9 +173,7 @@ export const Input_Modes: ComponentStoryFormat<Args> = {
             <input type="number" inputmode="none" tabindex="13" />
         </div>
   `,
-    name: 'Input Modes',
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    play: async (context) => {}
+    name: 'Input Modes'
 };
 
 export const Masked_Values: ComponentStoryFormat<Args> = {
@@ -207,9 +203,7 @@ export const Masked_Values: ComponentStoryFormat<Args> = {
             <omni-pin-field tabindex="17" value="1234"></omni-pin-field>
         </div>
   `,
-    name: 'Masked Values',
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    play: async (context) => {}
+    name: 'Masked Values'
 };
 
 export const Web_Components: ComponentStoryFormat<Args> = {
@@ -234,9 +228,7 @@ export const Web_Components: ComponentStoryFormat<Args> = {
 
         </div>
   `,
-    name: 'Web Components',
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    play: async (context) => {}
+    name: 'Web Components'
 };
 
 export const Enter_Key_Hint_Variations: ComponentStoryFormat<Args> = {
@@ -288,9 +280,7 @@ export const Enter_Key_Hint_Variations: ComponentStoryFormat<Args> = {
             <input type="number" enterkeyhint="send" tabindex="37" />
         </div>
   `,
-    name: 'Enter Key Hint Variations',
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    play: async (context) => {}
+    name: 'Enter Key Hint Variations'
 };
 
 export const Hide_Keyboard: ComponentStoryFormat<Args> = {
@@ -314,9 +304,7 @@ export const Hide_Keyboard: ComponentStoryFormat<Args> = {
             <input data-omni-keyboard-hidden type="text" inputmode="none" tabindex="40" />
         </div>  
   `,
-    name: 'Hide Keyboard',
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    play: async (context) => {}
+    name: 'Hide Keyboard'
 };
 
 export const Hide_Display_Value: ComponentStoryFormat<Args> = {
@@ -334,9 +322,7 @@ export const Hide_Display_Value: ComponentStoryFormat<Args> = {
         <input data-omni-keyboard-no-display  value="Some Value" type="text" tabindex="42" />
     </div>  
   `,
-    name: 'Hide Display Value',
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    play: async (context) => {}
+    name: 'Hide Display Value'
 };
 
 export const Attach_By_Attribute: ComponentStoryFormat<Args> = {
@@ -356,9 +342,7 @@ export const Attach_By_Attribute: ComponentStoryFormat<Args> = {
         <input data-omni-keyboard-attach type="text" tabindex="44" />
     </div>
   `,
-    name: 'Attach By Attribute',
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    play: async (context) => {}
+    name: 'Attach By Attribute'
 };
 
 export const Attach_By_Id: ComponentStoryFormat<Args> = {
@@ -382,9 +366,7 @@ export const Attach_By_Id: ComponentStoryFormat<Args> = {
 
     </div>
   `,
-    name: 'Attach By Id',
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    play: async (context) => {}
+    name: 'Attach By Id'
 };
 
 export const Slotted_Content: ComponentStoryFormat<Args> = {
@@ -456,9 +438,7 @@ export const Slotted_Content: ComponentStoryFormat<Args> = {
         'backspace': raw`<span class="center-inline">⌫</span>`,
         'clear': raw`<span class="center-inline">(X)</span>`,
         'close': raw`<span class="center-inline">^</span>`
-    },
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    play: async (context) => {}
+    }
 };
 
 export const Via_Script: ComponentStoryFormat<Args> = {
@@ -536,7 +516,5 @@ export const Via_Script: ComponentStoryFormat<Args> = {
         }
     });
 </script>
-    `,
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    play: async (context) => {}
+    `
 };
