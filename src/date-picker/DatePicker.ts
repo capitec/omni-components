@@ -31,6 +31,10 @@ import '../icons/ChevronRight.icon.js';
  * ```
  * @element omni-date-picker
  *
+ * Registry of all properties defined by the component.
+ *
+ * @fires {CustomEvent<{}>} change - Dispatched when a date is selected.
+ *
  * @cssprop --omni-date-picker-text-align - Date picker input text align.
  * @cssprop --omni-date-picker-font-color - Date picker input font color.
  * @cssprop --omni-date-picker-font-family - Date picker input font family.
@@ -305,7 +309,7 @@ export class DatePicker extends OmniFormElement {
             control: true,
             disabled: this.disabled,
             error: this.error as string
-        }
+        };
         return html` 
         <div id="control" class=${classMap(control)}>
             <omni-calendar-icon class="control-icon"></omni-calendar-icon>

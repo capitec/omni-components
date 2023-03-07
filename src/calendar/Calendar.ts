@@ -24,6 +24,10 @@ import '../icons/ChevronRight.icon.js';
  * ```
  * @element omni-calendar
  *
+ * Registry of all properties defined by the component.
+ *
+ * @fires {CustomEvent<{}>} change - Dispatched when a date is selected.
+ *
  * @cssprop --omni-calendar-box-shadow - Calendar container box shadow.
  * @cssprop --omni-calendar-border-radius - Calendar container border radius.
  * @cssprop --omni-calendar-z-index - Calendar container z-index.

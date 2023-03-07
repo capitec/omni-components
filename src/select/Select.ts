@@ -479,7 +479,7 @@ export class Select extends OmniFormElement {
             icon: true,
             disabled: this.disabled,
             error: this.error as string
-        }
+        };
         return html` <div id="control" class="control ${this._popUp ? `expanded` : `collapsed`}" @click="${() => this._controlClick()}">
             ${
                 this._isMobile
