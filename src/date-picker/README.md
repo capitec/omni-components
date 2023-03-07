@@ -42,9 +42,9 @@ disabled>
 
 ## Events
 
-| Event    | Type                                    |
-|----------|-----------------------------------------|
-| `change` | `CustomEvent<{ date: any; ISO: any; }>` |
+| Event    | Type              | Description                         |
+|----------|-------------------|-------------------------------------|
+| `change` | `CustomEvent<{}>` | Dispatched when a date is selected. |
 
 ## Slots
 
