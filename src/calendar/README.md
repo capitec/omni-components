@@ -50,9 +50,13 @@ locale="en-US">
 | `--omni-calendar-controls-border-bottom`         | Calendar control bar border bottom.              |
 | `--omni-calendar-controls-min-height`            | Calendar control bar minimum height.             |
 | `--omni-calendar-controls-padding`               | Calendar control bar padding.                    |
+| `--omni-calendar-day-button-color`               | Calendar day button color.                       |
 | `--omni-calendar-day-button-excluded-font-color` | Calendar day button excluded color.              |
+| `--omni-calendar-day-button-font-size`           | Calendar day button font size.                   |
+| `--omni-calendar-day-button-font-weight`         | Calendar day button font weight.                 |
 | `--omni-calendar-day-button-height`              | Calendar day button height.                      |
 | `--omni-calendar-day-button-hover-background-color` | Calendar day button hover background color.      |
+| `--omni-calendar-day-button-line-height`         | Calendar day button line height.                 |
 | `--omni-calendar-day-button-width`               | Calendar day button width.                       |
 | `--omni-calendar-day-current-button-border`      | Calendar day button current border.              |
 | `--omni-calendar-day-current-button-border-radius` | Calendar day button current border radius.       |
