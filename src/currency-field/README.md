@@ -60,7 +60,7 @@ Control to enter a formatted currency value.
 | `--omni-container-font-family`                   | Container font family.                         |
 | `--omni-container-height`                        | Container height.                              |
 | `--omni-container-width`                         | Container width.                               |
-| `--omni-currency-field-disabled-font`            | color -                                        |
+| `--omni-currency-field-disabled-font-color`      | Currency field disabled font color.            |
 | `--omni-currency-field-font-color`               | Currency field font color.                     |
 | `--omni-currency-field-font-family`              | Currency field font family.                    |
 | `--omni-currency-field-font-size`                | Currency field font size.                      |
