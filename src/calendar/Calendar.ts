@@ -114,6 +114,11 @@ import '../icons/ChevronRight.icon.js';
  * @cssprop --omni-calendar-day-button-width - Calendar day button width.
  * @cssprop --omni-calendar-day-button-height - Calendar day button height.
  *
+ * @cssprop --omni-calendar-day-button-font-size - Calendar day button font size.
+ * @cssprop --omni-calendar-day-button-font-weight - Calendar day button font weight.
+ * @cssprop --omni-calendar-day-button-line-height - Calendar day button line height.
+ * @cssprop --omni-calendar-day-button-color - Calendar day button color.
+ *
  * @cssprop --omni-calendar-day-button-hover-background-color - Calendar day button hover background color.
  *
  * @cssprop --omni-calendar-day-button-excluded-font-color - Calendar day button excluded color.
@@ -200,8 +205,7 @@ export class Calendar extends OmniElement {
         this.dispatchEvent(
             new CustomEvent('change', {
                 detail: {
-                    date: this.date.toJSDate(),
-                    ISO: this.value
+                    date: this.date.toJSDate()
                 }
             })
         );
@@ -396,6 +400,13 @@ export class Calendar extends OmniElement {
 
                 width: var(--omni-calendar-day-button-width,33px);
                 height: var(--omni-calendar-day-button-height,40px);
+
+                font-size: var(--omni-calendar-day-button-font-size, 14px);
+                font-weight: var(--omni-calendar-day-button-font-weight, 500);
+
+                line-height: var(--omni-calendar-day-button-line-height, 22px);
+
+                color: var(--omni-calendar-day-button-color, var(--omni-font-color));
             }
 
             .day-grid > .day:hover {

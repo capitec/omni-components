@@ -170,8 +170,7 @@ export class DatePicker extends OmniFormElement {
         this.dispatchEvent(
             new CustomEvent('change', {
                 detail: {
-                    date: (<CustomEvent>e).detail.date,
-                    ISO: (<CustomEvent>e).detail.ISO
+                    date: this.date.toJSDate()
                 }
             })
         );
