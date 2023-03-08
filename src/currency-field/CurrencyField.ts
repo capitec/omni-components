@@ -85,10 +85,6 @@ export class CurrencyField extends OmniFormElement {
 
     override connectedCallback(): void {
         super.connectedCallback();
-        /*
-        this.addEventListener('focusin', this._onFocusInput.bind(this), {
-            capture: true
-        });*/
         this.addEventListener('click', this._clickInput.bind(this), {
             capture: true
         });
@@ -305,7 +301,10 @@ export class CurrencyField extends OmniFormElement {
             return;
         }
         
-        console.log('input value at keydown', input.value);
+        //Remove the cent separator
+        const centValue = this._inputElement?.value.replace(new RegExp(this.fractionalSeparator, 'g'), '');
+        console.log('cent value', centValue);
+        //preFloatReplaceAll = formattedValue.replace(new RegExp(this.thousandsSeparator, 'g'), '')
 
         //convert current value to cents
         //const centValue = input.value;
@@ -315,19 +314,8 @@ export class CurrencyField extends OmniFormElement {
 
         }*/
 
-        // Check if the device is a Iphone or Ipad.
-        /*
-        if (this._isIOS()) {
-            if (e.keyCode === 188) {
-                // Check if caret is at end of the input.
-                if (input.value.length === input.selectionEnd) {
-                    input.value = input.value + this.fractionalSeparator;
-                }
-            }
-        }*/
-
         // If the pointer is positioned after a currency separator remove the separator and the preceding number.
-        if (
+        if(
             input.value.charAt((caretPosition as number) - 1) === this.thousandsSeparator &&
             (e.key.toLowerCase() === 'backspace' || e.keyCode === 229)
         ) {
