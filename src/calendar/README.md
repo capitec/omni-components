@@ -23,9 +23,9 @@ locale="en-US">
 
 ## Events
 
-| Event    | Type                                        |
-|----------|---------------------------------------------|
-| `change` | `CustomEvent<{ date: Date; ISO: string; }>` |
+| Event    | Type              | Description                         |
+|----------|-------------------|-------------------------------------|
+| `change` | `CustomEvent<{}>` | Dispatched when a date is selected. |
 
 ## Slots
 
