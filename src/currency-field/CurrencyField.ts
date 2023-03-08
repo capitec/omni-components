@@ -85,12 +85,23 @@ export class CurrencyField extends OmniFormElement {
 
     override connectedCallback(): void {
         super.connectedCallback();
+        /*
+        this.addEventListener('focusin', this._onFocusInput.bind(this), {
+            capture: true
+        });*/
+        this.addEventListener('click', this._clickInput.bind(this), {
+            capture: true
+        });
+        this.addEventListener('focus', this._focusInput.bind(this), {
+            capture: true
+        });
         this.addEventListener('input', this._keyInput.bind(this), {
             capture: true
         });
+        /*
         this.addEventListener('blur', this._blur.bind(this), {
             capture: true
-        });
+        });*/
         this.addEventListener('keydown', this._keyDown.bind(this), {
             capture: true
         });
@@ -218,6 +229,31 @@ export class CurrencyField extends OmniFormElement {
         }
     }
 
+    /* When the component is focussed */
+    _focusInput() {
+        console.log('focusin hit');
+
+        const input = this._inputElement as HTMLInputElement;
+        if(!this.value) {
+            this.value = '0.00';
+        }
+
+        if(input){
+            setTimeout(function(){ input.selectionStart = input.selectionEnd = 10000; }, 0);
+        }
+
+    }
+
+    _clickInput() {
+        console.log('click');
+
+        const input = this._inputElement as HTMLInputElement;
+        
+        if(input){
+            setTimeout(function(){ input.selectionStart = input.selectionEnd = 10000; }, 0);
+        }
+    }   
+
     // Format the currency value when the component loses focus
     async _blur(): Promise<void> {
         const inputValue = this._inputElement?.value;
@@ -255,7 +291,32 @@ export class CurrencyField extends OmniFormElement {
         const selection = selectionEnd - selectionStart;
         let valueFormatterCount = 0;
 
+        console.log('keydown event', e);
+
+        // Stop alpha keys from moving the caret position.
+        if (e.key >= 'a' && e.key <= 'z') {
+            e.preventDefault();
+            return;
+        }
+
+        // Copy currency field selection to clipboard.
+        if (e.ctrlKey && e.key.toLowerCase() === 'c') {
+            navigator.clipboard.writeText(input.value);
+            return;
+        }
+        
+        console.log('input value at keydown', input.value);
+
+        //convert current value to cents
+        //const centValue = input.value;
+
+        /*
+        if() {
+
+        }*/
+
         // Check if the device is a Iphone or Ipad.
+        /*
         if (this._isIOS()) {
             if (e.keyCode === 188) {
                 // Check if caret is at end of the input.
@@ -263,7 +324,7 @@ export class CurrencyField extends OmniFormElement {
                     input.value = input.value + this.fractionalSeparator;
                 }
             }
-        }
+        }*/
 
         // If the pointer is positioned after a currency separator remove the separator and the preceding number.
         if (
@@ -380,20 +441,10 @@ export class CurrencyField extends OmniFormElement {
             return;
         }
 
-        // Copy currency field selection to clipboard.
-        if (e.ctrlKey && e.key.toLowerCase() === 'c') {
-            navigator.clipboard.writeText(input.value);
-            return;
-        }
-
-        // Stop alpha keys from moving the caret position.
-        if (e.key >= 'a' && e.key <= 'z') {
-            e.preventDefault();
-            return;
-        }
     }
 
     async _keyInput(): Promise<void> {
+        //console.log('keyinput event', e);
         const preValueLength = this._inputElement!.value.length;
         const caretPosition = this._inputElement!.selectionStart;
         const inputValue = this._inputElement!.value;
