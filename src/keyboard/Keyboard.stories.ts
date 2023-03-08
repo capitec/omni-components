@@ -31,7 +31,6 @@ interface Args {
     spaceLabel: string;
     ctaLabel: string;
     closeLabel: string;
-    inputModeNone: 'hide' | 'show';
     attachMode: 'all' | 'attribute' | 'id';
     'caps-off': string;
     'caps-on': string;
@@ -57,22 +56,19 @@ export const Interactive: ComponentStoryFormat<Args> = {
         clear-label="${args.clearLabel}" 
         space-label="${args.spaceLabel}" 
         cta-label="${args.ctaLabel}" 
-        close-label="${args.closeLabel}" 
-        input-mode-none="${args.inputModeNone}">${
-        args['caps-off'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-off', args['caps-off']))}` : nothing
-    }${args['caps-on'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-on', args['caps-on']))}` : nothing}${
-        args['caps-on-permanent'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-on-permanent', args['caps-on-permanent']))}` : nothing
-    }${args['close'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('close', args['close']))}` : nothing}${
-        args['clear'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('clear', args['clear']))}` : nothing
-    }${args['backspace'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('backspace', args['backspace']))}` : nothing}${
-        args['cta-done'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-done', args['cta-done']))}` : nothing
-    }${args['cta-go'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-go', args['cta-go']))}` : nothing}${
-        args['cta-next'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-next', args['cta-next']))}` : nothing
-    }${args['cta-previous'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-previous', args['cta-previous']))}` : nothing}${
-        args['cta-search'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-search', args['cta-search']))}` : nothing
-    }${args['cta-send'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-send', args['cta-send']))}` : nothing}${
-        args['cta-enter'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-enter', args['cta-enter']))}` : nothing
-    }
+        close-label="${args.closeLabel}" >${args['caps-off'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-off', args['caps-off']))}` : nothing}${
+        args['caps-on'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-on', args['caps-on']))}` : nothing
+    }${args['caps-on-permanent'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-on-permanent', args['caps-on-permanent']))}` : nothing}${
+        args['close'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('close', args['close']))}` : nothing
+    }${args['clear'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('clear', args['clear']))}` : nothing}${
+        args['backspace'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('backspace', args['backspace']))}` : nothing
+    }${args['cta-done'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-done', args['cta-done']))}` : nothing}${
+        args['cta-go'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-go', args['cta-go']))}` : nothing
+    }${args['cta-next'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-next', args['cta-next']))}` : nothing}${
+        args['cta-previous'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-previous', args['cta-previous']))}` : nothing
+    }${args['cta-search'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-search', args['cta-search']))}` : nothing}${
+        args['cta-send'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-send', args['cta-send']))}` : nothing
+    }${args['cta-enter'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-enter', args['cta-enter']))}` : nothing}
     </omni-keyboard>
     
     <!-- Examples -->
@@ -152,7 +148,6 @@ export const Interactive: ComponentStoryFormat<Args> = {
         ctaLabel: 'Enter',
         closeLabel: 'Close',
         spaceLabel: 'Space',
-        inputModeNone: 'hide',
         attachMode: 'all',
         'caps-off': raw`<omni-caps-off-icon style="display: inherit;"></omni-caps-off-icon>`,
         'caps-on': raw`<omni-caps-on-icon style="display: inherit;"></omni-caps-on-icon>`,
@@ -174,19 +169,7 @@ export const Input_Modes: ComponentStoryFormat<Args> = {
     ...Interactive,
     description: () => html`
     <span>The Keyboard will react accordingly to the '<strong>inputmode</strong>' attribute on supported inputs.</span>
-    <br/>
-    <span>When the '<strong>input-mode</strong>' attribute is set to '<strong>none</strong>' on a supported input, the Keyboard will not apply to that input unless '<strong>input-mode-none</strong>' is set to '<strong>show</strong>' on the Keyboard.</span>
-    <br/>
-    <span>To illustrate this, update the <strong>Interactive</strong> Keyboard to have the '<strong>input-mode-none</strong>' attribute toggled between '<strong>show</strong>' and '<strong>hide</strong>'.</span>
-    <omni-switch class="docs-omni-component" label="Show Keyboard when 'inputmode' attribute is set to 'none'." ?checked="${Interactive.args!.inputModeNone === 'show'}" @value-change="${() => {
-        Interactive.args!.inputModeNone = Interactive.args!.inputModeNone === 'hide' ? 'show' : 'hide';
-        document.dispatchEvent(
-            new CustomEvent('story-renderer-interactive-update', {
-                bubbles: true,
-                composed: true
-            })
-        );
-    }}"></omni-switch>
+        
     `,
     render: (args: Args) =>
         Interactive.args!.attachMode === 'all'
@@ -200,10 +183,10 @@ export const Input_Modes: ComponentStoryFormat<Args> = {
             <input type="text" inputmode="decimal" tabindex="10" />
             <span>input with type="text" and inputmode="tel"</span>
             <input type="text" inputmode="tel" tabindex="11" />
-            <span>input with type="text" and inputmode="none" </span>
-            <input type="text" inputmode="none" tabindex="12" />
-            <span>input with type="number" and inputmode="none"</span>
-            <input type="number" inputmode="none" tabindex="13" />
+            <span>input with type="password" and inputmode="numeric" </span>
+            <input type="password" inputmode="numeric" tabindex="12" />
+            <span>input with type="text" and inputmode="url"</span>
+            <input type="text" inputmode="url" tabindex="13" />
         </div>
   `
             : html`
@@ -378,19 +361,7 @@ export const Hide_Keyboard: ComponentStoryFormat<Args> = {
     ...Interactive,
     description: () => html`
     <span>When the '<strong>data-omni-keyboard-hidden</strong>' attribute is set on a supported input, the Keyboard will not apply to that input.</span>
-    <br/>
-    <span>When the '<strong>input-mode</strong>' attribute is set to '<strong>none</strong>' on a supported input, the Keyboard will not apply to that input unless '<strong>input-mode-none</strong>' is set to '<strong>show</strong>' on the Keyboard.</span>
-    <br/>
-    <span>To illustrate this, update the <strong>Interactive</strong> Keyboard to have the '<strong>input-mode-none</strong>' attribute toggled between '<strong>show</strong>' and '<strong>hide</strong>'.</span>
-    <omni-switch class="docs-omni-component" label="Show Keyboard when 'inputmode' attribute is set to 'none'." ?checked="${Interactive.args!.inputModeNone === 'show'}" @value-change="${() => {
-        Interactive.args!.inputModeNone = Interactive.args!.inputModeNone === 'hide' ? 'show' : 'hide';
-        document.dispatchEvent(
-            new CustomEvent('story-renderer-interactive-update', {
-                bubbles: true,
-                composed: true
-            })
-        );
-    }}"></omni-switch>
+    
     `,
     render: (args: Args) => html`
         <div class="keyboard-showcase">
@@ -398,9 +369,9 @@ export const Hide_Keyboard: ComponentStoryFormat<Args> = {
             <!-- Hide Keyboard -->
             <span>input with type="text" and data-omni-keyboard-hidden</span>
             <input data-omni-keyboard-hidden type="text" tabindex="38" />
-            <span>input with type="text" and inputmode="none" (See variation when Keyboard input-mode-none="show")</span>
+            <span>input with type="text" and inputmode="none"</span>
             <input type="text" inputmode="none" tabindex="39" />
-            <span>input with type="text", data-omni-keyboard-hidden and inputmode="none" (See variation when Keyboard input-mode-none="show")</span>
+            <span>input with type="text", data-omni-keyboard-hidden and inputmode="none"</span>
             <input data-omni-keyboard-hidden type="text" inputmode="none" tabindex="40" />
         </div>  
   `,
@@ -525,22 +496,19 @@ export const Slotted_Content: ComponentStoryFormat<Args> = {
         clear-label="${args.clearLabel}" 
         space-label="${args.spaceLabel}" 
         cta-label="${args.ctaLabel}" 
-        close-label="${args.closeLabel}" 
-        input-mode-none="${args.inputModeNone}">${
-        args['caps-off'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-off', args['caps-off']))}` : nothing
-    }${args['caps-on'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-on', args['caps-on']))}` : nothing}${
-        args['caps-on-permanent'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-on-permanent', args['caps-on-permanent']))}` : nothing
-    }${args['close'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('close', args['close']))}` : nothing}${
-        args['clear'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('clear', args['clear']))}` : nothing
-    }${args['backspace'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('backspace', args['backspace']))}` : nothing}${
-        args['cta-done'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-done', args['cta-done']))}` : nothing
-    }${args['cta-go'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-go', args['cta-go']))}` : nothing}${
-        args['cta-next'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-next', args['cta-next']))}` : nothing
-    }${args['cta-previous'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-previous', args['cta-previous']))}` : nothing}${
-        args['cta-search'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-search', args['cta-search']))}` : nothing
-    }${args['cta-send'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-send', args['cta-send']))}` : nothing}${
-        args['cta-enter'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-enter', args['cta-enter']))}` : nothing
-    }
+        close-label="${args.closeLabel}" >${args['caps-off'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-off', args['caps-off']))}` : nothing}${
+        args['caps-on'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-on', args['caps-on']))}` : nothing
+    }${args['caps-on-permanent'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-on-permanent', args['caps-on-permanent']))}` : nothing}${
+        args['close'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('close', args['close']))}` : nothing
+    }${args['clear'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('clear', args['clear']))}` : nothing}${
+        args['backspace'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('backspace', args['backspace']))}` : nothing
+    }${args['cta-done'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-done', args['cta-done']))}` : nothing}${
+        args['cta-go'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-go', args['cta-go']))}` : nothing
+    }${args['cta-next'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-next', args['cta-next']))}` : nothing}${
+        args['cta-previous'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-previous', args['cta-previous']))}` : nothing
+    }${args['cta-search'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-search', args['cta-search']))}` : nothing}${
+        args['cta-send'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-send', args['cta-send']))}` : nothing
+    }${args['cta-enter'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-enter', args['cta-enter']))}` : nothing}
     </omni-keyboard>
 
 
@@ -584,7 +552,6 @@ export const Slotted_Content: ComponentStoryFormat<Args> = {
         ctaLabel: 'Enter',
         closeLabel: 'Close',
         spaceLabel: 'Space',
-        inputModeNone: 'hide',
         attachMode: 'id',
         'caps-off': raw`<span class="center-inline">lower</span>`,
         'caps-on': raw`<span class="center-inline">upper</span>`,

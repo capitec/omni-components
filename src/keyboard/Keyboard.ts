@@ -141,7 +141,7 @@ import './KeyboardButton.js';
 export class Keyboard extends OmniElement {
     /**
      * The rule for the Keyboard to attach to inputs for showing on component focus.
-     * * `all` - The Keyboard will show on focus for all input related components unless opted out with `data-omni-keyboard-hidden` on the component or a combination of `inputmode="none"` on the component and  `input-mode-none="hide"` on the Keyboard.
+     * * `all` - The Keyboard will show on focus for all input related components unless opted out with `data-omni-keyboard-hidden` on the component.
      * * `attribute` - The Keyboard will only show on focus for input related components with the `data-omni-keyboard-attach` attribute
      * @attr [attach-mode="all"]
      */
@@ -170,14 +170,6 @@ export class Keyboard extends OmniElement {
      * @attr [cta-label="Enter"]
      */
     @property({ type: String, attribute: 'cta-label', reflect: true }) ctaLabel: string = 'Enter';
-
-    /**
-     * The behaviour when encountering an inputmode="none" attribute on target component.
-     *  * `show` - Will display the Keyboard on focus even if set to none.
-     *  * `hide` - Will hide the Keyboard on focus when set to none. (Default)
-     * @attr [input-mode-none="hide"]
-     */
-    @property({ type: String, attribute: 'input-mode-none', reflect: true }) inputModeNone: 'hide' | 'show' = 'hide';
 
     @state() private mode: KeyboardMode = 'none';
     @state() private currentCase: 'lower' | 'upper' | 'upper-single' = 'lower';
@@ -258,8 +250,7 @@ export class Keyboard extends OmniElement {
                     clear-label="${ifDefined(init.clearLabel)}" 
                     space-label="${ifDefined(init.spaceLabel)}" 
                     cta-label="${ifDefined(init.ctaLabel)}" 
-                    close-label="${ifDefined(init.closeLabel)}" 
-                    input-mode-none="${ifDefined(init.inputModeNone)}">
+                    close-label="${ifDefined(init.closeLabel)}">
                     <omni-render-element slot="clear" .renderer="${init.clear ? init.clear : () => html`${init.clearLabel}`}"></omni-render-element>
                     ${
                         init.capsOff
@@ -740,8 +731,6 @@ export class Keyboard extends OmniElement {
                 this.target === input ||
                 // When the focused input has an unsupported type (e.g. 'color' or 'date'), treat as ignored.
                 !supportedTypes.includes(input.type) ||
-                // When the focused input has inputmode="none" and the Keyboard is not set to show in that state, treat as ignored.
-                (this.inputModeNone === 'hide' && (active.getAttribute('inputmode') === 'none' || input.inputMode === 'none')) ||
                 // When either the active component or the innermost focused element has 'data-omni-keyboard-hidden' attribute, treat as ignored.
                 active.hasAttribute(hiddenAttribute) ||
                 input.hasAttribute(hiddenAttribute) ||
@@ -1658,7 +1647,7 @@ export type KeyboardInit = {
 
     /**
      * The rule for the Keyboard to attach to inputs for showing on component focus.
-     * * `all` - The Keyboard will show on focus for all input related components unless opted out with `data-omni-keyboard-hidden` on the component or a combination of `inputmode="none"` on the component and  `input-mode-none="hide"` on the Keyboard.
+     * * `all` - The Keyboard will show on focus for all input related components unless opted out with `data-omni-keyboard-hidden` on the component.
      * * `attribute` - The Keyboard will only show on focus for input related components with the `data-omni-keyboard-attach` attribute.
      */
     attachMode?: 'all' | 'attribute' | 'id';
@@ -1682,13 +1671,6 @@ export type KeyboardInit = {
      * The text label to display on the call to action button when `enterkeyhint` is not defined or `enterkeyhint="enter"`. The `cta-enter` slot takes precedence over this label.
      */
     ctaLabel?: string;
-
-    /**
-     * The behaviour when encountering an inputmode="none" attribute on target component.
-     *  * `show` - Will display the Keyboard on focus even if set to none.
-     *  * `hide` - Will hide the Keyboard on focus when set to none.
-     */
-    inputModeNone?: 'hide' | 'show';
 
     /**
      * A function that returns content to render within the 'clear' slot
