@@ -185,8 +185,8 @@ export const Input_Modes: ComponentStoryFormat<Args> = {
             <input type="text" inputmode="tel" tabindex="11" />
             <span>input with type="password" and inputmode="numeric" </span>
             <input type="password" inputmode="numeric" tabindex="12" />
-            <span>input with type="text" and inputmode="url"</span>
-            <input type="text" inputmode="url" tabindex="13" />
+            <span>input with type="search" and inputmode="numeric"</span>
+            <input type="search" inputmode="numeric" tabindex="13" />
         </div>
   `
             : html`

@@ -202,12 +202,22 @@ export class Keyboard extends OmniElement {
         return this.currentCase === 'upper' || this.currentCase === 'upper-single' ? 'upper' : 'lower';
     }
 
-    private get currentEnterKeyHint() {
-        return (
+    private get currentEnterKeyHint(): EnterKeyHint {
+        const explicitHint = (
             this.targetComponent?.hasAttribute('enterkeyhint')
                 ? this.targetComponent.getAttribute('enterkeyhint')
-                : this.target?.getAttribute('enterkeyhint') ?? 'enter'
-        ) as EnterKeyHint;
+                : this.target?.getAttribute('enterkeyhint')
+        );
+
+        if (!explicitHint) {
+            if (this.target?.type === 'search') {
+                return 'search';
+            } else {
+                return 'enter';
+            }
+        }
+        
+       return explicitHint as EnterKeyHint;
     }
 
     private globalClick = this._globalClick.bind(this);
