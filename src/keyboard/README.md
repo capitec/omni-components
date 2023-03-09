@@ -10,17 +10,17 @@ An on-screen keyboard control component.
 
 ## Properties
 
-| Property     | Attribute     | Modifiers | Type                           | Default | Description                                      |
-|--------------|---------------|-----------|--------------------------------|---------|--------------------------------------------------|
-| `attachMode` | `attach-mode` |           | `"all" \| "attribute" \| "id"` | "all"   | The rule for the Keyboard to attach to inputs for showing on component focus.<br />* `all` - The Keyboard will show on focus for all input related components unless opted out with `data-omni-keyboard-hidden` on the component.<br />* `attribute` - The Keyboard will only show on focus for input related components with the `data-omni-keyboard-attach` attribute |
-| `clearLabel` | `clear-label` |           | `string`                       | "Clear" | The text label to display on the clear button. The `clear` slot takes precedence over this label. |
-| `closeLabel` | `close-label` |           | `string`                       | "Close" | The text label to display by the close button.   |
-| `ctaLabel`   | `cta-label`   |           | `string`                       | "Enter" | The text label to display on the call to action button when `enterkeyhint` is not defined or `enterkeyhint="enter"`. The `cta-enter` slot takes precedence over this label. |
-| `dir`        |               |           | `string`                       |         |                                                  |
-| `lang`       |               |           | `string`                       |         |                                                  |
-| `override`   | `override`    |           |                                |         | Used to set the base direction of text for display |
-| `spaceLabel` | `space-label` |           | `string`                       | "Space" | The text label to display on the spacebar button. |
-| `styles`     |               | readonly  | `CSSResultGroup[]`             |         |                                                  |
+| Property     | Attribute      | Modifiers | Type                           | Default | Description                                      |
+|--------------|----------------|-----------|--------------------------------|---------|--------------------------------------------------|
+| `attachMode` | `attach-mode`  |           | `"all" \| "attribute" \| "id"` | "all"   | The rule for the Keyboard to attach to inputs for showing on component focus.<br />* `all` - The Keyboard will show on focus for all input related components unless opted out with `data-omni-keyboard-hidden` on the component.<br />* `attribute` - The Keyboard will only show on focus for input related components with the `data-omni-keyboard-attach` attribute |
+| `clearLabel` | `clear-label`  |           | `string`                       | "Clear" | The text label to display on the clear button. The `clear` slot takes precedence over this label. |
+| `closeLabel` | `close-label`  |           | `string`                       | "Close" | The text label to display by the close button.   |
+| `ctaLabel`   | `action-label` |           | `string`                       | "Enter" | The text label to display on the call to action button when `enterkeyhint` is not defined or `enterkeyhint="enter"`. The `action-enter` slot takes precedence over this label. |
+| `dir`        |                |           | `string`                       |         |                                                  |
+| `lang`       |                |           | `string`                       |         |                                                  |
+| `override`   | `override`     |           |                                |         | Used to set the base direction of text for display |
+| `spaceLabel` | `space-label`  |           | `string`                       | "Space" | The text label to display on the spacebar button. |
+| `styles`     |                | readonly  | `CSSResultGroup[]`             |         |                                                  |
 
 ## Methods
 
@@ -46,25 +46,33 @@ An on-screen keyboard control component.
 
 | Name                | Description                                      |
 |---------------------|--------------------------------------------------|
+| `action-done`       | Content to display on call to action button ('Enter') when target component has enterkeyhint="done". |
+| `action-enter`      | Content to display on call to action button ('Enter') when target component has enterkeyhint="enter" or enterkeyhint is not set. |
+| `action-go`         | Content to display on call to action button ('Enter') when target component has enterkeyhint="go". |
+| `action-next`       | Content to display on call to action button ('Enter') when target component has enterkeyhint="next". |
+| `action-previous`   | Content to display on call to action button ('Enter') when target component has enterkeyhint="previous". |
+| `action-search`     | Content to display on call to action button ('Enter') when target component has enterkeyhint="search". |
+| `action-send`       | Content to display on call to action button ('Enter') when target component has enterkeyhint="send". |
 | `backspace`         | Content to display on backspace button.          |
 | `caps-off`          | Content to display on case change button when in a lowercase state. |
 | `caps-on`           | Content to display on case change button when in a single uppercase state. |
 | `caps-on-permanent` | Content to display on case change button when in a permanent uppercase state. |
 | `clear`             | Content to display on clear button.              |
 | `close`             | Content to display next to close label.          |
-| `cta-done`          | Content to display on call to action button ('Enter') when target component has enterkeyhint="done". |
-| `cta-enter`         | Content to display on call to action button ('Enter') when target component has enterkeyhint="enter" or enterkeyhint is not set. |
-| `cta-go`            | Content to display on call to action button ('Enter') when target component has enterkeyhint="go". |
-| `cta-next`          | Content to display on call to action button ('Enter') when target component has enterkeyhint="next". |
-| `cta-previous`      | Content to display on call to action button ('Enter') when target component has enterkeyhint="previous". |
-| `cta-search`        | Content to display on call to action button ('Enter') when target component has enterkeyhint="search". |
-| `cta-send`          | Content to display on call to action button ('Enter') when target component has enterkeyhint="send". |
 | `loading_indicator` | Used to define content that is displayed while async rendering is awaiting, or when renderLoading() is implicitly called |
 
 ## CSS Custom Properties
 
 | Property                                         | Description                                      |
 |--------------------------------------------------|--------------------------------------------------|
+| `--omni-keyboard-action-button-background-color` | Background colour for keyboard call to action button. |
+| `--omni-keyboard-action-button-border-radius`    | Border radius for keyboard call to action button. |
+| `--omni-keyboard-action-button-color`            | Font or icon colour for keyboard call to action button. |
+| `--omni-keyboard-action-button-font-size`        | Font size for keyboard call to action button.    |
+| `--omni-keyboard-action-button-font-weight`      | Font weight for keyboard call to action button.  |
+| `--omni-keyboard-action-button-margin`           | Margin for keyboard call to action button.       |
+| `--omni-keyboard-action-button-max-width`        | Max width for keyboard call to action button.    |
+| `--omni-keyboard-action-button-width`            | Width for keyboard call to action button.        |
 | `--omni-keyboard-background-color`               | Background color for keyboard.                   |
 | `--omni-keyboard-button-background-color`        | Background color for keyboard buttons.           |
 | `--omni-keyboard-button-border`                  | Border for keyboard buttons.                     |
@@ -92,25 +100,17 @@ An on-screen keyboard control component.
 | `--omni-keyboard-close-icon-width`               | Width for keyboard close button icon.            |
 | `--omni-keyboard-closer-padding-right`           | Right padding for keyboard close button area.    |
 | `--omni-keyboard-closer-width`                   | Width for keyboard close button area.            |
-| `--omni-keyboard-cta-button-background-color`    | Background colour for keyboard call to action button. |
-| `--omni-keyboard-cta-button-border-radius`       | Border radius for keyboard call to action button. |
-| `--omni-keyboard-cta-button-color`               | Font or icon colour for keyboard call to action button. |
-| `--omni-keyboard-cta-button-font-size`           | Font size for keyboard call to action button.    |
-| `--omni-keyboard-cta-button-font-weight`         | Font weight for keyboard call to action button.  |
-| `--omni-keyboard-cta-button-margin`              | Margin for keyboard call to action button.       |
-| `--omni-keyboard-cta-button-max-width`           | Max width for keyboard call to action button.    |
-| `--omni-keyboard-cta-button-width`               | Width for keyboard call to action button.        |
 | `--omni-keyboard-icons-color`                    | Colour for keyboard icons.                       |
 | `--omni-keyboard-key-row-margin`                 | Margin for keyboard rows.                        |
 | `--omni-keyboard-key-row-width`                  | Width for keyboard rows.                         |
+| `--omni-keyboard-mobile-action-button-height`    | Height for keyboard call to action button in mobile viewports. |
+| `--omni-keyboard-mobile-action-button-margin`    | Margin for keyboard call to action button in mobile viewports. |
+| `--omni-keyboard-mobile-action-button-max-width` | Max width for keyboard call to action button in mobile viewports. |
 | `--omni-keyboard-mobile-close-icon-width`        | Width for keyboard close button icon in mobile viewports. |
-| `--omni-keyboard-mobile-cta-button-height`       | Height for keyboard call to action button in mobile viewports. |
-| `--omni-keyboard-mobile-cta-button-margin`       | Margin for keyboard call to action button in mobile viewports. |
-| `--omni-keyboard-mobile-cta-button-max-width`    | Max width for keyboard call to action button in mobile viewports. |
 | `--omni-keyboard-mobile-key-row-margin`          | Margin for keyboard rows in mobile viewports.    |
 | `--omni-keyboard-mobile-key-row-width`           | Width for keyboard rows in mobile viewports.     |
-| `--omni-keyboard-mobile-small-cta-button-height` | Height for keyboard call to action button in small mobile viewports. |
-| `--omni-keyboard-mobile-small-cta-button-max-width` | Max width for keyboard call to action button in small mobile viewports. |
+| `--omni-keyboard-mobile-small-action-button-height` | Height for keyboard call to action button in small mobile viewports. |
+| `--omni-keyboard-mobile-small-action-button-max-width` | Max width for keyboard call to action button in small mobile viewports. |
 | `--omni-keyboard-mobile-small-key-row-margin`    | Margin for keyboard rows in small mobile viewports. |
 | `--omni-keyboard-mobile-special-key-row-margin`  | Margin for special keyboard rows in mobile viewports. |
 | `--omni-keyboard-row-padding-bottom`             | Bottom padding for last keyboard row.            |
