@@ -203,11 +203,9 @@ export class Keyboard extends OmniElement {
     }
 
     private get currentEnterKeyHint(): EnterKeyHint {
-        const explicitHint = (
-            this.targetComponent?.hasAttribute('enterkeyhint')
-                ? this.targetComponent.getAttribute('enterkeyhint')
-                : this.target?.getAttribute('enterkeyhint')
-        );
+        const explicitHint = this.targetComponent?.hasAttribute('enterkeyhint')
+            ? this.targetComponent.getAttribute('enterkeyhint')
+            : this.target?.getAttribute('enterkeyhint');
 
         if (!explicitHint) {
             if (this.target?.type === 'search') {
@@ -216,8 +214,8 @@ export class Keyboard extends OmniElement {
                 return 'enter';
             }
         }
-        
-       return explicitHint as EnterKeyHint;
+
+        return explicitHint as EnterKeyHint;
     }
 
     private globalClick = this._globalClick.bind(this);
