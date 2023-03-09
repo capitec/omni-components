@@ -34,11 +34,13 @@ disabled>
 
 ## Methods
 
-| Method          | Type                                     |
-|-----------------|------------------------------------------|
-| `renderContent` | `(): TemplateResult<1>`                  |
-| `renderControl` | `(): TemplateResult<1>`                  |
-| `renderPicker`  | `(): TemplateResult<1> \| unique symbol` |
+| Method          | Type                                          |
+|-----------------|-----------------------------------------------|
+| `focus`         | `(options?: FocusOptions \| undefined): void` |
+| `renderContent` | `(): TemplateResult<1>`                       |
+| `renderControl` | `(): TemplateResult<1>`                       |
+| `renderLabel`   | `(): TemplateResult<1>`                       |
+| `renderPicker`  | `(): TemplateResult<1> \| unique symbol`      |
 
 ## Events
 
