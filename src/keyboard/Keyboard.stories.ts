@@ -38,13 +38,13 @@ interface Args {
     close: string;
     clear: string;
     backspace: string;
-    'cta-done': string;
-    'cta-go': string;
-    'cta-next': string;
-    'cta-previous': string;
-    'cta-search': string;
-    'cta-send': string;
-    'cta-enter': string;
+    'action-done': string;
+    'action-go': string;
+    'action-next': string;
+    'action-previous': string;
+    'action-search': string;
+    'action-send': string;
+    'action-enter': string;
 }
 
 export const Interactive: ComponentStoryFormat<Args> = {
@@ -55,20 +55,20 @@ export const Interactive: ComponentStoryFormat<Args> = {
         attach-mode="${args.attachMode}" 
         clear-label="${args.clearLabel}" 
         space-label="${args.spaceLabel}" 
-        cta-label="${args.ctaLabel}" 
+        action-label="${args.ctaLabel}" 
         close-label="${args.closeLabel}" >${args['caps-off'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-off', args['caps-off']))}` : nothing}${
         args['caps-on'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-on', args['caps-on']))}` : nothing
     }${args['caps-on-permanent'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-on-permanent', args['caps-on-permanent']))}` : nothing}${
         args['close'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('close', args['close']))}` : nothing
     }${args['clear'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('clear', args['clear']))}` : nothing}${
         args['backspace'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('backspace', args['backspace']))}` : nothing
-    }${args['cta-done'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-done', args['cta-done']))}` : nothing}${
-        args['cta-go'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-go', args['cta-go']))}` : nothing
-    }${args['cta-next'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-next', args['cta-next']))}` : nothing}${
-        args['cta-previous'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-previous', args['cta-previous']))}` : nothing
-    }${args['cta-search'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-search', args['cta-search']))}` : nothing}${
-        args['cta-send'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-send', args['cta-send']))}` : nothing
-    }${args['cta-enter'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-enter', args['cta-enter']))}` : nothing}
+    }${args['action-done'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('action-done', args['action-done']))}` : nothing}${
+        args['action-go'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('action-go', args['action-go']))}` : nothing
+    }${args['action-next'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('action-next', args['action-next']))}` : nothing}${
+        args['action-previous'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('action-previous', args['action-previous']))}` : nothing
+    }${args['action-search'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('action-search', args['action-search']))}` : nothing}${
+        args['action-send'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('action-send', args['action-send']))}` : nothing
+    }${args['action-enter'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('action-enter', args['action-enter']))}` : nothing}
     </omni-keyboard>
     
     <!-- Examples -->
@@ -152,13 +152,13 @@ export const Interactive: ComponentStoryFormat<Args> = {
         'caps-off': raw`<omni-caps-off-icon style="display: inherit;"></omni-caps-off-icon>`,
         'caps-on': raw`<omni-caps-on-icon style="display: inherit;"></omni-caps-on-icon>`,
         'caps-on-permanent': raw`<omni-caps-on-permanent-icon style="display: inherit;"></omni-caps-on-permanent-icon>`,
-        'cta-done': raw`<omni-check-icon style="display: inherit;"></omni-check-icon>`,
-        'cta-enter': '',
-        'cta-go': raw`<omni-arrow-right-icon style="display: inherit;"></omni-arrow-right-icon>`,
-        'cta-next': raw`<omni-next-icon style="display: inherit;"></omni-next-icon>`,
-        'cta-previous': raw`<omni-previous-icon style="display: inherit;"></omni-previous-icon>`,
-        'cta-search': raw`<omni-search-icon style="display: inherit;"></omni-search-icon>`,
-        'cta-send': raw`<omni-send-icon style="display: inherit;"></omni-send-icon>`,
+        'action-done': raw`<omni-check-icon style="display: inherit;"></omni-check-icon>`,
+        'action-enter': '',
+        'action-go': raw`<omni-arrow-right-icon style="display: inherit;"></omni-arrow-right-icon>`,
+        'action-next': raw`<omni-next-icon style="display: inherit;"></omni-next-icon>`,
+        'action-previous': raw`<omni-previous-icon style="display: inherit;"></omni-previous-icon>`,
+        'action-search': raw`<omni-search-icon style="display: inherit;"></omni-search-icon>`,
+        'action-send': raw`<omni-send-icon style="display: inherit;"></omni-send-icon>`,
         backspace: raw`<omni-backspace-icon style="display: inherit;"></omni-backspace-icon>`,
         clear: '',
         close: raw`<omni-chevron-down-icon style="display: inherit;"></omni-chevron-down-icon>`
@@ -297,13 +297,13 @@ export const Enter_Key_Hint_Variations: ComponentStoryFormat<Args> = {
     <br/>
     <span>The '<strong>enterkeyhint</strong>' attribute is supported as follows:
         <ul>
-            <li><strong>enter</strong> (Default) - The '<strong>cta-enter</strong>' slot will apply to the call to action button. If not provided, the value defined with the '<strong>cta-label</strong>' attribute on the keyboard will be displayed on the call to action button.</li>
-            <li><strong>go</strong> - The '<strong>cta-go</strong>' slot will apply to the call to action button. If not provided, a right arrow icon <omni-arrow-right-icon class="example-icon-preview"></omni-arrow-right-icon> will be displayed by default.</li>
-            <li><strong>done</strong> - The '<strong>cta-done</strong>' slot will apply to the call to action button. If not provided, a checkmark icon <omni-check-icon class="example-icon-preview"></omni-check-icon> will be displayed by default.</li>
-            <li><strong>next</strong> - The '<strong>cta-next</strong>' slot will apply to the call to action button. If not provided, an icon of a right arrow within a circle <omni-next-icon class="example-icon-preview"></omni-next-icon> will be displayed by default.</li>
-            <li><strong>previous</strong> - The '<strong>cta-previous</strong>' slot will apply to the call to action button. If not provided, an icon of a left arrow within a circle <omni-previous-icon class="example-icon-preview"></omni-previous-icon> will be displayed by default. The Keyboard's default behaviour of focusing the next '<strong>tabIndex</strong>' will also reverse to focus the previous instead.</li>
-            <li><strong>search</strong> - The '<strong>cta-search</strong>' slot will apply to the call to action button. If not provided, a magnifying glass icon <omni-search-icon class="example-icon-preview"></omni-search-icon> will be displayed by default.</li>
-            <li><strong>send</strong> - The '<strong>cta-send</strong>' slot will apply to the call to action button. If not provided, a paper plane icon <omni-send-icon class="example-icon-preview"></omni-send-icon> will be displayed by default.</li>
+            <li><strong>enter</strong> (Default) - The '<strong>action-enter</strong>' slot will apply to the call to action button. If not provided, the value defined with the '<strong>action-label</strong>' attribute on the keyboard will be displayed on the call to action button.</li>
+            <li><strong>go</strong> - The '<strong>action-go</strong>' slot will apply to the call to action button. If not provided, a right arrow icon <omni-arrow-right-icon class="example-icon-preview"></omni-arrow-right-icon> will be displayed by default.</li>
+            <li><strong>done</strong> - The '<strong>action-done</strong>' slot will apply to the call to action button. If not provided, a checkmark icon <omni-check-icon class="example-icon-preview"></omni-check-icon> will be displayed by default.</li>
+            <li><strong>next</strong> - The '<strong>action-next</strong>' slot will apply to the call to action button. If not provided, an icon of a right arrow within a circle <omni-next-icon class="example-icon-preview"></omni-next-icon> will be displayed by default.</li>
+            <li><strong>previous</strong> - The '<strong>action-previous</strong>' slot will apply to the call to action button. If not provided, an icon of a left arrow within a circle <omni-previous-icon class="example-icon-preview"></omni-previous-icon> will be displayed by default. The Keyboard's default behaviour of focusing the next '<strong>tabIndex</strong>' will also reverse to focus the previous instead.</li>
+            <li><strong>search</strong> - The '<strong>action-search</strong>' slot will apply to the call to action button. If not provided, a magnifying glass icon <omni-search-icon class="example-icon-preview"></omni-search-icon> will be displayed by default.</li>
+            <li><strong>send</strong> - The '<strong>action-send</strong>' slot will apply to the call to action button. If not provided, a paper plane icon <omni-send-icon class="example-icon-preview"></omni-send-icon> will be displayed by default.</li>
         </ul>
     </span>
     `,
@@ -495,20 +495,20 @@ export const Slotted_Content: ComponentStoryFormat<Args> = {
         attach-mode="${args.attachMode}" 
         clear-label="${args.clearLabel}" 
         space-label="${args.spaceLabel}" 
-        cta-label="${args.ctaLabel}" 
+        action-label="${args.ctaLabel}" 
         close-label="${args.closeLabel}" >${args['caps-off'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-off', args['caps-off']))}` : nothing}${
         args['caps-on'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-on', args['caps-on']))}` : nothing
     }${args['caps-on-permanent'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-on-permanent', args['caps-on-permanent']))}` : nothing}${
         args['close'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('close', args['close']))}` : nothing
     }${args['clear'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('clear', args['clear']))}` : nothing}${
         args['backspace'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('backspace', args['backspace']))}` : nothing
-    }${args['cta-done'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-done', args['cta-done']))}` : nothing}${
-        args['cta-go'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-go', args['cta-go']))}` : nothing
-    }${args['cta-next'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-next', args['cta-next']))}` : nothing}${
-        args['cta-previous'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-previous', args['cta-previous']))}` : nothing
-    }${args['cta-search'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-search', args['cta-search']))}` : nothing}${
-        args['cta-send'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-send', args['cta-send']))}` : nothing
-    }${args['cta-enter'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('cta-enter', args['cta-enter']))}` : nothing}
+    }${args['action-done'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('action-done', args['action-done']))}` : nothing}${
+        args['action-go'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('action-go', args['action-go']))}` : nothing
+    }${args['action-next'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('action-next', args['action-next']))}` : nothing}${
+        args['action-previous'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('action-previous', args['action-previous']))}` : nothing
+    }${args['action-search'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('action-search', args['action-search']))}` : nothing}${
+        args['action-send'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('action-send', args['action-send']))}` : nothing
+    }${args['action-enter'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('action-enter', args['action-enter']))}` : nothing}
     </omni-keyboard>
 
 
@@ -556,17 +556,49 @@ export const Slotted_Content: ComponentStoryFormat<Args> = {
         'caps-off': raw`<span class="center-inline">lower</span>`,
         'caps-on': raw`<span class="center-inline">upper</span>`,
         'caps-on-permanent': raw`<span class="center-inline">UPPER</span>`,
-        'cta-done': raw`<span class="center-inline">Done</span>`,
-        'cta-enter': raw`<span class="center-inline">↵</span>`,
-        'cta-go': raw`<span class="center-inline">Go</span>`,
-        'cta-next': raw`<span class="center-inline">→</span>`,
-        'cta-previous': raw`<span class="center-inline">←</span>`,
-        'cta-search': raw`<span class="center-inline">Search</span>`,
-        'cta-send': raw`<span class="center-inline">Send</span>`,
+        'action-done': raw`<span class="center-inline">Done</span>`,
+        'action-enter': raw`<span class="center-inline">↵</span>`,
+        'action-go': raw`<span class="center-inline">Go</span>`,
+        'action-next': raw`<span class="center-inline">→</span>`,
+        'action-previous': raw`<span class="center-inline">←</span>`,
+        'action-search': raw`<span class="center-inline">Search</span>`,
+        'action-send': raw`<span class="center-inline">Send</span>`,
         backspace: raw`<span class="center-inline">⌫</span>`,
         clear: raw`<span class="center-inline">(X)</span>`,
         close: raw`<span class="center-inline">^</span>`
     }
+};
+
+export const Alternate_Modes: ComponentStoryFormat<Args> = {
+    ...Interactive,
+    description: () => html`
+    <span>The Keyboard will react accordingly to the '<strong>data-omni-keyboard-mode</strong>' attribute on supported target elements.</span>
+        
+    `,
+    render: (args: Args) =>
+        Interactive.args!.attachMode === 'all'
+            ? html`
+        <div class="keyboard-showcase">
+            <omni-label type="subtitle" label="Alternate Keyboard Modes"></omni-label>
+            <!-- Alternate Keyboard Modes on Omni Component -->
+            <omni-search-field label="Search Field" data-omni-keyboard-mode="numeric" no-native-keyboard tabindex="61"></omni-search-field>
+            <omni-text-field label="Text Field" data-omni-keyboard-mode="tel" no-native-keyboard tabindex="62"></omni-text-field>
+        </div>
+  `
+            : html`
+            <div class="keyboard-showcase">
+                <span>To illustrate this, update the <strong>Interactive</strong> Keyboard properties to have '<strong>attach-mode</strong>' attribute set to '<strong>all</strong>'.</span>
+                <omni-button @click="${() => {
+                    Interactive.args!.attachMode = 'all';
+                    document.dispatchEvent(
+                        new CustomEvent('story-renderer-interactive-update', {
+                            bubbles: true,
+                            composed: true
+                        })
+                    );
+                }}" class="docs-omni-component"><span>Update <strong>attach-mode</strong> to <strong>all</strong></span></omni-button>
+            </div>`,
+    name: 'Alternate Modes'
 };
 
 export const Via_Script: ComponentStoryFormat<Args> = {
@@ -600,7 +632,7 @@ export const Via_Script: ComponentStoryFormat<Args> = {
             });
         }
         return html`
-            <input data-omni-keyboard-attach="keyboard-script-generated"  type="text" tabindex="61" />
+            <input data-omni-keyboard-attach="keyboard-script-generated"  type="text" tabindex="63" />
         `;
     },
     name: 'Via Script',
@@ -613,7 +645,7 @@ export const Via_Script: ComponentStoryFormat<Args> = {
     },
     source: () => raw`
 <!-- Add an input that targets the keyboard id created from script -->
-<input data-omni-keyboard-attach="keyboard-script-generated"  type="text" tabindex="61" />
+<input data-omni-keyboard-attach="keyboard-script-generated"  type="text" tabindex="63" />
 
 <!-- A script that creates a keyboard to its default parent container (document.body) with some custom button labels including a custom backspace via render function -->
 <script defer>
