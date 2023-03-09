@@ -1,3 +1,49 @@
+# omni-arrow-right-icon
+
+Arrow right icon component.
+
+## Example
+
+```html
+<omni-arrow-right-icon></omni-arrow-right-icon>
+```
+
+## Properties
+
+| Property   |
+|------------|
+| `override` |
+
+## Methods
+
+| Method             | Type       |
+|--------------------|------------|
+| `createRenderRoot` | `(): this` |
+
+
+# omni-backspace-icon
+
+Backspace icon component.
+
+## Example
+
+```html
+<omni-backspace-icon></omni-backspace-icon>
+```
+
+## Properties
+
+| Property   |
+|------------|
+| `override` |
+
+## Methods
+
+| Method             | Type       |
+|--------------------|------------|
+| `createRenderRoot` | `(): this` |
+
+
 # omni-calendar-icon
 
 A calendar icon component.
@@ -11,6 +57,75 @@ import '@capitec/omni-components/icons/Calendar.icon.js';
 
 ```html
 <omni-calendar-icon></omni-calendar-icon>
+```
+
+## Properties
+
+| Property   |
+|------------|
+| `override` |
+
+## Methods
+
+| Method             | Type       |
+|--------------------|------------|
+| `createRenderRoot` | `(): this` |
+
+
+# omni-caps-off-icon
+
+Caps off icon component.
+
+## Example
+
+```html
+<omni-caps-off-icon></omni-caps-off-icon>
+```
+
+## Properties
+
+| Property   |
+|------------|
+| `override` |
+
+## Methods
+
+| Method             | Type       |
+|--------------------|------------|
+| `createRenderRoot` | `(): this` |
+
+
+# omni-caps-on-icon
+
+Caps on icon component.
+
+## Example
+
+```html
+<omni-caps-on-icon></omni-caps-on-icon>
+```
+
+## Properties
+
+| Property   |
+|------------|
+| `override` |
+
+## Methods
+
+| Method             | Type       |
+|--------------------|------------|
+| `createRenderRoot` | `(): this` |
+
+
+# omni-caps-on-permanent-icon
+
+Permanent caps on icon component.
+
+## Example
+
+```html
+<omni-caps-on-permanent-icon></omni-caps-on-permanent-icon>
 ```
 
 ## Properties
@@ -389,6 +504,29 @@ More icon component.
 | `createRenderRoot` | `(): this` |
 
 
+# omni-next-icon
+
+Next icon component.
+
+## Example
+
+```html
+<omni-next-icon></omni-next-icon>
+```
+
+## Properties
+
+| Property   |
+|------------|
+| `override` |
+
+## Methods
+
+| Method             | Type       |
+|--------------------|------------|
+| `createRenderRoot` | `(): this` |
+
+
 # omni-plus-icon
 
 Plus icon component.
@@ -412,6 +550,29 @@ Plus icon component.
 | `createRenderRoot` | `(): this` |
 
 
+# omni-previous-icon
+
+Previous icon component.
+
+## Example
+
+```html
+<omni-previous-icon></omni-previous-icon>
+```
+
+## Properties
+
+| Property   |
+|------------|
+| `override` |
+
+## Methods
+
+| Method             | Type       |
+|--------------------|------------|
+| `createRenderRoot` | `(): this` |
+
+
 # omni-search-icon
 
 Search icon component.
@@ -420,6 +581,29 @@ Search icon component.
 
 ```html
 <omni-search-icon></omni-search-icon>
+```
+
+## Properties
+
+| Property   |
+|------------|
+| `override` |
+
+## Methods
+
+| Method             | Type       |
+|--------------------|------------|
+| `createRenderRoot` | `(): this` |
+
+
+# omni-send-icon
+
+Send icon component.
+
+## Example
+
+```html
+<omni-send-icon></omni-send-icon>
 ```
 
 ## Properties

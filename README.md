@@ -263,6 +263,22 @@ Component that displays an icon.
 
 </td></tr><tr><td>
 
+[omni-arrow-right-icon](src/icons/README.md)
+
+</td><td>
+
+Arrow right icon component.
+
+</td></tr><tr><td>
+
+[omni-backspace-icon](src/icons/README.md)
+
+</td><td>
+
+Backspace icon component.
+
+</td></tr><tr><td>
+
 [omni-calendar-icon](src/icons/README.md)
 
 </td><td>
@@ -276,6 +292,30 @@ A calendar icon component.
 import '@capitec/omni-components/icons/Calendar.icon.js';
 
 ```
+
+</td></tr><tr><td>
+
+[omni-caps-off-icon](src/icons/README.md)
+
+</td><td>
+
+Caps off icon component.
+
+</td></tr><tr><td>
+
+[omni-caps-on-icon](src/icons/README.md)
+
+</td><td>
+
+Caps on icon component.
+
+</td></tr><tr><td>
+
+[omni-caps-on-permanent-icon](src/icons/README.md)
+
+</td><td>
+
+Permanent caps on icon component.
 
 </td></tr><tr><td>
 
@@ -407,6 +447,14 @@ More icon component.
 
 </td></tr><tr><td>
 
+[omni-next-icon](src/icons/README.md)
+
+</td><td>
+
+Next icon component.
+
+</td></tr><tr><td>
+
 [omni-plus-icon](src/icons/README.md)
 
 </td><td>
@@ -415,11 +463,43 @@ Plus icon component.
 
 </td></tr><tr><td>
 
+[omni-previous-icon](src/icons/README.md)
+
+</td><td>
+
+Previous icon component.
+
+</td></tr><tr><td>
+
 [omni-search-icon](src/icons/README.md)
 
 </td><td>
 
 Search icon component.
+
+</td></tr><tr><td>
+
+[omni-send-icon](src/icons/README.md)
+
+</td><td>
+
+Send icon component.
+
+</td></tr><tr><td>
+
+[omni-keyboard](src/keyboard/README.md)
+
+</td><td>
+
+An on-screen keyboard control component.
+
+</td></tr><tr><td>
+
+[omni-keyboard-button](src/keyboard/README.md)
+
+</td><td>
+
+An internal keyboard button control used in the keyboard component.
 
 </td></tr><tr><td>
 

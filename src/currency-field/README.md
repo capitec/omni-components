@@ -40,10 +40,11 @@ Control to enter a formatted currency value.
 
 ## Methods
 
-| Method          | Type                    |
-|-----------------|-------------------------|
-| `renderContent` | `(): TemplateResult<1>` |
-| `renderPrefix`  | `(): TemplateResult<1>` |
+| Method          | Type                                          |
+|-----------------|-----------------------------------------------|
+| `focus`         | `(options?: FocusOptions \| undefined): void` |
+| `renderContent` | `(): TemplateResult<1>`                       |
+| `renderPrefix`  | `(): TemplateResult<1>`                       |
 
 ## Slots
 
