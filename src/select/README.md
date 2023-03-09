@@ -43,6 +43,7 @@ Control to get / set a value within a list of options.
 |-----------------|------------------------------------------|
 | `renderContent` | `(): TemplateResult<1>`                  |
 | `renderControl` | `(): TemplateResult<1>`                  |
+| `renderLabel`   | `(): TemplateResult<1>`                  |
 | `renderLoading` | `(): TemplateResult<1>`                  |
 | `renderPicker`  | `(): TemplateResult<1> \| unique symbol` |
 
