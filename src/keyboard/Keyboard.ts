@@ -46,13 +46,13 @@ import './KeyboardButton.js';
  * @slot close - Content to display next to close label.
  * @slot backspace - Content to display on backspace button.
  * @slot clear - Content to display on clear button.
- * @slot cta-done - Content to display on call to action button ('Enter') when target component has enterkeyhint="done".
- * @slot cta-go - Content to display on call to action button ('Enter') when target component has enterkeyhint="go".
- * @slot cta-next - Content to display on call to action button ('Enter') when target component has enterkeyhint="next".
- * @slot cta-previous - Content to display on call to action button ('Enter') when target component has enterkeyhint="previous".
- * @slot cta-search - Content to display on call to action button ('Enter') when target component has enterkeyhint="search".
- * @slot cta-send - Content to display on call to action button ('Enter') when target component has enterkeyhint="send".
- * @slot cta-enter - Content to display on call to action button ('Enter') when target component has enterkeyhint="enter" or enterkeyhint is not set.
+ * @slot action-done - Content to display on call to action button ('Enter') when target component has enterkeyhint="done".
+ * @slot action-go - Content to display on call to action button ('Enter') when target component has enterkeyhint="go".
+ * @slot action-next - Content to display on call to action button ('Enter') when target component has enterkeyhint="next".
+ * @slot action-previous - Content to display on call to action button ('Enter') when target component has enterkeyhint="previous".
+ * @slot action-search - Content to display on call to action button ('Enter') when target component has enterkeyhint="search".
+ * @slot action-send - Content to display on call to action button ('Enter') when target component has enterkeyhint="send".
+ * @slot action-enter - Content to display on call to action button ('Enter') when target component has enterkeyhint="enter" or enterkeyhint is not set.
  *
  * @cssprop --omni-keyboard-button-icon-max-height - Max height for slotted content in keyboard buttons.
  * @cssprop --omni-keyboard-button-icon-max-width - Max width for slotted content in keyboard buttons.
@@ -92,14 +92,14 @@ import './KeyboardButton.js';
  * @cssprop --omni-keyboard-top-bar-border-radius - Border radius for keyboard top bar.
  * @cssprop --omni-keyboard-top-bar-border-bottom-color - Border bottom color for keyboard top bar.
  *
- * @cssprop --omni-keyboard-cta-button-width - Width for keyboard call to action button.
- * @cssprop --omni-keyboard-cta-button-max-width - Max width for keyboard call to action button.
- * @cssprop --omni-keyboard-cta-button-color - Font or icon colour for keyboard call to action button.
- * @cssprop --omni-keyboard-cta-button-background-color - Background colour for keyboard call to action button.
- * @cssprop --omni-keyboard-cta-button-font-size - Font size for keyboard call to action button.
- * @cssprop --omni-keyboard-cta-button-font-weight - Font weight for keyboard call to action button.
- * @cssprop --omni-keyboard-cta-button-border-radius - Border radius for keyboard call to action button.
- * @cssprop --omni-keyboard-cta-button-margin - Margin for keyboard call to action button.
+ * @cssprop --omni-keyboard-action-button-width - Width for keyboard call to action button.
+ * @cssprop --omni-keyboard-action-button-max-width - Max width for keyboard call to action button.
+ * @cssprop --omni-keyboard-action-button-color - Font or icon colour for keyboard call to action button.
+ * @cssprop --omni-keyboard-action-button-background-color - Background colour for keyboard call to action button.
+ * @cssprop --omni-keyboard-action-button-font-size - Font size for keyboard call to action button.
+ * @cssprop --omni-keyboard-action-button-font-weight - Font weight for keyboard call to action button.
+ * @cssprop --omni-keyboard-action-button-border-radius - Border radius for keyboard call to action button.
+ * @cssprop --omni-keyboard-action-button-margin - Margin for keyboard call to action button.
  *
  * @cssprop --omni-keyboard-close-icon-width - Width for keyboard close button icon.
  * @cssprop --omni-keyboard-close-button-font-weight - Font weight for keyboard close button.
@@ -124,9 +124,9 @@ import './KeyboardButton.js';
  * @cssprop --omni-keyboard-mobile-special-key-row-margin - Margin for special keyboard rows in mobile viewports.
  * @cssprop --omni-keyboard-mobile-key-row-width - Width for keyboard rows in mobile viewports.
  *
- * @cssprop --omni-keyboard-mobile-cta-button-height - Height for keyboard call to action button in mobile viewports.
- * @cssprop --omni-keyboard-mobile-cta-button-max-width - Max width for keyboard call to action button in mobile viewports.
- * @cssprop --omni-keyboard-mobile-cta-button-margin - Margin for keyboard call to action button in mobile viewports.
+ * @cssprop --omni-keyboard-mobile-action-button-height - Height for keyboard call to action button in mobile viewports.
+ * @cssprop --omni-keyboard-mobile-action-button-max-width - Max width for keyboard call to action button in mobile viewports.
+ * @cssprop --omni-keyboard-mobile-action-button-margin - Margin for keyboard call to action button in mobile viewports.
  *
  * @cssprop --omni-keyboard-mobile-close-icon-width - Width for keyboard close button icon in mobile viewports.
  * @cssprop --omni-keyboard-mobile-close-icon-width - Width for keyboard close button icon in mobile viewports.
@@ -134,8 +134,8 @@ import './KeyboardButton.js';
  * @cssprop --omni-keyboard-mobile-small-key-row-margin - Margin for keyboard rows in small mobile viewports.
  * @cssprop --omni-keyboard-mobile-small-key-row-margin - Margin for special keyboard rows in small mobile viewports.
  *
- * @cssprop --omni-keyboard-mobile-small-cta-button-height - Height for keyboard call to action button in small mobile viewports.
- * @cssprop --omni-keyboard-mobile-small-cta-button-max-width - Max width for keyboard call to action button in small mobile viewports.
+ * @cssprop --omni-keyboard-mobile-small-action-button-height - Height for keyboard call to action button in small mobile viewports.
+ * @cssprop --omni-keyboard-mobile-small-action-button-max-width - Max width for keyboard call to action button in small mobile viewports.
  */
 @customElement('omni-keyboard')
 export class Keyboard extends OmniElement {
@@ -166,10 +166,10 @@ export class Keyboard extends OmniElement {
     @property({ type: String, attribute: 'clear-label', reflect: true }) clearLabel: string = 'Clear';
 
     /**
-     * The text label to display on the call to action button when `enterkeyhint` is not defined or `enterkeyhint="enter"`. The `cta-enter` slot takes precedence over this label.
-     * @attr [cta-label="Enter"]
+     * The text label to display on the call to action button when `enterkeyhint` is not defined or `enterkeyhint="enter"`. The `action-enter` slot takes precedence over this label.
+     * @attr [action-label="Enter"]
      */
-    @property({ type: String, attribute: 'cta-label', reflect: true }) ctaLabel: string = 'Enter';
+    @property({ type: String, attribute: 'action-label', reflect: true }) ctaLabel: string = 'Enter';
 
     @state() private mode: KeyboardMode = 'none';
     @state() private currentCase: 'lower' | 'upper' | 'upper-single' = 'lower';
@@ -259,7 +259,7 @@ export class Keyboard extends OmniElement {
                     attach-mode="${ifDefined(init.attachMode)}" 
                     clear-label="${ifDefined(init.clearLabel)}" 
                     space-label="${ifDefined(init.spaceLabel)}" 
-                    cta-label="${ifDefined(init.ctaLabel)}" 
+                    action-label="${ifDefined(init.ctaLabel)}" 
                     close-label="${ifDefined(init.closeLabel)}">
                     <omni-render-element slot="clear" .renderer="${init.clear ? init.clear : () => html`${init.clearLabel}`}"></omni-render-element>
                     ${
@@ -287,38 +287,38 @@ export class Keyboard extends OmniElement {
                             ? html`<omni-render-element slot="close" .renderer="${init.close}"></omni-render-element>`
                             : html`<omni-chevron-down-icon style="display: inherit;" slot="close"></omni-chevron-down-icon>`
                     }
-                    <omni-render-element slot="cta-enter" .renderer="${
+                    <omni-render-element slot="action-enter" .renderer="${
                         init.ctaEnter ? init.ctaEnter : () => html`${init.ctaLabel}`
                     }"></omni-render-element>
                     ${
                         init.ctaDone
-                            ? html`<omni-render-element slot="cta-done" .renderer="${init.ctaDone}"></omni-render-element>`
-                            : html`<omni-check-icon style="display: inherit;"  slot="cta-done"></omni-check-icon>`
+                            ? html`<omni-render-element slot="action-done" .renderer="${init.ctaDone}"></omni-render-element>`
+                            : html`<omni-check-icon style="display: inherit;"  slot="action-done"></omni-check-icon>`
                     }
                     ${
                         init.ctaGo
-                            ? html`<omni-render-element slot="cta-go" .renderer="${init.ctaGo}"></omni-render-element>`
-                            : html`<omni-arrow-right-icon style="display: inherit;" slot="cta-go"></omni-arrow-right-icon>`
+                            ? html`<omni-render-element slot="action-go" .renderer="${init.ctaGo}"></omni-render-element>`
+                            : html`<omni-arrow-right-icon style="display: inherit;" slot="action-go"></omni-arrow-right-icon>`
                     }
                     ${
                         init.ctaNext
-                            ? html`<omni-render-element slot="cta-next" .renderer="${init.ctaNext}"></omni-render-element>`
-                            : html`<omni-next-icon style="display: inherit;"  slot="cta-next"></omni-next-icon>`
+                            ? html`<omni-render-element slot="action-next" .renderer="${init.ctaNext}"></omni-render-element>`
+                            : html`<omni-next-icon style="display: inherit;"  slot="action-next"></omni-next-icon>`
                     }
                     ${
                         init.ctaPrevious
-                            ? html`<omni-render-element slot="cta-previous" .renderer="${init.ctaPrevious}"></omni-render-element>`
-                            : html`<omni-previous-icon style="display: inherit;" slot="cta-previous"></omni-previous-icon>`
+                            ? html`<omni-render-element slot="action-previous" .renderer="${init.ctaPrevious}"></omni-render-element>`
+                            : html`<omni-previous-icon style="display: inherit;" slot="action-previous"></omni-previous-icon>`
                     }
                     ${
                         init.ctaSearch
-                            ? html`<omni-render-element slot="cta-search" .renderer="${init.ctaSearch}"></omni-render-element>`
-                            : html`<omni-search-icon style="display: inherit;" slot="cta-search"></omni-search-icon>`
+                            ? html`<omni-render-element slot="action-search" .renderer="${init.ctaSearch}"></omni-render-element>`
+                            : html`<omni-search-icon style="display: inherit;" slot="action-search"></omni-search-icon>`
                     }
                     ${
                         init.ctaSend
-                            ? html`<omni-render-element slot="cta-send" .renderer="${init.ctaSend}"></omni-render-element>`
-                            : html`<omni-send-icon style="display: inherit;" slot="cta-send"></omni-send-icon>`
+                            ? html`<omni-render-element slot="action-send" .renderer="${init.ctaSend}"></omni-render-element>`
+                            : html`<omni-send-icon style="display: inherit;" slot="action-send"></omni-send-icon>`
                     }
                 </omni-keyboard>
             `,
@@ -883,17 +883,17 @@ export class Keyboard extends OmniElement {
 				}
 
                 
-				.cta-button {
-					width: var(--omni-keyboard-cta-button-width, 100%);
-                    max-width: var(--omni-keyboard-cta-button-max-width,114px);
-					color: var(--omni-keyboard-cta-button-color,var(--omni-background-color));
-					background-color: var(--omni-keyboard-cta-button-background-color,var(--omni-primary-color));
+				.action-button {
+					width: var(--omni-keyboard-action-button-width, 100%);
+                    max-width: var(--omni-keyboard-action-button-max-width,114px);
+					color: var(--omni-keyboard-action-button-color,var(--omni-background-color));
+					background-color: var(--omni-keyboard-action-button-background-color,var(--omni-primary-color));
 					border: none;
 					text-align: center;
-					font-size: var(--omni-keyboard-cta-button-font-size,15px);
-					font-weight: var(--omni-keyboard-cta-button-font-weight,600);
-					border-radius: var(--omni-keyboard-cta-button-border-radius,8px);
-					margin: var(--omni-keyboard-cta-button-margin,var(--omni-keyboard-button-margin, 6px 7px));
+					font-size: var(--omni-keyboard-action-button-font-size,15px);
+					font-weight: var(--omni-keyboard-action-button-font-weight,600);
+					border-radius: var(--omni-keyboard-action-button-border-radius,8px);
+					margin: var(--omni-keyboard-action-button-margin,var(--omni-keyboard-button-margin, 6px 7px));
 					float: right;
                     cursor: pointer;
                     display: flex;
@@ -902,15 +902,15 @@ export class Keyboard extends OmniElement {
                     flex-direction: row;
 				}
 
-                .cta-fill {
+                .action-fill {
                     height: var(--omni-keyboard-button-height, 40px);
                     margin: var(--omni-keyboard-button-margin, 6px 7px);
                     max-width: unset !important;
                 }
 
 
-                .cta-icon {
-                    --omni-icon-fill: var(--omni-keyboard-cta-button-color,var(--omni-background-color));
+                .action-icon {
+                    --omni-icon-fill: var(--omni-keyboard-action-button-color,var(--omni-background-color));
                 }
 
                 .fill-space {
@@ -1060,10 +1060,10 @@ export class Keyboard extends OmniElement {
                         width:100%
                     }
 
-                   .cta-button {
-                        height: var(--omni-keyboard-mobile-cta-button-height, 28px);
-                        margin: var(--omni-keyboard-mobile-cta-button-margin, 2px);
-                        max-width: var(--omni-keyboard-mobile-cta-button-max-width, 60px);
+                   .action-button {
+                        height: var(--omni-keyboard-mobile-action-button-height, 28px);
+                        margin: var(--omni-keyboard-mobile-action-button-margin, 2px);
+                        max-width: var(--omni-keyboard-mobile-action-button-max-width, 60px);
                         
                    }
 
@@ -1092,10 +1092,10 @@ export class Keyboard extends OmniElement {
                         margin: var(--omni-keyboard-mobile-small-key-row-margin,8px 17px);
                     }
 
-                    .cta-button {
+                    .action-button {
                         font-size: x-small;
-                        height: var(--omni-keyboard-mobile-small-cta-button-height, 20px);
-                        max-width: var(--omni-keyboard-mobile-small-cta-button-max-width, 36px);
+                        height: var(--omni-keyboard-mobile-small-action-button-height, 20px);
+                        max-width: var(--omni-keyboard-mobile-small-action-button-max-width, 36px);
                         --omni-icon-size-medium: 15px;
                     }
 
@@ -1343,7 +1343,7 @@ export class Keyboard extends OmniElement {
 										</omni-keyboard-button>
 										${this.renderClear('numeric')}
                                         ${this.renderCallToAction({
-                                            'cta-fill': true
+                                            'action-fill': true
                                         })}
 									</div>
 								</div>
@@ -1402,7 +1402,7 @@ export class Keyboard extends OmniElement {
 									</div>
 									<div class="keyrow pad-bottom numeric-row">
                                         ${this.renderCallToAction({
-                                            'cta-fill': true
+                                            'action-fill': true
                                         })}
 									</div>
 								</div>
@@ -1489,7 +1489,7 @@ export class Keyboard extends OmniElement {
     renderCallToAction(extraClasses: ClassInfo | undefined = undefined) {
         const enterKeyHint = this.currentEnterKeyHint;
         const classes: ClassInfo = {
-            'cta-button': true,
+            'action-button': true,
             ...extraClasses
         };
         return html`
@@ -1498,62 +1498,62 @@ export class Keyboard extends OmniElement {
                 ${
                     enterKeyHint === 'done'
                         ? html`
-                        <omni-icon size="medium" class="cta-icon">
+                        <omni-icon size="medium" class="action-icon">
                             <div class="stretch-icon">
-                                <slot name="cta-done">
+                                <slot name="action-done">
                                     <omni-check-icon  style="display: unset;"></omni-check-icon>
                                 </slot>
                             </div>
                         </omni-icon>`
                         : enterKeyHint === 'go'
                         ? html`
-                        <omni-icon size="medium" class="cta-icon">
+                        <omni-icon size="medium" class="action-icon">
                             <div class="stretch-icon">
-                                <slot name="cta-go">
+                                <slot name="action-go">
                                     <omni-arrow-right-icon style="display: unset;"></omni-arrow-right-icon>
                                 </slot>
                             </div>
                         </omni-icon>`
                         : enterKeyHint === 'next'
                         ? html`
-                        <omni-icon size="medium" class="cta-icon">
+                        <omni-icon size="medium" class="action-icon">
                             <div class="stretch-icon">
-                                <slot name="cta-next">
+                                <slot name="action-next">
                                     <omni-next-icon  style="display: unset;"></omni-next-icon>
                                 </slot>
                             </div>
                         </omni-icon>`
                         : enterKeyHint === 'previous'
                         ? html`
-                        <omni-icon size="medium" class="cta-icon">
+                        <omni-icon size="medium" class="action-icon">
                             <div class="stretch-icon">
-                                <slot name="cta-previous">
+                                <slot name="action-previous">
                                     <omni-previous-icon  style="display: unset;"></omni-previous-icon>
                                 </slot>
                             </div>
                         </omni-icon>`
                         : enterKeyHint === 'search'
                         ? html`
-                        <omni-icon size="medium" class="cta-icon">
+                        <omni-icon size="medium" class="action-icon">
                             <div class="stretch-icon">
-                                <slot name="cta-search">
+                                <slot name="action-search">
                                     <omni-search-icon  style="display: unset;"></omni-search-icon>
                                 </slot>
                             </div>
                         </omni-icon>`
                         : enterKeyHint === 'send'
                         ? html`
-                        <omni-icon size="medium" class="cta-icon">
+                        <omni-icon size="medium" class="action-icon">
                             <div class="stretch-icon">
-                                <slot name="cta-send">
+                                <slot name="action-send">
                                     <omni-send-icon  style="display: unset;"></omni-send-icon>
                                 </slot>
                             </div>
                         </omni-icon>`
                         : html`
-                        <omni-icon size="medium" class="cta-icon">
+                        <omni-icon size="medium" class="action-icon">
                             <div class="stretch-icon flex-text-center">
-                                <slot name="cta-enter">
+                                <slot name="action-enter">
                                     ${this.ctaLabel}
                                 </slot>
                             </div>
@@ -1678,7 +1678,7 @@ export type KeyboardInit = {
     clearLabel?: string;
 
     /**
-     * The text label to display on the call to action button when `enterkeyhint` is not defined or `enterkeyhint="enter"`. The `cta-enter` slot takes precedence over this label.
+     * The text label to display on the call to action button when `enterkeyhint` is not defined or `enterkeyhint="enter"`. The `action-enter` slot takes precedence over this label.
      */
     ctaLabel?: string;
 
@@ -1713,37 +1713,37 @@ export type KeyboardInit = {
     close?: RenderFunction;
 
     /**
-     * A function that returns content to render within the 'cta-enter' slot
+     * A function that returns content to render within the 'action-enter' slot
      */
     ctaEnter?: RenderFunction;
 
     /**
-     * A function that returns content to render within the 'cta-done' slot
+     * A function that returns content to render within the 'action-done' slot
      */
     ctaDone?: RenderFunction;
 
     /**
-     * A function that returns content to render within the 'cta-go' slot
+     * A function that returns content to render within the 'action-go' slot
      */
     ctaGo?: RenderFunction;
 
     /**
-     * A function that returns content to render within the 'cta-next' slot
+     * A function that returns content to render within the 'action-next' slot
      */
     ctaNext?: RenderFunction;
 
     /**
-     * A function that returns content to render within the 'cta-previous' slot
+     * A function that returns content to render within the 'action-previous' slot
      */
     ctaPrevious?: RenderFunction;
 
     /**
-     * A function that returns content to render within the 'cta-search' slot
+     * A function that returns content to render within the 'action-search' slot
      */
     ctaSearch?: RenderFunction;
 
     /**
-     * A function that returns content to render within the 'cta-send' slot
+     * A function that returns content to render within the 'action-send' slot
      */
     ctaSend?: RenderFunction;
 };
