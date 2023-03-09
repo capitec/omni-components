@@ -256,6 +256,7 @@ export class DatePicker extends OmniFormElement {
             /* Styles for focus and hover on the layout */
             .layout:focus-within > .control {
                 border-left: var(--omni-date-picker-focused-control-left-border, solid 2px var(--omni-primary-color));
+                background-color: var(--omni-date-picker-control-hover-color, var(--omni-accent-hover-color));
             }
 
             .control-icon {
