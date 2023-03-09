@@ -52,6 +52,14 @@ export class EmailField extends OmniFormElement {
         });
     }
 
+    override focus(options?: FocusOptions | undefined): void {
+        if (this._inputElement) {
+            this._inputElement.focus(options);
+        } else {
+            super.focus(options);
+        }
+    }
+
     _blurOnEnter(e: any) {
         if (e.code === 'Enter' || e.keyCode === 13) {
             e.currentTarget.blur();

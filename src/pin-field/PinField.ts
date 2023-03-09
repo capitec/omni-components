@@ -97,6 +97,14 @@ export class PinField extends OmniFormElement {
         }
     }
 
+    override focus(options?: FocusOptions | undefined): void {
+        if (this._inputElement) {
+            this._inputElement.focus(options);
+        } else {
+            super.focus(options);
+        }
+    }
+
     _blurOnEnter(e: any) {
         if (e.code === 'Enter' || e.keyCode === 13) {
             e.currentTarget.blur();
@@ -123,12 +131,14 @@ export class PinField extends OmniFormElement {
 
         if (this.showPin) {
             this.showPin = false;
+            this._inputElement?.setAttribute('data-omni-keyboard-mask', '');
 
             if (!this.isWebkit) {
                 this.type = 'password';
             }
         } else {
             this.showPin = true;
+            this._inputElement?.removeAttribute('data-omni-keyboard-mask');
 
             if (!this.isWebkit) {
                 this.type = 'number';
@@ -248,7 +258,8 @@ export class PinField extends OmniFormElement {
         .type="${this.type}"
         .value=${live(this.value as string)}
         ?readOnly=${this.disabled}
-        tabindex="${this.disabled ? -1 : 0}" />
+        tabindex="${this.disabled ? -1 : 0}" 
+        data-omni-keyboard-mask />
     `;
     }
 }

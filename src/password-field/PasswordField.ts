@@ -70,6 +70,14 @@ export class PasswordField extends OmniFormElement {
         });
     }
 
+    override focus(options?: FocusOptions | undefined): void {
+        if (this._inputElement) {
+            this._inputElement.focus(options);
+        } else {
+            super.focus(options);
+        }
+    }
+
     _keyInput() {
         const input = this._inputElement;
         this.value = input?.value;

@@ -1,4 +1,4 @@
-import { loadCustomElementsModuleByFileFor, loadCssProperties, filterJsDocLinks } from '../../../dist/utils/StoryUtils.js';
+import { loadCustomElementsModuleByFileFor, loadCssProperties, transformFromJsdoc } from '../../../dist/utils/StoryUtils.js';
 
 export function getTagName(value, componentName) {
     const component = loadCustomElementsModuleByFileFor(componentName, value);
@@ -24,7 +24,7 @@ export function getProperties(value, componentName) {
     return declaration.members?.filter(m => m.kind === 'field' && m.privacy !== 'private')?.map(a => {
         return {
             ...a,
-            description: filterJsDocLinks(a.description)
+            description: transformFromJsdoc(a.description)
         };
     });
 }
@@ -34,7 +34,7 @@ export function getEvents(value, componentName) {
     return declaration.events?.map(e => {
         return {
             ...e,
-            description: filterJsDocLinks(e.description)
+            description: transformFromJsdoc(e.description)
         };
     });
 }
@@ -49,7 +49,7 @@ export function getSlots(value, componentName) {
     return declaration.slots?.map(s => {
         return {
             ...s,
-            description: filterJsDocLinks(s.description)
+            description: transformFromJsdoc(s.description)
         };
     });
 }
@@ -69,7 +69,7 @@ export function getCSSProperties(value, componentName) {
         const prop = cssProperties[name];
         return {
             name: `--${name}`,
-            description: filterJsDocLinks(prop.description),
+            description: transformFromJsdoc(prop.description),
             category: prop.subcategory
         };
     });
