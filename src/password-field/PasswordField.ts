@@ -1,8 +1,8 @@
 import { css, html } from 'lit';
-import { customElement, query, state } from 'lit/decorators.js';
+import { customElement, property, query, state } from 'lit/decorators.js';
 import { ClassInfo, classMap } from 'lit/directives/class-map.js';
 import { live } from 'lit/directives/live.js';
-import { OmniFormElement } from '../core/OmniFormElement.js';
+import { ifDefined, OmniFormElement } from '../core/OmniFormElement.js';
 
 import '../icons/EyeHidden.icon.js';
 import '../icons/EyeVisible.icon.js';
@@ -59,6 +59,12 @@ export class PasswordField extends OmniFormElement {
      * @ignore
      */
     @state() protected type: 'password' | 'text' = 'password';
+
+    /**
+     * Disables native on screen keyboards for the component.
+     * @attr [no-native-keyboard]
+     */
+    @property({ type: Boolean, reflect: true, attribute: 'no-native-keyboard' }) noNativeKeyboard?: boolean;
 
     @query('#inputField')
     private _inputElement?: HTMLInputElement;
@@ -188,6 +194,7 @@ export class PasswordField extends OmniFormElement {
         class=${classMap(field)}
         id="inputField"
         .type="${this.type}"
+        inputmode="${ifDefined(this.noNativeKeyboard ? 'none' : undefined)}"
         .value=${live(this.value as string)}
         ?readOnly=${this.disabled}
         tabindex="${this.disabled ? -1 : 0}" />

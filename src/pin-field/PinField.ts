@@ -1,5 +1,5 @@
 import { css, html } from 'lit';
-import { customElement, query, state } from 'lit/decorators.js';
+import { customElement, property, query, state } from 'lit/decorators.js';
 import { ClassInfo, classMap } from 'lit/directives/class-map.js';
 import { live } from 'lit/directives/live.js';
 import { OmniFormElement } from '../core/OmniFormElement.js';
@@ -59,6 +59,12 @@ export class PinField extends OmniFormElement {
      * @ignore
      */
     @state() protected type: 'password' | 'number' = 'number';
+
+    /**
+     * Disables native on screen keyboards for the component.
+     * @attr [no-native-keyboard]
+     */
+    @property({ type: Boolean, reflect: true, attribute: 'no-native-keyboard' }) noNativeKeyboard?: boolean;
 
     @query('#inputField')
     private _inputElement?: HTMLInputElement;
@@ -254,7 +260,8 @@ export class PinField extends OmniFormElement {
       <input
         class=${classMap(field)}
         id="inputField"
-        inputmode="numeric"
+        inputmode="${this.noNativeKeyboard ? 'none' : 'numeric'}"
+        data-omni-keyboard-mode="numeric"
         .type="${this.type}"
         .value=${live(this.value as string)}
         ?readOnly=${this.disabled}

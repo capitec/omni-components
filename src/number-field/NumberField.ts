@@ -1,8 +1,8 @@
 import { css, html } from 'lit';
-import { customElement, query } from 'lit/decorators.js';
+import { customElement, property, query } from 'lit/decorators.js';
 import { ClassInfo, classMap } from 'lit/directives/class-map.js';
 import { live } from 'lit/directives/live.js';
-import { OmniFormElement } from '../core/OmniFormElement.js';
+import { ifDefined, OmniFormElement } from '../core/OmniFormElement.js';
 
 /**
  * Input control to enter a single line of numbers.
@@ -40,6 +40,12 @@ import { OmniFormElement } from '../core/OmniFormElement.js';
 export class NumberField extends OmniFormElement {
     @query('#inputField')
     private _inputElement?: HTMLInputElement;
+
+    /**
+     * Disables native on screen keyboards for the component.
+     * @attr [no-native-keyboard]
+     */
+    @property({ type: Boolean, reflect: true, attribute: 'no-native-keyboard' }) noNativeKeyboard?: boolean;
 
     override connectedCallback() {
         super.connectedCallback();
@@ -142,6 +148,7 @@ export class NumberField extends OmniFormElement {
         class=${classMap(field)}
         id="inputField"
         type="number"
+        inputmode="${ifDefined(this.noNativeKeyboard ? 'none' : undefined)}"
         .value=${live(this.value as string)}
         ?readOnly=${this.disabled}
         tabindex="${this.disabled ? -1 : 0}" />

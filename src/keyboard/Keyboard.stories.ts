@@ -581,8 +581,8 @@ export const Alternate_Modes: ComponentStoryFormat<Args> = {
         <div class="keyboard-showcase">
             <omni-label type="subtitle" label="Alternate Keyboard Modes"></omni-label>
             <!-- Alternate Keyboard Modes on Omni Component -->
-            <omni-search-field label="Search Field" data-omni-keyboard-mode="numeric" tabindex="61"></omni-search-field>
-            <omni-text-field label="Text Field" data-omni-keyboard-mode="tel" tabindex="62"></omni-text-field>
+            <omni-search-field label="Search Field" data-omni-keyboard-mode="numeric" no-native-keyboard tabindex="61"></omni-search-field>
+            <omni-text-field label="Text Field" data-omni-keyboard-mode="tel" no-native-keyboard tabindex="62"></omni-text-field>
         </div>
   `
             : html`
@@ -632,7 +632,7 @@ export const Via_Script: ComponentStoryFormat<Args> = {
             });
         }
         return html`
-            <input data-omni-keyboard-attach="keyboard-script-generated"  type="text" tabindex="61" />
+            <input data-omni-keyboard-attach="keyboard-script-generated"  type="text" tabindex="63" />
         `;
     },
     name: 'Via Script',
@@ -645,7 +645,7 @@ export const Via_Script: ComponentStoryFormat<Args> = {
     },
     source: () => raw`
 <!-- Add an input that targets the keyboard id created from script -->
-<input data-omni-keyboard-attach="keyboard-script-generated"  type="text" tabindex="61" />
+<input data-omni-keyboard-attach="keyboard-script-generated"  type="text" tabindex="63" />
 
 <!-- A script that creates a keyboard to its default parent container (document.body) with some custom button labels including a custom backspace via render function -->
 <script defer>

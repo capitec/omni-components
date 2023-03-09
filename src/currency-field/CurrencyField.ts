@@ -78,6 +78,12 @@ export class CurrencyField extends OmniFormElement {
     @property({ type: Number, reflect: true, attribute: 'fractional-precision' }) fractionalPrecision: number = 2;
 
     /**
+     * Disables native on screen keyboards for the component.
+     * @attr [no-native-keyboard]
+     */
+    @property({ type: Boolean, reflect: true, attribute: 'no-native-keyboard' }) noNativeKeyboard?: boolean;
+
+    /**
      * Formatter provided to format the value.
      * @attr
      */
@@ -505,7 +511,8 @@ export class CurrencyField extends OmniFormElement {
                 id="inputField"
                 type="text"
                 maxlength="21"
-                inputmode="decimal"
+                inputmode="${this.noNativeKeyboard ? 'none' : 'decimal'}"
+                data-omni-keyboard-mode="decimal"
                 ?readOnly=${this.disabled}
                 tabindex="${this.disabled ? -1 : 0}" />
         `;
