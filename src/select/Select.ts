@@ -418,7 +418,7 @@ export class Select extends OmniFormElement {
                 }
 
                 .item:hover {
-                    background-color: var(--omni-select-item-hover-background-color, var(--omni-primary-hover-color));
+                    background-color: var(--omni-select-item-hover-background-color, #7878781a);
                 }
 
                 .item.selected {
@@ -426,7 +426,7 @@ export class Select extends OmniFormElement {
                 }
 
                 .none:hover {
-                    background-color: var(--omni-select-item-none-hover, var(--omni-primary-hover-color));
+                    background-color: var(--omni-select-item-none-hover, #7878781a);
                 }
 
                 .loading {

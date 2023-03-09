@@ -1,4 +1,4 @@
-import { html, css, nothing, PropertyValueMap } from 'lit';
+import { html, css, nothing, PropertyValueMap, TemplateResult } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { ClassInfo, classMap } from 'lit/directives/class-map.js';
 import { live } from 'lit/directives/live.js';
@@ -72,6 +72,8 @@ import '../icons/ChevronRight.icon.js';
  */
 @customElement('omni-date-picker')
 export class DatePicker extends OmniFormElement {
+    @query('#inputField')
+    private _inputElement?: HTMLInputElement;
     private defaultLocale: string = 'en-US';
 
     /**
@@ -110,6 +112,14 @@ export class DatePicker extends OmniFormElement {
             this.date = DateTime.fromISO(<string>this.value).setLocale(this.locale);
         }
         return true;
+    }
+
+    override focus(options?: FocusOptions | undefined): void {
+        if (this._inputElement) {
+            this._inputElement.focus(options);
+        } else {
+            super.focus(options);
+        }
     }
 
     /*Dimension checks */
@@ -207,8 +217,8 @@ export class DatePicker extends OmniFormElement {
                 padding: var(--omni-date-picker-padding, 10px);
                 width: var(--omni-date-picker-width);
                 min-width: var(--omni-date-picker-min-width, 242px);
-                /* Added to stop the transforming of the label when the input is clicked*/
-                pointer-events: none;
+                /* Added to stop the transforming of the label when the input is clicked
+                pointer-events: none;*/
                 cursor: pointer;
             }
 
@@ -240,8 +250,13 @@ export class DatePicker extends OmniFormElement {
 
             .control:hover  {
                 background-color: var(--omni-date-picker-control-hover-color, var(--omni-accent-hover-color));
+                border-left: var(--omni-date-picker-control-left-border, solid 1px var(--omni-primary-hover-color));
             }
-            
+
+            /* Styles for focus and hover on the layout */
+            .layout:focus-within > .control {
+                border-left: var(--omni-date-picker-focused-control-left-border, solid 2px var(--omni-primary-color));
+            }
 
             .control-icon {
                 width: var(--omni-date-picker-control-icon-width, 20px);
@@ -325,6 +340,10 @@ export class DatePicker extends OmniFormElement {
             this._dateSelected(e)}></omni-calendar>
             </div>
         `;
+    }
+
+    protected override renderLabel() {
+        return super.renderLabel(true);
     }
 }
 

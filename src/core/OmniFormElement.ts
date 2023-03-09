@@ -207,7 +207,7 @@ export class OmniFormElement extends OmniElement {
                 }
 
                 :host([value]:not([value=''])) .layout  > .label,
-                .layout:focus-within > .label
+                .layout:focus-within > .label:not(.focused-static)
                 {
                     top: 0px;
                     margin-left: var(--omni-form-focussed-label-margin-left, 10px);
@@ -223,7 +223,7 @@ export class OmniFormElement extends OmniElement {
                 }
             
                 :host([value]:not([value=''])) .layout  > .label > div::before,
-                .layout:focus-within > .label > div::before 
+                .layout:focus-within > .label:not(.focused-static) > div::before
                 {
                     content: "";
 					display: block;           
@@ -312,8 +312,9 @@ export class OmniFormElement extends OmniElement {
                     box-shadow: none;
                 }
 
+                /* Make this border wider half of focussed*/
                 .layout:hover > .border {
-                    border-color: var(--omni-form-hover-color, var(--omni-primary-color));
+                    border-color: var(--omni-form-hover-color, var(--omni-primary-hover-color));
                 }
 
                 .layout.disabled:hover > .border {
@@ -323,6 +324,8 @@ export class OmniFormElement extends OmniElement {
                 .layout.error:hover > .border {
                     border-color: var(--omni-form-error-hover-color, var(--omni-error-border-color));
                 }
+
+                
 
                 slot[name='prefix'],
                 slot[name='suffix'],
@@ -365,11 +368,12 @@ export class OmniFormElement extends OmniElement {
         return nothing;
     }
 
-    protected renderLabel() {
+    protected renderLabel(focusedStatic: boolean = false) {
         const labelClass: ClassInfo = {
             label: true,
             error: this.error ?? false,
-            disabled: this.disabled
+            disabled: this.disabled,
+            'focused-static': focusedStatic
         };
 
         return html`${this.label ? html`<div class=${classMap(labelClass)}><div>${this.label}</div></div>` : nothing}`;
