@@ -569,6 +569,38 @@ export const Slotted_Content: ComponentStoryFormat<Args> = {
     }
 };
 
+export const Alternate_Modes: ComponentStoryFormat<Args> = {
+    ...Interactive,
+    description: () => html`
+    <span>The Keyboard will react accordingly to the '<strong>data-omni-keyboard-mode</strong>' attribute on supported target elements.</span>
+        
+    `,
+    render: (args: Args) =>
+        Interactive.args!.attachMode === 'all'
+            ? html`
+        <div class="keyboard-showcase">
+            <omni-label type="subtitle" label="Alternate Keyboard Modes"></omni-label>
+            <!-- Alternate Keyboard Modes on Omni Component -->
+            <omni-search-field label="Search Field" data-omni-keyboard-mode="numeric" tabindex="61"></omni-search-field>
+            <omni-text-field label="Text Field" data-omni-keyboard-mode="tel" tabindex="62"></omni-text-field>
+        </div>
+  `
+            : html`
+            <div class="keyboard-showcase">
+                <span>To illustrate this, update the <strong>Interactive</strong> Keyboard properties to have '<strong>attach-mode</strong>' attribute set to '<strong>all</strong>'.</span>
+                <omni-button @click="${() => {
+                    Interactive.args!.attachMode = 'all';
+                    document.dispatchEvent(
+                        new CustomEvent('story-renderer-interactive-update', {
+                            bubbles: true,
+                            composed: true
+                        })
+                    );
+                }}" class="docs-omni-component"><span>Update <strong>attach-mode</strong> to <strong>all</strong></span></omni-button>
+            </div>`,
+    name: 'Alternate Modes'
+};
+
 export const Via_Script: ComponentStoryFormat<Args> = {
     render: (args: Args) => {
         const id = 'keyboard-script-generated';

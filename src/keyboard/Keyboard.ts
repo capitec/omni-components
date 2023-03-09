@@ -778,12 +778,14 @@ export class Keyboard extends OmniElement {
                 this.targetComponentObserver.observe(this.targetComponent, { attributes: true });
             }
 
+            const mode = (this.targetComponent.hasAttribute(explicitKeyboardMode) ? this.targetComponent.getAttribute(explicitKeyboardMode) : this.target.getAttribute(explicitKeyboardMode)) ?? input.inputMode;
+
             this.mode =
                 input.type === 'number' ||
                 input.type === 'tel' ||
-                input.inputMode === 'decimal' ||
-                input.inputMode === 'numeric' ||
-                input.inputMode === 'tel'
+                mode === 'decimal' ||
+                mode === 'numeric' ||
+                mode === 'tel'
                     ? 'numeric'
                     : 'alpha-numeric';
             this.state = this.mode;
@@ -1585,6 +1587,10 @@ export const noDisplayValueAttribute = 'data-omni-keyboard-no-display';
  * Indicates that the Keyboard is enabled for that component when the Keyboard has `attach-mode="attribute"`.
  */
 export const attachAttribute = 'data-omni-keyboard-attach';
+/**
+ * Indicates that the Keyboard is to render in specified type of inputmode. Takes precedence over `inputmode` attribute.
+ */
+export const explicitKeyboardMode = 'data-omni-keyboard-mode';
 
 const supportedTypes = ['number', 'email', 'tel', 'password', 'search', 'text', 'url', 'textarea'];
 const selectionSupportedTypes = ['tel', 'password', 'search', 'text', 'url', 'textarea'];
