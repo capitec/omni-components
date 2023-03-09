@@ -217,8 +217,7 @@ export class DatePicker extends OmniFormElement {
                 padding: var(--omni-date-picker-padding, 10px);
                 width: var(--omni-date-picker-width);
                 min-width: var(--omni-date-picker-min-width, 242px);
-                /* Added to stop the transforming of the label when the input is clicked
-                pointer-events: none;*/
+
                 cursor: pointer;
             }
 

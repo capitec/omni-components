@@ -277,8 +277,6 @@ export class Select extends OmniFormElement {
                     font-weight: var(--omni-select-field-font-weight, var(--omni-font-weight));
                     padding: var(--omni-select-field-padding, 10px);
 
-                    /* Added to stop the transforming of the label when the input is clicked */
-                    pointer-events: none;
                     height: var(--omni-select-field-height, 100%);
                     width: var(--omni-select-field-width, 100%);
                 }
@@ -531,6 +529,10 @@ export class Select extends OmniFormElement {
     // Render the loading indicator
     protected override renderLoading() {
         return html`<slot name="loading_indicator"><omni-loading-icon class="loading"></omni-loading-icon></slot>`;
+    }
+
+    protected override renderLabel() {
+        return super.renderLabel(true);
     }
 }
 
