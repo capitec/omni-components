@@ -164,7 +164,7 @@ export class Calendar extends OmniElement {
     private _months: string[] = Info.months('short', { locale: this.locale });
     private _days: string[] = Info.weekdays('short', { locale: this.locale });
 
-    private _updateDateVariablesUpdate = debounce(() => this._updateDateVariables(), 200);
+    private _updateDateVariablesUpdate = debounce(() => this._updateDateVariables(), 100);
 
     // Update properties of the Date picker component if user provides a value to the value property or if the locale property is updated.
     protected override shouldUpdate(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): boolean {

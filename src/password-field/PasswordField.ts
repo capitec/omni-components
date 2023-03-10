@@ -74,6 +74,18 @@ export class PasswordField extends OmniFormElement {
         this.addEventListener('input', this._keyInput.bind(this), {
             capture: true
         });
+        this.addEventListener('focus', this._focusInput.bind(this), {
+            capture: true
+        });
+    }
+
+    _focusInput() {
+        const input = this._inputElement;
+        if (input) {
+            setTimeout(function () {
+                input.selectionStart = input.selectionEnd = 10000;
+            }, 0);
+        }
     }
 
     override focus(options?: FocusOptions | undefined): void {

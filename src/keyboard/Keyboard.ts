@@ -776,14 +776,13 @@ export class Keyboard extends OmniElement {
                 this.targetComponentObserver.observe(this.targetComponent, { attributes: true });
             }
 
-            const mode = (this.targetComponent.hasAttribute(explicitKeyboardMode) ? this.targetComponent.getAttribute(explicitKeyboardMode) : this.target.getAttribute(explicitKeyboardMode)) ?? input.inputMode;
+            const mode =
+                (this.targetComponent.hasAttribute(explicitKeyboardMode)
+                    ? this.targetComponent.getAttribute(explicitKeyboardMode)
+                    : this.target.getAttribute(explicitKeyboardMode)) ?? input.inputMode;
 
             this.mode =
-                input.type === 'number' ||
-                input.type === 'tel' ||
-                mode === 'decimal' ||
-                mode === 'numeric' ||
-                mode === 'tel'
+                input.type === 'number' || input.type === 'tel' || mode === 'decimal' || mode === 'numeric' || mode === 'tel'
                     ? 'numeric'
                     : 'alpha-numeric';
             this.state = this.mode;
