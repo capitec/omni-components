@@ -246,8 +246,8 @@ export class DatePicker extends OmniFormElement {
 
             .control-icon,
             ::slotted([slot='calendar']){
-                width: var(--omni-date-picker-control-slot-width, 20px);
-                height: var(--omni-date-picker-control-slot-height, 20px);
+                width: var(--omni-date-picker-control-icon-width, 20px);
+                height: var(--omni-date-picker-control-icon-height, 20px);
                 fill: var(--omni-date-picker-control-icon-color,  var(--omni-primary-color));
                 cursor: pointer;
             }
