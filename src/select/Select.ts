@@ -47,9 +47,8 @@ import '../icons/More.icon.js';
  * @cssprop --omni-select-field-disabled-font-color - Select component input field disabled font color.
  * @cssprop --omni-select-field-error-font-color - Select component input field error font color.
  *
- * @cssprop --omni-select-control-margin-right - Select control right margin.
- * @cssprop --omni-select-control-margin-left - Select control left margin.
  * @cssprop --omni-select-control-width - Select control width.
+ * @cssprop --omni-select-control-height - Select control height.
  *
  * @cssprop --omni-select-control-icon-width - Select control icon width.
  * @cssprop --omni-select-control-icon-color - Select control icon color.
@@ -290,18 +289,18 @@ export class Select extends OmniFormElement {
                 }
 
                 .control {
-                    display: flex;
+                    display: inline-flex;
+                    flex: 0 0 auto;
+                    align-items: center;
                     cursor: pointer;
-                    margin-right: var(--omni-select-control-margin-right, 10px);
-                    margin-left: var(--omni-select-control-margin-left, 10px);
-                    width: var(--omni-select-control-width, 20px);
-
-                    /* Added to resolve issue of click event firing twice*/
+                    padding: var(--omni-select-control-padding, 10px 10px);
+                    /*Added to resolve issue of click event firing twice*/
                     pointer-events: none;
                 }
 
                 .icon {
                     width: var(--omni-select-control-icon-width, 20px);
+                    height: var(--omni-select-control-icon-height, 20px);
                     fill: var(--omni-select-control-icon-color, var(--omni-primary-color));
                 }
 
@@ -478,11 +477,11 @@ export class Select extends OmniFormElement {
             disabled: this.disabled,
             error: this.error as string
         };
-        return html` <div id="control" class="control ${this._popUp ? `expanded` : `collapsed`}" @click="${() => this._controlClick()}">
+        return html`<div id="control" class="control ${this._popUp ? `expanded` : `collapsed`}" @click="${() => this._controlClick()}">
             ${
                 this._isMobile
-                    ? html`<omni-more-icon class=${classMap(controlIcon)}></omni-more-icon>`
-                    : html`<omni-chevron-down-icon class=${classMap(controlIcon)}></omni-chevron-down-icon>`
+                    ? html`<slot name="more"><omni-more-icon class=${classMap(controlIcon)}></omni-more-icon></slot>`
+                    : html`<slot name="arrow"><omni-chevron-down-icon class=${classMap(controlIcon)}></omni-chevron-down-icon></slot>`
             }
         </div>`;
     }

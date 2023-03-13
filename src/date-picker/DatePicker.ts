@@ -230,37 +230,44 @@ export class DatePicker extends OmniFormElement {
             }
 
             /* Styles for the control and control icon */
+
             .control {
-                display: flex;
+                display: inline-flex;
+                flex: 0 0 auto;
+                align-items: center;
                 cursor: pointer;
-                justify-content: center;
-
-                width: var(--omni-date-picker-control-width, 40px);
-                border-left: var(--omni-date-picker-control-left-border, solid 1px var(--omni-primary-color));
-            }
-
-            .control.error {
-                border-left: var(--omni-date-picker-control-left-border, solid 1px var(--omni-error-font-color));
-            }
-
-            .control.error > .control-icon {
-                fill: var(--omni-date-picker-control-icon-color, var(--omni-error-font-color));
+                padding: var(--omni-date-picker-control-padding, 10px 10px);
             }
 
             .control:hover  {
                 background-color: var(--omni-date-picker-control-hover-color, var(--omni-accent-hover-color));
-                border-left: var(--omni-date-picker-control-left-border, solid 1px var(--omni-primary-hover-color));
             }
 
-            /* Styles for focus and hover on the layout */
-            .layout:focus-within > .control {
-                border-left: var(--omni-date-picker-focused-control-left-border, solid 2px var(--omni-primary-color));
-                background-color: var(--omni-date-picker-control-hover-color, var(--omni-accent-hover-color));
+
+            .control-icon,
+            ::slotted([slot='calendar']){
+                width: var(--omni-date-picker-control-slot-width, 20px);
+                height: var(--omni-date-picker-control-slot-height, 20px);
+                fill: var(--omni-date-picker-control-icon-color,  var(--omni-primary-color));
+                cursor: pointer;
             }
 
-            .control-icon {
-                width: var(--omni-date-picker-control-icon-width, 20px);
-                fill: var(--omni-date-picker-control-icon-color, var(--omni-primary-color));
+            .control-icon.error {
+                fill: var(--omni-date-picker-control-icon-error-color, var(--omni-error-font-color));
+            }
+
+            .left-border {
+                width: var(--omni-date-picker-control-left-border-width, 1px);
+                background-color: var(--omni-date-picker-control-left-border-color,var(--omni-form-border-color));
+            }
+
+            .layout:focus-within > .left-border {
+                width: var(--omni-date-picker-control-left-focused-border-width, 2px);
+                background-color: var(--omni-date-picker-control-hover-color, var(--omni-primary-color));
+            }
+
+            .left-border.error {
+                background-color: var(--omni-date-picker-control-left-border-error-color, var(--omni-error-font-color));
             }
 
             /* Styles related to the picker container*/
@@ -319,15 +326,31 @@ export class DatePicker extends OmniFormElement {
     }
 
     protected override renderControl() {
+        const border: ClassInfo = {
+            'left-border': true,
+            disabled: this.disabled,
+            error: this.error as string
+        };
         const control: ClassInfo = {
             control: true,
             disabled: this.disabled,
             error: this.error as string
         };
+
+        const controlIcon: ClassInfo = {
+            'control-icon': true,
+            disabled: this.disabled,
+            error: this.error as string
+        };
+
         return html` 
-        <div id="control" class=${classMap(control)}>
-            <omni-calendar-icon class="control-icon"></omni-calendar-icon>
-        </div>`;
+        <div class=${classMap(border)}></div>
+        <div class=${classMap(control)} @click=${this.focus}>
+                <slot name="calendar">
+                    <omni-calendar-icon class=${classMap(controlIcon)}></omni-calendar-icon>
+                </slot>            
+         </div>
+        `;
     }
 
     protected override renderPicker() {
