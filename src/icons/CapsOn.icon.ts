@@ -23,7 +23,7 @@ import DOMTreeElement from '../core/DOMTreeElement.js';
 export class CapsOnIcon extends DOMTreeElement {
     override render(): TemplateResult {
         return html`
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M20 18h5l-9-9-9 9h5v5h8z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="100%" height="100%"><path d="M20 18h5l-9-9-9 9h5v5h8z"/></svg>
             `;
     }
 }

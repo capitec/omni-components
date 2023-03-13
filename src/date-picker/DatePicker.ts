@@ -49,12 +49,22 @@ import '../icons/ChevronRight.icon.js';
  *
  * @cssprop --omni-date-picker-error-font-color - Date picker error font color.
  *
- * @cssprop --omni-date-picker-control-width - Date picker control width.
- * @cssprop --omni-date-picker-control-left-border - Date picker control left border.
+ * @cssprop --omni-date-picker-control-padding - Date picker control padding.
  * @cssprop --omni-date-picker-control-hover-color - Date picker control hover.
- *
+ * 
  * @cssprop --omni-date-picker-control-icon-width - Date picker control icon width.
+ * @cssprop --omni-date-picker-control-icon-height - Date picker control icon height.
  * @cssprop --omni-date-picker-control-icon-color - Date picker control icon color.
+ * 
+ * @cssprop --omni-date-picker-control-icon-error-color - Date picker control icon error color.
+ * 
+ * @cssprop --omni-date-picker-control-left-border-width - Date picker control left border width.
+ * @cssprop --omni-date-picker-control-left-border-color - Date picker control left border color.
+ * 
+ * @cssprop --omni-date-picker-control-left-focused-border-width - Date picker control left border focused width.
+ * @cssprop --omni-date-picker-control-left-focused-color - Date picker control left border focused color.
+ *
+ * @cssprop --omni-date-picker-control-left-border-error-color - Date picker control left border error color.
  *
  * @cssprop --omni-date-picker-container-z-index - Date picker container z-index.
  *
@@ -263,7 +273,7 @@ export class DatePicker extends OmniFormElement {
 
             .layout:focus-within > .left-border {
                 width: var(--omni-date-picker-control-left-focused-border-width, 2px);
-                background-color: var(--omni-date-picker-control-hover-color, var(--omni-primary-color));
+                background-color: var(--omni-date-picker-control-left-focused-color, var(--omni-primary-color));
             }
 
             .left-border.error {
@@ -324,24 +334,6 @@ export class DatePicker extends OmniFormElement {
                 tabindex="${this.disabled ? -1 : 0}" />
         `;
     }
-
-    /*
-    protected override renderControl() {
-        const control: ClassInfo = {
-            control: true,
-            disabled: this.disabled,
-            error: this.error as string
-        };
-        return html` 
-        <div class="control-wrapper">
-            <div id="control" class="control">
-                <slot name="calendar">
-                    <omni-calendar-icon class="control-icon"></omni-calendar-icon>
-                </slot>            
-            </div>
-         </div>
-        `;
-    }*/
 
     protected override renderControl() {
         const border: ClassInfo = {
