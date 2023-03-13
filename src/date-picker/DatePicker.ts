@@ -325,6 +325,24 @@ export class DatePicker extends OmniFormElement {
         `;
     }
 
+    /*
+    protected override renderControl() {
+        const control: ClassInfo = {
+            control: true,
+            disabled: this.disabled,
+            error: this.error as string
+        };
+        return html` 
+        <div class="control-wrapper">
+            <div id="control" class="control">
+                <slot name="calendar">
+                    <omni-calendar-icon class="control-icon"></omni-calendar-icon>
+                </slot>            
+            </div>
+         </div>
+        `;
+    }*/
+
     protected override renderControl() {
         const border: ClassInfo = {
             'left-border': true,

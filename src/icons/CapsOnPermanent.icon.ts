@@ -23,7 +23,7 @@ import DOMTreeElement from '../core/DOMTreeElement.js';
 export class CapsOnPermanentIcon extends DOMTreeElement {
     override render(): TemplateResult {
         return html`
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="100%" height="100%"><path d="M23 24v2H9v-2h14ZM16 6l9 9h-5v5h-8v-5H7l9-9Z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M23 24v2H9v-2h14ZM16 6l9 9h-5v5h-8v-5H7l9-9Z"/></svg>
             `;
     }
 }

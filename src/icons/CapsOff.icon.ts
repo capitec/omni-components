@@ -23,7 +23,7 @@ import DOMTreeElement from '../core/DOMTreeElement.js';
 export class CapsOffIcon extends DOMTreeElement {
     override render(): TemplateResult {
         return html`
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="100%" height="100%"><path clip-rule="evenodd" d="m16 9 9 9h-5v5h-8v-5H7l9-9Zm0 2.12-5.38 5.38h2.88v5h5v-5h2.88L16 11.12Z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path clip-rule="evenodd" d="m16 9 9 9h-5v5h-8v-5H7l9-9Zm0 2.12-5.38 5.38h2.88v5h5v-5h2.88L16 11.12Z"/></svg>
         `;
     }
 }
