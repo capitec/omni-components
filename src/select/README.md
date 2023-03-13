@@ -119,11 +119,11 @@ Control to get / set a value within a list of options.
 | `--omni-form-layout-border-radius`               | Layout border radius.                            |
 | `--omni-form-layout-height`                      | Layout height.                                   |
 | `--omni-form-layout-width`                       | Layout width.                                    |
-| `--omni-select-control-height`                   | Select control height.                           |
 | `--omni-select-control-icon-color`               | Select control icon color.                       |
 | `--omni-select-control-icon-error-color`         | Select control error icon color.                 |
+| `--omni-select-control-icon-height`              | Select control icon height.                      |
 | `--omni-select-control-icon-width`               | Select control icon width.                       |
-| `--omni-select-control-width`                    | Select control width.                            |
+| `--omni-select-control-padding`                  | Select component control padding.                |
 | `--omni-select-field-disabled-font-color`        | Select component input field disabled font color. |
 | `--omni-select-field-error-font-color`           | Select component input field error font color.   |
 | `--omni-select-field-font-color`                 | Select component input field font color.         |
