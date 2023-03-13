@@ -69,9 +69,15 @@ disabled>
 | `--omni-date-picker-container-z-index`           | Date picker container z-index.                 |
 | `--omni-date-picker-control-hover-color`         | Date picker control hover.                     |
 | `--omni-date-picker-control-icon-color`          | Date picker control icon color.                |
+| `--omni-date-picker-control-icon-error-color`    | Date picker control icon error color.          |
+| `--omni-date-picker-control-icon-height`         | Date picker control icon height.               |
 | `--omni-date-picker-control-icon-width`          | Date picker control icon width.                |
-| `--omni-date-picker-control-left-border`         | Date picker control left border.               |
-| `--omni-date-picker-control-width`               | Date picker control width.                     |
+| `--omni-date-picker-control-left-border-color`   | Date picker control left border color.         |
+| `--omni-date-picker-control-left-border-error-color` | Date picker control left border error color.   |
+| `--omni-date-picker-control-left-border-width`   | Date picker control left border width.         |
+| `--omni-date-picker-control-left-focused-border-width` | Date picker control left border focused width. |
+| `--omni-date-picker-control-left-focused-color`  | Date picker control left border focused color. |
+| `--omni-date-picker-control-padding`             | Date picker control padding.                   |
 | `--omni-date-picker-disabled-font-color`         | Date picker disabled font color.               |
 | `--omni-date-picker-error-font-color`            | Date picker error font color.                  |
 | `--omni-date-picker-font-color`                  | Date picker input font color.                  |
