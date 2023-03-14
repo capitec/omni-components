@@ -91,6 +91,10 @@ import './KeyboardButton.js';
  * @cssprop --omni-keyboard-top-bar-background-color - Background color for keyboard top bar.
  * @cssprop --omni-keyboard-top-bar-border-radius - Border radius for keyboard top bar.
  * @cssprop --omni-keyboard-top-bar-border-bottom-color - Border bottom color for keyboard top bar.
+ * 
+ * @cssprop --omni-keyboard-wrapper-width - Width for keyboard button rows wrapper.
+ * @cssprop --omni-keyboard-special-wrapper-width - Width for keyboard button rows wrapper for special keys.
+ * @cssprop --omni-keyboard-numeric-wrapper-width - Width for keyboard button rows wrapper for numeric keyboard mode.
  *
  * @cssprop --omni-keyboard-action-button-width - Width for keyboard call to action button.
  * @cssprop --omni-keyboard-action-button-max-width - Max width for keyboard call to action button.
@@ -970,7 +974,7 @@ export class Keyboard extends OmniElement {
 				}
 
 				.wrapper {
-                    width: 672px;
+                    width: var(--omni-keyboard-wrapper-width,672px);
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
@@ -980,11 +984,11 @@ export class Keyboard extends OmniElement {
 				}
 
                 .special-wrapper {
-                    width: 355px;
+                    width: var(--omni-keyboard-special-wrapper-width,355px);
                 }
 
                 .numeric-wrapper {
-                    width: 224px;
+                    width: var(--omni-keyboard-numeric-wrapper-width,224px);
                 }
 
 				.wrapper:first-child {
