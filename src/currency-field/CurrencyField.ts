@@ -134,12 +134,23 @@ export class CurrencyField extends OmniFormElement {
     }
 
     // Check if the device is a Iphone or Ipad running IOS.
+    /* Remove this as we wont allow users to enter their own number or decimal separator
     _isIOS() {
         return (
             ['iPad Simulator', 'iPhone Simulator', 'iPod Simulator', 'iPad', 'iPhone', 'iPod'].includes(navigator.platform) ||
             // iPad on iOS 13 detection
             navigator.userAgent.includes('Mac')
         );
+    }*/
+
+    // Function used to check if the key entered is a numeric value
+    _isNumber(number: string) {
+        return /\d/.test(number); 
+    }
+
+    // Function used to check if the cent value provided is all zeros 
+    _isAllZeros(centValue: string) {
+        return /^0*$/.test(centValue);
     }
 
     _parseAmount(value: string): number | null {
@@ -227,11 +238,15 @@ export class CurrencyField extends OmniFormElement {
 
     /* When the component is focussed */
     _focusInput() {
-        console.log('focusin hit');
 
         const input = this._inputElement as HTMLInputElement;
         if(!this.value) {
-            this.value = '0.00';
+            let startValue = '0.';
+            //Dynamically build up what the cents should be based on the fractional precision.
+            for (let index = 0; index < this.fractionalPrecision; index++) {
+                startValue += '0';
+            }
+            this.value = startValue;
         }
 
         if(input){
@@ -241,8 +256,6 @@ export class CurrencyField extends OmniFormElement {
     }
 
     _clickInput() {
-        console.log('click');
-
         const input = this._inputElement as HTMLInputElement;
         
         if(input){
@@ -285,11 +298,12 @@ export class CurrencyField extends OmniFormElement {
         const selectionStart = this._inputElement!.selectionStart!;
         const caretPosition = input.selectionStart;
         const selection = selectionEnd - selectionStart;
-        let valueFormatterCount = 0;
+        //let valueFormatterCount = 0;
 
-        console.log('keydown event', e);
+        // Convert the input element value to remove the fractional separator
+        let centValue = this._inputElement?.value.replace(this.fractionalSeparator, '');
 
-        // Stop alpha keys from moving the caret position.
+        // Stop alpha keys from moving the caret position, also do nothing when typing zero on the default value.
         if (e.key >= 'a' && e.key <= 'z') {
             e.preventDefault();
             return;
@@ -300,10 +314,79 @@ export class CurrencyField extends OmniFormElement {
             navigator.clipboard.writeText(input.value);
             return;
         }
+
+        console.log('event', e);
+        console.log('e.key', e.key);
+        console.log('e.keyCode', e.keyCode);
+
+        /* 
+         * Check input element value is all zeros and the key pressed is also zero if criteria met then do nothing.
+         * If key pressed is a numeric value that is not zero then add the value accordingly.
+         */
+        if(this._isAllZeros(centValue!) && (e.key === '0' || e.keyCode === 96)){
+            e.preventDefault();
+            return;
+        } else if (this._isNumber(e.key)) {        
+            e.preventDefault(); 
+            centValue = centValue+=e.key;
+
+            //Extract the amount part of the cent value.
+            let amountPart = centValue.substring(0, centValue.length - (this.fractionalPrecision));
+            //Extract the cents part of the cent value
+            const fractionPart = centValue.slice(-this.fractionalPrecision);
+
+            if(this._isAllZeros(amountPart)) {
+                amountPart = '0';
+                this._inputElement!.value = amountPart + this.fractionalSeparator + fractionPart;
+
+                //Format the value to be a float value
+                const floatValue = this._formatToFloat(this._inputElement!.value);
+                this.value = floatValue;
+
+            } else {
+                //Format the amount part
+                console.log('Past the cents part');
+                const parsedAmountPart = this._parseAmount(amountPart);
+                this._inputElement!.value = amountPart + this.fractionalSeparator + fractionPart;
+                const floatValue = this._formatToFloat(this._inputElement!.value);
+                this.value = floatValue;
+
+                //
+            }
+
+            //const fractionPart = centValue.slice(-this.fractionalPrecision);           
+            return;
+        }
+
+        // Remove only the value at the end if backspace key is hit and value of input is not all zeros.
+        if((e.key.toLowerCase() === 'backspace' || e.keyCode === 229) && !this._isAllZeros(centValue!)) {
+            e.preventDefault();
+            console.log('Backspace key');
+            centValue = centValue?.substring(0, centValue.length -1);
+
+            // Check if cent value is all zeroes if true set the value of the input to 0.00
+            if(this._isAllZeros(centValue!)){
+                this._inputElement!.value = '0.00';
+            } else {
+                const amountPart = centValue?.substring(0, centValue.length - (this.fractionalPrecision)) as string;
+    
+                const fractionPart = centValue?.slice(-this.fractionalPrecision);
+        
+                const parsedAmountPart = amountPart ? this._parseAmount(amountPart) : '0';
+                this._inputElement!.value = parsedAmountPart + this.fractionalSeparator + fractionPart;
+                const floatValue = this._formatToFloat(this._inputElement!.value);
+                this.value = floatValue;
+            }
+    
+            return;
+    
+        } else {
+            e.preventDefault();
+            return;
+        }
         
         //Remove the cent separator
-        const centValue = this._inputElement?.value.replace(new RegExp(this.fractionalSeparator, 'g'), '');
-        console.log('cent value', centValue);
+
         //preFloatReplaceAll = formattedValue.replace(new RegExp(this.thousandsSeparator, 'g'), '')
 
         //convert current value to cents
@@ -315,6 +398,7 @@ export class CurrencyField extends OmniFormElement {
         }*/
 
         // If the pointer is positioned after a currency separator remove the separator and the preceding number.
+        /*
         if(
             input.value.charAt((caretPosition as number) - 1) === this.thousandsSeparator &&
             (e.key.toLowerCase() === 'backspace' || e.keyCode === 229)
@@ -427,12 +511,14 @@ export class CurrencyField extends OmniFormElement {
             input.value = input.value.substring(0, input.value.indexOf(this.fractionalSeparator));
             this.value = this._formatToFloat(input.value);
             return;
-        }
+        }*/
 
     }
 
     async _keyInput(): Promise<void> {
+        console.log('key input event hit');
         //console.log('keyinput event', e);
+        /*
         const preValueLength = this._inputElement!.value.length;
         const caretPosition = this._inputElement!.selectionStart;
         const inputValue = this._inputElement!.value;
@@ -471,7 +557,7 @@ export class CurrencyField extends OmniFormElement {
             this._inputElement!.setSelectionRange(caretPosition! - 1, caretPosition! - 1);
         } else {
             this._inputElement!.setSelectionRange(caretPosition, caretPosition);
-        }
+        }*/
     }
 
     static override get styles() {
