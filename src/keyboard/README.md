@@ -113,11 +113,13 @@ An on-screen keyboard control component.
 | `--omni-keyboard-mobile-small-action-button-max-width` | Max width for keyboard call to action button in small mobile viewports. |
 | `--omni-keyboard-mobile-small-key-row-margin`    | Margin for keyboard rows in small mobile viewports. |
 | `--omni-keyboard-mobile-special-key-row-margin`  | Margin for special keyboard rows in mobile viewports. |
+| `--omni-keyboard-numeric-wrapper-width`          | Width for keyboard button rows wrapper for numeric keyboard mode. |
 | `--omni-keyboard-row-padding-bottom`             | Bottom padding for last keyboard row.            |
 | `--omni-keyboard-row-padding-top`                | Top padding for first keyboard row.              |
 | `--omni-keyboard-shadow-background-color`        | Background color for keyboard shadow.            |
 | `--omni-keyboard-shadow-border-radius`           | Border radius for keyboard shadow.               |
 | `--omni-keyboard-shadow-padding-bottom`          | Bottom padding for keyboard shadow.              |
+| `--omni-keyboard-special-wrapper-width`          | Width for keyboard button rows wrapper for special keys. |
 | `--omni-keyboard-top-bar-background-color`       | Background color for keyboard top bar.           |
 | `--omni-keyboard-top-bar-border-bottom-color`    | Border bottom color for keyboard top bar.        |
 | `--omni-keyboard-top-bar-border-radius`          | Border radius for keyboard top bar.              |
@@ -126,6 +128,7 @@ An on-screen keyboard control component.
 | `--omni-keyboard-top-bar-padding-left`           | Left padding for keyboard top bar.               |
 | `--omni-keyboard-top-bar-padding-right`          | Right padding for keyboard top bar.              |
 | `--omni-keyboard-top-bar-width`                  | Width for keyboard top bar.                      |
+| `--omni-keyboard-wrapper-width`                  | Width for keyboard button rows wrapper.          |
 | `--omni-numeric-keyboard-button-mobile-small-width` | Width for numeric keyboard buttons in small mobile viewports. |
 | `--omni-numeric-keyboard-button-mobile-width`    | Width for numeric keyboard buttons in mobile viewports. |
 | `--omni-return-keyboard-button-mobile-small-width` | Width for return keyboard buttons in small mobile viewports. |
