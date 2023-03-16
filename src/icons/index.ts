@@ -2,7 +2,7 @@ export * from './ArrowRight.icon.js';
 export * from './Backspace.icon.js';
 export * from './CapsOff.icon.js';
 export * from './CapsOn.icon.js';
-export * from './CapsOnPermanent.icon.js';
+export * from './CapsLock.icon.js';
 export * from './Check.icon.js';
 export * from './ChevronDown.icon.js';
 export * from './Clear.icon.js';

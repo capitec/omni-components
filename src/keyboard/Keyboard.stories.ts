@@ -34,7 +34,7 @@ interface Args {
     attachMode: 'all' | 'attribute' | 'id';
     'caps-off': string;
     'caps-on': string;
-    'caps-on-permanent': string;
+    'caps-lock': string;
     close: string;
     clear: string;
     backspace: string;
@@ -58,7 +58,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         action-label="${args.actionLabel}" 
         close-label="${args.closeLabel}" >${args['caps-off'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-off', args['caps-off']))}` : nothing}${
         args['caps-on'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-on', args['caps-on']))}` : nothing
-    }${args['caps-on-permanent'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-on-permanent', args['caps-on-permanent']))}` : nothing}${
+    }${args['caps-lock'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-lock', args['caps-lock']))}` : nothing}${
         args['close'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('close', args['close']))}` : nothing
     }${args['clear'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('clear', args['clear']))}` : nothing}${
         args['backspace'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('backspace', args['backspace']))}` : nothing
@@ -151,7 +151,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         attachMode: 'all',
         'caps-off': raw`<omni-caps-off-icon style="display: inherit;"></omni-caps-off-icon>`,
         'caps-on': raw`<omni-caps-on-icon style="display: inherit;"></omni-caps-on-icon>`,
-        'caps-on-permanent': raw`<omni-caps-on-permanent-icon style="display: inherit;"></omni-caps-on-permanent-icon>`,
+        'caps-lock': raw`<omni-caps-lock-icon style="display: inherit;"></omni-caps-lock-icon>`,
         'action-done': raw`<omni-check-icon style="display: inherit;"></omni-check-icon>`,
         'action-enter': '',
         'action-go': raw`<omni-arrow-right-icon style="display: inherit;"></omni-arrow-right-icon>`,
@@ -498,7 +498,7 @@ export const Slotted_Content: ComponentStoryFormat<Args> = {
         action-label="${args.actionLabel}" 
         close-label="${args.closeLabel}" >${args['caps-off'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-off', args['caps-off']))}` : nothing}${
         args['caps-on'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-on', args['caps-on']))}` : nothing
-    }${args['caps-on-permanent'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-on-permanent', args['caps-on-permanent']))}` : nothing}${
+    }${args['caps-lock'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-lock', args['caps-lock']))}` : nothing}${
         args['close'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('close', args['close']))}` : nothing
     }${args['clear'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('clear', args['clear']))}` : nothing}${
         args['backspace'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('backspace', args['backspace']))}` : nothing
@@ -555,7 +555,7 @@ export const Slotted_Content: ComponentStoryFormat<Args> = {
         attachMode: 'id',
         'caps-off': raw`<span class="center-inline">lower</span>`,
         'caps-on': raw`<span class="center-inline">upper</span>`,
-        'caps-on-permanent': raw`<span class="center-inline">UPPER</span>`,
+        'caps-lock': raw`<span class="center-inline">UPPER</span>`,
         'action-done': raw`<span class="center-inline">Done</span>`,
         'action-enter': raw`<span class="center-inline">↵</span>`,
         'action-go': raw`<span class="center-inline">Go</span>`,

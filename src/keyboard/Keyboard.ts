@@ -14,7 +14,7 @@ import '../icons/ChevronDown.icon.js';
 import '../icons/Check.icon.js';
 import '../icons/CapsOff.icon.js';
 import '../icons/CapsOn.icon.js';
-import '../icons/CapsOnPermanent.icon.js';
+import '../icons/CapsLock.icon.js';
 import '../icons/Next.icon.js';
 import '../icons/Previous.icon.js';
 import '../icons/Search.icon.js';
@@ -42,7 +42,7 @@ import './KeyboardButton.js';
  *
  * @slot caps-off - Content to display on case change button when in a lowercase state.
  * @slot caps-on - Content to display on case change button when in a single uppercase state.
- * @slot caps-on-permanent - Content to display on case change button when in a permanent uppercase state.
+ * @slot caps-lock - Content to display on case change button when in a permanent uppercase state (caps lock).
  * @slot close - Content to display next to close label.
  * @slot backspace - Content to display on backspace button.
  * @slot clear - Content to display on clear button.
@@ -277,9 +277,9 @@ export class Keyboard extends OmniElement {
                             : html`<omni-caps-on-icon style="display: inherit;" slot="caps-on"></omni-caps-on-icon>`
                     }
                     ${
-                        init.capsOnPermanent
-                            ? html`<omni-render-element slot="caps-on-permanent" .renderer="${init.capsOnPermanent}"></omni-render-element>`
-                            : html`<omni-caps-on-permanent-icon style="display: inherit;" slot="caps-on-permanent"></omni-caps-on-permanent-icon>`
+                        init.capsLock
+                            ? html`<omni-render-element slot="caps-lock" .renderer="${init.capsLock}"></omni-render-element>`
+                            : html`<omni-caps-lock-icon style="display: inherit;" slot="caps-lock"></omni-caps-lock-icon>`
                     }
                     ${
                         init.backspace
@@ -1449,8 +1449,8 @@ export class Keyboard extends OmniElement {
             ? html`
                 <omni-icon size="medium" class="themed-icon">
                     <div class="stretch-icon">
-                        <slot name="caps-on-permanent">
-                            <omni-caps-on-permanent-icon style="display: unset;"></omni-caps-on-permanent-icon>
+                        <slot name="caps-lock">
+                            <omni-caps-lock-icon style="display: unset;"></omni-caps-lock-icon>
                         </slot>
                     </div>
                 </omni-icon>
@@ -1708,9 +1708,9 @@ export type KeyboardInit = {
     capsOn?: RenderFunction;
 
     /**
-     * A function that returns content to render within the 'caps-on-permanent' slot
+     * A function that returns content to render within the 'caps-lock' slot
      */
-    capsOnPermanent?: RenderFunction;
+    capsLock?: RenderFunction;
 
     /**
      * A function that returns content to render within the 'backspace' slot
