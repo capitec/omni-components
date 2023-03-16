@@ -91,7 +91,7 @@ import './KeyboardButton.js';
  * @cssprop --omni-keyboard-top-bar-background-color - Background color for keyboard top bar.
  * @cssprop --omni-keyboard-top-bar-border-radius - Border radius for keyboard top bar.
  * @cssprop --omni-keyboard-top-bar-border-bottom-color - Border bottom color for keyboard top bar.
- * 
+ *
  * @cssprop --omni-keyboard-wrapper-width - Width for keyboard button rows wrapper.
  * @cssprop --omni-keyboard-special-wrapper-width - Width for keyboard button rows wrapper for special keys.
  * @cssprop --omni-keyboard-numeric-wrapper-width - Width for keyboard button rows wrapper for numeric keyboard mode.
@@ -207,11 +207,9 @@ export class Keyboard extends OmniElement {
     }
 
     private get currentEnterKeyHint(): EnterKeyHint {
-        const explicitHint = (
-            this.targetComponent?.hasAttribute('enterkeyhint')
-                ? this.targetComponent.getAttribute('enterkeyhint')
-                : this.target?.getAttribute('enterkeyhint')
-        );
+        const explicitHint = this.targetComponent?.hasAttribute('enterkeyhint')
+            ? this.targetComponent.getAttribute('enterkeyhint')
+            : this.target?.getAttribute('enterkeyhint');
 
         if (!explicitHint) {
             if (this.target?.type === 'search') {
@@ -220,8 +218,8 @@ export class Keyboard extends OmniElement {
                 return 'enter';
             }
         }
-        
-       return explicitHint as EnterKeyHint;
+
+        return explicitHint as EnterKeyHint;
     }
 
     private globalClick = this._globalClick.bind(this);
@@ -782,14 +780,13 @@ export class Keyboard extends OmniElement {
                 this.targetComponentObserver.observe(this.targetComponent, { attributes: true });
             }
 
-            const mode = (this.targetComponent.hasAttribute(explicitKeyboardMode) ? this.targetComponent.getAttribute(explicitKeyboardMode) : this.target.getAttribute(explicitKeyboardMode)) ?? input.inputMode;
+            const mode =
+                (this.targetComponent.hasAttribute(explicitKeyboardMode)
+                    ? this.targetComponent.getAttribute(explicitKeyboardMode)
+                    : this.target.getAttribute(explicitKeyboardMode)) ?? input.inputMode;
 
             this.mode =
-                input.type === 'number' ||
-                input.type === 'tel' ||
-                mode === 'decimal' ||
-                mode === 'numeric' ||
-                mode === 'tel'
+                input.type === 'number' || input.type === 'tel' || mode === 'decimal' || mode === 'numeric' || mode === 'tel'
                     ? 'numeric'
                     : 'alpha-numeric';
             this.state = this.mode;
