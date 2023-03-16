@@ -173,7 +173,7 @@ export class Keyboard extends OmniElement {
      * The text label to display on the call to action button when `enterkeyhint` is not defined or `enterkeyhint="enter"`. The `action-enter` slot takes precedence over this label.
      * @attr [action-label="Enter"]
      */
-    @property({ type: String, attribute: 'action-label', reflect: true }) ctaLabel: string = 'Enter';
+    @property({ type: String, attribute: 'action-label', reflect: true }) actionLabel: string = 'Enter';
 
     @state() private mode: KeyboardMode = 'none';
     @state() private currentCase: 'lower' | 'upper' | 'upper-single' = 'lower';
@@ -263,7 +263,7 @@ export class Keyboard extends OmniElement {
                     attach-mode="${ifDefined(init.attachMode)}" 
                     clear-label="${ifDefined(init.clearLabel)}" 
                     space-label="${ifDefined(init.spaceLabel)}" 
-                    action-label="${ifDefined(init.ctaLabel)}" 
+                    action-label="${ifDefined(init.actionLabel)}" 
                     close-label="${ifDefined(init.closeLabel)}">
                     <omni-render-element slot="clear" .renderer="${init.clear ? init.clear : () => html`${init.clearLabel}`}"></omni-render-element>
                     ${
@@ -292,36 +292,36 @@ export class Keyboard extends OmniElement {
                             : html`<omni-chevron-down-icon style="display: inherit;" slot="close"></omni-chevron-down-icon>`
                     }
                     <omni-render-element slot="action-enter" .renderer="${
-                        init.ctaEnter ? init.ctaEnter : () => html`${init.ctaLabel}`
+                        init.actionEnter ? init.actionEnter : () => html`${init.actionLabel}`
                     }"></omni-render-element>
                     ${
-                        init.ctaDone
-                            ? html`<omni-render-element slot="action-done" .renderer="${init.ctaDone}"></omni-render-element>`
+                        init.actionDone
+                            ? html`<omni-render-element slot="action-done" .renderer="${init.actionDone}"></omni-render-element>`
                             : html`<omni-check-icon style="display: inherit;"  slot="action-done"></omni-check-icon>`
                     }
                     ${
-                        init.ctaGo
-                            ? html`<omni-render-element slot="action-go" .renderer="${init.ctaGo}"></omni-render-element>`
+                        init.actionGo
+                            ? html`<omni-render-element slot="action-go" .renderer="${init.actionGo}"></omni-render-element>`
                             : html`<omni-arrow-right-icon style="display: inherit;" slot="action-go"></omni-arrow-right-icon>`
                     }
                     ${
-                        init.ctaNext
-                            ? html`<omni-render-element slot="action-next" .renderer="${init.ctaNext}"></omni-render-element>`
+                        init.actionNext
+                            ? html`<omni-render-element slot="action-next" .renderer="${init.actionNext}"></omni-render-element>`
                             : html`<omni-next-icon style="display: inherit;"  slot="action-next"></omni-next-icon>`
                     }
                     ${
-                        init.ctaPrevious
-                            ? html`<omni-render-element slot="action-previous" .renderer="${init.ctaPrevious}"></omni-render-element>`
+                        init.actionPrevious
+                            ? html`<omni-render-element slot="action-previous" .renderer="${init.actionPrevious}"></omni-render-element>`
                             : html`<omni-previous-icon style="display: inherit;" slot="action-previous"></omni-previous-icon>`
                     }
                     ${
-                        init.ctaSearch
-                            ? html`<omni-render-element slot="action-search" .renderer="${init.ctaSearch}"></omni-render-element>`
+                        init.actionSearch
+                            ? html`<omni-render-element slot="action-search" .renderer="${init.actionSearch}"></omni-render-element>`
                             : html`<omni-search-icon style="display: inherit;" slot="action-search"></omni-search-icon>`
                     }
                     ${
-                        init.ctaSend
-                            ? html`<omni-render-element slot="action-send" .renderer="${init.ctaSend}"></omni-render-element>`
+                        init.actionSend
+                            ? html`<omni-render-element slot="action-send" .renderer="${init.actionSend}"></omni-render-element>`
                             : html`<omni-send-icon style="display: inherit;" slot="action-send"></omni-send-icon>`
                     }
                 </omni-keyboard>
@@ -1560,7 +1560,7 @@ export class Keyboard extends OmniElement {
                         <omni-icon size="medium" class="action-icon">
                             <div class="stretch-icon flex-text-center">
                                 <slot name="action-enter">
-                                    ${this.ctaLabel}
+                                    ${this.actionLabel}
                                 </slot>
                             </div>
                         </omni-icon>`
@@ -1690,7 +1690,7 @@ export type KeyboardInit = {
     /**
      * The text label to display on the call to action button when `enterkeyhint` is not defined or `enterkeyhint="enter"`. The `action-enter` slot takes precedence over this label.
      */
-    ctaLabel?: string;
+    actionLabel?: string;
 
     /**
      * A function that returns content to render within the 'clear' slot
@@ -1725,37 +1725,37 @@ export type KeyboardInit = {
     /**
      * A function that returns content to render within the 'action-enter' slot
      */
-    ctaEnter?: RenderFunction;
+    actionEnter?: RenderFunction;
 
     /**
      * A function that returns content to render within the 'action-done' slot
      */
-    ctaDone?: RenderFunction;
+    actionDone?: RenderFunction;
 
     /**
      * A function that returns content to render within the 'action-go' slot
      */
-    ctaGo?: RenderFunction;
+    actionGo?: RenderFunction;
 
     /**
      * A function that returns content to render within the 'action-next' slot
      */
-    ctaNext?: RenderFunction;
+    actionNext?: RenderFunction;
 
     /**
      * A function that returns content to render within the 'action-previous' slot
      */
-    ctaPrevious?: RenderFunction;
+    actionPrevious?: RenderFunction;
 
     /**
      * A function that returns content to render within the 'action-search' slot
      */
-    ctaSearch?: RenderFunction;
+    actionSearch?: RenderFunction;
 
     /**
      * A function that returns content to render within the 'action-send' slot
      */
-    ctaSend?: RenderFunction;
+    actionSend?: RenderFunction;
 };
 
 declare global {

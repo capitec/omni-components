@@ -29,7 +29,7 @@ export default {
 interface Args {
     clearLabel: string;
     spaceLabel: string;
-    ctaLabel: string;
+    actionLabel: string;
     closeLabel: string;
     attachMode: 'all' | 'attribute' | 'id';
     'caps-off': string;
@@ -55,7 +55,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         attach-mode="${args.attachMode}" 
         clear-label="${args.clearLabel}" 
         space-label="${args.spaceLabel}" 
-        action-label="${args.ctaLabel}" 
+        action-label="${args.actionLabel}" 
         close-label="${args.closeLabel}" >${args['caps-off'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-off', args['caps-off']))}` : nothing}${
         args['caps-on'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-on', args['caps-on']))}` : nothing
     }${args['caps-on-permanent'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-on-permanent', args['caps-on-permanent']))}` : nothing}${
@@ -145,7 +145,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         `,
     args: {
         clearLabel: 'Clear',
-        ctaLabel: 'Enter',
+        actionLabel: 'Enter',
         closeLabel: 'Close',
         spaceLabel: 'Space',
         attachMode: 'all',
@@ -495,7 +495,7 @@ export const Slotted_Content: ComponentStoryFormat<Args> = {
         attach-mode="${args.attachMode}" 
         clear-label="${args.clearLabel}" 
         space-label="${args.spaceLabel}" 
-        action-label="${args.ctaLabel}" 
+        action-label="${args.actionLabel}" 
         close-label="${args.closeLabel}" >${args['caps-off'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-off', args['caps-off']))}` : nothing}${
         args['caps-on'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-on', args['caps-on']))}` : nothing
     }${args['caps-on-permanent'] ? html`${'\r\n'}${unsafeHTML(assignToSlot('caps-on-permanent', args['caps-on-permanent']))}` : nothing}${
@@ -549,7 +549,7 @@ export const Slotted_Content: ComponentStoryFormat<Args> = {
     name: 'Slotted Content',
     args: {
         clearLabel: 'Clear',
-        ctaLabel: 'Enter',
+        actionLabel: 'Enter',
         closeLabel: 'Close',
         spaceLabel: 'Space',
         attachMode: 'id',
@@ -609,7 +609,7 @@ export const Via_Script: ComponentStoryFormat<Args> = {
                 id: id,
                 attachMode: args.attachMode,
                 clearLabel: args.clearLabel,
-                ctaLabel: args.ctaLabel,
+                actionLabel: args.actionLabel,
                 closeLabel: args.closeLabel,
                 spaceLabel: args.spaceLabel,
                 backspace: () => {
@@ -639,7 +639,7 @@ export const Via_Script: ComponentStoryFormat<Args> = {
     args: {
         attachMode: 'id',
         clearLabel: 'Clear',
-        ctaLabel: '↵',
+        actionLabel: '↵',
         closeLabel: 'Close',
         spaceLabel: 'Space'
     },
@@ -653,7 +653,7 @@ export const Via_Script: ComponentStoryFormat<Args> = {
         id: 'keyboard-script-generated',
         attachMode: 'id',
         clearLabel: 'Clear',
-        ctaLabel: '↵',
+        actionLabel: '↵',
         closeLabel: 'Close',
         spaceLabel: 'Space',
         backspace: () => {
