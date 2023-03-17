@@ -25,7 +25,7 @@ import '../icon/Icon.js';
 import './KeyboardButton.js';
 
 /**
- * An on-screen keyboard control component.
+ * A responsive on-screen keyboard control component.
  *
  * @import
  * ```js
@@ -53,6 +53,14 @@ import './KeyboardButton.js';
  * @slot action-search - Content to display on call to action button ('Enter') when target component has enterkeyhint="search".
  * @slot action-send - Content to display on call to action button ('Enter') when target component has enterkeyhint="send".
  * @slot action-enter - Content to display on call to action button ('Enter') when target component has enterkeyhint="enter" or enterkeyhint is not set.
+ * 
+ * @global_attribute data-omni-keyboard-attach - Indicates that the Keyboard is enabled for that component when the Keyboard has `attach-mode="attribute"` or when the value is equal to the Keyboard's id and `attach-mode="id"`.
+ * @global_attribute data-omni-keyboard-hidden - Disables the Keyboard for that component.
+ * @global_attribute data-omni-keyboard-mode - Indicates that the Keyboard is to render in specified type of inputmode. Takes precedence over `inputmode` attribute.
+ * @global_attribute enterkeyhint - Indicates that the Keyboard's call to action button must render (and in some cases behave) accordingly.
+ * @global_attribute data-omni-keyboard-multi-line - Indicates that the call to action button inserts a new line instead of default behaviour.
+ * @global_attribute data-omni-keyboard-mask - Indicates that the Keyboard display value must be masked.
+ * @global_attribute data-omni-keyboard-no-display - Disables the Keyboard display value. Takes precedence over `data-omni-keyboard-mask`.
  *
  * @cssprop --omni-keyboard-button-icon-max-height - Max height for slotted content in keyboard buttons.
  * @cssprop --omni-keyboard-button-icon-max-width - Max width for slotted content in keyboard buttons.
@@ -92,6 +100,10 @@ import './KeyboardButton.js';
  * @cssprop --omni-keyboard-top-bar-border-radius - Border radius for keyboard top bar.
  * @cssprop --omni-keyboard-top-bar-border-bottom-color - Border bottom color for keyboard top bar.
  *
+ * @cssprop --omni-keyboard-numeric-display-label-max-width - Width for display label in keyboard numeric mode.
+ * @cssprop --omni-keyboard-special-display-label-max-width - Width for display label in keyboard special mode.
+ * @cssprop --omni-keyboard-alpha-display-label-max-width - Width for display label in keyboard alpha-numeric mode.
+ *
  * @cssprop --omni-keyboard-wrapper-width - Width for keyboard button rows wrapper.
  * @cssprop --omni-keyboard-special-wrapper-width - Width for keyboard button rows wrapper for special keys.
  * @cssprop --omni-keyboard-numeric-wrapper-width - Width for keyboard button rows wrapper for numeric keyboard mode.
@@ -124,6 +136,10 @@ import './KeyboardButton.js';
  * @cssprop --omni-keyboard-top-bar-mobile-height - Height for keyboard top bar in mobile viewports.
  * @cssprop --omni-keyboard-top-bar-mobile-border-radius - Border radius for keyboard top bar in mobile viewports.
  *
+ * @cssprop --omni-keyboard-mobile-numeric-display-label-max-width - Width for display label in keyboard numeric mode for mobile viewports.
+ * @cssprop --omni-keyboard-mobile-special-display-label-max-width - Width for display label in keyboard special mode for mobile viewports.
+ * @cssprop --omni-keyboard-mobile-alpha-display-label-max-width - Width for display label in keyboard alpha-numeric mode for mobile viewports.
+ *
  * @cssprop --omni-keyboard-mobile-key-row-margin - Margin for keyboard rows in mobile viewports.
  * @cssprop --omni-keyboard-mobile-special-key-row-margin - Margin for special keyboard rows in mobile viewports.
  * @cssprop --omni-keyboard-mobile-key-row-width - Width for keyboard rows in mobile viewports.
@@ -134,6 +150,10 @@ import './KeyboardButton.js';
  *
  * @cssprop --omni-keyboard-mobile-close-icon-width - Width for keyboard close button icon in mobile viewports.
  * @cssprop --omni-keyboard-mobile-close-icon-width - Width for keyboard close button icon in mobile viewports.
+ *
+ * @cssprop --omni-keyboard-mobile-small-numeric-display-label-max-width - Width for display label in keyboard numeric mode for small mobile viewports.
+ * @cssprop --omni-keyboard-mobile-small-special-display-label-max-width - Width for display label in keyboard special mode for small mobile viewports.
+ * @cssprop --omni-keyboard-mobile-small-alpha-display-label-max-width - Width for display label in keyboard alpha-numeric mode for small mobile viewports.
  *
  * @cssprop --omni-keyboard-mobile-small-key-row-margin - Margin for keyboard rows in small mobile viewports.
  * @cssprop --omni-keyboard-mobile-small-key-row-margin - Margin for special keyboard rows in small mobile viewports.
@@ -147,6 +167,7 @@ export class Keyboard extends OmniElement {
      * The rule for the Keyboard to attach to inputs for showing on component focus.
      * * `all` - The Keyboard will show on focus for all input related components unless opted out with `data-omni-keyboard-hidden` on the component.
      * * `attribute` - The Keyboard will only show on focus for input related components with the `data-omni-keyboard-attach` attribute
+     * * `id` - The Keyboard will only show on focus for input related components with the `data-omni-keyboard-attach` attribute set equal to the Keyboard's id
      * @attr [attach-mode="all"]
      */
     @property({ type: String, attribute: 'attach-mode', reflect: true }) attachMode: 'all' | 'attribute' | 'id' = 'all';
@@ -184,6 +205,7 @@ export class Keyboard extends OmniElement {
     private targetComponent?: HTMLElement;
     private targetComponentObserver?: MutationObserver;
     private returnMode: 'change-value' | 'multi-line' = 'change-value';
+    private focusNodes: Node[] = [];
 
     private get displayValue() {
         if (
@@ -342,6 +364,17 @@ export class Keyboard extends OmniElement {
 
         window.removeEventListener('click', this.globalClick);
         document.removeEventListener('focus', this.globalFocus, true);
+        if (this.focusNodes) {
+            this.focusNodes.forEach(node => {
+                try {
+                    if (node) {
+                        node.removeEventListener('focus', this.globalFocus, true);
+                    }
+                } catch (error) {
+                    console.error(error);
+                }
+            });
+        }
     }
 
     /**
@@ -728,6 +761,11 @@ export class Keyboard extends OmniElement {
 
     _globalFocus() {
         const active = this._findActiveElement();
+        const rootNode = active?.getRootNode();
+        if (rootNode && rootNode !== document && !this.focusNodes.includes(rootNode)) {
+            this.focusNodes.push(rootNode);
+            rootNode?.addEventListener('focus', this.globalFocus, true);
+        }
         if (
             active &&
             (active instanceof HTMLInputElement ||
@@ -884,6 +922,24 @@ export class Keyboard extends OmniElement {
 					justify-content: space-between;
 					border-bottom: 3px solid var(--omni-keyboard-top-bar-border-bottom-color,var(--omni-accent-color));
 				}
+
+                .display-label {
+                    white-space: nowrap; 
+                    overflow: hidden;
+                    text-overflow: ellipsis; 
+                }
+
+                .numeric-display {
+                    max-width: var(--omni-keyboard-numeric-display-label-max-width,116px);
+                }
+
+                .special-display {
+                    max-width: var(--omni-keyboard-special-display-label-max-width,246px);
+                }
+
+                .alpha-display {
+                    max-width: var(--omni-keyboard-alpha-display-label-max-width,562px);                    
+                }
 
                 
 				.action-button {
@@ -1077,6 +1133,18 @@ export class Keyboard extends OmniElement {
                    .closeButton {
                         font-size: var(--omni-keyboard-close-button-font-size,16px);
                     }
+
+                    .numeric-display {
+                        max-width: var(--omni-keyboard-mobile-numeric-display-label-max-width,310px);
+                    }
+    
+                    .special-display {
+                        max-width: var(--omni-keyboard-mobile-special-display-label-max-width,310px);
+                    }
+    
+                    .alpha-display {
+                        max-width: var(--omni-keyboard-mobile-alpha-display-label-max-width,310px);                    
+                    }
                 
                 }
 
@@ -1105,6 +1173,18 @@ export class Keyboard extends OmniElement {
                     .topbar > omni-label {
                         --omni-label-default-font-size: x-small;
                     }
+
+                    .numeric-display {
+                        max-width: var(--omni-keyboard-mobile-small-numeric-display-label-max-width,176px);
+                    }
+    
+                    .special-display {
+                        max-width: var(--omni-keyboard-mobile-small-special-display-label-max-width,176px);
+                    }
+    
+                    .alpha-display {
+                        max-width: var(--omni-keyboard-mobile-small-alpha-display-label-max-width,176px);                    
+                    }
                 }
 
 			`
@@ -1118,7 +1198,7 @@ export class Keyboard extends OmniElement {
 				<div class="wrapperContainer">
 					<div class="shadow">
 						<div class="topbar">
-							<omni-label label="${this.displayValue}"></omni-label>
+							<omni-label><span class="display-label alpha-display">${this.displayValue}</span></omni-label>
 							<div class="closer" @click="${this._close}">
 								<omni-label class="closeButton" label="${this.closeLabel}"></omni-label>
 								<omni-icon size="medium" class="themed-icon">${this.renderClose()}</omni-icon>
@@ -1274,7 +1354,7 @@ export class Keyboard extends OmniElement {
 				<div class="wrapperContainer">
 					<div class="shadow">
 						<div class="topbar">
-							<omni-label label="${this.displayValue}"></omni-label>
+							<omni-label><span class="display-label special-display">${this.displayValue}</span></omni-label>
 							<div class="closer" @click="${this._close}">
 								<omni-label class="closeButton" label="${this.closeLabel}"></omni-label>
 								<omni-icon size="medium" class="themed-icon">${this.renderClose()}</omni-icon>
@@ -1362,7 +1442,7 @@ export class Keyboard extends OmniElement {
 				<div class="wrapperContainer">
 					<div class="shadow">
 						<div class="topbar">
-							<omni-label label="${this.displayValue}"></omni-label>
+							<omni-label><span class="display-label numeric-display">${this.displayValue}</span></omni-label>
 							<div class="closer" @click="${this._close}">
 								<omni-label class="closeButton" label="${this.closeLabel}"></omni-label>
 								<omni-icon size="medium" class="themed-icon">${this.renderClose()}</omni-icon>
@@ -1585,7 +1665,7 @@ export const hiddenAttribute = 'data-omni-keyboard-hidden';
  */
 export const noDisplayValueAttribute = 'data-omni-keyboard-no-display';
 /**
- * Indicates that the Keyboard is enabled for that component when the Keyboard has `attach-mode="attribute"`.
+ * Indicates that the Keyboard is enabled for that component when the Keyboard has `attach-mode="attribute"` or when the value is equal to the Keyboard's id and `attach-mode="id"`.
  */
 export const attachAttribute = 'data-omni-keyboard-attach';
 /**
@@ -1666,6 +1746,7 @@ export type KeyboardInit = {
      * The rule for the Keyboard to attach to inputs for showing on component focus.
      * * `all` - The Keyboard will show on focus for all input related components unless opted out with `data-omni-keyboard-hidden` on the component.
      * * `attribute` - The Keyboard will only show on focus for input related components with the `data-omni-keyboard-attach` attribute.
+     * * `id` - The Keyboard will only show on focus for input related components with the `data-omni-keyboard-attach` attribute set equal to the Keyboard's id
      */
     attachMode?: 'all' | 'attribute' | 'id';
 

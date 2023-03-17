@@ -116,6 +116,32 @@ eleventyComputed:
                         </table>
                     </div>
                 {% endif %}
+
+                {% set globalAttributes = customElements | getGlobalAttributes(component.name) %}
+                {% if globalAttributes.length > 0 %}
+                    <h2 class="component-props-table-header" style="padding-top: 24px;">Supported Global Attributes</h2>
+                    <div class="docs-search-area">
+                        <omni-search-field id="global-attribute-search"></omni-search-field>
+                    </div>
+                    <div class="component-props-table-wrapper">
+                        <table class="component-props-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Attribute</th>
+                                    <th scope="col">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody id="component-global-attributes">
+                                {% for globAttr in globalAttributes %}
+                                <tr>
+                                    <td data-label="Attribute" scope="row"><pre><code class="language-js">{{ globAttr.attribute }}</code></pre></td>
+                                    <td data-label="Description">{{ globAttr.description | safe }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
                 
                 {% set events = customElements | getEvents(component.name) %}
                 {% if events.length > 0 %}

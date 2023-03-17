@@ -29,6 +29,16 @@ export function getProperties(value, componentName) {
     });
 }
 
+export function getGlobalAttributes(value, componentName) {
+    const declaration = getComponentDeclaration(value, componentName);
+    return declaration.globalAttributes?.map(a => {
+        return {
+            ...a,
+            description: transformFromJsdoc(a.description)
+        };
+    });
+}
+
 export function getEvents(value, componentName) {
     const declaration = getComponentDeclaration(value, componentName);
     return declaration.events?.map(e => {
