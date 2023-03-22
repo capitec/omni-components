@@ -46,7 +46,7 @@ import '../icons/More.icon.js';
  *
  * @cssprop --omni-select-field-disabled-font-color - Select component input field disabled font color.
  * @cssprop --omni-select-field-error-font-color - Select component input field error font color.
- * 
+ *
  * @cssprop --omni-select-control-padding - Select component control padding.
  *
  * @cssprop --omni-select-control-icon-width - Select control icon width.

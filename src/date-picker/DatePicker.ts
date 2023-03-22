@@ -51,16 +51,16 @@ import '../icons/ChevronRight.icon.js';
  *
  * @cssprop --omni-date-picker-control-padding - Date picker control padding.
  * @cssprop --omni-date-picker-control-hover-color - Date picker control hover.
- * 
+ *
  * @cssprop --omni-date-picker-control-icon-width - Date picker control icon width.
  * @cssprop --omni-date-picker-control-icon-height - Date picker control icon height.
  * @cssprop --omni-date-picker-control-icon-color - Date picker control icon color.
- * 
+ *
  * @cssprop --omni-date-picker-control-icon-error-color - Date picker control icon error color.
- * 
+ *
  * @cssprop --omni-date-picker-control-left-border-width - Date picker control left border width.
  * @cssprop --omni-date-picker-control-left-border-color - Date picker control left border color.
- * 
+ *
  * @cssprop --omni-date-picker-control-left-focused-border-width - Date picker control left border focused width.
  * @cssprop --omni-date-picker-control-left-focused-color - Date picker control left border focused color.
  *

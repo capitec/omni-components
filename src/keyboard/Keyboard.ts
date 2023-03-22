@@ -91,7 +91,7 @@ import './KeyboardButton.js';
  * @cssprop --omni-keyboard-top-bar-background-color - Background color for keyboard top bar.
  * @cssprop --omni-keyboard-top-bar-border-radius - Border radius for keyboard top bar.
  * @cssprop --omni-keyboard-top-bar-border-bottom-color - Border bottom color for keyboard top bar.
- * 
+ *
  * @cssprop --omni-keyboard-wrapper-width - Width for keyboard button rows wrapper.
  * @cssprop --omni-keyboard-special-wrapper-width - Width for keyboard button rows wrapper for special keys.
  * @cssprop --omni-keyboard-numeric-wrapper-width - Width for keyboard button rows wrapper for numeric keyboard mode.
