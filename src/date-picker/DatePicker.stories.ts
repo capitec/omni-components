@@ -79,11 +79,6 @@ export const Interactive: ComponentStoryFormat<Args> = {
         const yearGrid = (await querySelectorAsync(calendar.shadowRoot as ShadowRoot, '.year-grid')) as HTMLElement;
         await expect(yearGrid).toBeTruthy();
 
-        /*
-        const yearButton = await querySelectorAsync(calendar.shadowRoot as ShadowRoot, '[label="2020"]');
-        await expect(yearButton).toBeTruthy();
-        await userEvent.click(yearButton as HTMLElement);*/
-
         const yearButtons = yearGrid.querySelectorAll('.year');
         const yearButtonArray = [...yearButtons];
         const yearButton = yearButtonArray.filter((year) => year.textContent === '2020');
@@ -98,10 +93,6 @@ export const Interactive: ComponentStoryFormat<Args> = {
         const monthButton = monthButtonsArray.filter((month) => month.textContent === 'Dec');
         await expect(monthButton[0]).toBeTruthy();
         await userEvent.click(monthButton[0]);
-        /*const monthButton = await querySelectorAsync(calendar.shadowRoot as ShadowRoot, '[label="Dec"]');
-        await expect(monthButton).toBeTruthy();
-        await userEvent.click(monthButton as HTMLElement);*/
-
         const daysGrid = await querySelectorAsync(calendar.shadowRoot as ShadowRoot, '.day-grid');
         await expect(daysGrid).toBeTruthy();
 
