@@ -90,16 +90,8 @@ export class CurrencyField extends OmniFormElement {
         });
         this.addEventListener('focus', this._focusInput.bind(this), {
             capture: true
-        });
-        this.addEventListener('input', this._keyInput.bind(this), {
-            capture: true
-        });
-        
+        });      
         this.addEventListener('blur', this._blur.bind(this), {
-            capture: true
-        });
-        // Used to catch cases where users hit alpha keys and copy paste scenarios.
-        this.addEventListener('keydown', this._keyDown.bind(this), {
             capture: true
         });
         // Used instead of keydown to catch inputs for mobile devices.
@@ -140,16 +132,6 @@ export class CurrencyField extends OmniFormElement {
             }
         }
     }
-
-    // Check if the device is a Iphone or Ipad running IOS.
-    /* Remove this as we wont allow users to enter their own number or decimal separator
-    _isIOS() {
-        return (
-            ['iPad Simulator', 'iPhone Simulator', 'iPod Simulator', 'iPad', 'iPhone', 'iPod'].includes(navigator.platform) ||
-            // iPad on iOS 13 detection
-            navigator.userAgent.includes('Mac')
-        );
-    }*/
 
     // Function used to check if the key entered is a numeric value
     _isNumber(number: string) {
@@ -263,12 +245,16 @@ export class CurrencyField extends OmniFormElement {
 
     }
 
+    // When clicking in the input position the caret at the end of the input unless there is a valid highlighted selection.
     _clickInput() {
         const input = this._inputElement as HTMLInputElement;
-        
+
         if(input){
-            setTimeout(function(){ input.selectionStart = input.selectionEnd = 10000; }, 0);
+            if(input.selectionStart === input.selectionEnd){
+                setTimeout(function(){ input.selectionStart = input.selectionEnd = 10000; }, 0);
+            }
         }
+        
     }   
 
     // Format the currency value when the component loses focus
@@ -280,54 +266,59 @@ export class CurrencyField extends OmniFormElement {
                 this.value = undefined;
             }
         };
-
-        /*
-        if (inputValue?.includes(this.fractionalSeparator)) {
-            // Split out the amount and fraction (cents) parts of the input value
-            const amountPart = this._parseAmount(inputValue.substring(0, inputValue.indexOf(this.fractionalSeparator)));
-
-            let fractionPart = this._parseFraction(inputValue.substring(inputValue.indexOf(this.fractionalSeparator) + 1));
-
-            const fractionalDifference = this.fractionalPrecision - fractionPart.length;
-            if (fractionalDifference > 0) {
-                for (let index = 0; index < fractionalDifference; index++) {
-                    fractionPart += '0';
-                }
-            }
-
-            await this._formatToCurrency(amountPart as number).then((res) => {
-                this._inputElement!.value = res + (this.fractionalPrecision > 0 ? this.fractionalSeparator + fractionPart : '');
-            });
-        } else {
-            await this._formatToCurrency(this._parseAmount(inputValue as string) as number).then((res) => {
-                this._inputElement!.value = res;
-            });
-        }
-        this.value = this._formatToFloat(this._inputElement?.value as string);*/
     }
 
     _onPaste(e: ClipboardEvent) {
-        console.log('onPaste event', e);
 
         const clipboardData = e.clipboardData;
-        const windowClipboardData = window.Clipboard;
         const pastedData = clipboardData?.getData('Text');
 
-        console.log(pastedData);
+        //Try to parse the value pasted into a valid numeric amount.
+        const numericPastedData = this._parseAmount(pastedData!);
 
-        //Check what the selection start and selection end 
-        const selectionStart = this._inputElement!.selectionStart!;
-        const selectionEnd = this._inputElement!.selectionEnd!;
+        // Check if the numeric pasted data is not null then update the value in the input 
+        if(this._inputElement && numericPastedData){
+            e.preventDefault();
 
-        console.log('selection start', selectionStart);
-        console.log('selection end', selectionEnd);
+            //Check if selection is the entire value
+            if((this._inputElement.value.length === this._inputElement.selectionEnd!) || (this._inputElement.selectionStart === this._inputElement.value.length)) {
 
-        //
+                const centValue = (this._inputElement.value + numericPastedData).replace(this.fractionalSeparator, '');
+
+                // Extract the amount part of the cent value.
+                const amountPart = centValue.substring(0, centValue.length - (this.fractionalPrecision));
+                //Extract the cents part of the cent value
+                const fractionPart = centValue.slice(-this.fractionalPrecision);
+
+                const parsedAmountPart = this._parseAmount(amountPart);
+                this._inputElement!.value = parsedAmountPart + this.fractionalSeparator + fractionPart;
+
+            } else {
+                const newInputValue = this._inputElement.value.slice(0, this._inputElement.selectionStart!) + numericPastedData  + this._inputElement.value.slice(this._inputElement.selectionEnd!);
+    
+                const centValue = newInputValue.replace(this.fractionalSeparator, '');
+    
+                // Extract the amount part of the cent value.
+                const amountPart = centValue.substring(0, centValue.length - (this.fractionalPrecision));
+                //Extract the cents part of the cent value
+                const fractionPart = centValue.slice(-this.fractionalPrecision);
+    
+                const parsedAmountPart = this._parseAmount(amountPart);
+                this._inputElement!.value = parsedAmountPart + this.fractionalSeparator + fractionPart;
+            }
+
+            const floatValue = this._formatToFloat(this._inputElement!.value);
+            this.value = floatValue;
+
+            return;
+        } else {
+            e.preventDefault();
+            //Set caret position to the end of the component.
+            return;        
+        }
     }
 
     _beforeInput(e: InputEvent) {
-        //console.log('input element value before input', this._inputElement!.value);
-        //console.log('before input event', e);
 
         let centValue = this._inputElement?.value.replace(this.fractionalSeparator, '');
         
@@ -359,8 +350,6 @@ export class CurrencyField extends OmniFormElement {
     
                 } else {
                     //Format the amount part
-                    //console.log('Past the cents part');
-                    const parsedAmountPart = this._parseAmount(amountPart);
                     this._inputElement!.value = amountPart + this.fractionalSeparator + fractionPart;
                     const floatValue = this._formatToFloat(this._inputElement!.value);
                     this.value = floatValue;
@@ -397,270 +386,6 @@ export class CurrencyField extends OmniFormElement {
             }
         }
        
-    }
-
-    //
-    async _keyDown(e: KeyboardEvent): Promise<void> {
-        const input = this._inputElement as HTMLInputElement;
-        const selectionEnd = this._inputElement!.selectionEnd!;
-        const selectionStart = this._inputElement!.selectionStart!;
-        const caretPosition = input.selectionStart;
-        const selection = selectionEnd - selectionStart;
-        //let valueFormatterCount = 0;
-
-        //console.log('keydown event', e);
-
-        // Convert the input element value to remove the fractional separator
-        const centValue = this._inputElement?.value.replace(this.fractionalSeparator, '');
-
-        // Stop alpha keys from moving the caret position, also do nothing when typing zero on the default value.
-        if (e.key >= 'a' && e.key <= 'z') {
-            e.preventDefault();
-            return;
-        }
-
-        // Copy currency field selection to clipboard.
-        if (e.ctrlKey && e.key.toLowerCase() === 'c') {
-            navigator.clipboard.writeText(input.value);
-            return;
-        }
-
-        /*
-        if(this._isAllZeros(centValue!) && (e.key === '0' || e.keyCode === 96) ){
-            e.preventDefault();
-            return;
-        } else if (this._isNumber(e.key)) {        
-            e.preventDefault(); 
-            centValue = centValue+=e.key;
-
-            //Extract the amount part of the cent value.
-            let amountPart = centValue.substring(0, centValue.length - (this.fractionalPrecision));
-            //Extract the cents part of the cent value
-            const fractionPart = centValue.slice(-this.fractionalPrecision);
-
-            if(this._isAllZeros(amountPart)) {
-                amountPart = '0';
-                this._inputElement!.value = amountPart + this.fractionalSeparator + fractionPart;
-
-                //Format the value to be a float value
-                const floatValue = this._formatToFloat(this._inputElement!.value);
-                this.value = floatValue;
-
-            } else {
-                //Format the amount part
-                console.log('Past the cents part');
-                const parsedAmountPart = this._parseAmount(amountPart);
-                this._inputElement!.value = amountPart + this.fractionalSeparator + fractionPart;
-                const floatValue = this._formatToFloat(this._inputElement!.value);
-                this.value = floatValue;
-
-                //
-            }
-
-            //const fractionPart = centValue.slice(-this.fractionalPrecision);           
-            return;
-        }
-
-        // Remove only the value at the end if backspace key is hit and value of input is not all zeros.
-        if((e.key.toLowerCase() === 'backspace' || e.keyCode === 229) && !this._isAllZeros(centValue!)) {
-            e.preventDefault();
-            console.log('Backspace key');
-            centValue = centValue?.substring(0, centValue.length -1);
-
-            // Check if cent value is all zeroes if true set the value of the input to 0.00
-            if(this._isAllZeros(centValue!)){
-                this._inputElement!.value = '0.00';
-            } else {
-                const amountPart = centValue?.substring(0, centValue.length - (this.fractionalPrecision)) as string;
-    
-                const fractionPart = centValue?.slice(-this.fractionalPrecision);
-        
-                const parsedAmountPart = amountPart ? this._parseAmount(amountPart) : '0';
-                this._inputElement!.value = parsedAmountPart + this.fractionalSeparator + fractionPart;
-                const floatValue = this._formatToFloat(this._inputElement!.value);
-                this.value = floatValue;
-            }
-    
-            return;
-    
-        } else {
-            e.preventDefault();
-            return;
-        }*/
-        
-        //Remove the cent separator
-
-        //preFloatReplaceAll = formattedValue.replace(new RegExp(this.thousandsSeparator, 'g'), '')
-
-        //convert current value to cents
-        //const centValue = input.value;
-
-        /*
-        if() {
-
-        }*/
-
-        // If the pointer is positioned after a currency separator remove the separator and the preceding number.
-        /*
-        if(
-            input.value.charAt((caretPosition as number) - 1) === this.thousandsSeparator &&
-            (e.key.toLowerCase() === 'backspace' || e.keyCode === 229)
-        ) {
-            // Count of the thousand separators of the component.
-            valueFormatterCount = input.value.match(new RegExp(this.thousandsSeparator, 'g'))!.length;
-
-            // If the value includes a fraction (cents) separator parse the fraction part and append it to the value.
-            if (input.value.includes(this.fractionalSeparator)) {
-                const fractionPart = this._parseFraction(input.value.substring(input.value.indexOf(this.fractionalSeparator) + 1));
-
-                if (selection) {
-                    await this._formatToCurrency(
-                        this._parseAmount(
-                            input.value.substring(0, caretPosition! - 1) +
-                                input.value.substring(caretPosition! + selection, input.value.indexOf(this.fractionalSeparator))
-                        ) as number
-                    ).then((res) => {
-                        input.value = res + this.fractionalSeparator + fractionPart;
-                    });
-                } else {
-                    await this._formatToCurrency(
-                        this._parseAmount(
-                            input.value.substring(0, caretPosition! - 2) +
-                                input.value.substring(caretPosition! + selection, input.value.indexOf(this.fractionalSeparator))
-                        ) as number
-                    ).then((res) => {
-                        input.value = res + this.fractionalSeparator + fractionPart;
-                    });
-                }
-            } else {
-                if (selection) {
-                    if (input.value.length === input.selectionEnd) {
-                        await this._formatToCurrency(this._parseAmount(input.value.substring(0, caretPosition! - 1)) as number).then((res) => {
-                            this._inputElement!.value = res;
-                        });
-                    } else {
-                        await this._formatToCurrency(
-                            this._parseAmount(
-                                input.value.substring(0, caretPosition! - 1) +
-                                    input.value.substring(input.selectionEnd as number, input.value.length + 1)
-                            ) as number
-                        ).then((res) => {
-                            this._inputElement!.value = res;
-                        });
-                    }
-                } else {
-                    await this._formatToCurrency(
-                        this._parseAmount(
-                            input.value.substring(0, caretPosition! - 2) + input.value.substring(caretPosition! + selection, input.value.length + 1)
-                        ) as number
-                    ).then((res) => {
-                        this._inputElement!.value = res;
-                    });
-                }
-            }
-
-            // Added so that the number before the separator is not removed.
-            e.preventDefault();
-
-            const floatValue = this._formatToFloat(input.value);
-            this.value = floatValue;
-
-            await this.updateComplete;
-
-            // Set caret position after value is formatted.
-            const postFormatterCount = input.value.match(new RegExp(this.thousandsSeparator, 'g'))!.length;
-            const formatterDifference = valueFormatterCount - postFormatterCount;
-            if (selection) {
-                this._inputElement!.setSelectionRange(caretPosition! - 1, caretPosition! - 1);
-            } else {
-                this._inputElement!.setSelectionRange(caretPosition! - 1 - formatterDifference, caretPosition! - 1 - formatterDifference);
-            }
-        }
-
-        // When the delete key is pressed and the caret is positioned at the thousand separator
-        if (input.value.charAt(caretPosition!) === this.thousandsSeparator && this.thousandsSeparator !== '' && e.key.toLowerCase() === 'delete') {
-            // Calculate the what values to remove from the input.
-            const diff = selectionEnd - selectionStart > 0 ? selectionEnd - selectionStart : 2;
-
-            if (input.value.includes(this.fractionalSeparator)) {
-                const fractionPart = this._parseFraction(input.value.substring(input.value.indexOf(this.fractionalSeparator) + 1));
-
-                await this._formatToCurrency(
-                    this._parseAmount(
-                        input.value.substring(0, caretPosition!) +
-                            input.value.substring(caretPosition! + diff, input.value.indexOf(this.fractionalSeparator))
-                    ) as number
-                ).then((res) => {
-                    input.value = res + this.fractionalSeparator + fractionPart;
-                });
-            } else {
-                await this._formatToCurrency(
-                    input.value.substring(0, caretPosition!) + input.value.substring(caretPosition! + diff, input.value.length + 1)
-                ).then((res) => {
-                    input.value = res;
-                });
-            }
-
-            e.preventDefault();
-            this.value = this._formatToFloat(input.value);
-
-            await this.updateComplete;
-
-            this._inputElement?.setSelectionRange(caretPosition, caretPosition);
-        }
-
-        // Delete fraction (cents) part if delete button is clicked.
-        if (input.value.charAt(caretPosition!) === this.fractionalSeparator && e.key.toLowerCase() === 'delete') {
-            input.value = input.value.substring(0, input.value.indexOf(this.fractionalSeparator));
-            this.value = this._formatToFloat(input.value);
-            return;
-        }*/
-
-    }
-
-    async _keyInput(): Promise<void> {
-        console.log('key input event hit');
-        //console.log('keyinput event', e);
-        /*
-        const preValueLength = this._inputElement!.value.length;
-        const caretPosition = this._inputElement!.selectionStart;
-        const inputValue = this._inputElement!.value;
-
-        if (inputValue.includes(this.fractionalSeparator)) {
-            // Split out the amount and fraction (cents) parts of the input value
-            const amountPart = this._parseAmount(inputValue.substring(0, inputValue.indexOf(this.fractionalSeparator)));
-
-            let fractionPart = this._parseFraction(inputValue.substring(inputValue.indexOf(this.fractionalSeparator) + 1));
-
-            if (fractionPart.length >= this.fractionalPrecision) {
-                fractionPart = fractionPart.substring(0, this.fractionalPrecision);
-            }
-            // Format amount and fraction (cents) to currency string, ignoring fraction if still partially completed eg: just '.' is valid.
-            await this._formatToCurrency(amountPart as number).then((res) => {
-                this._inputElement!.value = res + this.fractionalSeparator + fractionPart;
-            });
-        } else {
-            await this._formatToCurrency(this._parseAmount(inputValue) as number).then((res) => {
-                this._inputElement!.value = res;
-            });
-        }
-
-        // Set the value to a float value.
-        this.value = this._formatToFloat(inputValue);
-
-        await this.updateComplete;
-
-        // Length of the input value after the input value is updated and formatted.
-        const postValueLength = this._inputElement?.value.length;
-
-        // Position the caret in the correct position.
-        if ((postValueLength as number) > preValueLength) {
-            this._inputElement!.setSelectionRange(caretPosition! + 1, caretPosition! + 1);
-        } else if (preValueLength > postValueLength!) {
-            this._inputElement!.setSelectionRange(caretPosition! - 1, caretPosition! - 1);
-        } else {
-            this._inputElement!.setSelectionRange(caretPosition, caretPosition);
-        }*/
     }
 
     static override get styles() {
