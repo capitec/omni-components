@@ -355,7 +355,7 @@ export class DatePicker extends OmniFormElement {
 
         return html` 
         <div class=${classMap(border)}></div>
-        <div class=${classMap(control)} @click=${this.focus}>
+        <div id="control" class=${classMap(control)} @click=${this.focus}>
                 <slot name="calendar">
                     <omni-calendar-icon class=${classMap(controlIcon)}></omni-calendar-icon>
                 </slot>            
