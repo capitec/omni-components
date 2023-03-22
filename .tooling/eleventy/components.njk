@@ -128,6 +128,7 @@ eleventyComputed:
                             <thead>
                                 <tr>
                                     <th scope="col">Attribute</th>
+                                    <th scope="col">Type</th>
                                     <th scope="col">Description</th>
                                 </tr>
                             </thead>
@@ -135,6 +136,7 @@ eleventyComputed:
                                 {% for globAttr in globalAttributes %}
                                 <tr>
                                     <td data-label="Attribute" scope="row"><pre><code class="language-js">{{ globAttr.attribute }}</code></pre></td>
+                                    <td data-label="Type"><pre><code class="language-js">{{globAttr.type}}</code></pre></td>
                                     <td data-label="Description">{{ globAttr.description | safe }}</td>
                                 </tr>
                                 {% endfor %}

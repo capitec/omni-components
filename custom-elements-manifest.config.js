@@ -48,7 +48,13 @@ const plugins = {
                                 jsDoc.tags?.forEach(tag => {
                                     const tagName = tag.tagName.getText();
                                     if (tagName && (tagName.toLowerCase() === 'globalattr' || tagName.toLowerCase() === 'global_attribute')) {
-                                        const attribute = tag.comment.substring(0,tag.comment.indexOf(' - '));
+                                        let attribute = tag.comment.substring(0,tag.comment.indexOf(' - '));
+                                        let type = '';
+                                        if (attribute.includes('}')) {
+                                            const split = attribute.split('}');
+                                            attribute = split[split.length - 1];
+                                            type = split[0].replace('{','');
+                                        }
                                         const description = tag.comment.substring(tag.comment.indexOf(' - ') + 3);
 
                                         const classDeclaration = moduleDoc.declarations.find(declaration => declaration.name === className);
@@ -58,7 +64,8 @@ const plugins = {
                                         }
                                         classDeclaration.globalAttributes.push({
                                             attribute,
-                                            description
+                                            description,
+                                            type
                                         });
                                     }
                                 });

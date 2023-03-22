@@ -53,14 +53,14 @@ import './KeyboardButton.js';
  * @slot action-search - Content to display on call to action button ('Enter') when target component has enterkeyhint="search".
  * @slot action-send - Content to display on call to action button ('Enter') when target component has enterkeyhint="send".
  * @slot action-enter - Content to display on call to action button ('Enter') when target component has enterkeyhint="enter" or enterkeyhint is not set.
- * 
- * @global_attribute data-omni-keyboard-attach - Indicates that the Keyboard is enabled for that component when the Keyboard has `attach-mode="attribute"` or when the value is equal to the Keyboard's id and `attach-mode="id"`.
- * @global_attribute data-omni-keyboard-hidden - Disables the Keyboard for that component.
- * @global_attribute data-omni-keyboard-mode - Indicates that the Keyboard is to render in specified type of inputmode. Takes precedence over `inputmode` attribute.
- * @global_attribute enterkeyhint - Indicates that the Keyboard's call to action button must render (and in some cases behave) accordingly.
- * @global_attribute data-omni-keyboard-multi-line - Indicates that the call to action button inserts a new line instead of default behaviour.
- * @global_attribute data-omni-keyboard-mask - Indicates that the Keyboard display value must be masked.
- * @global_attribute data-omni-keyboard-no-display - Disables the Keyboard display value. Takes precedence over `data-omni-keyboard-mask`.
+ *
+ * @global_attribute {boolean | string} data-omni-keyboard-attach - Indicates that the Keyboard is enabled for that component when the Keyboard has `attach-mode="attribute"` or when the value is equal to the Keyboard's id and `attach-mode="id"`.
+ * @global_attribute {boolean} data-omni-keyboard-hidden - Disables the Keyboard for that component.
+ * @global_attribute {InputMode} data-omni-keyboard-mode - Indicates that the Keyboard is to render in specified type of inputmode. Takes precedence over `inputmode` attribute.
+ * @global_attribute {EnterKeyHint} enterkeyhint - Indicates that the Keyboard's call to action button must render (and in some cases behave) accordingly.
+ * @global_attribute {boolean} data-omni-keyboard-multi-line - Indicates that the call to action button inserts a new line instead of default behaviour.
+ * @global_attribute {boolean} data-omni-keyboard-mask - Indicates that the Keyboard display value must be masked.
+ * @global_attribute {boolean} data-omni-keyboard-no-display - Disables the Keyboard display value. Takes precedence over `data-omni-keyboard-mask`.
  *
  * @cssprop --omni-keyboard-button-icon-max-height - Max height for slotted content in keyboard buttons.
  * @cssprop --omni-keyboard-button-icon-max-width - Max width for slotted content in keyboard buttons.
@@ -365,7 +365,7 @@ export class Keyboard extends OmniElement {
         window.removeEventListener('click', this.globalClick);
         document.removeEventListener('focus', this.globalFocus, true);
         if (this.focusNodes) {
-            this.focusNodes.forEach(node => {
+            this.focusNodes.forEach((node) => {
                 try {
                     if (node) {
                         node.removeEventListener('focus', this.globalFocus, true);
@@ -818,10 +818,11 @@ export class Keyboard extends OmniElement {
                 this.targetComponentObserver.observe(this.targetComponent, { attributes: true });
             }
 
-            const mode =
-                (this.targetComponent.hasAttribute(explicitKeyboardMode)
-                    ? this.targetComponent.getAttribute(explicitKeyboardMode)
-                    : this.target.getAttribute(explicitKeyboardMode)) ?? input.inputMode;
+            const mode = ((this.targetComponent.hasAttribute(explicitKeyboardMode) && this.targetComponent.getAttribute(explicitKeyboardMode)
+                ? this.targetComponent.getAttribute(explicitKeyboardMode)
+                : this.target.getAttribute(explicitKeyboardMode)) ??
+                input.inputMode ??
+                'text') as InputMode;
 
             this.mode =
                 input.type === 'number' || input.type === 'tel' || mode === 'decimal' || mode === 'numeric' || mode === 'tel'
@@ -1676,6 +1677,7 @@ export const explicitKeyboardMode = 'data-omni-keyboard-mode';
 const supportedTypes = ['number', 'email', 'tel', 'password', 'search', 'text', 'url', 'textarea'];
 const selectionSupportedTypes = ['tel', 'password', 'search', 'text', 'url', 'textarea'];
 
+export type InputMode = 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url';
 export type InputEventTypes =
     | 'insertText'
     | 'insertReplacementText'
