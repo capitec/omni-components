@@ -79,7 +79,7 @@ export const Value: ComponentStoryFormat<Args> = {
     </omni-calendar>
     `,
     name: 'Value',
-    description: 'Set the value of the Calendar component, this has to be a valid date in ISOformat',
+    description: 'Set the value of the Calendar component, this has to be a valid date in ISO format',
     args: {
         value: isoDate
     } as Args,

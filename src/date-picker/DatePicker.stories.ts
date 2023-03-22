@@ -13,8 +13,8 @@ import { DatePicker } from './DatePicker';
 import './DatePicker.js';
 
 export default {
-    title: 'UI Components/Select',
-    component: 'omni-select'
+    title: 'UI Components/DatePicker',
+    component: 'omni-date-picker'
 } as CSFIdentifier;
 
 interface Args extends BaseArgs {
@@ -114,7 +114,7 @@ export const Value: ComponentStoryFormat<Args> = {
     </omni-date-picker>
     `,
     name: 'Value',
-    description: 'Set the current value of the Date picker component.',
+    description: 'Set the current value of the Date Picker component.',
     args: {
         label: 'Value',
         value: isoDate
@@ -137,7 +137,7 @@ export const Locale: ComponentStoryFormat<Args> = {
     </omni-date-picker>
     `,
     name: 'Locale',
-    description: 'Set the current locale of the Date picker component.',
+    description: 'Set the current locale of the Date Picker component.',
     args: {
         label: 'Locale',
         locale: testLocale

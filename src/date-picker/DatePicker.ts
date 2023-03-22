@@ -10,7 +10,7 @@ import '../icons/ChevronLeft.icon.js';
 import '../icons/ChevronRight.icon.js';
 
 /**
- * Control that allows you to select a specific date
+ * Control to get / set a specific date using a calendar.
  *
  * @import
  * ```js
@@ -99,13 +99,10 @@ export class DatePicker extends OmniFormElement {
 
     //Internal state properties for dimensions
     @state() private _bottomOfViewport: boolean = false;
-    @state() private _isMobile: boolean = false;
-
-    //private _updateDateVariablesUpdate = debounce(() => this._updateDateVariables(), 800);
 
     override connectedCallback() {
         super.connectedCallback();
-        this._mobileCheck();
+        // this._mobileCheck();
         this.addEventListener('click', this._inputClick.bind(this));
         window.addEventListener('click', this._windowClick.bind(this));
     }
@@ -135,7 +132,6 @@ export class DatePicker extends OmniFormElement {
     /*Dimension checks */
     async _dimensionsCheck() {
         await this._bottomCheck();
-        this._mobileCheck();
     }
 
     // Check to see if the component is at the bottom of the viewport if true set the internal boolean value.
@@ -145,17 +141,6 @@ export class DatePicker extends OmniFormElement {
             this._bottomOfViewport = true;
         } else {
             this._bottomOfViewport = false;
-        }
-    }
-
-    // Check the width of the screen to set the internal mobile boolean to true of false.
-    _mobileCheck() {
-        if (!window.matchMedia ? window.innerWidth >= 767 : window.matchMedia('screen and (min-width: 767px)').matches) {
-            // Desktop width is at least 767px
-            this._isMobile = false;
-        } else {
-            // Mobile screen less than 767px
-            this._isMobile = true;
         }
     }
 
