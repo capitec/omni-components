@@ -145,15 +145,15 @@ export class Select extends OmniFormElement {
 
     override connectedCallback() {
         super.connectedCallback();
-        this._mobileCheck();
+        this._checkforMobile();
         this.addEventListener('click', this._inputClick.bind(this));
         window.addEventListener('click', this._windowClick.bind(this));
     }
 
     protected override async firstUpdated(): Promise<void> {
-        await this._dimensionsCheck();
-        window.addEventListener('resize', this._dimensionsCheck.bind(this));
-        window.addEventListener('scroll', this._dimensionsCheck.bind(this));
+        await this._checkScreenDimensions();
+        window.addEventListener('resize', this._checkScreenDimensions.bind(this));
+        window.addEventListener('scroll', this._checkScreenDimensions.bind(this));
     }
 
     _inputClick() {
@@ -196,14 +196,14 @@ export class Select extends OmniFormElement {
     }
 
     // Check the dimensions of the screen to determine how to render items container and which control icon to apply.
-    async _dimensionsCheck() {
-        await this._bottomCheck();
-        this._mobileCheck();
+    async _checkScreenDimensions() {
+        await this._checkForBottomOfScreen();
+        this._checkforMobile();
         await this._itemsMaxHeightChange();
     }
 
     // Check to see if the component is at the bottom of the viewport if true set the internal boolean value.
-    async _bottomCheck() {
+    async _checkForBottomOfScreen() {
         if (visualViewport) {
             const distanceFromBottom = visualViewport.height - this.getBoundingClientRect().bottom;
             if (distanceFromBottom < 150) {
@@ -215,7 +215,7 @@ export class Select extends OmniFormElement {
     }
 
     // Check the width of the screen to set the internal mobile boolean to true of false.
-    _mobileCheck() {
+    _checkforMobile() {
         if (!window.matchMedia ? window.innerWidth >= 767 : window.matchMedia('screen and (min-width: 767px)').matches) {
             // Desktop width is at least 767px
             this._isMobile = false;
