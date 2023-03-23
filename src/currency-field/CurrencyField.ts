@@ -15,15 +15,15 @@ import '../label/Label.js';
  *
  * ```html
  * <omni-currency-field
- *  label="Enter currency value"
- *  value="100"
- *  hint="Required"
- *  error="Please enter the correct amount"
- *  currency-symbol="$"
- *  thousands-separator=","
- *  fractional-separator="."
- *  fractional-precision=2
- *  disabled>
+ *   label="Enter currency value"
+ *   value="100"
+ *   hint="Required"
+ *   error="Please enter the correct amount"
+ *   currency-symbol="$"
+ *   thousands-separator=","
+ *   fractional-separator="."
+ *   fractional-precision=2
+ *   disabled>
  * </omni-currency-field>
  * ```
  *
@@ -38,7 +38,7 @@ import '../label/Label.js';
  * @cssprop --omni-currency-field-height - Currency field height.
  * @cssprop --omni-currency-field-width - Currency field width.
  *
- * @cssprop --omni-currency-field-disabled-font-color -
+ * @cssprop --omni-currency-field-disabled-font-color - Currency field disabled font color.
  *
  * @cssprop --omni-currency-field-label-left-margin - Currency field label left margin.
  *

@@ -18,7 +18,6 @@ import '../icons/Check.icon.js';
  * ```html
  * <omni-check
  *   label="My Toggle Value"
- *   .data="{'id': 12345, 'name': 'Test'}"
  *   hint="Required"
  *   error="Field level error message"
  *   checked

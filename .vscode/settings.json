@@ -37,8 +37,10 @@
 		"text-field": true,
 		"utils": true,
 		"switch": true,
+		"date-picker": true,
 		"email-field": true,
 		"pin-field": true,
+		"calendar": true,
 		"keyboard": true
 	}
 }

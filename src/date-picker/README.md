@@ -1,35 +1,35 @@
-# omni-pin-field
+# omni-date-picker
 
-Pin input control to enter masked numeric values.
+Control to get / set a specific date using a calendar.
 
 ## Example
 
 ```html
-<omni-pin-field
-  label="Enter a value"
-  value=1234
-  data="{'id': 12345, 'name': 'Test'}"
-  hint="Required"
-  error="Field level error message"
-  disabled>
-</omni-pin-field>
+<omni-date-picker
+ label="Enter a value"
+ value="2023-03-01"
+ hint="Required"
+ error="Select a valid date"
+ locale="en-US"
+ disabled>
+</omni-date-picker>
 ```
 
 ## Properties
 
-| Property           | Attribute            | Modifiers | Type                                             | Default | Description                                      |
-|--------------------|----------------------|-----------|--------------------------------------------------|---------|--------------------------------------------------|
-| `data`             | `data`               |           | `object \| undefined`                            |         | Data associated with the component.              |
-| `dir`              |                      |           | `string`                                         |         |                                                  |
-| `disabled`         | `disabled`           |           | `boolean`                                        | false   | Indicator if the component should be disabled.   |
-| `error`            | `error`              |           | `string \| undefined`                            |         | Error message guiding a user to correct a mistake. |
-| `hint`             | `hint`               |           | `string \| undefined`                            |         | Hint message to assist the user.                 |
-| `label`            | `label`              |           | `string \| undefined`                            |         | Text label.                                      |
-| `lang`             |                      |           | `string`                                         |         |                                                  |
-| `noNativeKeyboard` | `no-native-keyboard` |           | `boolean \| undefined`                           |         | Disables native on screen keyboards for the component. |
-| `override`         | `override`           |           |                                                  |         | Used to set the base direction of text for display |
-| `styles`           |                      | readonly  | `CSSResultGroup[]`                               |         |                                                  |
-| `value`            | `value`              |           | `string \| number \| Record<string, unknown> \| undefined` | null    | Value entered into the form component.           |
+| Property   | Attribute  | Modifiers | Type                                             | Default         | Description                                      |
+|------------|------------|-----------|--------------------------------------------------|-----------------|--------------------------------------------------|
+| `data`     | `data`     |           | `object \| undefined`                            |                 | Data associated with the component.              |
+| `dir`      |            |           | `string`                                         |                 |                                                  |
+| `disabled` | `disabled` |           | `boolean`                                        | false           | Indicator if the component should be disabled.   |
+| `error`    | `error`    |           | `string \| undefined`                            |                 | Error message guiding a user to correct a mistake. |
+| `hint`     | `hint`     |           | `string \| undefined`                            |                 | Hint message to assist the user.                 |
+| `label`    | `label`    |           | `string \| undefined`                            |                 | Text label.                                      |
+| `lang`     |            |           | `string`                                         |                 |                                                  |
+| `locale`   | `locale`   |           | `string`                                         | "defaultLocale" | The locale used for formatting the output of the Date time picker. |
+| `override` | `override` |           |                                                  |                 | Used to set the base direction of text for display |
+| `styles`   |            | readonly  | `CSSResultGroup[]`                               |                 |                                                  |
+| `value`    | `value`    |           | `string \| number \| Record<string, unknown> \| undefined` | null            | Value entered into the form component.           |
 
 ## Methods
 
@@ -38,15 +38,21 @@ Pin input control to enter masked numeric values.
 | `focus`         | `(options?: FocusOptions \| undefined): void` |
 | `renderContent` | `(): TemplateResult<1>`                       |
 | `renderControl` | `(): TemplateResult<1>`                       |
+| `renderLabel`   | `(): TemplateResult<1>`                       |
+| `renderPicker`  | `(): TemplateResult<1> \| unique symbol`      |
+
+## Events
+
+| Event    | Type              | Description                         |
+|----------|-------------------|-------------------------------------|
+| `change` | `CustomEvent<{}>` | Dispatched when a date is selected. |
 
 ## Slots
 
 | Name                | Description                                      |
 |---------------------|--------------------------------------------------|
-| `hide`              | Replaces the icon for the pin value hidden state. |
 | `loading_indicator` | Used to define content that is displayed while async rendering is awaiting, or when renderLoading() is implicitly called |
 | `prefix`            | Replaces the icon for the prefix slot.           |
-| `show`              | Replaces the icon for the checked value visible state. |
 | `suffix`            | Replaces the icon for the suffix slot.           |
 
 ## CSS Custom Properties
@@ -56,6 +62,37 @@ Pin input control to enter masked numeric values.
 | `--omni-container-font-family`                   | Container font family.                         |
 | `--omni-container-height`                        | Container height.                              |
 | `--omni-container-width`                         | Container width.                               |
+| `--omni-date-picker-container-render-bottom-top` | Date picker container render bottom top.       |
+| `--omni-date-picker-container-top`               | Date picker container top.                     |
+| `--omni-date-picker-container-width`             | Date picker container width.                   |
+| `--omni-date-picker-container-z-index`           | Date picker container z-index.                 |
+| `--omni-date-picker-control-hover-color`         | Date picker control hover.                     |
+| `--omni-date-picker-control-icon-color`          | Date picker control icon color.                |
+| `--omni-date-picker-control-icon-error-color`    | Date picker control icon error color.          |
+| `--omni-date-picker-control-icon-height`         | Date picker control icon height.               |
+| `--omni-date-picker-control-icon-width`          | Date picker control icon width.                |
+| `--omni-date-picker-control-left-border-color`   | Date picker control left border color.         |
+| `--omni-date-picker-control-left-border-error-color` | Date picker control left border error color.   |
+| `--omni-date-picker-control-left-border-width`   | Date picker control left border width.         |
+| `--omni-date-picker-control-left-focused-border-width` | Date picker control left border focused width. |
+| `--omni-date-picker-control-left-focused-color`  | Date picker control left border focused color. |
+| `--omni-date-picker-control-padding`             | Date picker control padding.                   |
+| `--omni-date-picker-disabled-font-color`         | Date picker disabled font color.               |
+| `--omni-date-picker-error-font-color`            | Date picker error font color.                  |
+| `--omni-date-picker-font-color`                  | Date picker input font color.                  |
+| `--omni-date-picker-font-family`                 | Date picker input font family.                 |
+| `--omni-date-picker-font-size`                   | Date picker input font size.                   |
+| `--omni-date-picker-font-weight`                 | Date picker input font weight.                 |
+| `--omni-date-picker-height`                      | Date picker input height.                      |
+| `--omni-date-picker-min-width`                   | Date picker min width.                         |
+| `--omni-date-picker-mobile-picker-container-bottom` | Date picker container mobile bottom.           |
+| `--omni-date-picker-mobile-picker-container-box-shadow` | Date picker container mobile box shadow.       |
+| `--omni-date-picker-mobile-picker-container-left` | Date picker container mobile left.             |
+| `--omni-date-picker-mobile-picker-container-right` | Date picker container mobile right.            |
+| `--omni-date-picker-padding`                     | Date picker input padding.                     |
+| `--omni-date-picker-period-container-border-bottom` | Date picker container border bottom.           |
+| `--omni-date-picker-text-align`                  | Date picker input text align.                  |
+| `--omni-date-picker-width`                       | Date picker width.                             |
 | `--omni-form-border-bottom`                      | Form border bottom.                            |
 | `--omni-form-border-color`                       | Form border color.                             |
 | `--omni-form-border-left`                        | Form border left.                              |
@@ -107,23 +144,6 @@ Pin input control to enter masked numeric values.
 | `--omni-form-layout-border-radius`               | Layout border radius.                          |
 | `--omni-form-layout-height`                      | Layout height.                                 |
 | `--omni-form-layout-width`                       | Layout width.                                  |
-| `--omni-pin-field-control-padding-bottom`        | Pin field control padding bottom.              |
-| `--omni-pin-field-control-padding-left`          | Pin field control padding left.                |
-| `--omni-pin-field-control-padding-right`         | Pin field control padding right.               |
-| `--omni-pin-field-control-padding-top`           | Pin field control padding top.                 |
-| `--omni-pin-field-disabled-font-color`           | Pin field disabled font color.                 |
-| `--omni-pin-field-error-font-color`              | Pin field error font color.                    |
-| `--omni-pin-field-font-color`                    | Pin field font color.                          |
-| `--omni-pin-field-font-family`                   | Pin field font family.                         |
-| `--omni-pin-field-font-size`                     | Pin field font size.                           |
-| `--omni-pin-field-font-weight`                   | Pin field font weight.                         |
-| `--omni-pin-field-height`                        | Pin field height.                              |
-| `--omni-pin-field-icon-color`                    | Pin field slot icon color.                     |
-| `--omni-pin-field-icon-height`                   | Pin field slot height.                         |
-| `--omni-pin-field-icon-width`                    | Pin field slot width.                          |
-| `--omni-pin-field-padding`                       | Pin field padding.                             |
-| `--omni-pin-field-text-align`                    | Pin field text align.                          |
-| `--omni-pin-field-width`                         | Pin field width.                               |
 | `--omni-theme-accent-active-color`               | Theme accent active color.                     |
 | `--omni-theme-accent-color`                      | Theme accent color.                            |
 | `--omni-theme-accent-hover-color`                | Theme accent hover color.                      |

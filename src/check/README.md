@@ -7,7 +7,6 @@ Control that allows a selection to be made.
 ```html
 <omni-check
   label="My Toggle Value"
-  .data="{'id': 12345, 'name': 'Test'}"
   hint="Required"
   error="Field level error message"
   checked

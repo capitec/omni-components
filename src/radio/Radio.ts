@@ -15,7 +15,6 @@ import { OmniElement } from '../core/OmniElement.js';
  * ```html
  * <omni-radio
  *   label="My Toggle Value"
- *   data="{'id': 12345, 'name': 'Test'}"
  *   hint="Required"
  *   error="Field level error message"
  *   checked

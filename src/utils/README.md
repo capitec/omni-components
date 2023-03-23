@@ -118,3 +118,9 @@
 | `createRenderRoot`                   | `(): Element \| ShadowRoot`                      |
 | `handleCustomThemeCSSVariableSearch` | `(e: Event): void`                               |
 | `renderCssVariable`                  | `(variable: CSSVariable): TemplateResult<1> \| unique symbol` |
+
+## Events
+
+| Event                               |
+|-------------------------------------|
+| `story-renderer-interactive-update` |
