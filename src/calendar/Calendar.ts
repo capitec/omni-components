@@ -212,7 +212,7 @@ export class Calendar extends OmniElement {
     }
 
     // When the control bar button is clicked it can either be one of the following examples*/
-    _controlBarClick() {
+    _changeStateSelection() {
         switch (this._showState) {
             case 'months':
                 this._showState = 'years';
@@ -226,7 +226,7 @@ export class Calendar extends OmniElement {
     }
 
     // Called when next button of the control bar is clicked.
-    _nextClick() {
+    _goToNext() {
         switch (this._showState) {
             case 'years':
                 this._selectedYear = this._selectedYear + 10;
@@ -250,7 +250,7 @@ export class Calendar extends OmniElement {
     }
 
     // Called when the previous button of the control bar is clicked.
-    _previousClick() {
+    _goToPrevious() {
         switch (this._showState) {
             case 'years':
                 this._selectedYear = this._selectedYear - 10;
@@ -274,13 +274,13 @@ export class Calendar extends OmniElement {
     }
 
     // When the year button is clicked on the year scroller.
-    _yearSelect(year: number) {
+    _selectYear(year: number) {
         this._selectedYear = year;
         this._showState = 'months';
     }
 
     // When the month button is clicked on the month grid.
-    _monthSelect(month: number) {
+    _selectMonth(month: number) {
         this._selectedMonth = month;
         this._showState = 'days';
     }
@@ -572,15 +572,15 @@ export class Calendar extends OmniElement {
     _renderControlBar() {
         const controlBarDate = DateTime.local(this._selectedYear, this._selectedMonth, 1).setLocale(this.locale);
         return html`<span class="control-bar">
-            <div class="left-control" @click="${() => this._previousClick()}"><omni-chevron-left-icon></omni-chevron-left-icon></div>
-            <div class="control-label" @click="${() => this._controlBarClick()}">${
+            <div class="left-control" @click="${() => this._goToPrevious()}"><omni-chevron-left-icon></omni-chevron-left-icon></div>
+            <div class="control-label" @click="${() => this._changeStateSelection()}">${
             this._showState === 'years'
                 ? `${this._selectedDecade[0]} - ${this._selectedDecade[this._selectedDecade.length - 1]}`
                 : this._showState === 'months'
                 ? this._selectedYear
                 : `${controlBarDate.monthLong} ${this._selectedYear}`
         }</div>
-            <div class="right-control" @click="${() => this._nextClick()}"><omni-chevron-right-icon></omni-chevron-right-icon></div>
+            <div class="right-control" @click="${() => this._goToNext()}"><omni-chevron-right-icon></omni-chevron-right-icon></div>
         </span>`;
     }
 
@@ -689,7 +689,7 @@ export class Calendar extends OmniElement {
             selected: this.date && this.date.isValid && this.date.year === this._selectedYear && this.date.monthShort === month
         };
 
-        return html`<div class=${classMap(monthStyles)} @click="${() => this._monthSelect(index + 1)}">${month}</div>`;
+        return html`<div class=${classMap(monthStyles)} @click="${() => this._selectMonth(index + 1)}">${month}</div>`;
     }
 
     /* Year grid and button render functions */
@@ -717,7 +717,7 @@ export class Calendar extends OmniElement {
             out: false
         };
 
-        return html`<div class=${classMap(yearStyles)} @click="${() => this._yearSelect(year)}">${year}</div>`;
+        return html`<div class=${classMap(yearStyles)} @click="${() => this._selectYear(year)}">${year}</div>`;
     }
 }
 

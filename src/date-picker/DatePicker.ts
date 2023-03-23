@@ -102,7 +102,6 @@ export class DatePicker extends OmniFormElement {
 
     override connectedCallback() {
         super.connectedCallback();
-        // this._mobileCheck();
         this.addEventListener('click', this._inputClick.bind(this));
         window.addEventListener('click', this._windowClick.bind(this));
     }
@@ -131,11 +130,11 @@ export class DatePicker extends OmniFormElement {
 
     /*Dimension checks */
     async _dimensionsCheck() {
-        await this._bottomCheck();
+        await this._checkForBottomOfScreen();
     }
 
     // Check to see if the component is at the bottom of the viewport if true set the internal boolean value.
-    async _bottomCheck() {
+    async _checkForBottomOfScreen() {
         const distanceFromBottom = visualViewport!.height - this.getBoundingClientRect().bottom;
         if (distanceFromBottom < 270) {
             this._bottomOfViewport = true;
