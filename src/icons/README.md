@@ -72,6 +72,29 @@ import '@capitec/omni-components/icons/Calendar.icon.js';
 | `createRenderRoot` | `(): this` |
 
 
+# omni-caps-lock-icon
+
+Caps lock icon component.
+
+## Example
+
+```html
+<omni-caps-lock-icon></omni-caps-lock-icon>
+```
+
+## Properties
+
+| Property   |
+|------------|
+| `override` |
+
+## Methods
+
+| Method             | Type       |
+|--------------------|------------|
+| `createRenderRoot` | `(): this` |
+
+
 # omni-caps-off-icon
 
 Caps off icon component.
@@ -103,29 +126,6 @@ Caps on icon component.
 
 ```html
 <omni-caps-on-icon></omni-caps-on-icon>
-```
-
-## Properties
-
-| Property   |
-|------------|
-| `override` |
-
-## Methods
-
-| Method             | Type       |
-|--------------------|------------|
-| `createRenderRoot` | `(): this` |
-
-
-# omni-caps-on-permanent-icon
-
-Permanent caps on icon component.
-
-## Example
-
-```html
-<omni-caps-on-permanent-icon></omni-caps-on-permanent-icon>
 ```
 
 ## Properties
