@@ -20,13 +20,12 @@ import '../icons/ChevronRight.icon.js';
  * @example
  * ```html
  * <omni-date-picker
- * label="Enter a value"
- * value="Hello World"
- * data="{'id': 12345, 'name': 'Test'}
- * hint="Required"
- * error="Select a valid date"
- * locale="en-US"
- * disabled>
+ *  label="Enter a value"
+ *  value="2023-03-01"
+ *  hint="Required"
+ *  error="Select a valid date"
+ *  locale="en-US"
+ *  disabled>
  * </omni-date-picker>
  * ```
  * @element omni-date-picker

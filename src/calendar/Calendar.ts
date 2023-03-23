@@ -18,8 +18,8 @@ import '../icons/ChevronRight.icon.js';
  * @example
  * ```html
  * <omni-calendar
- * value="2023-02-23"
- * locale="en-US">
+ *   value="2023-02-23"
+ *   locale="en-US">
  * </omni-calendar>
  * ```
  * @element omni-calendar

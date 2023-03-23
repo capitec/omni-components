@@ -35,6 +35,9 @@ import '../icons/More.icon.js';
  *
  * @element omni-select
  *
+ * @slot more - Replaces the icon for the more slot (Displays on mobile devices).
+ * @slot arrow - Replaces the icon for the arrow slot (Displays on desktop and tablet devices).
+ *
  * @cssprop --omni-select-field-text-align - Select component input field text align.
  * @cssprop --omni-select-field-font-color -  Select component input field font color.
  * @cssprop --omni-select-field-font-family - Select component input field font family.
@@ -278,6 +281,8 @@ export class Select extends OmniFormElement {
 
                     height: var(--omni-select-field-height, 100%);
                     width: var(--omni-select-field-width, 100%);
+
+                    cursor: pointer;
                 }
 
                 .field.disabled {
