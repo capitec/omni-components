@@ -1,6 +1,6 @@
 # omni-date-picker
 
-Control that allows you to select a specific date
+Control to get / set a specific date using a calendar.
 
 ## Example
 

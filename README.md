@@ -235,7 +235,7 @@ Control to enter a formatted currency value.
 
 </td><td>
 
-Control that allows you to select a specific date
+Control to get / set a specific date using a calendar.
 
 </td></tr><tr><td>
 
