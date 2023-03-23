@@ -14,7 +14,7 @@ import '../icons/ChevronDown.icon.js';
 import '../icons/Check.icon.js';
 import '../icons/CapsOff.icon.js';
 import '../icons/CapsOn.icon.js';
-import '../icons/CapsOnPermanent.icon.js';
+import '../icons/CapsLock.icon.js';
 import '../icons/Next.icon.js';
 import '../icons/Previous.icon.js';
 import '../icons/Search.icon.js';
@@ -25,7 +25,7 @@ import '../icon/Icon.js';
 import './KeyboardButton.js';
 
 /**
- * An on-screen keyboard control component.
+ * A responsive on-screen keyboard control component.
  *
  * @import
  * ```js
@@ -42,7 +42,7 @@ import './KeyboardButton.js';
  *
  * @slot caps-off - Content to display on case change button when in a lowercase state.
  * @slot caps-on - Content to display on case change button when in a single uppercase state.
- * @slot caps-on-permanent - Content to display on case change button when in a permanent uppercase state.
+ * @slot caps-lock - Content to display on case change button when in a permanent uppercase state (caps lock).
  * @slot close - Content to display next to close label.
  * @slot backspace - Content to display on backspace button.
  * @slot clear - Content to display on clear button.
@@ -53,6 +53,14 @@ import './KeyboardButton.js';
  * @slot action-search - Content to display on call to action button ('Enter') when target component has enterkeyhint="search".
  * @slot action-send - Content to display on call to action button ('Enter') when target component has enterkeyhint="send".
  * @slot action-enter - Content to display on call to action button ('Enter') when target component has enterkeyhint="enter" or enterkeyhint is not set.
+ *
+ * @global_attribute {boolean | string} data-omni-keyboard-attach - Indicates that the Keyboard is enabled for that component when the Keyboard has `attach-mode="attribute"` or when the value is equal to the Keyboard's id and `attach-mode="id"`.
+ * @global_attribute {boolean} data-omni-keyboard-hidden - Disables the Keyboard for that component.
+ * @global_attribute {InputMode} data-omni-keyboard-mode - Indicates that the Keyboard is to render in specified type of inputmode. Takes precedence over `inputmode` attribute.
+ * @global_attribute {EnterKeyHint} enterkeyhint - Indicates that the Keyboard's call to action button must render (and in some cases behave) accordingly.
+ * @global_attribute {boolean} data-omni-keyboard-multi-line - Indicates that the call to action button inserts a new line instead of default behaviour.
+ * @global_attribute {boolean} data-omni-keyboard-mask - Indicates that the Keyboard display value must be masked.
+ * @global_attribute {boolean} data-omni-keyboard-no-display - Disables the Keyboard display value. Takes precedence over `data-omni-keyboard-mask`.
  *
  * @cssprop --omni-keyboard-button-icon-max-height - Max height for slotted content in keyboard buttons.
  * @cssprop --omni-keyboard-button-icon-max-width - Max width for slotted content in keyboard buttons.
@@ -92,6 +100,10 @@ import './KeyboardButton.js';
  * @cssprop --omni-keyboard-top-bar-border-radius - Border radius for keyboard top bar.
  * @cssprop --omni-keyboard-top-bar-border-bottom-color - Border bottom color for keyboard top bar.
  *
+ * @cssprop --omni-keyboard-numeric-display-label-max-width - Width for display label in keyboard numeric mode.
+ * @cssprop --omni-keyboard-special-display-label-max-width - Width for display label in keyboard special mode.
+ * @cssprop --omni-keyboard-alpha-display-label-max-width - Width for display label in keyboard alpha-numeric mode.
+ *
  * @cssprop --omni-keyboard-wrapper-width - Width for keyboard button rows wrapper.
  * @cssprop --omni-keyboard-special-wrapper-width - Width for keyboard button rows wrapper for special keys.
  * @cssprop --omni-keyboard-numeric-wrapper-width - Width for keyboard button rows wrapper for numeric keyboard mode.
@@ -124,6 +136,10 @@ import './KeyboardButton.js';
  * @cssprop --omni-keyboard-top-bar-mobile-height - Height for keyboard top bar in mobile viewports.
  * @cssprop --omni-keyboard-top-bar-mobile-border-radius - Border radius for keyboard top bar in mobile viewports.
  *
+ * @cssprop --omni-keyboard-mobile-numeric-display-label-max-width - Width for display label in keyboard numeric mode for mobile viewports.
+ * @cssprop --omni-keyboard-mobile-special-display-label-max-width - Width for display label in keyboard special mode for mobile viewports.
+ * @cssprop --omni-keyboard-mobile-alpha-display-label-max-width - Width for display label in keyboard alpha-numeric mode for mobile viewports.
+ *
  * @cssprop --omni-keyboard-mobile-key-row-margin - Margin for keyboard rows in mobile viewports.
  * @cssprop --omni-keyboard-mobile-special-key-row-margin - Margin for special keyboard rows in mobile viewports.
  * @cssprop --omni-keyboard-mobile-key-row-width - Width for keyboard rows in mobile viewports.
@@ -134,6 +150,10 @@ import './KeyboardButton.js';
  *
  * @cssprop --omni-keyboard-mobile-close-icon-width - Width for keyboard close button icon in mobile viewports.
  * @cssprop --omni-keyboard-mobile-close-icon-width - Width for keyboard close button icon in mobile viewports.
+ *
+ * @cssprop --omni-keyboard-mobile-small-numeric-display-label-max-width - Width for display label in keyboard numeric mode for small mobile viewports.
+ * @cssprop --omni-keyboard-mobile-small-special-display-label-max-width - Width for display label in keyboard special mode for small mobile viewports.
+ * @cssprop --omni-keyboard-mobile-small-alpha-display-label-max-width - Width for display label in keyboard alpha-numeric mode for small mobile viewports.
  *
  * @cssprop --omni-keyboard-mobile-small-key-row-margin - Margin for keyboard rows in small mobile viewports.
  * @cssprop --omni-keyboard-mobile-small-key-row-margin - Margin for special keyboard rows in small mobile viewports.
@@ -147,6 +167,7 @@ export class Keyboard extends OmniElement {
      * The rule for the Keyboard to attach to inputs for showing on component focus.
      * * `all` - The Keyboard will show on focus for all input related components unless opted out with `data-omni-keyboard-hidden` on the component.
      * * `attribute` - The Keyboard will only show on focus for input related components with the `data-omni-keyboard-attach` attribute
+     * * `id` - The Keyboard will only show on focus for input related components with the `data-omni-keyboard-attach` attribute set equal to the Keyboard's id
      * @attr [attach-mode="all"]
      */
     @property({ type: String, attribute: 'attach-mode', reflect: true }) attachMode: 'all' | 'attribute' | 'id' = 'all';
@@ -173,7 +194,7 @@ export class Keyboard extends OmniElement {
      * The text label to display on the call to action button when `enterkeyhint` is not defined or `enterkeyhint="enter"`. The `action-enter` slot takes precedence over this label.
      * @attr [action-label="Enter"]
      */
-    @property({ type: String, attribute: 'action-label', reflect: true }) ctaLabel: string = 'Enter';
+    @property({ type: String, attribute: 'action-label', reflect: true }) actionLabel: string = 'Enter';
 
     @state() private mode: KeyboardMode = 'none';
     @state() private currentCase: 'lower' | 'upper' | 'upper-single' = 'lower';
@@ -184,6 +205,7 @@ export class Keyboard extends OmniElement {
     private targetComponent?: HTMLElement;
     private targetComponentObserver?: MutationObserver;
     private returnMode: 'change-value' | 'multi-line' = 'change-value';
+    private focusNodes: Node[] = [];
 
     private get displayValue() {
         if (
@@ -261,7 +283,7 @@ export class Keyboard extends OmniElement {
                     attach-mode="${ifDefined(init.attachMode)}" 
                     clear-label="${ifDefined(init.clearLabel)}" 
                     space-label="${ifDefined(init.spaceLabel)}" 
-                    action-label="${ifDefined(init.ctaLabel)}" 
+                    action-label="${ifDefined(init.actionLabel)}" 
                     close-label="${ifDefined(init.closeLabel)}">
                     <omni-render-element slot="clear" .renderer="${init.clear ? init.clear : () => html`${init.clearLabel}`}"></omni-render-element>
                     ${
@@ -275,9 +297,9 @@ export class Keyboard extends OmniElement {
                             : html`<omni-caps-on-icon style="display: inherit;" slot="caps-on"></omni-caps-on-icon>`
                     }
                     ${
-                        init.capsOnPermanent
-                            ? html`<omni-render-element slot="caps-on-permanent" .renderer="${init.capsOnPermanent}"></omni-render-element>`
-                            : html`<omni-caps-on-permanent-icon style="display: inherit;" slot="caps-on-permanent"></omni-caps-on-permanent-icon>`
+                        init.capsLock
+                            ? html`<omni-render-element slot="caps-lock" .renderer="${init.capsLock}"></omni-render-element>`
+                            : html`<omni-caps-lock-icon style="display: inherit;" slot="caps-lock"></omni-caps-lock-icon>`
                     }
                     ${
                         init.backspace
@@ -290,36 +312,36 @@ export class Keyboard extends OmniElement {
                             : html`<omni-chevron-down-icon style="display: inherit;" slot="close"></omni-chevron-down-icon>`
                     }
                     <omni-render-element slot="action-enter" .renderer="${
-                        init.ctaEnter ? init.ctaEnter : () => html`${init.ctaLabel}`
+                        init.actionEnter ? init.actionEnter : () => html`${init.actionLabel}`
                     }"></omni-render-element>
                     ${
-                        init.ctaDone
-                            ? html`<omni-render-element slot="action-done" .renderer="${init.ctaDone}"></omni-render-element>`
+                        init.actionDone
+                            ? html`<omni-render-element slot="action-done" .renderer="${init.actionDone}"></omni-render-element>`
                             : html`<omni-check-icon style="display: inherit;"  slot="action-done"></omni-check-icon>`
                     }
                     ${
-                        init.ctaGo
-                            ? html`<omni-render-element slot="action-go" .renderer="${init.ctaGo}"></omni-render-element>`
+                        init.actionGo
+                            ? html`<omni-render-element slot="action-go" .renderer="${init.actionGo}"></omni-render-element>`
                             : html`<omni-arrow-right-icon style="display: inherit;" slot="action-go"></omni-arrow-right-icon>`
                     }
                     ${
-                        init.ctaNext
-                            ? html`<omni-render-element slot="action-next" .renderer="${init.ctaNext}"></omni-render-element>`
+                        init.actionNext
+                            ? html`<omni-render-element slot="action-next" .renderer="${init.actionNext}"></omni-render-element>`
                             : html`<omni-next-icon style="display: inherit;"  slot="action-next"></omni-next-icon>`
                     }
                     ${
-                        init.ctaPrevious
-                            ? html`<omni-render-element slot="action-previous" .renderer="${init.ctaPrevious}"></omni-render-element>`
+                        init.actionPrevious
+                            ? html`<omni-render-element slot="action-previous" .renderer="${init.actionPrevious}"></omni-render-element>`
                             : html`<omni-previous-icon style="display: inherit;" slot="action-previous"></omni-previous-icon>`
                     }
                     ${
-                        init.ctaSearch
-                            ? html`<omni-render-element slot="action-search" .renderer="${init.ctaSearch}"></omni-render-element>`
+                        init.actionSearch
+                            ? html`<omni-render-element slot="action-search" .renderer="${init.actionSearch}"></omni-render-element>`
                             : html`<omni-search-icon style="display: inherit;" slot="action-search"></omni-search-icon>`
                     }
                     ${
-                        init.ctaSend
-                            ? html`<omni-render-element slot="action-send" .renderer="${init.ctaSend}"></omni-render-element>`
+                        init.actionSend
+                            ? html`<omni-render-element slot="action-send" .renderer="${init.actionSend}"></omni-render-element>`
                             : html`<omni-send-icon style="display: inherit;" slot="action-send"></omni-send-icon>`
                     }
                 </omni-keyboard>
@@ -342,6 +364,17 @@ export class Keyboard extends OmniElement {
 
         window.removeEventListener('click', this.globalClick);
         document.removeEventListener('focus', this.globalFocus, true);
+        if (this.focusNodes) {
+            this.focusNodes.forEach((node) => {
+                try {
+                    if (node) {
+                        node.removeEventListener('focus', this.globalFocus, true);
+                    }
+                } catch (error) {
+                    console.error(error);
+                }
+            });
+        }
     }
 
     /**
@@ -599,8 +632,6 @@ export class Keyboard extends OmniElement {
                     // Reset the whole value to be empty
                     const newVal = '';
 
-                    // Notify the input that its value is updated
-                    this.target.value = newVal;
                     const beforeInputEvent = new InputEvent('beforeinput', inputInfo);
                     allowContinue = this.target.dispatchEvent(beforeInputEvent);
                     // // Uncomment if support for async event handlers are required
@@ -609,6 +640,8 @@ export class Keyboard extends OmniElement {
                     //     allowContinue = !beforeInputEvent.defaultPrevented;
                     // }
                     if (allowContinue) {
+                        this.target.value = newVal;
+                        // Notify the input that its value is updated
                         this.target.dispatchEvent(new InputEvent('input', inputInfo));
                     }
                     this.target.dispatchEvent(
@@ -634,7 +667,7 @@ export class Keyboard extends OmniElement {
                 };
                 const inputInfo: InputEventInitWithType = {
                     inputType: 'insertText',
-                    data: event.detail.value === 'return' ? null : event.detail.value?.toString(),
+                    data: event.detail.value?.toString(),
                     bubbles: true,
                     cancelable: true,
                     composed: true
@@ -728,6 +761,11 @@ export class Keyboard extends OmniElement {
 
     _globalFocus() {
         const active = this._findActiveElement();
+        const rootNode = active?.getRootNode();
+        if (rootNode && rootNode !== document && !this.focusNodes.includes(rootNode)) {
+            this.focusNodes.push(rootNode);
+            rootNode?.addEventListener('focus', this.globalFocus, true);
+        }
         if (
             active &&
             (active instanceof HTMLInputElement ||
@@ -780,10 +818,11 @@ export class Keyboard extends OmniElement {
                 this.targetComponentObserver.observe(this.targetComponent, { attributes: true });
             }
 
-            const mode =
-                (this.targetComponent.hasAttribute(explicitKeyboardMode)
-                    ? this.targetComponent.getAttribute(explicitKeyboardMode)
-                    : this.target.getAttribute(explicitKeyboardMode)) ?? input.inputMode;
+            const mode = ((this.targetComponent.hasAttribute(explicitKeyboardMode) && this.targetComponent.getAttribute(explicitKeyboardMode)
+                ? this.targetComponent.getAttribute(explicitKeyboardMode)
+                : this.target.getAttribute(explicitKeyboardMode)) ??
+                input.inputMode ??
+                'text') as InputMode;
 
             this.mode =
                 input.type === 'number' || input.type === 'tel' || mode === 'decimal' || mode === 'numeric' || mode === 'tel'
@@ -884,6 +923,24 @@ export class Keyboard extends OmniElement {
 					justify-content: space-between;
 					border-bottom: 3px solid var(--omni-keyboard-top-bar-border-bottom-color,var(--omni-accent-color));
 				}
+
+                .display-label {
+                    white-space: nowrap; 
+                    overflow: hidden;
+                    text-overflow: ellipsis; 
+                }
+
+                .numeric-display {
+                    max-width: var(--omni-keyboard-numeric-display-label-max-width,116px);
+                }
+
+                .special-display {
+                    max-width: var(--omni-keyboard-special-display-label-max-width,246px);
+                }
+
+                .alpha-display {
+                    max-width: var(--omni-keyboard-alpha-display-label-max-width,562px);                    
+                }
 
                 
 				.action-button {
@@ -1077,6 +1134,18 @@ export class Keyboard extends OmniElement {
                    .closeButton {
                         font-size: var(--omni-keyboard-close-button-font-size,16px);
                     }
+
+                    .numeric-display {
+                        max-width: var(--omni-keyboard-mobile-numeric-display-label-max-width,310px);
+                    }
+    
+                    .special-display {
+                        max-width: var(--omni-keyboard-mobile-special-display-label-max-width,310px);
+                    }
+    
+                    .alpha-display {
+                        max-width: var(--omni-keyboard-mobile-alpha-display-label-max-width,310px);                    
+                    }
                 
                 }
 
@@ -1105,6 +1174,18 @@ export class Keyboard extends OmniElement {
                     .topbar > omni-label {
                         --omni-label-default-font-size: x-small;
                     }
+
+                    .numeric-display {
+                        max-width: var(--omni-keyboard-mobile-small-numeric-display-label-max-width,176px);
+                    }
+    
+                    .special-display {
+                        max-width: var(--omni-keyboard-mobile-small-special-display-label-max-width,176px);
+                    }
+    
+                    .alpha-display {
+                        max-width: var(--omni-keyboard-mobile-small-alpha-display-label-max-width,176px);                    
+                    }
                 }
 
 			`
@@ -1118,7 +1199,7 @@ export class Keyboard extends OmniElement {
 				<div class="wrapperContainer">
 					<div class="shadow">
 						<div class="topbar">
-							<omni-label label="${this.displayValue}"></omni-label>
+							<omni-label><span class="display-label alpha-display">${this.displayValue}</span></omni-label>
 							<div class="closer" @click="${this._close}">
 								<omni-label class="closeButton" label="${this.closeLabel}"></omni-label>
 								<omni-icon size="medium" class="themed-icon">${this.renderClose()}</omni-icon>
@@ -1274,7 +1355,7 @@ export class Keyboard extends OmniElement {
 				<div class="wrapperContainer">
 					<div class="shadow">
 						<div class="topbar">
-							<omni-label label="${this.displayValue}"></omni-label>
+							<omni-label><span class="display-label special-display">${this.displayValue}</span></omni-label>
 							<div class="closer" @click="${this._close}">
 								<omni-label class="closeButton" label="${this.closeLabel}"></omni-label>
 								<omni-icon size="medium" class="themed-icon">${this.renderClose()}</omni-icon>
@@ -1362,7 +1443,7 @@ export class Keyboard extends OmniElement {
 				<div class="wrapperContainer">
 					<div class="shadow">
 						<div class="topbar">
-							<omni-label label="${this.displayValue}"></omni-label>
+							<omni-label><span class="display-label numeric-display">${this.displayValue}</span></omni-label>
 							<div class="closer" @click="${this._close}">
 								<omni-label class="closeButton" label="${this.closeLabel}"></omni-label>
 								<omni-icon size="medium" class="themed-icon">${this.renderClose()}</omni-icon>
@@ -1446,8 +1527,8 @@ export class Keyboard extends OmniElement {
             ? html`
                 <omni-icon size="medium" class="themed-icon">
                     <div class="stretch-icon">
-                        <slot name="caps-on-permanent">
-                            <omni-caps-on-permanent-icon style="display: unset;"></omni-caps-on-permanent-icon>
+                        <slot name="caps-lock">
+                            <omni-caps-lock-icon style="display: unset;"></omni-caps-lock-icon>
                         </slot>
                     </div>
                 </omni-icon>
@@ -1557,7 +1638,7 @@ export class Keyboard extends OmniElement {
                         <omni-icon size="medium" class="action-icon">
                             <div class="stretch-icon flex-text-center">
                                 <slot name="action-enter">
-                                    ${this.ctaLabel}
+                                    ${this.actionLabel}
                                 </slot>
                             </div>
                         </omni-icon>`
@@ -1585,7 +1666,7 @@ export const hiddenAttribute = 'data-omni-keyboard-hidden';
  */
 export const noDisplayValueAttribute = 'data-omni-keyboard-no-display';
 /**
- * Indicates that the Keyboard is enabled for that component when the Keyboard has `attach-mode="attribute"`.
+ * Indicates that the Keyboard is enabled for that component when the Keyboard has `attach-mode="attribute"` or when the value is equal to the Keyboard's id and `attach-mode="id"`.
  */
 export const attachAttribute = 'data-omni-keyboard-attach';
 /**
@@ -1596,6 +1677,7 @@ export const explicitKeyboardMode = 'data-omni-keyboard-mode';
 const supportedTypes = ['number', 'email', 'tel', 'password', 'search', 'text', 'url', 'textarea'];
 const selectionSupportedTypes = ['tel', 'password', 'search', 'text', 'url', 'textarea'];
 
+export type InputMode = 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url';
 export type InputEventTypes =
     | 'insertText'
     | 'insertReplacementText'
@@ -1666,6 +1748,7 @@ export type KeyboardInit = {
      * The rule for the Keyboard to attach to inputs for showing on component focus.
      * * `all` - The Keyboard will show on focus for all input related components unless opted out with `data-omni-keyboard-hidden` on the component.
      * * `attribute` - The Keyboard will only show on focus for input related components with the `data-omni-keyboard-attach` attribute.
+     * * `id` - The Keyboard will only show on focus for input related components with the `data-omni-keyboard-attach` attribute set equal to the Keyboard's id
      */
     attachMode?: 'all' | 'attribute' | 'id';
 
@@ -1687,7 +1770,7 @@ export type KeyboardInit = {
     /**
      * The text label to display on the call to action button when `enterkeyhint` is not defined or `enterkeyhint="enter"`. The `action-enter` slot takes precedence over this label.
      */
-    ctaLabel?: string;
+    actionLabel?: string;
 
     /**
      * A function that returns content to render within the 'clear' slot
@@ -1705,9 +1788,9 @@ export type KeyboardInit = {
     capsOn?: RenderFunction;
 
     /**
-     * A function that returns content to render within the 'caps-on-permanent' slot
+     * A function that returns content to render within the 'caps-lock' slot
      */
-    capsOnPermanent?: RenderFunction;
+    capsLock?: RenderFunction;
 
     /**
      * A function that returns content to render within the 'backspace' slot
@@ -1722,37 +1805,37 @@ export type KeyboardInit = {
     /**
      * A function that returns content to render within the 'action-enter' slot
      */
-    ctaEnter?: RenderFunction;
+    actionEnter?: RenderFunction;
 
     /**
      * A function that returns content to render within the 'action-done' slot
      */
-    ctaDone?: RenderFunction;
+    actionDone?: RenderFunction;
 
     /**
      * A function that returns content to render within the 'action-go' slot
      */
-    ctaGo?: RenderFunction;
+    actionGo?: RenderFunction;
 
     /**
      * A function that returns content to render within the 'action-next' slot
      */
-    ctaNext?: RenderFunction;
+    actionNext?: RenderFunction;
 
     /**
      * A function that returns content to render within the 'action-previous' slot
      */
-    ctaPrevious?: RenderFunction;
+    actionPrevious?: RenderFunction;
 
     /**
      * A function that returns content to render within the 'action-search' slot
      */
-    ctaSearch?: RenderFunction;
+    actionSearch?: RenderFunction;
 
     /**
      * A function that returns content to render within the 'action-send' slot
      */
-    ctaSend?: RenderFunction;
+    actionSend?: RenderFunction;
 };
 
 declare global {
