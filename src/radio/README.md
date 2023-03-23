@@ -7,7 +7,6 @@ Control to select a single value from a group of values.
 ```html
 <omni-radio
   label="My Toggle Value"
-  data="{'id': 12345, 'name': 'Test'}"
   hint="Required"
   error="Field level error message"
   checked

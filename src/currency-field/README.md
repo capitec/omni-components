@@ -6,15 +6,15 @@ Control to enter a formatted currency value.
 
 ```html
 <omni-currency-field
- label="Enter currency value"
- value="100"
- hint="Required"
- error="Please enter the correct amount"
- currency-symbol="$"
- thousands-separator=","
- fractional-separator="."
- fractional-precision=2
- disabled>
+  label="Enter currency value"
+  value="100"
+  hint="Required"
+  error="Please enter the correct amount"
+  currency-symbol="$"
+  thousands-separator=","
+  fractional-separator="."
+  fractional-precision=2
+  disabled>
 </omni-currency-field>
 ```
 

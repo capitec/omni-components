@@ -57,7 +57,9 @@ Control to get / set a value within a list of options.
 
 | Name                | Description                                      |
 |---------------------|--------------------------------------------------|
+| `arrow`             | Replaces the icon for the arrow slot (Displays on desktop and tablet devices). |
 | `loading_indicator` | Used to define content that is displayed while async rendering is awaiting, or when renderLoading() is implicitly called |
+| `more`              | Replaces the icon for the more slot (Displays on mobile devices). |
 | `prefix`            | Replaces the icon for the prefix slot.           |
 | `suffix`            | Replaces the icon for the suffix slot.           |
 
