@@ -632,8 +632,6 @@ export class Keyboard extends OmniElement {
                     // Reset the whole value to be empty
                     const newVal = '';
 
-                    // Notify the input that its value is updated
-                    this.target.value = newVal;
                     const beforeInputEvent = new InputEvent('beforeinput', inputInfo);
                     allowContinue = this.target.dispatchEvent(beforeInputEvent);
                     // // Uncomment if support for async event handlers are required
@@ -642,6 +640,8 @@ export class Keyboard extends OmniElement {
                     //     allowContinue = !beforeInputEvent.defaultPrevented;
                     // }
                     if (allowContinue) {
+                        this.target.value = newVal;
+                        // Notify the input that its value is updated
                         this.target.dispatchEvent(new InputEvent('input', inputInfo));
                     }
                     this.target.dispatchEvent(
@@ -667,7 +667,7 @@ export class Keyboard extends OmniElement {
                 };
                 const inputInfo: InputEventInitWithType = {
                     inputType: 'insertText',
-                    data: event.detail.value === 'return' ? null : event.detail.value?.toString(),
+                    data: event.detail.value?.toString(),
                     bubbles: true,
                     cancelable: true,
                     composed: true
