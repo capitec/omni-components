@@ -330,6 +330,38 @@ export const Disabled: ComponentStoryFormat<Args> = {
     }
 };
 
+export const Custom_Control_Slot: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
+        <omni-select data-testid="test-select" label="${ifNotEmpty(args.label)}" .items="${args.items}">
+            <svg slot="arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px" style="fill: orange;"><path d="M12 2.25c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12 6.615 2.25 12 2.25Zm0 1.5a8.25 8.25 0 1 0 0 16.5 8.25 8.25 0 0 0 0-16.5ZM12 7a.75.75 0 0 1 .75.75v3.5h3.5a.75.75 0 0 1 .743.648L17 12a.75.75 0 0 1-.75.75h-3.5v3.5a.75.75 0 0 1-.648.743L12 17a.75.75 0 0 1-.75-.75v-3.5h-3.5a.75.75 0 0 1-.743-.648L7 12a.75.75 0 0 1 .75-.75h3.5v-3.5a.75.75 0 0 1 .648-.743Z"/></svg>
+            <svg slot="more" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px" style="fill: orange;"><path d="M12 2.25c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12 6.615 2.25 12 2.25Zm0 1.5a8.25 8.25 0 1 0 0 16.5 8.25 8.25 0 0 0 0-16.5ZM12 7a.75.75 0 0 1 .75.75v3.5h3.5a.75.75 0 0 1 .743.648L17 12a.75.75 0 0 1-.75.75h-3.5v3.5a.75.75 0 0 1-.648.743L12 17a.75.75 0 0 1-.75-.75v-3.5h-3.5a.75.75 0 0 1-.743-.648L7 12a.75.75 0 0 1 .75-.75h3.5v-3.5a.75.75 0 0 1 .648-.743Z"/></svg>
+        </omni-select>
+    `,
+    name: 'Custom Control Slot',
+    description: 'Set html content to display within the available control slots.',
+    args: {
+        label: 'Custom slots',
+        items: stringItems
+    } as Args,
+    play: async (context) => {
+        const select = within(context.canvasElement).getByTestId<Select>('test-select');
+
+        if (!window.matchMedia ? window.innerWidth >= 767 : window.matchMedia('screen and (min-width: 767px)').matches) {
+            const slotElement = select.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=arrow]');
+            await expect(slotElement).toBeTruthy();
+
+            const foundSlottedSvgElement = slotElement?.assignedElements().find((e) => e.tagName.toLocaleLowerCase() === 'svg');
+            await expect(foundSlottedSvgElement).toBeTruthy();
+        } else {
+            const slotElement = select.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=more]');
+            await expect(slotElement).toBeTruthy();
+
+            const foundSlottedSvgElement = slotElement?.assignedElements().find((e) => e.tagName.toLocaleLowerCase() === 'svg');
+            await expect(foundSlottedSvgElement).toBeTruthy();
+        }
+    }
+};
+
 export const Label = LabelStory<Select, BaseArgs>('omni-select');
 
 export const Hint = HintStory<Select, BaseArgs>('omni-select');
