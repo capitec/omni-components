@@ -295,6 +295,14 @@ import '@capitec/omni-components/icons/Calendar.icon.js';
 
 </td></tr><tr><td>
 
+[omni-caps-lock-icon](src/icons/README.md)
+
+</td><td>
+
+Caps lock icon component.
+
+</td></tr><tr><td>
+
 [omni-caps-off-icon](src/icons/README.md)
 
 </td><td>
@@ -308,14 +316,6 @@ Caps off icon component.
 </td><td>
 
 Caps on icon component.
-
-</td></tr><tr><td>
-
-[omni-caps-on-permanent-icon](src/icons/README.md)
-
-</td><td>
-
-Permanent caps on icon component.
 
 </td></tr><tr><td>
 
@@ -491,7 +491,7 @@ Send icon component.
 
 </td><td>
 
-An on-screen keyboard control component.
+A responsive on-screen keyboard control component.
 
 </td></tr><tr><td>
 
