@@ -107,9 +107,9 @@ export class DatePicker extends OmniFormElement {
     }
 
     protected override async firstUpdated(): Promise<void> {
-        await this._dimensionsCheck();
-        window.addEventListener('resize', this._dimensionsCheck.bind(this));
-        window.addEventListener('scroll', this._dimensionsCheck.bind(this));
+        await this._checkForBottomOfScreen();
+        window.addEventListener('resize', this._checkForBottomOfScreen.bind(this));
+        window.addEventListener('scroll', this._checkForBottomOfScreen.bind(this));
     }
 
     // Update properties of the Date picker component if user provides a value to the value property or if the locale property is updated.
@@ -126,11 +126,6 @@ export class DatePicker extends OmniFormElement {
         } else {
             super.focus(options);
         }
-    }
-
-    /*Dimension checks */
-    async _dimensionsCheck() {
-        await this._checkForBottomOfScreen();
     }
 
     // Check to see if the component is at the bottom of the viewport if true set the internal boolean value.
