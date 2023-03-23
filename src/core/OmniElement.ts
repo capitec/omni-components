@@ -65,8 +65,8 @@ export abstract class OmniElement extends LitElement {
         /* Handy tool for color lighten / darken: https://www.cssfontstack.com/oldsites/hexcolortool/. */
 
         --omni-primary-color: var(--omni-theme-primary-color, #808080);
-        --omni-primary-hover-color: var(--omni-theme-primary-hover-color, #7878781a); /* 3% darker */
-        --omni-primary-active-color: var(--omni-theme-primary-active-color, #787878); /* 6% darker */
+        --omni-primary-hover-color: var(--omni-theme-primary-hover-color, #787878); /* 3% darker */
+        --omni-primary-active-color: var(--omni-theme-primary-active-color, #717171); /* 6% darker */
 
         --omni-accent-color: var(--omni-theme-accent-color, #c3c3c3);
         --omni-accent-hover-color: var(--omni-theme-accent-hover-color, #bbbbbb1a); /* 3% darker */

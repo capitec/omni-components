@@ -1,5 +1,5 @@
 import { css, html } from 'lit';
-import { customElement, query, state } from 'lit/decorators.js';
+import { customElement, property, query, state } from 'lit/decorators.js';
 import { ClassInfo, classMap } from 'lit/directives/class-map.js';
 import { live } from 'lit/directives/live.js';
 import { OmniFormElement } from '../core/OmniFormElement.js';
@@ -60,6 +60,12 @@ export class PinField extends OmniFormElement {
      */
     @state() protected type: 'password' | 'number' = 'number';
 
+    /**
+     * Disables native on screen keyboards for the component.
+     * @attr [no-native-keyboard]
+     */
+    @property({ type: Boolean, reflect: true, attribute: 'no-native-keyboard' }) noNativeKeyboard?: boolean;
+
     @query('#inputField')
     private _inputElement?: HTMLInputElement;
     private showPin?: boolean = false;
@@ -97,6 +103,14 @@ export class PinField extends OmniFormElement {
         }
     }
 
+    override focus(options?: FocusOptions | undefined): void {
+        if (this._inputElement) {
+            this._inputElement.focus(options);
+        } else {
+            super.focus(options);
+        }
+    }
+
     _blurOnEnter(e: any) {
         if (e.code === 'Enter' || e.keyCode === 13) {
             e.currentTarget.blur();
@@ -123,12 +137,14 @@ export class PinField extends OmniFormElement {
 
         if (this.showPin) {
             this.showPin = false;
+            this._inputElement?.setAttribute('data-omni-keyboard-mask', '');
 
             if (!this.isWebkit) {
                 this.type = 'password';
             }
         } else {
             this.showPin = true;
+            this._inputElement?.removeAttribute('data-omni-keyboard-mask');
 
             if (!this.isWebkit) {
                 this.type = 'number';
@@ -244,11 +260,13 @@ export class PinField extends OmniFormElement {
       <input
         class=${classMap(field)}
         id="inputField"
-        inputmode="numeric"
+        inputmode="${this.noNativeKeyboard ? 'none' : 'numeric'}"
+        data-omni-keyboard-mode="numeric"
         .type="${this.type}"
         .value=${live(this.value as string)}
         ?readOnly=${this.disabled}
-        tabindex="${this.disabled ? -1 : 0}" />
+        tabindex="${this.disabled ? -1 : 0}" 
+        data-omni-keyboard-mask />
     `;
     }
 }

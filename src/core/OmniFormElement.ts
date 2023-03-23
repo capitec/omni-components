@@ -39,6 +39,7 @@ import OmniElement from './OmniElement.js';
  *
  * @cssprop --omni-form-focussed-border-width - Form focussed border width.
  * @cssprop --omni-form-focussed-border-color - Form focussed border color.
+ * @cssprop --omni-form-focussed-label-disabled-background-color - Form focussed label disabled background color.
  * @cssprop --omni-form-focussed-label-transform-scale - Form focussed label transform scale.
  * @cssprop --omni-form-focussed-label-margin-left - Form focussed label left margin.
  * @cssprop --omni-form-focussed-label-color - Form focussed label color.
@@ -206,7 +207,7 @@ export class OmniFormElement extends OmniElement {
                 }
 
                 :host([value]:not([value=''])) .layout  > .label,
-                .layout:focus-within > .label
+                .layout:focus-within > .label:not(.focused-static)
                 {
                     top: 0px;
                     margin-left: var(--omni-form-focussed-label-margin-left, 10px);
@@ -222,7 +223,7 @@ export class OmniFormElement extends OmniElement {
                 }
             
                 :host([value]:not([value=''])) .layout  > .label > div::before,
-                .layout:focus-within > .label > div::before 
+                .layout:focus-within > .label:not(.focused-static) > div::before
                 {
                     content: "";
 					display: block;           
@@ -234,6 +235,12 @@ export class OmniFormElement extends OmniElement {
 					z-index: -1;
                     top:50%;
                     width: calc(100% + var(--omni-form-focussed-label-padding-left, 3px) + var(--omni-form-focussed-label-padding-right, 3px));
+                }
+
+                :host([value]:not([value=''])) .layout.disabled  > .label > div::before,
+                .layout.disabled:focus-within > .label > div::before 
+                {
+                    background-color: var(--omni-form-focussed-label-disabled-background-color, var(--omni-disabled-background-color));
                 }
 
                 :host([value]:not([value=''])) .layout  > .label > div,
@@ -305,8 +312,9 @@ export class OmniFormElement extends OmniElement {
                     box-shadow: none;
                 }
 
+                /* Make this border wider half of focussed*/
                 .layout:hover > .border {
-                    border-color: var(--omni-form-hover-color, var(--omni-primary-color));
+                    border-color: var(--omni-form-hover-color, var(--omni-primary-hover-color));
                 }
 
                 .layout.disabled:hover > .border {
@@ -316,6 +324,8 @@ export class OmniFormElement extends OmniElement {
                 .layout.error:hover > .border {
                     border-color: var(--omni-form-error-hover-color, var(--omni-error-border-color));
                 }
+
+                
 
                 slot[name='prefix'],
                 slot[name='suffix'],
@@ -358,11 +368,12 @@ export class OmniFormElement extends OmniElement {
         return nothing;
     }
 
-    protected renderLabel() {
+    protected renderLabel(focusedStatic: boolean = false) {
         const labelClass: ClassInfo = {
             label: true,
             error: this.error ?? false,
-            disabled: this.disabled
+            disabled: this.disabled,
+            'focused-static': focusedStatic
         };
 
         return html`${this.label ? html`<div class=${classMap(labelClass)}><div>${this.label}</div></div>` : nothing}`;

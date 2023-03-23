@@ -1,8 +1,8 @@
 import { html, css } from 'lit';
-import { customElement, query } from 'lit/decorators.js';
+import { customElement, property, query } from 'lit/decorators.js';
 import { ClassInfo, classMap } from 'lit/directives/class-map.js';
 import { live } from 'lit/directives/live.js';
-import { OmniFormElement } from '../core/OmniFormElement.js';
+import { ifDefined, OmniFormElement } from '../core/OmniFormElement.js';
 
 /**
  * Control to input text.
@@ -43,11 +43,25 @@ export class TextField extends OmniFormElement {
     @query('#inputField')
     private _inputElement?: HTMLInputElement;
 
+    /**
+     * Disables native on screen keyboards for the component.
+     * @attr [no-native-keyboard]
+     */
+    @property({ type: Boolean, reflect: true, attribute: 'no-native-keyboard' }) noNativeKeyboard?: boolean;
+
     override connectedCallback() {
         super.connectedCallback();
         this.addEventListener('input', this._keyInput.bind(this), {
             capture: true
         });
+    }
+
+    override focus(options?: FocusOptions | undefined): void {
+        if (this._inputElement) {
+            this._inputElement.focus(options);
+        } else {
+            super.focus(options);
+        }
     }
 
     _keyInput() {
@@ -85,7 +99,7 @@ export class TextField extends OmniFormElement {
         }
 
         .field.error {
-            color: var(--omni-text-field-font-color);
+            color: var(--omni-text-field-error-font-color);
         }
       `
         ];
@@ -102,6 +116,7 @@ export class TextField extends OmniFormElement {
         class=${classMap(field)}
         id="inputField"
         type="text"
+        inputmode="${ifDefined(this.noNativeKeyboard ? 'none' : undefined)}"
         .value=${live(this.value as string)}
         ?readOnly=${this.disabled}
         tabindex="${this.disabled ? -1 : 0}" />

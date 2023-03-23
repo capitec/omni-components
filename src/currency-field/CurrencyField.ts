@@ -15,15 +15,15 @@ import '../label/Label.js';
  *
  * ```html
  * <omni-currency-field
- *  label="Enter currency value"
- *  value="100"
- *  hint="Required"
- *  error="Please enter the correct amount"
- *  currency-symbol="$"
- *  thousands-separator=","
- *  fractional-separator="."
- *  fractional-precision=2
- *  disabled>
+ *   label="Enter currency value"
+ *   value="100"
+ *   hint="Required"
+ *   error="Please enter the correct amount"
+ *   currency-symbol="$"
+ *   thousands-separator=","
+ *   fractional-separator="."
+ *   fractional-precision=2
+ *   disabled>
  * </omni-currency-field>
  * ```
  *
@@ -38,7 +38,7 @@ import '../label/Label.js';
  * @cssprop --omni-currency-field-height - Currency field height.
  * @cssprop --omni-currency-field-width - Currency field width.
  *
- * @cssprop --omni-currency-field-disabled-font-color -
+ * @cssprop --omni-currency-field-disabled-font-color - Currency field disabled font color.
  *
  * @cssprop --omni-currency-field-label-left-margin - Currency field label left margin.
  *
@@ -78,6 +78,12 @@ export class CurrencyField extends OmniFormElement {
     @property({ type: Number, reflect: true, attribute: 'fractional-precision' }) fractionalPrecision: number = 2;
 
     /**
+     * Disables native on screen keyboards for the component.
+     * @attr [no-native-keyboard]
+     */
+    @property({ type: Boolean, reflect: true, attribute: 'no-native-keyboard' }) noNativeKeyboard?: boolean;
+
+    /**
      * Formatter provided to format the value.
      * @attr
      */
@@ -109,6 +115,14 @@ export class CurrencyField extends OmniFormElement {
             await this._formatToCurrency(this.value.toString()).then((res) => {
                 this._inputElement!.value = res;
             });
+        }
+    }
+
+    override focus(options?: FocusOptions | undefined): void {
+        if (this._inputElement) {
+            this._inputElement.focus(options);
+        } else {
+            super.focus(options);
         }
     }
 
@@ -450,7 +464,8 @@ export class CurrencyField extends OmniFormElement {
                 id="inputField"
                 type="text"
                 maxlength="21"
-                inputmode="decimal"
+                inputmode="${this.noNativeKeyboard ? 'none' : 'decimal'}"
+                data-omni-keyboard-mode="decimal"
                 ?readOnly=${this.disabled}
                 tabindex="${this.disabled ? -1 : 0}" />
         `;

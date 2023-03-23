@@ -35,6 +35,9 @@ import '../icons/More.icon.js';
  *
  * @element omni-select
  *
+ * @slot more - Replaces the icon for the more slot (Displays on mobile devices).
+ * @slot arrow - Replaces the icon for the arrow slot (Displays on desktop and tablet devices).
+ *
  * @cssprop --omni-select-field-text-align - Select component input field text align.
  * @cssprop --omni-select-field-font-color -  Select component input field font color.
  * @cssprop --omni-select-field-font-family - Select component input field font family.
@@ -47,12 +50,12 @@ import '../icons/More.icon.js';
  * @cssprop --omni-select-field-disabled-font-color - Select component input field disabled font color.
  * @cssprop --omni-select-field-error-font-color - Select component input field error font color.
  *
- * @cssprop --omni-select-control-margin-right - Select control right margin.
- * @cssprop --omni-select-control-margin-left - Select control left margin.
- * @cssprop --omni-select-control-width - Select control width.
+ * @cssprop --omni-select-control-padding - Select component control padding.
  *
  * @cssprop --omni-select-control-icon-width - Select control icon width.
+ * @cssprop --omni-select-control-icon-height - Select control icon height.
  * @cssprop --omni-select-control-icon-color - Select control icon color.
+ * @cssprop --omni-select-control-icon-error-color - Select control error icon color.
  *
  * @cssprop --omni-select-items-container-box-shadow - Select items container box shadow.
  * @cssprop --omni-select-items-container-background-color - Select items container background color.
@@ -145,15 +148,15 @@ export class Select extends OmniFormElement {
 
     override connectedCallback() {
         super.connectedCallback();
-        this._mobileCheck();
+        this._checkforMobile();
         this.addEventListener('click', this._inputClick.bind(this));
         window.addEventListener('click', this._windowClick.bind(this));
     }
 
     protected override async firstUpdated(): Promise<void> {
-        await this._dimensionsCheck();
-        window.addEventListener('resize', this._dimensionsCheck.bind(this));
-        window.addEventListener('scroll', this._dimensionsCheck.bind(this));
+        await this._checkScreenDimensions();
+        window.addEventListener('resize', this._checkScreenDimensions.bind(this));
+        window.addEventListener('scroll', this._checkScreenDimensions.bind(this));
     }
 
     _inputClick() {
@@ -196,14 +199,14 @@ export class Select extends OmniFormElement {
     }
 
     // Check the dimensions of the screen to determine how to render items container and which control icon to apply.
-    async _dimensionsCheck() {
-        await this._bottomCheck();
-        this._mobileCheck();
+    async _checkScreenDimensions() {
+        await this._checkForBottomOfScreen();
+        this._checkforMobile();
         await this._itemsMaxHeightChange();
     }
 
     // Check to see if the component is at the bottom of the viewport if true set the internal boolean value.
-    async _bottomCheck() {
+    async _checkForBottomOfScreen() {
         if (visualViewport) {
             const distanceFromBottom = visualViewport.height - this.getBoundingClientRect().bottom;
             if (distanceFromBottom < 150) {
@@ -215,7 +218,7 @@ export class Select extends OmniFormElement {
     }
 
     // Check the width of the screen to set the internal mobile boolean to true of false.
-    _mobileCheck() {
+    _checkforMobile() {
         if (!window.matchMedia ? window.innerWidth >= 767 : window.matchMedia('screen and (min-width: 767px)').matches) {
             // Desktop width is at least 767px
             this._isMobile = false;
@@ -276,10 +279,10 @@ export class Select extends OmniFormElement {
                     font-weight: var(--omni-select-field-font-weight, var(--omni-font-weight));
                     padding: var(--omni-select-field-padding, 10px);
 
-                    /* Added to stop the transforming of the label when the input is clicked */
-                    pointer-events: none;
                     height: var(--omni-select-field-height, 100%);
                     width: var(--omni-select-field-width, 100%);
+
+                    cursor: pointer;
                 }
 
                 .field.disabled {
@@ -291,19 +294,23 @@ export class Select extends OmniFormElement {
                 }
 
                 .control {
-                    display: flex;
+                    display: inline-flex;
+                    flex: 0 0 auto;
+                    align-items: center;
                     cursor: pointer;
-                    margin-right: var(--omni-select-control-margin-right, 10px);
-                    margin-left: var(--omni-select-control-margin-left, 10px);
-                    width: var(--omni-select-control-width, 20px);
-
-                    /* Added to resolve issue of click event firing twice*/
+                    padding: var(--omni-select-control-padding, 10px 10px);
+                    /*Added to resolve issue of click event firing twice*/
                     pointer-events: none;
                 }
 
-                .control-icon {
+                .icon {
                     width: var(--omni-select-control-icon-width, 20px);
+                    height: var(--omni-select-control-icon-height, 20px);
                     fill: var(--omni-select-control-icon-color, var(--omni-primary-color));
+                }
+
+                .icon.error {
+                    fill: var(--omni-select-control-icon-error-color, var(--omni-error-font-color));
                 }
 
                 /* Default item container styles*/
@@ -413,7 +420,7 @@ export class Select extends OmniFormElement {
                 }
 
                 .item:hover {
-                    background-color: var(--omni-select-item-hover-background-color, var(--omni-primary-hover-color));
+                    background-color: var(--omni-select-item-hover-background-color, var(--omni-accent-hover-color));
                 }
 
                 .item.selected {
@@ -421,7 +428,7 @@ export class Select extends OmniFormElement {
                 }
 
                 .none:hover {
-                    background-color: var(--omni-select-item-none-hover, var(--omni-primary-hover-color));
+                    background-color: var(--omni-select-item-none-hover, var(--omni-accent-hover-color));
                 }
 
                 .loading {
@@ -470,11 +477,16 @@ export class Select extends OmniFormElement {
     }
 
     protected override renderControl() {
-        return html` <div id="control" class="control ${this._popUp ? `expanded` : `collapsed`}" @click="${() => this._controlClick()}">
+        const controlIcon: ClassInfo = {
+            icon: true,
+            disabled: this.disabled,
+            error: this.error as string
+        };
+        return html`<div id="control" class="control ${this._popUp ? `expanded` : `collapsed`}" @click="${() => this._controlClick()}">
             ${
                 this._isMobile
-                    ? html`<omni-more-icon class="control-icon"></omni-more-icon>`
-                    : html`<omni-chevron-down-icon class="control-icon"></omni-chevron-down-icon>`
+                    ? html`<slot name="more"><omni-more-icon class=${classMap(controlIcon)}></omni-more-icon></slot>`
+                    : html`<slot name="arrow"><omni-chevron-down-icon class=${classMap(controlIcon)}></omni-chevron-down-icon></slot>`
             }
         </div>`;
     }
@@ -521,6 +533,10 @@ export class Select extends OmniFormElement {
     // Render the loading indicator
     protected override renderLoading() {
         return html`<slot name="loading_indicator"><omni-loading-icon class="loading"></omni-loading-icon></slot>`;
+    }
+
+    protected override renderLabel() {
+        return super.renderLabel(true);
     }
 }
 

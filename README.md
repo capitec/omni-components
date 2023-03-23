@@ -191,6 +191,14 @@ Control that allows an action to be executed.
 
 </td></tr><tr><td>
 
+[omni-calendar](src/calendar/README.md)
+
+</td><td>
+
+Calendar component to set specific date.
+
+</td></tr><tr><td>
+
 [omni-check](src/check/README.md)
 
 </td><td>
@@ -223,6 +231,14 @@ Control to enter a formatted currency value.
 
 </td></tr><tr><td>
 
+[omni-date-picker](src/date-picker/README.md)
+
+</td><td>
+
+Control to get / set a specific date using a calendar.
+
+</td></tr><tr><td>
+
 [omni-email-field](src/email-field/README.md)
 
 </td><td>
@@ -247,6 +263,62 @@ Component that displays an icon.
 
 </td></tr><tr><td>
 
+[omni-arrow-right-icon](src/icons/README.md)
+
+</td><td>
+
+Arrow right icon component.
+
+</td></tr><tr><td>
+
+[omni-backspace-icon](src/icons/README.md)
+
+</td><td>
+
+Backspace icon component.
+
+</td></tr><tr><td>
+
+[omni-calendar-icon](src/icons/README.md)
+
+</td><td>
+
+A calendar icon component.
+
+
+```js
+
+
+import '@capitec/omni-components/icons/Calendar.icon.js';
+
+```
+
+</td></tr><tr><td>
+
+[omni-caps-off-icon](src/icons/README.md)
+
+</td><td>
+
+Caps off icon component.
+
+</td></tr><tr><td>
+
+[omni-caps-on-icon](src/icons/README.md)
+
+</td><td>
+
+Caps on icon component.
+
+</td></tr><tr><td>
+
+[omni-caps-on-permanent-icon](src/icons/README.md)
+
+</td><td>
+
+Permanent caps on icon component.
+
+</td></tr><tr><td>
+
 [omni-check-icon](src/icons/README.md)
 
 </td><td>
@@ -260,6 +332,38 @@ Check icon component.
 </td><td>
 
 Chevron down icon component.
+
+</td></tr><tr><td>
+
+[omni-chevron-left-icon](src/icons/README.md)
+
+</td><td>
+
+Chevron left icon component.
+
+
+```js
+
+
+import '@capitec/omni-components/icons/ChevronLeft.icon.js';
+
+```
+
+</td></tr><tr><td>
+
+[omni-chevron-right-icon](src/icons/README.md)
+
+</td><td>
+
+Chevron right icon component.
+
+
+```js
+
+
+import '@capitec/omni-components/icons/ChevronRight.icon.js';
+
+```
 
 </td></tr><tr><td>
 
@@ -343,6 +447,14 @@ More icon component.
 
 </td></tr><tr><td>
 
+[omni-next-icon](src/icons/README.md)
+
+</td><td>
+
+Next icon component.
+
+</td></tr><tr><td>
+
 [omni-plus-icon](src/icons/README.md)
 
 </td><td>
@@ -351,11 +463,43 @@ Plus icon component.
 
 </td></tr><tr><td>
 
+[omni-previous-icon](src/icons/README.md)
+
+</td><td>
+
+Previous icon component.
+
+</td></tr><tr><td>
+
 [omni-search-icon](src/icons/README.md)
 
 </td><td>
 
 Search icon component.
+
+</td></tr><tr><td>
+
+[omni-send-icon](src/icons/README.md)
+
+</td><td>
+
+Send icon component.
+
+</td></tr><tr><td>
+
+[omni-keyboard](src/keyboard/README.md)
+
+</td><td>
+
+An on-screen keyboard control component.
+
+</td></tr><tr><td>
+
+[omni-keyboard-button](src/keyboard/README.md)
+
+</td><td>
+
+An internal keyboard button control used in the keyboard component.
 
 </td></tr><tr><td>
 
@@ -465,17 +609,17 @@ See the [`CONTRIBUTING.md`](./CONTRIBUTING.md) guide to get involved.
 <table>
 <tr>
     <td align="center">
-        <a href="https://github.com/BOTLANNER">
-            <img src="https://avatars.githubusercontent.com/u/16349308?v=4" width="100;" alt="BOTLANNER"/>
-            <br />
-            <sub><b>BOTLANNER</b></sub>
-        </a>
-    </td>
-    <td align="center">
         <a href="https://github.com/chromaticWaster">
             <img src="https://avatars.githubusercontent.com/u/22874454?v=4" width="100;" alt="chromaticWaster"/>
             <br />
             <sub><b>chromaticWaster</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/BOTLANNER">
+            <img src="https://avatars.githubusercontent.com/u/16349308?v=4" width="100;" alt="BOTLANNER"/>
+            <br />
+            <sub><b>BOTLANNER</b></sub>
         </a>
     </td>
     <td align="center">
