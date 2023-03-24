@@ -231,7 +231,8 @@ export class CurrencyField extends OmniFormElement {
             let preFloatReplaceAll = '';
             if (formattedValue.includes(this.fractionalSeparator) && this.fractionalPrecision > 0) {
                 preFloatReplaceAll = formattedValue.replace(new RegExp(this.thousandsSeparator, 'g'), '').replace(this.fractionalSeparator, '.');
-                return Number(parseFloat(preFloatReplaceAll).toFixed(this.fractionalPrecision));
+                console.log('Formatted float', Number(parseFloat(preFloatReplaceAll).toFixed(this.fractionalPrecision)).toFixed(this.fractionalPrecision));
+                return Number(parseFloat(preFloatReplaceAll).toFixed(this.fractionalPrecision)).toFixed(this.fractionalPrecision);                
             } else {
                 preFloatReplaceAll = formattedValue.replace(new RegExp(this.thousandsSeparator, 'g'), '');
                 return Number(parseFloat(preFloatReplaceAll).toFixed(0));
@@ -372,17 +373,6 @@ export class CurrencyField extends OmniFormElement {
                 }
 
                 return;
-            }
-
-            switch (e.inputType as InputEventTypes) {
-                case 'deleteContentBackward':
-                    break;
-                case 'deleteContentForward':
-                    break;
-                case 'deleteContent':
-                    break;
-                default:
-                    break;
             }
 
             // Remove only the value at the end if backspace key is hit and value of input is not all zeros.
