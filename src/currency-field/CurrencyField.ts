@@ -148,6 +148,17 @@ export class CurrencyField extends OmniFormElement {
         }
     }
 
+    _dispatchCustomEvent(amount: number) {
+
+        this.dispatchEvent(
+            new CustomEvent('change', {
+                detail: {
+                    value: amount
+                }
+            })
+        );
+    }
+
     // Function used to check if the key entered is a numeric value
     _isNumber(number: string) {
         return /\d/.test(number);
@@ -231,7 +242,6 @@ export class CurrencyField extends OmniFormElement {
             let preFloatReplaceAll = '';
             if (formattedValue.includes(this.fractionalSeparator) && this.fractionalPrecision > 0) {
                 preFloatReplaceAll = formattedValue.replace(new RegExp(this.thousandsSeparator, 'g'), '').replace(this.fractionalSeparator, '.');
-                console.log('Formatted float', Number(parseFloat(preFloatReplaceAll).toFixed(this.fractionalPrecision)).toFixed(this.fractionalPrecision));
                 return Number(parseFloat(preFloatReplaceAll).toFixed(this.fractionalPrecision)).toFixed(this.fractionalPrecision);                
             } else {
                 preFloatReplaceAll = formattedValue.replace(new RegExp(this.thousandsSeparator, 'g'), '');
@@ -329,6 +339,7 @@ export class CurrencyField extends OmniFormElement {
 
             const floatValue = this._formatToFloat(this._inputElement!.value);
             this.value = floatValue;
+            this._dispatchCustomEvent(this.value as number);
 
             return;
         } else {
@@ -371,7 +382,7 @@ export class CurrencyField extends OmniFormElement {
                     const floatValue = this._formatToFloat(this._inputElement!.value);
                     this.value = floatValue;
                 }
-
+                this._dispatchCustomEvent(this.value as number);
                 return;
             }
 
