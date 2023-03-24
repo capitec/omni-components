@@ -158,6 +158,16 @@ export class CurrencyField extends OmniFormElement {
         return /^0*$/.test(centValue);
     }
 
+    _setDefaultValue(): string {
+        let startValue = '0.';
+        //Dynamically build up what the cents should be based on the fractional precision.
+        for (let index = 0; index < this.fractionalPrecision; index++) {
+            startValue += '0';
+        }
+
+        return startValue;
+    }
+
     _parseAmount(value: string): number | null {
         let cleanValue = '';
 
@@ -246,12 +256,13 @@ export class CurrencyField extends OmniFormElement {
     _focusInput() {
         const input = this._inputElement as HTMLInputElement;
         if (!this.value) {
+            /*
             let startValue = '0.';
             //Dynamically build up what the cents should be based on the fractional precision.
             for (let index = 0; index < this.fractionalPrecision; index++) {
                 startValue += '0';
-            }
-            this.value = startValue;
+            }*/
+            this.value = this._setDefaultValue();
         }
 
         if (input) {
