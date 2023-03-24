@@ -168,6 +168,17 @@ export class CurrencyField extends OmniFormElement {
         return /^0*$/.test(centValue);
     }
 
+    _setDefaultValue(value: string): string {
+        value += '.';
+        //let startValue = '0.';
+        //Dynamically build up what the cents should be based on the fractional precision.
+        for (let index = 0; index < this.fractionalPrecision; index++) {
+            value += '0';
+        }
+
+        return value;
+    }
+
     _parseAmount(value: string): number | null {
         let cleanValue = '';
 
@@ -217,6 +228,11 @@ export class CurrencyField extends OmniFormElement {
 
             if (fractionPart.length >= this.fractionalPrecision) {
                 fractionPart = fractionPart.substring(0, this.fractionalPrecision);
+            } else if (fractionPart.length < this.fractionalPrecision) {
+                const difference = this.fractionalPrecision - fractionPart.length;
+                for (let index = 0; index < difference; index++) {
+                    fractionPart += '0';
+                }
             }
             // Format amount and fraction (cents) part to currency string, ignoring fraction if still partially completed eg: just '.' is valid.
             return amountPart + this.fractionalSeparator + fractionPart;
@@ -232,7 +248,7 @@ export class CurrencyField extends OmniFormElement {
             return amountPart + this.fractionalSeparator + fractionPart;
         }
         // Resolve this to be more dynamic based on fractional precision
-        return formattedValue + this.fractionalSeparator + '00';
+        return this._setDefaultValue(formattedValue);
     }
 
     // Format the internal value to a float.
@@ -255,12 +271,13 @@ export class CurrencyField extends OmniFormElement {
     _focusInput() {
         const input = this._inputElement as HTMLInputElement;
         if (!this.value) {
+            /*
             let startValue = '0.';
             //Dynamically build up what the cents should be based on the fractional precision.
             for (let index = 0; index < this.fractionalPrecision; index++) {
                 startValue += '0';
-            }
-            this.value = startValue;
+            }*/
+            this.value = this._setDefaultValue('0');
         }
 
         if (input) {
@@ -393,6 +410,9 @@ export class CurrencyField extends OmniFormElement {
                 // Check if cent value is all zeroes if true set the value of the input to 0.00
                 if (this._isAllZeros(centValue!)) {
                     this._inputElement!.value = '0.00';
+                    const floatValue = this._formatToFloat(this._inputElement!.value);
+                    this.value = floatValue;
+                    this._dispatchCustomEvent(this.value as number);
                 } else {
                     const amountPart = centValue?.substring(0, centValue.length - this.fractionalPrecision) as string;
 
