@@ -231,8 +231,8 @@ export class CurrencyField extends OmniFormElement {
             // Format amount and fraction (cents) part to currency string, ignoring fraction if still partially completed eg: just '.' is valid.
             return amountPart + this.fractionalSeparator + fractionPart;
         }
-
-        return formattedValue;
+        // Resolve this to be more dynamic based on fractional precision
+        return formattedValue + this.fractionalSeparator + '00';
     }
 
     // Format the internal value to a float.
@@ -402,8 +402,8 @@ export class CurrencyField extends OmniFormElement {
                     this._inputElement!.value = parsedAmountPart + this.fractionalSeparator + fractionPart;
                     const floatValue = this._formatToFloat(this._inputElement!.value);
                     this.value = floatValue;
+                    this._dispatchCustomEvent(this.value as number);
                 }
-
                 return;
             } else {
                 e.preventDefault();
