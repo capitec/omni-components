@@ -1,6 +1,6 @@
 # omni-keyboard
 
-An on-screen keyboard control component.
+A responsive on-screen keyboard control component.
 
 ## Example
 
@@ -10,17 +10,17 @@ An on-screen keyboard control component.
 
 ## Properties
 
-| Property     | Attribute      | Modifiers | Type                           | Default | Description                                      |
-|--------------|----------------|-----------|--------------------------------|---------|--------------------------------------------------|
-| `attachMode` | `attach-mode`  |           | `"all" \| "attribute" \| "id"` | "all"   | The rule for the Keyboard to attach to inputs for showing on component focus.<br />* `all` - The Keyboard will show on focus for all input related components unless opted out with `data-omni-keyboard-hidden` on the component.<br />* `attribute` - The Keyboard will only show on focus for input related components with the `data-omni-keyboard-attach` attribute |
-| `clearLabel` | `clear-label`  |           | `string`                       | "Clear" | The text label to display on the clear button. The `clear` slot takes precedence over this label. |
-| `closeLabel` | `close-label`  |           | `string`                       | "Close" | The text label to display by the close button.   |
-| `ctaLabel`   | `action-label` |           | `string`                       | "Enter" | The text label to display on the call to action button when `enterkeyhint` is not defined or `enterkeyhint="enter"`. The `action-enter` slot takes precedence over this label. |
-| `dir`        |                |           | `string`                       |         |                                                  |
-| `lang`       |                |           | `string`                       |         |                                                  |
-| `override`   | `override`     |           |                                |         | Used to set the base direction of text for display |
-| `spaceLabel` | `space-label`  |           | `string`                       | "Space" | The text label to display on the spacebar button. |
-| `styles`     |                | readonly  | `CSSResultGroup[]`             |         |                                                  |
+| Property      | Attribute      | Modifiers | Type                           | Default | Description                                      |
+|---------------|----------------|-----------|--------------------------------|---------|--------------------------------------------------|
+| `actionLabel` | `action-label` |           | `string`                       | "Enter" | The text label to display on the call to action button when `enterkeyhint` is not defined or `enterkeyhint="enter"`. The `action-enter` slot takes precedence over this label. |
+| `attachMode`  | `attach-mode`  |           | `"all" \| "attribute" \| "id"` | "all"   | The rule for the Keyboard to attach to inputs for showing on component focus.<br />* `all` - The Keyboard will show on focus for all input related components unless opted out with `data-omni-keyboard-hidden` on the component.<br />* `attribute` - The Keyboard will only show on focus for input related components with the `data-omni-keyboard-attach` attribute<br />* `id` - The Keyboard will only show on focus for input related components with the `data-omni-keyboard-attach` attribute set equal to the Keyboard's id |
+| `clearLabel`  | `clear-label`  |           | `string`                       | "Clear" | The text label to display on the clear button. The `clear` slot takes precedence over this label. |
+| `closeLabel`  | `close-label`  |           | `string`                       | "Close" | The text label to display by the close button.   |
+| `dir`         |                |           | `string`                       |         |                                                  |
+| `lang`        |                |           | `string`                       |         |                                                  |
+| `override`    | `override`     |           |                                |         | Used to set the base direction of text for display |
+| `spaceLabel`  | `space-label`  |           | `string`                       | "Space" | The text label to display on the spacebar button. |
+| `styles`      |                | readonly  | `CSSResultGroup[]`             |         |                                                  |
 
 ## Methods
 
@@ -54,9 +54,9 @@ An on-screen keyboard control component.
 | `action-search`     | Content to display on call to action button ('Enter') when target component has enterkeyhint="search". |
 | `action-send`       | Content to display on call to action button ('Enter') when target component has enterkeyhint="send". |
 | `backspace`         | Content to display on backspace button.          |
+| `caps-lock`         | Content to display on case change button when in a permanent uppercase state (caps lock). |
 | `caps-off`          | Content to display on case change button when in a lowercase state. |
 | `caps-on`           | Content to display on case change button when in a single uppercase state. |
-| `caps-on-permanent` | Content to display on case change button when in a permanent uppercase state. |
 | `clear`             | Content to display on clear button.              |
 | `close`             | Content to display next to close label.          |
 | `loading_indicator` | Used to define content that is displayed while async rendering is awaiting, or when renderLoading() is implicitly called |
@@ -73,6 +73,7 @@ An on-screen keyboard control component.
 | `--omni-keyboard-action-button-margin`           | Margin for keyboard call to action button.       |
 | `--omni-keyboard-action-button-max-width`        | Max width for keyboard call to action button.    |
 | `--omni-keyboard-action-button-width`            | Width for keyboard call to action button.        |
+| `--omni-keyboard-alpha-display-label-max-width`  | Width for display label in keyboard alpha-numeric mode. |
 | `--omni-keyboard-background-color`               | Background color for keyboard.                   |
 | `--omni-keyboard-button-background-color`        | Background color for keyboard buttons.           |
 | `--omni-keyboard-button-border`                  | Border for keyboard buttons.                     |
@@ -106,19 +107,27 @@ An on-screen keyboard control component.
 | `--omni-keyboard-mobile-action-button-height`    | Height for keyboard call to action button in mobile viewports. |
 | `--omni-keyboard-mobile-action-button-margin`    | Margin for keyboard call to action button in mobile viewports. |
 | `--omni-keyboard-mobile-action-button-max-width` | Max width for keyboard call to action button in mobile viewports. |
+| `--omni-keyboard-mobile-alpha-display-label-max-width` | Width for display label in keyboard alpha-numeric mode for mobile viewports. |
 | `--omni-keyboard-mobile-close-icon-width`        | Width for keyboard close button icon in mobile viewports. |
 | `--omni-keyboard-mobile-key-row-margin`          | Margin for keyboard rows in mobile viewports.    |
 | `--omni-keyboard-mobile-key-row-width`           | Width for keyboard rows in mobile viewports.     |
+| `--omni-keyboard-mobile-numeric-display-label-max-width` | Width for display label in keyboard numeric mode for mobile viewports. |
 | `--omni-keyboard-mobile-small-action-button-height` | Height for keyboard call to action button in small mobile viewports. |
 | `--omni-keyboard-mobile-small-action-button-max-width` | Max width for keyboard call to action button in small mobile viewports. |
+| `--omni-keyboard-mobile-small-alpha-display-label-max-width` | Width for display label in keyboard alpha-numeric mode for small mobile viewports. |
 | `--omni-keyboard-mobile-small-key-row-margin`    | Margin for keyboard rows in small mobile viewports. |
+| `--omni-keyboard-mobile-small-numeric-display-label-max-width` | Width for display label in keyboard numeric mode for small mobile viewports. |
+| `--omni-keyboard-mobile-small-special-display-label-max-width` | Width for display label in keyboard special mode for small mobile viewports. |
+| `--omni-keyboard-mobile-special-display-label-max-width` | Width for display label in keyboard special mode for mobile viewports. |
 | `--omni-keyboard-mobile-special-key-row-margin`  | Margin for special keyboard rows in mobile viewports. |
+| `--omni-keyboard-numeric-display-label-max-width` | Width for display label in keyboard numeric mode. |
 | `--omni-keyboard-numeric-wrapper-width`          | Width for keyboard button rows wrapper for numeric keyboard mode. |
 | `--omni-keyboard-row-padding-bottom`             | Bottom padding for last keyboard row.            |
 | `--omni-keyboard-row-padding-top`                | Top padding for first keyboard row.              |
 | `--omni-keyboard-shadow-background-color`        | Background color for keyboard shadow.            |
 | `--omni-keyboard-shadow-border-radius`           | Border radius for keyboard shadow.               |
 | `--omni-keyboard-shadow-padding-bottom`          | Bottom padding for keyboard shadow.              |
+| `--omni-keyboard-special-display-label-max-width` | Width for display label in keyboard special mode. |
 | `--omni-keyboard-special-wrapper-width`          | Width for keyboard button rows wrapper for special keys. |
 | `--omni-keyboard-top-bar-background-color`       | Background color for keyboard top bar.           |
 | `--omni-keyboard-top-bar-border-bottom-color`    | Border bottom color for keyboard top bar.        |

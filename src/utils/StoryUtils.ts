@@ -1042,6 +1042,26 @@ function setupSearch() {
         }
     }
 
+    //Global Attribute search
+    const globalAttributeSearch = document.querySelector<SearchField>('#global-attribute-search');
+    const globalAttributeRows = document.querySelector<HTMLTableSectionElement>('#component-global-attributes')?.children;
+    if (globalAttributeSearch && globalAttributeRows) {
+        globalAttributeSearch.addEventListener('input', handleGlobalAttributes);
+        globalAttributeSearch.addEventListener('change', handleGlobalAttributes);
+    }
+
+    function handleGlobalAttributes() {
+        const filterValue = globalAttributeSearch?.value ?? '';
+        for (let index = 0; index < globalAttributeRows!.length; index++) {
+            const element = globalAttributeRows![index] as HTMLElement;
+            if (element.innerText && element.innerText.toLowerCase().includes((<string>filterValue).toLowerCase())) {
+                element.classList.remove('hidden');
+            } else {
+                element.classList.add('hidden');
+            }
+        }
+    }
+
     //Event search
     const eventSearch = document.querySelector<SearchField>('#event-search');
     const eventRows = document.querySelector<HTMLTableSectionElement>('#component-events')?.children;
