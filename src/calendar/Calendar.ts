@@ -598,7 +598,8 @@ export class Calendar extends OmniElement {
     _renderControlBar() {
         const controlBarDate = DateTime.local(this._selectedYear, this._selectedMonth, 1).setLocale(this.locale);
         return html`<span class="control-bar">
-            <div class="left-control" @click="${() => this._goToPrevious()}"><slot name="left-control"><omni-chevron-left-icon class="left-chevron"></omni-chevron-left-icon></slot></div>
+            <div class="left-control" @click="${() =>
+                this._goToPrevious()}"><slot name="left-control"><omni-chevron-left-icon class="left-chevron"></omni-chevron-left-icon></slot></div>
             <div class="control-label" @click="${() => this._changeStateSelection()}">${
             this._showState === 'years'
                 ? `${this._selectedDecade[0]} - ${this._selectedDecade[this._selectedDecade.length - 1]}`
@@ -606,7 +607,8 @@ export class Calendar extends OmniElement {
                 ? this._selectedYear
                 : `${controlBarDate.monthLong} ${this._selectedYear}`
         }</div>
-            <div class="right-control" @click="${() => this._goToNext()}"><slot name="right-control"><omni-chevron-right-icon class="right-chevron"></omni-chevron-right-icon></slot></div>
+            <div class="right-control" @click="${() =>
+                this._goToNext()}"><slot name="right-control"><omni-chevron-right-icon class="right-chevron"></omni-chevron-right-icon></slot></div>
         </span>`;
     }
 

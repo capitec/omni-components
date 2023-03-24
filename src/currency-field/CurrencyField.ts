@@ -149,7 +149,6 @@ export class CurrencyField extends OmniFormElement {
     }
 
     _dispatchCustomEvent(amount: number) {
-
         this.dispatchEvent(
             new CustomEvent('change', {
                 detail: {
@@ -242,7 +241,7 @@ export class CurrencyField extends OmniFormElement {
             let preFloatReplaceAll = '';
             if (formattedValue.includes(this.fractionalSeparator) && this.fractionalPrecision > 0) {
                 preFloatReplaceAll = formattedValue.replace(new RegExp(this.thousandsSeparator, 'g'), '').replace(this.fractionalSeparator, '.');
-                return Number(parseFloat(preFloatReplaceAll).toFixed(this.fractionalPrecision)).toFixed(this.fractionalPrecision);                
+                return Number(parseFloat(preFloatReplaceAll).toFixed(this.fractionalPrecision)).toFixed(this.fractionalPrecision);
             } else {
                 preFloatReplaceAll = formattedValue.replace(new RegExp(this.thousandsSeparator, 'g'), '');
                 return Number(parseFloat(preFloatReplaceAll).toFixed(0));
