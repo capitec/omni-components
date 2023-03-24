@@ -427,23 +427,6 @@ export class CurrencyField extends OmniFormElement {
                     }
                     that._inputElement!.selectionStart = that._inputElement!.selectionEnd = 10000;
                 }, 0);
-                // Check if cent value is all zeroes if true set the value of the input to 0.00
-                if (this._isAllZeros(centValue!)) {
-                    this._inputElement!.value = '0.00';
-                    const floatValue = this._formatToFloat(this._inputElement!.value);
-                    this.value = floatValue;
-                    this._dispatchCustomEvent(this.value as number);
-                } else {
-                    const amountPart = centValue?.substring(0, centValue.length - this.fractionalPrecision) as string;
-
-                    const fractionPart = centValue?.slice(-this.fractionalPrecision);
-
-                    const parsedAmountPart = amountPart ? this._parseAmount(amountPart) : '0';
-                    this._inputElement!.value = parsedAmountPart + this.fractionalSeparator + fractionPart;
-                    const floatValue = this._formatToFloat(this._inputElement!.value);
-                    this.value = floatValue;
-                    this._dispatchCustomEvent(this.value as number);
-                }
                 return;
             } else {
                 e.preventDefault();
