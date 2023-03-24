@@ -348,7 +348,8 @@ export class Calendar extends OmniElement {
             .control-bar > .control-label {
                 cursor: pointer;
                 text-align: center;
-
+                text-decoration: underline;
+                
                 width: var(--omni-calendar-control-label-width , 115px);
 
                 color: var(--omni-calendar-control-label-color, var(--omni-font-color));
