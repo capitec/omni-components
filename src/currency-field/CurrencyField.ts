@@ -406,7 +406,27 @@ export class CurrencyField extends OmniFormElement {
             if ((e.inputType as InputEventTypes) === 'deleteContentBackward' && !this._isAllZeros(centValue!)) {
                 e.preventDefault();
                 centValue = centValue?.substring(0, centValue.length - 1);
+                // eslint-disable-next-line @typescript-eslint/no-this-alias
+                const that = this;
+                setTimeout(function () {
+                    if (that._isAllZeros(centValue!)) {
+                        that._inputElement!.value = '0.00';
+                        const floatValue = that._formatToFloat(that._inputElement!.value);
+                        that.value = floatValue;
+                        that._dispatchCustomEvent(that.value as number);
+                    } else {
+                        const amountPart = centValue?.substring(0, centValue.length - that.fractionalPrecision) as string;
 
+                        const fractionPart = centValue?.slice(-that.fractionalPrecision);
+
+                        const parsedAmountPart = amountPart ? that._parseAmount(amountPart) : '0';
+                        that._inputElement!.value = parsedAmountPart + that.fractionalSeparator + fractionPart;
+                        const floatValue = that._formatToFloat(that._inputElement!.value);
+                        that.value = floatValue;
+                        that._dispatchCustomEvent(that.value as number);
+                    }
+                    that._inputElement!.selectionStart = that._inputElement!.selectionEnd = 10000;
+                }, 0);
                 // Check if cent value is all zeroes if true set the value of the input to 0.00
                 if (this._isAllZeros(centValue!)) {
                     this._inputElement!.value = '0.00';
@@ -427,6 +447,15 @@ export class CurrencyField extends OmniFormElement {
                 return;
             } else {
                 e.preventDefault();
+                // const input = this._inputElement as HTMLInputElement;
+                // eslint-disable-next-line @typescript-eslint/no-this-alias
+                const that = this;
+                setTimeout(function () {
+                    that._inputElement!.value = '0.00';
+                    const floatValue = that._formatToFloat(that._inputElement!.value);
+                    that.value = floatValue;
+                    that._inputElement!.selectionStart = that._inputElement!.selectionEnd = 10000;
+                }, 0);
                 return;
             }
         }
