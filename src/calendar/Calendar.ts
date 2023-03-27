@@ -27,6 +27,9 @@ import '../icons/ChevronRight.icon.js';
  * Registry of all properties defined by the component.
  *
  * @fires {CustomEvent<{}>} change - Dispatched when a date is selected.
+ * 
+ * @slot left-control - Replaces the icon for the left control button.
+ * @slot right-control - Replaces the icon for the right control button.
  *
  * @cssprop --omni-calendar-box-shadow - Calendar container box shadow.
  * @cssprop --omni-calendar-border-radius - Calendar container border radius.
@@ -334,16 +337,6 @@ export class Calendar extends OmniElement {
                 min-height: var(--omni-calendar-control-bar-min-height,56px);
 
             }
-
-            /*omni calendar control icon color and width*/
-            /*
-            .control-bar > .left-control,
-            .control-bar > .right-control{
-                cursor: pointer;
-
-                fill: var(--omni-calendar-control-color, var(--omni-primary-color));
-                width: var(--omni-calendar-control-width, 23px);
-            }*/
 
             /*omni calendar control icon color and width*/
             .control-bar > .left-control,
