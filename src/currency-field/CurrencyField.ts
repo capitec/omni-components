@@ -415,7 +415,6 @@ export class CurrencyField extends OmniFormElement {
 
             // Remove only the value at the end if backspace key is hit and value of input is not all zeros.
             if ((e.inputType as InputEventTypes) && !this._isAllZeros(centValue!)) {
-                e.preventDefault();
 
                 //Switch case for different input event types.
                 /*
@@ -432,6 +431,7 @@ export class CurrencyField extends OmniFormElement {
                 // eslint-disable-next-line @typescript-eslint/no-this-alias
                 const that = this;
                 if ((e.inputType as InputEventTypes) === 'deleteContentBackward') {
+                    e.preventDefault();
                     centValue = centValue?.substring(0, centValue.length - 1);
                     setTimeout(function () {
                         if (that._isAllZeros(centValue!)) {
@@ -455,9 +455,10 @@ export class CurrencyField extends OmniFormElement {
 
                     return;
                 } else {
+                    /*
                     setTimeout(function () {
                         that._inputElement!.selectionStart = that._inputElement!.selectionEnd = 10000;
-                    }, 0);
+                    }, 0);*/
                 }
             } else {
                 //Ensuring on older devices that the caret doesn't jump when hitting Deletecontent backwards event type.
