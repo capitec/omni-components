@@ -49,9 +49,9 @@ Control to enter a formatted currency value.
 
 ## Events
 
-| Event    | Type                              |
-|----------|-----------------------------------|
-| `change` | `CustomEvent<{ value: number; }>` |
+| Event    | Type              | Description                                      |
+|----------|-------------------|--------------------------------------------------|
+| `change` | `CustomEvent<{}>` | Dispatched when the Currency field value changes. |
 
 ## Slots
 
