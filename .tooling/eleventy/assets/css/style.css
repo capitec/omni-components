@@ -24,20 +24,6 @@ body {
     scroll-behavior: smooth;
 }
 
-h1, h2, h3 {
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
-
-h1 {
-    border-bottom: 1px solid var(--docs-border-color);
-}
-
-p, ul {
-    padding-top: 10px;
-    /* padding-bottom: 10px; */
-}
-
 a,
 a > * {
     cursor: pointer;
@@ -539,7 +525,29 @@ header .header-version-select {
 /* STATIC ARTICLES */
 
 .static-article {
-    padding: 24px 48px;
+    padding: 0 48px 24px 48px;
+}
+
+.static-article h1, h2, h3 {
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 6px;
+    margin-top: 24px;
+}
+
+.static-article h1 {
+    font-size: 32px;
+}
+
+.static-article p {
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+.static-article pre {
+    padding: 12px;
+    background: var(--docs-secondary-background-color) !important;
+    margin-bottom: 6px;
 }
 
 .subheading {
@@ -572,6 +580,7 @@ header .header-version-select {
 @media all and (-ms-high-contrast: none) {
     .link-list {
         display: -ms-grid;
+        display: grid;
         -ms-grid-columns: 1fr 1fr;
         -ms-grid-rows: 1fr 1fr;
     }
@@ -695,6 +704,7 @@ header .header-version-select {
     cursor: pointer; 
     margin-left: 12px;
     opacity: 50%;
+    -webkit-user-select: none;
     user-select: none;
 }
 
@@ -828,8 +838,8 @@ header .header-version-select {
 
 .component-stories .name {
     font-size: 1.5em;
-    font-weight: 600;
-    padding-top: 24px;
+    font-weight: 500;
+    /* padding-top: 24px; */
     padding-bottom: 10px;
 }
 
@@ -1005,9 +1015,8 @@ table td {
 }
 
 table th {
-    font-size: 0.85em;
+    font-size: 1em;
     letter-spacing: 0.1em;
-    text-transform: uppercase;
 }
 
 .component-props-table > td {
@@ -1024,10 +1033,8 @@ table th {
 .component-props-table-header {
     padding: 0px 48px;
     padding-bottom: 0px;
-    text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
     text-decoration: none;
     font-size: 26px;
     line-height: 1.35;
@@ -1362,7 +1369,7 @@ pre[class*='language-'] {
     }
 
     .docs-search-area {
-        padding: 0px 24px;
+        padding: 0 24px 24px 24px;
     }
 
     /* STATIC ARTICLES */
