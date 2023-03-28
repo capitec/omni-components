@@ -113,6 +113,9 @@ export class CurrencyField extends OmniFormElement {
         this.addEventListener('paste', this._onPaste.bind(this), {
             capture: true
         });
+        this.addEventListener('keyup', this._blurOnEnter.bind(this), {
+            capture: true
+        });
     }
 
     // Format the bound value.
@@ -219,6 +222,12 @@ export class CurrencyField extends OmniFormElement {
         }
 
         return cleanValue;
+    }
+
+    _blurOnEnter(e: any) {
+        if (e.code === 'Enter' || e.keyCode === 13) {
+            e.currentTarget.blur();
+        }
     }
 
     // Format the value to a currency formatted string value.
