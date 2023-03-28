@@ -128,7 +128,7 @@ export const Hint = HintStory<CurrencyField, BaseArgs>('omni-currency-field');
 
 export const Error_Label = ErrorStory<CurrencyField, BaseArgs>('omni-currency-field');
 
-export const Value = ValueStory<CurrencyField, BaseArgs>('omni-currency-field', '1200.5');
+export const Value = ValueStory<CurrencyField, BaseArgs>('omni-currency-field', '1200.50');
 
 export const Prefix = PrefixStory<CurrencyField, BaseArgs>('omni-currency-field');
 

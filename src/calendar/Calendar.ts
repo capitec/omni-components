@@ -27,7 +27,7 @@ import '../icons/ChevronRight.icon.js';
  * Registry of all properties defined by the component.
  *
  * @fires {CustomEvent<{}>} change - Dispatched when a date is selected.
- * 
+ *
  * @slot left-control - Replaces the icon for the left control button.
  * @slot right-control - Replaces the icon for the right control button.
  *

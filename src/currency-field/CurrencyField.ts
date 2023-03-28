@@ -29,7 +29,7 @@ import '../label/Label.js';
  * ```
  *
  * @element omni-currency-field
- * 
+ *
  * Registry of all properties defined by the component.
  *
  * @fires {CustomEvent<{}>} change - Dispatched when the Currency field value changes.
@@ -109,7 +109,7 @@ export class CurrencyField extends OmniFormElement {
         this.addEventListener('beforeinput', this._beforeInput.bind(this), {
             capture: true
         });
-        //Used to catch and format paste actions.
+        // Used to catch and format paste actions.
         this.addEventListener('paste', this._onPaste.bind(this), {
             capture: true
         });
@@ -164,7 +164,7 @@ export class CurrencyField extends OmniFormElement {
         );
     }
 
-    // Used to check if the value provided in a valid numeric value
+    // Used to check if the value provided in a valid numeric value.
     _isNumber(number: string) {
         return /\d/.test(number);
     }
@@ -174,12 +174,12 @@ export class CurrencyField extends OmniFormElement {
         return /^0*$/.test(centValue);
     }
 
-    // Convert given value to cents 
+    // Convert given value to cents.
     _convertToCents(currencyValue: string) {
         return currencyValue.replace(this.fractionalSeparator, '');
     }
-    
-    // Format to a full currency value with whole amount and cents
+
+    // Format to a full currency value with whole amount and cents.
     _formatToCurrencyValue(value: string): string {
         value += '.';
 
@@ -207,7 +207,7 @@ export class CurrencyField extends OmniFormElement {
         }
     }
 
-    // Parse the cents portion of the currency value
+    // Parse the cents portion of the currency value.
     _parseFraction(value: string): string {
         let cleanValue = '';
 
@@ -234,7 +234,7 @@ export class CurrencyField extends OmniFormElement {
         const formattedValue = preFormattedValue.toString().replace(new RegExp(this.formatter, 'g'), this.thousandsSeparator || '');
         await this.updateComplete;
 
-        // decimal separator has to be resolved here.
+        // Decimal separator has to be resolved here.
         if (formattedValue.includes(this.fractionalSeparator)) {
             const amountPart = formattedValue.substring(0, formattedValue.indexOf(this.fractionalSeparator));
 
@@ -281,7 +281,7 @@ export class CurrencyField extends OmniFormElement {
         }
     }
 
-    /* When the component is focussed */
+    // When the component is focussed.
     _onFocusInput() {
         const input = this._inputElement as HTMLInputElement;
         if (!this.value) {
@@ -308,11 +308,12 @@ export class CurrencyField extends OmniFormElement {
         }
     }
 
-    // Format the currency value when the component loses focus
+    // Format the currency value when the component loses focus.
     async _onBlur(): Promise<void> {
+        console.log('blur hit and value is', this.value);
         if (this._inputElement) {
             const inputCentValue = this._convertToCents(this._inputElement.value);
-            // on blur if the value in the input is all zeroes 
+            // on blur if the value in the input is all zeroes.
             if (this._isAllZeros(inputCentValue)) {
                 this._inputElement.value = '';
                 this.value = undefined;
@@ -320,6 +321,7 @@ export class CurrencyField extends OmniFormElement {
         }
     }
 
+    // When a value is pasted in the input.
     _onPaste(e: ClipboardEvent) {
         const input = this._inputElement as HTMLInputElement;
         const clipboardData = e.clipboardData;
@@ -333,13 +335,11 @@ export class CurrencyField extends OmniFormElement {
         if (input && numericPastedData) {
             e.preventDefault();
 
-            //Check if selection is the entire value 
+            // Check if selection is the entire value.
             if (input.value.length === input.selectionEnd && input.selectionStart !== input.selectionEnd) {
-  
-                //Added for cases where the pasted data can be a value that is less than the fractional precision it should be treated as cents.
+                // Added for cases where the pasted data can be a value that is less than the fractional precision it should be treated as cents.
                 let preNumericValue = '0';
-                if(numericPastedData.toString().length < this.fractionalPrecision + 1) {
-                    
+                if (numericPastedData.toString().length < this.fractionalPrecision + 1) {
                     const difference = this.fractionalPrecision + 1 - numericPastedData.toString().length;
                     for (let index = 0; index < difference; index++) {
                         preNumericValue += '0';
@@ -348,19 +348,19 @@ export class CurrencyField extends OmniFormElement {
                 } else {
                     centValue = this._convertToCents(numericPastedData.toString());
                 }
-                
-            } 
-            // Check if the content being pasted is at the end of the input 
-            else if (input.selectionStart === input.value.length) {
-                centValue = this._convertToCents(this._inputElement.value + numericPastedData);
-                
-            } else {
-                centValue = this._convertToCents(this._inputElement.value.slice(0, input.selectionStart) + numericPastedData + input.value.slice(input.selectionEnd!));
             }
-            
+            // Check if the content being pasted is at the end of the input.
+            else if (input.selectionStart === input.value.length) {
+                centValue = this._convertToCents(input.value + numericPastedData);
+            } else {
+                centValue = this._convertToCents(
+                    input.value.slice(0, input.selectionStart!) + numericPastedData + input.value.slice(input.selectionEnd!)
+                );
+            }
+
             // Extract the amount part of the cent value.
             const amountPart = centValue.substring(0, centValue.length - this.fractionalPrecision);
-            //Extract the cents part of the cent value
+            // Extract the cents part of the cent value.
             const fractionPart = centValue.slice(-this.fractionalPrecision);
 
             const parsedAmountPart = this._parseAmount(amountPart);
@@ -372,7 +372,7 @@ export class CurrencyField extends OmniFormElement {
 
             return;
         } else {
-            //If pasted value is not valid position the caret to the end of the input.
+            // If pasted value is not valid position the caret to the end of the input.
             e.preventDefault();
             setTimeout(function () {
                 input.selectionStart = input.selectionEnd = 10000;
@@ -382,7 +382,9 @@ export class CurrencyField extends OmniFormElement {
     }
 
     _beforeInput(e: InputEvent) {
+        const input = this._inputElement as HTMLInputElement;
         let centValue = this._convertToCents(this._inputElement?.value as string);
+        console.log('InputType', e.inputType);
 
         if (centValue && this._inputElement) {
             /**
@@ -395,35 +397,51 @@ export class CurrencyField extends OmniFormElement {
             } else if (this._isNumber(e.data as string)) {
                 e.preventDefault();
                 centValue = centValue += e.data;
+                /*
+                console.log('input selection start', input.selectionStart);
+                console.log('input selection end', input.selectionEnd);*/
+                //Do a check on the selection range and update the value in the component accordingly
+
+                /* 
+                if(input.selectionStart !== input.selectionEnd){
+
+                }else{
+                    centValue = centValue += e.data;
+                }*/
 
                 // Extract the amount part of the cent value.
                 let amountPart = centValue.substring(0, centValue.length - this.fractionalPrecision);
-                //Extract the cents part of the cent value
+                // Extract the cents part of the cent value.
                 const fractionPart = centValue.slice(-this.fractionalPrecision);
 
                 if (this._isAllZeros(amountPart)) {
                     amountPart = '0';
+                    /*
                     this._inputElement.value = amountPart + this.fractionalSeparator + fractionPart;
 
-                    //Format the value to be a float value
+                    // Format the value to be a float value.
                     const floatValue = this._formatToFloat(this._inputElement.value);
-                    this.value = floatValue;
+                    this.value = floatValue;*/
                 } else {
-                    //Format the amount part
+                    // Format the amount part.
+                    /*
                     this._inputElement.value = amountPart + this.fractionalSeparator + fractionPart;
                     const floatValue = this._formatToFloat(this._inputElement.value);
-                    this.value = floatValue;
+                    this.value = floatValue;*/
                 }
+                this._inputElement.value = amountPart + this.fractionalSeparator + fractionPart;
+                const floatValue = this._formatToFloat(this._inputElement.value);
+                this.value = floatValue;
                 this._dispatchCustomEvent(this.value as number);
                 return;
             }
 
             // Remove only the value at the end if backspace key is hit and value of input is not all zeros.
-            if ((e.inputType as InputEventTypes) === 'deleteContentBackward' && !this._isAllZeros(centValue!)) {
+            if ((e.inputType as InputEventTypes) && !this._isAllZeros(centValue!)) {
                 e.preventDefault();
-                console.log('InputEventType', e.inputType);
 
                 //Switch case for different input event types.
+                /*
                 switch (e.inputType as InputEventTypes) {
                     case 'deleteContentBackward':
                         break;
@@ -433,11 +451,12 @@ export class CurrencyField extends OmniFormElement {
                         break;
                     default:
                         break;
-                }
+                }*/
 
                 centValue = centValue?.substring(0, centValue.length - 1);
                 // eslint-disable-next-line @typescript-eslint/no-this-alias
                 const that = this;
+
                 setTimeout(function () {
                     if (that._isAllZeros(centValue!)) {
                         that._inputElement!.value = that._formatToCurrencyValue('0');
@@ -457,18 +476,21 @@ export class CurrencyField extends OmniFormElement {
                     }
                     that._inputElement!.selectionStart = that._inputElement!.selectionEnd = 10000;
                 }, 0);
+
                 return;
             } else {
                 e.preventDefault();
-                // const input = this._inputElement as HTMLInputElement;
+                console.log('Else for input is hit InputType is', e.inputType);
                 // eslint-disable-next-line @typescript-eslint/no-this-alias
                 const that = this;
+
                 setTimeout(function () {
                     that._inputElement!.value = that._formatToCurrencyValue('0');
                     const floatValue = that._formatToFloat(that._inputElement!.value);
                     that.value = floatValue;
                     that._inputElement!.selectionStart = that._inputElement!.selectionEnd = 10000;
                 }, 0);
+
                 return;
             }
         }
