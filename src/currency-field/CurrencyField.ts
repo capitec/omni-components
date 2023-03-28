@@ -397,17 +397,6 @@ export class CurrencyField extends OmniFormElement {
             } else if (this._isNumber(e.data as string)) {
                 e.preventDefault();
                 centValue = centValue += e.data;
-                /*
-                console.log('input selection start', input.selectionStart);
-                console.log('input selection end', input.selectionEnd);*/
-                //Do a check on the selection range and update the value in the component accordingly
-
-                /* 
-                if(input.selectionStart !== input.selectionEnd){
-
-                }else{
-                    centValue = centValue += e.data;
-                }*/
 
                 // Extract the amount part of the cent value.
                 let amountPart = centValue.substring(0, centValue.length - this.fractionalPrecision);
@@ -416,18 +405,6 @@ export class CurrencyField extends OmniFormElement {
 
                 if (this._isAllZeros(amountPart)) {
                     amountPart = '0';
-                    /*
-                    this._inputElement.value = amountPart + this.fractionalSeparator + fractionPart;
-
-                    // Format the value to be a float value.
-                    const floatValue = this._formatToFloat(this._inputElement.value);
-                    this.value = floatValue;*/
-                } else {
-                    // Format the amount part.
-                    /*
-                    this._inputElement.value = amountPart + this.fractionalSeparator + fractionPart;
-                    const floatValue = this._formatToFloat(this._inputElement.value);
-                    this.value = floatValue;*/
                 }
                 this._inputElement.value = amountPart + this.fractionalSeparator + fractionPart;
                 const floatValue = this._formatToFloat(this._inputElement.value);
@@ -452,33 +429,38 @@ export class CurrencyField extends OmniFormElement {
                     default:
                         break;
                 }*/
-
-                centValue = centValue?.substring(0, centValue.length - 1);
                 // eslint-disable-next-line @typescript-eslint/no-this-alias
                 const that = this;
+                if ((e.inputType as InputEventTypes) === 'deleteContentBackward') {
+                    centValue = centValue?.substring(0, centValue.length - 1);
+                    setTimeout(function () {
+                        if (that._isAllZeros(centValue!)) {
+                            that._inputElement!.value = that._formatToCurrencyValue('0');
+                            const floatValue = that._formatToFloat(that._inputElement!.value);
+                            that.value = floatValue;
+                            that._dispatchCustomEvent(that.value as number);
+                        } else {
+                            const amountPart = centValue?.substring(0, centValue.length - that.fractionalPrecision) as string;
 
-                setTimeout(function () {
-                    if (that._isAllZeros(centValue!)) {
-                        that._inputElement!.value = that._formatToCurrencyValue('0');
-                        const floatValue = that._formatToFloat(that._inputElement!.value);
-                        that.value = floatValue;
-                        that._dispatchCustomEvent(that.value as number);
-                    } else {
-                        const amountPart = centValue?.substring(0, centValue.length - that.fractionalPrecision) as string;
+                            const fractionPart = centValue?.slice(-that.fractionalPrecision);
 
-                        const fractionPart = centValue?.slice(-that.fractionalPrecision);
+                            const parsedAmountPart = amountPart ? that._parseAmount(amountPart) : '0';
+                            that._inputElement!.value = parsedAmountPart + that.fractionalSeparator + fractionPart;
+                            const floatValue = that._formatToFloat(that._inputElement!.value);
+                            that.value = floatValue;
+                            that._dispatchCustomEvent(that.value as number);
+                        }
+                        that._inputElement!.selectionStart = that._inputElement!.selectionEnd = 10000;
+                    }, 0);
 
-                        const parsedAmountPart = amountPart ? that._parseAmount(amountPart) : '0';
-                        that._inputElement!.value = parsedAmountPart + that.fractionalSeparator + fractionPart;
-                        const floatValue = that._formatToFloat(that._inputElement!.value);
-                        that.value = floatValue;
-                        that._dispatchCustomEvent(that.value as number);
-                    }
-                    that._inputElement!.selectionStart = that._inputElement!.selectionEnd = 10000;
-                }, 0);
-
-                return;
+                    return;
+                } else {
+                    setTimeout(function () {
+                        that._inputElement!.selectionStart = that._inputElement!.selectionEnd = 10000;
+                    }, 0);
+                }
             } else {
+                //Ensuring on older devices that the caret doesn't jump when hitting Deletecontent backwards event type.
                 e.preventDefault();
                 console.log('Else for input is hit InputType is', e.inputType);
                 // eslint-disable-next-line @typescript-eslint/no-this-alias
