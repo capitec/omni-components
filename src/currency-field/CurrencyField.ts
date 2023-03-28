@@ -415,7 +415,6 @@ export class CurrencyField extends OmniFormElement {
 
             // Remove only the value at the end if backspace key is hit and value of input is not all zeros.
             if ((e.inputType as InputEventTypes) && !this._isAllZeros(centValue!)) {
-
                 //Switch case for different input event types.
                 /*
                 switch (e.inputType as InputEventTypes) {
