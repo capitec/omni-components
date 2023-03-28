@@ -451,13 +451,7 @@ export class CurrencyField extends OmniFormElement {
                         }
                         that._inputElement!.selectionStart = that._inputElement!.selectionEnd = 10000;
                     }, 0);
-
                     return;
-                } else {
-                    /*
-                    setTimeout(function () {
-                        that._inputElement!.selectionStart = that._inputElement!.selectionEnd = 10000;
-                    }, 0);*/
                 }
             } else {
                 //Ensuring on older devices that the caret doesn't jump when hitting Deletecontent backwards event type.
@@ -475,6 +469,7 @@ export class CurrencyField extends OmniFormElement {
 
                 return;
             }
+            console.log('Default behavior');
         }
     }
 
