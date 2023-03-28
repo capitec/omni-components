@@ -167,7 +167,7 @@ export class OmniFormElement extends OmniElement {
                     border-width: var(--omni-form-border-width, 1px);
                     border-radius: var(--omni-form-border-radius, 4px);
                     border-style: var(--omni-form-border-style, solid);
-                    border-color: var(--omni-form-border-color, var(--omni-primary-color));
+                    border-color: var(--omni-form-border-color, #808080);
                     pointer-events: none;
                 }
 

@@ -319,7 +319,6 @@ export class CurrencyField extends OmniFormElement {
 
     // Format the currency value when the component loses focus.
     async _onBlur(): Promise<void> {
-        console.log('blur hit and value is', this.value);
         if (this._inputElement) {
             const inputCentValue = this._convertToCents(this._inputElement.value);
             // on blur if the value in the input is all zeroes.
@@ -393,7 +392,6 @@ export class CurrencyField extends OmniFormElement {
     _beforeInput(e: InputEvent) {
         const input = this._inputElement as HTMLInputElement;
         let centValue = this._convertToCents(this._inputElement?.value as string);
-        console.log('InputType', e.inputType);
 
         if (centValue && this._inputElement) {
             /**
@@ -465,7 +463,6 @@ export class CurrencyField extends OmniFormElement {
             } else {
                 //Ensuring on older devices that the caret doesn't jump when hitting Deletecontent backwards event type.
                 e.preventDefault();
-                console.log('Else for input is hit InputType is', e.inputType);
                 // eslint-disable-next-line @typescript-eslint/no-this-alias
                 const that = this;
 
@@ -478,7 +475,6 @@ export class CurrencyField extends OmniFormElement {
 
                 return;
             }
-            console.log('Default behavior');
         }
     }
 
