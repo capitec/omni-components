@@ -66,10 +66,10 @@ export const Interactive: ComponentStoryFormat<Args> = {
         setUIValueClean(inputField);
         inputField.value = '';
 
-        const input = jest.fn();
-        currencyField.addEventListener('input', input);
+        const beforeinput = jest.fn();
+        currencyField.addEventListener('beforeinput', beforeinput);
 
-        const value = '1200000.15';
+        const value = '120000015';
         await userEvent.type(inputField, value);
 
         // TODO: Fix race conditions in tests
@@ -80,7 +80,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
             await waitFor(() => expect(inputField).toHaveValue('1,200,000.15'), {
                 timeout: 3000
             });
-            await waitFor(() => expect(input).toBeCalledTimes(value.length), {
+            await waitFor(() => expect(beforeinput).toBeCalledTimes(value.length), {
                 timeout: 3000
             });
         }
@@ -102,7 +102,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         if (navigator.userAgent === 'Test Runner') {
             console.log('CICD Test - Not Visual');
         } else {
-            await waitFor(() => expect(inputField).toHaveValue('1,200,000'), {
+            await waitFor(() => expect(inputField).toHaveValue('12,000.00'), {
                 timeout: 3000
             });
         }
@@ -115,7 +115,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         if (navigator.userAgent === 'Test Runner') {
             console.log('CICD Test - Not Visual');
         } else {
-            await waitFor(() => expect(inputField).toHaveValue('120,000'), {
+            await waitFor(() => expect(inputField).toHaveValue('1,200.00'), {
                 timeout: 3000
             });
         }
@@ -128,7 +128,7 @@ export const Hint = HintStory<CurrencyField, BaseArgs>('omni-currency-field');
 
 export const Error_Label = ErrorStory<CurrencyField, BaseArgs>('omni-currency-field');
 
-export const Value = ValueStory<CurrencyField, BaseArgs>('omni-currency-field', '1200');
+export const Value = ValueStory<CurrencyField, BaseArgs>('omni-currency-field', '1200.50');
 
 export const Prefix = PrefixStory<CurrencyField, BaseArgs>('omni-currency-field');
 
