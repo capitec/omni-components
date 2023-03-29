@@ -133,12 +133,12 @@ export class PinField extends OmniFormElement {
 
     _keyInput() {
         const input = this._inputElement;
-    
+
         if (input?.value && this.pinLength) {
             if (String(input?.value).length > this.pinLength) {
                 // Restrict the input characters to the length of specified in the args.
                 input.value = String(input?.value).slice(0, this.pinLength);
-            } 
+            }
         }
 
         this.value = input?.value;
