@@ -66,6 +66,12 @@ export class PinField extends OmniFormElement {
      */
     @property({ type: Boolean, reflect: true, attribute: 'no-native-keyboard' }) noNativeKeyboard?: boolean;
 
+    /**
+     * Adds character limit for the pin input field.
+     * @attr [pin-length]
+     */
+    @property({ reflect: true, attribute: 'pin-length' }) pinLength?: number = 4;
+
     @query('#inputField')
     private _inputElement?: HTMLInputElement;
     private showPin?: boolean = false;
@@ -127,6 +133,14 @@ export class PinField extends OmniFormElement {
 
     _keyInput() {
         const input = this._inputElement;
+    
+        if (input?.value && this.pinLength) {
+            if (String(input?.value).length > this.pinLength) {
+                // Restrict the input characters to the length of specified in the args.
+                input.value = String(input?.value).slice(0, this.pinLength);
+            } 
+        }
+
         this.value = input?.value;
     }
 
@@ -265,7 +279,7 @@ export class PinField extends OmniFormElement {
         .type="${this.type}"
         .value=${live(this.value as string)}
         ?readOnly=${this.disabled}
-        tabindex="${this.disabled ? -1 : 0}" 
+        tabindex="${this.disabled ? -1 : 0}"
         data-omni-keyboard-mask />
     `;
     }

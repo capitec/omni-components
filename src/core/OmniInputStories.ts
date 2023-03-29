@@ -18,6 +18,7 @@ export interface BaseArgs {
     hint: string;
     error: string;
     disabled: boolean;
+    pinLength?: number;
 
     suffix: string;
     prefix: string;

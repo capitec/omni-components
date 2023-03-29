@@ -31,6 +31,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
       data-testid="test-pin-field"
       label="${ifNotEmpty(args.label)}"
       value="${args.value}"
+      .pinLength=${args.pinLength}
       hint="${ifNotEmpty(args.hint)}"
       error="${ifNotEmpty(args.error)}"
       ?disabled="${args.disabled}">${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${
@@ -49,7 +50,8 @@ export const Interactive: ComponentStoryFormat<Args> = {
         prefix: '',
         suffix: '',
         hide: '',
-        show: ''
+        show: '',
+        pinLength: undefined
     },
     play: async (context) => {
         const pinField = within(context.canvasElement).getByTestId<PinField>('test-pin-field');
