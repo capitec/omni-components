@@ -76,7 +76,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         await waitFor(() => expect(inputField).toHaveValue('1,200,000.15'), {
             timeout: 3000
         });
-        await waitFor(() => expect(inputField).toBeCalledTimes(value.length), {
+        await waitFor(() => expect(beforeinput).toBeCalledTimes(value.length), {
             timeout: 3000
         });
 
