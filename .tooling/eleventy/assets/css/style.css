@@ -526,12 +526,41 @@ header .header-version-select {
     padding: 0 48px 24px 48px;
 }
 
+.static-article .anchor {
+    float: left;
+    padding-right: 4px;
+    margin-left: -16px;
+    line-height: 1;
+
+    background-color: var(--docs-static-blockquote-color);
+    -webkit-mask: url(../images/link.svg);
+    mask: url(../images/link.svg);
+    -webkit-mask-position: 50%;
+    mask-position: 50%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+
+    width: 16px;
+    min-height: 16px;
+
+    justify-content: center;
+    display: none;
+    cursor: pointer;
+}
+
+.static-article h1:hover .anchor,
+.static-article h2:hover .anchor,
+.static-article h3:hover .anchor {
+    display: block;
+}
+
 .static-article h1, h2, h3 {
     font-weight: 500;
     line-height: 1.5;
     margin-bottom: 6px;
     margin-top: 24px;
     font-family: var(--omni-theme-font-family, 'Hind Vadodara');
+    display: flex;
 }
 
 .static-article h1 {

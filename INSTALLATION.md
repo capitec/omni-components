@@ -55,7 +55,7 @@ To use Omni Components with a bundler, first install it from NPM along with your
 npm install @capitec/omni-components
 ```
 
-> 💡 Using a bundler will allow for optimal [tree shaking](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking), which will ensure the smallest size and most efficient usage. Our [starter templates](#starter-templates-🔰) already provide this for you!
+> 💡 Using a bundler will allow for optimal [tree shaking](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking), which will ensure the smallest size and most efficient usage. Our [starter templates](#starter-templates-) already provide this for you!
 
 ## Starter Templates 🔰
 
