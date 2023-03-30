@@ -56,15 +56,10 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
         });
         const value = 'johndoe@gmail.com';
 
-        // TODO: Fix race conditions in tests
-        if (navigator.userAgent === 'Test Runner') {
-            console.log('CICD Test - Not Visual');
-        } else {
-            await waitFor(() => expect(inputField).toHaveValue(value), {
-                timeout: 3000
-            });
-            await expect(input).toBeCalledTimes(value.length);
-        }
+        await waitFor(() => expect(inputField).toHaveValue(value), {
+            timeout: 3000
+        });
+        await expect(input).toBeCalledTimes(value.length);
     }
 };
 
