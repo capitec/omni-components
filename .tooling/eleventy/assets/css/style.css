@@ -549,6 +549,13 @@ header .header-version-select {
     margin-bottom: 6px;
 }
 
+.static-article blockquote {
+    border-left: 5px solid var(--docs-secondary-background-color);
+    margin-top: 12px;
+    padding-left: 6px;
+    color: var(--docs-static-blockquote-color);
+}
+
 .subheading {
     --mediumdark: '#999999';
     font-weight: 900;
