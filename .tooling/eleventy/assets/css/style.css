@@ -554,13 +554,18 @@ header .header-version-select {
     display: block;
 }
 
-.static-article h1, h2, h3 {
-    font-weight: 500;
+.static-article h1, h2, h3, h4 {
+    font-weight: 600;
     line-height: 1.5;
     margin-bottom: 6px;
     margin-top: 24px;
     font-family: var(--omni-theme-font-family, 'Hind Vadodara');
     display: flex;
+}
+
+.static-article h1, h2 {
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--docs-border-color);
 }
 
 .static-article h1 {
@@ -576,6 +581,11 @@ header .header-version-select {
     padding: 12px;
     background: var(--docs-secondary-background-color) !important;
     margin-bottom: 6px;
+}
+
+.static-article pre.language-html * {
+    font-size: 13px;
+    font-family: monospace;
 }
 
 .static-article blockquote {
@@ -873,7 +883,7 @@ header .header-version-select {
 
 .component-stories .name {
     font-size: 1.5em;
-    font-weight: 500;
+    font-weight: 600;
     /* padding-top: 24px; */
     padding-bottom: 10px;
 }
@@ -1075,7 +1085,7 @@ table th {
     line-height: 1.35;
     margin: 0;
     color: var(--omni-theme-font-color);
-    font-weight: 500;
+    font-weight: 600;
     margin-bottom: 20px;
 }
 
