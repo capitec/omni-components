@@ -64,7 +64,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         await expect(daysGrid).toBeTruthy();
 
         //Find the day button at the specified position
-        const dayButton = calendar.shadowRoot!.querySelectorAll('div.day > div.day-label')[15];
+        const dayButton = calendar.shadowRoot?.querySelectorAll('div.day > div.day-label')[15] as HTMLElement;
         await expect(dayButton).toBeTruthy();
         await userEvent.click(dayButton);
     }

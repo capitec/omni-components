@@ -6,7 +6,7 @@
 
 ### All Submissions:
 
-* [ ] I have followed the guidelines in the Contributing document.
+* [ ] I have followed the [contribution guidelines](https://github.com/capitec/omni-components/blob/develop/CONTRIBUTING.md) for this project.
 * [ ] I have checked to ensure there aren't other open [Pull Requests](../pulls) for the same update/change.
 
 

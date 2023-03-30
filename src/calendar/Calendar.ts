@@ -170,6 +170,7 @@ export class Calendar extends OmniElement {
     private _updateDateVariablesUpdate = debounce(() => this._updateDateVariables(), 100);
 
     // Update properties of the Date picker component if user provides a value to the value property or if the locale property is updated.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     protected override shouldUpdate(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): boolean {
         if (_changedProperties.has('value')) {
             this.date = DateTime.fromISO(<string>this.value).setLocale(this.locale);
