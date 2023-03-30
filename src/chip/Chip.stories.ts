@@ -139,7 +139,7 @@ export const Chip_Slot_Icon: ComponentStoryFormat<Args> = {
     },
     play: async (context) => {
         const chip = within(context.canvasElement).getByTestId<Chip>('test-chip');
-        const slotElement = chip.shadowRoot!.querySelector<HTMLSlotElement>('slot[name="chip_icon"]');
+        const slotElement = chip.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="chip_icon"]');
         await expect(slotElement).toBeTruthy();
 
         const foundSlottedSvgElement = slotElement?.assignedElements().find((e) => e.tagName.toLowerCase() === 'svg');
