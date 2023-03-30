@@ -124,18 +124,13 @@ export const Max_Length: ComponentStoryFormat<Args> = {
         });
         const value = 12345;
 
-        // TODO: Fix race conditions in tests
-        if (navigator.userAgent === 'Test Runner') {
-            console.log('CICD Test - Not Visual');
-        } else {
-            await waitFor(() => expect(inputField).toHaveValue(value), {
-                timeout: 3000
-            });
+        await waitFor(() => expect(inputField).toHaveValue(value), {
+            timeout: 3000
+        });
 
-            await waitFor(() => expect(inputField.value).toBe(String(value)), {
-                timeout: 3000
-            });
-        }
+        await waitFor(() => expect(inputField.value).toBe(String(value)), {
+            timeout: 3000
+        });
     }
 };
 
