@@ -67,14 +67,9 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
         const clearButton = searchField.shadowRoot?.getElementById(`control`) as HTMLElement;
         await userEvent.click(clearButton);
 
-        // TODO: Fix race conditions in tests
-        if (navigator.userAgent === 'Test Runner') {
-            console.log('CICD Test - Not Visual');
-        } else {
-            await waitFor(() => expect(inputField).toHaveValue(''), {
-                timeout: 3000
-            });
-        }
+        await waitFor(() => expect(inputField).toHaveValue(''), {
+            timeout: 3000
+        });
     }
 };
 

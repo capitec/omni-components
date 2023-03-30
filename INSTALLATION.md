@@ -11,7 +11,7 @@ The easiest way to install Omni Components is with the CDN:
 <script type="module" src="https://cdn.jsdelivr.net/npm/@capitec/omni-components@esm/dist/omni-components.js"></script>
 ```
 
-<strong> 💡 If you're only using a few components, it will be more efficient to [cherry pick](#cherry-picking-) the ones you need. </strong>
+> 💡 If you're only using a few components, it will be more efficient to [cherry pick](#cherry-picking-) the ones you need.
 
 ## Local Installation 💾
 
@@ -23,7 +23,7 @@ npm install @capitec/omni-components
 
 With the latest package installed from NPM, [you can use a bundler](#bundling-). The ESM package used for [CDN Installation](#cdn-installation-(easiest)-) has its dependencies bundled already which allows it to be used without the need to install dependencies. However when using the local installation from NPM, the dependencies need to be provided externally, or you would need to [bundle the dependencies](#bundling-).
 
-<strong> 💡 For clarity, the docs will usually show imports from `@capitec/omni-components`. If you're not using a module resolver or bundler, you'll need to adjust these paths to point to the folder Omni Components is in. </strong>
+> 💡 For clarity, the docs will usually show imports from `@capitec/omni-components`. If you're not using a module resolver or bundler, you'll need to adjust these paths to point to the folder Omni Components is in.
 
 
 ## Cherry Picking 🍒
@@ -43,7 +43,7 @@ Here's an example that loads only the button component.
 
 NOTE: Some components may have dependencies that are automatically imported when you cherry pick.
 
-<strong> 💡  _Never_ cherry pick components or utilities from `omni-components.js` as this will still cause the browser to load the entire library. Instead, cherry pick from specific modules as shown above. You will also see files named `chunk.[hash].js` in the `chunks-js` directory, never import these files directly, as they are generated and change from version to version. </strong>
+> 💡  _Never_ cherry pick components or utilities from `omni-components.js` as this will still cause the browser to load the entire library. Instead, cherry pick from specific modules as shown above. You will also see files named `chunk.[hash].js` in the `chunks-js` directory, never import these files directly, as they are generated and change from version to version.
 
 ## Bundling 💼
 
@@ -55,7 +55,7 @@ To use Omni Components with a bundler, first install it from NPM along with your
 npm install @capitec/omni-components
 ```
 
-<strong> 💡 Using a bundler will allow for optimal [tree shaking](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking), which will ensure the smallest size and most efficient usage. Our [starter templates](#starter-templates-🔰) already provide this for you!</strong>
+> 💡 Using a bundler will allow for optimal [tree shaking](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking), which will ensure the smallest size and most efficient usage. Our [starter templates](#starter-templates-) already provide this for you!
 
 ## Starter Templates 🔰
 

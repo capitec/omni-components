@@ -473,8 +473,7 @@ header .header-version-select {
 }
 
 .menu-item {
-    margin: 0 24px;
-    border-left: 2px solid var(--docs-border-color);
+    border-left: 2px solid transparent;
 }
 
 .menu-item.separator {
@@ -490,8 +489,7 @@ header .header-version-select {
 }
 
 .menu-item.selected {
-    border-left: 2px solid #3AB6FF; /* #209cee;*/
-    /* #00486d; */
+    border-left: 2px solid #3AB6FF;
 }
 
 .menu-link {
@@ -528,11 +526,46 @@ header .header-version-select {
     padding: 0 48px 24px 48px;
 }
 
-.static-article h1, h2, h3 {
+.static-article .anchor {
+    float: left;
+    padding-right: 4px;
+    margin-left: -16px;
+    line-height: 1;
+
+    background-color: var(--docs-static-blockquote-color);
+    -webkit-mask: url(../images/link.svg);
+    mask: url(../images/link.svg);
+    -webkit-mask-position: 50%;
+    mask-position: 50%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+
+    width: 16px;
+    min-height: 16px;
+
+    justify-content: center;
+    display: none;
+    cursor: pointer;
+}
+
+.static-article h1:hover .anchor,
+.static-article h2:hover .anchor,
+.static-article h3:hover .anchor {
+    display: block;
+}
+
+.static-article h1, h2, h3, h4 {
     font-weight: 600;
-    line-height: 1.2;
+    line-height: 1.5;
     margin-bottom: 6px;
     margin-top: 24px;
+    font-family: var(--omni-theme-font-family, 'Hind Vadodara');
+    display: flex;
+}
+
+.static-article h1, h2 {
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--docs-border-color);
 }
 
 .static-article h1 {
@@ -548,6 +581,18 @@ header .header-version-select {
     padding: 12px;
     background: var(--docs-secondary-background-color) !important;
     margin-bottom: 6px;
+}
+
+.static-article pre.language-html * {
+    font-size: 13px;
+    font-family: monospace;
+}
+
+.static-article blockquote {
+    border-left: 5px solid var(--docs-secondary-background-color);
+    margin-top: 12px;
+    padding-left: 6px;
+    color: var(--docs-static-blockquote-color);
 }
 
 .subheading {
@@ -838,7 +883,7 @@ header .header-version-select {
 
 .component-stories .name {
     font-size: 1.5em;
-    font-weight: 500;
+    font-weight: 600;
     /* padding-top: 24px; */
     padding-bottom: 10px;
 }
@@ -1040,7 +1085,7 @@ table th {
     line-height: 1.35;
     margin: 0;
     color: var(--omni-theme-font-color);
-    font-weight: 500;
+    font-weight: 600;
     margin-bottom: 20px;
 }
 
