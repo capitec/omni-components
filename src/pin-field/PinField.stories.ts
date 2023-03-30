@@ -82,18 +82,13 @@ export const Interactive: ComponentStoryFormat<Args> = {
         // Required to clear userEvent Symbol that keeps hidden state of previously typed values via userEvent. If not cleared this cannot be run multiple times with the same results
         setUIValueClean(inputField);
 
-        // TODO: Fix race conditions in tests
-        if (navigator.userAgent === 'Test Runner') {
-            console.log('CICD Test - Not Visual');
-        } else {
-            await waitFor(() => expect(inputField).toHaveValue(value), {
-                timeout: 3000
-            });
+        await waitFor(() => expect(inputField).toHaveValue(value), {
+            timeout: 3000
+        });
 
-            await waitFor(() => expect(interactions).toBeCalledTimes(value.toString().length + 1), {
-                timeout: 3000
-            });
-        }
+        await waitFor(() => expect(interactions).toBeCalledTimes(value.toString().length + 1), {
+            timeout: 3000
+        });
     }
 };
 

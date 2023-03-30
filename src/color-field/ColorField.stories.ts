@@ -88,16 +88,12 @@ export const Disabled: ComponentStoryFormat<BaseArgs> = {
             pointerEventsCheck: 0
         });
 
-        // TODO: Fix race conditions in tests
-        if (navigator.userAgent === 'Test Runner') {
-            console.log('CICD Test - Not Visual');
-        } else {
-            await waitFor(() => expect(input.value).toBeFalsy(), {
-                timeout: 3000
-            });
-            await waitFor(() => expect(inputTest).toBeCalledTimes(0), {
-                timeout: 3000
-            });
-        }
+        await waitFor(() => expect(input.value).toBeFalsy(), {
+            timeout: 3000
+        });
+        await waitFor(() => expect(inputTest).toBeCalledTimes(0), {
+            timeout: 3000
+        });
+
     }
 };
