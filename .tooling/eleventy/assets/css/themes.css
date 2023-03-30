@@ -39,6 +39,7 @@ html {
     --docs-home-header-title-font-color: #ffffff; 
     --docs-home-header-sub-title-font-color: #000000b3;
     --docs-home-header-background-color: #209cef;
+    --docs-static-blockquote-color: #4D4D4D;
     --code-editor-background-color: var(--docs-secondary-background-color);
     --code-editor-theme: light;
 
@@ -180,6 +181,7 @@ header {
     --docs-home-header-title-font-color: #209cef;
     --docs-home-header-sub-title-font-color: #ffffff;
     --docs-home-header-background-color: var(--docs-secondary-background-color);
+    --docs-static-blockquote-color: #c3c3c3;
     --code-editor-background-color: var(--docs-secondary-background-color);
     --code-editor-theme: dark;
 
