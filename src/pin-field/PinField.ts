@@ -70,7 +70,7 @@ export class PinField extends OmniFormElement {
      * Adds character limit for the pin input field.
      * @attr [max-length]
      */
-    @property({ reflect: true, attribute: 'max-length' }) maxLength?: number;
+    @property({ type: Number, reflect: true, attribute: 'max-length' }) maxLength?: number;
 
     @query('#inputField')
     private _inputElement?: HTMLInputElement;
