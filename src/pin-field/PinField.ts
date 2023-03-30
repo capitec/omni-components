@@ -278,7 +278,6 @@ export class PinField extends OmniFormElement {
         value=${live(this.value as string)}
         ?readOnly=${this.disabled}
         tabindex="${this.disabled ? -1 : 0}"
-        maxLength="${this.maxLength as number}"
         data-omni-keyboard-mask />
     `;
     }
