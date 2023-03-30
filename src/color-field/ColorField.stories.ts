@@ -94,6 +94,5 @@ export const Disabled: ComponentStoryFormat<BaseArgs> = {
         await waitFor(() => expect(inputTest).toBeCalledTimes(0), {
             timeout: 3000
         });
-
     }
 };
