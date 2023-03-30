@@ -32,7 +32,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
       data-testid="test-pin-field"
       label="${ifNotEmpty(args.label)}"
       value="${args.value}"
-      maxLength=${args.maxLength}
+      max-length=${args.maxLength}
       hint="${ifNotEmpty(args.hint)}"
       error="${ifNotEmpty(args.error)}"
       ?disabled="${args.disabled}">${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${
@@ -101,7 +101,7 @@ export const Max_Length: ComponentStoryFormat<Args> = {
       data-testid="test-pin-field"
       label="${ifNotEmpty(args.label)}"
       value="${args.value}"
-      maxLength=${args.maxLength}>
+      max-length=${args.maxLength}>
     </omni-pin-field>
   `,
     name: 'Max Length',
