@@ -113,7 +113,7 @@ export class CurrencyField extends OmniFormElement {
         this.addEventListener('paste', this._onPaste.bind(this), {
             capture: true
         });
-        // Used to make the component blur when enter key is pressed on a mobile keyboard 
+        // Used to make the component blur when enter key is pressed on a mobile keyboard
         this.addEventListener('keyup', this._blurOnEnter.bind(this), {
             capture: true
         });
@@ -225,7 +225,7 @@ export class CurrencyField extends OmniFormElement {
         return cleanValue;
     }
 
-    // Blur when the enter key is pressed on a virtual keyboard 
+    // Blur when the enter key is pressed on a virtual keyboard
     _blurOnEnter(e: any) {
         if (e.code === 'Enter' || e.keyCode === 13) {
             e.currentTarget.blur();
@@ -339,7 +339,7 @@ export class CurrencyField extends OmniFormElement {
         let centValue = '';
 
         // Try to parse the value pasted into a valid numeric amount.
-        const numericPastedData = this._parseAmount(pastedData!);
+        const numericPastedData = this._parseAmount(pastedData as string);
 
         // Check if the numeric pasted data is not null then update the value in the input.
         if (input && numericPastedData) {
@@ -364,7 +364,7 @@ export class CurrencyField extends OmniFormElement {
                 centValue = this._convertToCents(input.value + numericPastedData);
             } else {
                 centValue = this._convertToCents(
-                    input.value.slice(0, input.selectionStart!) + numericPastedData + input.value.slice(input.selectionEnd!)
+                    input.value.slice(0, input.selectionStart as number) + numericPastedData + input.value.slice(input.selectionEnd as number)
                 );
             }
 
@@ -374,9 +374,9 @@ export class CurrencyField extends OmniFormElement {
             const fractionPart = centValue.slice(-this.fractionalPrecision);
 
             const parsedAmountPart = this._parseAmount(amountPart);
-            this._inputElement!.value = parsedAmountPart + this.fractionalSeparator + fractionPart;
+            input.value = parsedAmountPart + this.fractionalSeparator + fractionPart;
 
-            const floatValue = this._formatToFloat(this._inputElement!.value);
+            const floatValue = this._formatToFloat(this._inputElement?.value as string);
             this.value = floatValue;
             this._dispatchCustomEvent(this.value as number);
 
@@ -395,32 +395,31 @@ export class CurrencyField extends OmniFormElement {
         const input = this._inputElement as HTMLInputElement;
         let centValue = this._convertToCents(this._inputElement?.value as string);
 
-        if (centValue && this._inputElement) {
+        console.log('e.eventType', e.inputType);
+
+        if (centValue && input) {
+            e.preventDefault();
             /**
              * Check if the input elements converted cent value is all zeros.
              * Check if the data of the input event is zero
              */
-            if (this._isAllZeros(centValue!) && e.data === '0') {
-                e.preventDefault();
+            if (this._isAllZeros(centValue as string) && e.data === '0') {
                 return;
             } else if (this._isNumber(e.data as string)) {
-                e.preventDefault();
-
                 //If the entire input value is selected and has to be replaced with the character provided
-                if(input.value.length === input.selectionEnd && input.selectionStart !== input.selectionEnd){
+                if (input.value.length === input.selectionEnd && input.selectionStart !== input.selectionEnd) {
                     let preNumericValue = '0';
-                    for (let index = 0; index <  this.fractionalPrecision; index++) {
+                    for (let index = 0; index < this.fractionalPrecision; index++) {
                         preNumericValue += '0';
                     }
                     centValue = this._convertToCents(preNumericValue + e.data);
-
                 }
                 // If the caret is positioned at the end of the input
                 else if (input.selectionStart === input.value.length) {
                     centValue = centValue += e.data;
                 } else {
                     centValue = this._convertToCents(
-                        this._inputElement!.value.slice(0, input.selectionStart as number) + e.data + input.value.slice(input.selectionEnd as number)
+                        input.value.slice(0, input.selectionStart as number) + e.data + input.value.slice(input.selectionEnd as number)
                     );
                 }
 
@@ -432,74 +431,80 @@ export class CurrencyField extends OmniFormElement {
                 if (this._isAllZeros(amountPart)) {
                     amountPart = '0';
                 }
-                this._inputElement.value = amountPart + this.fractionalSeparator + fractionPart;
-                const floatValue = this._formatToFloat(this._inputElement.value);
+                input.value = amountPart + this.fractionalSeparator + fractionPart;
+                const floatValue = this._formatToFloat(input.value);
                 this.value = floatValue;
                 this._dispatchCustomEvent(this.value as number);
                 return;
             }
 
-            // Remove only the value at the end if backspace key is hit and value of input is not all zeros.
-            if ((e.inputType as InputEventTypes) && !this._isAllZeros(centValue!)) {
-
-                // eslint-disable-next-line @typescript-eslint/no-this-alias
-                const that = this;
-                if ((e.inputType as InputEventTypes) === 'deleteContentBackward') {
-                    e.preventDefault();
-                    centValue = centValue?.substring(0, centValue.length - 1);
-                    
-                    setTimeout(function () {
-                        if (that._isAllZeros(centValue!)) {
-                            that._inputElement!.value = that._formatToCurrencyValue('0');
-                            const floatValue = that._formatToFloat(that._inputElement!.value);
-                            that.value = floatValue;
-                            that._dispatchCustomEvent(that.value as number);
-                        } else {
-
-                            if(that._inputElement!.selectionStart !== that._inputElement!.selectionEnd){
-                                centValue = that._convertToCents(
-                                    input.value.slice(0, input.selectionStart!) + input.value.slice(input.selectionEnd!)
-                                );
-
-                                const amountPart = centValue?.substring(0, centValue.length - that.fractionalPrecision) as string;
-
-                                const fractionPart = centValue?.slice(-that.fractionalPrecision);
-    
-                                const parsedAmountPart = amountPart ? that._parseAmount(amountPart) : '0';
-                                that._inputElement!.value = parsedAmountPart + that.fractionalSeparator + fractionPart;
-                                const floatValue = that._formatToFloat(that._inputElement!.value);
-                                that.value = floatValue;
-                                that._dispatchCustomEvent(that.value as number);
-                            }else {
-                                const amountPart = centValue?.substring(0, centValue.length - that.fractionalPrecision) as string;
-
-                                const fractionPart = centValue?.slice(-that.fractionalPrecision);
-    
-                                const parsedAmountPart = amountPart ? that._parseAmount(amountPart) : '0';
-                                that._inputElement!.value = parsedAmountPart + that.fractionalSeparator + fractionPart;
-                                const floatValue = that._formatToFloat(that._inputElement!.value);
-                                that.value = floatValue;
-                                that._dispatchCustomEvent(that.value as number);
-                            }
-
-                        }
-                        that._inputElement!.selectionStart = that._inputElement!.selectionEnd = 10000;
-                    }, 0);
-                    return;
-                }
-            } 
-            //Ensuring on older devices that the caret doesn't jump when hitting the delete key on a virtual keyboard.
-            else {
-                
-                e.preventDefault();
+            // Check if inputType prop is populated and value of input is not all zeros.
+            if ((e.inputType as InputEventTypes) && !this._isAllZeros(centValue as string)) {
                 // eslint-disable-next-line @typescript-eslint/no-this-alias
                 const that = this;
 
                 setTimeout(function () {
-                    that._inputElement!.value = that._formatToCurrencyValue('0');
-                    const floatValue = that._formatToFloat(that._inputElement!.value);
+                    // Condition if the backspace key is hit works on virtual and desktop keyboards
+                    if (e.inputType === 'deleteContentBackward') {
+                        centValue = centValue?.substring(0, centValue.length - 1);
+
+                        if (that._isAllZeros(centValue as string)) {
+                            input.value = that._formatToCurrencyValue('0');
+                            const floatValue = that._formatToFloat(input.value);
+                            that.value = floatValue;
+                            that._dispatchCustomEvent(that.value as number);
+                        } else {
+                            if (input.value.length === input.selectionEnd && input.selectionStart !== input.selectionEnd) {
+                                let preNumericValue = '0';
+                                for (let index = 0; index < that.fractionalPrecision; index++) {
+                                    preNumericValue += '0';
+                                }
+                                centValue = that._convertToCents(preNumericValue);
+                            } else if (input.selectionStart !== input.selectionEnd) {
+                                centValue = that._convertToCents(
+                                    input.value.slice(0, input.selectionStart as number) + input.value.slice(input.selectionEnd as number)
+                                );
+                            }
+                        }
+                    }
+                    // Condition if the delete key is pressed on a desktop keyboard check if the entire value of the input is selected or a portion and update accordingly.
+                    else if (e.inputType === 'deleteContentForward') {
+                        if (input.value.length === input.selectionEnd && input.selectionStart !== input.selectionEnd) {
+                            let preNumericValue = '0';
+                            for (let index = 0; index < that.fractionalPrecision; index++) {
+                                preNumericValue += '0';
+                            }
+                            centValue = that._convertToCents(preNumericValue);
+                        } else if (input.selectionStart !== input.selectionEnd) {
+                            centValue = that._convertToCents(
+                                input.value.slice(0, input.selectionStart as number) + input.value.slice(input.selectionEnd as number)
+                            );
+                        }
+                    }
+                    const amountPart = centValue?.substring(0, centValue.length - that.fractionalPrecision) as string;
+
+                    const fractionPart = centValue?.slice(-that.fractionalPrecision);
+
+                    const parsedAmountPart = amountPart ? that._parseAmount(amountPart) : '0';
+                    input.value = parsedAmountPart + that.fractionalSeparator + fractionPart;
+                    const floatValue = that._formatToFloat(input.value);
                     that.value = floatValue;
-                    that._inputElement!.selectionStart = that._inputElement!.selectionEnd = 10000;
+                    that._dispatchCustomEvent(that.value as number);
+
+                    input.selectionStart = input.selectionEnd = 10000;
+                    return;
+                }, 0);
+            }
+            //Ensuring on older devices that the caret doesn't jump when hitting the delete key on a virtual keyboard.
+            else {
+                // eslint-disable-next-line @typescript-eslint/no-this-alias
+                const that = this;
+
+                setTimeout(function () {
+                    input.value = that._formatToCurrencyValue('0');
+                    const floatValue = that._formatToFloat(input.value);
+                    that.value = floatValue;
+                    input.selectionStart = input.selectionEnd = 10000;
                 }, 0);
 
                 return;

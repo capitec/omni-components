@@ -93,7 +93,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
 
         console.log('After backspacing', inputField.value);
 
-        await waitFor(() => expect(inputField).toHaveValue('1,200,000'), {
+        await waitFor(() => expect(inputField).toHaveValue('12,000.00'), {
             timeout: 3000
         });
 
@@ -101,7 +101,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         const leftArrow = '{ArrowLeft>3/}{Backspace}';
         await userEvent.type(inputField, leftArrow);
 
-        await waitFor(() => expect(inputField).toHaveValue('120,000'), {
+        await waitFor(() => expect(inputField).toHaveValue('1,200.00'), {
             timeout: 3000
         });
     }
