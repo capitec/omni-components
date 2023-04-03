@@ -225,7 +225,7 @@ export class CurrencyField extends OmniFormElement {
         return cleanValue;
     }
 
-    // Blur when the enter key is pressed on a virtual keyboard
+    // Blur when the enter key is pressed on a virtual keyboard.
     _blurOnEnter(e: any) {
         if (e.code === 'Enter' || e.keyCode === 13) {
             e.currentTarget.blur();
@@ -300,7 +300,7 @@ export class CurrencyField extends OmniFormElement {
         }
 
         if (input) {
-            setTimeout(function () {
+            setTimeout(() => {
                 input.selectionStart = input.selectionEnd = 10000;
             }, 0);
         }
@@ -312,7 +312,7 @@ export class CurrencyField extends OmniFormElement {
 
         if (input) {
             if (input.selectionStart === input.selectionEnd) {
-                setTimeout(function () {
+                setTimeout(() => {
                     input.selectionStart = input.selectionEnd = 10000;
                 }, 0);
             }
@@ -384,7 +384,7 @@ export class CurrencyField extends OmniFormElement {
         } else {
             // If pasted value is not valid position the caret to the end of the input.
             e.preventDefault();
-            setTimeout(function () {
+            setTimeout(() => {
                 input.selectionStart = input.selectionEnd = 10000;
             }, 0);
             return;
@@ -443,7 +443,7 @@ export class CurrencyField extends OmniFormElement {
                 // eslint-disable-next-line @typescript-eslint/no-this-alias
                 const that = this;
 
-                setTimeout(function () {
+                setTimeout(() => {
                     // Condition if the backspace key is hit works on virtual and desktop keyboards
                     if (e.inputType === 'deleteContentBackward') {
                         centValue = centValue?.substring(0, centValue.length - 1);
@@ -500,7 +500,7 @@ export class CurrencyField extends OmniFormElement {
                 // eslint-disable-next-line @typescript-eslint/no-this-alias
                 const that = this;
 
-                setTimeout(function () {
+                setTimeout(() => {
                     input.value = that._formatToCurrencyValue('0');
                     const floatValue = that._formatToFloat(input.value);
                     that.value = floatValue;

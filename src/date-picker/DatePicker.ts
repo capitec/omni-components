@@ -1,4 +1,4 @@
-import { html, css, nothing, PropertyValueMap, TemplateResult } from 'lit';
+import { html, css, nothing, PropertyValueMap } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { ClassInfo, classMap } from 'lit/directives/class-map.js';
 import { live } from 'lit/directives/live.js';
@@ -112,6 +112,7 @@ export class DatePicker extends OmniFormElement {
     }
 
     // Update properties of the Date picker component if user provides a value to the value property or if the locale property is updated.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     protected override shouldUpdate(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): boolean {
         if (_changedProperties.has('value')) {
             this.date = DateTime.fromISO(<string>this.value).setLocale(this.locale);

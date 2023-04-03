@@ -167,7 +167,7 @@ export class OmniFormElement extends OmniElement {
                     border-width: var(--omni-form-border-width, 1px);
                     border-radius: var(--omni-form-border-radius, 4px);
                     border-style: var(--omni-form-border-style, solid);
-                    border-color: var(--omni-form-border-color, #808080);
+                    border-color: var(--omni-form-border-color, var(--omni-primary-color));
                     pointer-events: none;
                 }
 
@@ -203,7 +203,7 @@ export class OmniFormElement extends OmniElement {
                 .layout:focus-within > .border {
                     border-style: solid;
                     border-width: var(--omni-form-focussed-border-width, 2px);
-                    border-color: var(--omni-form-focussed-border-color, var(--omni-primary-color));
+                    border-color: var(--omni-form-focussed-border-color, var(--omni-primary-active-color));
                 }
 
                 :host([value]:not([value=''])) .layout  > .label,

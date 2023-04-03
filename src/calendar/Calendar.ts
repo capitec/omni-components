@@ -341,7 +341,7 @@ export class Calendar extends OmniElement {
 
             /*omni calendar control icon color and width*/
             .control-bar > .left-control,
-            .control-bar > .right-control{
+            .control-bar > .right-control {
                 cursor: pointer;
 
                 display: inline-flex;
@@ -591,18 +591,27 @@ export class Calendar extends OmniElement {
     // Render the control bar displaying month and year or year depending on state or locale.
     _renderControlBar() {
         const controlBarDate = DateTime.local(this._selectedYear, this._selectedMonth, 1).setLocale(this.locale);
-        return html`<span class="control-bar">
-            <div class="left-control" @click="${() =>
-                this._goToPrevious()}"><slot name="left-control"><omni-chevron-left-icon class="left-chevron"></omni-chevron-left-icon></slot></div>
-            <div class="control-label" @click="${() => this._changeStateSelection()}">${
-            this._showState === 'years'
-                ? `${this._selectedDecade[0]} - ${this._selectedDecade[this._selectedDecade.length - 1]}`
-                : this._showState === 'months'
-                ? this._selectedYear
-                : `${controlBarDate.monthLong} ${this._selectedYear}`
-        }</div>
-            <div class="right-control" @click="${() =>
-                this._goToNext()}"><slot name="right-control"><omni-chevron-right-icon class="right-chevron"></omni-chevron-right-icon></slot></div>
+        return html`
+        <span class="control-bar">
+            <div class="left-control" @click="${() => this._goToPrevious()}">
+                <slot name="left-control">
+                    <omni-chevron-left-icon class="left-chevron"></omni-chevron-left-icon>
+                </slot>
+            </div>
+            <div class="control-label" @click="${() => this._changeStateSelection()}">
+                ${
+                    this._showState === 'years'
+                        ? `${this._selectedDecade[0]} - ${this._selectedDecade[this._selectedDecade.length - 1]}`
+                        : this._showState === 'months'
+                        ? this._selectedYear
+                        : `${controlBarDate.monthLong} ${this._selectedYear}`
+                }
+            </div>
+            <div class="right-control" @click="${() => this._goToNext()}">
+                <slot name="right-control">
+                    <omni-chevron-right-icon class="right-chevron"></omni-chevron-right-icon>
+                </slot>
+            </div>
         </span>`;
     }
 
