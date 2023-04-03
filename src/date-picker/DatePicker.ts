@@ -130,7 +130,7 @@ export class DatePicker extends OmniFormElement {
 
     // Check to see if the component is at the bottom of the viewport if true set the internal boolean value.
     async _checkForBottomOfScreen() {
-        const distanceFromBottom = visualViewport!.height - this.getBoundingClientRect().bottom;
+        const distanceFromBottom = (visualViewport?.height as number) - this.getBoundingClientRect().bottom;
         if (distanceFromBottom < 270) {
             this._bottomOfViewport = true;
         } else {
