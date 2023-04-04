@@ -66,9 +66,9 @@ export class EmailField extends OmniFormElement {
         }
     }
 
-    _blurOnEnter(e: any) {
+    _blurOnEnter(e: KeyboardEvent) {
         if (e.code === 'Enter' || e.keyCode === 13) {
-            e.currentTarget.blur();
+            (e.currentTarget as HTMLElement).blur();
         }
     }
 

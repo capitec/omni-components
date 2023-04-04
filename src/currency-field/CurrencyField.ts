@@ -158,7 +158,7 @@ export class CurrencyField extends OmniFormElement {
     }
 
     // Dispatch a custom change event required as we manipulate and format the value of the input.
-    _dispatchCustomEvent(amount: number) {
+    _dispatchChange(amount: number) {
         this.dispatchEvent(
             new CustomEvent('change', {
                 detail: {
@@ -226,9 +226,9 @@ export class CurrencyField extends OmniFormElement {
     }
 
     // Blur when the enter key is pressed on a virtual keyboard.
-    _blurOnEnter(e: any) {
+    _blurOnEnter(e: KeyboardEvent) {
         if (e.code === 'Enter' || e.keyCode === 13) {
-            e.currentTarget.blur();
+            (e.currentTarget as HTMLElement).blur();
         }
     }
 
@@ -300,8 +300,13 @@ export class CurrencyField extends OmniFormElement {
         }
 
         if (input) {
+            /*
+             * Added to position the caret at the end of the input.
+             * Chrome has an odd quirk where the focus event fires before the cursor is moved into the field.
+             * Added a timeout of 0 ms to defer the operation until the stack is clear.
+             */
             setTimeout(() => {
-                input.selectionStart = input.selectionEnd = 10000;
+                input.selectionStart = input.selectionEnd = input.value?.length ?? 0;
             }, 0);
         }
     }
@@ -312,8 +317,9 @@ export class CurrencyField extends OmniFormElement {
 
         if (input) {
             if (input.selectionStart === input.selectionEnd) {
+                //
                 setTimeout(() => {
-                    input.selectionStart = input.selectionEnd = 10000;
+                    input.selectionStart = input.selectionEnd = input.value?.length ?? 0;
                 }, 0);
             }
         }
@@ -378,14 +384,14 @@ export class CurrencyField extends OmniFormElement {
 
             const floatValue = this._formatToFloat(this._inputElement?.value as string);
             this.value = floatValue;
-            this._dispatchCustomEvent(this.value as number);
+            this._dispatchChange(this.value as number);
 
             return;
         } else {
             // If pasted value is not valid position the caret to the end of the input.
             e.preventDefault();
             setTimeout(() => {
-                input.selectionStart = input.selectionEnd = 10000;
+                input.selectionStart = input.selectionEnd = input.value?.length ?? 0;
             }, 0);
             return;
         }
@@ -434,7 +440,7 @@ export class CurrencyField extends OmniFormElement {
                 input.value = amountPart + this.fractionalSeparator + fractionPart;
                 const floatValue = this._formatToFloat(input.value);
                 this.value = floatValue;
-                this._dispatchCustomEvent(this.value as number);
+                this._dispatchChange(this.value as number);
                 return;
             }
 
@@ -452,7 +458,7 @@ export class CurrencyField extends OmniFormElement {
                             input.value = that._formatToCurrencyValue('0');
                             const floatValue = that._formatToFloat(input.value);
                             that.value = floatValue;
-                            that._dispatchCustomEvent(that.value as number);
+                            that._dispatchChange(that.value as number);
                         } else {
                             if (input.value.length === input.selectionEnd && input.selectionStart !== input.selectionEnd) {
                                 let preNumericValue = '0';
@@ -489,7 +495,7 @@ export class CurrencyField extends OmniFormElement {
                     input.value = parsedAmountPart + that.fractionalSeparator + fractionPart;
                     const floatValue = that._formatToFloat(input.value);
                     that.value = floatValue;
-                    that._dispatchCustomEvent(that.value as number);
+                    that._dispatchChange(that.value as number);
 
                     input.selectionStart = input.selectionEnd = 10000;
                     return;
@@ -504,7 +510,7 @@ export class CurrencyField extends OmniFormElement {
                     input.value = that._formatToCurrencyValue('0');
                     const floatValue = that._formatToFloat(input.value);
                     that.value = floatValue;
-                    input.selectionStart = input.selectionEnd = 10000;
+                    input.selectionStart = input.selectionEnd = input.value?.length ?? 0;
                 }, 0);
 
                 return;
