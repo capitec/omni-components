@@ -497,7 +497,7 @@ export class CurrencyField extends OmniFormElement {
                     that.value = floatValue;
                     that._dispatchChange(that.value as number);
 
-                    input.selectionStart = input.selectionEnd = 10000;
+                    input.selectionStart = input.selectionEnd = input.value?.length ?? 0;
                     return;
                 }, 0);
             }
