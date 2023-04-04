@@ -66,6 +66,7 @@ A vulnerability is typically a security-related risk associated with *any part* 
 1. [Fork](https://github.com/capitec/omni-components/fork) the repository and create a branch from `develop`.
 2. Clone the forked repo, checkout your branch, and run `npm ci` inside the repository root.
 3. Start up the dev server with `npm run serve` (or by launching debugging in VS Code).
+4. Install the testing dependencies with `npx playwright install --with-deps`.
 
 ### Directory Structure
 
@@ -144,7 +145,11 @@ Here's a *non-exhaustive* list of requirements that are key to contributing to t
 ### Checks
 
 * Code scanning passes.
-* Lint validation passes.
-* Format validation passes.
+* Lint validation passes. 
+> 💡 TIP: Analyze changes locally with `npm run lint`.
+* Format validation passes. 
+> 💡 TIP: Apply changes locally with `npm run format`.
 * All story play function tests pass.
+> 💡 TIP: Run tests locally with `npm run test`.
+
 <!--- * All story play function tests has at least 80% code coverage of components. --->
