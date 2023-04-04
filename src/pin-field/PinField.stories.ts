@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { setUIValueClean } from '@testing-library/user-event/dist/esm/document/UI.js';
 import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { LabelStory, BaseArgs, HintStory, ErrorStory, DisabledStory, ValueStory, PrefixStory, SuffixStory } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
@@ -101,11 +102,11 @@ export const Max_Length: ComponentStoryFormat<Args> = {
       data-testid="test-pin-field"
       label="${ifNotEmpty(args.label)}"
       value="${args.value}"
-      max-length=${args.maxLength}>
+      max-length=${ifDefined(args.maxLength)}>
     </omni-pin-field>
   `,
     name: 'Max Length',
-    description: 'Set html attribute to limit the characters of the field.',
+    description: 'Limit the character input length based on the value provided.',
     args: {
         label: 'Max Length',
         maxLength: 5
