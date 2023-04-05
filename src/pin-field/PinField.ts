@@ -8,7 +8,7 @@ import '../icons/EyeHidden.icon.js';
 import '../icons/EyeVisible.icon.js';
 
 /**
- * Pin input control to enter masked numeric values.
+ * Input control to enter a masked numeric value.
  *
  * @import
  * ```js
@@ -20,7 +20,7 @@ import '../icons/EyeVisible.icon.js';
  * <omni-pin-field
  *   label="Enter a value"
  *   value=1234
- *   data="{'id': 12345, 'name': 'Test'}"
+ *   max-length: 5
  *   hint="Required"
  *   error="Field level error message"
  *   disabled>
@@ -65,6 +65,12 @@ export class PinField extends OmniFormElement {
      * @attr [no-native-keyboard]
      */
     @property({ type: Boolean, reflect: true, attribute: 'no-native-keyboard' }) noNativeKeyboard?: boolean;
+
+    /**
+     * Maximum character input length.
+     * @attr [max-length]
+     */
+    @property({ type: Number, reflect: true, attribute: 'max-length' }) maxLength?: number;
 
     @query('#inputField')
     private _inputElement?: HTMLInputElement;
@@ -127,6 +133,12 @@ export class PinField extends OmniFormElement {
 
     _keyInput() {
         const input = this._inputElement;
+        if (input?.value && this.maxLength && typeof this.maxLength === 'number') {
+            if (String(input?.value).length > this.maxLength) {
+                // Restrict the input characters to the length of specified in the args.
+                input.value = String(input?.value).slice(0, this.maxLength);
+            }
+        }
         this.value = input?.value;
     }
 
@@ -262,10 +274,10 @@ export class PinField extends OmniFormElement {
         id="inputField"
         inputmode="${this.noNativeKeyboard ? 'none' : 'numeric'}"
         data-omni-keyboard-mode="numeric"
-        .type="${this.type}"
-        .value=${live(this.value as string)}
+        type="${this.type}"
+        value=${live(this.value as string)}
         ?readOnly=${this.disabled}
-        tabindex="${this.disabled ? -1 : 0}" 
+        tabindex="${this.disabled ? -1 : 0}"
         data-omni-keyboard-mask />
     `;
     }
