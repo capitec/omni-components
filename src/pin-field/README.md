@@ -1,6 +1,6 @@
 # omni-pin-field
 
-Pin input control to enter masked numeric values.
+Input control to enter a masked numeric value.
 
 ## Example
 
@@ -8,7 +8,7 @@ Pin input control to enter masked numeric values.
 <omni-pin-field
   label="Enter a value"
   value=1234
-  data="{'id': 12345, 'name': 'Test'}"
+  max-length: 5
   hint="Required"
   error="Field level error message"
   disabled>
@@ -26,6 +26,7 @@ Pin input control to enter masked numeric values.
 | `hint`             | `hint`               |           | `string \| undefined`                            |         | Hint message to assist the user.                 |
 | `label`            | `label`              |           | `string \| undefined`                            |         | Text label.                                      |
 | `lang`             |                      |           | `string`                                         |         |                                                  |
+| `maxLength`        | `max-length`         |           | `number \| undefined`                            |         | Maximum character input length.                  |
 | `noNativeKeyboard` | `no-native-keyboard` |           | `boolean \| undefined`                           |         | Disables native on screen keyboards for the component. |
 | `override`         | `override`           |           |                                                  |         | Used to set the base direction of text for display |
 | `styles`           |                      | readonly  | `CSSResultGroup[]`                               |         |                                                  |

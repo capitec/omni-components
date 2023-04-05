@@ -531,7 +531,7 @@ Password input control.
 
 </td><td>
 
-Pin input control to enter masked numeric values.
+Input control to enter a masked numeric value.
 
 </td></tr><tr><td>
 
@@ -634,6 +634,13 @@ See the [`CONTRIBUTING.md`](./CONTRIBUTING.md) guide to get involved.
             <img src="https://avatars.githubusercontent.com/u/54233338?v=4" width="100;" alt="jn42lm1"/>
             <br />
             <sub><b>jn42lm1</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/Makhubedu">
+            <img src="https://avatars.githubusercontent.com/u/43409770?v=4" width="100;" alt="Makhubedu"/>
+            <br />
+            <sub><b>Makhubedu</b></sub>
         </a>
     </td>
     <td align="center">
