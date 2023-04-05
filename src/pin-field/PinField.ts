@@ -8,7 +8,7 @@ import '../icons/EyeHidden.icon.js';
 import '../icons/EyeVisible.icon.js';
 
 /**
- * Pin input control to enter masked numeric values.
+ * Input control to enter a masked numeric value.
  *
  * @import
  * ```js
@@ -20,7 +20,7 @@ import '../icons/EyeVisible.icon.js';
  * <omni-pin-field
  *   label="Enter a value"
  *   value=1234
- *   data="{'id': 12345, 'name': 'Test'}"
+ *   max-length: 5
  *   hint="Required"
  *   error="Field level error message"
  *   disabled>
