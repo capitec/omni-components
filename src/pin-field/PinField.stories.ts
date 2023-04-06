@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { setUIValueClean } from '@testing-library/user-event/dist/esm/document/UI.js';
 import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { LabelStory, BaseArgs, HintStory, ErrorStory, DisabledStory, ValueStory, PrefixStory, SuffixStory } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
@@ -23,6 +24,7 @@ export default {
 interface Args extends BaseArgs {
     hide: string;
     show: string;
+    maxLength: number;
 }
 
 export const Interactive: ComponentStoryFormat<Args> = {
@@ -31,6 +33,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
       data-testid="test-pin-field"
       label="${ifNotEmpty(args.label)}"
       value="${args.value}"
+      max-length=${args.maxLength}
       hint="${ifNotEmpty(args.hint)}"
       error="${ifNotEmpty(args.error)}"
       ?disabled="${args.disabled}">${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${
@@ -49,7 +52,8 @@ export const Interactive: ComponentStoryFormat<Args> = {
         prefix: '',
         suffix: '',
         hide: '',
-        show: ''
+        show: '',
+        maxLength: undefined
     },
     play: async (context) => {
         const pinField = within(context.canvasElement).getByTestId<PinField>('test-pin-field');
@@ -87,6 +91,45 @@ export const Interactive: ComponentStoryFormat<Args> = {
         });
 
         await waitFor(() => expect(interactions).toBeCalledTimes(value.toString().length + 1), {
+            timeout: 3000
+        });
+    }
+};
+
+export const Max_Length: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
+    <omni-pin-field
+      data-testid="test-pin-field"
+      label="${ifNotEmpty(args.label)}"
+      value="${args.value}"
+      max-length=${ifDefined(args.maxLength)}>
+    </omni-pin-field>
+  `,
+    name: 'Max Length',
+    description: 'Limit the character input length based on the value provided.',
+    args: {
+        label: 'Max Length',
+        maxLength: 5
+    },
+    play: async (context) => {
+        const pinField = within(context.canvasElement).getByTestId<PinField>('test-pin-field');
+        pinField.value = '';
+
+        const interactions = jest.fn();
+        pinField.addEventListener('input', interactions);
+
+        const inputField = pinField.shadowRoot?.getElementById('inputField') as HTMLInputElement;
+
+        await userEvent.type(inputField, '12345678910', {
+            pointerEventsCheck: 0
+        });
+        const value = 12345;
+
+        await waitFor(() => expect(inputField).toHaveValue(value), {
+            timeout: 3000
+        });
+
+        await waitFor(() => expect(inputField.value).toBe(String(value)), {
             timeout: 3000
         });
     }

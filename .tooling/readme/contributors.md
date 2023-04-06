@@ -31,6 +31,13 @@
         </a>
     </td>
     <td align="center">
+        <a href="https://github.com/Makhubedu">
+            <img src="https://avatars.githubusercontent.com/u/43409770?v=4" width="100;" alt="Makhubedu"/>
+            <br />
+            <sub><b>Makhubedu</b></sub>
+        </a>
+    </td>
+    <td align="center">
         <a href="https://github.com/capitec-oss">
             <img src="https://avatars.githubusercontent.com/u/109588738?v=4" width="100;" alt="capitec-oss"/>
             <br />
