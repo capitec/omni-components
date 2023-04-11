@@ -1,3 +1,4 @@
+/* eslint-disable no-control-regex */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { html as langHtml } from '@codemirror/lang-html';
 import { githubDark as codeThemeDark } from '@ddietr/codemirror-themes/github-dark.js';
@@ -493,9 +494,19 @@ export class StoryRenderer extends LitElement {
             const context = this._createStoryContext(story, canvasElementQuery);
             await story.play(context);
             this.querySelector<HTMLDivElement>(canvasElementQuery + '-result.success')!.style.display = 'flex';
+            this.querySelector<HTMLDivElement>(canvasElementQuery + '-result.failure')!.style.display = 'none';
         } catch (error: any) {
             this.querySelector<HTMLDivElement>(canvasElementQuery + '-result.failure')!.style.display = 'flex';
-            this._playError = error?.toString();
+            this.querySelector<HTMLDivElement>(canvasElementQuery + '-result.success')!.style.display = 'none';
+
+            //Try to strip chalk colours from jest expect error outputs
+            this._playError = (error?.matcherResult?.message ?? error?.message)
+                ?.toString()
+                .replace(/\u001b[^m]*?m/g, '')
+                // eslint-disable-next-line no-regex-spaces
+                .replace(/\n \u001b[^m]*?m/g, '')
+                .replace(/\u001b[^m]*?m\n/g, '')
+                .replace(/\n\u001b[^m]*?m/g, '');
         } finally {
             this._isBusyPlaying = false;
         }
