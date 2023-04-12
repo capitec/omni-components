@@ -66,6 +66,11 @@ export const Interactive: ComponentStoryFormat<Args> = {
         setUIValueClean(inputField);
         inputField.value = '';
 
+        // Simulate click, focus and blur events
+        await userEvent.click(inputField);
+        await inputField.focus();
+        await inputField.blur();
+
         const beforeinput = jest.fn();
         currencyField.addEventListener('beforeinput', beforeinput);
 
@@ -104,6 +109,38 @@ export const Interactive: ComponentStoryFormat<Args> = {
         await waitFor(() => expect(inputField).toHaveValue('1,200.00'), {
             timeout: 3000
         });
+
+        /* Paste Tests */
+        //Set the selection range of the input component to ensure the entire value is selected.
+        inputField.setSelectionRange(0, 10);
+
+        const number = '88.88'
+        await userEvent.paste(number);
+
+        await waitFor(() => expect(inputField).toHaveValue('88.88'), {
+            timeout: 3000
+        });
+
+        setUIValueClean(inputField);
+        inputField.value = '';
+        await userEvent.type(inputField, value);
+
+        // Check the following value as input value is formatted to currency value;
+        await waitFor(() => expect(inputField).toHaveValue('1,200,000.15'), {
+            timeout: 3000
+        });
+
+        // Paste invalid numeric value the alpha characters should be stripped and the value should be updated accordingly.
+        inputField.setSelectionRange(3, 10);
+        const invalidNumber = '4abc'
+        await userEvent.paste(invalidNumber);
+
+        await waitFor(() => expect(inputField).toHaveValue('124.15'), {
+            timeout: 3000
+        });
+
+        //TODO add tests for before input scenarios
+        
     }
 };
 
