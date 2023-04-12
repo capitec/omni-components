@@ -114,7 +114,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         //Set the selection range of the input component to ensure the entire value is selected.
         inputField.setSelectionRange(0, 10);
 
-        const number = '88.88'
+        const number = '88.88';
         await userEvent.paste(number);
 
         await waitFor(() => expect(inputField).toHaveValue('88.88'), {
@@ -132,7 +132,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
 
         // Paste invalid numeric value the alpha characters should be stripped and the value should be updated accordingly.
         inputField.setSelectionRange(3, 10);
-        const invalidNumber = '4abc'
+        const invalidNumber = '4abc';
         await userEvent.paste(invalidNumber);
 
         await waitFor(() => expect(inputField).toHaveValue('124.15'), {
@@ -140,7 +140,6 @@ export const Interactive: ComponentStoryFormat<Args> = {
         });
 
         //TODO add tests for before input scenarios
-        
     }
 };
 
