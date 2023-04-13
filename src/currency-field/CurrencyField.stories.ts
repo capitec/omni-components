@@ -46,7 +46,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
     name: 'Interactive',
     args: {
         label: 'Label',
-        value: '',
+        value: '123456789',
         hint: '',
         error: '',
         disabled: false,
@@ -66,24 +66,24 @@ export const Interactive: ComponentStoryFormat<Args> = {
         setUIValueClean(inputField);
         inputField.value = '';
 
+        // Simulate click, focus and blur events
+        await userEvent.click(inputField);
+        await inputField.focus();
+        await inputField.blur();
+
         const beforeinput = jest.fn();
         currencyField.addEventListener('beforeinput', beforeinput);
 
         const value = '120000015';
         await userEvent.type(inputField, value);
 
-        // TODO: Fix race conditions in tests
-        if (navigator.userAgent === 'Test Runner') {
-            console.log('CICD Test - Not Visual');
-        } else {
-            // Check the following value as input value is formatted to currency value;
-            await waitFor(() => expect(inputField).toHaveValue('1,200,000.15'), {
-                timeout: 3000
-            });
-            await waitFor(() => expect(beforeinput).toBeCalledTimes(value.length), {
-                timeout: 3000
-            });
-        }
+        // Check the following value as input value is formatted to currency value;
+        await waitFor(() => expect(inputField).toHaveValue('1,200,000.15'), {
+            timeout: 3000
+        });
+        await waitFor(() => expect(beforeinput).toBeCalledTimes(value.length), {
+            timeout: 3000
+        });
 
         // Backspacing to cover the removal of cents and cents separator
         const backspace = '{Backspace>2/}';
@@ -98,27 +98,48 @@ export const Interactive: ComponentStoryFormat<Args> = {
 
         console.log('After backspacing', inputField.value);
 
-        // TODO: Fix race conditions in tests
-        if (navigator.userAgent === 'Test Runner') {
-            console.log('CICD Test - Not Visual');
-        } else {
-            await waitFor(() => expect(inputField).toHaveValue('12,000.00'), {
-                timeout: 3000
-            });
-        }
+        await waitFor(() => expect(inputField).toHaveValue('12,000.00'), {
+            timeout: 3000
+        });
 
         // Use left arrow key to position the caret after the currency separator.
         const leftArrow = '{ArrowLeft>3/}{Backspace}';
         await userEvent.type(inputField, leftArrow);
 
-        // TODO: Fix race conditions in tests
-        if (navigator.userAgent === 'Test Runner') {
-            console.log('CICD Test - Not Visual');
-        } else {
-            await waitFor(() => expect(inputField).toHaveValue('1,200.00'), {
-                timeout: 3000
-            });
-        }
+        await waitFor(() => expect(inputField).toHaveValue('1,200.00'), {
+            timeout: 3000
+        });
+
+        /* Paste Tests */
+        //Set the selection range of the input component to ensure the entire value is selected.
+        inputField.setSelectionRange(0, 10);
+
+        const number = '88.88';
+        await userEvent.paste(number);
+
+        await waitFor(() => expect(inputField).toHaveValue('88.88'), {
+            timeout: 3000
+        });
+
+        setUIValueClean(inputField);
+        inputField.value = '';
+        await userEvent.type(inputField, value);
+
+        // Check the following value as input value is formatted to currency value;
+        await waitFor(() => expect(inputField).toHaveValue('1,200,000.15'), {
+            timeout: 3000
+        });
+
+        // Paste invalid numeric value the alpha characters should be stripped and the value should be updated accordingly.
+        inputField.setSelectionRange(3, 10);
+        const invalidNumber = '4abc';
+        await userEvent.paste(invalidNumber);
+
+        await waitFor(() => expect(inputField).toHaveValue('124.15'), {
+            timeout: 3000
+        });
+
+        //TODO add tests for before input scenarios
     }
 };
 

@@ -31,11 +31,15 @@
 
 /* DOCS SPECIFIC */
 html {
+    --docs-link-color: dodgerblue;
+    --docs-link-visited-color: blueviolet;
+
     --docs-border-color: #e1e1e1;
     --docs-secondary-background-color: #f9f9f9;
     --docs-home-header-title-font-color: #ffffff; 
     --docs-home-header-sub-title-font-color: #000000b3;
     --docs-home-header-background-color: #209cef;
+    --docs-static-blockquote-color: #4D4D4D;
     --code-editor-background-color: var(--docs-secondary-background-color);
     --code-editor-theme: light;
 
@@ -129,6 +133,7 @@ header {
 /* Only dark theme changes both root and docs vars explicitly */
 :root[theme="dark"],
 *[theme="dark"] .docs-omni-component {
+
     --omni-theme-primary-color:  #b4b4b4;
     --omni-theme-primary-hover-color: #f7f7f71a ;
     --omni-theme-primary-active-color: #ffffff ;
@@ -176,11 +181,12 @@ header {
     --docs-home-header-title-font-color: #209cef;
     --docs-home-header-sub-title-font-color: #ffffff;
     --docs-home-header-background-color: var(--docs-secondary-background-color);
+    --docs-static-blockquote-color: #c3c3c3;
     --code-editor-background-color: var(--docs-secondary-background-color);
     --code-editor-theme: dark;
 
     --docs-link-color: deepskyblue;
-    --docs-link-visited-color: blueviolet;
+    --docs-link-visited-color: violet;
     --docs-prism-span-text-shadow: inherit;
     --docs-prism-comment-color: #999;
     --docs-prism-punctuation-color: #ccc;
