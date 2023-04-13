@@ -253,6 +253,16 @@ jobs:
           npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish Latest React Package 📦
+        # Release only
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        working-directory: ./.tooling/react-wrapper
+        run: |
+          npm run generate
+          cd dist && npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           
       - name: Publish Alpha Package 📦
         # Alpha branch only
@@ -260,6 +270,16 @@ jobs:
         run: |
           npm version "${{ env.LOCAL_VERSION }}-alpha" -git-tag-version false -allow-same-version true          
           npm publish --tag alpha --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          
+      - name: Publish Alpha React Package 📦
+        # Alpha branch only
+        if: github.ref == 'refs/heads/alpha'
+        working-directory: ./.tooling/react-wrapper
+        run: |
+          npm run generate
+          cd dist && npm publish --tag alpha --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           
@@ -272,12 +292,32 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           
+      - name: Publish Beta React Package 📦
+        # Develop branch only
+        if: github.ref == 'refs/heads/develop'
+        working-directory: ./.tooling/react-wrapper
+        run: |      
+          npm run generate
+          cd dist && npm publish --tag beta --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          
       - name: Publish Next Package 📦
         # Main branch only
         if: github.ref == 'refs/heads/main'
         run: |
           npm version "${{ env.LOCAL_VERSION }}-next" -git-tag-version false -allow-same-version true          
           npm publish --tag next --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          
+      - name: Publish Next React Package 📦
+        # Main branch only
+        if: github.ref == 'refs/heads/main'
+        working-directory: ./.tooling/react-wrapper
+        run: |    
+          npm run generate
+          cd dist && npm publish --tag next --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 

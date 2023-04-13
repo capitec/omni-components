@@ -1,0 +1,30 @@
+{
+    "name": "@capitec/omni-components-react",
+    "private": true,
+    "description": "Wrapper React components for custom web components provided by the '@capitec/omni-components' package",
+    "keywords": [
+        "web components",
+        "custom elements",
+        "components",
+        "react",
+        "React"
+    ],
+    "bugs": {
+        "url": "https://github.com/capitec/omni-components/issues"
+    },
+    "homepage": "https://capitec.github.io/open-source/docs/omni-components/",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/capitec/omni-components.git"
+    },
+    "author": "capitec",
+    "license": "MIT",
+    "dependencies": {
+        "@lit-labs/react": "^1.1.1",
+        "react": "^18.2.0",
+        "@capitec/omni-components": "file:../.."
+    },
+    "scripts": {
+        "generate": "node ./generate.mjs"
+    }
+}
