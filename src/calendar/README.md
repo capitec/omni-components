@@ -31,7 +31,9 @@ Calendar component to set specific date.
 
 | Name                | Description                                      |
 |---------------------|--------------------------------------------------|
+| `left-control`      | Replaces the icon for the left control button.   |
 | `loading_indicator` | Used to define content that is displayed while async rendering is awaiting, or when renderLoading() is implicitly called |
+| `right-control`     | Replaces the icon for the right control button.  |
 
 ## CSS Custom Properties
 

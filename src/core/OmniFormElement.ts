@@ -203,7 +203,7 @@ export class OmniFormElement extends OmniElement {
                 .layout:focus-within > .border {
                     border-style: solid;
                     border-width: var(--omni-form-focussed-border-width, 2px);
-                    border-color: var(--omni-form-focussed-border-color, var(--omni-primary-color));
+                    border-color: var(--omni-form-focussed-border-color, var(--omni-primary-active-color));
                 }
 
                 :host([value]:not([value=''])) .layout  > .label,
@@ -313,16 +313,19 @@ export class OmniFormElement extends OmniElement {
                 }
 
                 /* Make this border wider half of focussed*/
-                .layout:hover > .border {
-                    border-color: var(--omni-form-hover-color, var(--omni-primary-hover-color));
-                }
+                /* Added to resolve sticky hover state on mobile devices */
+                @media (hover: hover) {
+                    .layout:hover > .border {
+                        border-color: var(--omni-form-hover-color, var(--omni-primary-hover-color));
+                    }
 
-                .layout.disabled:hover > .border {
-                    border-color: var(--omni-form-disabled-hover-color, var(--omni-disabled-border-color));
-                }
+                    .layout.disabled:hover > .border {
+                        border-color: var(--omni-form-disabled-hover-color, var(--omni-disabled-border-color));
+                    }
 
-                .layout.error:hover > .border {
-                    border-color: var(--omni-form-error-hover-color, var(--omni-error-border-color));
+                    .layout.error:hover > .border {
+                        border-color: var(--omni-form-error-hover-color, var(--omni-error-border-color));
+                    }
                 }
 
                 

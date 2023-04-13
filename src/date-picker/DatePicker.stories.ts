@@ -7,7 +7,7 @@ import { DateTime } from 'luxon';
 import { LabelStory, BaseArgs, HintStory, ErrorStory, PrefixStory, SuffixStory, DisabledStory } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
-import { assignToSlot, ComponentStoryFormat, CSFIdentifier, querySelectorAsync, raw } from '../utils/StoryUtils.js';
+import { assignToSlot, ComponentStoryFormat, CSFIdentifier, querySelectorAsync } from '../utils/StoryUtils.js';
 import { DatePicker } from './DatePicker';
 
 import './DatePicker.js';
@@ -62,7 +62,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
 
         await expect(click).toBeCalledTimes(2);
 
-        const controlButton = datePicker.shadowRoot!.getElementById('control');
+        const controlButton = datePicker.shadowRoot?.getElementById('control');
 
         await expect(controlButton).toBeTruthy();
 
@@ -97,7 +97,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         await expect(daysGrid).toBeTruthy();
 
         //Find the day button at the specified position
-        const dayButton = calendar.shadowRoot!.querySelectorAll('div.day > div.day-label')[15];
+        const dayButton = calendar.shadowRoot?.querySelectorAll('div.day > div.day-label')[15] as HTMLElement;
         await expect(dayButton).toBeTruthy();
         await userEvent.click(dayButton);
     }

@@ -47,6 +47,12 @@ Control to enter a formatted currency value.
 | `renderContent` | `(): TemplateResult<1>`                       |
 | `renderPrefix`  | `(): TemplateResult<1>`                       |
 
+## Events
+
+| Event    | Type              | Description                                      |
+|----------|-------------------|--------------------------------------------------|
+| `change` | `CustomEvent<{}>` | Dispatched when the Currency field value changes. |
+
 ## Slots
 
 | Name                | Description                                      |
