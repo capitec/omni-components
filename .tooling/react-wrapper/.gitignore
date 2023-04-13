@@ -1,0 +1,5 @@
+*
+!.gitignore
+!generate.mjs
+!package.json
+!README.md
