@@ -13,5 +13,5 @@
 
 ## Overview
 
-This package is generated on the publish of the `@capitec/omni-components` package and is not authored manually.
+This package is auto-generated on the publish of the `@capitec/omni-components` package.
 
