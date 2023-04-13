@@ -25,7 +25,7 @@ export const Omni{Component} = createComponent({
 `;
 
 const typingsTemplate = `
-import type { ReactWebComponent } from '@lit-labs/react';
+import type { ReactWebComponent, EventName } from '@lit-labs/react';
 import type { {Component} } from '@capitec/omni-components/{component}';
 export type { {Component} } from '@capitec/omni-components/{component}';
 
@@ -33,7 +33,7 @@ export type { {Component} } from '@capitec/omni-components/{component}';
  * {description}
  */
 export const Omni{Component}: ReactWebComponent<{Component}, {
-    {events}
+    {event-types}
   }>;
 `;
 
@@ -119,6 +119,7 @@ manifest.modules.forEach(module => {
             components.push(component);
 
             let events = `${tagDeclaration.events?.map(e => `${jsdocEvent(e)}${reactEventName(e.name)}: '${e.name}'`)?.join(',\r\n') ?? ''}`;
+            let eventTypes = `${tagDeclaration.events?.map(e => `${jsdocEvent(e)}${reactEventName(e.name)}: ${e.type?.text ? `EventName<${e.type.text}>`:  `'${e.name}'`}`)?.join(',\r\n') ?? ''}`;
             
     
             // Generate code and typings for the component from templates
@@ -133,7 +134,7 @@ manifest.modules.forEach(module => {
                                             .replace(new RegExp('{Component}', 'g'), Component)
                                             .replace(new RegExp('{tag-name}', 'g'), tagName)
                                             .replace(new RegExp('{description}', 'g'), description)
-                                            .replace(new RegExp('{events}', 'g'), events);
+                                            .replace(new RegExp('{event-types}', 'g'), eventTypes);
     
              
             if (!fs.existsSync(componentPath)) {
