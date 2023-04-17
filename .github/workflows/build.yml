@@ -259,6 +259,7 @@ jobs:
         if: ${{ startsWith(github.ref, 'refs/tags/') }}
         working-directory: ./.tooling/react-wrapper
         run: |
+          npm i
           npm run generate
           cd dist && npm publish --access public
         env:
@@ -278,6 +279,7 @@ jobs:
         if: github.ref == 'refs/heads/alpha'
         working-directory: ./.tooling/react-wrapper
         run: |
+          npm i
           npm run generate
           cd dist && npm publish --tag alpha --access public
         env:
@@ -296,7 +298,8 @@ jobs:
         # Develop branch only
         if: github.ref == 'refs/heads/develop'
         working-directory: ./.tooling/react-wrapper
-        run: |      
+        run: |    
+          npm i  
           npm run generate
           cd dist && npm publish --tag beta --access public
         env:
@@ -315,7 +318,8 @@ jobs:
         # Main branch only
         if: github.ref == 'refs/heads/main'
         working-directory: ./.tooling/react-wrapper
-        run: |    
+        run: |  
+          npm i  
           npm run generate
           cd dist && npm publish --tag next --access public
         env:
@@ -334,6 +338,16 @@ jobs:
           npm publish --tag esm --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish Latest React ESM Package 📦
+        # Release only
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        working-directory: ./.tooling/react-wrapper
+        run: |
+          npm run bundle
+          cd bundle-dist && npm publish --tag esm --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           
       - name: Publish Alpha ESM Package 📦
         # Alpha branch only
@@ -341,6 +355,16 @@ jobs:
         run: |
           npm version "${{ env.LOCAL_VERSION }}-esm-alpha" -git-tag-version false -allow-same-version true          
           npm publish --tag esm-alpha --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish Alpha React ESM Package 📦
+        # Alpha branch only
+        if: github.ref == 'refs/heads/alpha'
+        working-directory: ./.tooling/react-wrapper
+        run: |
+          npm run bundle
+          cd bundle-dist && npm publish --tag esm-alpha --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           
@@ -352,6 +376,16 @@ jobs:
           npm publish --tag esm-beta --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish Beta React ESM Package 📦
+        # Develop branch only
+        if: github.ref == 'refs/heads/develop'
+        working-directory: ./.tooling/react-wrapper
+        run: |
+          npm run bundle
+          cd bundle-dist && npm publish --tag esm-beta --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           
       - name: Publish Next ESM Package 📦
         # Main branch only
@@ -359,6 +393,16 @@ jobs:
         run: |
           npm version "${{ env.LOCAL_VERSION }}-esm-next" -git-tag-version false -allow-same-version true          
           npm publish --tag esm-next --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish Next React ESM Package 📦
+        # Main branch only
+        if: github.ref == 'refs/heads/main'
+        working-directory: ./.tooling/react-wrapper
+        run: |
+          npm run bundle
+          cd bundle-dist && npm publish --tag esm-next --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 

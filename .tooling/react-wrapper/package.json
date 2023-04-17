@@ -24,7 +24,13 @@
         "react": "^18.2.0",
         "@capitec/omni-components": "file:../.."
     },
+    "devDependencies": {
+        "fs-extra": "^10.1.0",
+        "globby": "^13.1.2",
+        "esbuild": "^0.17.17"
+    },
     "scripts": {
-        "generate": "node ./generate.mjs"
+        "generate": "node ./generate.mjs",
+        "bundle": "node ./bundle.mjs"
     }
 }
