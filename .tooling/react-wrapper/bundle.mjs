@@ -16,12 +16,24 @@ fs.rmSync(outDir, { recursive: true, force: true });
     if (!fs.existsSync(componentsDir)) {
         execSync('npm run generate');
     }
-    
+
     await fs.copy(componentsDir, outDir);
+
     const packageFile = JSON.parse(fs.readFileSync(`${outDir}/package.json`, 'utf-8'));
 
     console.log(`Building for ${format.toUpperCase()} ${target.toString().toUpperCase()}...`);
     const entryPoints = (await globby(`./${outDir}/**/*.jsx`));
+
+    entryPoints.forEach(e => {
+        let contents = fs.readFileSync(e, 'utf-8');
+        // Remove react import
+        contents = contents.replace(new RegExp(`import React from 'react';`, 'g'), '')
+            // User React from window
+            .replace(new RegExp(`react: React,`, 'g'), 'react: window.React,');
+
+        fs.writeFileSync(e, contents, 'utf-8');
+    })
+
     const buildResult = await esbuild
         .build({
             format: format,
