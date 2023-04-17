@@ -109,6 +109,9 @@ manifest.modules.forEach(module => {
     ) {
         try {
             const tagDeclaration = module.declarations.find(d => d.tagName && d.customElement);
+            if (tagDeclaration.ignore) {
+                return;
+            }
             const tagName = tagDeclaration.tagName;
             const Component = tagDeclaration.name;
             const component = path.basename(path.dirname(module.path));
@@ -218,6 +221,7 @@ packageFile.dependencies['@capitec/omni-components'] = `^${localOmniComponentsPa
 
 delete packageFile.private;
 delete packageFile.scripts;
+delete packageFile.devDependencies;
 
 // Write out package file to dist
 fs.writeFileSync(`${outDir}/package.json`,JSON.stringify(packageFile, null, 4), 'utf-8');
