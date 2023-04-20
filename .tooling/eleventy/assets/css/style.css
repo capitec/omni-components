@@ -1040,7 +1040,7 @@ table {
 
 table thead tr th,
 table tbody tr td {
-    border-bottom: 1px solid #ddd;
+    /* border-bottom: 1px solid #ddd; */
 }
 
 table tr {
@@ -1062,6 +1062,11 @@ table td {
 table th {
     font-size: 1em;
     letter-spacing: 0.1em;
+    background-color: var(--docs-secondary-background-color);
+}
+
+table tr:nth-child(even) { 
+    background-color: var(--docs-secondary-background-color);
 }
 
 .component-props-table > td {
