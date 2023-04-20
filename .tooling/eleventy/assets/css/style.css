@@ -1076,7 +1076,10 @@ table th {
 }
 
 .component-props-table-header {
-    padding: 0px 48px;
+    border-bottom: 0;
+    padding-top: 24px;
+    padding-left: 48px;
+    padding-right: 48px;
     padding-bottom: 0px;
     -webkit-font-smoothing: antialiased;
     box-sizing: border-box;
