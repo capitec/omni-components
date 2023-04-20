@@ -4,7 +4,17 @@ import { setUIValueClean } from '@testing-library/user-event/dist/esm/document/U
 import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { LabelStory, BaseArgs, HintStory, ErrorStory, DisabledStory, ValueStory, PrefixStory, SuffixStory } from '../core/OmniInputStories.js';
+import {
+    LabelStory,
+    BaseArgs,
+    ClearableStory,
+    HintStory,
+    ErrorStory,
+    DisabledStory,
+    ValueStory,
+    PrefixStory,
+    SuffixStory
+} from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
 import { assignToSlot, ComponentStoryFormat, CSFIdentifier } from '../utils/StoryUtils.js';
@@ -70,6 +80,8 @@ export const Hint = HintStory<EmailField, BaseArgs>('omni-email-field');
 export const Error_Label = ErrorStory<EmailField, BaseArgs>('omni-email-field');
 
 export const Value = ValueStory<EmailField, BaseArgs>('omni-email-field', 'johndoe@gmail.com');
+
+export const Clear = ClearableStory<EmailField, BaseArgs>('omni-email-field', 'johndoe@gmail.com');
 
 export const Prefix = PrefixStory<EmailField, BaseArgs>('omni-email-field');
 

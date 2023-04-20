@@ -3,10 +3,12 @@ export { ifDefined } from 'lit/directives/if-defined.js';
 import { property } from 'lit/decorators.js';
 import { ClassInfo, classMap } from 'lit/directives/class-map.js';
 import OmniElement from './OmniElement.js';
+import '../icons/Clear.icon.js';
 
 /**
  * Base class used by form components to share common properties, styles and functionality.
  *
+ * @slot clear - Replaces the icon for the clear slot.
  * @slot prefix - Replaces the icon for the prefix slot.
  * @slot suffix - Replaces the icon for the suffix slot.
  *
@@ -77,6 +79,11 @@ import OmniElement from './OmniElement.js';
  * @cssprop --omni-form-disabled-hover-color - Form disabled hover color.
  * @cssprop --omni-form-error-hover-color - Form error hover color.
  *
+ * @cssprop --omni-form-clear-control-margin-right - Form clear control right margin.
+ * @cssprop --omni-form-clear-control-margin-left -  Form clear control left margin.
+ * @cssprop --omni-form-clear-control-width - Form clear control width.
+ * @cssprop --omni-form-clear-icon-color - Form clear icon color.
+ *
  */
 export class OmniFormElement extends OmniElement {
     /**
@@ -114,6 +121,30 @@ export class OmniFormElement extends OmniElement {
      * @attr
      */
     @property({ type: Boolean, reflect: true }) disabled = false;
+
+    /**
+     * Toggles the ability to clear the value of the component.
+     * @attr
+     */
+    @property({ type: Boolean, reflect: true }) clearable = false;
+
+    protected _onClearClick(e: MouseEvent) {
+        if (this.disabled) {
+            return e.stopImmediatePropagation();
+        }
+
+        //this.value = '';
+
+        this.value = null as unknown as string;
+
+        // Dispatch standard DOM event to cater for single clear.
+        this.dispatchEvent(
+            new Event('change', {
+                bubbles: true,
+                composed: true
+            })
+        );
+    }
 
     static override get styles(): CSSResultGroup {
         return [
@@ -328,7 +359,27 @@ export class OmniFormElement extends OmniElement {
                     }
                 }
 
-                
+                .clear-control {
+                    display: flex;
+                  
+                    margin-right: var(--omni-form-clear-control-margin-right, 10px);
+                    margin-left: var(--omni-form-clear-control-margin-left, 10px);
+                    width: var(--omni-form-clear-control-width, 20px);
+                }
+
+                .clear-click {
+                    display: flex;
+                }
+
+                .clear-icon {
+                    fill: var(--omni-form-clear-icon-color, var(--omni-primary-color));
+                }
+
+                .clear-icon,
+                ::slotted([slot='clear']){
+                    width: var(--omni-form-clear-icon-width, 20px);
+                    cursor: pointer;
+                }
 
                 slot[name='prefix'],
                 slot[name='suffix'],
@@ -356,6 +407,7 @@ export class OmniFormElement extends OmniElement {
                     ${this.renderLabel()} 
                     ${this.renderContent()} 
                     <slot name="suffix"></slot>
+                    ${this.renderClear()}
                     ${this.renderControl()} ${this.renderPicker()}
                 </div>
                 ${this.renderHint()} ${this.renderError()}
@@ -396,5 +448,21 @@ export class OmniFormElement extends OmniElement {
 
     protected renderError() {
         return html`${this.error ? html`<div class="error-label">${this.error}</div>` : nothing} `;
+    }
+
+    protected renderClear(): typeof nothing | TemplateResult {
+        return html`
+        <div class="clear-control">
+            ${
+                this.clearable && this.value && !this.disabled
+                    ? html`
+            <div id="clear-click" class="clear-click" @click="${(e: MouseEvent) => this._onClearClick(e)}">
+                    <slot name="clear">
+                        <omni-clear-icon class="clear-icon"></omni-clear-icon>
+                    </slot>
+            </div>`
+                    : nothing
+            }
+        </div>`;
     }
 }

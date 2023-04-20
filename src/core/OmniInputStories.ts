@@ -6,6 +6,7 @@ import userEvent from '@testing-library/user-event';
 import * as jest from 'jest-mock';
 import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
+import { string } from 'yargs';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM';
 import { ComponentStoryFormat, raw } from '../utils/StoryUtils.js';
@@ -18,6 +19,7 @@ export interface BaseArgs {
     hint: string;
     error: string;
     disabled: boolean;
+    clearable: boolean;
 
     suffix: string;
     prefix: string;
@@ -154,6 +156,40 @@ export const SuffixStory = <T extends HTMLElement, U extends BaseArgs>(tagName: 
         }
     };
     return Suffix;
+};
+
+export const ClearableStory = <T extends HTMLElement, U extends BaseArgs>(
+    tagName: string,
+    inputValue: string | number | string[] = 'The input value'
+) => {
+    const Clearable: ComponentStoryFormat<U> = {
+        render: (args: U) =>
+            html`${unsafeHTML(
+                `<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}" value="${args.value}" clearable></${tagName}>`
+            )}`,
+        name: 'Clearable',
+        description: 'Grants ability to clear the content of the component.',
+        args: {
+            label: 'Clearable',
+            clearable: true,
+            value: inputValue
+        } as U,
+        play: async (context) => {
+            const input = within(context.canvasElement).getByTestId<T>('test-field');
+
+            const inputField = input.shadowRoot?.getElementById('inputField') as HTMLInputElement;
+
+            //Clearable class test.
+            const clearableAttribute = input.attributes.getNamedItem('clearable');
+            await expect(clearableAttribute).toBeTruthy();
+
+            const clearButton = input.shadowRoot?.getElementById(`clear-click`) as HTMLElement;
+            await userEvent.click(clearButton);
+
+            await expect(inputField).toHaveValue('');
+        }
+    };
+    return Clearable;
 };
 
 export const DisabledStory = <T extends HTMLElement, U extends BaseArgs>(

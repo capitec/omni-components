@@ -4,7 +4,17 @@ import { setUIValueClean } from '@testing-library/user-event/dist/esm/document/U
 import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { LabelStory, BaseArgs, HintStory, ErrorStory, DisabledStory, ValueStory, PrefixStory, SuffixStory } from '../core/OmniInputStories.js';
+import {
+    LabelStory,
+    BaseArgs,
+    ClearableStory,
+    HintStory,
+    ErrorStory,
+    DisabledStory,
+    ValueStory,
+    PrefixStory,
+    SuffixStory
+} from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
 import { assignToSlot, ComponentStoryFormat, CSFIdentifier } from '../utils/StoryUtils.js';
@@ -72,6 +82,8 @@ export const Hint = HintStory<NumberField, BaseArgs>('omni-number-field');
 export const Error_Label = ErrorStory<NumberField, BaseArgs>('omni-number-field');
 
 export const Value = ValueStory<NumberField, BaseArgs>('omni-number-field', 123);
+
+export const Clear = ClearableStory<NumberField, BaseArgs>('omni-number-field', 123);
 
 export const Prefix = PrefixStory<NumberField, BaseArgs>('omni-number-field');
 
