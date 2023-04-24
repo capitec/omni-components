@@ -98,6 +98,7 @@ export class DatePicker extends OmniFormElement {
 
     //Internal state properties for dimensions
     @state() private _bottomOfViewport: boolean = false;
+    @state() private _isMobile: boolean = false;
 
     override connectedCallback() {
         super.connectedCallback();
@@ -107,8 +108,11 @@ export class DatePicker extends OmniFormElement {
 
     protected override async firstUpdated(): Promise<void> {
         await this._checkForBottomOfScreen();
+        await this._checkforMobile();
         window.addEventListener('resize', this._checkForBottomOfScreen.bind(this));
         window.addEventListener('scroll', this._checkForBottomOfScreen.bind(this));
+        window.addEventListener('resize', this._checkforMobile.bind(this));
+        window.addEventListener('scroll', this._checkforMobile.bind(this));
     }
 
     // Update properties of the Date picker component if user provides a value to the value property or if the locale property is updated.
@@ -138,9 +142,21 @@ export class DatePicker extends OmniFormElement {
         }
     }
 
+    // Check the width of the screen to set the internal mobile boolean to true of false.
+    async _checkforMobile() {
+        if (!window.matchMedia ? window.innerWidth >= 767 : window.matchMedia('screen and (min-width: 767px)').matches) {
+            // Desktop width is at least 767px
+            this._isMobile = false;
+        } else {
+            // Mobile screen less than 767px
+            this._isMobile = true;
+        }
+    }
+
     _inputClick(e: Event) {
         const pickerContainer = this.renderRoot.querySelector<HTMLDivElement>('#picker-container');
-        if (!e.composedPath() || !pickerContainer || !e.composedPath().includes(pickerContainer)) {
+        const pickerDialog = this.renderRoot.querySelector<HTMLDialogElement>('#picker-dialog');
+        if ((!e.composedPath() || !pickerContainer || !e.composedPath().includes(pickerContainer)) || (!e.composedPath() || !pickerDialog || !e.composedPath().includes(pickerDialog))) {
             this._toggleCalendar();
         }
     }
@@ -154,10 +170,30 @@ export class DatePicker extends OmniFormElement {
     }
 
     _toggleCalendar() {
+        
         if (this._showCalendar) {
             this._showCalendar = false;
+            if(this._isMobile){
+                //this._pickerContainer?.close();
+                const pickerDialog = this.renderRoot.querySelector<HTMLDialogElement>('#picker-dialog');
+                console.log('pickerDialog', pickerDialog);
+                if(pickerDialog){
+                    pickerDialog.close();
+                }
+            }
+            //this._pickerContainer?.close();
         } else {
             this._showCalendar = true;
+            
+            if(this._isMobile) {
+                const pickerDialog = this.renderRoot.querySelector<HTMLDialogElement>('#picker-dialog');
+                if(pickerDialog){
+                    pickerDialog.showModal();
+                }
+
+                //this._pickerContainer?.showModal();
+            }
+            //this._pickerContainer?.showModal();
         }
     }
 
@@ -264,8 +300,26 @@ export class DatePicker extends OmniFormElement {
                 z-index: var(--omni-date-picker-container-z-index, 420);
             }
 
-            /* Picker container mobile*/
+            /* Picker dialog mobile*/
             @media screen and (max-width: 766px) {
+
+                .picker-dialog {
+                    position: fixed;
+                    top: inherit;
+                    width: 100%;
+                    margin: unset;
+                    border-style: none;
+                    padding: unset;
+                    left: var(--omni-date-picker-mobile-picker-dialog-left, 0px);
+                    right: var(--omni-date-picker-mobile-picker-dialog-right, 0px);
+                    bottom: var(--omni-date-picker-mobile-picker-dialog-bottom, 0px);
+                }
+                
+                .picker-dialog:modal{
+                    max-width: 100%;
+                    overflow: none;
+                }
+                /*
                 .picker-container {
                     position: fixed;
                     top: none;
@@ -273,7 +327,7 @@ export class DatePicker extends OmniFormElement {
                     right: var(--omni-date-picker-mobile-picker-container-right, 0px);
                     bottom: var(--omni-date-picker-mobile-picker-container-bottom, 0px);
                     box-shadow: var(--omni-date-picker-mobile-picker-container-box-shadow, 0px 0px 2px 2px rgba(0, 0, 0, 0.11));
-                }
+                }*/
             }
 
             /* Desktop and landscape tablet device styling, if element is at the bottom of the screen make items render above the input */
@@ -343,15 +397,32 @@ export class DatePicker extends OmniFormElement {
     }
 
     protected override renderPicker() {
+
+        if(this._isMobile){
+            return html`
+            <dialog id="picker-dialog" class="picker-dialog">
+                <omni-calendar 
+                    id="calendar" 
+                    locale=${this.locale} 
+                    .value=${this.value as string} 
+                    @change=${(e: Event) =>this._dateSelected(e)}>
+                </omni-calendar>
+            </dialog>`; 
+        }
         if (!this._showCalendar) {
             return nothing;
-        }
-        return html`
+        } else {
+            return  html ` 
             <div id="picker-container" class="picker-container ${this._bottomOfViewport ? `bottom` : ``}">
-                <omni-calendar id="calendar" locale=${this.locale} .value=${this.value as string} @change=${(e: Event) =>
-            this._dateSelected(e)}></omni-calendar>
-            </div>
-        `;
+                <omni-calendar 
+                  id="calendar" 
+                  locale=${this.locale} 
+                  .value=${this.value as string} 
+                  @change=${(e: Event) =>
+                  this._dateSelected(e)}>
+                </omni-calendar>
+            </div>`;
+        }
     }
 
     protected override renderLabel() {

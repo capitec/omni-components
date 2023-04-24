@@ -401,8 +401,6 @@ export class CurrencyField extends OmniFormElement {
         const input = this._inputElement as HTMLInputElement;
         let centValue = this._convertToCents(this._inputElement?.value as string);
 
-        console.log('e.eventType', e.inputType);
-
         if (centValue && input) {
             e.preventDefault();
             /**

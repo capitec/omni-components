@@ -178,8 +178,21 @@ export class Select extends OmniFormElement {
     _togglePopup() {
         if (this._popUp) {
             this._popUp = false;
+            if(this._isMobile){
+                //this._pickerContainer?.close();
+                const pickerDialog = this.renderRoot.querySelector<HTMLDialogElement>('#picker-dialog');
+                if(pickerDialog){
+                    pickerDialog.close();
+                }
+            }
         } else {
             this._popUp = true;
+            if(this._isMobile) {
+                const pickerDialog = this.renderRoot.querySelector<HTMLDialogElement>('#picker-dialog');
+                if(pickerDialog){
+                    pickerDialog.showModal();
+                }
+            }
         }
     }
 
@@ -369,6 +382,23 @@ export class Select extends OmniFormElement {
                         border-top-left-radius: var(--omni-select-mobile-items-container-border-top-left-radius, 10px);
                         border-top-right-radius: var(--omni-select-mobile-items-container-border-top-right-radius, 10px);
                     }
+
+                    .picker-dialog {
+                        position: fixed;
+                        top: inherit;
+                        width: 100%;
+                        margin: unset;
+                        border-style: none;
+                        padding: unset;
+                        left: var(--omni-date-picker-mobile-picker-dialog-left, 0px);
+                        right: var(--omni-date-picker-mobile-picker-dialog-right, 0px);
+                        bottom: var(--omni-date-picker-mobile-picker-dialog-bottom, 0px);
+                    }
+                    
+                    .picker-dialog:modal{
+                        max-width: 100%;
+                        overflow: none;
+                    }
                 }
 
                 /* Should only display for mobile rendering */
@@ -462,16 +492,24 @@ export class Select extends OmniFormElement {
     }
 
     protected override renderPicker() {
+        if(this._isMobile){
+            return html `
+            <dialog id="picker-dialog" class="picker-dialog">
+                ${this._isMobile && this.label ? html`<div class="header">${this.label}</div>` : nothing}
+                <div ${ref(this._itemsMaxHeightChange)} id="items" class="items"> ${until(this._renderOptions(),html`<div>${this.renderLoading()}</div>`)} 
+                </div>
+            </dialog>
+            `
+        }
+        
         if (!this._popUp) {
             return nothing;
         }
         return html`
             <div id="items-container" class="items-container ${this._bottomOfViewport ? `bottom` : ``}">
                 ${this._isMobile && this.label ? html`<div class="header">${this.label}</div>` : nothing}
-                <div ${ref(this._itemsMaxHeightChange)} id="items" class="items"> ${until(
-            this._renderOptions(),
-            html`<div>${this.renderLoading()}</div>`
-        )} </div>
+                <div ${ref(this._itemsMaxHeightChange)} id="items" class="items"> ${until(this._renderOptions(),html`<div>${this.renderLoading()}</div>`)} 
+                </div>
             </div>
         `;
     }
