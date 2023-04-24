@@ -20,10 +20,27 @@ eleventyComputed:
         <div class="component-desc">{{ customElements | getDescription(component.name) | safe }}</div> 
         <div class="component-info">
             <div class="component-info-item">
+                <div>Usage</div>
+                <div class="component-framework-toggle docs-omni-component">
+                    <div class="selected-framework" id="select-html">
+                        HTML
+                    </div>
+                    <div id="select-react">
+                        React
+                    </div>
+                </div>
+            </div>
+            <div class="component-info-item">
                 <div>Module</div>
-                <div class="component-info-item-code">
+                <div class="component-info-item-code" id="html-imports">
                     <pre><code class="language-js no-code-scroll" id="component-import-code">{{ customElements | getImport(component.name)}}</code></pre>
                     <span class="copy-icon material-icons" onclick="copyToClipboard('component-import-code');return false;">
+                        content_copy
+                    </span>
+                </div>           
+                <div class="component-info-item-code no-display" id="react-imports">
+                    <pre><code class="language-js no-code-scroll" id="component-import-code-react">{{ customElements | getReactImport(component.name)}}</code></pre>
+                    <span class="copy-icon material-icons" onclick="copyToClipboard('component-import-code-react');return false;">
                         content_copy
                     </span>
                 </div>
@@ -40,11 +57,15 @@ eleventyComputed:
                 </div>
             </div>
             <div class="component-info-item">
-                <div>Package</div>
+                <div>Packages</div>
                 <div>
-                    <a href="https://www.npmjs.com/package/@capitec/omni-components" target="blank" class="component-info-item-link">
+                    <a href="https://www.npmjs.com/package/@capitec/omni-components" target="blank" class="component-info-item-link" id="html-package">
                         <img src="./assets/images/npm.svg" class="component-info-item-img">
                         @capitec/omni-components
+                    </a>
+                    <a href="https://www.npmjs.com/package/@capitec/omni-components-react" target="blank" class="component-info-item-link no-display" id="react-package">
+                        <img src="./assets/images/npm.svg" class="component-info-item-img">
+                        @capitec/omni-components-react
                     </a>
                 </div>
             </div>
