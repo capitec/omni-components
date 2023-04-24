@@ -45,7 +45,23 @@ export const Interactive: ComponentStoryFormat<Args> = {
     play: async (context) => {
         const label = within(context.canvasElement).getByTestId<Label>('test-label');
         await expect(label.shadowRoot).toHaveTextContent(Interactive.args?.label as string);
-    }
+
+        throw new Error('Simulate failure');
+    },
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniLabel } from "@capitec/omni-components-react/label";
+
+const App = () => <OmniLabel${args.label ? ` label='${args.label}'` : ''}${args.type ? ` type='${args.type}'` : ''}${
+                !args['[Default Slot]']
+                    ? '/>'
+                    : `>
+                      ${args['[Default Slot]']}
+                  </OmniLabel>`
+            };`
+        }
+    ]
 };
 
 export const Title: ComponentStoryFormat<Args> = {
@@ -58,7 +74,15 @@ export const Title: ComponentStoryFormat<Args> = {
     play: async (context) => {
         const label = within(context.canvasElement).getByTestId<Label>('test-label');
         await expect(label.shadowRoot).toHaveTextContent(Title.args?.label as string);
-    }
+    },
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniLabel } from "@capitec/omni-components-react/label";
+
+const App = () => <OmniLabel${args.label ? ` label='${args.label}'` : ''}${args.type ? ` type='${args.type}'` : ''}/>;`
+        }
+    ]
 };
 
 export const Subtitle: ComponentStoryFormat<Args> = {
