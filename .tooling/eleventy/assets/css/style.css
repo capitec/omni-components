@@ -733,6 +733,7 @@ header .header-version-select {
     border-radius: 6px;
     border-color: var(--omni-theme-primary-color);
     width: fit-content;
+    overflow: hidden;
 }
 
 .component-framework-toggle > * {

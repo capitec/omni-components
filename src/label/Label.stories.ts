@@ -45,8 +45,6 @@ export const Interactive: ComponentStoryFormat<Args> = {
     play: async (context) => {
         const label = within(context.canvasElement).getByTestId<Label>('test-label');
         await expect(label.shadowRoot).toHaveTextContent(Interactive.args?.label as string);
-
-        throw new Error('Simulate failure');
     },
     frameworkSources: [
         {
