@@ -600,7 +600,7 @@ export class StoryRenderer extends LitElement {
         const splitPath = elementModule!.path.split('/');
         const componentDirectory = splitPath[splitPath.length - 2];
 
-        let esmVersion =
+        const esmVersion =
             version && version !== 'latest' && version !== 'local'
                 ? !['alpha', 'beta', 'next'].includes(version)
                     ? `${version}-esm`
@@ -639,11 +639,6 @@ export class StoryRenderer extends LitElement {
                 // css = '';
                 break;
             case 'React':
-                //React wrappers only exist in alpha right now
-                if (esmVersion === 'esm') {
-                    esmVersion = 'esm-alpha';
-                }
-
                 html = `
 <html theme="${themeOption ?? 'light'}">
     <body>

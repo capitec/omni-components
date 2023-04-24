@@ -58,7 +58,7 @@ async function renderAsLit(data) {
                 
 <omni-render-element .data="\${this.someData}" .renderer="\${this.renderAsLit}"></omni-render-element>
 `,
-        disableCodePen: true
+            disableCodePen: true
         }
     ],
     name: 'Lit Template',

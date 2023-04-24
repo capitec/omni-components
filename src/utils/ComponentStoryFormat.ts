@@ -56,7 +56,7 @@ export type FrameworkSource<T> = {
      * Indicates that code is not valid for translating to CodePen.
      */
     disableCodePen?: boolean;
-}
+};
 
 export type FrameworkOption = 'HTML' | 'React';
 
