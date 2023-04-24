@@ -101,15 +101,16 @@
 
 ## Properties
 
-| Property         | Attribute     | Type                              |
-|------------------|---------------|-----------------------------------|
-| `codeEditor`     |               | `CodeEditor \| undefined`         |
-| `interactive`    | `interactive` | `boolean \| undefined`            |
-| `key`            | `key`         | `string \| undefined`             |
-| `override`       |               |                                   |
-| `path`           | `path`        | `string \| undefined`             |
-| `propertyEditor` |               | `LivePropertyEditor \| undefined` |
-| `tag`            | `tag`         | `string \| undefined`             |
+| Property          | Attribute     | Type                              |
+|-------------------|---------------|-----------------------------------|
+| `htmlCodeEditor`  |               | `CodeEditor \| undefined`         |
+| `interactive`     | `interactive` | `boolean \| undefined`            |
+| `key`             | `key`         | `string \| undefined`             |
+| `override`        |               |                                   |
+| `path`            | `path`        | `string \| undefined`             |
+| `propertyEditor`  |               | `LivePropertyEditor \| undefined` |
+| `reactCodeEditor` |               | `CodeEditor \| undefined`         |
+| `tag`             | `tag`         | `string \| undefined`             |
 
 ## Methods
 
