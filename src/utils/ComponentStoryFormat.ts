@@ -34,8 +34,31 @@ export type ComponentStoryFormat<T> = {
     /**
      * Obtain original DOM source (non-standard)
      */
-    source?: () => string;
+    //source?: () => string;
+
+    /**
+     * Obtain source per framework (non-standard)
+     */
+    frameworkSources?: FrameworkSource<T>[];
 };
+
+export type FrameworkSource<T> = {
+    /**
+     * Framework that the source relates to.
+     */
+    framework: FrameworkOption;
+    /**
+     * Function that generates a source string from provided args.
+     */
+    load?: (args: T) => string;
+
+    /**
+     * Indicates that code is not valid for translating to CodePen.
+     */
+    disableCodePen?: boolean;
+}
+
+export type FrameworkOption = 'HTML' | 'React';
 
 export type CSFIdentifier = {
     title: string;

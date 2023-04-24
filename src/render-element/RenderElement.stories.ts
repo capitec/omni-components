@@ -41,12 +41,15 @@ async function renderAsString(data: object) {
 }
 
 export const Lit_Template: ComponentStoryFormat<Args> = {
-    source: () => `
+    frameworkSources: [
+        {
+            framework: 'HTML',
+            load: () => `
                 
 <!-- Bound function used (<script> tags only for syntax highlighting) -->
 <script>
-async function renderAsLit(data: object) {
-    await new Promise<void>((r) => setTimeout(() => r(), 3000));
+async function renderAsLit(data) {
+    await new Promise((r) => setTimeout(() => r(), 3000));
     return html\`<span>\${JSON.stringify(data)}</span>\`;
 }
 </script>
@@ -55,6 +58,9 @@ async function renderAsLit(data: object) {
                 
 <omni-render-element .data="\${this.someData}" .renderer="\${this.renderAsLit}"></omni-render-element>
 `,
+        disableCodePen: true
+        }
+    ],
     name: 'Lit Template',
     description: 'Render a Lit template string from the renderer function.',
     render: (args: Args) => html`
@@ -121,7 +127,10 @@ export const HTML_Element_Instance: ComponentStoryFormat<Args> = {
     },
     name: 'HTML Element Instance',
     description: 'Render an HTMLElement instance from the renderer function.',
-    source: () => `
+    frameworkSources: [
+        {
+            framework: 'HTML',
+            load: () => `
 <omni-render-element id="renderElI"></omni-render-element>
 <script defer>
     async function renderAsElement(data) {
@@ -139,7 +148,9 @@ export const HTML_Element_Instance: ComponentStoryFormat<Args> = {
             hello: 'world',
             'other-data': false
     };
-</script>`,
+</script>`
+        }
+    ],
     args: {
         data: {
             hello: 'world',
@@ -205,11 +216,14 @@ export const HTML_String: ComponentStoryFormat<Args> = {
     },
     name: 'HTML String',
     description: 'Render a string from the renderer function as html.',
-    source: () => `
+    frameworkSources: [
+        {
+            framework: 'HTML',
+            load: () => `
 <omni-render-element id="renderElS"></omni-render-element>
 <script defer>
     async function renderAsString(data) {
-        await new Promise<void>((r) => setTimeout(() => r(), 3000));
+        await new Promise((r) => setTimeout(() => r(), 3000));
         return \`<span>\${JSON.stringify(data)}</span>\`;
     }
     renderEl = document.getElementById('renderElS');
@@ -220,7 +234,9 @@ export const HTML_String: ComponentStoryFormat<Args> = {
             hello: 'world',
             'other-data': false
     };
-</script>`,
+</script>`
+        }
+    ],
     args: {
         data: {
             hello: 'world',

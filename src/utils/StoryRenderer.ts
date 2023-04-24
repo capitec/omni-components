@@ -1,6 +1,7 @@
 /* eslint-disable no-control-regex */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { html as langHtml } from '@codemirror/lang-html';
+import { javascript as langJs } from '@codemirror/lang-javascript';
 import { githubDark as codeThemeDark } from '@ddietr/codemirror-themes/github-dark.js';
 import { githubLight as codeTheme } from '@ddietr/codemirror-themes/github-light.js';
 import { html, LitElement, nothing, render, TemplateResult } from 'lit';
@@ -20,6 +21,7 @@ import {
     loadCssProperties,
     Package,
     ComponentStoryFormat,
+    FrameworkOption,
     transformSource,
     getSourceFromLit
 } from './StoryUtils.js';
@@ -47,8 +49,10 @@ export class StoryRenderer extends LitElement {
     @state() _isBusyPlaying?: boolean;
     @state() _playError?: string;
     @state() _showStylesDialog?: boolean;
+    @state() _sourceTab: FrameworkOption = 'HTML';
 
-    @query('.source-code') codeEditor?: CodeEditor;
+    @query('.html-source-code') htmlCodeEditor?: CodeEditor;
+    @query('.react-source-code') reactCodeEditor?: CodeEditor;
     @query('.live-props') propertyEditor?: LivePropertyEditor;
 
     private originalInteractiveSrc?: string;
@@ -176,7 +180,12 @@ export class StoryRenderer extends LitElement {
         this.story!.originalArgs = this.story?.originalArgs ?? JSON.parse(JSON.stringify(this.story?.args));
 
         const res = this.story!.render!(this.story!.args);
-        const storySource = this.story!.source ? this.story!.source() : getSourceFromLit(res);
+
+        const htmlSourceDefinition = this.story!.frameworkSources?.find((fs) => fs.framework === 'HTML');
+        const htmlSource = htmlSourceDefinition?.load ? htmlSourceDefinition.load(this.story!.args) : getSourceFromLit(res);
+
+        const reactSourceDefinition = this.story!.frameworkSources?.find((fs) => fs.framework === 'React');
+        const reactSource = reactSourceDefinition?.load ? reactSourceDefinition.load(this.story!.args) : '';
 
         return html`
         <div class="story-description">
@@ -233,8 +242,19 @@ export class StoryRenderer extends LitElement {
                                 );
                                 await this.updateComplete;
 
-                                if (this.codeEditor && !this.story?.source) {
-                                    await this.codeEditor.refresh(() => getSourceFromLit(this.story!.render!(this.story!.args)));
+                                if (this.htmlCodeEditor) {
+                                    await this.htmlCodeEditor.refresh(() =>
+                                        this.story!.frameworkSources?.find((fs) => fs.framework === 'HTML')?.load
+                                            ? this.story!.frameworkSources!.find((fs) => fs.framework === 'HTML')!.load!(this.story!.args)
+                                            : getSourceFromLit(this.story!.render!(this.story!.args))
+                                    );
+                                }
+                                if (this.reactCodeEditor) {
+                                    await this.reactCodeEditor.refresh(() =>
+                                        this.story!.frameworkSources?.find((fs) => fs.framework === 'React')?.load
+                                            ? this.story!.frameworkSources!.find((fs) => fs.framework === 'React')!.load!(this.story!.args)
+                                            : ''
+                                    );
                                 }
                             }
                         }}"></live-property-editor>
@@ -244,12 +264,12 @@ export class StoryRenderer extends LitElement {
                 }
             </div>
             <!-- <div style="border-top: 1px solid #e1e1e1;max-width: 600px;"> -->
-            <div class="code-block">
+            <div class="code-block html-code ${this._sourceTab === 'HTML' ? '' : 'no-display'}">
                 <code-editor
-                class="source-code"
+                class="source-code html-source-code"
                 .transformSource="${(s: string) => transformSource(s)}"
                 .extensions="${async () => [this._currentCodeTheme(), langHtml(await loadCustomElementsCodeMirrorCompletionsRemote())]}"
-                .code="${live(storySource ?? '')}"
+                .code="${live(htmlSource ?? '')}"
                 @codemirror-loaded="${(e: CustomEvent<CodeMirrorEditorEvent>) => {
                     const newSource = e.detail.source;
                     this.originalInteractiveSrc = newSource;
@@ -258,7 +278,7 @@ export class StoryRenderer extends LitElement {
                 @codemirror-source-change="${(e: CustomEvent<CodeMirrorSourceUpdateEvent>) => {
                     const newSource = e.detail.source;
                     this._interactiveSrc = newSource;
-                    this.overrideInteractive = this._interactiveSrc !== this.originalInteractiveSrc && this._interactiveSrc !== storySource;
+                    this.overrideInteractive = this._interactiveSrc !== this.originalInteractiveSrc && this._interactiveSrc !== htmlSource;
 
                     this.requestUpdate();
                     this.dispatchEvent(
@@ -272,38 +292,115 @@ export class StoryRenderer extends LitElement {
                 </code-editor>
             </div>
             ${
+                reactSource
+                    ? html`
+            <div class="code-block react-code ${this._sourceTab === 'React' ? '' : 'no-display'}">
+                <code-editor
+                class="source-code react-source-code"
+                .extensions="${async () => [
+                    this._currentCodeTheme(),
+                    langJs({
+                        jsx: true
+                    })
+                ]}"
+                .code="${reactSource}"
+                read-only>
+                </code-editor>
+            </div>`
+                    : nothing
+            }
+
+            <div class="two-part">
+            
+                <div class="play-tests">
+                    ${
+                        this.story?.play
+                            ? html`
+                            <div style="display: flex;flex-direction: row;align-items: center;">
+                            <omni-button
+                                class="docs-omni-component"
+                                label="Test"
+                                slot-position="left"
+                                ?disabled=${
+                                    this.overrideInteractive ||
+                                    this._isBusyPlaying ||
+                                    JSON.stringify(this.story?.originalArgs)
+                                        .replaceAll('\n', '')
+                                        .replaceAll('\\n', '')
+                                        .replaceAll('\t', '')
+                                        .replaceAll(' ', '') !==
+                                        JSON.stringify(this.story?.args)
+                                            .replaceAll('\n', '')
+                                            .replaceAll('\\n', '')
+                                            .replaceAll('\t', '')
+                                            .replaceAll(' ', '')
+                                }
+                                @click="${() => this._play(this.story, `.${this.key}`)}">
+                                <omni-icon class="docs-omni-component" icon="@material/play_arrow" style="margin-right: 8px;"></omni-icon>
+                            </omni-button>
+                            <div class="${this.key + '-result'} success">
+                                <span class="material-icons" style="color: #155724;">check</span>
+                                <span class="hidden-after-760" style="margin-left: 8px;">Passed</span>
+                            </div>
+                            </div>       
+                    `
+                            : nothing
+                    }
+                </div>     
+                <div class="framework-toggles docs-omni-component">
+                    ${
+                        reactSource
+                            ? html`
+                                <omni-button type="${this._sourceTab === 'HTML' ? 'primary' : 'secondary'}" @click="${() =>
+                                  (this._sourceTab = 'HTML')}">
+                                    <div>
+                                        <svg class="hidden-until-760" style="height: 24px; width: 24px; color: var(--omni-theme-font-color); fill: currentColor;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                            <title>HTML5 Logo</title>
+                                            <path d="M108.4 0h23v22.8h21.2V0h23v69h-23V46h-21v23h-23.2M206 23h-20.3V0h63.7v23H229v46h-23M259.5 0h24.1l14.8 24.3L313.2 0h24.1v69h-23V34.8l-16.1 24.8l-16.1-24.8v34.2h-22.6M348.7 0h23v46.2h32.6V69h-55.6"/>
+                                            <path fill="#e44d26" d="M107.6 471l-33-370.4h362.8l-33 370.2L255.7 512"/>
+                                            <path fill="#f16529" d="M256 480.5V131H404.3L376 447"/>
+                                            <path fill="#ebebeb" d="M142 176.3h114v45.4h-64.2l4.2 46.5h60v45.3H154.4M156.4 336.3H202l3.2 36.3 50.8 13.6v47.4l-93.2-26"/>
+                                            <path fill="#fff" d="M369.6 176.3H255.8v45.4h109.6M361.3 268.2H255.8v45.4h56l-5.3 59-50.7 13.6v47.2l93-25.8"/>
+                                        </svg>
+                                        <div class="hidden-after-760">
+                                            HTML
+                                        </div>  
+                                    </div>  
+                                </omni-button>
+                                <omni-button type="${this._sourceTab === 'React' ? 'primary' : 'secondary'}" @click="${() =>
+                                  (this._sourceTab = 'React')}">
+                                    <div>
+                                        <img class="hidden-until-760" style="height: 24px; width: 24px;" src="./assets/images/react.svg" alt="React" />
+                                        <div class="hidden-after-760">
+                                            React
+                                        </div>  
+                                    </div>  
+                                </omni-button>
+                            `
+                            : nothing
+                    }
+                    <div class="docs-omni-component codepen-gen-btn ${
+                        this.story!.frameworkSources?.find((fs) => fs.framework === this._sourceTab)?.disableCodePen ? 'no-display' : ''
+                    }" @click="${() =>
+            this._generateCodePen(this._sourceTab, {
+                React: reactSource,
+                HTML: htmlSource
+            })}">
+                        <svg class="hidden-after-760" style="height: 12px; stroke: var(--omni-theme-font-color);" viewBox="0 0 138 26" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" title="CodePen"><path d="M15 8a7 7 0 1 0 0 10m7-8.7L33 2l11 7.3v7.4L33 24l-11-7.3zm0 0 11 7.4 11-7.4m0 7.4L33 9.3l-11 7.4M33 2v7.3m0 7.4V24M52 6h5a7 7 0 0 1 0 14h-5zm28 0h-9v14h9m-9-7h6m11 1h6a4 4 0 0 0 0-8h-6v14m26-14h-9v14h9m-9-7h6m11 7V6l11 14V6"></path></svg>
+                        <svg class="hidden-until-760" style="height: 24px; stroke: var(--omni-theme-font-color); background: var(--omni-theme-background-color);" xmlns="http://www.w3.org/2000/svg" aria-label="CodePen" role="img" viewBox="0 0 512 512"><g xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="33" stroke-linejoin="round"><path d="M81 198v116l175 117 175-117V198L256 81z"/><path d="M81 198l175 116 175-116M256 81v117"/><path d="M81 314l175-116 175 116M256 431V314"/></g></svg>
+                    </div>
+                </div>
+            </div>
+            ${
                 this.story?.play
                     ? html`
-                <div class="play-tests">
-                    <div style="display: flex; flex-direction: row;">
-                    <omni-button
-                        class="docs-omni-component"
-                        label="Run Tests"
-                        slot-position="left"
-                        ?disabled=${
-                            this.overrideInteractive ||
-                            this._isBusyPlaying ||
-                            JSON.stringify(this.story?.originalArgs)
-                                .replaceAll('\n', '')
-                                .replaceAll('\\n', '')
-                                .replaceAll('\t', '')
-                                .replaceAll(' ', '') !==
-                                JSON.stringify(this.story?.args).replaceAll('\n', '').replaceAll('\\n', '').replaceAll('\t', '').replaceAll(' ', '')
-                        }
-                        @click="${() => this._play(this.story, `.${this.key}`)}">
-                        <omni-icon class="docs-omni-component" icon="@material/play_arrow" style="margin-right: 8px;"></omni-icon>
-                    </omni-button>
-                    <div class="${this.key + '-result'} success">
-                        <span class="material-icons" style="color: #155724;">check</span>
-                        <span style="margin-left: 8px;">Passed</span>
-                    </div>
-                    </div>
-                    <div class="${this.key + '-result'} failure">
+                <div class="${this.key + '-result'} failure">
+                    <div class="play-tests-out">
                     <span class="material-icons" style="color: #721c24;">close</span>
                     <span style="margin-left: 8px;"><pre>${this._playError}</pre></span>
                     </div>
-                </div>            
-            `
+                </div>
+                `
                     : nothing
             }
         </div>
@@ -474,13 +571,153 @@ export class StoryRenderer extends LitElement {
 
         await this.updateComplete;
 
-        if (this.codeEditor && !this.story?.source) {
-            await this.codeEditor.refresh(() => getSourceFromLit(this.story!.render!(this.story!.args)));
+        if (this.htmlCodeEditor) {
+            await this.htmlCodeEditor.refresh(() =>
+                this.story!.frameworkSources?.find((fs) => fs.framework === 'HTML')?.load
+                    ? this.story!.frameworkSources!.find((fs) => fs.framework === 'HTML')!.load!(this.story!.args)
+                    : getSourceFromLit(this.story!.render!(this.story!.args))
+            );
+        }
+        if (this.reactCodeEditor) {
+            await this.reactCodeEditor.refresh(() =>
+                this.story!.frameworkSources?.find((fs) => fs.framework === 'React')?.load
+                    ? this.story!.frameworkSources!.find((fs) => fs.framework === 'React')!.load!(this.story!.args)
+                    : ''
+            );
         }
 
         if (this.propertyEditor) {
             this.propertyEditor.resetSlots();
         }
+    }
+
+    private async _generateCodePen(source: FrameworkOption, frameworkSources: Record<FrameworkOption, string>) {
+        const sourceCode = frameworkSources[source];
+
+        const version = (document.getElementById('header-version-indicator')?.innerText ?? '').toLowerCase();
+
+        const elementModule = this.customElements!.modules.find((module) => module.exports?.find((e) => e.name === this.tag));
+        const splitPath = elementModule!.path.split('/');
+        const componentDirectory = splitPath[splitPath.length - 2];
+
+        let esmVersion =
+            version && version !== 'latest' && version !== 'local'
+                ? !['alpha', 'beta', 'next'].includes(version)
+                    ? `${version}-esm`
+                    : `esm-${version}`
+                : 'esm';
+        let html = '';
+        let css = '';
+        for (let index = 0; index < document.styleSheets.length; index++) {
+            const sheet = document.styleSheets[index];
+            try {
+                if (sheet.cssRules) {
+                    for (let idx = 0; idx < sheet.cssRules.length; idx++) {
+                        const rule = sheet.cssRules[idx];
+                        css += `
+        ${rule.cssText}`;
+                    }
+                }
+            } catch (error) {
+                continue;
+            }
+        }
+        const themeOption = document.documentElement.getAttribute('theme');
+        let js = '';
+        let js_pre = 'none';
+        let js_externals = '';
+        switch (source) {
+            case 'HTML':
+                html = `
+<html theme="${themeOption ?? 'light'}">
+    <body>
+        ${sourceCode}
+    </body>
+</html>`;
+                js = `import 'https://cdn.jsdelivr.net/npm/@capitec/omni-components@${esmVersion}/dist/omni-components.js';`;
+                // js_pre = 'typescript';
+                // css = '';
+                break;
+            case 'React':
+                //React wrappers only exist in alpha right now
+                if (esmVersion === 'esm') {
+                    esmVersion = 'esm-alpha';
+                }
+
+                html = `
+<html theme="${themeOption ?? 'light'}">
+    <body>
+        <div id="root"></div>
+    </body>
+</html>`;
+                js = `
+${sourceCode
+    .replace('@capitec/omni-components-react', `https://cdn.jsdelivr.net/npm/@capitec/omni-components-react@${esmVersion}`)
+    .replace(`/${componentDirectory}`, `/${componentDirectory}/index.js`)}
+
+const el = document.querySelector("#root");
+ReactDOM.render(<App/>, el);`;
+                js_pre = 'babel';
+                js_externals =
+                    'https://cdnjs.cloudflare.com/ajax/libs/react/16.7.0/umd/react.production.min.js;https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.7.0/umd/react-dom.production.min.js';
+                // css = '';
+                break;
+        }
+
+        const data = {
+            // All Optional
+            title: `${this.story?.name} - ${source}`,
+            description:
+                this.story?.description && typeof this.story?.description === 'function' ? this.story.description() : this.story?.description,
+            private: false, // true || false - When the Pen is saved, it will save as Private if logged in user has that privilege, otherwise it will save as public
+            // parent                : id // If supplied, the Pen will save as a fork of this id. Note it's not the slug, but ID. You can find the ID of a Pen with `window.CP.pen.id` in the browser console.
+            tags: [source, 'Omni Components', 'web components', 'custom elements'],
+            editors: '101', // Set which editors are open. In this example HTML open, CSS closed, JS open
+            layout: 'top', // top | left | right
+            html: html,
+            html_pre_processor: 'none', //"none" || "slim" || "haml" || "markdown",
+            css: css,
+            css_pre_processor: 'none', //"none" || "less" || "scss" || "sass" || "stylus",
+            css_starter: 'neither', // "normalize" || "reset" || "neither",
+            css_prefix: 'neither', // "autoprefixer" || "prefixfree" || "neither",
+            js: js,
+            js_pre_processor: js_pre, // "none" || "coffeescript" || "babel" || "livescript" || "typescript",
+            // html_classes          : "loading",
+            head: `<link rel="stylesheet preload" href="https://fonts.googleapis.com/css?family=Hind Vadodara" as="style">
+            <link rel="stylesheet preload" href="https://fonts.googleapis.com/icon?family=Material+Icons" as="style">`,
+            // css_external          : "http://yoursite.com/style.css", // semi-colon separate multiple files
+            js_external: js_externals // semi-colon separate multiple files
+        };
+
+        const JSONstring = JSON.stringify(data)
+            // Quotes will screw up the JSON
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&apos;');
+
+        const formHTML = `<form style="display: none;" action="https://codepen.io/pen/define" method="POST" target="_blank"> 
+            <input type="hidden" name="data" value='${JSONstring}'>
+            <input type="submit" class="code-submit">
+        </form>`;
+
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = formHTML;
+        tempDiv.style.display = 'none';
+        document.body.appendChild(tempDiv);
+
+        const codeSubmit = tempDiv.querySelector('.code-submit') as HTMLInputElement;
+        codeSubmit.click();
+
+        document.body.removeChild(tempDiv);
+
+        // const body = new URLSearchParams();
+        // body.append('data', JSONstring);
+
+        // const response = await fetch('https://codepen.io/pen/define', {
+        //     method: 'post',
+        //     body: body,
+        // })
+
+        // console.log(response);
     }
 
     private async _play(story: any, canvasElementQuery: string) {

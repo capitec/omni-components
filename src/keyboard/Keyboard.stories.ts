@@ -183,7 +183,7 @@ export const Attach_By_Attribute: ComponentStoryFormat<Args> = {
     description: () => html`
     <span>When the '<strong>attach-mode</strong>' attribute is set to '<strong>attribute</strong>' on the Keyboard, then the Keyboard will only react to supported inputs with the '<strong>data-omni-keyboard-attach</strong>' attribute without a value.</span>
     `,
-    source: () => getSourceFromLit(attachByAttribute),
+    frameworkSources: [{ framework: 'HTML', load: () => getSourceFromLit(attachByAttribute), disableCodePen: true }],
     render: (args: Args) =>
         Interactive.args!.attachMode === 'attribute'
             ? attachByAttribute
@@ -240,7 +240,7 @@ export const Attach_By_Id: ComponentStoryFormat<Args> = {
         }}" class="docs-omni-component"><span>Update <strong>attach-mode</strong> to <strong>id</strong></span></omni-button>
     </div>
     `,
-    source: () => getSourceFromLit(attachById),
+    frameworkSources: [{ framework: 'HTML', load: () => getSourceFromLit(attachByAttribute), disableCodePen: true }],
     name: 'Attach By Id'
 };
 
@@ -261,6 +261,7 @@ export const Enter_Key_Hint_Variations: ComponentStoryFormat<Args> = {
         </ul>
     </span>
     `,
+    frameworkSources: [{ framework: 'HTML', load: () => getSourceFromLit(attachByAttribute), disableCodePen: true }],
     render: (args: Args) =>
         Interactive.args!.attachMode === 'all'
             ? html`
@@ -325,6 +326,7 @@ export const Masked_Values: ComponentStoryFormat<Args> = {
         </ul>
     </span>
     `,
+    frameworkSources: [{ framework: 'HTML', load: () => getSourceFromLit(attachByAttribute), disableCodePen: true }],
     render: (args: Args) =>
         Interactive.args!.attachMode === 'all'
             ? html`
@@ -360,6 +362,7 @@ export const Hide_Display_Value: ComponentStoryFormat<Args> = {
     description: () => html`
     <span>When the '<strong>data-omni-keyboard-no-display</strong>' attribute is set on a supported input, the display preview on the Keyboard header will not be visible.</span>
     `,
+    frameworkSources: [{ framework: 'HTML', load: () => getSourceFromLit(attachByAttribute), disableCodePen: true }],
     render: (args: Args) =>
         Interactive.args!.attachMode === 'all'
             ? html`
@@ -394,6 +397,7 @@ export const Hide_Keyboard: ComponentStoryFormat<Args> = {
     <span>When the '<strong>data-omni-keyboard-hidden</strong>' attribute is set on a supported input, the Keyboard will not apply to that input.</span>
     
     `,
+    frameworkSources: [{ framework: 'HTML', load: () => getSourceFromLit(attachByAttribute), disableCodePen: true }],
     render: (args: Args) => html`
         <div class="keyboard-showcase">
             <omni-label type="subtitle" label="Hide Keyboard"></omni-label>
@@ -413,6 +417,7 @@ export const Alternate_Modes: ComponentStoryFormat<Args> = {
     <span>The Keyboard will react accordingly to the '<strong>data-omni-keyboard-mode</strong>' attribute on supported target elements.</span>
         
     `,
+    frameworkSources: [{ framework: 'HTML', load: () => getSourceFromLit(attachByAttribute), disableCodePen: true }],
     render: (args: Args) =>
         Interactive.args!.attachMode === 'all'
             ? html`
@@ -570,7 +575,11 @@ export const Via_Script: ComponentStoryFormat<Args> = {
         closeLabel: 'Close',
         spaceLabel: 'Space'
     },
-    source: () => raw`
+    frameworkSources: [
+        {
+            framework: 'HTML',
+            disableCodePen: true,
+            load: () => raw`
 <!-- Add an input that targets the keyboard id created from script -->
 <omni-text-field data-omni-keyboard-attach="keyboard-script-generated" label="Keyboard from script" tabindex="49"></omni-text-field> 
 
@@ -603,6 +612,8 @@ export const Via_Script: ComponentStoryFormat<Args> = {
     });
 </script>
     `
+        }
+    ]
 };
 
 export const Vanilla_Inputs: ComponentStoryFormat<Args> = {
@@ -610,6 +621,7 @@ export const Vanilla_Inputs: ComponentStoryFormat<Args> = {
     description: () => html`
     <span>The Keyboard supports vanilla native HTML <strong>input</strong> and <strong>textarea</strong> elements.</span>
     `,
+    frameworkSources: [{ framework: 'HTML', load: () => getSourceFromLit(attachByAttribute), disableCodePen: true }],
     render: (args: Args) =>
         Interactive.args!.attachMode === 'all'
             ? html`
