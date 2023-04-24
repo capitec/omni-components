@@ -661,7 +661,7 @@ ReactDOM.render(<App/>, el);`;
 
         const data = {
             // All Optional
-            title: `${this.story?.name} - ${source}`,
+            title: `${this.key ?? this.story?.name ?? 'Generated CodePen'} - ${source}`,
             description:
                 this.story?.description && typeof this.story?.description === 'function' ? this.story.description() : this.story?.description,
             private: false, // true || false - When the Pen is saved, it will save as Private if logged in user has that privilege, otherwise it will save as public
