@@ -641,14 +641,22 @@ export class StoryRenderer extends LitElement {
             case 'React':
                 html = `
 <html theme="${themeOption ?? 'light'}">
-    <body>
+    <body style="
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 24px;
+    ">
         <div id="root"></div>
     </body>
 </html>`;
                 js = `
 ${sourceCode
-    .replace('@capitec/omni-components-react', `https://cdn.jsdelivr.net/npm/@capitec/omni-components-react@${esmVersion}`)
-    .replace(`/${componentDirectory}`, `/${componentDirectory}/index.js`)}
+    .replaceAll('@capitec/omni-components-react', `https://cdn.jsdelivr.net/npm/@capitec/omni-components-react@${esmVersion}`)
+    .replace(new RegExp(`https://cdn.jsdelivr.net/npm/@capitec/omni-components-react@${esmVersion}/([^/"'\`]+)`, 'g'), '$&/index.js')
+} 
 
 const el = document.querySelector("#root");
 ReactDOM.render(<App/>, el);`;
@@ -667,7 +675,7 @@ ReactDOM.render(<App/>, el);`;
             private: false, // true || false - When the Pen is saved, it will save as Private if logged in user has that privilege, otherwise it will save as public
             // parent                : id // If supplied, the Pen will save as a fork of this id. Note it's not the slug, but ID. You can find the ID of a Pen with `window.CP.pen.id` in the browser console.
             tags: [source, 'Omni Components', 'web components', 'custom elements'],
-            editors: '101', // Set which editors are open. In this example HTML open, CSS closed, JS open
+            editors: '1011', // Set which editors are open. In this example HTML open, CSS closed, JS open, console open
             layout: 'top', // top | left | right
             html: html,
             html_pre_processor: 'none', //"none" || "slim" || "haml" || "markdown",
