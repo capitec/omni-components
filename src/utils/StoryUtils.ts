@@ -803,7 +803,7 @@ async function setupFrameworks() {
     const htmlPackage = document.getElementById('html-package') as HTMLLinkElement;
     const reactPackage = document.getElementById('react-package') as HTMLLinkElement;
 
-    htmlBtn.addEventListener('click', () => {
+    htmlBtn?.addEventListener('click', () => {
         htmlBtn.classList.add('selected-framework');
         reactBtn.classList.remove('selected-framework');
 
@@ -813,7 +813,7 @@ async function setupFrameworks() {
         reactImports.classList.add('no-display');
         reactPackage.classList.add('no-display');
     });
-    reactBtn.addEventListener('click', () => {
+    reactBtn?.addEventListener('click', () => {
         reactBtn.classList.add('selected-framework');
         htmlBtn.classList.remove('selected-framework');
 

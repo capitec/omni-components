@@ -346,7 +346,7 @@ export class StoryRenderer extends LitElement {
                 </div>     
                 <div class="framework-toggles docs-omni-component">
                     ${
-                        reactSource
+                        !this.interactive && reactSource
                             ? html`
                                 <div class="${this._sourceTab === 'HTML' ? 'selected' : ''}" @click="${() =>
                                   (this._sourceTab = 'HTML')}">
@@ -622,7 +622,13 @@ export class StoryRenderer extends LitElement {
             case 'HTML':
                 html = `
 <html theme="${themeOption ?? 'light'}">
-    <body>
+    <body style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding: 24px;
+    ">
         ${sourceCode}
     </body>
 </html>`;
@@ -634,8 +640,11 @@ export class StoryRenderer extends LitElement {
                 html = `
 <html theme="${themeOption ?? 'light'}">
     <body style="
-          text-align: center;
-          padding: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding: 24px;
     ">
         <div id="root"></div>
     </body>
