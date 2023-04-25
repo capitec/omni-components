@@ -152,6 +152,7 @@ export const Asymmetrical: ComponentStoryFormat<Args> = {
             <svg 
                 viewBox="0 0 138 26" 
                 fill="none" 
+                stroke="var(--omni-icon-fill, currentColor)"
                 stroke-width="2.3" 
                 stroke-linecap="round" 
                 stroke-linejoin="round"
@@ -183,6 +184,7 @@ export const Symmetrical: ComponentStoryFormat<Args> = {
             <svg 
                 viewBox="0 0 138 26" 
                 fill="none" 
+                stroke="var(--omni-icon-fill, currentColor)"
                 stroke-width="2.3" 
                 stroke-linecap="round" 
                 stroke-linejoin="round"
