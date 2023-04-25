@@ -2,6 +2,7 @@ import { within } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import { html } from 'lit';
 import { DateTime } from 'luxon';
+import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
 import { ComponentStoryFormat, CSFIdentifier, querySelectorAsync } from '../utils/StoryUtils.js';
 import { Calendar } from './Calendar';
@@ -18,15 +19,15 @@ interface Args {
     value: string;
 }
 
-const localDate = DateTime.local();
+const localDate = DateTime.local().plus({ days: 1 });
 const isoDate = localDate.toISODate();
 
 export const Interactive: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
     <omni-calendar
         data-testid="test-calendar"
-        locale="${args.locale}"
-        .value="${args.value}"
+        locale="${ifNotEmpty(args.locale)}"
+        value="${ifNotEmpty(args.value)}"
     >       
     </omni-calendar>
     `,
@@ -74,10 +75,18 @@ export const Value: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
     <omni-calendar
         data-testid="test-calendar"
-        .value="${args.value}"
+        value="${args.value}"
         >
     </omni-calendar>
     `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniCalendar } from "@capitec/omni-components-react/calendar";
+
+const App = () => <OmniCalendar${args.value ? ` value='${args.value}'` : ''}/>;`
+        }
+    ],
     name: 'Value',
     description: 'Set the value of the Calendar component, this has to be a valid date in ISO format',
     args: {
@@ -98,6 +107,14 @@ export const Locale: ComponentStoryFormat<Args> = {
         >
     </omni-calendar>
     `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniCalendar } from "@capitec/omni-components-react/calendar";
+
+const App = () => <OmniCalendar${args.locale ? ` locale='${args.locale}'` : ''}/>;`
+        }
+    ],
     name: 'Locale',
     description: 'Set the locale of the Calendar.',
     args: {

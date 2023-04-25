@@ -73,22 +73,7 @@ export const Interactive = {
             pointerEventsCheck: 0
         });
         await expect(click).toBeCalledTimes(2);
-    },
-    frameworkSources: [
-        {
-            framework: 'React',
-            load: (args) => `import { OmniButton } from "@capitec/omni-components-react/button";
-
-const App = () => <OmniButton${args.label ? ` label='${args.label}'` : ''}${args.type ? ` type='${args.type}'` : ''}${args.slotPosition ? ` slot-position='${args.slotPosition}'` : ''}${args.disabled ? ` disabled` : ''}${
-                !args['[Default Slot]']
-                    ? '/>'
-                    : `>
-                      {console.error('Slotted content might require additional imports and potential React wrappers.')}
-                      ${args['[Default Slot]']}
-                  </OmniButton>`
-            };`
-        }
-    ]
+    }
 } as ComponentStoryFormat<Args>;
 
 export const Type = {
