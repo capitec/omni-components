@@ -1,5 +1,6 @@
 import { html, css, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 import { OmniElement } from '../core/OmniElement.js';
 
 /**
@@ -55,113 +56,146 @@ export class Icon extends OmniElement {
      */
     @property({ type: String, reflect: true }) icon?: string;
 
+    /**
+     * When true, enforces 1:1 width and height of the icon.
+     * @attr
+     */
+    @property({ type: Boolean, reflect: true }) symmetrical?: boolean;
+
     static override get styles() {
         return [
             super.styles,
             css`
-        :host {
-          width: fit-content;
-          justify-content: center;
-          color: var(--omni-icon-fill, currentColor);
-          fill: var(--omni-icon-fill, currentColor);
-          background-color: var(--omni-icon-background-color);
-        }
+                :host {
+                    width: fit-content;
+                    justify-content: center;
+                    color: var(--omni-icon-fill, currentColor);
+                    fill: var(--omni-icon-fill, currentColor);
+                    background-color: var(--omni-icon-background-color);
+                }
 
-        /* MATERIAL ICON STYLES */
+                /* MATERIAL ICON STYLES */
 
-        .material-icon {
-          font-family: 'Material Icons';
-          font-weight: normal;
-          font-style: normal;
-          display: inline-block;
-          line-height: 1;
-          text-transform: none;
-          letter-spacing: normal;
-          word-wrap: normal;
-          white-space: nowrap;
-          direction: ltr;
-          padding: 0px;
-          margin: 0px;
+                .material-icon {
+                    font-family: 'Material Icons';
+                    font-weight: normal;
+                    font-style: normal;
+                    display: inline-block;
+                    line-height: 1;
+                    text-transform: none;
+                    letter-spacing: normal;
+                    word-wrap: normal;
+                    white-space: nowrap;
+                    direction: ltr;
+                    padding: 0px;
+                    margin: 0px;
 
-          align-self: center;
-          justify-self: center;
+                    align-self: center;
+                    justify-self: center;
 
-          /* Support for all WebKit browsers. */
-          -webkit-font-smoothing: antialiased;
+                    /* Support for all WebKit browsers. */
+                    -webkit-font-smoothing: antialiased;
 
-          /* Support for Safari and Chrome. */
-          text-rendering: optimizeLegibility;
+                    /* Support for Safari and Chrome. */
+                    text-rendering: optimizeLegibility;
 
-          /* Support for Firefox. */
-          -moz-osx-font-smoothing: grayscale;
+                    /* Support for Firefox. */
+                    -moz-osx-font-smoothing: grayscale;
 
-          /* Support for IE. */
-          font-feature-settings: 'liga';
-        }
+                    /* Support for IE. */
+                    font-feature-settings: 'liga';
+                }
 
-        .material-icon.large {
-          font-size: var(--omni-icon-size-large, 48px);
-        }
+                .material-icon.large {
+                    font-size: var(--omni-icon-size-large, 48px);
+                }
 
-        .material-icon.medium {
-          font-size: var(--omni-icon-size-medium, 32px);
-        }
+                .material-icon.medium {
+                    font-size: var(--omni-icon-size-medium, 32px);
+                }
 
-        .material-icon.small {
-          font-size: var(--omni-icon-size-small, 16px);
-        }
+                .material-icon.small {
+                    font-size: var(--omni-icon-size-small, 16px);
+                }
 
-        .material-icon.extra-small {
-          font-size: var(--omni-icon-size-extra-small, 8.25px);
-        }
+                .material-icon.extra-small {
+                    font-size: var(--omni-icon-size-extra-small, 8.25px);
+                }
 
-        .material-icon.default {
-          font-size: var(--omni-icon-size-default, 24px);
-        }
+                .material-icon.default {
+                    font-size: var(--omni-icon-size-default, 24px);
+                }
 
-        /* SVG ICON STYLES */
+                /* SVG ICON STYLES */
 
-        .svg-icon.large {
-          height: var(--omni-icon-size-large, 48px);
-          /*width: 48px;*/
-        }
+                .svg-icon.large {
+                    height: var(--omni-icon-size-large, 48px);
+                }
 
-        .svg-icon.medium {
-          height: var(--omni-icon-size-medium, 32px);
-          /*width: 32px;*/
-        }
+                .svg-icon.large.symmetrical {
+                    width: var(--omni-icon-size-large, 48px);
+                }
 
-        .svg-icon.small {
-          height: var(--omni-icon-size-small, 16px);
-          /*width: 16px;*/
-        }
+                .svg-icon.medium {
+                    height: var(--omni-icon-size-medium, 32px);
+                }
 
-        .svg-icon.extra-small {
-          height: var(--omni-icon-size-extra-small, 8.25px);
-          /*width: 16px;*/
-        }
+                .svg-icon.medium.symmetrical {
+                    width: var(--omni-icon-size-medium, 32px);
+                }
 
-        .svg-icon.default {
-          height: var(--omni-icon-size-default, 24px);
-          /*width: 24px;*/
-        }
-      `
+                .svg-icon.small {
+                    height: var(--omni-icon-size-small, 16px);
+                }
+
+                .svg-icon.small.symmetrical {
+                    width: var(--omni-icon-size-small, 16px);
+                }
+
+                .svg-icon.extra-small {
+                    height: var(--omni-icon-size-extra-small, 8.25px);
+                }
+
+                .svg-icon.extra-small.symmetrical {
+                    width: var(--omni-icon-size-extra-small, 8.25px);
+                }
+
+                .svg-icon.default {
+                    height: var(--omni-icon-size-default, 24px);
+                }
+
+                .svg-icon.default.symmetrical {
+                    width: var(--omni-icon-size-default, 24px);
+                }
+            `
         ];
     }
 
     override render(): TemplateResult {
+        const iconClassMap = classMap({
+            ['svg-icon']: true,
+            [`${this.size}`]: this.size,
+            [`symmetrical`]: this.symmetrical ?? false
+        });
+
         if (this.icon) {
             if (this.icon.startsWith('@material/')) {
                 return html`<div class="material-icon ${this.size}">${this.icon.replace('@material/', '')}</div>`;
             }
-            return html`<img class="svg-icon ${this.size}" src="${this.icon}" alt="${this.icon}" />`;
+
+            return html`
+                <img 
+                    class=${iconClassMap}
+                    src="${this.icon}" 
+                    alt="${this.icon}" />
+            `;
         }
 
         return html`
-      <div class="svg-icon ${this.size}">
-        <slot></slot>
-      </div>
-    `;
+            <div class=${iconClassMap}>
+                <slot></slot>
+            </div>
+        `;
     }
 }
 
