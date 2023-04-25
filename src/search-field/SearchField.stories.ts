@@ -46,7 +46,7 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
         hint: '',
         error: '',
         disabled: false,
-        clearable: true,
+        clearable: false,
         prefix: '',
         suffix: ''
     },
