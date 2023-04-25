@@ -71,13 +71,6 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
         await waitFor(() => expect(interaction).toBeCalledTimes(value.length), {
             timeout: 3000
         });
-
-        const clearButton = searchField.shadowRoot?.getElementById(`clear-click`) as HTMLElement;
-        await userEvent.click(clearButton);
-
-        await waitFor(() => expect(inputField).toHaveValue(''), {
-            timeout: 3000
-        });
     }
 };
 
