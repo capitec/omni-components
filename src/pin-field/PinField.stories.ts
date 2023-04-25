@@ -153,6 +153,8 @@ export const Error_Label = ErrorStory<PinField, BaseArgs>('omni-pin-field');
 
 export const Value = ValueStory<PinField, BaseArgs>('omni-pin-field', 1234);
 
+export const Clear = ClearableStory<PinField, BaseArgs>('omni-pin-field', 1234);
+
 export const Prefix = PrefixStory<PinField, BaseArgs>('omni-pin-field');
 
 export const Suffix = SuffixStory<PinField, BaseArgs>('omni-pin-field');

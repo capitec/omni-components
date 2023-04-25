@@ -549,7 +549,7 @@ export class CurrencyField extends OmniFormElement {
                 }
 
                 .label {
-                    margin-left: var(--omni-currency-field-label-left-margin, 25px);
+                    margin-left: var(--omni-currency-field-label-left-margin, var(--omni-form-label-margin-left, 25px));
                 }
 
                 .currency-symbol {

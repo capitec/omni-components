@@ -133,7 +133,7 @@ export class OmniFormElement extends OmniElement {
             return e.stopImmediatePropagation();
         }
 
-        this.value = null as unknown as string;
+        this.value = '';
 
         // Dispatch standard DOM event to cater for single clear.
         this.dispatchEvent(
