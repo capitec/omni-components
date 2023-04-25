@@ -75,7 +75,7 @@ export const Subtitle: ComponentStoryFormat<Args> = {
 };
 
 export const Strong: ComponentStoryFormat<Args> = {
-    render: (args: Args) => html` <omni-label data-testid="test-label" label="${args.label}" type="${args.type}"> </omni-label> `,
+    render: (args: Args) => html` <omni-label data-testid="test-label" label="${args.label}" type="${args.type}"></omni-label>`,
     description: 'Set the text to display with a bold font style.',
     args: {
         label: 'Strong',
@@ -84,5 +84,24 @@ export const Strong: ComponentStoryFormat<Args> = {
     play: async (context) => {
         const label = within(context.canvasElement).getByTestId<Label>('test-label');
         await expect(label.shadowRoot).toHaveTextContent(Strong.args?.label as string);
+    }
+};
+
+export const Slot: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
+        <omni-label data-testid="test-label" type="${args.type}">
+            <span>This is <span style="text-decoration: underline;">underlined</span> text inside a paragraph.</span>
+        </omni-label>
+    `,
+    description: 'Set html content to display within.',
+    args: {
+        label: 'Slot',
+        type: 'strong'
+    },
+    play: async (context) => {
+        const label = within(context.canvasElement).getByTestId<Label>('test-label');
+        const slotElement = label.shadowRoot?.querySelector('slot');
+        const foundSlottedSpan = slotElement?.assignedElements().find((e) => e.innerHTML.includes('text inside a paragraph.'));
+        await expect(foundSlottedSpan).toBeTruthy();
     }
 };
