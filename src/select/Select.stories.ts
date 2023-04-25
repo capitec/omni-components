@@ -62,6 +62,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
             .renderItem="${args.renderItem}"
             idField="${args.idField}"
             ?disabled="${args.disabled}"
+            ?clearable="${args.clearable}"
             empty-message="${args.emptyMessage}"
             >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${
         args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}` : nothing
@@ -78,6 +79,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         hint: '',
         error: '',
         disabled: false,
+        clearable: false,
         prefix: '',
         suffix: '',
         items: displayItems as Record<string, unknown>[],
