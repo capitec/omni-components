@@ -35,6 +35,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
             error="${ifNotEmpty(args.error)}"
             locale="${args.locale}"
             ?disabled="${args.disabled}"
+            ?clearable="${args.clearable}"
             >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${
         args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}` : nothing
     }${args.prefix || args.suffix ? '\r\n' : nothing}</omni-date-picker

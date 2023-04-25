@@ -44,6 +44,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
             hint="${ifNotEmpty(args.hint)}"
             error="${ifNotEmpty(args.error)}"
             ?disabled="${args.disabled}"
+            ?clearable="${args.clearable}"
             fractional-precision="${args.fractionalPrecision}"
             fractional-separator="${ifNotEmpty(args.fractionalSeparator)}"
             thousands-separator="${ifNotEmpty(args.thousandsSeparator)}"
@@ -60,6 +61,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         hint: '',
         error: '',
         disabled: false,
+        clearable: false,
         prefix: '',
         suffix: '',
         fractionalPrecision: 2,
