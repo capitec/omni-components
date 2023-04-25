@@ -62,3 +62,5 @@ npm install @capitec/omni-components
 To help bootstrap a development project, we offer the following application starter template repositories:
 
 * [Lit Starter](https://github.com/capitec/template-pwa-lit) - For [Lit](https://lit.dev)-based SPA development.
+* [Vue Starter](https://github.com/capitec/template-pwa-vue) - For [Vue](https://vuejs.org/)-based SPA development.
+* [React Starter](https://github.com/capitec/template-pwa-react) - For [React](https://react.dev/)-based SPA development.
