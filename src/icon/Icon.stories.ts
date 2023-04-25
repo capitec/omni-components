@@ -17,17 +17,21 @@ export default {
 interface Args {
     size: (typeof sizeOptions)[number];
     icon: string;
+    symmetrical: boolean;
     '[Default Slot]': string;
 }
 
 export const Interactive: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
-    <!-- Icons loaded by content path instead of font-based or slotted content will not be able to be styled directly -->
-
-    <omni-icon data-testid="test-icon" size="${ifNotEmpty(args.size)}" icon="${ifNotEmpty(args.icon)}">
-      ${unsafeHTML(args['[Default Slot]'])}
-    </omni-icon>
-  `,
+        <!-- Icons loaded by content path instead of font-based or slotted content will not be able to be styled directly -->
+        <omni-icon 
+            data-testid="test-icon" 
+            size="${ifNotEmpty(args.size)}" 
+            icon="${ifNotEmpty(args.icon)}"
+            ?symmetrical=${args.symmetrical}>
+            ${unsafeHTML(args['[Default Slot]'])}
+        </omni-icon>
+    `,
     name: 'Interactive',
     args: {
         size: 'default',
@@ -36,12 +40,11 @@ export const Interactive: ComponentStoryFormat<Args> = {
     viewBox="0 0 16 16"
     xmlns="http://www.w3.org/2000/svg"
     width="100%"
-    height="100%"
-  >
+    height="100%">
     <g transform="translate(-2,-2)">
-      <path d="m8.229 14.062-3.521-3.541L5.75 9.479l2.479 2.459 6.021-6L15.292 7Z" />
+        <path d="m8.229 14.062-3.521-3.541L5.75 9.479l2.479 2.459 6.021-6L15.292 7Z" />
     </g>
-  </svg>`,
+</svg>`,
         icon: undefined as unknown as string
     },
     play: async (context) => {
@@ -53,7 +56,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
 };
 
 export const SVG: ComponentStoryFormat<Args> = {
-    render: (args: Args) => html` <omni-icon data-testid="test-icon" size="${args.size}"> ${unsafeHTML(args['[Default Slot]'])} </omni-icon> `,
+    render: (args: Args) => html`<omni-icon data-testid="test-icon" size="${args.size}">${unsafeHTML(args['[Default Slot]'])}</omni-icon>`,
     name: 'SVG',
     description: 'Set html/svg content to display as an icon.',
     args: {
@@ -64,8 +67,7 @@ export const SVG: ComponentStoryFormat<Args> = {
                 viewBox="0 0 16 16"
                 xmlns="http://www.w3.org/2000/svg"
                 width="100%"
-                height="100%"
-              >
+                height="100%">
                 <g transform="translate(-2,-2)">
                   <path d="m8.229 14.062-3.521-3.541L5.75 9.479l2.479 2.459 6.021-6L15.292 7Z" />
                 </g>
@@ -85,7 +87,7 @@ export const Local_Source: ComponentStoryFormat<Args> = {
     <!-- Icons loaded by content path instead of font-based or slotted content will not be able to be styled directly -->
 
     <omni-icon data-testid="test-icon" size="${args.size}" icon="${args.icon}"></omni-icon>
-  `,
+    `,
     name: 'Local Source',
     description: 'Set the icon to display as a local source file.',
     args: {
@@ -105,7 +107,7 @@ export const Remote_Source: ComponentStoryFormat<Args> = {
     <!-- Icons loaded by content path instead of font-based or slotted content will not be able to be styled directly -->
 
     <omni-icon data-testid="test-icon" size="${args.size}" icon="${args.icon}"></omni-icon>
-  `,
+    `,
     name: 'Remote Source',
     description: 'Set the icon to display as a remote file.',
     args: {
@@ -126,8 +128,8 @@ export const Material: ComponentStoryFormat<Args> = {
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <!-- ------------------------------------------------------------- -->
 
-    <omni-icon data-testid="test-icon" size="${args.size}" icon="${args.icon}"> </omni-icon>
-  `,
+    <omni-icon data-testid="test-icon" size="${args.size}" icon="${args.icon}"></omni-icon>
+    `,
     description: 'Set the icon to display as a font icon from the Material Icons library.',
     args: {
         size: 'default',
@@ -138,5 +140,68 @@ export const Material: ComponentStoryFormat<Args> = {
         const materialElement = icon.shadowRoot?.querySelector<HTMLElement>('.material-icon');
         await expect(materialElement).toBeTruthy();
         await expect(materialElement?.innerText).toEqual(Material.args?.icon?.replace('@material/', ''));
+    }
+};
+
+export const Asymmetrical: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
+        <omni-icon 
+            data-testid="test-icon" 
+            size="${args.size}" 
+            ?symmetrical=${args.symmetrical}>
+            <svg 
+                viewBox="0 0 138 26" 
+                fill="none" 
+                stroke-width="2.3" 
+                stroke-linecap="round" 
+                stroke-linejoin="round"
+                width="100%"
+                height="100%"
+                title="CodePen">
+                    <path d="M15 8a7 7 0 1 0 0 10m7-8.7L33 2l11 7.3v7.4L33 24l-11-7.3zm0 0 11 7.4 11-7.4m0 7.4L33 9.3l-11 7.4M33 2v7.3m0 7.4V24M52 6h5a7 7 0 0 1 0 14h-5zm28 0h-9v14h9m-9-7h6m11 1h6a4 4 0 0 0 0-8h-6v14m26-14h-9v14h9m-9-7h6m11 7V6l11 14V6"></path>
+                </svg>
+        </omni-icon>
+    `,
+    description: () => html`Renders the icon by aligning only the inner height to the <strong>size</strong> attribute, this is the default behavior.`,
+    args: {
+        size: 'large',
+        symmetrical: false
+    },
+    play: async (context) => {
+        const icon = within(context.canvasElement).getByTestId<Icon>('test-icon');
+        const svg = icon.querySelector('svg') as SVGElement;
+        await expect(svg.clientWidth).not.toEqual(svg.clientHeight);
+    }
+};
+
+export const Symmetrical: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
+        <omni-icon 
+            data-testid="test-icon" 
+            size="${args.size}" 
+            ?symmetrical=${args.symmetrical}>
+            <svg 
+                viewBox="0 0 138 26" 
+                fill="none" 
+                stroke-width="2.3" 
+                stroke-linecap="round" 
+                stroke-linejoin="round"
+                width="100%"
+                height="100%"
+                title="CodePen">
+                    <path d="M15 8a7 7 0 1 0 0 10m7-8.7L33 2l11 7.3v7.4L33 24l-11-7.3zm0 0 11 7.4 11-7.4m0 7.4L33 9.3l-11 7.4M33 2v7.3m0 7.4V24M52 6h5a7 7 0 0 1 0 14h-5zm28 0h-9v14h9m-9-7h6m11 1h6a4 4 0 0 0 0-8h-6v14m26-14h-9v14h9m-9-7h6m11 7V6l11 14V6"></path>
+                </svg>
+        </omni-icon>
+    `,
+    description: () =>
+        html`Renders the icon by aligning both the inner height and width to the <strong>size</strong> attribute, creating a 1:1 aspect ratio.`,
+    args: {
+        size: 'large',
+        symmetrical: true
+    },
+    play: async (context) => {
+        const icon = within(context.canvasElement).getByTestId<Icon>('test-icon');
+        const svg = icon.querySelector('svg') as SVGElement;
+        await expect(svg.clientWidth).toEqual(svg.clientHeight);
     }
 };
