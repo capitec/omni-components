@@ -106,8 +106,6 @@ export const Interactive: ComponentStoryFormat<Args> = {
 
         await currencyField.updateComplete;
 
-        console.log('After backspacing', inputField.value);
-
         await waitFor(() => expect(inputField).toHaveValue('12,000.00'), {
             timeout: 3000
         });

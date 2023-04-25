@@ -399,7 +399,7 @@ export class CurrencyField extends OmniFormElement {
 
     _beforeInput(e: InputEvent) {
         const input = this._inputElement as HTMLInputElement;
-        let centValue = this._convertToCents(this._inputElement?.value as string);
+        let centValue = this._convertToCents(this._inputElement?.value ? this._inputElement?.value : '0');
 
         if (centValue && input) {
             e.preventDefault();
@@ -577,7 +577,6 @@ export class CurrencyField extends OmniFormElement {
                 class=${classMap(field)}
                 id="inputField"
                 type="text"
-                maxlength="21"
                 inputmode="${this.noNativeKeyboard ? 'none' : 'decimal'}"
                 data-omni-keyboard-mode="decimal"
                 ?readOnly=${this.disabled}

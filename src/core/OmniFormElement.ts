@@ -133,8 +133,6 @@ export class OmniFormElement extends OmniElement {
             return e.stopImmediatePropagation();
         }
 
-        //this.value = '';
-
         this.value = null as unknown as string;
 
         // Dispatch standard DOM event to cater for single clear.
@@ -144,6 +142,9 @@ export class OmniFormElement extends OmniElement {
                 composed: true
             })
         );
+
+        // Prevent the event from bubbling up. for mobile use cases that will bring the component into focus and render the items.
+        e.stopPropagation();
     }
 
     static override get styles(): CSSResultGroup {
@@ -406,8 +407,8 @@ export class OmniFormElement extends OmniElement {
                     <slot name="prefix">${this.renderPrefix()}</slot>
                     ${this.renderLabel()} 
                     ${this.renderContent()} 
-                    <slot name="suffix"></slot>
                     ${this.renderClear()}
+                    <slot name="suffix"></slot>
                     ${this.renderControl()} ${this.renderPicker()}
                 </div>
                 ${this.renderHint()} ${this.renderError()}

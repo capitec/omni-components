@@ -581,12 +581,16 @@ export class Keyboard extends OmniElement {
                     }
                     if (!allowContinue) {
                         this.target.dispatchEvent(new KeyboardEvent('keyup', keyInfo));
+                        this.target.focus();
+                        this.requestUpdate();
                         return;
                     }
                     const old = this.target.value;
 
                     if (selection.start === 0) {
                         // Nothing to backspace
+                        this.target.focus();
+                        this.requestUpdate();
                         return;
                     }
 
@@ -653,6 +657,7 @@ export class Keyboard extends OmniElement {
                     );
 
                     // Re-render for the changes to be visible
+                    this.target.focus();
                     this.requestUpdate();
                     return;
                 }
@@ -694,6 +699,8 @@ export class Keyboard extends OmniElement {
                 }
                 if (!allowContinue) {
                     this.target.dispatchEvent(new KeyboardEvent('keyup', keyInfo));
+                    this.target.focus();
+                    this.requestUpdate();
                     return;
                 }
 
