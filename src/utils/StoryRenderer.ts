@@ -319,8 +319,6 @@ export class StoryRenderer extends LitElement {
                             <div style="display: flex;flex-direction: row;align-items: center;">
                             <omni-button
                                 class="docs-omni-component"
-                                label="Test"
-                                slot-position="left"
                                 ?disabled=${
                                     this.overrideInteractive ||
                                     this._isBusyPlaying ||
@@ -336,11 +334,10 @@ export class StoryRenderer extends LitElement {
                                             .replaceAll(' ', '')
                                 }
                                 @click="${() => this._play(this.story, `.${this.key}`)}">
-                                <omni-icon class="docs-omni-component" icon="@material/play_arrow" style="margin-right: 8px;"></omni-icon>
+                                <omni-icon class="docs-omni-component" icon="@material/play_arrow"></omni-icon>
                             </omni-button>
                             <div class="${this.key + '-result'} success">
                                 <span class="material-icons" style="color: #155724;">check</span>
-                                <span class="hidden-after-760" style="margin-left: 8px;">Passed</span>
                             </div>
                             </div>       
                     `
@@ -351,31 +348,24 @@ export class StoryRenderer extends LitElement {
                     ${
                         reactSource
                             ? html`
-                                <omni-button type="${this._sourceTab === 'HTML' ? 'primary' : 'secondary'}" @click="${() =>
+                                <div class="${this._sourceTab === 'HTML' ? 'selected' : ''}" @click="${() =>
                                   (this._sourceTab = 'HTML')}">
-                                    <div>
-                                        <svg class="hidden-until-760" style="height: 24px; width: 24px; color: var(--omni-theme-font-color); fill: currentColor;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                            <title>HTML5 Logo</title>
-                                            <path d="M108.4 0h23v22.8h21.2V0h23v69h-23V46h-21v23h-23.2M206 23h-20.3V0h63.7v23H229v46h-23M259.5 0h24.1l14.8 24.3L313.2 0h24.1v69h-23V34.8l-16.1 24.8l-16.1-24.8v34.2h-22.6M348.7 0h23v46.2h32.6V69h-55.6"/>
-                                            <path fill="#e44d26" d="M107.6 471l-33-370.4h362.8l-33 370.2L255.7 512"/>
-                                            <path fill="#f16529" d="M256 480.5V131H404.3L376 447"/>
-                                            <path fill="#ebebeb" d="M142 176.3h114v45.4h-64.2l4.2 46.5h60v45.3H154.4M156.4 336.3H202l3.2 36.3 50.8 13.6v47.4l-93.2-26"/>
-                                            <path fill="#fff" d="M369.6 176.3H255.8v45.4h109.6M361.3 268.2H255.8v45.4h56l-5.3 59-50.7 13.6v47.2l93-25.8"/>
+                                    <omni-icon class="docs-omni-component" size="default">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="24" height="24">
+                                            <title>HTML5 Logo Badge</title>
+                                            <path fill="#E34F26" d="M71,460 L30,0 481,0 440,460 255,512"></path>
+                                            <path fill="#EF652A" d="M256,472 L405,431 440,37 256,37"></path>
+                                            <path fill="#EBEBEB" d="M256,208 L181,208 176,150 256,150 256,94 255,94 114,94 115,109 129,265 256,265zM256,355 L255,355 192,338 188,293 158,293 132,293 139,382 255,414 256,414z"></path>
+                                            <path fill="#FFF" d="M255,208 L255,265 325,265 318,338 255,355 255,414 371,382 372,372 385,223 387,208 371,208zM255,94 L255,129 255,150 255,150 392,150 392,150 392,150 393,138 396,109 397,94z"></path>
                                         </svg>
-                                        <div class="hidden-after-760">
-                                            HTML
-                                        </div>  
-                                    </div>  
-                                </omni-button>
-                                <omni-button type="${this._sourceTab === 'React' ? 'primary' : 'secondary'}" @click="${() =>
+                                    </omni-icon>
+                                </div>
+                                <div class="${this._sourceTab === 'React' ? 'selected' : ''}" @click="${() =>
                                   (this._sourceTab = 'React')}">
-                                    <div>
-                                        <img class="hidden-until-760" style="height: 24px; width: 24px;" src="./assets/images/react.svg" alt="React" />
-                                        <div class="hidden-after-760">
-                                            React
-                                        </div>  
-                                    </div>  
-                                </omni-button>
+                                    <omni-icon class="docs-omni-component" size="default">
+                                        <img style="height: 24px; width: 24px;" src="./assets/images/react.svg" alt="React" />
+                                    </omni-icon>
+                                </div>
                             `
                             : nothing
                     }
@@ -386,8 +376,10 @@ export class StoryRenderer extends LitElement {
                 React: reactSource,
                 HTML: htmlSource
             })}">
-                        <svg class="hidden-after-760" style="height: 12px; stroke: var(--omni-theme-font-color);" viewBox="0 0 138 26" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" title="CodePen"><path d="M15 8a7 7 0 1 0 0 10m7-8.7L33 2l11 7.3v7.4L33 24l-11-7.3zm0 0 11 7.4 11-7.4m0 7.4L33 9.3l-11 7.4M33 2v7.3m0 7.4V24M52 6h5a7 7 0 0 1 0 14h-5zm28 0h-9v14h9m-9-7h6m11 1h6a4 4 0 0 0 0-8h-6v14m26-14h-9v14h9m-9-7h6m11 7V6l11 14V6"></path></svg>
-                        <svg class="hidden-until-760" style="height: 24px; stroke: var(--omni-theme-font-color); background: var(--omni-theme-background-color);" xmlns="http://www.w3.org/2000/svg" aria-label="CodePen" role="img" viewBox="0 0 512 512"><g xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="33" stroke-linejoin="round"><path d="M81 198v116l175 117 175-117V198L256 81z"/><path d="M81 198l175 116 175-116M256 81v117"/><path d="M81 314l175-116 175 116M256 431V314"/></g></svg>
+                        <omni-icon class="docs-omni-component" size="default">
+                            <svg class="hidden-after-760" style="height: 12px; stroke: var(--omni-theme-font-color);" viewBox="0 0 138 26" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" title="CodePen"><path d="M15 8a7 7 0 1 0 0 10m7-8.7L33 2l11 7.3v7.4L33 24l-11-7.3zm0 0 11 7.4 11-7.4m0 7.4L33 9.3l-11 7.4M33 2v7.3m0 7.4V24M52 6h5a7 7 0 0 1 0 14h-5zm28 0h-9v14h9m-9-7h6m11 1h6a4 4 0 0 0 0-8h-6v14m26-14h-9v14h9m-9-7h6m11 7V6l11 14V6"></path></svg>
+                            <svg class="hidden-until-760" style="height: 24px; stroke: var(--omni-theme-font-color); background: var(--omni-theme-background-color);" xmlns="http://www.w3.org/2000/svg" aria-label="CodePen" role="img" viewBox="0 0 512 512"><g xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="33" stroke-linejoin="round"><path d="M81 198v116l175 117 175-117V198L256 81z"/><path d="M81 198l175 116 175-116M256 81v117"/><path d="M81 314l175-116 175 116M256 431V314"/></g></svg>
+                        </omni-icon>
                     </div>
                 </div>
             </div>
@@ -642,11 +634,7 @@ export class StoryRenderer extends LitElement {
                 html = `
 <html theme="${themeOption ?? 'light'}">
     <body style="
-          width: 100%;
-          height: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          text-align: center;
           padding: 24px;
     ">
         <div id="root"></div>
