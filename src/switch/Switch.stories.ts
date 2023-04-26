@@ -2,6 +2,7 @@ import { within, fireEvent } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import * as jest from 'jest-mock';
 import { html } from 'lit';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
 import { ComponentStoryFormat, CSFIdentifier } from '../utils/StoryUtils.js';
@@ -21,6 +22,7 @@ interface Args {
     error: string;
     checked: boolean;
     disabled: boolean;
+    '[Default Slot]': string;
 }
 
 export const Interactive: ComponentStoryFormat<Args> = {
@@ -32,7 +34,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
       hint="${ifNotEmpty(args.hint)}"
       error="${ifNotEmpty(args.error)}"
       ?checked="${args.checked}"
-      ?disabled="${args.disabled}"></omni-switch>
+      ?disabled="${args.disabled}">${unsafeHTML(args['[Default Slot]'])}</omni-switch>
   `,
     name: 'Interactive',
     args: {
@@ -41,7 +43,8 @@ export const Interactive: ComponentStoryFormat<Args> = {
         hint: '',
         error: '',
         checked: false,
-        disabled: false
+        disabled: false,
+        '[Default Slot]': undefined
     },
     play: async (context) => {
         const switchElement = within(context.canvasElement).getByTestId<Switch>('test-switch');
@@ -143,3 +146,17 @@ export const Disabled: ComponentStoryFormat<Args> = {
         await expect(valueChange).toBeCalledTimes(0);
     }
 };
+
+export const Slot = {
+    render: () => html`
+        <omni-switch data-testid="test-switch">Slotted</omni-switch>
+    `,
+    name: 'Slot',
+    description: 'Set content to display within.',
+    args: {},
+    play: async (context) => {
+        const switchElement = within(context.canvasElement).getByTestId<Switch>('test-switch');
+        const slottedText = switchElement.innerHTML;
+        await expect(slottedText).toEqual('Slotted');
+    }
+} as ComponentStoryFormat<Args>;

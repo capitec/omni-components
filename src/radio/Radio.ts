@@ -25,6 +25,8 @@ import { OmniElement } from '../core/OmniElement.js';
  * @element omni-radio
  *
  * Registry of all properties defined by the component.
+ * 
+ * @slot - Content to render inside the component.
  *
  * @fires {CustomEvent<{ old: Boolean; new: Boolean; }>} value-change - Dispatched when the control value is changed to either on or off.
  *
@@ -282,21 +284,22 @@ export class Radio extends OmniElement {
 
     override render(): TemplateResult {
         return html`
-      <div
-        class=${classMap({
-            container: true,
-            checked: this.checked ?? false,
-            disabled: this.disabled ?? false
-        })}>
-        <div id="content" tabindex="${this.disabled ? '' : 0}" @click="${this._click}" @keydown="${this._keyDown}">
-          ${this.checked ? html`<div class="indicator"></div>` : nothing}
-        </div>
-        <label id="label" class="label" @click="${this._click}">
-          ${this.label} ${this.hint && !this.error ? html`<div class="hint">${this.hint}</div>` : nothing}
-          ${this.error ? html`<div class="error">${this.error}</div>` : nothing}
-        </label>
-      </div>
-    `;
+        <div
+            class=${classMap({
+                container: true,
+                checked: this.checked ?? false,
+                disabled: this.disabled ?? false
+            })}>
+            <div id="content" tabindex="${this.disabled ? '' : 0}" @click="${this._click}" @keydown="${this._keyDown}">
+                ${this.checked ? html`<div class="indicator"></div>` : nothing}
+            </div>
+            <label id="label" class="label" @click="${this._click}">
+                <slot></slot>
+                ${this.label} ${this.hint && !this.error ? html`<div class="hint">${this.hint}</div>` : nothing}
+                ${this.error ? html`<div class="error">${this.error}</div>` : nothing}
+                </label>
+            </div>
+        `;
     }
 }
 
