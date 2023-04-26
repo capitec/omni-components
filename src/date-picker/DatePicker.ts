@@ -67,10 +67,10 @@ import '../icons/ChevronRight.icon.js';
  *
  * @cssprop --omni-date-picker-container-z-index - Date picker container z-index.
  *
- * @cssprop --omni-date-picker-mobile-picker-container-left - Date picker container mobile left.
- * @cssprop --omni-date-picker-mobile-picker-container-right - Date picker container mobile right.
- * @cssprop --omni-date-picker-mobile-picker-container-bottom - Date picker container mobile bottom.
- * @cssprop --omni-date-picker-mobile-picker-container-box-shadow - Date picker container mobile box shadow.
+ * @cssprop --omni-date-picker-mobile-picker-dialog-left - Date picker dialog left.
+ * @cssprop --omni-date-picker-mobile-picker-dialog-right - Date picker dialog right
+ * @cssprop --omni-date-picker-mobile-picker-dialog-bottom - Date picker dialog bottom
+ * @cssprop --omni-date-picker-mobile-picker-dialog-background-color - Date picker dialog background color.
  *
  * @cssprop --omni-date-picker-container-width - Date picker container width.
  * @cssprop --omni-date-picker-container-top - Date picker container top.
@@ -98,6 +98,7 @@ export class DatePicker extends OmniFormElement {
 
     //Internal state properties for dimensions
     @state() private _bottomOfViewport: boolean = false;
+    @state() private _isMobile: boolean = false;
 
     override connectedCallback() {
         super.connectedCallback();
@@ -107,8 +108,11 @@ export class DatePicker extends OmniFormElement {
 
     protected override async firstUpdated(): Promise<void> {
         await this._checkForBottomOfScreen();
+        await this._checkforMobile();
         window.addEventListener('resize', this._checkForBottomOfScreen.bind(this));
         window.addEventListener('scroll', this._checkForBottomOfScreen.bind(this));
+        window.addEventListener('resize', this._checkforMobile.bind(this));
+        window.addEventListener('scroll', this._checkforMobile.bind(this));
     }
 
     // Update properties of the Date picker component if user provides a value to the value property or if the locale property is updated.
@@ -138,9 +142,27 @@ export class DatePicker extends OmniFormElement {
         }
     }
 
+    // Check the width of the screen to set the internal mobile boolean to true of false.
+    async _checkforMobile() {
+        if (!window.matchMedia ? window.innerWidth >= 767 : window.matchMedia('screen and (min-width: 767px)').matches) {
+            // Desktop width is at least 767px
+            this._isMobile = false;
+        } else {
+            // Mobile screen less than 767px
+            this._isMobile = true;
+        }
+    }
+
     _inputClick(e: Event) {
         const pickerContainer = this.renderRoot.querySelector<HTMLDivElement>('#picker-container');
-        if (!e.composedPath() || !pickerContainer || !e.composedPath().includes(pickerContainer)) {
+        const pickerDialog = this.renderRoot.querySelector<HTMLDialogElement>('#picker-dialog');
+
+        //Check that the pickerContainer or pickerDialog is not loaded
+        if (
+            !e.composedPath() ||
+            !(pickerContainer || pickerDialog) ||
+            !(e.composedPath().includes(pickerContainer as Element) || e.composedPath().includes(pickerDialog as Element))
+        ) {
             this._toggleCalendar();
         }
     }
@@ -148,16 +170,39 @@ export class DatePicker extends OmniFormElement {
     // https://stackoverflow.com/a/39245638
     // Close the item container when clicking outside the date picker component.
     _windowClick(e: Event) {
-        if (e.composedPath() && !e.composedPath().includes(this) && this._showCalendar) {
-            this._showCalendar = false;
+        const pickerDialog = this.renderRoot.querySelector<HTMLDialogElement>('#picker-dialog') as HTMLDialogElement;
+        const composedPath = e.composedPath();
+        /**
+         * Check when the window is clicked to close the container(Desktop) or dialog(Mobile)
+         * For mobile scenarios check if the dialog is the lowest item in the composed path
+         */
+        if (
+            composedPath &&
+            (!composedPath.includes(this) || (this._isMobile && pickerDialog && composedPath.findIndex((p) => p === pickerDialog) === 0)) &&
+            this._showCalendar
+        ) {
+            this._toggleCalendar();
         }
     }
 
     _toggleCalendar() {
         if (this._showCalendar) {
             this._showCalendar = false;
+            if (this._isMobile) {
+                const pickerDialog = this.renderRoot.querySelector<HTMLDialogElement>('#picker-dialog');
+
+                if (pickerDialog) {
+                    pickerDialog.close();
+                }
+            }
         } else {
             this._showCalendar = true;
+            if (this._isMobile) {
+                const pickerDialog = this.renderRoot.querySelector<HTMLDialogElement>('#picker-dialog');
+                if (pickerDialog) {
+                    pickerDialog.showModal();
+                }
+            }
         }
     }
 
@@ -264,15 +309,28 @@ export class DatePicker extends OmniFormElement {
                 z-index: var(--omni-date-picker-container-z-index, 420);
             }
 
-            /* Picker container mobile*/
+            /* Picker dialog mobile*/
             @media screen and (max-width: 766px) {
-                .picker-container {
+
+                .picker-dialog {
                     position: fixed;
-                    top: none;
-                    left: var(--omni-date-picker-mobile-picker-container-left, 0px);
-                    right: var(--omni-date-picker-mobile-picker-container-right, 0px);
-                    bottom: var(--omni-date-picker-mobile-picker-container-bottom, 0px);
-                    box-shadow: var(--omni-date-picker-mobile-picker-container-box-shadow, 0px 0px 2px 2px rgba(0, 0, 0, 0.11));
+                    top: inherit;
+                    width: 100%;
+                    margin: unset;
+                    border-style: none;
+                    padding: unset;
+                    left: var(--omni-date-picker-mobile-picker-dialog-left, 0px);
+                    right: var(--omni-date-picker-mobile-picker-dialog-right, 0px);
+                    bottom: var(--omni-date-picker-mobile-picker-dialog-bottom, 0px);
+                }
+                
+                .picker-dialog:modal{
+                    max-width: 100%;
+                    overflow: none;
+                }
+
+                .picker-dialog::backdrop {
+                    background: var(--omni-date-picker-mobile-picker-dialog-background-color, rgba(0, 0, 0, 0.1));
                 }
             }
 
@@ -343,15 +401,30 @@ export class DatePicker extends OmniFormElement {
     }
 
     protected override renderPicker() {
+        if (this._isMobile) {
+            return html`
+            <dialog id="picker-dialog" class="picker-dialog">
+                <omni-calendar 
+                    id="calendar" 
+                    locale=${this.locale} 
+                    .value=${this.value as string} 
+                    @change=${(e: Event) => this._dateSelected(e)}>
+                </omni-calendar>
+            </dialog>`;
+        }
         if (!this._showCalendar) {
             return nothing;
-        }
-        return html`
+        } else {
+            return html` 
             <div id="picker-container" class="picker-container ${this._bottomOfViewport ? `bottom` : ``}">
-                <omni-calendar id="calendar" locale=${this.locale} .value=${this.value as string} @change=${(e: Event) =>
-            this._dateSelected(e)}></omni-calendar>
-            </div>
-        `;
+                <omni-calendar 
+                  id="calendar" 
+                  locale=${this.locale} 
+                  .value=${this.value as string} 
+                  @change=${(e: Event) => this._dateSelected(e)}>
+                </omni-calendar>
+            </div>`;
+        }
     }
 
     protected override renderLabel() {

@@ -67,6 +67,7 @@ export class TextField extends OmniFormElement {
     _keyInput() {
         const input = this._inputElement;
         this.value = input?.value;
+        this.requestUpdate();
     }
 
     static override get styles() {

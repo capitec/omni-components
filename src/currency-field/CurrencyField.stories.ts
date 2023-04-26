@@ -4,7 +4,17 @@ import { setUIValueClean } from '@testing-library/user-event/dist/esm/document/U
 import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { LabelStory, BaseArgs, HintStory, ErrorStory, DisabledStory, ValueStory, PrefixStory, SuffixStory } from '../core/OmniInputStories.js';
+import {
+    LabelStory,
+    BaseArgs,
+    ClearableStory,
+    HintStory,
+    ErrorStory,
+    DisabledStory,
+    ValueStory,
+    PrefixStory,
+    SuffixStory
+} from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
 import { assignToSlot, ComponentStoryFormat, CSFIdentifier } from '../utils/StoryUtils.js';
@@ -34,6 +44,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
             hint="${ifNotEmpty(args.hint)}"
             error="${ifNotEmpty(args.error)}"
             ?disabled="${args.disabled}"
+            ?clearable="${args.clearable}"
             fractional-precision="${args.fractionalPrecision}"
             fractional-separator="${ifNotEmpty(args.fractionalSeparator)}"
             thousands-separator="${ifNotEmpty(args.thousandsSeparator)}"
@@ -50,6 +61,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         hint: '',
         error: '',
         disabled: false,
+        clearable: false,
         prefix: '',
         suffix: '',
         fractionalPrecision: 2,
@@ -95,8 +107,6 @@ export const Interactive: ComponentStoryFormat<Args> = {
         });
 
         await currencyField.updateComplete;
-
-        console.log('After backspacing', inputField.value);
 
         await waitFor(() => expect(inputField).toHaveValue('12,000.00'), {
             timeout: 3000
@@ -150,6 +160,8 @@ export const Hint = HintStory<CurrencyField, BaseArgs>('omni-currency-field');
 export const Error_Label = ErrorStory<CurrencyField, BaseArgs>('omni-currency-field');
 
 export const Value = ValueStory<CurrencyField, BaseArgs>('omni-currency-field', '1200.50');
+
+export const Clear = ClearableStory<CurrencyField, BaseArgs>('omni-currency-field', '1200.50');
 
 export const Prefix = PrefixStory<CurrencyField, BaseArgs>('omni-currency-field');
 
