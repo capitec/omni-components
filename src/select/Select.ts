@@ -60,11 +60,12 @@ import '../icons/More.icon.js';
  * @cssprop --omni-select-items-container-box-shadow - Select items container box shadow.
  * @cssprop --omni-select-items-container-background-color - Select items container background color.
  *
- * @cssprop --omni-select-mobile-items-container-left - Select item container for mobile left.
- * @cssprop --omni-select-mobile-items-container-right - Select item container for mobile right.
- * @cssprop --omni-select-mobile-items-container-bottom - Select item container for mobile bottom.
- * @cssprop --omni-select-mobile-items-container-border-top-left-radius - Select item container for mobile top left radius.
- * @cssprop --omni-select-mobile-items-container-border-top-right-radius - Select item container for mobile right left radius.
+ * @cssprop --omni-select-dialog-height - Select dialog height
+ * @cssprop --omni-select-dialog-left - Select dialog left
+ * @cssprop --omni-select-dialog-right - Select dialog right
+ * @cssprop --omni-select-dialog-bottom - Select dialog bottom
+ * @cssprop --omni-select-dialog-modal-max-width - Select dialog modal max width.
+ * @cssprop --omni-select-dialog-background-color - Select dialog background color().
  *
  * @cssprop --omni-select-items-container-width - Select items container width
  * @cssprop --omni-select-items-container-top - Select items container top.
@@ -159,14 +160,24 @@ export class Select extends OmniFormElement {
         window.addEventListener('scroll', this._checkScreenDimensions.bind(this));
     }
 
-    _inputClick() {
+    _inputClick(e: Event) {
         this._togglePopup();
     }
 
     // https://stackoverflow.com/a/39245638
     // Close the item container when clicking outside the select component.
     _windowClick(e: Event) {
-        if (e.composedPath() && !e.composedPath().includes(this) && this._popUp) {
+        const itemsDialog = this.renderRoot.querySelector<HTMLDialogElement>('#items-dialog') as HTMLDialogElement;
+        const composedPath = e.composedPath();
+        /**
+         * Check when the window is clicked to close the container(Desktop) or dialog(Mobile)
+         * For mobile scenarios check if the dialog is the lowest item in the composed path
+         */
+        if (
+            composedPath &&
+            (!composedPath.includes(this) || (this._isMobile && itemsDialog && composedPath.findIndex((p) => p === itemsDialog) === 0)) &&
+            this._popUp
+        ) {
             this._togglePopup();
         }
     }
@@ -178,8 +189,20 @@ export class Select extends OmniFormElement {
     _togglePopup() {
         if (this._popUp) {
             this._popUp = false;
+            if (this._isMobile) {
+                const itemsDialog = this.renderRoot.querySelector<HTMLDialogElement>('#items-dialog');
+                if (itemsDialog) {
+                    itemsDialog.close();
+                }
+            }
         } else {
             this._popUp = true;
+            if (this._isMobile) {
+                const itemsDialog = this.renderRoot.querySelector<HTMLDialogElement>('#items-dialog');
+                if (itemsDialog) {
+                    itemsDialog.showModal();
+                }
+            }
         }
     }
 
@@ -355,19 +378,25 @@ export class Select extends OmniFormElement {
                 
                 /* Mobile device styling */
                 @media screen and (max-width: 766px) {
-                    .items {
-                       max-height: var(--omni-select-mobile-items-max-height, 240px);
+                    .items-dialog {
+                        position: fixed;
+                        top: inherit;
+                        margin: unset;
+                        border-style: none;
+                        padding: unset;
+                        width: 100%;
+                        height: var(--omni-select-dialog-height, 240px);
+                        left: var(--omni-select-dialog-left, 0px);
+                        right: var(--omni-select-dialog-right, 0px);
+                        bottom: var(--omni-select-dialog-bottom, 0px);
+                    }
+                    
+                    .items-dialog:modal{
+                        max-width: var(--omni-select-dialog-modal-max-width, 100%);
                     }
 
-                    .items-container {
-                        position: fixed;
-
-                        left: var(--omni-select-mobile-items-container-left, 0px);
-                        right: var(--omni-select-mobile-items-container-right, 0px);
-                        bottom: var(--omni-select-mobile-items-container-bottom, 0px);
-
-                        border-top-left-radius: var(--omni-select-mobile-items-container-border-top-left-radius, 10px);
-                        border-top-right-radius: var(--omni-select-mobile-items-container-border-top-right-radius, 10px);
+                    .items-dialog::backdrop {
+                        background: var(--omni-select-dialog-background-color, rgba(0, 0, 0, 0.1));
                     }
                 }
 
@@ -463,6 +492,19 @@ export class Select extends OmniFormElement {
     }
 
     protected override renderPicker() {
+        if (this._isMobile) {
+            return html`
+            <dialog id="items-dialog" class="items-dialog">
+                ${this._isMobile && this.label ? html`<div class="header">${this.label}</div>` : nothing}
+                <div ${ref(this._itemsMaxHeightChange)} id="items" class="items"> ${until(
+                this._renderOptions(),
+                html`<div>${this.renderLoading()}</div>`
+            )} 
+                </div>
+            </dialog>
+            `;
+        }
+
         if (!this._popUp) {
             return nothing;
         }
@@ -472,7 +514,8 @@ export class Select extends OmniFormElement {
                 <div ${ref(this._itemsMaxHeightChange)} id="items" class="items"> ${until(
             this._renderOptions(),
             html`<div>${this.renderLoading()}</div>`
-        )} </div>
+        )} 
+                </div>
             </div>
         `;
     }

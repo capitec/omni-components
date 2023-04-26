@@ -18,6 +18,7 @@ Search input control.
 
 | Property           | Attribute            | Modifiers | Type                                             | Default | Description                                      |
 |--------------------|----------------------|-----------|--------------------------------------------------|---------|--------------------------------------------------|
+| `clearable`        | `clearable`          |           | `boolean`                                        | false   | Toggles the ability to clear the value of the component. |
 | `data`             | `data`               |           | `object \| undefined`                            |         | Data associated with the component.              |
 | `dir`              |                      |           | `string`                                         |         |                                                  |
 | `disabled`         | `disabled`           |           | `boolean`                                        | false   | Indicator if the component should be disabled.   |
@@ -36,7 +37,6 @@ Search input control.
 |-----------------|-----------------------------------------------|
 | `focus`         | `(options?: FocusOptions \| undefined): void` |
 | `renderContent` | `(): TemplateResult<1>`                       |
-| `renderControl` | `(): TemplateResult<1>`                       |
 | `renderPrefix`  | `(): TemplateResult<1>`                       |
 
 ## Events
@@ -49,6 +49,7 @@ Search input control.
 
 | Name                | Description                                      |
 |---------------------|--------------------------------------------------|
+| `clear`             | Replaces the icon for the clear slot.            |
 | `loading_indicator` | Used to define content that is displayed while async rendering is awaiting, or when renderLoading() is implicitly called |
 | `prefix`            | Replaces the icon for the prefix slot.           |
 | `suffix`            | Replaces the icon for the suffix slot.           |
@@ -68,6 +69,10 @@ Search input control.
 | `--omni-form-border-style`                       | Form border style.                             |
 | `--omni-form-border-top`                         | Form border top.                               |
 | `--omni-form-border-width`                       | Form border width.                             |
+| `--omni-form-clear-control-margin-left`          | Form clear control left margin.                |
+| `--omni-form-clear-control-margin-right`         | Form clear control right margin.               |
+| `--omni-form-clear-control-width`                | Form clear control width.                      |
+| `--omni-form-clear-icon-color`                   | Form clear icon color.                         |
 | `--omni-form-disabled-background-color`          | Form disabled background color.                |
 | `--omni-form-disabled-border-color`              | Form disabled border color.                    |
 | `--omni-form-disabled-focussed-label-background-color` | Form disabled label focussed background color. |

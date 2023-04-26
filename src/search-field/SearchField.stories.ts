@@ -4,7 +4,17 @@ import { setUIValueClean } from '@testing-library/user-event/dist/esm/document/U
 import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { LabelStory, BaseArgs, HintStory, ErrorStory, DisabledStory, ValueStory, PrefixStory, SuffixStory } from '../core/OmniInputStories.js';
+import {
+    LabelStory,
+    BaseArgs,
+    ClearableStory,
+    HintStory,
+    ErrorStory,
+    DisabledStory,
+    ValueStory,
+    PrefixStory,
+    SuffixStory
+} from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
 import { assignToSlot, ComponentStoryFormat, CSFIdentifier } from '../utils/StoryUtils.js';
@@ -24,7 +34,8 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
             value="${args.value}"
             hint="${ifNotEmpty(args.hint)}"
             error="${ifNotEmpty(args.error)}"
-            ?disabled="${args.disabled}">${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${
+            ?disabled="${args.disabled}"
+            ?clearable="${args.clearable}">${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${
         args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}` : nothing
     }${args.prefix || args.suffix ? '\r\n' : nothing}</omni-search-field>
     `,
@@ -35,6 +46,7 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
         hint: '',
         error: '',
         disabled: false,
+        clearable: false,
         prefix: '',
         suffix: ''
     },
@@ -52,22 +64,10 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
         const value = 'Batman';
         await userEvent.type(inputField, value);
 
-        // TODO: Fix race conditions in tests
-        if (navigator.userAgent === 'Test Runner') {
-            console.log('CICD Test - Not Visual');
-        } else {
-            await waitFor(() => expect(inputField).toHaveValue(value), {
-                timeout: 3000
-            });
-            await waitFor(() => expect(interaction).toBeCalledTimes(value.length), {
-                timeout: 3000
-            });
-        }
-
-        const clearButton = searchField.shadowRoot?.getElementById(`control`) as HTMLElement;
-        await userEvent.click(clearButton);
-
-        await waitFor(() => expect(inputField).toHaveValue(''), {
+        await waitFor(() => expect(inputField).toHaveValue(value), {
+            timeout: 3000
+        });
+        await waitFor(() => expect(interaction).toBeCalledTimes(value.length), {
             timeout: 3000
         });
     }
@@ -80,6 +80,8 @@ export const Hint = HintStory<SearchField, BaseArgs>('omni-search-field');
 export const ErrorLabel = ErrorStory<SearchField, BaseArgs>('omni-search-field');
 
 export const Value = ValueStory<SearchField, BaseArgs>('omni-search-field');
+
+export const Clear = ClearableStory<SearchField, BaseArgs>('omni-search-field', 'Clear my name');
 
 export const Prefix = PrefixStory<SearchField, BaseArgs>('omni-search-field');
 
