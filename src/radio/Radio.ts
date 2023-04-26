@@ -25,7 +25,7 @@ import { OmniElement } from '../core/OmniElement.js';
  * @element omni-radio
  *
  * Registry of all properties defined by the component.
- * 
+ *
  * @slot - Content to render inside the component.
  *
  * @fires {CustomEvent<{ old: Boolean; new: Boolean; }>} value-change - Dispatched when the control value is changed to either on or off.

@@ -24,7 +24,7 @@ import { OmniElement } from '../core/OmniElement.js';
  * @element omni-switch
  *
  * Registry of all properties defined by the component.
- * 
+ *
  * @slot - Content to render inside the component.
  *
  * @fires {CustomEvent<{ old: Boolean; new: Boolean; }>} value-change - Dispatched when the switch checked state is changed.
