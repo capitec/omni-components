@@ -17,19 +17,20 @@ Control to get / set a specific date using a calendar.
 
 ## Properties
 
-| Property   | Attribute  | Modifiers | Type                                             | Default         | Description                                      |
-|------------|------------|-----------|--------------------------------------------------|-----------------|--------------------------------------------------|
-| `data`     | `data`     |           | `object \| undefined`                            |                 | Data associated with the component.              |
-| `dir`      |            |           | `string`                                         |                 |                                                  |
-| `disabled` | `disabled` |           | `boolean`                                        | false           | Indicator if the component should be disabled.   |
-| `error`    | `error`    |           | `string \| undefined`                            |                 | Error message guiding a user to correct a mistake. |
-| `hint`     | `hint`     |           | `string \| undefined`                            |                 | Hint message to assist the user.                 |
-| `label`    | `label`    |           | `string \| undefined`                            |                 | Text label.                                      |
-| `lang`     |            |           | `string`                                         |                 |                                                  |
-| `locale`   | `locale`   |           | `string`                                         | "defaultLocale" | The locale used for formatting the output of the Date time picker. |
-| `override` | `override` |           |                                                  |                 | Used to set the base direction of text for display |
-| `styles`   |            | readonly  | `CSSResultGroup[]`                               |                 |                                                  |
-| `value`    | `value`    |           | `string \| number \| Record<string, unknown> \| undefined` | null            | Value entered into the form component.           |
+| Property    | Attribute   | Modifiers | Type                                             | Default         | Description                                      |
+|-------------|-------------|-----------|--------------------------------------------------|-----------------|--------------------------------------------------|
+| `clearable` | `clearable` |           | `boolean`                                        | false           | Toggles the ability to clear the value of the component. |
+| `data`      | `data`      |           | `object \| undefined`                            |                 | Data associated with the component.              |
+| `dir`       |             |           | `string`                                         |                 |                                                  |
+| `disabled`  | `disabled`  |           | `boolean`                                        | false           | Indicator if the component should be disabled.   |
+| `error`     | `error`     |           | `string \| undefined`                            |                 | Error message guiding a user to correct a mistake. |
+| `hint`      | `hint`      |           | `string \| undefined`                            |                 | Hint message to assist the user.                 |
+| `label`     | `label`     |           | `string \| undefined`                            |                 | Text label.                                      |
+| `lang`      |             |           | `string`                                         |                 |                                                  |
+| `locale`    | `locale`    |           | `string`                                         | "defaultLocale" | The locale used for formatting the output of the Date time picker. |
+| `override`  | `override`  |           |                                                  |                 | Used to set the base direction of text for display |
+| `styles`    |             | readonly  | `CSSResultGroup[]`                               |                 |                                                  |
+| `value`     | `value`     |           | `string \| number \| Record<string, unknown> \| undefined` | null            | Value entered into the form component.           |
 
 ## Methods
 
@@ -51,6 +52,7 @@ Control to get / set a specific date using a calendar.
 
 | Name                | Description                                      |
 |---------------------|--------------------------------------------------|
+| `clear`             | Replaces the icon for the clear slot.            |
 | `loading_indicator` | Used to define content that is displayed while async rendering is awaiting, or when renderLoading() is implicitly called |
 | `prefix`            | Replaces the icon for the prefix slot.           |
 | `suffix`            | Replaces the icon for the suffix slot.           |
@@ -85,10 +87,10 @@ Control to get / set a specific date using a calendar.
 | `--omni-date-picker-font-weight`                 | Date picker input font weight.                 |
 | `--omni-date-picker-height`                      | Date picker input height.                      |
 | `--omni-date-picker-min-width`                   | Date picker min width.                         |
-| `--omni-date-picker-mobile-picker-container-bottom` | Date picker container mobile bottom.           |
-| `--omni-date-picker-mobile-picker-container-box-shadow` | Date picker container mobile box shadow.       |
-| `--omni-date-picker-mobile-picker-container-left` | Date picker container mobile left.             |
-| `--omni-date-picker-mobile-picker-container-right` | Date picker container mobile right.            |
+| `--omni-date-picker-mobile-picker-dialog-background-color` | Date picker dialog background color.           |
+| `--omni-date-picker-mobile-picker-dialog-bottom` | Date picker dialog bottom                      |
+| `--omni-date-picker-mobile-picker-dialog-left`   | Date picker dialog left.                       |
+| `--omni-date-picker-mobile-picker-dialog-right`  | Date picker dialog right                       |
 | `--omni-date-picker-padding`                     | Date picker input padding.                     |
 | `--omni-date-picker-period-container-border-bottom` | Date picker container border bottom.           |
 | `--omni-date-picker-text-align`                  | Date picker input text align.                  |
@@ -101,6 +103,10 @@ Control to get / set a specific date using a calendar.
 | `--omni-form-border-style`                       | Form border style.                             |
 | `--omni-form-border-top`                         | Form border top.                               |
 | `--omni-form-border-width`                       | Form border width.                             |
+| `--omni-form-clear-control-margin-left`          | Form clear control left margin.                |
+| `--omni-form-clear-control-margin-right`         | Form clear control right margin.               |
+| `--omni-form-clear-control-width`                | Form clear control width.                      |
+| `--omni-form-clear-icon-color`                   | Form clear icon color.                         |
 | `--omni-form-disabled-background-color`          | Form disabled background color.                |
 | `--omni-form-disabled-border-color`              | Form disabled border color.                    |
 | `--omni-form-disabled-focussed-label-background-color` | Form disabled label focussed background color. |
