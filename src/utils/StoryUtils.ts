@@ -1397,7 +1397,9 @@ function transformSource(input: string) {
     // 			 .replace(new RegExp("(([\\r\\n]+| )([^ \\r\\n])*)=(\"([^\"]|\"\"){0}\")>"), " >")
     // Remove any properties with empty string assignments within the tag
     // 			 .replace(new RegExp("(([\\r\\n]+| )([^ \\r\\n])*)=(\"([^\"]|\"\"){0}\")"), " ");
-    return pretty(input);
+    return pretty(input, {
+        ocd: true
+    });
 }
 
 declare global {
