@@ -2,6 +2,7 @@ import { within, fireEvent } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import * as jest from 'jest-mock';
 import { html } from 'lit';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
 import { ComponentStoryFormat, CSFIdentifier } from '../utils/StoryUtils.js';
@@ -21,19 +22,20 @@ interface Args {
     error: string;
     checked: boolean;
     disabled: boolean;
+    '[Default Slot]': string;
 }
 
 export const Interactive: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
-    <omni-radio
-      data-testid="test-radio"
-      label="${ifNotEmpty(args.label)}"
-      .data="${args.data}"
-      hint="${ifNotEmpty(args.hint)}"
-      error="${ifNotEmpty(args.error)}"
-      ?checked="${args.checked}"
-      ?disabled="${args.disabled}"></omni-radio>
-  `,
+        <omni-radio
+            data-testid="test-radio"
+            label="${ifNotEmpty(args.label)}"
+            .data="${args.data}"
+            hint="${ifNotEmpty(args.hint)}"
+            error="${ifNotEmpty(args.error)}"
+            ?checked="${args.checked}"
+            ?disabled="${args.disabled}">${unsafeHTML(args['[Default Slot]'])}</omni-radio>
+    `,
     name: 'Interactive',
     args: {
         label: '',
@@ -41,7 +43,8 @@ export const Interactive: ComponentStoryFormat<Args> = {
         hint: '',
         error: '',
         checked: false,
-        disabled: false
+        disabled: false,
+        '[Default Slot]': undefined
     },
     play: async (context) => {
         const radio = within(context.canvasElement).getByTestId<Radio>('test-radio');
@@ -185,3 +188,17 @@ const App = () => <OmniRadio${args.label ? ` label='${args.label}'` : ''}${args.
         await expect(valueChange).toBeCalledTimes(0);
     }
 };
+
+export const Slot = {
+    render: () => html`
+        <omni-radio data-testid="test-radio">Slotted</omni-radio>
+    `,
+    name: 'Slot',
+    description: 'Set content to display within.',
+    args: {},
+    play: async (context) => {
+        const radioElement = within(context.canvasElement).getByTestId<Radio>('test-radio');
+        const slottedText = radioElement.innerHTML;
+        await expect(slottedText).toEqual('Slotted');
+    }
+} as ComponentStoryFormat<Args>;

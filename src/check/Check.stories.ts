@@ -33,24 +33,25 @@ interface Args {
 
     check_icon: string;
     indeterminate_icon: string;
+    '[Default Slot]': string;
 }
 
 export const Interactive: ComponentStoryFormat<Args> = {
     render: (args) => html`
-    <omni-check
-      data-testid="test-check"
-      label="${ifNotEmpty(args.label)}"
-      .data="${args.data}"
-      hint="${ifNotEmpty(args.hint)}"
-      error="${ifNotEmpty(args.error)}"
-      ?checked="${args.checked}"
-      ?disabled="${args.disabled}"
-      ?indeterminate="${args.indeterminate}"
-      >${args.indeterminate_icon ? html`${'\r\n'}${unsafeHTML(assignToSlot('indeterminate_icon', args.indeterminate_icon))}` : nothing}${
-        args.check_icon ? html`${'\r\n'}${unsafeHTML(assignToSlot('check_icon', args.check_icon))}` : nothing
-    }${args.check_icon || args.indeterminate_icon ? '\r\n' : nothing}</omni-check
-    >
-  `,
+        <omni-check
+            data-testid="test-check"
+            label="${ifNotEmpty(args.label)}"
+            .data="${args.data}"
+            hint="${ifNotEmpty(args.hint)}"
+            error="${ifNotEmpty(args.error)}"
+            ?checked="${args.checked}"
+            ?disabled="${args.disabled}"
+            ?indeterminate="${args.indeterminate}">${
+        args.indeterminate_icon ? html`${'\r\n'}${unsafeHTML(assignToSlot('indeterminate_icon', args.indeterminate_icon))}` : nothing
+    }${args.check_icon ? html`${'\r\n'}${unsafeHTML(assignToSlot('check_icon', args.check_icon))}` : nothing}${
+        args.check_icon || args.indeterminate_icon ? '\r\n' : nothing
+    }${unsafeHTML(args['[Default Slot]'])}</omni-check>
+    `,
     name: 'Interactive',
     args: {
         label: '',
@@ -61,7 +62,8 @@ export const Interactive: ComponentStoryFormat<Args> = {
         disabled: false,
         indeterminate: false,
         check_icon: '',
-        indeterminate_icon: ''
+        indeterminate_icon: '',
+        '[Default Slot]': undefined
     },
     play: async (context) => {
         const check = within(context.canvasElement).getByTestId<Check>('test-check');
@@ -229,6 +231,20 @@ const App = () => <OmniCheck${args.label ? ` label='${args.label}'` : ''}${args.
     }
 };
 
+export const Slot = {
+    render: () => html`
+        <omni-check data-testid="test-check">Slotted</omni-check>
+    `,
+    name: 'Slot',
+    description: 'Set content to display within.',
+    args: {},
+    play: async (context) => {
+        const checkElement = within(context.canvasElement).getByTestId<Check>('test-check');
+        const slottedText = checkElement.innerHTML;
+        await expect(slottedText).toEqual('Slotted');
+    }
+} as ComponentStoryFormat<Args>;
+
 export const Custom_Check_Icon: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
     <omni-check data-testid="test-check" label="${args.label}" ?checked="${args.checked}"> ${unsafeHTML(args.check_icon)} </omni-check>
@@ -251,12 +267,14 @@ const App = () => <OmniCheck${args.label ? ` label='${args.label}'` : ''}${args.
     args: {
         label: 'Custom Check Icon',
         checked: true,
-        check_icon: raw`<svg slot="check_icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 442.79 410.38" version="1.0" width="100%"
-                      height="100%">
-                      <path style="stroke:#000;stroke-width:19.892;fill:lightgreen"
-                        d="m-1747.2-549.3 287.72 333.9c146.6-298.83 326.06-573.74 614.52-834.75-215.89 121.82-453.86 353.14-657.14 639.38l-245.1-138.53z"
-                        transform="translate(843.77 509.04) scale(.48018)" />
-                    </svg>`
+        check_icon: raw`
+            <svg slot="check_icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 442.79 410.38" version="1.0" width="100%"
+                height="100%">
+                <path style="stroke:#000;stroke-width:19.892;fill:lightgreen"
+                d="m-1747.2-549.3 287.72 333.9c146.6-298.83 326.06-573.74 614.52-834.75-215.89 121.82-453.86 353.14-657.14 639.38l-245.1-138.53z"
+                transform="translate(843.77 509.04) scale(.48018)" />
+            </svg>
+        `
     },
     play: async (context) => {
         const check = within(context.canvasElement).getByTestId<Check>('test-check');
