@@ -105,6 +105,14 @@ export const Max_Length: ComponentStoryFormat<Args> = {
       max-length=${ifDefined(args.maxLength)}>
     </omni-pin-field>
   `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniPinField } from "@capitec/omni-components-react/pin-field";
+
+const App = () => <OmniPinField${args.label ? ` label='${args.label}'` : ''}${args.value ? ` value='${args.value}'` : ''}${args.maxLength ? ` max-length='${args.maxLength}'` : ''}/>;`
+        }
+    ],
     name: 'Max Length',
     description: 'Limit the character input length based on the value provided.',
     args: {

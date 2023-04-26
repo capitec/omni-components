@@ -23,9 +23,29 @@ export interface BaseArgs {
     prefix: string;
 }
 
+function toPascalCase(text: string) {
+    return text.replace(/(^\w|-\w)/g, clearAndUpper);
+}
+
+function clearAndUpper(text: string) {
+    return text.replace(/-/, '').toUpperCase();
+}
+
+function asDirectoryName(omniElementTag: string) {
+    return omniElementTag.replace('omni-', '');
+}
+
 export const LabelStory = <T extends HTMLElement, U extends BaseArgs>(tagName: string) => {
     const Label: ComponentStoryFormat<U> = {
         render: (args: U) => html`${unsafeHTML(`<${tagName}  data-testid="test-field" label="${ifNotEmpty(args.label)}"></${tagName}>`)}`,
+        frameworkSources: [
+            {
+                framework: 'React',
+                load: (args) => `import { ${toPascalCase(tagName)} } from "@capitec/omni-components-react/${asDirectoryName(tagName)}";
+    
+const App = () => <${toPascalCase(tagName)}${args.label ? ` label='${args.label}'` : ''}/>;`
+            }
+        ],
         name: 'Label',
         description: 'Set a text value to display as a label.',
         args: {
@@ -43,6 +63,14 @@ export const HintStory = <T extends HTMLElement, U extends BaseArgs>(tagName: st
     const Hint: ComponentStoryFormat<U> = {
         render: (args: U) =>
             html`${unsafeHTML(`<${tagName}  data-testid="test-field" label="${ifNotEmpty(args.label)}" hint="${args.hint}"></${tagName}>`)}`,
+        frameworkSources: [
+            {
+                framework: 'React',
+                load: (args) => `import { ${toPascalCase(tagName)} } from "@capitec/omni-components-react/${asDirectoryName(tagName)}";
+    
+const App = () => <${toPascalCase(tagName)}${args.label ? ` label='${args.label}'` : ''}${args.hint ? ` hint='${args.hint}'` : ''}/>;`
+            }
+        ],
         name: 'Hint',
         description: 'Set a text value to display as a hint.',
         args: {
@@ -63,6 +91,14 @@ export const ErrorStory = <T extends HTMLElement, U extends BaseArgs>(tagName: s
     const Error: ComponentStoryFormat<U> = {
         render: (args: U) =>
             html`${unsafeHTML(`<${tagName} data-testid="test-field" label="${args.label}" error="${ifNotEmpty(args.error)}"></${tagName}>`)}`,
+        frameworkSources: [
+            {
+                framework: 'React',
+                load: (args) => `import { ${toPascalCase(tagName)} } from "@capitec/omni-components-react/${asDirectoryName(tagName)}";
+    
+const App = () => <${toPascalCase(tagName)}${args.label ? ` label='${args.label}'` : ''}${args.error ? ` error='${args.error}'` : ''}/>;`
+            }
+        ],
         name: 'Error',
         description: 'Set a text value to display as an error.',
         args: {
@@ -86,6 +122,14 @@ export const ValueStory = <T extends HTMLElement, U extends BaseArgs>(
     const Value: ComponentStoryFormat<U> = {
         render: (args: U) =>
             html`${unsafeHTML(`<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}" value="${args.value}"></${tagName}>`)}`,
+        frameworkSources: [
+            {
+                framework: 'React',
+                load: (args) => `import { ${toPascalCase(tagName)} } from "@capitec/omni-components-react/${asDirectoryName(tagName)}";
+    
+const App = () => <${toPascalCase(tagName)}${args.label ? ` label='${args.label}'` : ''}${args.value ? ` value='${args.value}'` : ''}/>;`
+            }
+        ],
         name: 'Value',
         description: 'Set the current value of the component.',
         args: {
@@ -110,6 +154,17 @@ export const PrefixStory = <T extends HTMLElement, U extends BaseArgs>(tagName: 
             <${tagName} data-testid="test-field" style="--omni-form-label-margin-left:40px;" label="${ifNotEmpty(args.label)}">
             ${args.prefix}
             </${tagName}>`)}`,
+        frameworkSources: [
+            {
+                framework: 'React',
+                load: (args) => `import { ${toPascalCase(tagName)} } from "@capitec/omni-components-react/${asDirectoryName(tagName)}";
+    
+// Note that styles are applied to the slotted content via the style property and the --omni-form-label-margin-left css variable is overridden
+const App = () => <${toPascalCase(tagName)}${args.label ? ` label='${args.label}'` : ''} style={{'--omni-form-label-margin-left':'40px'}}>
+                    <svg slot="prefix" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px" style={{fill: 'orange', marginLeft: '10px'}}><path d="M12 2.25c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12 6.615 2.25 12 2.25Zm0 1.5a8.25 8.25 0 1 0 0 16.5 8.25 8.25 0 0 0 0-16.5ZM12 7a.75.75 0 0 1 .75.75v3.5h3.5a.75.75 0 0 1 .743.648L17 12a.75.75 0 0 1-.75.75h-3.5v3.5a.75.75 0 0 1-.648.743L12 17a.75.75 0 0 1-.75-.75v-3.5h-3.5a.75.75 0 0 1-.743-.648L7 12a.75.75 0 0 1 .75-.75h3.5v-3.5a.75.75 0 0 1 .648-.743Z"/></svg>
+                  </${toPascalCase(tagName)}>;`
+            }
+        ],
         name: 'Prefix',
         description: 'Set html content to display as a prefix within the component.',
         args: {
@@ -137,6 +192,17 @@ export const SuffixStory = <T extends HTMLElement, U extends BaseArgs>(tagName: 
             <${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}">
             ${args.suffix}
             </${tagName}>`)}`,
+        frameworkSources: [
+            {
+                framework: 'React',
+                load: (args) => `import { ${toPascalCase(tagName)} } from "@capitec/omni-components-react/${asDirectoryName(tagName)}";
+    
+// Note that styles are applied to the slotted content via the style property
+const App = () => <${toPascalCase(tagName)}${args.label ? ` label='${args.label}'` : ''}>
+                    <svg slot="suffix" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px" style={{fill: 'orange', marginRight: '10px'}}><path d="M12 2.25c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12 6.615 2.25 12 2.25Zm0 1.5a8.25 8.25 0 1 0 0 16.5 8.25 8.25 0 0 0 0-16.5ZM12 7a.75.75 0 0 1 .75.75v3.5h3.5a.75.75 0 0 1 .743.648L17 12a.75.75 0 0 1-.75.75h-3.5v3.5a.75.75 0 0 1-.648.743L12 17a.75.75 0 0 1-.75-.75v-3.5h-3.5a.75.75 0 0 1-.743-.648L7 12a.75.75 0 0 1 .75-.75h3.5v-3.5a.75.75 0 0 1 .648-.743Z"/></svg>
+                  </${toPascalCase(tagName)}>;`
+            }
+        ],
         name: 'Suffix',
         description: 'Set html content to display as a suffix within the component.',
         args: {
@@ -165,6 +231,14 @@ export const DisabledStory = <T extends HTMLElement, U extends BaseArgs>(
             html`${unsafeHTML(
                 `<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}" value="${args.value}" disabled></${tagName}>`
             )}`,
+        frameworkSources: [
+            {
+                framework: 'React',
+                load: (args) => `import { ${toPascalCase(tagName)} } from "@capitec/omni-components-react/${asDirectoryName(tagName)}";
+    
+const App = () => <${toPascalCase(tagName)}${args.label ? ` label='${args.label}'` : ''}${args.value ? ` value='${args.value}'` : ''} disabled/>;`
+            }
+        ],
         name: 'Disabled',
         description: 'Prevent interaction (pointer/input events).',
         args: {

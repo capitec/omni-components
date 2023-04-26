@@ -1017,7 +1017,7 @@ header .header-version-select {
 }
 
 .component-stories .story .two-part .framework-toggles > * {
-    margin-right: 2px;
+    margin-right: 6px;
     
     
     padding: 5px;
@@ -1138,7 +1138,7 @@ table {
 
 table thead tr th,
 table tbody tr td {
-    border-bottom: 1px solid #ddd;
+    /* border-bottom: 1px solid #ddd; */
 }
 
 table tr {
@@ -1160,6 +1160,11 @@ table td {
 table th {
     font-size: 1em;
     letter-spacing: 0.1em;
+    background-color: var(--docs-secondary-background-color);
+}
+
+table tr:nth-child(even) { 
+    background-color: var(--docs-secondary-background-color);
 }
 
 .component-props-table > td {
@@ -1174,7 +1179,10 @@ table th {
 }
 
 .component-props-table-header {
-    padding: 0px 48px;
+    border-bottom: 0;
+    padding-top: 24px;
+    padding-left: 48px;
+    padding-right: 48px;
     padding-bottom: 0px;
     -webkit-font-smoothing: antialiased;
     box-sizing: border-box;

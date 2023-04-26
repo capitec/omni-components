@@ -116,7 +116,7 @@ eleventyComputed:
 
                 {% set properties = customElements | getProperties(component.name) %}
                 {% if properties.length > 0 %}
-                    <h2 class="component-props-table-header" style="padding-top: 24px;">Properties</h2>
+                    <h2 class="component-props-table-header">Properties</h2>
                     <div class="docs-search-area">
                         <omni-search-field id="attribute-search"></omni-search-field>
                     </div>
@@ -146,7 +146,7 @@ eleventyComputed:
 
                 {% set globalAttributes = customElements | getGlobalAttributes(component.name) %}
                 {% if globalAttributes.length > 0 %}
-                    <h2 class="component-props-table-header" style="padding-top: 24px;">Supported Global Attributes</h2>
+                    <h2 class="component-props-table-header">Supported Global Attributes</h2>
                     <div class="docs-search-area">
                         <omni-search-field id="global-attribute-search"></omni-search-field>
                     </div>
@@ -253,7 +253,6 @@ eleventyComputed:
                 {% endif %}
             </div>
             <div class="component-tab" id="styles" role="tabpanel">
-                <div style="padding-top: 24px;"></div>
                 {% for cssCat in customElements | getCSSProperties(component.name) %}
                     {% set cssProperties = cssCat.properties %}
                     {% if cssProperties.length > 0 %}
