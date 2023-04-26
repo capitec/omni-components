@@ -164,9 +164,7 @@ export const ClearableStory = <T extends HTMLElement, U extends BaseArgs>(
     const Clearable: ComponentStoryFormat<U> = {
         render: (args: U) =>
             html`${unsafeHTML(
-                `<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}" value="${args.value}" clearable="${
-                    args.clearable
-                }"}></${tagName}>`
+                `<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}" value="${args.value}" clearable></${tagName}>`
             )}`,
         name: 'Clearable',
         description: 'Clear the value of the component.',
