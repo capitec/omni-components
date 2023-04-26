@@ -232,6 +232,14 @@ export const ClearableStory = <T extends HTMLElement, U extends BaseArgs>(
             html`${unsafeHTML(
                 `<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}" value="${args.value}" clearable></${tagName}>`
             )}`,
+        frameworkSources: [
+            {
+                framework: 'React',
+                load: (args) => `import { ${toPascalCase(tagName)} } from "@capitec/omni-components-react/${asDirectoryName(tagName)}";
+    
+const App = () => <${toPascalCase(tagName)}${args.label ? ` label='${args.label}'` : ''}${args.value ? ` value='${args.value}'` : ''} clearable/>;`
+            }
+        ],
         name: 'Clearable',
         description: 'Clear the value of the component.',
         args: {
