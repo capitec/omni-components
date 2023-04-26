@@ -164,9 +164,9 @@ export const ClearableStory = <T extends HTMLElement, U extends BaseArgs>(
     const Clearable: ComponentStoryFormat<U> = {
         render: (args: U) =>
             html`${unsafeHTML(
-                `<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}" value="${args.value}" clearable=${
+                `<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}" value="${args.value}" clearable="${
                     args.clearable
-                }></${tagName}>`
+                }"}></${tagName}>`
             )}`,
         name: 'Clearable',
         description: 'Clear the value of the component.',
@@ -177,8 +177,6 @@ export const ClearableStory = <T extends HTMLElement, U extends BaseArgs>(
         } as U,
         play: async (context) => {
             const input = within(context.canvasElement).getByTestId<T>('test-field');
-
-            //const inputField = input.shadowRoot?.getElementById('inputField') as HTMLInputElement;
 
             //Clearable attribute test.
             const clearableAttribute = input.attributes.getNamedItem('clearable');

@@ -161,14 +161,6 @@ export class Select extends OmniFormElement {
     }
 
     _inputClick(e: Event) {
-        /*
-        const itemsContainer = this.renderRoot.querySelector<HTMLDivElement>('#items-container');
-        const itemsDialog = this.renderRoot.querySelector<HTMLDialogElement>('#items-dialog');
-        
-        //Check that the pickerContainer or pickerDialog is not loaded 
-        if ((!e.composedPath() || !(itemsContainer || itemsDialog) || !(e.composedPath().includes(itemsContainer as Element) || e.composedPath().includes(itemsDialog as Element)))) {
-            this._togglePopup();
-        }*/
         this._togglePopup();
     }
 
@@ -198,7 +190,6 @@ export class Select extends OmniFormElement {
         if (this._popUp) {
             this._popUp = false;
             if (this._isMobile) {
-                //this._pickerContainer?.close();
                 const itemsDialog = this.renderRoot.querySelector<HTMLDialogElement>('#items-dialog');
                 if (itemsDialog) {
                     itemsDialog.close();

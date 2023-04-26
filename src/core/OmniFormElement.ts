@@ -128,7 +128,7 @@ export class OmniFormElement extends OmniElement {
      */
     @property({ type: Boolean, reflect: true }) clearable = false;
 
-    protected _onClearClick(e: MouseEvent) {
+    protected _clearValue(e: MouseEvent) {
         if (this.disabled) {
             return e.stopImmediatePropagation();
         }
@@ -457,7 +457,7 @@ export class OmniFormElement extends OmniElement {
             ${
                 this.clearable && this.value && !this.disabled
                     ? html`
-            <div id="clear-click" class="clear-click" @click="${(e: MouseEvent) => this._onClearClick(e)}">
+            <div id="clear-click" class="clear-click" @click="${(e: MouseEvent) => this._clearValue(e)}">
                     <slot name="clear">
                         <omni-clear-icon class="clear-icon"></omni-clear-icon>
                     </slot>

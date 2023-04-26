@@ -64,7 +64,6 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
         const value = 'Batman';
         await userEvent.type(inputField, value);
 
-        // TODO: Fix race conditions in tests
         await waitFor(() => expect(inputField).toHaveValue(value), {
             timeout: 3000
         });
