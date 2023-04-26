@@ -193,6 +193,16 @@ export const Slot = {
     render: () => html`
         <omni-radio data-testid="test-radio">Slotted</omni-radio>
     `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniRadio } from "@capitec/omni-components-react/radio";
+
+const App = () => <OmniRadio>
+                    Slotted
+                  </OmniRadio>;`
+        }
+    ],
     name: 'Slot',
     description: 'Set content to display within.',
     args: {},

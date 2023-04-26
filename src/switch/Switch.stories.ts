@@ -191,6 +191,16 @@ export const Slot = {
     render: () => html`
         <omni-switch data-testid="test-switch">Slotted</omni-switch>
     `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniSwitch } from "@capitec/omni-components-react/switch";
+
+const App = () => <OmniSwitch>
+                    Slotted
+                  </OmniSwitch>;`
+        }
+    ],
     name: 'Slot',
     description: 'Set content to display within.',
     args: {},

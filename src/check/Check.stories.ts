@@ -235,6 +235,16 @@ export const Slot = {
     render: () => html`
         <omni-check data-testid="test-check">Slotted</omni-check>
     `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniCheck } from "@capitec/omni-components-react/check";
+
+const App = () => <OmniCheck>
+                    Slotted
+                  </OmniCheck>;`
+        }
+    ],
     name: 'Slot',
     description: 'Set content to display within.',
     args: {},
