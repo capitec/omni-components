@@ -45,20 +45,44 @@ export const Lit_Template: ComponentStoryFormat<Args> = {
         {
             framework: 'HTML',
             load: () => `
-                
-<!-- Bound function used (<script> tags only for syntax highlighting) -->
-<script>
+ 
+<script type="module">
+    import { html } from 'https://unpkg.com/lit/index.js?module';
+    import { render } from 'https://unpkg.com/lit-html/lit-html.js?module';
+
+    const someData = {
+        hello: 'world',
+        'other-data': false
+    };
+    async function renderAsLit(data) {
+        await new Promise((r) => setTimeout(() => r(), 3000));
+        return html\`<span>\${JSON.stringify(data)}</span>\`;
+    }
+
+    render(html\`                
+        <omni-render-element 
+            .data="\${someData}" 
+            .renderer="\${renderAsLit}">
+        </omni-render-element>
+    \`, document.getElementById('root'));
+</script>  
+<div id="root"></div>
+`,
+            // disableCodePen: true
+        },
+        {
+            framework: 'React',
+            load: () => `import { OmniRenderElement } from "@capitec/omni-components-react/render-element";
+import { html } from 'https://unpkg.com/lit/index.js?module';
+
 async function renderAsLit(data) {
     await new Promise((r) => setTimeout(() => r(), 3000));
     return html\`<span>\${JSON.stringify(data)}</span>\`;
 }
-</script>
-
-...
-                
-<omni-render-element .data="\${this.someData}" .renderer="\${this.renderAsLit}"></omni-render-element>
-`,
-            disableCodePen: true
+const App = () => <OmniRenderElement renderer={renderAsLit} data={{
+                    hello: 'world',
+                    'other-data': false
+                  }}/>;`
         }
     ],
     name: 'Lit Template',
@@ -149,6 +173,22 @@ export const HTML_Element_Instance: ComponentStoryFormat<Args> = {
             'other-data': false
     };
 </script>`
+        },
+        {
+            framework: 'React',
+            load: () => `import { OmniRenderElement } from "@capitec/omni-components-react/render-element";
+
+async function renderAsElement(data) {
+    await new Promise((r) => setTimeout(() => r(), 3000));
+    const span = document.createElement('span');
+    span.appendChild(document.createTextNode(JSON.stringify(data)));
+    span.addEventListener('click', (ev) => alert('Clicked'));
+    return span;
+}
+const App = () => <OmniRenderElement renderer={renderAsElement} data={{
+                    hello: 'world',
+                    'other-data': false
+                  }}/>;`
         }
     ],
     args: {
@@ -235,6 +275,19 @@ export const HTML_String: ComponentStoryFormat<Args> = {
             'other-data': false
     };
 </script>`
+        },
+        {
+            framework: 'React',
+            load: () => `import { OmniRenderElement } from "@capitec/omni-components-react/render-element";
+
+async function renderAsString(data) {
+    await new Promise((r) => setTimeout(() => r(), 3000));
+    return \`<span>\${JSON.stringify(data)}</span>\`;
+}
+const App = () => <OmniRenderElement renderer={renderAsString} data={{
+                    hello: 'world',
+                    'other-data': false
+                  }}/>;`
         }
     ],
     args: {

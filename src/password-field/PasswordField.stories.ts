@@ -110,6 +110,18 @@ export const Custom_Icon_Slot: ComponentStoryFormat<Args> = {
       <omni-lock-closed-icon style="fill: lightgreen;" slot="hide"></omni-lock-closed-icon>
     </omni-password-field>
   `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniPasswordField } from "@capitec/omni-components-react/password-field";
+import { OmniLockClosedIcon,OmniLockOpenIcon } from "@capitec/omni-components-react/icons";
+
+const App = () => <OmniPasswordField${args.label ? ` label='${args.label}'` : ''}${args.disabled ? ` disabled` : ''}>
+                    <OmniLockOpenIcon style={{fill: 'orange'}} slot="show"/>
+                    <OmniLockClosedIcon style={{fill: 'lightgreen'}} slot="hide"/>
+                  </OmniPasswordField>;`
+        }
+    ],
     name: 'Custom Icon Slot',
     description: 'Set html content to display as the visibility indicators of the field.',
     args: {

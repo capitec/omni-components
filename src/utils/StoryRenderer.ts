@@ -310,7 +310,7 @@ export class StoryRenderer extends LitElement {
                     : nothing
             }
 
-            <div class="two-part">
+            <div class="two-part ${!this.story?.play && this.story!.frameworkSources?.find((fs) => fs.framework === this._sourceTab)?.disableCodePen && !reactSource ? 'no-display' : ''}">
             
                 <div class="play-tests">
                     ${
@@ -690,7 +690,6 @@ ReactDOM.render(<App/>, el);`;
         };
 
         const JSONstring = JSON.stringify(data)
-            // Quotes will screw up the JSON
             .replace(/"/g, '&quot;')
             .replace(/'/g, '&apos;');
 
