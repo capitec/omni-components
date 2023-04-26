@@ -46,6 +46,7 @@ Control that allows a selection to be made.
 
 | Name                 | Description                                      |
 |----------------------|--------------------------------------------------|
+|                      | Content to render inside the component.          |
 | `check_icon`         | Replaces the icon for the checked state          |
 | `indeterminate_icon` | Replaces the icon for the indeterminate state    |
 | `loading_indicator`  | Used to define content that is displayed while async rendering is awaiting, or when renderLoading() is implicitly called |

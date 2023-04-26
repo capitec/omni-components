@@ -45,6 +45,7 @@ Control to select a single value from a group of values.
 
 | Name                | Description                                      |
 |---------------------|--------------------------------------------------|
+|                     | Content to render inside the component.          |
 | `loading_indicator` | Used to define content that is displayed while async rendering is awaiting, or when renderLoading() is implicitly called |
 
 ## CSS Custom Properties
