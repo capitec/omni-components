@@ -18,6 +18,7 @@ export interface BaseArgs {
     hint: string;
     error: string;
     disabled: boolean;
+    clearable: boolean;
 
     suffix: string;
     prefix: string;
@@ -220,6 +221,38 @@ const App = () => <${toPascalCase(tagName)}${args.label ? ` label='${args.label}
         }
     };
     return Suffix;
+};
+
+export const ClearableStory = <T extends HTMLElement, U extends BaseArgs>(
+    tagName: string,
+    inputValue: string | number | string[] = 'The input value'
+) => {
+    const Clearable: ComponentStoryFormat<U> = {
+        render: (args: U) =>
+            html`${unsafeHTML(
+                `<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}" value="${args.value}" clearable></${tagName}>`
+            )}`,
+        name: 'Clearable',
+        description: 'Clear the value of the component.',
+        args: {
+            label: 'Clearable',
+            clearable: true,
+            value: inputValue
+        } as U,
+        play: async (context) => {
+            const input = within(context.canvasElement).getByTestId<T>('test-field');
+
+            //Clearable attribute test.
+            const clearableAttribute = input.attributes.getNamedItem('clearable');
+            await expect(clearableAttribute).toBeTruthy();
+
+            const clearButton = input.shadowRoot?.getElementById(`clear-click`) as HTMLElement;
+            await userEvent.click(clearButton);
+
+            await expect(input).toHaveValue('');
+        }
+    };
+    return Clearable;
 };
 
 export const DisabledStory = <T extends HTMLElement, U extends BaseArgs>(

@@ -6,7 +6,7 @@ import userEvent from '@testing-library/user-event';
 import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { LabelStory, BaseArgs, HintStory, ErrorStory, PrefixStory, SuffixStory } from '../core/OmniInputStories.js';
+import { LabelStory, BaseArgs, ClearableStory, HintStory, ErrorStory, PrefixStory, SuffixStory } from '../core/OmniInputStories.js';
 import { RenderFunction } from '../render-element/RenderElement.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
@@ -62,6 +62,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
             .renderItem="${args.renderItem}"
             id-field="${args.idField}"
             ?disabled="${args.disabled}"
+            ?clearable="${args.clearable}"
             empty-message="${args.emptyMessage}"
             >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${
         args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}` : nothing
@@ -78,6 +79,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         hint: '',
         error: '',
         disabled: false,
+        clearable: false,
         prefix: '',
         suffix: '',
         items: displayItems as Record<string, unknown>[],
@@ -611,6 +613,8 @@ export const Label = LabelStory<Select, BaseArgs>('omni-select');
 export const Hint = HintStory<Select, BaseArgs>('omni-select');
 
 export const Error_Label = ErrorStory<Select, BaseArgs>('omni-select');
+
+export const Clear = ClearableStory<Select, BaseArgs>('omni-select');
 
 export const Prefix = PrefixStory<Select, BaseArgs>('omni-select');
 

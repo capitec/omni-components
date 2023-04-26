@@ -4,7 +4,7 @@ import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { DateTime } from 'luxon';
-import { LabelStory, BaseArgs, HintStory, ErrorStory, PrefixStory, SuffixStory, DisabledStory } from '../core/OmniInputStories.js';
+import { LabelStory, BaseArgs, HintStory, ErrorStory, PrefixStory, SuffixStory, DisabledStory, ClearableStory } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
 import { assignToSlot, ComponentStoryFormat, CSFIdentifier, querySelectorAsync } from '../utils/StoryUtils.js';
@@ -34,6 +34,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
             error="${ifNotEmpty(args.error)}"
             locale="${args.locale}"
             ?disabled="${args.disabled}"
+            ?clearable="${args.clearable}"
             >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${
         args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}` : nothing
     }${args.prefix || args.suffix ? '\r\n' : nothing}</omni-date-picker
@@ -179,6 +180,8 @@ export const Label = LabelStory<DatePicker, BaseArgs>('omni-date-picker');
 export const Hint = HintStory<DatePicker, BaseArgs>('omni-date-picker');
 
 export const Error_Label = ErrorStory<DatePicker, BaseArgs>('omni-date-picker');
+
+export const Clear = ClearableStory<DatePicker, BaseArgs>('omni-date-picker', isoDate);
 
 export const Prefix = PrefixStory<DatePicker, BaseArgs>('omni-date-picker');
 

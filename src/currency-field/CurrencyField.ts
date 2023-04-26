@@ -374,6 +374,11 @@ export class CurrencyField extends OmniFormElement {
                 );
             }
 
+            // Required to ensure that input value length does not exceed maxlength attribute value.
+            if (centValue.length > input.maxLength) {
+                centValue = centValue.substring(0, input.maxLength);
+            }
+
             // Extract the amount part of the cent value.
             const amountPart = centValue.substring(0, centValue.length - this.fractionalPrecision);
             // Extract the cents part of the cent value.
@@ -399,9 +404,7 @@ export class CurrencyField extends OmniFormElement {
 
     _beforeInput(e: InputEvent) {
         const input = this._inputElement as HTMLInputElement;
-        let centValue = this._convertToCents(this._inputElement?.value as string);
-
-        console.log('e.eventType', e.inputType);
+        let centValue = this._convertToCents(this._inputElement?.value ? this._inputElement?.value : '0');
 
         if (centValue && input) {
             e.preventDefault();
@@ -427,6 +430,11 @@ export class CurrencyField extends OmniFormElement {
                     centValue = this._convertToCents(
                         input.value.slice(0, input.selectionStart as number) + e.data + input.value.slice(input.selectionEnd as number)
                     );
+                }
+
+                // Required to ensure that input value length does not exceed maxlength attribute value.
+                if (centValue.length > input.maxLength) {
+                    centValue = centValue.substring(0, input.maxLength);
                 }
 
                 // Extract the amount part of the cent value.
@@ -551,7 +559,7 @@ export class CurrencyField extends OmniFormElement {
                 }
 
                 .label {
-                    margin-left: var(--omni-currency-field-label-left-margin, 25px);
+                    margin-left: var(--omni-currency-field-label-left-margin, var(--omni-form-label-margin-left, 25px));
                 }
 
                 .currency-symbol {
@@ -579,9 +587,9 @@ export class CurrencyField extends OmniFormElement {
                 class=${classMap(field)}
                 id="inputField"
                 type="text"
-                maxlength="21"
                 inputmode="${this.noNativeKeyboard ? 'none' : 'decimal'}"
                 data-omni-keyboard-mode="decimal"
+                maxlength="15"
                 ?readOnly=${this.disabled}
                 tabindex="${this.disabled ? -1 : 0}" />
         `;
