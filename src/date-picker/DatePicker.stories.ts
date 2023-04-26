@@ -36,9 +36,10 @@ export const Interactive: ComponentStoryFormat<Args> = {
             locale="${args.locale}"
             ?disabled="${args.disabled}"
             ?clearable="${args.clearable}"
-            >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${
+            >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}
+            ${args.clear ? html`${'\r\n'}${unsafeHTML(assignToSlot('clear', args.clear))}` : nothing}${
         args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}` : nothing
-    }${args.prefix || args.suffix ? '\r\n' : nothing}</omni-date-picker
+    }${args.prefix || args.suffix || args.clear ? '\r\n' : nothing}</omni-date-picker
         >
     `,
     name: 'Interactive',
@@ -51,6 +52,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         disabled: false,
         prefix: '',
         suffix: '',
+        clear: '',
         locale: 'en-us'
     } as Args,
     play: async (context) => {

@@ -22,6 +22,7 @@ export interface BaseArgs {
 
     suffix: string;
     prefix: string;
+    clear: string;
 }
 
 export const LabelStory = <T extends HTMLElement, U extends BaseArgs>(tagName: string) => {

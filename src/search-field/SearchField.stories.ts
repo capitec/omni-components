@@ -35,9 +35,10 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
             hint="${ifNotEmpty(args.hint)}"
             error="${ifNotEmpty(args.error)}"
             ?disabled="${args.disabled}"
-            ?clearable="${args.clearable}">${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${
+            ?clearable="${args.clearable}">${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}
+            ${args.clear ? html`${'\r\n'}${unsafeHTML(assignToSlot('clear', args.clear))}` : nothing}${
         args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}` : nothing
-    }${args.prefix || args.suffix ? '\r\n' : nothing}</omni-search-field>
+    }${args.prefix || args.suffix || args.clear ? '\r\n' : nothing}</omni-search-field>
     `,
     name: 'Interactive',
     args: {
@@ -48,7 +49,8 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
         disabled: false,
         clearable: false,
         prefix: '',
-        suffix: ''
+        suffix: '',
+        clear: ''
     },
     play: async (context) => {
         const searchField = within(context.canvasElement).getByTestId<SearchField>('test-search-field');
