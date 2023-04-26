@@ -71,7 +71,6 @@ export class Icon extends OmniElement {
                     justify-content: center;
                     color: var(--omni-icon-fill, currentColor);
                     fill: var(--omni-icon-fill, currentColor);
-                    stroke: var(--omni-icon-fill, currentColor);
                     background-color: var(--omni-icon-background-color);
                 }
 
