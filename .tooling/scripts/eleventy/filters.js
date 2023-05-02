@@ -1,4 +1,5 @@
 import { loadCustomElementsModuleByFileFor, loadCssProperties, transformFromJsdoc } from '../../../dist/utils/StoryUtils.js';
+import path from 'path';
 
 export function getTagName(value, componentName) {
     const component = loadCustomElementsModuleByFileFor(componentName, value);
@@ -17,6 +18,14 @@ export function getImport(value, componentName) {
     const declaration = component.declarations.find(d => d.name === componentName);
     const imp = declaration.import ? declaration.import.replace(/```/gi, '').replace('js', '').replace(/(\r\n|\n|\r)/gm, '') : null;
     return imp;
+}
+
+export function getReactImport(value, componentName) {
+    const component = loadCustomElementsModuleByFileFor(componentName, value);
+    const declaration = component.declarations.find(d => d.name === componentName);
+    const ComponentName = declaration.name;
+    const componentPath = path.basename(path.dirname(component.path));
+    return `import { Omni${ComponentName} } from "@capitec/omni-components-react/${componentPath}";`;
 }
 
 export function getProperties(value, componentName) {

@@ -285,14 +285,6 @@ Backspace icon component.
 
 A calendar icon component.
 
-
-```js
-
-
-import '@capitec/omni-components/icons/Calendar.icon.js';
-
-```
-
 </td></tr><tr><td>
 
 [omni-caps-lock-icon](src/icons/README.md)
@@ -341,14 +333,6 @@ Chevron down icon component.
 
 Chevron left icon component.
 
-
-```js
-
-
-import '@capitec/omni-components/icons/ChevronLeft.icon.js';
-
-```
-
 </td></tr><tr><td>
 
 [omni-chevron-right-icon](src/icons/README.md)
@@ -356,14 +340,6 @@ import '@capitec/omni-components/icons/ChevronLeft.icon.js';
 </td><td>
 
 Chevron right icon component.
-
-
-```js
-
-
-import '@capitec/omni-components/icons/ChevronRight.icon.js';
-
-```
 
 </td></tr><tr><td>
 

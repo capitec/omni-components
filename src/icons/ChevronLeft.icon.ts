@@ -5,8 +5,8 @@ import DOMTreeElement from '../core/DOMTreeElement.js';
 /**
  * Chevron left icon component.
  *
+ * @import
  * ```js
- *
  * import '@capitec/omni-components/icons/ChevronLeft.icon.js';
  * ```
  *
