@@ -65,7 +65,7 @@ Core features of the library include:
 1️⃣ &nbsp; Install Omni Components in your project.
 
 ```bash
-npm install @capitec/omni-components
+npm install '@capitec/omni-components'
 ```
 
 2️⃣ &nbsp; Import the components you require. See [`INSTALLATION.md`](./INSTALLATION.md) for more detail.
@@ -191,11 +191,11 @@ Control that allows an action to be executed.
 
 </td></tr><tr><td>
 
-[omni-calendar](src/calendar/README.md)
+[omni-chip](src/chip/README.md)
 
 </td><td>
 
-Calendar component to set specific date.
+Control that can be used for input, setting attributes, or performing actions.
 
 </td></tr><tr><td>
 
@@ -207,11 +207,11 @@ Control that allows a selection to be made.
 
 </td></tr><tr><td>
 
-[omni-chip](src/chip/README.md)
+[omni-calendar](src/calendar/README.md)
 
 </td><td>
 
-Control that can be used for input, setting attributes, or performing actions.
+Calendar component to set specific date.
 
 </td></tr><tr><td>
 
@@ -247,19 +247,19 @@ Email input control, used in forms for input validation and to display correct v
 
 </td></tr><tr><td>
 
-[omni-hyperlink](src/hyperlink/README.md)
-
-</td><td>
-
-Control to indicate an action to be executed. Typically used for navigational purposes.
-
-</td></tr><tr><td>
-
 [omni-icon](src/icon/README.md)
 
 </td><td>
 
 Component that displays an icon.
+
+</td></tr><tr><td>
+
+[omni-hyperlink](src/hyperlink/README.md)
+
+</td><td>
+
+Control to indicate an action to be executed. Typically used for navigational purposes.
 
 </td></tr><tr><td>
 
@@ -495,19 +495,19 @@ Input control to enter a single line of numbers.
 
 </td></tr><tr><td>
 
-[omni-password-field](src/password-field/README.md)
-
-</td><td>
-
-Password input control.
-
-</td></tr><tr><td>
-
 [omni-pin-field](src/pin-field/README.md)
 
 </td><td>
 
 Input control to enter a masked numeric value.
+
+</td></tr><tr><td>
+
+[omni-password-field](src/password-field/README.md)
+
+</td><td>
+
+Password input control.
 
 </td></tr><tr><td>
 
