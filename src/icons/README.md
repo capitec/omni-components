@@ -48,11 +48,6 @@ Backspace icon component.
 
 A calendar icon component.
 
-```js
-
-import '@capitec/omni-components/icons/Calendar.icon.js';
-```
-
 ## Example
 
 ```html
@@ -191,11 +186,6 @@ Chevron down icon component.
 
 Chevron left icon component.
 
-```js
-
-import '@capitec/omni-components/icons/ChevronLeft.icon.js';
-```
-
 ## Example
 
 ```html
@@ -218,11 +208,6 @@ import '@capitec/omni-components/icons/ChevronLeft.icon.js';
 # omni-chevron-right-icon
 
 Chevron right icon component.
-
-```js
-
-import '@capitec/omni-components/icons/ChevronRight.icon.js';
-```
 
 ## Example
 
