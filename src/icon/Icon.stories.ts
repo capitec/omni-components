@@ -115,7 +115,9 @@ export const Local_Source: ComponentStoryFormat<Args> = {
 /*
     Icons loaded by content path instead of font-based or slotted content will not be able to be styled directly
 */
-const App = () => <OmniIcon${args.size ? ` size='${args.size}'` : ''}${args.icon ? ` icon='${args.icon}'` : ''}${args.symmetrical ? ` symmetrical` : ''}/>;`,
+const App = () => <OmniIcon${args.size ? ` size='${args.size}'` : ''}${args.icon ? ` icon='${args.icon}'` : ''}${
+                args.symmetrical ? ` symmetrical` : ''
+            }/>;`,
             disableCodePen: true
         },
         {
@@ -151,7 +153,9 @@ export const Remote_Source: ComponentStoryFormat<Args> = {
 /*
     Icons loaded by content path instead of font-based or slotted content will not be able to be styled directly
 */
-const App = () => <OmniIcon${args.size ? ` size='${args.size}'` : ''}${args.icon ? ` icon='${args.icon}'` : ''}${args.symmetrical ? ` symmetrical` : ''}/>;`
+const App = () => <OmniIcon${args.size ? ` size='${args.size}'` : ''}${args.icon ? ` icon='${args.icon}'` : ''}${
+                args.symmetrical ? ` symmetrical` : ''
+            }/>;`
         }
     ],
     name: 'Remote Source',
@@ -186,7 +190,9 @@ export const Material: ComponentStoryFormat<Args> = {
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 <!-- ------------------------------------------------------------- -->
 */
-const App = () => <OmniIcon${args.size ? ` size='${args.size}'` : ''}${args.icon ? ` icon='${args.icon}'` : ''}${args.symmetrical ? ` symmetrical` : ''}/>;`
+const App = () => <OmniIcon${args.size ? ` size='${args.size}'` : ''}${args.icon ? ` icon='${args.icon}'` : ''}${
+                args.symmetrical ? ` symmetrical` : ''
+            }/>;`
         }
     ],
     description: 'Set the icon to display as a font icon from the Material Icons library.',
