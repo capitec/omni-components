@@ -26,9 +26,11 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
       hint="${ifNotEmpty(args.hint)}"
       error="${ifNotEmpty(args.error)}"
       ?disabled="${args.disabled}"
-      >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${
+      ?clearable="${args.clearable}"
+      >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}
+       ${args.clear ? html`${'\r\n'}${unsafeHTML(assignToSlot('clear', args.clear))}` : nothing}${
         args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}` : nothing
-    }${args.prefix || args.suffix ? '\r\n' : nothing}</omni-color-field
+    }${args.prefix || args.suffix || args.clear ? '\r\n' : nothing}</omni-color-field
     >
   `,
     name: 'Interactive',
@@ -39,8 +41,10 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
         hint: '',
         error: '',
         disabled: false,
+        clearable: false,
         prefix: '',
-        suffix: ''
+        suffix: '',
+        clear: ''
     },
     play: async (context) => {
         const field = within(context.canvasElement).getByTestId<ColorField>('test-color-field');
