@@ -28,7 +28,7 @@ fs.rmSync(outDir, { recursive: true, force: true });
         let contents = fs.readFileSync(e, 'utf-8');
         // Remove react import
         contents = contents.replace(new RegExp(`import React from 'react';`, 'g'), '')
-            // User React from window
+            // Use React from window
             .replace(new RegExp(`react: React,`, 'g'), 'react: window.React,');
 
         fs.writeFileSync(e, contents, 'utf-8');
