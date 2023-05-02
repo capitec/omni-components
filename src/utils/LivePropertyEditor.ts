@@ -175,6 +175,9 @@ export class LivePropertyEditor extends OmniElement {
 
                 .live-header {
                     margin-top: 15px;
+                    padding: 6px 0;
+                    font-weight: 600;
+                    font-size: 16px;
                 }
 
                 .live-header:first-of-type {

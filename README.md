@@ -65,7 +65,7 @@ Core features of the library include:
 1️⃣ &nbsp; Install Omni Components in your project.
 
 ```bash
-npm install @capitec/omni-components
+npm install '@capitec/omni-components'
 ```
 
 2️⃣ &nbsp; Import the components you require. See [`INSTALLATION.md`](./INSTALLATION.md) for more detail.
