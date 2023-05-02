@@ -29,8 +29,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         <omni-date-picker
             data-testid="test-date-picker"
             label="${ifNotEmpty(args.label)}"
-            .value="${args.value}"
-            .data="${args.data}"
+            value="${ifNotEmpty(args.value)}"
             hint="${ifNotEmpty(args.hint)}"
             error="${ifNotEmpty(args.error)}"
             locale="${args.locale}"
@@ -45,7 +44,6 @@ export const Interactive: ComponentStoryFormat<Args> = {
     args: {
         label: 'Select a Date',
         value: '',
-        data: {},
         hint: '',
         error: '',
         disabled: false,
@@ -109,11 +107,19 @@ export const Value: ComponentStoryFormat<Args> = {
     <omni-date-picker
         data-testid="test-date-picker"
         label="${ifNotEmpty(args.label)}"
-        .value="${args.value}"
+        value="${args.value}"
     >
 
     </omni-date-picker>
     `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniDatePicker } from "@capitec/omni-components-react/date-picker";
+
+const App = () => <OmniDatePicker${args.label ? ` label='${args.label}'` : ''}${args.value ? ` value='${args.value}'` : ''}/>;`
+        }
+    ],
     name: 'Value',
     description: 'Set the current value of the Date Picker component.',
     args: {
@@ -137,6 +143,14 @@ export const Locale: ComponentStoryFormat<Args> = {
     >
     </omni-date-picker>
     `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniDatePicker } from "@capitec/omni-components-react/date-picker";
+
+const App = () => <OmniDatePicker${args.label ? ` label='${args.label}'` : ''}${args.locale ? ` locale='${args.locale}'` : ''}/>;`
+        }
+    ],
     name: 'Locale',
     description: 'Set the current locale of the Date Picker component.',
     args: {

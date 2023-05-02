@@ -57,8 +57,33 @@ npm install @capitec/omni-components
 
 > 💡 Using a bundler will allow for optimal [tree shaking](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking), which will ensure the smallest size and most efficient usage. Our [starter templates](#starter-templates-) already provide this for you!
 
+
+
+## React Wrappers 🎁
+
+React makes some assumptions about HTML elements that don't fully apply to custom elements, as it treats lower-case tag names differently from upper-case component names in ways that can make custom elements harder than necessary to use. 
+
+Omni Components provides a separate package with each web component wrapped into a React component.
+
+
+You can install Omni Components for React locally with the following command:
+
+```bash
+npm install @capitec/omni-components-react
+```
+
+Or you can use Omni Components for React directly via a CDN:
+```jsx
+import { OmniButton } from "https://cdn.jsdelivr.net/npm/@capitec/omni-components-react@esm/button/index.js";
+
+const App = () => <OmniButton label='Click' type='primary'/>; 
+```
+
+
 ## Starter Templates 🔰
 
 To help bootstrap a development project, we offer the following application starter template repositories:
 
 * [Lit Starter](https://github.com/capitec/template-pwa-lit) - For [Lit](https://lit.dev)-based SPA development.
+* [Vue Starter](https://github.com/capitec/template-pwa-vue) - For [Vue](https://vuejs.org/)-based SPA development.
+* [React Starter](https://github.com/capitec/template-pwa-react) - For [React](https://react.dev/)-based SPA development.

@@ -477,6 +477,7 @@ export class Select extends OmniFormElement {
         return html`
             <input
                 class=${classMap(field)}
+                data-omni-keyboard-hidden
                 id="select"
                 type="text"
                 readonly

@@ -67,7 +67,15 @@ export const Interactive: ComponentStoryFormat<Args> = {
 };
 
 export const Label: ComponentStoryFormat<Args> = {
-    render: (args: Args) => html`<omni-radio data-testid="test-radio" label="${args.label}"></omni-radio>`,
+    render: (args: Args) => html` <omni-radio data-testid="test-radio" label="${args.label}"></omni-radio> `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniRadio } from "@capitec/omni-components-react/radio";
+
+const App = () => <OmniRadio${args.label ? ` label='${args.label}'` : ''}/>;`
+        }
+    ],
     description: 'Set a text value to display next to the component.',
     args: {
         label: 'Label'
@@ -80,7 +88,15 @@ export const Label: ComponentStoryFormat<Args> = {
 };
 
 export const Hint: ComponentStoryFormat<Args> = {
-    render: (args: Args) => html`<omni-radio data-testid="test-radio" label="${args.label}" hint="${args.hint}"></omni-radio>`,
+    render: (args: Args) => html` <omni-radio data-testid="test-radio" label="${args.label}" hint="${args.hint}"></omni-radio> `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniRadio } from "@capitec/omni-components-react/radio";
+
+const App = () => <OmniRadio${args.label ? ` label='${args.label}'` : ''}${args.hint ? ` hint='${args.hint}'` : ''}/>;`
+        }
+    ],
     description: 'Set a text value to as a hint.',
     args: {
         label: 'Hint',
@@ -95,7 +111,15 @@ export const Hint: ComponentStoryFormat<Args> = {
 
 export const Error_Label: ComponentStoryFormat<Args> = {
     name: 'Error', // Explicitly named as error, the exported name cannot be 'Error' as that is reserved
-    render: (args: Args) => html`<omni-radio data-testid="test-radio" label="${args.label}" error="${args.error}"></omni-radio>`,
+    render: (args: Args) => html` <omni-radio data-testid="test-radio" label="${args.label}" error="${args.error}"></omni-radio> `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniRadio } from "@capitec/omni-components-react/radio";
+
+const App = () => <OmniRadio${args.label ? ` label='${args.label}'` : ''}${args.error ? ` error='${args.error}'` : ''}/>;`
+        }
+    ],
     description: 'Set a text value to display as an error.',
     args: {
         label: 'Error',
@@ -109,7 +133,15 @@ export const Error_Label: ComponentStoryFormat<Args> = {
 };
 
 export const Checked: ComponentStoryFormat<Args> = {
-    render: (args: Args) => html`<omni-radio data-testid="test-radio" label="${args.label}" ?checked="${args.checked}"></omni-radio>`,
+    render: (args: Args) => html` <omni-radio data-testid="test-radio" label="${args.label}" ?checked="${args.checked}"></omni-radio> `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniRadio } from "@capitec/omni-components-react/radio";
+
+const App = () => <OmniRadio${args.label ? ` label='${args.label}'` : ''}${args.checked ? ` checked` : ''}/>;`
+        }
+    ],
     description: 'Set the component to a checked state.',
     args: {
         label: 'Checked',
@@ -123,7 +155,15 @@ export const Checked: ComponentStoryFormat<Args> = {
 };
 
 export const Disabled: ComponentStoryFormat<Args> = {
-    render: (args: Args) => html`<omni-radio data-testid="test-radio" label="${args.label}" ?disabled="${args.disabled}"></omni-radio>`,
+    render: (args: Args) => html` <omni-radio data-testid="test-radio" label="${args.label}" ?disabled="${args.disabled}"></omni-radio> `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniRadio } from "@capitec/omni-components-react/radio";
+
+const App = () => <OmniRadio${args.label ? ` label='${args.label}'` : ''}${args.disabled ? ` disabled` : ''}/>;`
+        }
+    ],
     description: 'Prevent interaction (pointer events).',
     args: {
         label: 'Disabled',
@@ -153,6 +193,16 @@ export const Slot = {
     render: () => html`
         <omni-radio data-testid="test-radio">Slotted</omni-radio>
     `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniRadio } from "@capitec/omni-components-react/radio";
+
+const App = () => <OmniRadio>
+                    Slotted
+                  </OmniRadio>;`
+        }
+    ],
     name: 'Slot',
     description: 'Set content to display within.',
     args: {},

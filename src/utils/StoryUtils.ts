@@ -15,7 +15,7 @@ import pretty from 'pretty';
 import { SearchField } from '../search-field/SearchField.js';
 import { Select } from '../select/Select.js';
 import { CodeEditor, CodeMirrorEditorEvent, CodeMirrorSourceUpdateEvent } from './CodeEditor.js';
-export { ComponentStoryFormat, CSFIdentifier } from './ComponentStoryFormat.js';
+export * from './ComponentStoryFormat.js';
 export { PlayFunction, PlayFunctionContext } from './PlayFunction.js';
 import { StoryRenderer } from './StoryRenderer.js';
 
@@ -768,6 +768,9 @@ async function setupEleventy() {
     windowAny.copyToClipboard = copyToClipboard;
     windowAny.openTab = openTab;
 
+    //Framework toggles
+    setupFrameworks();
+
     // Versions
     setupVersions();
 
@@ -790,6 +793,36 @@ async function setupEleventy() {
     setupSearch();
 
     await setupThemes();
+}
+
+async function setupFrameworks() {
+    const htmlBtn = document.getElementById('select-html') as HTMLDivElement;
+    const reactBtn = document.getElementById('select-react') as HTMLDivElement;
+    const htmlImports = document.getElementById('html-imports') as HTMLDivElement;
+    const reactImports = document.getElementById('react-imports') as HTMLDivElement;
+    const htmlPackage = document.getElementById('html-package') as HTMLLinkElement;
+    const reactPackage = document.getElementById('react-package') as HTMLLinkElement;
+
+    htmlBtn?.addEventListener('click', () => {
+        htmlBtn.classList.add('selected-framework');
+        reactBtn.classList.remove('selected-framework');
+
+        htmlImports.classList.remove('no-display');
+        htmlPackage.classList.remove('no-display');
+
+        reactImports.classList.add('no-display');
+        reactPackage.classList.add('no-display');
+    });
+    reactBtn?.addEventListener('click', () => {
+        reactBtn.classList.add('selected-framework');
+        htmlBtn.classList.remove('selected-framework');
+
+        reactImports.classList.remove('no-display');
+        reactPackage.classList.remove('no-display');
+
+        htmlImports.classList.add('no-display');
+        htmlPackage.classList.add('no-display');
+    });
 }
 
 async function setupVersions() {

@@ -5,8 +5,8 @@ import DOMTreeElement from '../core/DOMTreeElement.js';
 /**
  * A calendar icon component.
  *
+ * @import
  * ```js
- *
  * import '@capitec/omni-components/icons/Calendar.icon.js';
  * ```
  *

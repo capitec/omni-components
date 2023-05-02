@@ -41,20 +41,50 @@ async function renderAsString(data: object) {
 }
 
 export const Lit_Template: ComponentStoryFormat<Args> = {
-    source: () => `
-                
-<!-- Bound function used (<script> tags only for syntax highlighting) -->
-<script>
-async function renderAsLit(data: object) {
-    await new Promise<void>((r) => setTimeout(() => r(), 3000));
+    frameworkSources: [
+        {
+            framework: 'HTML',
+            load: () => `
+ 
+<script type="module">
+    import { html } from 'https://unpkg.com/lit/index.js?module';
+    import { render } from 'https://unpkg.com/lit-html/lit-html.js?module';
+
+    const someData = {
+        hello: 'world',
+        'other-data': false
+    };
+    async function renderAsLit(data) {
+        await new Promise((r) => setTimeout(() => r(), 3000));
+        return html\`<span>\${JSON.stringify(data)}</span>\`;
+    }
+
+    render(html\`                
+        <omni-render-element 
+            .data="\${someData}" 
+            .renderer="\${renderAsLit}">
+        </omni-render-element>
+    \`, document.getElementById('root'));
+</script>  
+<div id="root"></div>
+`
+            // disableCodePen: true
+        },
+        {
+            framework: 'React',
+            load: () => `import { OmniRenderElement } from "@capitec/omni-components-react/render-element";
+import { html } from 'https://unpkg.com/lit/index.js?module';
+
+async function renderAsLit(data) {
+    await new Promise((r) => setTimeout(() => r(), 3000));
     return html\`<span>\${JSON.stringify(data)}</span>\`;
 }
-</script>
-
-...
-                
-<omni-render-element .data="\${this.someData}" .renderer="\${this.renderAsLit}"></omni-render-element>
-`,
+const App = () => <OmniRenderElement renderer={renderAsLit} data={{
+                    hello: 'world',
+                    'other-data': false
+                  }}/>;`
+        }
+    ],
     name: 'Lit Template',
     description: 'Render a Lit template string from the renderer function.',
     render: (args: Args) => html`
@@ -121,7 +151,10 @@ export const HTML_Element_Instance: ComponentStoryFormat<Args> = {
     },
     name: 'HTML Element Instance',
     description: 'Render an HTMLElement instance from the renderer function.',
-    source: () => `
+    frameworkSources: [
+        {
+            framework: 'HTML',
+            load: () => `
 <omni-render-element id="renderElI"></omni-render-element>
 <script defer>
     async function renderAsElement(data) {
@@ -139,7 +172,25 @@ export const HTML_Element_Instance: ComponentStoryFormat<Args> = {
             hello: 'world',
             'other-data': false
     };
-</script>`,
+</script>`
+        },
+        {
+            framework: 'React',
+            load: () => `import { OmniRenderElement } from "@capitec/omni-components-react/render-element";
+
+async function renderAsElement(data) {
+    await new Promise((r) => setTimeout(() => r(), 3000));
+    const span = document.createElement('span');
+    span.appendChild(document.createTextNode(JSON.stringify(data)));
+    span.addEventListener('click', (ev) => alert('Clicked'));
+    return span;
+}
+const App = () => <OmniRenderElement renderer={renderAsElement} data={{
+                    hello: 'world',
+                    'other-data': false
+                  }}/>;`
+        }
+    ],
     args: {
         data: {
             hello: 'world',
@@ -205,11 +256,14 @@ export const HTML_String: ComponentStoryFormat<Args> = {
     },
     name: 'HTML String',
     description: 'Render a string from the renderer function as html.',
-    source: () => `
+    frameworkSources: [
+        {
+            framework: 'HTML',
+            load: () => `
 <omni-render-element id="renderElS"></omni-render-element>
 <script defer>
     async function renderAsString(data) {
-        await new Promise<void>((r) => setTimeout(() => r(), 3000));
+        await new Promise((r) => setTimeout(() => r(), 3000));
         return \`<span>\${JSON.stringify(data)}</span>\`;
     }
     renderEl = document.getElementById('renderElS');
@@ -220,7 +274,22 @@ export const HTML_String: ComponentStoryFormat<Args> = {
             hello: 'world',
             'other-data': false
     };
-</script>`,
+</script>`
+        },
+        {
+            framework: 'React',
+            load: () => `import { OmniRenderElement } from "@capitec/omni-components-react/render-element";
+
+async function renderAsString(data) {
+    await new Promise((r) => setTimeout(() => r(), 3000));
+    return \`<span>\${JSON.stringify(data)}</span>\`;
+}
+const App = () => <OmniRenderElement renderer={renderAsString} data={{
+                    hello: 'world',
+                    'other-data': false
+                  }}/>;`
+        }
+    ],
     args: {
         data: {
             hello: 'world',
