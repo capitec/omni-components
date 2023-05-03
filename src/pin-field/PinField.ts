@@ -1,5 +1,5 @@
 import { css, html } from 'lit';
-import { customElement, query, state } from 'lit/decorators.js';
+import { customElement, property, query, state } from 'lit/decorators.js';
 import { ClassInfo, classMap } from 'lit/directives/class-map.js';
 import { live } from 'lit/directives/live.js';
 import { OmniFormElement } from '../core/OmniFormElement.js';
@@ -8,7 +8,7 @@ import '../icons/EyeHidden.icon.js';
 import '../icons/EyeVisible.icon.js';
 
 /**
- * Pin input control to enter masked numeric values.
+ * Input control to enter a masked numeric value.
  *
  * @import
  * ```js
@@ -20,7 +20,7 @@ import '../icons/EyeVisible.icon.js';
  * <omni-pin-field
  *   label="Enter a value"
  *   value=1234
- *   data="{'id': 12345, 'name': 'Test'}"
+ *   max-length: 5
  *   hint="Required"
  *   error="Field level error message"
  *   disabled>
@@ -60,6 +60,18 @@ export class PinField extends OmniFormElement {
      */
     @state() protected type: 'password' | 'number' = 'number';
 
+    /**
+     * Disables native on screen keyboards for the component.
+     * @attr [no-native-keyboard]
+     */
+    @property({ type: Boolean, reflect: true, attribute: 'no-native-keyboard' }) noNativeKeyboard?: boolean;
+
+    /**
+     * Maximum character input length.
+     * @attr [max-length]
+     */
+    @property({ type: Number, reflect: true, attribute: 'max-length' }) maxLength?: number;
+
     @query('#inputField')
     private _inputElement?: HTMLInputElement;
     private showPin?: boolean = false;
@@ -97,9 +109,17 @@ export class PinField extends OmniFormElement {
         }
     }
 
-    _blurOnEnter(e: any) {
+    override focus(options?: FocusOptions | undefined): void {
+        if (this._inputElement) {
+            this._inputElement.focus(options);
+        } else {
+            super.focus(options);
+        }
+    }
+
+    _blurOnEnter(e: KeyboardEvent) {
         if (e.code === 'Enter' || e.keyCode === 13) {
-            e.currentTarget.blur();
+            (e.currentTarget as HTMLElement).blur();
         }
     }
 
@@ -113,6 +133,12 @@ export class PinField extends OmniFormElement {
 
     _keyInput() {
         const input = this._inputElement;
+        if (input?.value && this.maxLength && typeof this.maxLength === 'number') {
+            if (String(input?.value).length > this.maxLength) {
+                // Restrict the input characters to the length of specified in the args.
+                input.value = String(input?.value).slice(0, this.maxLength);
+            }
+        }
         this.value = input?.value;
     }
 
@@ -123,12 +149,14 @@ export class PinField extends OmniFormElement {
 
         if (this.showPin) {
             this.showPin = false;
+            this._inputElement?.setAttribute('data-omni-keyboard-mask', '');
 
             if (!this.isWebkit) {
                 this.type = 'password';
             }
         } else {
             this.showPin = true;
+            this._inputElement?.removeAttribute('data-omni-keyboard-mask');
 
             if (!this.isWebkit) {
                 this.type = 'number';
@@ -244,11 +272,13 @@ export class PinField extends OmniFormElement {
       <input
         class=${classMap(field)}
         id="inputField"
-        inputmode="numeric"
-        .type="${this.type}"
-        .value=${live(this.value as string)}
+        inputmode="${this.noNativeKeyboard ? 'none' : 'numeric'}"
+        data-omni-keyboard-mode="numeric"
+        type="${this.type}"
+        value=${live(this.value as string)}
         ?readOnly=${this.disabled}
-        tabindex="${this.disabled ? -1 : 0}" />
+        tabindex="${this.disabled ? -1 : 0}"
+        data-omni-keyboard-mask />
     `;
     }
 }

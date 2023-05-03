@@ -2,6 +2,38 @@
 /* eslint-disable no-case-declarations */
 const plugins = {
     plugins: [
+        function ignorePlugin() {
+            return {
+                // Runs for each module
+                analyzePhase({ ts, node, moduleDoc }) {
+                    switch (node.kind) {
+                        case ts.SyntaxKind.ClassDeclaration:
+                            const className = node.name.getText();
+
+                            node.jsDoc?.forEach(jsDoc => {
+                                jsDoc.tags?.forEach(tag => {
+                                    const tagName = tag.tagName.getText();
+                                    if (tagName && (tagName.toLowerCase() === 'ignore')) {
+                                        const classDeclaration = moduleDoc.declarations.find(declaration => declaration.name === className);
+
+                                        classDeclaration.ignore = true;
+                                    }
+                                });
+                            });
+
+                            break;
+                    }
+                },
+                // Runs for each module, after analyzing, all information about your module should now be available
+                moduleLinkPhase({ moduleDoc }) {
+                    // console.log(moduleDoc);
+                },
+                // Runs after all modules have been parsed, and after post processing
+                packageLinkPhase(customElementsManifest) {
+                    // console.log(customElementsManifest);
+                },
+            };
+        }(),
         function cssCategoryPlugin() {
             return {
                 // Runs for each module
@@ -19,6 +51,54 @@ const plugins = {
                                         const classDeclaration = moduleDoc.declarations.find(declaration => declaration.name === className);
 
                                         classDeclaration.cssCategory = description;
+                                    }
+                                });
+                            });
+
+                            break;
+                    }
+                },
+                // Runs for each module, after analyzing, all information about your module should now be available
+                moduleLinkPhase({ moduleDoc }) {
+                    // console.log(moduleDoc);
+                },
+                // Runs after all modules have been parsed, and after post processing
+                packageLinkPhase(customElementsManifest) {
+                    // console.log(customElementsManifest);
+                },
+            };
+        }(),
+        function globalAttributesPlugin() {
+            return {
+                // Runs for each module
+                analyzePhase({ ts, node, moduleDoc }) {
+                    switch (node.kind) {
+                        case ts.SyntaxKind.ClassDeclaration:
+                            const className = node.name.getText();
+
+                            node.jsDoc?.forEach(jsDoc => {
+                                jsDoc.tags?.forEach(tag => {
+                                    const tagName = tag.tagName.getText();
+                                    if (tagName && (tagName.toLowerCase() === 'globalattr' || tagName.toLowerCase() === 'global_attribute')) {
+                                        let attribute = tag.comment.substring(0,tag.comment.indexOf(' - '));
+                                        let type = '';
+                                        if (attribute.includes('}')) {
+                                            const split = attribute.split('}');
+                                            attribute = split[split.length - 1];
+                                            type = split[0].replace('{','');
+                                        }
+                                        const description = tag.comment.substring(tag.comment.indexOf(' - ') + 3);
+
+                                        const classDeclaration = moduleDoc.declarations.find(declaration => declaration.name === className);
+
+                                        if (!classDeclaration.globalAttributes) {
+                                            classDeclaration.globalAttributes = [];
+                                        }
+                                        classDeclaration.globalAttributes.push({
+                                            attribute,
+                                            description,
+                                            type
+                                        });
                                     }
                                 });
                             });

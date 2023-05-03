@@ -7,7 +7,6 @@ Control to select a single value from a group of values.
 ```html
 <omni-radio
   label="My Toggle Value"
-  data="{'id': 12345, 'name': 'Test'}"
   hint="Required"
   error="Field level error message"
   checked
@@ -46,6 +45,7 @@ Control to select a single value from a group of values.
 
 | Name                | Description                                      |
 |---------------------|--------------------------------------------------|
+|                     | Content to render inside the component.          |
 | `loading_indicator` | Used to define content that is displayed while async rendering is awaiting, or when renderLoading() is implicitly called |
 
 ## CSS Custom Properties

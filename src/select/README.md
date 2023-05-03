@@ -21,6 +21,7 @@ Control to get / set a value within a list of options.
 
 | Property       | Attribute       | Modifiers | Type                                             | Default             | Description                                      |
 |----------------|-----------------|-----------|--------------------------------------------------|---------------------|--------------------------------------------------|
+| `clearable`    | `clearable`     |           | `boolean`                                        | false               | Toggles the ability to clear the value of the component. |
 | `data`         | `data`          |           | `object \| undefined`                            |                     | Data associated with the component.              |
 | `dir`          |                 |           | `string`                                         |                     |                                                  |
 | `disabled`     | `disabled`      |           | `boolean`                                        | false               | Indicator if the component should be disabled.   |
@@ -43,6 +44,7 @@ Control to get / set a value within a list of options.
 |-----------------|------------------------------------------|
 | `renderContent` | `(): TemplateResult<1>`                  |
 | `renderControl` | `(): TemplateResult<1>`                  |
+| `renderLabel`   | `(): TemplateResult<1>`                  |
 | `renderLoading` | `(): TemplateResult<1>`                  |
 | `renderPicker`  | `(): TemplateResult<1> \| unique symbol` |
 
@@ -56,7 +58,10 @@ Control to get / set a value within a list of options.
 
 | Name                | Description                                      |
 |---------------------|--------------------------------------------------|
+| `arrow`             | Replaces the icon for the arrow slot (Displays on desktop and tablet devices). |
+| `clear`             | Replaces the icon for the clear slot.            |
 | `loading_indicator` | Used to define content that is displayed while async rendering is awaiting, or when renderLoading() is implicitly called |
+| `more`              | Replaces the icon for the more slot (Displays on mobile devices). |
 | `prefix`            | Replaces the icon for the prefix slot.           |
 | `suffix`            | Replaces the icon for the suffix slot.           |
 
@@ -75,6 +80,10 @@ Control to get / set a value within a list of options.
 | `--omni-form-border-style`                       | Form border style.                               |
 | `--omni-form-border-top`                         | Form border top.                                 |
 | `--omni-form-border-width`                       | Form border width.                               |
+| `--omni-form-clear-control-margin-left`          | Form clear control left margin.                  |
+| `--omni-form-clear-control-margin-right`         | Form clear control right margin.                 |
+| `--omni-form-clear-control-width`                | Form clear control width.                        |
+| `--omni-form-clear-icon-color`                   | Form clear icon color.                           |
 | `--omni-form-disabled-background-color`          | Form disabled background color.                  |
 | `--omni-form-disabled-border-color`              | Form disabled border color.                      |
 | `--omni-form-disabled-focussed-label-background-color` | Form disabled label focussed background color.   |
@@ -94,6 +103,7 @@ Control to get / set a value within a list of options.
 | `--omni-form-focussed-error-label-color`         | Form focussed error label color.                 |
 | `--omni-form-focussed-label-background-color`    | Form focussed label background color.            |
 | `--omni-form-focussed-label-color`               | Form focussed label color.                       |
+| `--omni-form-focussed-label-disabled-background-color` | Form focussed label disabled background color.   |
 | `--omni-form-focussed-label-margin-left`         | Form focussed label left margin.                 |
 | `--omni-form-focussed-label-padding-left`        | Form focussed label left.                        |
 | `--omni-form-focussed-label-padding-right`       | Form focussed label right.                       |
@@ -118,10 +128,16 @@ Control to get / set a value within a list of options.
 | `--omni-form-layout-height`                      | Layout height.                                   |
 | `--omni-form-layout-width`                       | Layout width.                                    |
 | `--omni-select-control-icon-color`               | Select control icon color.                       |
+| `--omni-select-control-icon-error-color`         | Select control error icon color.                 |
+| `--omni-select-control-icon-height`              | Select control icon height.                      |
 | `--omni-select-control-icon-width`               | Select control icon width.                       |
-| `--omni-select-control-margin-left`              | Select control left margin.                      |
-| `--omni-select-control-margin-right`             | Select control right margin.                     |
-| `--omni-select-control-width`                    | Select control width.                            |
+| `--omni-select-control-padding`                  | Select component control padding.                |
+| `--omni-select-dialog-background-color`          | Select dialog background color.                  |
+| `--omni-select-dialog-bottom`                    | Select dialog bottom.                            |
+| `--omni-select-dialog-left`                      | Select dialog left.                              |
+| `--omni-select-dialog-modal-max-height`          | Select dialog height.                            |
+| `--omni-select-dialog-modal-max-width`           | Select dialog modal max width.                   |
+| `--omni-select-dialog-right`                     | Select dialog right.                             |
 | `--omni-select-field-disabled-font-color`        | Select component input field disabled font color. |
 | `--omni-select-field-error-font-color`           | Select component input field error font color.   |
 | `--omni-select-field-font-color`                 | Select component input field font color.         |
@@ -164,11 +180,6 @@ Control to get / set a value within a list of options.
 | `--omni-select-items-width`                      | Select items width.                              |
 | `--omni-select-loading-indicator-height`         | Select loading indicator height.                 |
 | `--omni-select-loading-indicator-width`          | Select loading indicator width.                  |
-| `--omni-select-mobile-items-container-border-top-left-radius` | Select item container for mobile top left radius. |
-| `--omni-select-mobile-items-container-border-top-right-radius` | Select item container for mobile right left radius. |
-| `--omni-select-mobile-items-container-bottom`    | Select item container for mobile bottom.         |
-| `--omni-select-mobile-items-container-left`      | Select item container for mobile left.           |
-| `--omni-select-mobile-items-container-right`     | Select item container for mobile right.          |
 | `--omni-theme-accent-active-color`               | Theme accent active color.                       |
 | `--omni-theme-accent-color`                      | Theme accent color.                              |
 | `--omni-theme-accent-hover-color`                | Theme accent hover color.                        |

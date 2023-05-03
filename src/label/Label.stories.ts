@@ -45,7 +45,21 @@ export const Interactive: ComponentStoryFormat<Args> = {
     play: async (context) => {
         const label = within(context.canvasElement).getByTestId<Label>('test-label');
         await expect(label.shadowRoot).toHaveTextContent(Interactive.args?.label as string);
-    }
+    },
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniLabel } from "@capitec/omni-components-react/label";
+
+const App = () => <OmniLabel${args.label ? ` label='${args.label}'` : ''}${args.type ? ` type='${args.type}'` : ''}${
+                !args['[Default Slot]']
+                    ? '/>'
+                    : `>
+                      ${args['[Default Slot]']}
+                  </OmniLabel>`
+            };`
+        }
+    ]
 };
 
 export const Title: ComponentStoryFormat<Args> = {
@@ -58,11 +72,33 @@ export const Title: ComponentStoryFormat<Args> = {
     play: async (context) => {
         const label = within(context.canvasElement).getByTestId<Label>('test-label');
         await expect(label.shadowRoot).toHaveTextContent(Title.args?.label as string);
-    }
+    },
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniLabel } from "@capitec/omni-components-react/label";
+
+const App = () => <OmniLabel${args.label ? ` label='${args.label}'` : ''}${args.type ? ` type='${args.type}'` : ''}/>;`
+        }
+    ]
 };
 
 export const Subtitle: ComponentStoryFormat<Args> = {
     render: (args: Args) => html` <omni-label data-testid="test-label" label="${args.label}" type="${args.type}"> </omni-label> `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniLabel } from "@capitec/omni-components-react/label";
+
+const App = () => <OmniLabel${args.label ? ` label='${args.label}'` : ''}${args.type ? ` type='${args.type}'` : ''}${
+                !args['[Default Slot]']
+                    ? '/>'
+                    : `>
+                      ${args['[Default Slot]']}
+                  </OmniLabel>`
+            };`
+        }
+    ],
     description: 'Set the text to display with the styles of a subtitle.',
     args: {
         label: 'Subtitle',
@@ -75,7 +111,21 @@ export const Subtitle: ComponentStoryFormat<Args> = {
 };
 
 export const Strong: ComponentStoryFormat<Args> = {
-    render: (args: Args) => html` <omni-label data-testid="test-label" label="${args.label}" type="${args.type}"> </omni-label> `,
+    render: (args: Args) => html` <omni-label data-testid="test-label" label="${args.label}" type="${args.type}"></omni-label>`,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniLabel } from "@capitec/omni-components-react/label";
+
+const App = () => <OmniLabel${args.label ? ` label='${args.label}'` : ''}${args.type ? ` type='${args.type}'` : ''}${
+                !args['[Default Slot]']
+                    ? '/>'
+                    : `>
+                      ${args['[Default Slot]']}
+                  </OmniLabel>`
+            };`
+        }
+    ],
     description: 'Set the text to display with a bold font style.',
     args: {
         label: 'Strong',
@@ -84,5 +134,34 @@ export const Strong: ComponentStoryFormat<Args> = {
     play: async (context) => {
         const label = within(context.canvasElement).getByTestId<Label>('test-label');
         await expect(label.shadowRoot).toHaveTextContent(Strong.args?.label as string);
+    }
+};
+
+export const Slot: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
+        <omni-label data-testid="test-label" type="${args.type}">
+            <span>This is <span style="text-decoration: underline;">underlined</span> text inside a paragraph.</span>
+        </omni-label>
+    `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniLabel } from "@capitec/omni-components-react/label";
+
+const App = () => <OmniLabel${args.label ? ` label='${args.label}'` : ''}${args.type ? ` type='${args.type}'` : ''}>
+                    <span>This is <span style={{textDecoration: 'underline'}}>underlined</span> text inside a paragraph.</span>
+                  </OmniLabel>;`
+        }
+    ],
+    description: 'Set html content to display within.',
+    args: {
+        label: 'Slot',
+        type: 'strong'
+    },
+    play: async (context) => {
+        const label = within(context.canvasElement).getByTestId<Label>('test-label');
+        const slotElement = label.shadowRoot?.querySelector('slot');
+        const foundSlottedSpan = slotElement?.assignedElements().find((e) => e.innerHTML.includes('text inside a paragraph.'));
+        await expect(foundSlottedSpan).toBeTruthy();
     }
 };

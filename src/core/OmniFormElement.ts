@@ -3,10 +3,12 @@ export { ifDefined } from 'lit/directives/if-defined.js';
 import { property } from 'lit/decorators.js';
 import { ClassInfo, classMap } from 'lit/directives/class-map.js';
 import OmniElement from './OmniElement.js';
+import '../icons/Clear.icon.js';
 
 /**
  * Base class used by form components to share common properties, styles and functionality.
  *
+ * @slot clear - Replaces the icon for the clear slot.
  * @slot prefix - Replaces the icon for the prefix slot.
  * @slot suffix - Replaces the icon for the suffix slot.
  *
@@ -39,6 +41,7 @@ import OmniElement from './OmniElement.js';
  *
  * @cssprop --omni-form-focussed-border-width - Form focussed border width.
  * @cssprop --omni-form-focussed-border-color - Form focussed border color.
+ * @cssprop --omni-form-focussed-label-disabled-background-color - Form focussed label disabled background color.
  * @cssprop --omni-form-focussed-label-transform-scale - Form focussed label transform scale.
  * @cssprop --omni-form-focussed-label-margin-left - Form focussed label left margin.
  * @cssprop --omni-form-focussed-label-color - Form focussed label color.
@@ -75,6 +78,11 @@ import OmniElement from './OmniElement.js';
  * @cssprop --omni-form-hover-color - Form hover color.
  * @cssprop --omni-form-disabled-hover-color - Form disabled hover color.
  * @cssprop --omni-form-error-hover-color - Form error hover color.
+ *
+ * @cssprop --omni-form-clear-control-margin-right - Form clear control right margin.
+ * @cssprop --omni-form-clear-control-margin-left -  Form clear control left margin.
+ * @cssprop --omni-form-clear-control-width - Form clear control width.
+ * @cssprop --omni-form-clear-icon-color - Form clear icon color.
  *
  */
 export class OmniFormElement extends OmniElement {
@@ -113,6 +121,31 @@ export class OmniFormElement extends OmniElement {
      * @attr
      */
     @property({ type: Boolean, reflect: true }) disabled = false;
+
+    /**
+     * Toggles the ability to clear the value of the component.
+     * @attr
+     */
+    @property({ type: Boolean, reflect: true }) clearable = false;
+
+    protected _clearValue(e: MouseEvent) {
+        if (this.disabled) {
+            return e.stopImmediatePropagation();
+        }
+
+        this.value = '';
+
+        // Dispatch standard DOM event to cater for single clear.
+        this.dispatchEvent(
+            new Event('change', {
+                bubbles: true,
+                composed: true
+            })
+        );
+
+        // Prevent the event from bubbling up. for mobile use cases that will bring the component into focus and render the items.
+        e.stopPropagation();
+    }
 
     static override get styles(): CSSResultGroup {
         return [
@@ -202,11 +235,11 @@ export class OmniFormElement extends OmniElement {
                 .layout:focus-within > .border {
                     border-style: solid;
                     border-width: var(--omni-form-focussed-border-width, 2px);
-                    border-color: var(--omni-form-focussed-border-color, var(--omni-primary-color));
+                    border-color: var(--omni-form-focussed-border-color, var(--omni-primary-active-color));
                 }
 
                 :host([value]:not([value=''])) .layout  > .label,
-                .layout:focus-within > .label
+                .layout:focus-within > .label:not(.focused-static)
                 {
                     top: 0px;
                     margin-left: var(--omni-form-focussed-label-margin-left, 10px);
@@ -222,7 +255,7 @@ export class OmniFormElement extends OmniElement {
                 }
             
                 :host([value]:not([value=''])) .layout  > .label > div::before,
-                .layout:focus-within > .label > div::before 
+                .layout:focus-within > .label:not(.focused-static) > div::before
                 {
                     content: "";
 					display: block;           
@@ -234,6 +267,12 @@ export class OmniFormElement extends OmniElement {
 					z-index: -1;
                     top:50%;
                     width: calc(100% + var(--omni-form-focussed-label-padding-left, 3px) + var(--omni-form-focussed-label-padding-right, 3px));
+                }
+
+                :host([value]:not([value=''])) .layout.disabled  > .label > div::before,
+                .layout.disabled:focus-within > .label > div::before 
+                {
+                    background-color: var(--omni-form-focussed-label-disabled-background-color, var(--omni-disabled-background-color));
                 }
 
                 :host([value]:not([value=''])) .layout  > .label > div,
@@ -305,16 +344,42 @@ export class OmniFormElement extends OmniElement {
                     box-shadow: none;
                 }
 
-                .layout:hover > .border {
-                    border-color: var(--omni-form-hover-color, var(--omni-primary-color));
+                /* Make this border wider half of focussed*/
+                /* Added to resolve sticky hover state on mobile devices */
+                @media (hover: hover) {
+                    .layout:hover > .border {
+                        border-color: var(--omni-form-hover-color, var(--omni-primary-hover-color));
+                    }
+
+                    .layout.disabled:hover > .border {
+                        border-color: var(--omni-form-disabled-hover-color, var(--omni-disabled-border-color));
+                    }
+
+                    .layout.error:hover > .border {
+                        border-color: var(--omni-form-error-hover-color, var(--omni-error-border-color));
+                    }
                 }
 
-                .layout.disabled:hover > .border {
-                    border-color: var(--omni-form-disabled-hover-color, var(--omni-disabled-border-color));
+                .clear-control {
+                    display: flex;
+                  
+                    margin-right: var(--omni-form-clear-control-margin-right, 10px);
+                    margin-left: var(--omni-form-clear-control-margin-left, 10px);
+                    width: var(--omni-form-clear-control-width, 20px);
                 }
 
-                .layout.error:hover > .border {
-                    border-color: var(--omni-form-error-hover-color, var(--omni-error-border-color));
+                .clear-click {
+                    display: flex;
+                }
+
+                .clear-icon {
+                    fill: var(--omni-form-clear-icon-color, var(--omni-primary-color));
+                }
+
+                .clear-icon,
+                ::slotted([slot='clear']){
+                    width: var(--omni-form-clear-icon-width, 20px);
+                    cursor: pointer;
                 }
 
                 slot[name='prefix'],
@@ -342,6 +407,7 @@ export class OmniFormElement extends OmniElement {
                     <slot name="prefix">${this.renderPrefix()}</slot>
                     ${this.renderLabel()} 
                     ${this.renderContent()} 
+                    ${this.renderClear()}
                     <slot name="suffix"></slot>
                     ${this.renderControl()} ${this.renderPicker()}
                 </div>
@@ -358,11 +424,12 @@ export class OmniFormElement extends OmniElement {
         return nothing;
     }
 
-    protected renderLabel() {
+    protected renderLabel(focusedStatic: boolean = false) {
         const labelClass: ClassInfo = {
             label: true,
             error: this.error ?? false,
-            disabled: this.disabled
+            disabled: this.disabled,
+            'focused-static': focusedStatic
         };
 
         return html`${this.label ? html`<div class=${classMap(labelClass)}><div>${this.label}</div></div>` : nothing}`;
@@ -382,5 +449,21 @@ export class OmniFormElement extends OmniElement {
 
     protected renderError() {
         return html`${this.error ? html`<div class="error-label">${this.error}</div>` : nothing} `;
+    }
+
+    protected renderClear(): typeof nothing | TemplateResult {
+        return html`
+        <div class="clear-control">
+            ${
+                this.clearable && this.value && !this.disabled
+                    ? html`
+            <div id="clear-click" class="clear-click" @click="${(e: MouseEvent) => this._clearValue(e)}">
+                    <slot name="clear">
+                        <omni-clear-icon class="clear-icon"></omni-clear-icon>
+                    </slot>
+            </div>`
+                    : nothing
+            }
+        </div>`;
     }
 }

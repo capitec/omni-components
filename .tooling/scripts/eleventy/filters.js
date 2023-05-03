@@ -1,4 +1,5 @@
-import { loadCustomElementsModuleByFileFor, loadCssProperties, filterJsDocLinks } from '../../../dist/utils/StoryUtils.js';
+import { loadCustomElementsModuleByFileFor, loadCssProperties, transformFromJsdoc } from '../../../dist/utils/StoryUtils.js';
+import path from 'path';
 
 export function getTagName(value, componentName) {
     const component = loadCustomElementsModuleByFileFor(componentName, value);
@@ -19,12 +20,30 @@ export function getImport(value, componentName) {
     return imp;
 }
 
+export function getReactImport(value, componentName) {
+    const component = loadCustomElementsModuleByFileFor(componentName, value);
+    const declaration = component.declarations.find(d => d.name === componentName);
+    const ComponentName = declaration.name;
+    const componentPath = path.basename(path.dirname(component.path));
+    return `import { Omni${ComponentName} } from "@capitec/omni-components-react/${componentPath}";`;
+}
+
 export function getProperties(value, componentName) {
     const declaration = getComponentDeclaration(value, componentName);
     return declaration.members?.filter(m => m.kind === 'field' && m.privacy !== 'private')?.map(a => {
         return {
             ...a,
-            description: filterJsDocLinks(a.description)
+            description: transformFromJsdoc(a.description)
+        };
+    });
+}
+
+export function getGlobalAttributes(value, componentName) {
+    const declaration = getComponentDeclaration(value, componentName);
+    return declaration.globalAttributes?.map(a => {
+        return {
+            ...a,
+            description: transformFromJsdoc(a.description)
         };
     });
 }
@@ -34,7 +53,7 @@ export function getEvents(value, componentName) {
     return declaration.events?.map(e => {
         return {
             ...e,
-            description: filterJsDocLinks(e.description)
+            description: transformFromJsdoc(e.description)
         };
     });
 }
@@ -49,7 +68,7 @@ export function getSlots(value, componentName) {
     return declaration.slots?.map(s => {
         return {
             ...s,
-            description: filterJsDocLinks(s.description)
+            description: transformFromJsdoc(s.description)
         };
     });
 }
@@ -69,7 +88,7 @@ export function getCSSProperties(value, componentName) {
         const prop = cssProperties[name];
         return {
             name: `--${name}`,
-            description: filterJsDocLinks(prop.description),
+            description: transformFromJsdoc(prop.description),
             category: prop.subcategory
         };
     });

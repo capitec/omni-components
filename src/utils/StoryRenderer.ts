@@ -1,12 +1,13 @@
+/* eslint-disable no-control-regex */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { html as langHtml } from '@codemirror/lang-html';
+import { javascript as langJs } from '@codemirror/lang-javascript';
 import { githubDark as codeThemeDark } from '@ddietr/codemirror-themes/github-dark.js';
 import { githubLight as codeTheme } from '@ddietr/codemirror-themes/github-light.js';
 import { html, LitElement, nothing, render, TemplateResult } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { live } from 'lit/directives/live.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import pretty from 'pretty';
 import { ColorField } from '../color-field/ColorField.js';
 import { SearchField } from '../search-field/SearchField.js';
 import { TextField } from '../text-field/TextField.js';
@@ -14,7 +15,16 @@ import { CodeMirrorSourceUpdateEvent, CodeMirrorEditorEvent } from './CodeEditor
 import { CodeEditor } from './CodeEditor.js';
 import { LivePropertyEditor, PropertyChangeEvent } from './LivePropertyEditor.js';
 import { StoryController } from './StoryController.js';
-import { loadCustomElementsCodeMirrorCompletionsRemote, loadCustomElements, loadCssProperties, Package, ComponentStoryFormat } from './StoryUtils.js';
+import {
+    loadCustomElementsCodeMirrorCompletionsRemote,
+    loadCustomElements,
+    loadCssProperties,
+    Package,
+    ComponentStoryFormat,
+    FrameworkOption,
+    transformSource,
+    getSourceFromLit
+} from './StoryUtils.js';
 
 import '../label/Label.js';
 import '../button/Button';
@@ -39,8 +49,10 @@ export class StoryRenderer extends LitElement {
     @state() _isBusyPlaying?: boolean;
     @state() _playError?: string;
     @state() _showStylesDialog?: boolean;
+    @state() _sourceTab: FrameworkOption = 'HTML';
 
-    @query('.source-code') codeEditor?: CodeEditor;
+    @query('.html-source-code') htmlCodeEditor?: CodeEditor;
+    @query('.react-source-code') reactCodeEditor?: CodeEditor;
     @query('.live-props') propertyEditor?: LivePropertyEditor;
 
     private originalInteractiveSrc?: string;
@@ -98,6 +110,9 @@ export class StoryRenderer extends LitElement {
                     ce.updateExtensions();
                 });
             }
+        });
+        document.addEventListener(interactiveUpdate, () => {
+            this.requestUpdate();
         });
         this.theme = getComputedStyle(document.documentElement).getPropertyValue('--code-editor-theme')?.trim();
     }
@@ -165,7 +180,12 @@ export class StoryRenderer extends LitElement {
         this.story!.originalArgs = this.story?.originalArgs ?? JSON.parse(JSON.stringify(this.story?.args));
 
         const res = this.story!.render!(this.story!.args);
-        const storySource = this.story!.source ? this.story!.source() : this._getSourceFromLit(res);
+
+        const htmlSourceDefinition = this.story!.frameworkSources?.find((fs) => fs.framework === 'HTML');
+        const htmlSource = htmlSourceDefinition?.load ? htmlSourceDefinition.load(this.story!.args) : getSourceFromLit(res);
+
+        const reactSourceDefinition = this.story!.frameworkSources?.find((fs) => fs.framework === 'React');
+        const reactSource = reactSourceDefinition?.load ? reactSourceDefinition.load(this.story!.args) : '';
 
         return html`
         <div class="story-description">
@@ -214,10 +234,27 @@ export class StoryRenderer extends LitElement {
                                 this.story!.args![changed.property] = changed.newValue;
 
                                 this.requestUpdate();
+                                this.dispatchEvent(
+                                    new CustomEvent(interactiveUpdate, {
+                                        bubbles: true,
+                                        composed: true
+                                    })
+                                );
                                 await this.updateComplete;
 
-                                if (this.codeEditor && !this.story?.source) {
-                                    await this.codeEditor.refresh(() => this._getSourceFromLit(this.story!.render!(this.story!.args)));
+                                if (this.htmlCodeEditor) {
+                                    await this.htmlCodeEditor.refresh(() =>
+                                        this.story!.frameworkSources?.find((fs) => fs.framework === 'HTML')?.load
+                                            ? this.story!.frameworkSources!.find((fs) => fs.framework === 'HTML')!.load!(this.story!.args)
+                                            : getSourceFromLit(this.story!.render!(this.story!.args))
+                                    );
+                                }
+                                if (this.reactCodeEditor) {
+                                    await this.reactCodeEditor.refresh(() =>
+                                        this.story!.frameworkSources?.find((fs) => fs.framework === 'React')?.load
+                                            ? this.story!.frameworkSources!.find((fs) => fs.framework === 'React')!.load!(this.story!.args)
+                                            : ''
+                                    );
                                 }
                             }
                         }}"></live-property-editor>
@@ -227,12 +264,12 @@ export class StoryRenderer extends LitElement {
                 }
             </div>
             <!-- <div style="border-top: 1px solid #e1e1e1;max-width: 600px;"> -->
-            <div class="code-block">
+            <div class="code-block html-code ${this._sourceTab === 'HTML' ? '' : 'no-display'}">
                 <code-editor
-                class="source-code"
-                .transformSource="${(s: string) => this._transformSource(s)}"
+                class="source-code html-source-code"
+                .transformSource="${(s: string) => transformSource(s)}"
                 .extensions="${async () => [this._currentCodeTheme(), langHtml(await loadCustomElementsCodeMirrorCompletionsRemote())]}"
-                .code="${live(storySource ?? '')}"
+                .code="${live(htmlSource ?? '')}"
                 @codemirror-loaded="${(e: CustomEvent<CodeMirrorEditorEvent>) => {
                     const newSource = e.detail.source;
                     this.originalInteractiveSrc = newSource;
@@ -241,42 +278,125 @@ export class StoryRenderer extends LitElement {
                 @codemirror-source-change="${(e: CustomEvent<CodeMirrorSourceUpdateEvent>) => {
                     const newSource = e.detail.source;
                     this._interactiveSrc = newSource;
-                    this.overrideInteractive = this._interactiveSrc !== this.originalInteractiveSrc && this._interactiveSrc !== storySource;
+                    this.overrideInteractive = this._interactiveSrc !== this.originalInteractiveSrc && this._interactiveSrc !== htmlSource;
 
                     this.requestUpdate();
+                    this.dispatchEvent(
+                        new CustomEvent(interactiveUpdate, {
+                            bubbles: true,
+                            composed: true
+                        })
+                    );
                 }}"
                 ?read-only="${true /*!this.interactive*/}">
                 </code-editor>
             </div>
-            <div class="play-tests">
-                <div style="display: flex; flex-direction: row;">
-                <omni-button
-                    class="docs-omni-component"
-                    label="Run Tests"
-                    slot-position="left"
-                    ?disabled=${
-                        this.overrideInteractive ||
-                        this._isBusyPlaying ||
-                        JSON.stringify(this.story?.originalArgs)
-                            .replaceAll('\n', '')
-                            .replaceAll('\\n', '')
-                            .replaceAll('\t', '')
-                            .replaceAll(' ', '') !==
-                            JSON.stringify(this.story?.args).replaceAll('\n', '').replaceAll('\\n', '').replaceAll('\t', '').replaceAll(' ', '')
+            ${
+                reactSource
+                    ? html`
+            <div class="code-block react-code ${this._sourceTab === 'React' ? '' : 'no-display'}">
+                <code-editor
+                class="source-code react-source-code"
+                .extensions="${async () => [
+                    this._currentCodeTheme(),
+                    langJs({
+                        jsx: true
+                    })
+                ]}"
+                .code="${reactSource}"
+                read-only>
+                </code-editor>
+            </div>`
+                    : nothing
+            }
+
+            <div class="two-part ${
+                !this.story?.play && this.story!.frameworkSources?.find((fs) => fs.framework === this._sourceTab)?.disableCodePen && !reactSource
+                    ? 'no-display'
+                    : ''
+            }">
+            
+                <div class="play-tests">
+                    ${
+                        this.story?.play
+                            ? html`
+                            <div style="display: flex;flex-direction: row;align-items: center;">
+                            <omni-button
+                                class="docs-omni-component"
+                                ?disabled=${
+                                    this.overrideInteractive ||
+                                    this._isBusyPlaying ||
+                                    JSON.stringify(this.story?.originalArgs)
+                                        .replaceAll('\n', '')
+                                        .replaceAll('\\n', '')
+                                        .replaceAll('\t', '')
+                                        .replaceAll(' ', '') !==
+                                        JSON.stringify(this.story?.args)
+                                            .replaceAll('\n', '')
+                                            .replaceAll('\\n', '')
+                                            .replaceAll('\t', '')
+                                            .replaceAll(' ', '')
+                                }
+                                @click="${() => this._play(this.story, `.${this.key}`)}">
+                                <omni-icon class="docs-omni-component" icon="@material/play_arrow"></omni-icon>
+                            </omni-button>
+                            <div class="${this.key + '-result'} success">
+                                <span class="material-icons" style="color: #155724;">check</span>
+                            </div>
+                            </div>       
+                    `
+                            : nothing
                     }
-                    @click="${() => this._play(this.story, `.${this.key}`)}">
-                    <omni-icon class="docs-omni-component" icon="@material/play_arrow" style="margin-right: 8px;"></omni-icon>
-                </omni-button>
-                <div class="${this.key + '-result'} success">
-                    <span class="material-icons" style="color: #155724;">check</span>
-                    <span style="margin-left: 8px;">Passed</span>
-                </div>
-                </div>
-                <div class="${this.key + '-result'} failure">
-                <span class="material-icons" style="color: #721c24;">close</span>
-                <span style="margin-left: 8px;"><pre>${this._playError}</pre></span>
+                </div>     
+                <div class="framework-toggles docs-omni-component">
+                    ${
+                        !this.interactive && reactSource
+                            ? html`
+                                <div class="${this._sourceTab === 'HTML' ? 'selected' : ''}" @click="${() => (this._sourceTab = 'HTML')}">
+                                    <omni-icon class="docs-omni-component" size="default">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="24" height="24">
+                                            <title>HTML5 Logo Badge</title>
+                                            <path fill="#E34F26" d="M71,460 L30,0 481,0 440,460 255,512"></path>
+                                            <path fill="#EF652A" d="M256,472 L405,431 440,37 256,37"></path>
+                                            <path fill="#EBEBEB" d="M256,208 L181,208 176,150 256,150 256,94 255,94 114,94 115,109 129,265 256,265zM256,355 L255,355 192,338 188,293 158,293 132,293 139,382 255,414 256,414z"></path>
+                                            <path fill="#FFF" d="M255,208 L255,265 325,265 318,338 255,355 255,414 371,382 372,372 385,223 387,208 371,208zM255,94 L255,129 255,150 255,150 392,150 392,150 392,150 393,138 396,109 397,94z"></path>
+                                        </svg>
+                                    </omni-icon>
+                                </div>
+                                <div class="${this._sourceTab === 'React' ? 'selected' : ''}" @click="${() => (this._sourceTab = 'React')}">
+                                    <omni-icon class="docs-omni-component" size="default">
+                                        <img style="height: 24px; width: 24px;" src="./assets/images/react.svg" alt="React" />
+                                    </omni-icon>
+                                </div>
+                            `
+                            : nothing
+                    }
+                    <div class="docs-omni-component codepen-gen-btn ${
+                        this.story!.frameworkSources?.find((fs) => fs.framework === this._sourceTab)?.disableCodePen ? 'no-display' : ''
+                    }" @click="${() =>
+            this._generateCodePen(this._sourceTab, {
+                React: reactSource,
+                HTML: htmlSource
+            })}">
+                        <omni-icon class="docs-omni-component" size="default">
+                            <svg class="hidden-after-760" style="height: 12px; stroke: var(--omni-theme-font-color);" viewBox="0 0 138 26" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" title="CodePen"><path d="M15 8a7 7 0 1 0 0 10m7-8.7L33 2l11 7.3v7.4L33 24l-11-7.3zm0 0 11 7.4 11-7.4m0 7.4L33 9.3l-11 7.4M33 2v7.3m0 7.4V24M52 6h5a7 7 0 0 1 0 14h-5zm28 0h-9v14h9m-9-7h6m11 1h6a4 4 0 0 0 0-8h-6v14m26-14h-9v14h9m-9-7h6m11 7V6l11 14V6"></path></svg>
+                            <svg class="hidden-until-760" style="height: 24px; stroke: var(--omni-theme-font-color); background: var(--omni-theme-background-color);" xmlns="http://www.w3.org/2000/svg" aria-label="CodePen" role="img" viewBox="0 0 512 512"><g xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="33" stroke-linejoin="round"><path d="M81 198v116l175 117 175-117V198L256 81z"/><path d="M81 198l175 116 175-116M256 81v117"/><path d="M81 314l175-116 175 116M256 431V314"/></g></svg>
+                        </omni-icon>
+                    </div>
                 </div>
             </div>
+            ${
+                this.story?.play
+                    ? html`
+                <div class="${this.key + '-result'} failure">
+                    <div class="play-tests-out">
+                    <span class="material-icons" style="color: #721c24;">close</span>
+                    <span style="margin-left: 8px;"><pre>${this._playError}</pre></span>
+                    </div>
+                </div>
+                `
+                    : nothing
+            }
         </div>
     `;
     }
@@ -436,11 +556,28 @@ export class StoryRenderer extends LitElement {
         sessionStorage.removeItem(`custom-css-${this.tag}`);
 
         this.requestUpdate();
+        this.dispatchEvent(
+            new CustomEvent(interactiveUpdate, {
+                bubbles: true,
+                composed: true
+            })
+        );
 
         await this.updateComplete;
 
-        if (this.codeEditor && !this.story?.source) {
-            await this.codeEditor.refresh(() => this._getSourceFromLit(this.story!.render!(this.story!.args)));
+        if (this.htmlCodeEditor) {
+            await this.htmlCodeEditor.refresh(() =>
+                this.story!.frameworkSources?.find((fs) => fs.framework === 'HTML')?.load
+                    ? this.story!.frameworkSources!.find((fs) => fs.framework === 'HTML')!.load!(this.story!.args)
+                    : getSourceFromLit(this.story!.render!(this.story!.args))
+            );
+        }
+        if (this.reactCodeEditor) {
+            await this.reactCodeEditor.refresh(() =>
+                this.story!.frameworkSources?.find((fs) => fs.framework === 'React')?.load
+                    ? this.story!.frameworkSources!.find((fs) => fs.framework === 'React')!.load!(this.story!.args)
+                    : ''
+            );
         }
 
         if (this.propertyEditor) {
@@ -448,16 +585,137 @@ export class StoryRenderer extends LitElement {
         }
     }
 
-    private _getSourceFromLit(res: TemplateResult): string {
-        let tempContainer = document.createElement('div');
-        render(res, tempContainer);
-        const source = this._transformSource(tempContainer.innerHTML);
+    private async _generateCodePen(source: FrameworkOption, frameworkSources: Record<FrameworkOption, string>) {
+        const sourceCode = frameworkSources[source];
 
-        //Cleanup
-        tempContainer.innerHTML = '';
-        tempContainer = null as any;
+        const version = (document.getElementById('header-version-indicator')?.innerText ?? '').toLowerCase();
 
-        return source;
+        const elementModule = this.customElements!.modules.find((module) => module.exports?.find((e) => e.name === this.tag));
+        const splitPath = elementModule!.path.split('/');
+        const componentDirectory = splitPath[splitPath.length - 2];
+
+        const esmVersion =
+            version && version !== 'latest' && version !== 'local'
+                ? !['alpha', 'beta', 'next'].includes(version)
+                    ? `${version}-esm`
+                    : `esm-${version}`
+                : 'esm';
+        let html = '';
+        let css = '';
+        for (let index = 0; index < document.styleSheets.length; index++) {
+            const sheet = document.styleSheets[index];
+            try {
+                if (sheet.cssRules) {
+                    for (let idx = 0; idx < sheet.cssRules.length; idx++) {
+                        const rule = sheet.cssRules[idx];
+                        css += `
+        ${rule.cssText}`;
+                    }
+                }
+            } catch (error) {
+                continue;
+            }
+        }
+        const themeOption = document.documentElement.getAttribute('theme');
+        let js = '';
+        let js_pre = 'none';
+        let js_externals = '';
+        switch (source) {
+            case 'HTML':
+                html = `
+<html theme="${themeOption ?? 'light'}">
+    <body style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding: 24px;
+    ">
+        ${sourceCode}
+    </body>
+</html>`;
+                js = `import 'https://cdn.jsdelivr.net/npm/@capitec/omni-components@${esmVersion}/dist/omni-components.js';`;
+                // js_pre = 'typescript';
+                // css = '';
+                break;
+            case 'React':
+                html = `
+<html theme="${themeOption ?? 'light'}">
+    <body style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding: 24px;
+    ">
+        <div id="root"></div>
+    </body>
+</html>`;
+                js = `
+${sourceCode
+    .replaceAll('@capitec/omni-components-react', `https://cdn.jsdelivr.net/npm/@capitec/omni-components-react@${esmVersion}`)
+    .replace(new RegExp(`https://cdn.jsdelivr.net/npm/@capitec/omni-components-react@${esmVersion}/([^/"'\`]+)`, 'g'), '$&/index.js')} 
+
+const el = document.querySelector("#root");
+ReactDOM.render(<App/>, el);`;
+                js_pre = 'babel';
+                js_externals =
+                    'https://cdnjs.cloudflare.com/ajax/libs/react/16.7.0/umd/react.production.min.js;https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.7.0/umd/react-dom.production.min.js';
+                // css = '';
+                break;
+        }
+
+        const data = {
+            // All Optional
+            title: `${this.key ?? this.story?.name ?? 'Generated CodePen'} - ${source}`,
+            description:
+                this.story?.description && typeof this.story?.description === 'function' ? this.story.description() : this.story?.description,
+            private: false, // true || false - When the Pen is saved, it will save as Private if logged in user has that privilege, otherwise it will save as public
+            // parent                : id // If supplied, the Pen will save as a fork of this id. Note it's not the slug, but ID. You can find the ID of a Pen with `window.CP.pen.id` in the browser console.
+            tags: [source, 'Omni Components', 'web components', 'custom elements'],
+            editors: '1011', // Set which editors are open. In this example HTML open, CSS closed, JS open, console open
+            layout: 'top', // top | left | right
+            html: html,
+            html_pre_processor: 'none', //"none" || "slim" || "haml" || "markdown",
+            css: css,
+            css_pre_processor: 'none', //"none" || "less" || "scss" || "sass" || "stylus",
+            css_starter: 'neither', // "normalize" || "reset" || "neither",
+            css_prefix: 'neither', // "autoprefixer" || "prefixfree" || "neither",
+            js: js,
+            js_pre_processor: js_pre, // "none" || "coffeescript" || "babel" || "livescript" || "typescript",
+            // html_classes          : "loading",
+            head: `<link rel="stylesheet preload" href="https://fonts.googleapis.com/css?family=Hind Vadodara" as="style">
+            <link rel="stylesheet preload" href="https://fonts.googleapis.com/icon?family=Material+Icons" as="style">`,
+            // css_external          : "http://yoursite.com/style.css", // semi-colon separate multiple files
+            js_external: js_externals // semi-colon separate multiple files
+        };
+
+        const JSONstring = JSON.stringify(data).replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+
+        const formHTML = `<form style="display: none;" action="https://codepen.io/pen/define" method="POST" target="_blank"> 
+            <input type="hidden" name="data" value='${JSONstring}'>
+            <input type="submit" class="code-submit">
+        </form>`;
+
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = formHTML;
+        tempDiv.style.display = 'none';
+        document.body.appendChild(tempDiv);
+
+        const codeSubmit = tempDiv.querySelector('.code-submit') as HTMLInputElement;
+        codeSubmit.click();
+
+        document.body.removeChild(tempDiv);
+
+        // const body = new URLSearchParams();
+        // body.append('data', JSONstring);
+
+        // const response = await fetch('https://codepen.io/pen/define', {
+        //     method: 'post',
+        //     body: body,
+        // })
+
+        // console.log(response);
     }
 
     private async _play(story: any, canvasElementQuery: string) {
@@ -471,9 +729,19 @@ export class StoryRenderer extends LitElement {
             const context = this._createStoryContext(story, canvasElementQuery);
             await story.play(context);
             this.querySelector<HTMLDivElement>(canvasElementQuery + '-result.success')!.style.display = 'flex';
+            this.querySelector<HTMLDivElement>(canvasElementQuery + '-result.failure')!.style.display = 'none';
         } catch (error: any) {
             this.querySelector<HTMLDivElement>(canvasElementQuery + '-result.failure')!.style.display = 'flex';
-            this._playError = error?.toString();
+            this.querySelector<HTMLDivElement>(canvasElementQuery + '-result.success')!.style.display = 'none';
+
+            //Try to strip chalk colours from jest expect error outputs
+            this._playError = (error?.matcherResult?.message ?? error?.message)
+                ?.toString()
+                .replace(/\u001b[^m]*?m/g, '')
+                // eslint-disable-next-line no-regex-spaces
+                .replace(/\n \u001b[^m]*?m/g, '')
+                .replace(/\u001b[^m]*?m\n/g, '')
+                .replace(/\n\u001b[^m]*?m/g, '');
         } finally {
             this._isBusyPlaying = false;
         }
@@ -487,22 +755,6 @@ export class StoryRenderer extends LitElement {
         };
     }
 
-    private _transformSource(input: string) {
-        // Remove test ids from displayed source
-        input = input
-            .replace(/<!--\?lit\$[0-9]+\$-->|<!--\??-->/g, '')
-            .replace(new RegExp('data-testid=("([^"]|"")*")'), '')
-            // Update any object references to curly braces for easier reading
-            .replaceAll('[object Object]', '{}')
-            // Remove empty string assignments to fix boolean attributes
-            .replaceAll('=""', '');
-        // Remove any properties with empty string assignments at the end of the html tag
-        // 			 .replace(new RegExp("(([\\r\\n]+| )([^ \\r\\n])*)=(\"([^\"]|\"\"){0}\")>"), " >")
-        // Remove any properties with empty string assignments within the tag
-        // 			 .replace(new RegExp("(([\\r\\n]+| )([^ \\r\\n])*)=(\"([^\"]|\"\"){0}\")"), " ");
-        return pretty(input);
-    }
-
     private _currentCodeTheme() {
         if (this.theme?.toLowerCase() === 'dark') {
             return codeThemeDark;
@@ -510,6 +762,8 @@ export class StoryRenderer extends LitElement {
         return codeTheme;
     }
 }
+
+const interactiveUpdate = 'story-renderer-interactive-update';
 
 type CSSVariable = {
     control: 'text' | 'color';

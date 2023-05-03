@@ -9,12 +9,13 @@ import { githubLight as codeTheme } from '@ddietr/codemirror-themes/github-light
 import { Octokit } from '@octokit/core';
 import { Package, ClassDeclaration, CustomElementDeclaration, Declaration, CustomElement } from 'custom-elements-manifest/schema';
 export { Package, ClassDeclaration, CustomElementDeclaration, Declaration, CustomElement } from 'custom-elements-manifest/schema';
-import { html } from 'lit';
+import { html, TemplateResult } from 'lit';
 import { render } from 'lit-html';
+import pretty from 'pretty';
 import { SearchField } from '../search-field/SearchField.js';
 import { Select } from '../select/Select.js';
 import { CodeEditor, CodeMirrorEditorEvent, CodeMirrorSourceUpdateEvent } from './CodeEditor.js';
-export { ComponentStoryFormat, CSFIdentifier } from './ComponentStoryFormat.js';
+export * from './ComponentStoryFormat.js';
 export { PlayFunction, PlayFunctionContext } from './PlayFunction.js';
 import { StoryRenderer } from './StoryRenderer.js';
 
@@ -470,6 +471,18 @@ function filterJsDocLinks(jsdoc: string) {
     return jsdoc;
 }
 
+function transformFromJsdoc(jsdoc: string) {
+    if (!jsdoc) return jsdoc;
+
+    const newline = '\r\n';
+
+    jsdoc = filterJsDocLinks(jsdoc);
+    jsdoc = jsdoc.replace(new RegExp(newline, 'g'), raw`<br/>`);
+    jsdoc = jsdoc.replace(new RegExp(/\*/, 'g'), '•');
+
+    return jsdoc;
+}
+
 /**
  * Interprets a template literal as a raw HTML string.
  *
@@ -755,6 +768,9 @@ async function setupEleventy() {
     windowAny.copyToClipboard = copyToClipboard;
     windowAny.openTab = openTab;
 
+    //Framework toggles
+    setupFrameworks();
+
     // Versions
     setupVersions();
 
@@ -777,6 +793,36 @@ async function setupEleventy() {
     setupSearch();
 
     await setupThemes();
+}
+
+async function setupFrameworks() {
+    const htmlBtn = document.getElementById('select-html') as HTMLDivElement;
+    const reactBtn = document.getElementById('select-react') as HTMLDivElement;
+    const htmlImports = document.getElementById('html-imports') as HTMLDivElement;
+    const reactImports = document.getElementById('react-imports') as HTMLDivElement;
+    const htmlPackage = document.getElementById('html-package') as HTMLLinkElement;
+    const reactPackage = document.getElementById('react-package') as HTMLLinkElement;
+
+    htmlBtn?.addEventListener('click', () => {
+        htmlBtn.classList.add('selected-framework');
+        reactBtn.classList.remove('selected-framework');
+
+        htmlImports.classList.remove('no-display');
+        htmlPackage.classList.remove('no-display');
+
+        reactImports.classList.add('no-display');
+        reactPackage.classList.add('no-display');
+    });
+    reactBtn?.addEventListener('click', () => {
+        reactBtn.classList.add('selected-framework');
+        htmlBtn.classList.remove('selected-framework');
+
+        reactImports.classList.remove('no-display');
+        reactPackage.classList.remove('no-display');
+
+        htmlImports.classList.add('no-display');
+        htmlPackage.classList.add('no-display');
+    });
 }
 
 async function setupVersions() {
@@ -1021,6 +1067,26 @@ function setupSearch() {
         const filterValue = attributeSearch?.value ?? '';
         for (let index = 0; index < attributeRows!.length; index++) {
             const element = attributeRows![index] as HTMLElement;
+            if (element.innerText && element.innerText.toLowerCase().includes((<string>filterValue).toLowerCase())) {
+                element.classList.remove('hidden');
+            } else {
+                element.classList.add('hidden');
+            }
+        }
+    }
+
+    //Global Attribute search
+    const globalAttributeSearch = document.querySelector<SearchField>('#global-attribute-search');
+    const globalAttributeRows = document.querySelector<HTMLTableSectionElement>('#component-global-attributes')?.children;
+    if (globalAttributeSearch && globalAttributeRows) {
+        globalAttributeSearch.addEventListener('input', handleGlobalAttributes);
+        globalAttributeSearch.addEventListener('change', handleGlobalAttributes);
+    }
+
+    function handleGlobalAttributes() {
+        const filterValue = globalAttributeSearch?.value ?? '';
+        for (let index = 0; index < globalAttributeRows!.length; index++) {
+            const element = globalAttributeRows![index] as HTMLElement;
             if (element.innerText && element.innerText.toLowerCase().includes((<string>filterValue).toLowerCase())) {
                 element.classList.remove('hidden');
             } else {
@@ -1339,6 +1405,36 @@ function currentCodeTheme() {
     return codeTheme;
 }
 
+function getSourceFromLit(res: TemplateResult): string {
+    let tempContainer = document.createElement('div');
+    render(res, tempContainer);
+    const source = transformSource(tempContainer.innerHTML);
+
+    //Cleanup
+    tempContainer.innerHTML = '';
+    tempContainer = null as any;
+
+    return source;
+}
+
+function transformSource(input: string) {
+    // Remove test ids from displayed source
+    input = input
+        .replace(/<!--\?lit\$[0-9]+\$-->|<!--\??-->/g, '')
+        .replace(new RegExp('data-testid=("([^"]|"")*")'), '')
+        // Update any object references to curly braces for easier reading
+        .replaceAll('[object Object]', '{}')
+        // Remove empty string assignments to fix boolean attributes
+        .replaceAll('=""', '');
+    // Remove any properties with empty string assignments at the end of the html tag
+    // 			 .replace(new RegExp("(([\\r\\n]+| )([^ \\r\\n])*)=(\"([^\"]|\"\"){0}\")>"), " >")
+    // Remove any properties with empty string assignments within the tag
+    // 			 .replace(new RegExp("(([\\r\\n]+| )([^ \\r\\n])*)=(\"([^\"]|\"\"){0}\")"), " ");
+    return pretty(input, {
+        ocd: true
+    });
+}
+
 declare global {
     interface Window {
         srCount: number;
@@ -1361,6 +1457,7 @@ export {
     markdownCode,
     asRenderString,
     filterJsDocLinks,
+    transformFromJsdoc,
     formatMarkdownCodeElements,
     markdownCodeToHtml,
     assignToSlot,
@@ -1370,5 +1467,7 @@ export {
     setupThemes,
     setupEleventy,
     setupTheming,
-    uploadTheme
+    uploadTheme,
+    transformSource,
+    getSourceFromLit
 };

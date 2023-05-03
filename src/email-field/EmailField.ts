@@ -1,5 +1,5 @@
 import { html, css } from 'lit';
-import { customElement, query } from 'lit/decorators.js';
+import { customElement, property, query } from 'lit/decorators.js';
 import { ClassInfo, classMap } from 'lit/directives/class-map.js';
 import { live } from 'lit/directives/live.js';
 import { OmniFormElement } from '../core/OmniFormElement.js';
@@ -42,6 +42,12 @@ export class EmailField extends OmniFormElement {
     @query('#inputField')
     private _inputElement?: HTMLInputElement;
 
+    /**
+     * Disables native on screen keyboards for the component.
+     * @attr [no-native-keyboard]
+     */
+    @property({ type: Boolean, reflect: true, attribute: 'no-native-keyboard' }) noNativeKeyboard?: boolean;
+
     override connectedCallback() {
         super.connectedCallback();
         this.addEventListener('input', this._keyInput.bind(this), {
@@ -52,9 +58,17 @@ export class EmailField extends OmniFormElement {
         });
     }
 
-    _blurOnEnter(e: any) {
+    override focus(options?: FocusOptions | undefined): void {
+        if (this._inputElement) {
+            this._inputElement.focus(options);
+        } else {
+            super.focus(options);
+        }
+    }
+
+    _blurOnEnter(e: KeyboardEvent) {
         if (e.code === 'Enter' || e.keyCode === 13) {
-            e.currentTarget.blur();
+            (e.currentTarget as HTMLElement).blur();
         }
     }
 
@@ -110,7 +124,8 @@ export class EmailField extends OmniFormElement {
       <input
         class=${classMap(field)}
         id="inputField"
-        inputmode="email"
+        inputmode="${this.noNativeKeyboard ? 'none' : 'email'}"
+        data-omni-keyboard-mode="email"
         type="email"
         .value=${live(this.value as string)}
         ?readOnly=${this.disabled}

@@ -71,6 +71,14 @@ export const Interactive: ComponentStoryFormat<Args> = {
 
 export const Label: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`<omni-hyperlink data-testid="test-hyperlink" label="${args.label}"></omni-hyperlink>`,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniHyperlink } from "@capitec/omni-components-react/hyperlink";
+
+const App = () => <OmniHyperlink${args.label ? ` label='${args.label}'` : ''}/>;`
+        }
+    ],
     name: 'Label',
     description: 'Set the text content of the component.',
     args: {
@@ -85,6 +93,14 @@ export const Label: ComponentStoryFormat<Args> = {
 
 export const Size: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`<omni-hyperlink data-testid="test-hyperlink" label="${args.label}" size="${args.size}"></omni-hyperlink>`,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniHyperlink } from "@capitec/omni-components-react/hyperlink";
+
+const App = () => <OmniHyperlink${args.label ? ` label='${args.label}'` : ''}${args.size ? ` size='${args.size}'` : ''}/>;`
+        }
+    ],
     name: 'Size',
     description: 'Set the component to a predefined size.',
     args: {
@@ -101,6 +117,14 @@ export const Size: ComponentStoryFormat<Args> = {
 export const Href: ComponentStoryFormat<Args> = {
     render: (args: Args) =>
         html`<omni-hyperlink data-testid="test-hyperlink" label="${args.label}" href="${args.href}" target="_blank"></omni-hyperlink>`,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniHyperlink } from "@capitec/omni-components-react/hyperlink";
+
+const App = () => <OmniHyperlink${args.label ? ` label='${args.label}'` : ''}${args.href ? ` href='${args.href}'` : ''} target="_blank"/>;`
+        }
+    ],
     name: 'Href',
     description: 'Set the hypertext reference.',
     args: {
@@ -121,6 +145,14 @@ export const Disabled: ComponentStoryFormat<Args> = {
       href="https://example.com"
       label="${args.label}"
       ?disabled="${args.disabled}"></omni-hyperlink>`,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniHyperlink } from "@capitec/omni-components-react/hyperlink";
+
+const App = () => <OmniHyperlink href="https://example.com"${args.label ? ` label='${args.label}'` : ''}${args.disabled ? ` disabled` : ''}/>;`
+        }
+    ],
     name: 'Disabled',
     description: 'Prevent interaction (pointer events).',
     args: {
@@ -148,6 +180,14 @@ export const Disabled: ComponentStoryFormat<Args> = {
 export const Inline: ComponentStoryFormat<Args> = {
     render: (args: Args) =>
         html`<p data-testid="test-paragraph"> Inline <omni-hyperlink label="${args.label}" ?inline="${args.inline}"></omni-hyperlink> example </p>`,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniHyperlink } from "@capitec/omni-components-react/hyperlink";
+
+const App = () => <p> Inline <OmniHyperlink${args.label ? ` label='${args.label}'` : ''}${args.inline ? ` inline` : ''}/> example </p>;`
+        }
+    ],
     name: 'Inline',
     description: 'Render the component using its inline styles.',
     args: {

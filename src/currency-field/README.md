@@ -6,15 +6,15 @@ Control to enter a formatted currency value.
 
 ```html
 <omni-currency-field
- label="Enter currency value"
- value="100"
- hint="Required"
- error="Please enter the correct amount"
- currency-symbol="$"
- thousands-separator=","
- fractional-separator="."
- fractional-precision=2
- disabled>
+  label="Enter currency value"
+  value="100"
+  hint="Required"
+  error="Please enter the correct amount"
+  currency-symbol="$"
+  thousands-separator=","
+  fractional-separator="."
+  fractional-precision=2
+  disabled>
 </omni-currency-field>
 ```
 
@@ -22,6 +22,7 @@ Control to enter a formatted currency value.
 
 | Property              | Attribute              | Modifiers | Type                                             | Default                   | Description                                      |
 |-----------------------|------------------------|-----------|--------------------------------------------------|---------------------------|--------------------------------------------------|
+| `clearable`           | `clearable`            |           | `boolean`                                        | false                     | Toggles the ability to clear the value of the component. |
 | `currencySymbol`      | `currency-symbol`      |           | `string`                                         | "$"                       | Currency symbol.                                 |
 | `data`                | `data`                 |           | `object \| undefined`                            |                           | Data associated with the component.              |
 | `dir`                 |                        |           | `string`                                         |                           |                                                  |
@@ -33,6 +34,7 @@ Control to enter a formatted currency value.
 | `hint`                | `hint`                 |           | `string \| undefined`                            |                           | Hint message to assist the user.                 |
 | `label`               | `label`                |           | `string \| undefined`                            |                           | Text label.                                      |
 | `lang`                |                        |           | `string`                                         |                           |                                                  |
+| `noNativeKeyboard`    | `no-native-keyboard`   |           | `boolean \| undefined`                           |                           | Disables native on screen keyboards for the component. |
 | `override`            | `override`             |           |                                                  |                           | Used to set the base direction of text for display |
 | `styles`              |                        | readonly  | `CSSResultGroup[]`                               |                           |                                                  |
 | `thousandsSeparator`  | `thousands-separator`  |           | `string`                                         | ""                        | Thousands separator.                             |
@@ -40,15 +42,23 @@ Control to enter a formatted currency value.
 
 ## Methods
 
-| Method          | Type                    |
-|-----------------|-------------------------|
-| `renderContent` | `(): TemplateResult<1>` |
-| `renderPrefix`  | `(): TemplateResult<1>` |
+| Method          | Type                                          |
+|-----------------|-----------------------------------------------|
+| `focus`         | `(options?: FocusOptions \| undefined): void` |
+| `renderContent` | `(): TemplateResult<1>`                       |
+| `renderPrefix`  | `(): TemplateResult<1>`                       |
+
+## Events
+
+| Event    | Type              | Description                                  |
+|----------|-------------------|----------------------------------------------|
+| `change` | `CustomEvent<{}>` | Dispatched when the component value changes. |
 
 ## Slots
 
 | Name                | Description                                      |
 |---------------------|--------------------------------------------------|
+| `clear`             | Replaces the icon for the clear slot.            |
 | `loading_indicator` | Used to define content that is displayed while async rendering is awaiting, or when renderLoading() is implicitly called |
 | `prefix`            | Replaces the icon for the prefix slot.           |
 | `suffix`            | Replaces the icon for the suffix slot.           |
@@ -60,7 +70,7 @@ Control to enter a formatted currency value.
 | `--omni-container-font-family`                   | Container font family.                         |
 | `--omni-container-height`                        | Container height.                              |
 | `--omni-container-width`                         | Container width.                               |
-| `--omni-currency-field-disabled-font`            | color -                                        |
+| `--omni-currency-field-disabled-font-color`      | Currency field disabled font color.            |
 | `--omni-currency-field-font-color`               | Currency field font color.                     |
 | `--omni-currency-field-font-family`              | Currency field font family.                    |
 | `--omni-currency-field-font-size`                | Currency field font size.                      |
@@ -82,6 +92,10 @@ Control to enter a formatted currency value.
 | `--omni-form-border-style`                       | Form border style.                             |
 | `--omni-form-border-top`                         | Form border top.                               |
 | `--omni-form-border-width`                       | Form border width.                             |
+| `--omni-form-clear-control-margin-left`          | Form clear control left margin.                |
+| `--omni-form-clear-control-margin-right`         | Form clear control right margin.               |
+| `--omni-form-clear-control-width`                | Form clear control width.                      |
+| `--omni-form-clear-icon-color`                   | Form clear icon color.                         |
 | `--omni-form-disabled-background-color`          | Form disabled background color.                |
 | `--omni-form-disabled-border-color`              | Form disabled border color.                    |
 | `--omni-form-disabled-focussed-label-background-color` | Form disabled label focussed background color. |
@@ -101,6 +115,7 @@ Control to enter a formatted currency value.
 | `--omni-form-focussed-error-label-color`         | Form focussed error label color.               |
 | `--omni-form-focussed-label-background-color`    | Form focussed label background color.          |
 | `--omni-form-focussed-label-color`               | Form focussed label color.                     |
+| `--omni-form-focussed-label-disabled-background-color` | Form focussed label disabled background color. |
 | `--omni-form-focussed-label-margin-left`         | Form focussed label left margin.               |
 | `--omni-form-focussed-label-padding-left`        | Form focussed label left.                      |
 | `--omni-form-focussed-label-padding-right`       | Form focussed label right.                     |

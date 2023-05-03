@@ -84,7 +84,6 @@ export class ColorField extends OmniFormElement {
           font-family: var(--omni-color-field-font-family, var(--omni-font-family));
           font-size: var(--omni-color-field-font-size, var(--omni-font-size));
           font-weight: var(--omni-color-field-font-weight, var(--omni-font-weight));
-          height: var(--omni-color-field-height, 100%);
           min-height: var(--omni-color-field-min-height, 20px);
           min-width: var(--omni-color-field-min-width, 100px);
           padding: var(--omni-color-field-padding, 10px);
@@ -132,6 +131,14 @@ export class ColorField extends OmniFormElement {
         }
       `
         ];
+    }
+
+    override focus(options?: FocusOptions | undefined): void {
+        if (this._inputElement) {
+            this._inputElement.focus(options);
+        } else {
+            super.focus(options);
+        }
     }
 
     protected override renderContent() {

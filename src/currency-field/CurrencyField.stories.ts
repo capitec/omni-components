@@ -4,7 +4,17 @@ import { setUIValueClean } from '@testing-library/user-event/dist/esm/document/U
 import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { LabelStory, BaseArgs, HintStory, ErrorStory, DisabledStory, ValueStory, PrefixStory, SuffixStory } from '../core/OmniInputStories.js';
+import {
+    LabelStory,
+    BaseArgs,
+    ClearableStory,
+    HintStory,
+    ErrorStory,
+    DisabledStory,
+    ValueStory,
+    PrefixStory,
+    SuffixStory
+} from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
 import { assignToSlot, ComponentStoryFormat, CSFIdentifier } from '../utils/StoryUtils.js';
@@ -34,14 +44,16 @@ export const Interactive: ComponentStoryFormat<Args> = {
             hint="${ifNotEmpty(args.hint)}"
             error="${ifNotEmpty(args.error)}"
             ?disabled="${args.disabled}"
+            ?clearable="${args.clearable}"
             fractional-precision="${args.fractionalPrecision}"
             fractional-separator="${ifNotEmpty(args.fractionalSeparator)}"
             thousands-separator="${ifNotEmpty(args.thousandsSeparator)}"
             currency-symbol="${ifNotEmpty(args.currencySymbol)}"
             formatter="${ifNotEmpty(args.formatter)}"           
-            >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${
+            >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}
+            ${args.clear ? html`${'\r\n'}${unsafeHTML(assignToSlot('clear', args.clear))}` : nothing}${
         args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}` : nothing
-    }${args.prefix || args.suffix ? '\r\n' : nothing}</omni-currency-field>
+    }${args.prefix || args.suffix || args.clear ? '\r\n' : nothing}</omni-currency-field>
     `,
     name: 'Interactive',
     args: {
@@ -50,8 +62,10 @@ export const Interactive: ComponentStoryFormat<Args> = {
         hint: '',
         error: '',
         disabled: false,
+        clearable: false,
         prefix: '',
         suffix: '',
+        clear: '',
         fractionalPrecision: 2,
         fractionalSeparator: '.',
         thousandsSeparator: ',',
@@ -66,57 +80,78 @@ export const Interactive: ComponentStoryFormat<Args> = {
         setUIValueClean(inputField);
         inputField.value = '';
 
-        const input = jest.fn();
-        currencyField.addEventListener('input', input);
+        // Simulate click, focus and blur events
+        await userEvent.click(inputField);
+        await inputField.focus();
+        await inputField.blur();
 
-        const value = '1200000.15';
+        const beforeinput = jest.fn();
+        currencyField.addEventListener('beforeinput', beforeinput);
+
+        const value = '120000015';
         await userEvent.type(inputField, value);
 
-        // TODO: Fix race conditions in tests
-        if (navigator.userAgent === 'Test Runner') {
-            console.log('CICD Test - Not Visual');
-        } else {
-            // Check the following value as input value is formatted to currency value;
-            await waitFor(() => expect(inputField).toHaveValue('1,200,000.15'), {
-                timeout: 3000
-            });
-            await waitFor(() => expect(input).toBeCalledTimes(value.length), {
-                timeout: 3000
-            });
-        }
+        // Check the following value as input value is formatted to currency value;
+        await waitFor(() => expect(inputField).toHaveValue('1,200,000.15'), {
+            timeout: 3000
+        });
+        await waitFor(() => expect(beforeinput).toBeCalledTimes(value.length), {
+            timeout: 3000
+        });
 
         // Backspacing to cover the removal of cents and cents separator
-        const backspace = '{Backspace}';
+        const backspace = '{Backspace>2/}';
         // Required to clear userEvent Symbol that keeps hidden state of previously typed values via userEvent. If not cleared this cannot be run multiple times with the same results
         setUIValueClean(inputField);
         await userEvent.type(inputField, backspace, {
-            initialSelectionStart: 10,
-            initialSelectionEnd: 10
+            initialSelectionStart: 12,
+            initialSelectionEnd: 12
         });
 
         await currencyField.updateComplete;
 
-        // TODO: Fix race conditions in tests
-        if (navigator.userAgent === 'Test Runner') {
-            console.log('CICD Test - Not Visual');
-        } else {
-            await waitFor(() => expect(inputField).toHaveValue('1,200,000'), {
-                timeout: 3000
-            });
-        }
+        await waitFor(() => expect(inputField).toHaveValue('12,000.00'), {
+            timeout: 3000
+        });
 
         // Use left arrow key to position the caret after the currency separator.
         const leftArrow = '{ArrowLeft>3/}{Backspace}';
         await userEvent.type(inputField, leftArrow);
 
-        // TODO: Fix race conditions in tests
-        if (navigator.userAgent === 'Test Runner') {
-            console.log('CICD Test - Not Visual');
-        } else {
-            await waitFor(() => expect(inputField).toHaveValue('120,000'), {
-                timeout: 3000
-            });
-        }
+        await waitFor(() => expect(inputField).toHaveValue('1,200.00'), {
+            timeout: 3000
+        });
+
+        /* Paste Tests */
+        //Set the selection range of the input component to ensure the entire value is selected.
+        inputField.setSelectionRange(0, 10);
+
+        const number = '88.88';
+        await userEvent.paste(number);
+
+        await waitFor(() => expect(inputField).toHaveValue('88.88'), {
+            timeout: 3000
+        });
+
+        setUIValueClean(inputField);
+        inputField.value = '';
+        await userEvent.type(inputField, value);
+
+        // Check the following value as input value is formatted to currency value;
+        await waitFor(() => expect(inputField).toHaveValue('1,200,000.15'), {
+            timeout: 3000
+        });
+
+        // Paste invalid numeric value the alpha characters should be stripped and the value should be updated accordingly.
+        inputField.setSelectionRange(3, 10);
+        const invalidNumber = '4abc';
+        await userEvent.paste(invalidNumber);
+
+        await waitFor(() => expect(inputField).toHaveValue('124.15'), {
+            timeout: 3000
+        });
+
+        //TODO add tests for before input scenarios
     }
 };
 
@@ -126,10 +161,12 @@ export const Hint = HintStory<CurrencyField, BaseArgs>('omni-currency-field');
 
 export const Error_Label = ErrorStory<CurrencyField, BaseArgs>('omni-currency-field');
 
-export const Value = ValueStory<CurrencyField, BaseArgs>('omni-currency-field', '100.15');
+export const Value = ValueStory<CurrencyField, BaseArgs>('omni-currency-field', '1200.50');
+
+export const Clear = ClearableStory<CurrencyField, BaseArgs>('omni-currency-field', '1200.50');
 
 export const Prefix = PrefixStory<CurrencyField, BaseArgs>('omni-currency-field');
 
 export const Suffix = SuffixStory<CurrencyField, BaseArgs>('omni-currency-field');
 
-export const Disabled = DisabledStory<CurrencyField, BaseArgs>('omni-currency-field', '100.15');
+export const Disabled = DisabledStory<CurrencyField, BaseArgs>('omni-currency-field', '1200');

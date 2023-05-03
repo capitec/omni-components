@@ -18,7 +18,6 @@ import '../icons/Check.icon.js';
  * ```html
  * <omni-check
  *   label="My Toggle Value"
- *   .data="{'id': 12345, 'name': 'Test'}"
  *   hint="Required"
  *   error="Field level error message"
  *   checked
@@ -30,6 +29,7 @@ import '../icons/Check.icon.js';
  *
  * Registry of all properties defined by the component.
  *
+ * @slot - Content to render inside the component.
  * @slot indeterminate_icon - Replaces the icon for the indeterminate state
  * @slot check_icon - Replaces the icon for the checked state
  *
@@ -320,38 +320,39 @@ export class Check extends OmniElement {
 
     override render(): TemplateResult {
         return html`
-      <div
-        class=${classMap({
-            container: true,
-            indeterminate: this.indeterminate ?? false,
-            checked: this.checked ?? false,
-            disabled: this.disabled ?? false
-        })}>
-        <div id="content" @keydown="${this._keyDown}">
-          <div class="indicator">
-            ${
-                this.indeterminate
-                    ? html`
-                  <slot name="indeterminate_icon">
-                    <omni-indeterminate-icon></omni-indeterminate-icon>
-                  </slot>
-                `
-                    : this.checked
-                    ? html`
-                  <slot name="check_icon">
-                    <omni-check-icon></omni-check-icon>
-                  </slot>
-                `
-                    : nothing
-            }
-          </div>
-        </div>
-        <label class="label">
-          ${this.label} ${this.hint && !this.error ? html`<div class="hint">${this.hint}</div>` : nothing}
-          ${this.error ? html`<div class="error">${this.error}</div>` : nothing}
-        </label>
-      </div>
-    `;
+            <div
+                class=${classMap({
+                    container: true,
+                    indeterminate: this.indeterminate ?? false,
+                    checked: this.checked ?? false,
+                    disabled: this.disabled ?? false
+                })}>
+                <div id="content" @keydown="${this._keyDown}">
+                    <div class="indicator">
+                        ${
+                            this.indeterminate
+                                ? html`
+                            <slot name="indeterminate_icon">
+                                <omni-indeterminate-icon></omni-indeterminate-icon>
+                            </slot>
+                            `
+                                : this.checked
+                                ? html`
+                            <slot name="check_icon">
+                                <omni-check-icon></omni-check-icon>
+                            </slot>
+                            `
+                                : nothing
+                        }
+                    </div>
+                </div>
+                <label class="label">
+                    <slot></slot>
+                    ${this.label} ${this.hint && !this.error ? html`<div class="hint">${this.hint}</div>` : nothing}
+                    ${this.error ? html`<div class="error">${this.error}</div>` : nothing}
+                </label>
+            </div>
+        `;
     }
 }
 

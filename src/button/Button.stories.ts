@@ -78,6 +78,14 @@ export const Interactive = {
 
 export const Type = {
     render: (args: Args) => html` <omni-button type="${args.type}" label="${args.label}" data-testid="test-button"></omni-button> `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniButton } from "@capitec/omni-components-react/button";
+
+const App = () => <OmniButton${args.label ? ` label='${args.label}'` : ''}${args.type ? ` type='${args.type}'` : ''}/>;`
+        }
+    ],
     name: 'Type',
     description: 'Set the type of button to render using different combinations of primary and alternate colours.',
     args: {
@@ -94,6 +102,14 @@ export const Type = {
 
 export const Label = {
     render: (args: Args) => html` <omni-button label="${args.label}" data-testid="test-button"></omni-button> `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniButton } from "@capitec/omni-components-react/button";
+
+const App = () => <OmniButton${args.label ? ` label='${args.label}'` : ''}/>;`
+        }
+    ],
     name: 'Label',
     description: 'Set a text value to display within.',
     args: {
@@ -113,6 +129,17 @@ export const Slot = {
       <omni-icon size="default" icon="./assets/images/direction.svg"></omni-icon>
     </omni-button>
   `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniButton } from "@capitec/omni-components-react/button";
+import { OmniIcon } from "@capitec/omni-components-react/icon";
+
+const App = () => <OmniButton>
+                    <OmniIcon size="default" icon="./assets/images/direction.svg" />
+                  </OmniButton>;`
+        }
+    ],
     name: 'Slot',
     description: 'Set html content to display within.',
     args: {},
@@ -126,10 +153,19 @@ export const Slot = {
 
 export const Disabled = {
     render: (args: Args) => html` <omni-button disabled label="${args.label}" data-testid="test-button"></omni-button> `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniButton } from "@capitec/omni-components-react/button";
+
+const App = () => <OmniButton${args.label ? ` label='${args.label}'` : ''}${args.disabled ? ` disabled` : ''}/>;`
+        }
+    ],
     name: 'Disabled',
     description: 'Prevent interaction (pointer events).',
     args: {
-        label: 'Disabled'
+        label: 'Disabled',
+        disabled: true
     },
     play: async (context) => {
         const button = within(context.canvasElement).getByTestId<Button>('test-button'); // Test for disabled CSS.

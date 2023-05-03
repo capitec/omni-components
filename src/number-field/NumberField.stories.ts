@@ -4,7 +4,17 @@ import { setUIValueClean } from '@testing-library/user-event/dist/esm/document/U
 import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { LabelStory, BaseArgs, HintStory, ErrorStory, DisabledStory, ValueStory, PrefixStory, SuffixStory } from '../core/OmniInputStories.js';
+import {
+    LabelStory,
+    BaseArgs,
+    ClearableStory,
+    HintStory,
+    ErrorStory,
+    DisabledStory,
+    ValueStory,
+    PrefixStory,
+    SuffixStory
+} from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
 import { assignToSlot, ComponentStoryFormat, CSFIdentifier } from '../utils/StoryUtils.js';
@@ -26,9 +36,11 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
       hint="${ifNotEmpty(args.hint)}"
       error="${ifNotEmpty(args.error)}"
       ?disabled="${args.disabled}"
-      >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${
+      ?clearable="${args.clearable}"
+      >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}
+      ${args.clear ? html`${'\r\n'}${unsafeHTML(assignToSlot('clear', args.clear))}` : nothing}${
         args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}` : nothing
-    }${args.prefix || args.suffix ? '\r\n' : nothing}</omni-number-field>
+    }${args.prefix || args.suffix || args.clear ? '\r\n' : nothing}</omni-number-field>
   `,
     name: 'Interactive',
     args: {
@@ -38,7 +50,8 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
         error: '',
         disabled: false,
         prefix: '',
-        suffix: ''
+        suffix: '',
+        clear: ''
     },
     play: async (context) => {
         const numberField = within(context.canvasElement).getByTestId<NumberField>('test-number-field');
@@ -56,17 +69,12 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
             pointerEventsCheck: 0
         });
 
-        // TODO: Fix race conditions in tests
-        if (navigator.userAgent === 'Test Runner') {
-            console.log('CICD Test - Not Visual');
-        } else {
-            await waitFor(() => expect(inputField).toHaveValue(parseInt(value)), {
-                timeout: 3000
-            });
-            await waitFor(() => expect(input).toBeCalledTimes(value.length), {
-                timeout: 3000
-            });
-        }
+        await waitFor(() => expect(inputField).toHaveValue(parseInt(value)), {
+            timeout: 3000
+        });
+        await waitFor(() => expect(input).toBeCalledTimes(value.length), {
+            timeout: 3000
+        });
     }
 };
 
@@ -77,6 +85,8 @@ export const Hint = HintStory<NumberField, BaseArgs>('omni-number-field');
 export const Error_Label = ErrorStory<NumberField, BaseArgs>('omni-number-field');
 
 export const Value = ValueStory<NumberField, BaseArgs>('omni-number-field', 123);
+
+export const Clear = ClearableStory<NumberField, BaseArgs>('omni-number-field', 123);
 
 export const Prefix = PrefixStory<NumberField, BaseArgs>('omni-number-field');
 

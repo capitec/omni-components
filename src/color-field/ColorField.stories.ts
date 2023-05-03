@@ -4,7 +4,7 @@ import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { OmniFormElement } from '../core/OmniFormElement.js';
-import { LabelStory, BaseArgs, HintStory, ErrorStory, ValueStory, PrefixStory, SuffixStory } from '../core/OmniInputStories.js';
+import { LabelStory, BaseArgs, ClearableStory, HintStory, ErrorStory, ValueStory, PrefixStory, SuffixStory } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
 import { assignToSlot, ComponentStoryFormat, CSFIdentifier } from '../utils/StoryUtils.js';
@@ -26,9 +26,11 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
       hint="${ifNotEmpty(args.hint)}"
       error="${ifNotEmpty(args.error)}"
       ?disabled="${args.disabled}"
-      >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${
+      ?clearable="${args.clearable}"
+      >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}
+       ${args.clear ? html`${'\r\n'}${unsafeHTML(assignToSlot('clear', args.clear))}` : nothing}${
         args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}` : nothing
-    }${args.prefix || args.suffix ? '\r\n' : nothing}</omni-color-field
+    }${args.prefix || args.suffix || args.clear ? '\r\n' : nothing}</omni-color-field
     >
   `,
     name: 'Interactive',
@@ -39,13 +41,15 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
         hint: '',
         error: '',
         disabled: false,
+        clearable: false,
         prefix: '',
-        suffix: ''
+        suffix: '',
+        clear: ''
     },
     play: async (context) => {
         const field = within(context.canvasElement).getByTestId<ColorField>('test-color-field');
 
-        const inputField = field.shadowRoot!.getElementById('inputField') as HTMLInputElement;
+        const inputField = field.shadowRoot?.getElementById('inputField') as HTMLInputElement;
 
         await expect(inputField.type).toBe('color');
     }
@@ -59,12 +63,22 @@ export const Error_Label = ErrorStory<ColorField, BaseArgs>('omni-color-field');
 
 export const Value = ValueStory<ColorField, BaseArgs>('omni-color-field', '#f6b73c');
 
+export const Clear = ClearableStory<ColorField, BaseArgs>('omni-color-field', '#f6b73c');
+
 export const Prefix = PrefixStory<ColorField, BaseArgs>('omni-color-field');
 
 export const Suffix = SuffixStory<ColorField, BaseArgs>('omni-color-field');
 
 export const Disabled: ComponentStoryFormat<BaseArgs> = {
     render: (args: BaseArgs) => html`<omni-color-field data-testid="test-field" label="${ifNotEmpty(args.label)}" disabled></omni-color-field>`,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniColorField } from "@capitec/omni-components-react/color-field";
+
+const App = () => <OmniColorField${args.label ? ` label='${args.label}'` : ''}${args.disabled ? ` disabled` : ''}/>;`
+        }
+    ],
     name: 'Disabled',
     description: 'Prevent interaction (pointer events).',
     args: {
@@ -82,22 +96,17 @@ export const Disabled: ComponentStoryFormat<BaseArgs> = {
         const inputTest = jest.fn();
         input.addEventListener('input', inputTest);
 
-        const inputField = input.shadowRoot!.getElementById('inputField') as OmniFormElement;
+        const inputField = input.shadowRoot?.getElementById('inputField') as OmniFormElement;
 
         await userEvent.type(inputField, 'Value Update 3', {
             pointerEventsCheck: 0
         });
 
-        // TODO: Fix race conditions in tests
-        if (navigator.userAgent === 'Test Runner') {
-            console.log('CICD Test - Not Visual');
-        } else {
-            await waitFor(() => expect(input.value).toBeFalsy(), {
-                timeout: 3000
-            });
-            await waitFor(() => expect(inputTest).toBeCalledTimes(0), {
-                timeout: 3000
-            });
-        }
+        await waitFor(() => expect(input.value).toBeFalsy(), {
+            timeout: 3000
+        });
+        await waitFor(() => expect(inputTest).toBeCalledTimes(0), {
+            timeout: 3000
+        });
     }
 };

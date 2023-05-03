@@ -3,17 +3,17 @@
 <table>
 <tr>
     <td align="center">
-        <a href="https://github.com/BOTLANNER">
-            <img src="https://avatars.githubusercontent.com/u/16349308?v=4" width="100;" alt="BOTLANNER"/>
-            <br />
-            <sub><b>BOTLANNER</b></sub>
-        </a>
-    </td>
-    <td align="center">
         <a href="https://github.com/chromaticWaster">
             <img src="https://avatars.githubusercontent.com/u/22874454?v=4" width="100;" alt="chromaticWaster"/>
             <br />
             <sub><b>chromaticWaster</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/BOTLANNER">
+            <img src="https://avatars.githubusercontent.com/u/16349308?v=4" width="100;" alt="BOTLANNER"/>
+            <br />
+            <sub><b>BOTLANNER</b></sub>
         </a>
     </td>
     <td align="center">
@@ -28,6 +28,13 @@
             <img src="https://avatars.githubusercontent.com/u/54233338?v=4" width="100;" alt="jn42lm1"/>
             <br />
             <sub><b>jn42lm1</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/Makhubedu">
+            <img src="https://avatars.githubusercontent.com/u/43409770?v=4" width="100;" alt="Makhubedu"/>
+            <br />
+            <sub><b>Makhubedu</b></sub>
         </a>
     </td>
     <td align="center">

@@ -7,7 +7,6 @@ Control to switch a value on or off.
 ```html
 <omni-switch
   label="My Switch Value"
-  data="{'id': 12345, 'name': 'Test'}"
   hint="Required"
   error="Field level error message"
   checked>
@@ -45,6 +44,7 @@ Control to switch a value on or off.
 
 | Name                | Description                                      |
 |---------------------|--------------------------------------------------|
+|                     | Content to render inside the component.          |
 | `loading_indicator` | Used to define content that is displayed while async rendering is awaiting, or when renderLoading() is implicitly called |
 
 ## CSS Custom Properties

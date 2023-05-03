@@ -2,6 +2,7 @@ import { within, fireEvent } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import * as jest from 'jest-mock';
 import { html } from 'lit';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
 import { ComponentStoryFormat, CSFIdentifier } from '../utils/StoryUtils.js';
@@ -21,6 +22,7 @@ interface Args {
     error: string;
     checked: boolean;
     disabled: boolean;
+    '[Default Slot]': string;
 }
 
 export const Interactive: ComponentStoryFormat<Args> = {
@@ -32,7 +34,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
       hint="${ifNotEmpty(args.hint)}"
       error="${ifNotEmpty(args.error)}"
       ?checked="${args.checked}"
-      ?disabled="${args.disabled}"></omni-switch>
+      ?disabled="${args.disabled}">${unsafeHTML(args['[Default Slot]'])}</omni-switch>
   `,
     name: 'Interactive',
     args: {
@@ -41,7 +43,8 @@ export const Interactive: ComponentStoryFormat<Args> = {
         hint: '',
         error: '',
         checked: false,
-        disabled: false
+        disabled: false,
+        '[Default Slot]': undefined
     },
     play: async (context) => {
         const switchElement = within(context.canvasElement).getByTestId<Switch>('test-switch');
@@ -63,6 +66,14 @@ export const Interactive: ComponentStoryFormat<Args> = {
 
 export const Label: ComponentStoryFormat<Args> = {
     render: (args: Args) => html` <omni-switch data-testid="test-switch" label="${args.label}"></omni-switch> `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniSwitch } from "@capitec/omni-components-react/switch";
+
+const App = () => <OmniSwitch${args.label ? ` label='${args.label}'` : ''}/>;`
+        }
+    ],
     description: 'Set text content to display next to the component.',
     args: {
         label: 'Label'
@@ -76,6 +87,14 @@ export const Label: ComponentStoryFormat<Args> = {
 
 export const Hint: ComponentStoryFormat<Args> = {
     render: (args: Args) => html` <omni-switch data-testid="test-switch" label="${args.label}" hint="${args.hint}"></omni-switch> `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniSwitch } from "@capitec/omni-components-react/switch";
+
+const App = () => <OmniSwitch${args.label ? ` label='${args.label}'` : ''}${args.hint ? ` hint='${args.hint}'` : ''}/>;`
+        }
+    ],
     description: 'Set text content to display as a hint.',
     args: {
         label: 'Hint',
@@ -91,6 +110,14 @@ export const Hint: ComponentStoryFormat<Args> = {
 export const Error_Label: ComponentStoryFormat<Args> = {
     name: 'Error', // Explicitly named as error, the exported name cannot be 'Error' as that is reserved
     render: (args: Args) => html` <omni-switch data-testid="test-switch" label="${args.label}" error="${args.error}"></omni-switch> `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniSwitch } from "@capitec/omni-components-react/switch";
+
+const App = () => <OmniSwitch${args.label ? ` label='${args.label}'` : ''}${args.error ? ` error='${args.error}'` : ''}/>;`
+        }
+    ],
     description: 'Set text content to display as an error.',
     args: {
         label: 'Error',
@@ -105,6 +132,14 @@ export const Error_Label: ComponentStoryFormat<Args> = {
 
 export const Checked: ComponentStoryFormat<Args> = {
     render: (args: Args) => html` <omni-switch data-testid="test-switch" label="${args.label}" ?checked="${args.checked}"></omni-switch> `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniSwitch } from "@capitec/omni-components-react/switch";
+
+const App = () => <OmniSwitch${args.label ? ` label='${args.label}'` : ''}${args.checked ? ` checked` : ''}/>;`
+        }
+    ],
     description: 'Set the component to a checked state.',
     args: {
         label: 'Checked',
@@ -119,6 +154,14 @@ export const Checked: ComponentStoryFormat<Args> = {
 
 export const Disabled: ComponentStoryFormat<Args> = {
     render: (args: Args) => html` <omni-switch data-testid="test-switch" label="${args.label}" ?disabled="${args.disabled}"></omni-switch> `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniSwitch } from "@capitec/omni-components-react/switch";
+
+const App = () => <OmniSwitch${args.label ? ` label='${args.label}'` : ''}${args.disabled ? ` disabled` : ''}/>;`
+        }
+    ],
     description: 'Prevent interaction (pointer events).',
     args: {
         label: 'Disabled',
@@ -143,3 +186,27 @@ export const Disabled: ComponentStoryFormat<Args> = {
         await expect(valueChange).toBeCalledTimes(0);
     }
 };
+
+export const Slot = {
+    render: () => html`
+        <omni-switch data-testid="test-switch">Slotted</omni-switch>
+    `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniSwitch } from "@capitec/omni-components-react/switch";
+
+const App = () => <OmniSwitch>
+                    Slotted
+                  </OmniSwitch>;`
+        }
+    ],
+    name: 'Slot',
+    description: 'Set content to display within.',
+    args: {},
+    play: async (context) => {
+        const switchElement = within(context.canvasElement).getByTestId<Switch>('test-switch');
+        const slottedText = switchElement.innerHTML;
+        await expect(slottedText).toEqual('Slotted');
+    }
+} as ComponentStoryFormat<Args>;

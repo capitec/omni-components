@@ -67,6 +67,14 @@ export const Interactive: ComponentStoryFormat<Args> = {
 
 export const Label: ComponentStoryFormat<Args> = {
     render: (args: Args) => html` <omni-chip data-testid="test-chip" label="${ifNotEmpty(args.label)}"> </omni-chip> `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniChip } from "@capitec/omni-components-react/chip";
+
+const App = () => <OmniChip${args.label ? ` label='${args.label}'` : ''}/>;`
+        }
+    ],
     name: 'Label',
     description: 'Set a text value to display within.',
     args: {
@@ -74,12 +82,20 @@ export const Label: ComponentStoryFormat<Args> = {
     },
     play: async (context) => {
         const chip = within(context.canvasElement).getByTestId<Chip>('test-chip');
-        await expect(chip.shadowRoot!.getElementById('label')).toHaveTextContent(Label.args?.label as string);
+        await expect(chip.shadowRoot?.getElementById('label')).toHaveTextContent(Label.args?.label as string);
     }
 };
 
 export const Closable: ComponentStoryFormat<Args> = {
     render: (args: Args) => html` <omni-chip data-testid="test-chip" label="${ifNotEmpty(args.label)}" ?closable=${args.closable}> </omni-chip> `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniChip } from "@capitec/omni-components-react/chip";
+
+const App = () => <OmniChip${args.label ? ` label='${args.label}'` : ''}${args.closable ? ` closable` : ''}/>;`
+        }
+    ],
     name: 'Closable',
     description: 'Add a close icon to the component.',
     args: {
@@ -91,7 +107,7 @@ export const Closable: ComponentStoryFormat<Args> = {
         const remove = jest.fn();
         chip.addEventListener('remove', remove);
 
-        const closeButton = chip.shadowRoot!.getElementById('closeButton') as HTMLElement;
+        const closeButton = chip.shadowRoot?.getElementById('closeButton') as HTMLElement;
 
         await userEvent.click(closeButton, {
             pointerEventsCheck: 0
@@ -105,6 +121,14 @@ export const Closable: ComponentStoryFormat<Args> = {
 
 export const Disabled: ComponentStoryFormat<Args> = {
     render: (args: Args) => html` <omni-chip data-testid="test-chip" label="${ifNotEmpty(args.label)}" ?disabled="${args.disabled}"> </omni-chip> `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniChip } from "@capitec/omni-components-react/chip";
+
+const App = () => <OmniChip${args.label ? ` label='${args.label}'` : ''}${args.disabled ? ` disabled` : ''}/>;`
+        }
+    ],
     name: 'Disabled',
     description: 'Prevent interaction (pointer events).',
     args: {
@@ -113,7 +137,7 @@ export const Disabled: ComponentStoryFormat<Args> = {
     },
     play: async (context) => {
         const chip = within(context.canvasElement).getByTestId<Chip>('test-chip');
-        const chipElement = chip.shadowRoot!.getElementById('chip') as HTMLElement;
+        const chipElement = chip.shadowRoot?.getElementById('chip') as HTMLElement;
         const foundDisabledClass = chipElement.classList.contains('disabled');
         await expect(foundDisabledClass).toBeTruthy(); // Test for not clickable.
 
@@ -130,6 +154,16 @@ export const Chip_Slot_Icon: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
     <omni-chip data-testid="test-chip" label="${ifNotEmpty(args.label)}" ?closable=${args.closable}> ${unsafeHTML(args.chip_icon)} </omni-chip>
   `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniChip } from "@capitec/omni-components-react/chip";
+
+const App = () => <OmniChip${args.label ? ` label='${args.label}'` : ''}>
+                    <svg slot="chip_icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100%" height="100%" style={{fill: 'orange'}}><path d="M12 2.25c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12 6.615 2.25 12 2.25Zm0 1.5a8.25 8.25 0 1 0 0 16.5 8.25 8.25 0 0 0 0-16.5ZM12 7a.75.75 0 0 1 .75.75v3.5h3.5a.75.75 0 0 1 .743.648L17 12a.75.75 0 0 1-.75.75h-3.5v3.5a.75.75 0 0 1-.648.743L12 17a.75.75 0 0 1-.75-.75v-3.5h-3.5a.75.75 0 0 1-.743-.648L7 12a.75.75 0 0 1 .75-.75h3.5v-3.5a.75.75 0 0 1 .648-.743Z"/></svg>
+                  </OmniChip>;`
+        }
+    ],
     name: 'Chip Icon',
     description: 'Set html content to display as an icon.',
     args: {
@@ -139,7 +173,7 @@ export const Chip_Slot_Icon: ComponentStoryFormat<Args> = {
     },
     play: async (context) => {
         const chip = within(context.canvasElement).getByTestId<Chip>('test-chip');
-        const slotElement = chip.shadowRoot!.querySelector<HTMLSlotElement>('slot[name="chip_icon"]');
+        const slotElement = chip.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="chip_icon"]');
         await expect(slotElement).toBeTruthy();
 
         const foundSlottedSvgElement = slotElement?.assignedElements().find((e) => e.tagName.toLowerCase() === 'svg');
@@ -153,6 +187,16 @@ export const Custom_Close_Icon: ComponentStoryFormat<Args> = {
       ${unsafeHTML(args.chip_icon)} ${unsafeHTML(args.close_icon)}
     </omni-chip>
   `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniChip } from "@capitec/omni-components-react/chip";
+
+const App = () => <OmniChip${args.label ? ` label='${args.label}'` : ''}${args.closable ? ` closable` : ''}>
+                    <svg slot="close_icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100%" height="100%"><path d="m7.446 6.397.084.073L13 11.939l5.47-5.47a.75.75 0 0 1 1.133.977l-.073.084L14.061 13l5.47 5.47a.75.75 0 0 1-.977 1.133l-.084-.073L13 14.061l-5.47 5.47a.75.75 0 0 1-1.133-.977l.073-.084L11.939 13l-5.47-5.47a.75.75 0 0 1 .977-1.133Z"/></svg>
+                  </OmniChip>;`
+        }
+    ],
     name: 'Custom Close Icon',
     description: 'Set html content to display as the close icon.',
     args: {
@@ -162,7 +206,7 @@ export const Custom_Close_Icon: ComponentStoryFormat<Args> = {
     },
     play: async (context) => {
         const chip = within(context.canvasElement).getByTestId<Chip>('test-chip');
-        const slotElement = chip.shadowRoot!.querySelector<HTMLSlotElement>('slot[name=close_icon]');
+        const slotElement = chip.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=close_icon]');
         await expect(slotElement).toBeTruthy();
 
         const foundSlottedSvgElement = slotElement?.assignedElements().find((e) => e.tagName.toLocaleLowerCase() === 'svg');

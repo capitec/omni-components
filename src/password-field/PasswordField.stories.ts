@@ -1,9 +1,20 @@
 import { waitFor, within } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
+import { setUIValueClean } from '@testing-library/user-event/dist/esm/document/UI.js';
 import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { LabelStory, BaseArgs, HintStory, ErrorStory, DisabledStory, ValueStory, PrefixStory, SuffixStory } from '../core/OmniInputStories.js';
+import {
+    LabelStory,
+    BaseArgs,
+    ClearableStory,
+    HintStory,
+    ErrorStory,
+    DisabledStory,
+    ValueStory,
+    PrefixStory,
+    SuffixStory
+} from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
 import { assignToSlot, ComponentStoryFormat, CSFIdentifier } from '../utils/StoryUtils.js';
@@ -32,7 +43,9 @@ export const Interactive: ComponentStoryFormat<Args> = {
       value="${args.value}"
       hint="${ifNotEmpty(args.hint)}"
       error="${ifNotEmpty(args.error)}"
-      ?disabled="${args.disabled}">${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${
+      ?disabled="${args.disabled}"
+      ?clearable="${args.clearable}">${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}
+      ${args.clear ? html`${'\r\n'}${unsafeHTML(assignToSlot('clear', args.clear))}` : nothing}${
         args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}` : nothing
     }${args.hide ? html`${'\r\n'}${unsafeHTML(assignToSlot('hide', args.hide))}` : nothing}${
         args.show ? html`${'\r\n'}${unsafeHTML(assignToSlot('show', args.show))}` : nothing
@@ -45,18 +58,24 @@ export const Interactive: ComponentStoryFormat<Args> = {
         hint: '',
         error: '',
         disabled: false,
+        clearable: false,
         prefix: '',
         suffix: '',
+        clear: '',
         hide: '',
         show: ''
     },
     play: async (context) => {
         const passwordField = within(context.canvasElement).getByTestId<PasswordField>('test-password-field');
+        passwordField.value = '';
+
         const interactions = jest.fn();
         passwordField.addEventListener('input', interactions);
         passwordField.addEventListener('click', interactions);
 
         const inputField = passwordField.shadowRoot?.getElementById('inputField') as HTMLInputElement;
+        // Required to clear userEvent Symbol that keeps hidden state of previously typed values via userEvent. If not cleared this cannot be run multiple times with the same results
+        setUIValueClean(inputField);
 
         const showSlotElement = passwordField.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=show]');
         await expect(showSlotElement).toBeTruthy();
@@ -74,18 +93,13 @@ export const Interactive: ComponentStoryFormat<Args> = {
         });
         const value = 'Value Update';
 
-        // TODO: Fix race conditions in tests
-        if (navigator.userAgent === 'Test Runner') {
-            console.log('CICD Test - Not Visual');
-        } else {
-            await waitFor(() => expect(inputField).toHaveValue(value), {
-                timeout: 3000
-            });
+        await waitFor(() => expect(inputField).toHaveValue(value), {
+            timeout: 3000
+        });
 
-            await waitFor(() => expect(interactions).toBeCalledTimes(value.length + 1), {
-                timeout: 3000
-            });
-        }
+        await waitFor(() => expect(interactions).toBeCalledTimes(value.length + 1), {
+            timeout: 3000
+        });
     }
 };
 
@@ -96,6 +110,8 @@ export const Hint = HintStory<PasswordField, BaseArgs>('omni-password-field');
 export const Error_Label = ErrorStory<PasswordField, BaseArgs>('omni-password-field');
 
 export const Value = ValueStory<PasswordField, BaseArgs>('omni-password-field', 'Password123');
+
+export const Clear = ClearableStory<PasswordField, BaseArgs>('omni-password-field', 'Password123');
 
 export const Prefix = PrefixStory<PasswordField, BaseArgs>('omni-password-field');
 
@@ -110,6 +126,18 @@ export const Custom_Icon_Slot: ComponentStoryFormat<Args> = {
       <omni-lock-closed-icon style="fill: lightgreen;" slot="hide"></omni-lock-closed-icon>
     </omni-password-field>
   `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniPasswordField } from "@capitec/omni-components-react/password-field";
+import { OmniLockClosedIcon,OmniLockOpenIcon } from "@capitec/omni-components-react/icons";
+
+const App = () => <OmniPasswordField${args.label ? ` label='${args.label}'` : ''}${args.disabled ? ` disabled` : ''}>
+                    <OmniLockOpenIcon style={{fill: 'orange'}} slot="show"/>
+                    <OmniLockClosedIcon style={{fill: 'lightgreen'}} slot="hide"/>
+                  </OmniPasswordField>;`
+        }
+    ],
     name: 'Custom Icon Slot',
     description: 'Set html content to display as the visibility indicators of the field.',
     args: {

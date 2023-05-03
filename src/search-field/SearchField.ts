@@ -1,8 +1,8 @@
 import { html, css } from 'lit';
-import { customElement, query } from 'lit/decorators.js';
+import { customElement, property, query } from 'lit/decorators.js';
 import { ClassInfo, classMap } from 'lit/directives/class-map.js';
 import { live } from 'lit/directives/live.js';
-import { OmniFormElement } from '../core/OmniFormElement.js';
+import { ifDefined, OmniFormElement } from '../core/OmniFormElement.js';
 
 import '../icons/Clear.icon.js';
 import '../icons/Search.icon.js';
@@ -59,6 +59,12 @@ export class SearchField extends OmniFormElement {
     @query('#inputField')
     private _inputElement?: HTMLInputElement;
 
+    /**
+     * Disables native on screen keyboards for the component.
+     * @attr [no-native-keyboard]
+     */
+    @property({ type: Boolean, reflect: true, attribute: 'no-native-keyboard' }) noNativeKeyboard?: boolean;
+
     override connectedCallback() {
         super.connectedCallback();
         this.addEventListener('input', this._keyInput.bind(this), {
@@ -66,25 +72,17 @@ export class SearchField extends OmniFormElement {
         });
     }
 
+    override focus(options?: FocusOptions | undefined): void {
+        if (this._inputElement) {
+            this._inputElement.focus(options);
+        } else {
+            super.focus(options);
+        }
+    }
+
     _keyInput() {
         const input = this._inputElement;
         this.value = input?.value;
-    }
-
-    async _clearField(e: MouseEvent) {
-        if (this.disabled) {
-            return e.stopImmediatePropagation();
-        }
-
-        this.value = '';
-
-        // Dispatch standard DOM event to cater for single clear.
-        this.dispatchEvent(
-            new Event('change', {
-                bubbles: true,
-                composed: true
-            })
-        );
     }
 
     static override get styles() {
@@ -120,24 +118,6 @@ export class SearchField extends OmniFormElement {
                     color: var(--omni-search-field-error-font-color);
                 }
 
-                .control {
-                    display: flex;
-                  
-                    margin-right: var(--omni-search-field-control-margin-right, 10px);
-                    margin-left: var(--omni-search-field-control-margin-left, 10px);
-                    width: var(--omni-search-field-control-width, 20px);
-                }
-
-                .clear-icon {
-                    fill: var(--omni-search-field-clear-icon-color, var(--omni-primary-color));
-                }
-
-                .clear-icon,
-                ::slotted([slot='clear']){
-                    width: var(--omni-search-field-clear-icon-width, 20px);
-                    cursor: pointer;
-                }
-
                 .search-icon {
                     fill: var(--omni-search-field-search-icon-color, var(--omni-primary-color));
                     width: var(--omni-search-field-search-icon-width, 20px);   
@@ -155,21 +135,13 @@ export class SearchField extends OmniFormElement {
                 input[type="search"]::-webkit-search-results-decoration {
                   -webkit-appearance:none;
                 }
-                .
+                
             `
         ];
     }
 
     protected override renderPrefix() {
         return html`<omni-search-icon class="search-icon"></omni-search-icon>`;
-    }
-
-    protected override renderControl() {
-        return html`
-            <div id="control" class="control" @click="${(e: MouseEvent) => this._clearField(e)}">
-                ${this.value ? html`<slot name="clear"><omni-clear-icon class="clear-icon"></omni-clear-icon></slot>` : ``}
-            </div>
-        `;
     }
 
     protected override renderContent() {
@@ -183,6 +155,7 @@ export class SearchField extends OmniFormElement {
                 class=${classMap(field)}
                 id="inputField"
                 type="search"
+                inputmode="${ifDefined(this.noNativeKeyboard ? 'none' : undefined)}"
                 .value=${live(this.value as string)}
                 ?readOnly=${this.disabled}
                 tabindex="${this.disabled ? -1 : 0}" />
