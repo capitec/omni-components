@@ -64,6 +64,8 @@ import '../icons/Check.icon.js';
  * @cssprop --omni-check-indicator-border-width - Indicator Border width.
  * @cssprop --omni-check-indicator-border-color - Indicator Border color.
  * @cssprop --omni-check-indicator-color - Indicator color.
+ * @cssprop --omni-check-indicator-icon-width - Indicator icon width.
+ * @cssprop --omni-check-indicator-icon-height - Indicator icon height.
  *
  * @cssprop --omni-check-checked-background-color - Checked Background color.
  * @cssprop --omni-check-indeterminate-background-color - Indeterminate Background color.
@@ -241,7 +243,11 @@ export class Check extends OmniElement {
 
         .indicator {
           width: 100%;
-          height: 100%;
+          height: 100%;          
+          display: flex;
+          align-items: center;
+          align-content: center;
+          justify-content: center;
         }
 
         .container.checked > #content > .indicator {
@@ -314,6 +320,13 @@ export class Check extends OmniElement {
         .container.checked.disabled > #content > .indicator {
           border-color: transparent;
         }
+        
+        .indicator-icon,
+        ::slotted([slot='indeterminate_icon']),
+        ::slotted([slot='check_icon']) {
+            width: var(--omni-check-indicator-icon-width, 16px);
+            height: var(--omni-check-indicator-icon-height, 16px);
+        }
       `
         ];
     }
@@ -333,13 +346,13 @@ export class Check extends OmniElement {
                             this.indeterminate
                                 ? html`
                             <slot name="indeterminate_icon">
-                                <omni-indeterminate-icon></omni-indeterminate-icon>
+                                <omni-indeterminate-icon class="indicator-icon"></omni-indeterminate-icon>
                             </slot>
                             `
                                 : this.checked
                                 ? html`
                             <slot name="check_icon">
-                                <omni-check-icon></omni-check-icon>
+                                <omni-check-icon class="indicator-icon"></omni-check-icon>
                             </slot>
                             `
                                 : nothing
