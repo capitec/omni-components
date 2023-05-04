@@ -89,6 +89,10 @@ export class PinField extends OmniFormElement {
         this.addEventListener('keyup', this._blurOnEnter.bind(this), {
             capture: true
         });
+        // Used to catch and format paste actions.
+        this.addEventListener('paste', this._onPaste.bind(this), {
+            capture: true
+        });
     }
 
     //Added for non webkit supporting browsers
@@ -98,13 +102,21 @@ export class PinField extends OmniFormElement {
         if (!this.isWebkit) {
             this.type = 'password';
         }
+        //Check if the value provided is valid and numeric else set value to be empty string.
+        if (this.value !== null && this.value !== undefined && new RegExp('^[0-9]+$').test(this.value as string) === false) {
+            this.value = '';
+        } else if (this.maxLength && (this.value as string).length > this.maxLength) {
+            this.value = String(this.value).slice(0, this.maxLength);
+        }
     }
 
     override async attributeChangedCallback(name: string, _old: string | null, value: string | null): Promise<void> {
         super.attributeChangedCallback(name, _old, value);
         if (name === 'value') {
-            if (new RegExp('^[0-9]+$').test(value as string) === false) {
-                return;
+            if (value !== null && value !== undefined && new RegExp('^[0-9]+$').test(value as string) === false) {
+                this.value = _old as string;
+            } else if (this.maxLength && (value as string).length > this.maxLength) {
+                this.value = value?.slice(0, this.maxLength) as string;
             }
         }
     }
@@ -140,6 +152,22 @@ export class PinField extends OmniFormElement {
             }
         }
         this.value = input?.value;
+    }
+
+    // When a value is pasted in the input.
+    _onPaste(e: ClipboardEvent) {
+        const input = this._inputElement as HTMLInputElement;
+        const clipboardData = e.clipboardData;
+        let pastedData = clipboardData?.getData('Text');
+
+        if (pastedData && new RegExp('^[0-9]+$').test(pastedData) === false) {
+            if (this.maxLength && pastedData.length > this.maxLength) {
+                pastedData = pastedData.slice(0, this.maxLength);
+            }
+            input.value = pastedData;
+        } else {
+            return;
+        }
     }
 
     _iconClicked(e: MouseEvent) {
