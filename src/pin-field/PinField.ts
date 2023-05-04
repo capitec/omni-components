@@ -113,7 +113,7 @@ export class PinField extends OmniFormElement {
     override async attributeChangedCallback(name: string, _old: string | null, value: string | null): Promise<void> {
         super.attributeChangedCallback(name, _old, value);
         if (name === 'value') {
-            if (value !== null && value !== undefined && new RegExp('^[0-9]+$').test(value as string) === false) {
+            if (value !== null && value !== undefined && value !== '' && new RegExp('^[0-9]+$').test(value as string) === false) {
                 this.value = _old as string;
             } else if (this.maxLength && (value as string).length > this.maxLength) {
                 this.value = value?.slice(0, this.maxLength) as string;
