@@ -50,9 +50,10 @@ export const Interactive: ComponentStoryFormat<Args> = {
             thousands-separator="${ifNotEmpty(args.thousandsSeparator)}"
             currency-symbol="${ifNotEmpty(args.currencySymbol)}"
             formatter="${ifNotEmpty(args.formatter)}"           
-            >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${
+            >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}
+            ${args.clear ? html`${'\r\n'}${unsafeHTML(assignToSlot('clear', args.clear))}` : nothing}${
         args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}` : nothing
-    }${args.prefix || args.suffix ? '\r\n' : nothing}</omni-currency-field>
+    }${args.prefix || args.suffix || args.clear ? '\r\n' : nothing}</omni-currency-field>
     `,
     name: 'Interactive',
     args: {
@@ -64,6 +65,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         clearable: false,
         prefix: '',
         suffix: '',
+        clear: '',
         fractionalPrecision: 2,
         fractionalSeparator: '.',
         thousandsSeparator: ',',

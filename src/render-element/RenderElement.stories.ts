@@ -67,7 +67,7 @@ export const Lit_Template: ComponentStoryFormat<Args> = {
     \`, document.getElementById('root'));
 </script>  
 <div id="root"></div>
-`,
+`
             // disableCodePen: true
         },
         {

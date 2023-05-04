@@ -132,12 +132,12 @@ Control to get / set a value within a list of options.
 | `--omni-select-control-icon-height`              | Select control icon height.                      |
 | `--omni-select-control-icon-width`               | Select control icon width.                       |
 | `--omni-select-control-padding`                  | Select component control padding.                |
-| `--omni-select-dialog-background-color`          | Select dialog background color().                |
-| `--omni-select-dialog-bottom`                    | Select dialog bottom                             |
-| `--omni-select-dialog-height`                    | Select dialog height                             |
-| `--omni-select-dialog-left`                      | Select dialog left                               |
+| `--omni-select-dialog-background-color`          | Select dialog background color.                  |
+| `--omni-select-dialog-bottom`                    | Select dialog bottom.                            |
+| `--omni-select-dialog-left`                      | Select dialog left.                              |
+| `--omni-select-dialog-modal-max-height`          | Select dialog height.                            |
 | `--omni-select-dialog-modal-max-width`           | Select dialog modal max width.                   |
-| `--omni-select-dialog-right`                     | Select dialog right                              |
+| `--omni-select-dialog-right`                     | Select dialog right.                             |
 | `--omni-select-field-disabled-font-color`        | Select component input field disabled font color. |
 | `--omni-select-field-error-font-color`           | Select component input field error font color.   |
 | `--omni-select-field-font-color`                 | Select component input field font color.         |

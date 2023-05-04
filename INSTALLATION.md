@@ -18,7 +18,7 @@ The easiest way to install Omni Components is with the CDN:
 You can also install Omni Components locally with the following command:
 
 ```bash
-npm install @capitec/omni-components
+npm install '@capitec/omni-components'
 ```
 
 With the latest package installed from NPM, [you can use a bundler](#bundling-). The ESM package used for [CDN Installation](#cdn-installation-(easiest)-) has its dependencies bundled already which allows it to be used without the need to install dependencies. However when using the local installation from NPM, the dependencies need to be provided externally, or you would need to [bundle the dependencies](#bundling-).
@@ -52,7 +52,7 @@ Omni Components is distributed as a collection of standard ES modules that [all 
 To use Omni Components with a bundler, first install it from NPM along with your bundler of choice:
 
 ```bash
-npm install @capitec/omni-components
+npm install '@capitec/omni-components'
 ```
 
 > 💡 Using a bundler will allow for optimal [tree shaking](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking), which will ensure the smallest size and most efficient usage. Our [starter templates](#starter-templates-) already provide this for you!
@@ -69,7 +69,7 @@ Omni Components provides a separate package with each web component wrapped into
 You can install Omni Components for React locally with the following command:
 
 ```bash
-npm install @capitec/omni-components-react
+npm install '@capitec/omni-components-react'
 ```
 
 Or you can use Omni Components for React directly via a CDN:

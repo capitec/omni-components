@@ -63,7 +63,7 @@ const App = () => <OmniLabel${args.label ? ` label='${args.label}'` : ''}${args.
 };
 
 export const Title: ComponentStoryFormat<Args> = {
-    render: (args: Args) => html` <omni-label data-testid="test-label" label="${args.label}" type="${args.type}"> </omni-label> `,    
+    render: (args: Args) => html` <omni-label data-testid="test-label" label="${args.label}" type="${args.type}"> </omni-label> `,
     description: 'Set the text to display with the styles of a title.',
     args: {
         label: 'Title',

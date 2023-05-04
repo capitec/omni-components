@@ -64,11 +64,12 @@ export const Interactive: ComponentStoryFormat<Args> = {
             ?disabled="${args.disabled}"
             ?clearable="${args.clearable}"
             empty-message="${args.emptyMessage}"
-            >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${
+            >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}
+            ${args.clear ? html`${'\r\n'}${unsafeHTML(assignToSlot('clear', args.clear))}` : nothing}${
         args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}` : nothing
     }
             ${args.loading_indicator ? html`${'\r\n'}${unsafeHTML(assignToSlot('loading_indicator', args.loading_indicator))}${'\r\n'}` : nothing}${
-        args.prefix || args.suffix ? '\r\n' : nothing
+        args.prefix || args.suffix || args.clear ? '\r\n' : nothing
     }</omni-select
         >
     `,
@@ -82,6 +83,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         clearable: false,
         prefix: '',
         suffix: '',
+        clear: '',
         items: displayItems as Record<string, unknown>[],
         displayField: 'label',
         idField: 'id',

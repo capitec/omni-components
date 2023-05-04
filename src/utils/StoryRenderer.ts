@@ -310,7 +310,11 @@ export class StoryRenderer extends LitElement {
                     : nothing
             }
 
-            <div class="two-part ${!this.story?.play && this.story!.frameworkSources?.find((fs) => fs.framework === this._sourceTab)?.disableCodePen && !reactSource ? 'no-display' : ''}">
+            <div class="two-part ${
+                !this.story?.play && this.story!.frameworkSources?.find((fs) => fs.framework === this._sourceTab)?.disableCodePen && !reactSource
+                    ? 'no-display'
+                    : ''
+            }">
             
                 <div class="play-tests">
                     ${
@@ -348,8 +352,7 @@ export class StoryRenderer extends LitElement {
                     ${
                         !this.interactive && reactSource
                             ? html`
-                                <div class="${this._sourceTab === 'HTML' ? 'selected' : ''}" @click="${() =>
-                                  (this._sourceTab = 'HTML')}">
+                                <div class="${this._sourceTab === 'HTML' ? 'selected' : ''}" @click="${() => (this._sourceTab = 'HTML')}">
                                     <omni-icon class="docs-omni-component" size="default">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="24" height="24">
                                             <title>HTML5 Logo Badge</title>
@@ -360,8 +363,7 @@ export class StoryRenderer extends LitElement {
                                         </svg>
                                     </omni-icon>
                                 </div>
-                                <div class="${this._sourceTab === 'React' ? 'selected' : ''}" @click="${() =>
-                                  (this._sourceTab = 'React')}">
+                                <div class="${this._sourceTab === 'React' ? 'selected' : ''}" @click="${() => (this._sourceTab = 'React')}">
                                     <omni-icon class="docs-omni-component" size="default">
                                         <img style="height: 24px; width: 24px;" src="./assets/images/react.svg" alt="React" />
                                     </omni-icon>
@@ -652,8 +654,7 @@ export class StoryRenderer extends LitElement {
                 js = `
 ${sourceCode
     .replaceAll('@capitec/omni-components-react', `https://cdn.jsdelivr.net/npm/@capitec/omni-components-react@${esmVersion}`)
-    .replace(new RegExp(`https://cdn.jsdelivr.net/npm/@capitec/omni-components-react@${esmVersion}/([^/"'\`]+)`, 'g'), '$&/index.js')
-} 
+    .replace(new RegExp(`https://cdn.jsdelivr.net/npm/@capitec/omni-components-react@${esmVersion}/([^/"'\`]+)`, 'g'), '$&/index.js')} 
 
 const el = document.querySelector("#root");
 ReactDOM.render(<App/>, el);`;
@@ -689,9 +690,7 @@ ReactDOM.render(<App/>, el);`;
             js_external: js_externals // semi-colon separate multiple files
         };
 
-        const JSONstring = JSON.stringify(data)
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&apos;');
+        const JSONstring = JSON.stringify(data).replace(/"/g, '&quot;').replace(/'/g, '&apos;');
 
         const formHTML = `<form style="display: none;" action="https://codepen.io/pen/define" method="POST" target="_blank"> 
             <input type="hidden" name="data" value='${JSONstring}'>

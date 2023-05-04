@@ -60,12 +60,12 @@ import '../icons/More.icon.js';
  * @cssprop --omni-select-items-container-box-shadow - Select items container box shadow.
  * @cssprop --omni-select-items-container-background-color - Select items container background color.
  *
- * @cssprop --omni-select-dialog-height - Select dialog height
- * @cssprop --omni-select-dialog-left - Select dialog left
- * @cssprop --omni-select-dialog-right - Select dialog right
- * @cssprop --omni-select-dialog-bottom - Select dialog bottom
+ * @cssprop --omni-select-dialog-left - Select dialog left.
+ * @cssprop --omni-select-dialog-right - Select dialog right.
+ * @cssprop --omni-select-dialog-bottom - Select dialog bottom.
+ * @cssprop --omni-select-dialog-modal-max-height - Select dialog height.
  * @cssprop --omni-select-dialog-modal-max-width - Select dialog modal max width.
- * @cssprop --omni-select-dialog-background-color - Select dialog background color().
+ * @cssprop --omni-select-dialog-background-color - Select dialog background color.
  *
  * @cssprop --omni-select-items-container-width - Select items container width
  * @cssprop --omni-select-items-container-top - Select items container top.
@@ -385,7 +385,6 @@ export class Select extends OmniFormElement {
                         border-style: none;
                         padding: unset;
                         width: 100%;
-                        height: var(--omni-select-dialog-height, 240px);
                         left: var(--omni-select-dialog-left, 0px);
                         right: var(--omni-select-dialog-right, 0px);
                         bottom: var(--omni-select-dialog-bottom, 0px);
@@ -393,6 +392,7 @@ export class Select extends OmniFormElement {
                     
                     .items-dialog:modal{
                         max-width: var(--omni-select-dialog-modal-max-width, 100%);
+                        max-height: var(--omni-select-dialog-modal-max-height, 240px);
                     }
 
                     .items-dialog::backdrop {
@@ -481,6 +481,7 @@ export class Select extends OmniFormElement {
                 id="select"
                 type="text"
                 readonly
+                inputMode="none"
                 ?disabled=${this.disabled}
                 .value=${live(
                     (typeof this.value !== 'string' && this.displayField

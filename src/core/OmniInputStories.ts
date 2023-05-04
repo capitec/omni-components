@@ -22,6 +22,7 @@ export interface BaseArgs {
 
     suffix: string;
     prefix: string;
+    clear: string;
 }
 
 function toPascalCase(text: string) {

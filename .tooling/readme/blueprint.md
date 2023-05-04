@@ -57,7 +57,7 @@ Core features of the library include:
 1️⃣ &nbsp; Install {{ template:projectName }} in your project.
 
 ```bash
-npm install {{ pkg.name }}
+npm install '{{ pkg.name }}'
 ```
 
 2️⃣ &nbsp; Import the components you require. See [`INSTALLATION.md`](./INSTALLATION.md) for more detail.

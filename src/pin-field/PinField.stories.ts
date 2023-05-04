@@ -47,7 +47,8 @@ export const Interactive: ComponentStoryFormat<Args> = {
       hint="${ifNotEmpty(args.hint)}"
       error="${ifNotEmpty(args.error)}"
       ?disabled="${args.disabled}"
-      ?clearable="${args.clearable}">${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}${
+      ?clearable="${args.clearable}">${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}
+      ${args.clear ? html`${'\r\n'}${unsafeHTML(assignToSlot('clear', args.clear))}` : nothing}${
         args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}` : nothing
     }${args.hide ? html`${'\r\n'}${unsafeHTML(assignToSlot('hide', args.hide))}` : nothing}${
         args.show ? html`${'\r\n'}${unsafeHTML(assignToSlot('show', args.show))}` : nothing
@@ -63,6 +64,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         clearable: false,
         prefix: '',
         suffix: '',
+        clear: '',
         hide: '',
         show: '',
         maxLength: undefined
@@ -122,7 +124,9 @@ export const Max_Length: ComponentStoryFormat<Args> = {
             framework: 'React',
             load: (args) => `import { OmniPinField } from "@capitec/omni-components-react/pin-field";
 
-const App = () => <OmniPinField${args.label ? ` label='${args.label}'` : ''}${args.value ? ` value='${args.value}'` : ''}${args.maxLength ? ` max-length='${args.maxLength}'` : ''}/>;`
+const App = () => <OmniPinField${args.label ? ` label='${args.label}'` : ''}${args.value ? ` value='${args.value}'` : ''}${
+                args.maxLength ? ` max-length='${args.maxLength}'` : ''
+            }/>;`
         }
     ],
     name: 'Max Length',
