@@ -183,7 +183,7 @@ export const Hint = HintStory<DatePicker, BaseArgs>('omni-date-picker');
 
 export const Error_Label = ErrorStory<DatePicker, BaseArgs>('omni-date-picker');
 
-export const Clear = ClearableStory<DatePicker, BaseArgs>('omni-date-picker', isoDate);
+export const Clearable = ClearableStory<DatePicker, BaseArgs>('omni-date-picker', isoDate);
 
 export const Prefix = PrefixStory<DatePicker, BaseArgs>('omni-date-picker');
 

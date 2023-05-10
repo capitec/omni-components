@@ -26,7 +26,9 @@ interface Args extends BaseArgs {
     emptyMessage: string;
     idField: string;
     renderItem: RenderFunction;
+    searchable: boolean;
     loading_indicator: string;
+    searchFunction: object;
 }
 
 const displayItems = [
@@ -49,6 +51,10 @@ async function promiseDisplayItems(data: Record<string, unknown>[]) {
     return data as SelectTypes;
 }
 
+async function promiseCustomSearch(data: Record<string, unknown>[]) {
+    console.log()
+}
+
 export const Interactive: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
         <omni-select
@@ -63,6 +69,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
             id-field="${args.idField}"
             ?disabled="${args.disabled}"
             ?clearable="${args.clearable}"
+            ?seearchable="${args.searchable}"
             empty-message="${args.emptyMessage}"
             >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}
             ${args.clear ? html`${'\r\n'}${unsafeHTML(assignToSlot('clear', args.clear))}` : nothing}${
@@ -81,6 +88,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         error: '',
         disabled: false,
         clearable: false,
+        searchable: false,
         prefix: '',
         suffix: '',
         clear: '',
@@ -610,13 +618,133 @@ const App = () => <OmniSelect label="${args.label}" items={stringItems}>
     }
 };
 
+export const Searchable: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
+    <omni-select data-testid="test-select" label="${ifNotEmpty(args.label)}" .items="${args.items}" display-field="${args.displayField}" id-field="${args.idField}" ?searchable="${args.searchable}">
+    </omni-select>
+`,
+frameworkSources: [
+    {
+        framework: 'HTML',
+        load: (args) => `<omni-select id='omni-select' label="${args.label}" display-field="${args.displayField}" id-field="${args.idField}" searchable></omni-select>
+        <script defer>
+            const displayItems = [
+                { id: '1', label: 'Peter Parker' },
+                { id: '2', label: 'James Howlett' },
+                { id: '3', label: 'Tony Stark' },
+                { id: '4', label: 'Steve Rodgers' },
+                { id: '5', label: 'Bruce Banner' },
+                { id: '6', label: 'Wanda Maximoff' },
+                { id: '7', label: 'TChalla' },
+                { id: '8', label: 'Henry P. McCoy' },
+                { id: '9', label: 'Carl Lucas' },
+                { id: '10', label: 'Frank Castle' }
+            ];  
+            select = document.getElementById('omni-select');
+            select.items = displayItems;
+        </script>`
+    },
+    {
+        framework: 'React',
+        load: (args) => `import { OmniSelect } from "@capitec/omni-components-react/select";
+
+        const displayItems = [
+            { id: '1', label: 'Peter Parker' },
+            { id: '2', label: 'James Howlett' },
+            { id: '3', label: 'Tony Stark' },
+            { id: '4', label: 'Steve Rodgers' },
+            { id: '5', label: 'Bruce Banner' },
+            { id: '6', label: 'Wanda Maximoff' },
+            { id: '7', label: 'TChalla' },
+            { id: '8', label: 'Henry P. McCoy' },
+            { id: '9', label: 'Carl Lucas' },
+            { id: '10', label: 'Frank Castle' }
+        ];
+
+        const App = () => <OmniSelect label="${args.label}" display-field="${args.displayField}" id-field="${args.idField}" items={displayItems} searchable></OmniSelect>`
+    }
+],
+name: 'Searchable',
+description: 'Adds a search input to limit the options to Select',
+args: {
+    label: 'Searchable',
+    displayField: 'label',
+    idField: 'id',
+    searchable: true,
+    items: displayItems as Record<string, unknown>[]
+} as Args,
+play: async (context) => {
+    const select = within(context.canvasElement).getByTestId<Select>('test-select');
+    const click = jest.fn();
+    select.addEventListener('click', click);
+
+    await userEvent.click(select);
+
+    //Add check to find the items-container once the component is opened.
+    const itemContainer = await querySelectorAsync(select!.shadowRoot!, '#items-container');
+    await expect(itemContainer).toBeTruthy();
+
+    const searchField = await querySelectorAsync(select!.shadowRoot!, '#searchField');
+    await expect(searchField).toBeTruthy();
+
+}
+}
+
+export const Custom_Search_Function: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
+    <omni-select data-testid="test-select" label="${ifNotEmpty(args.label)}" .items="${args.items}" display-field="${args.displayField}" id-field="${args.idField}" ?searchable="${args.searchable}">
+    </omni-select>
+    `,
+frameworkSources: [
+    {
+        framework: 'HTML',
+        load: (args) => `<omni-select id='omni-select' label="${args.label}" display-field="${args.displayField}" id-field="${args.idField}" searchable></omni-select>
+        <script defer>
+            const displayItems = [
+                { id: '1', label: 'Peter Parker' },
+                { id: '2', label: 'James Howlett' },
+                { id: '3', label: 'Tony Stark' },
+                { id: '4', label: 'Steve Rodgers' },
+                { id: '5', label: 'Bruce Banner' },
+                { id: '6', label: 'Wanda Maximoff' },
+                { id: '7', label: 'TChalla' },
+                { id: '8', label: 'Henry P. McCoy' },
+                { id: '9', label: 'Carl Lucas' },
+                { id: '10', label: 'Frank Castle' }
+            ];  
+            select = document.getElementById('omni-select');
+            select.items = displayItems;
+        </script>`
+    },
+    {
+        framework: 'React',
+        load: (args) => `import { OmniSelect } from "@capitec/omni-components-react/select";
+
+        const displayItems = [
+            { id: '1', label: 'Peter Parker' },
+            { id: '2', label: 'James Howlett' },
+            { id: '3', label: 'Tony Stark' },
+            { id: '4', label: 'Steve Rodgers' },
+            { id: '5', label: 'Bruce Banner' },
+            { id: '6', label: 'Wanda Maximoff' },
+            { id: '7', label: 'TChalla' },
+            { id: '8', label: 'Henry P. McCoy' },
+            { id: '9', label: 'Carl Lucas' },
+            { id: '10', label: 'Frank Castle' }
+        ];
+
+        const App = () => <OmniSelect label="${args.label}" display-field="${args.displayField}" id-field="${args.idField}" items={displayItems} searchable></OmniSelect>`
+    }
+],
+}
+
 export const Label = LabelStory<Select, BaseArgs>('omni-select');
 
 export const Hint = HintStory<Select, BaseArgs>('omni-select');
 
 export const Error_Label = ErrorStory<Select, BaseArgs>('omni-select');
 
-export const Clear = ClearableStory<Select, BaseArgs>('omni-select');
+export const Clearable = ClearableStory<Select, BaseArgs>('omni-select');
 
 export const Prefix = PrefixStory<Select, BaseArgs>('omni-select');
 

@@ -83,7 +83,7 @@ export const ErrorLabel = ErrorStory<SearchField, BaseArgs>('omni-search-field')
 
 export const Value = ValueStory<SearchField, BaseArgs>('omni-search-field');
 
-export const Clear = ClearableStory<SearchField, BaseArgs>('omni-search-field', 'Clear my name');
+export const Clearable = ClearableStory<SearchField, BaseArgs>('omni-search-field', 'Clear my name');
 
 export const Prefix = PrefixStory<SearchField, BaseArgs>('omni-search-field');
 

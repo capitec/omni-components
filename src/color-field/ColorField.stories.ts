@@ -63,7 +63,7 @@ export const Error_Label = ErrorStory<ColorField, BaseArgs>('omni-color-field');
 
 export const Value = ValueStory<ColorField, BaseArgs>('omni-color-field', '#f6b73c');
 
-export const Clear = ClearableStory<ColorField, BaseArgs>('omni-color-field', '#f6b73c');
+export const Clearable = ClearableStory<ColorField, BaseArgs>('omni-color-field', '#f6b73c');
 
 export const Prefix = PrefixStory<ColorField, BaseArgs>('omni-color-field');
 
