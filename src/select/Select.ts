@@ -135,7 +135,7 @@ export class Select extends OmniFormElement {
      * Selectable items of the select component.
      * @attr
      */
-    @property({ type: Array, reflect: true }) items?: SelectItems | (() => SelectItems);
+    @property({ type: Array, reflect: true }) items?: SelectItems | ((filterValue?: string) => SelectItems);
 
     /**
      * Field of the item to display as one of the selectable options.
@@ -171,14 +171,14 @@ export class Select extends OmniFormElement {
      * Custom search function for items instead of using the default.
      * @no_attribute
      */
-    @property({ type: Object, reflect: false }) searchFunction?: unknown;
+    @property({ type: Object, reflect: false }) filterItems?: (filterValue: string, items: SelectTypes) => SelectItems;
 
     //(...data: unknown[]) => RenderResult | Promise<RenderResult>;
     // Internal state properties
     @state() private _popUp: boolean = false;
     @state() private _bottomOfViewport: boolean = false;
     @state() private _isMobile: boolean = false;
-    @state() private _searchValue: string | null = null;
+    @state() private _searchValue?: string;
 
     override connectedCallback() {
         super.connectedCallback();
@@ -230,7 +230,7 @@ export class Select extends OmniFormElement {
     _togglePopup() {
         if (this._popUp) {
             this._popUp = false;
-            this._searchValue = null;
+            this._searchValue = undefined;
             if (this._isMobile) {
                 const itemsDialog = this.renderRoot.querySelector<HTMLDialogElement>('#items-dialog');
                 if (itemsDialog) {
@@ -344,7 +344,7 @@ export class Select extends OmniFormElement {
     }
 
     _onSearchFieldClear() {
-        this._searchValue = null;
+        this._searchValue = undefined;
         this.requestUpdate();
     }
 
@@ -696,7 +696,7 @@ export class Select extends OmniFormElement {
         let itemsLength = 0;
 
         if (typeof this.items === 'function') {
-            items = await this.items();
+            items = await this.items(this._searchValue);
         } else {
             items = (await this.items) as SelectTypes;
         }
@@ -706,11 +706,11 @@ export class Select extends OmniFormElement {
             //itemsLength = items.filter((i: string) => this._filterOption(i)).length;
             // let tempItems = items as (string | Record<string, unknown>)[];
 
-            if(this.searchFunction && typeof this.searchFunction === 'function'){
-                items = await this.searchFunction(items);
+            if(this._searchValue && this.filterItems && typeof this.filterItems === 'function'){
+                items = await this.filterItems(this._searchValue, items);
+            }else {
+                items = (items as (string | Record<string, unknown>)[]).filter((i) => this._filterOption(i)) as SelectTypes;
             }
-
-            items = (items as (string | Record<string, unknown>)[]).filter((i) => this._filterOption(i)) as SelectTypes;
             itemsLength = items.length;
         }
 
