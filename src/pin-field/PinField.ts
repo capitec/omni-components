@@ -102,18 +102,21 @@ export class PinField extends OmniFormElement {
         if (!this.isWebkit) {
             this.type = 'password';
         }
-        //Check if the value provided is valid and numeric else set value to be empty string.
-        if (this.value !== null && this.value !== undefined && new RegExp('^[0-9]+$').test(this.value as string) === false) {
-            this.value = '';
-        } else if (this.maxLength && this.value !== null && this.value !== undefined && (this.value as string).length > this.maxLength) {
-            this.value = String(this.value).slice(0, this.maxLength);
+
+        if (this.value !== null && this.value !== undefined && this.value !== '') {
+            //Check if the value provided is valid and numeric else set value to be empty string.
+            if (new RegExp('^[0-9]+$').test(this.value as string) === false) {
+                this.value = '';
+            } else if (this.maxLength && (this.value as string).length > this.maxLength) {
+                this.value = String(this.value).slice(0, this.maxLength);
+            }
         }
     }
 
     override async attributeChangedCallback(name: string, _old: string | null, value: string | null): Promise<void> {
         super.attributeChangedCallback(name, _old, value);
-        if (name === 'value') {
-            if (value !== null && value !== undefined && value !== '' && new RegExp('^[0-9]+$').test(value as string) === false) {
+        if (name === 'value' && value !== null && value !== undefined && value !== '') {
+            if (new RegExp('^[0-9]+$').test(value as string) === false) {
                 this.value = _old as string;
             } else if (this.maxLength && (value as string).length > this.maxLength) {
                 this.value = value?.slice(0, this.maxLength) as string;
@@ -137,7 +140,7 @@ export class PinField extends OmniFormElement {
 
     _keyDown(e: KeyboardEvent) {
         // Stop alpha keys
-        if (!e.ctrlKey && (e.key >= 'a' && e.key <= 'z')) {
+        if (!e.ctrlKey && e.key >= 'a' && e.key <= 'z') {
             e.preventDefault();
             return;
         }
