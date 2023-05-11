@@ -105,7 +105,7 @@ export class PinField extends OmniFormElement {
         //Check if the value provided is valid and numeric else set value to be empty string.
         if (this.value !== null && this.value !== undefined && new RegExp('^[0-9]+$').test(this.value as string) === false) {
             this.value = '';
-        } else if (this.maxLength && (this.value as string).length > this.maxLength) {
+        } else if (this.maxLength && this.value !== null && this.value !== undefined && (this.value as string).length > this.maxLength) {
             this.value = String(this.value).slice(0, this.maxLength);
         }
     }
@@ -137,7 +137,7 @@ export class PinField extends OmniFormElement {
 
     _keyDown(e: KeyboardEvent) {
         // Stop alpha keys
-        if (e.key >= 'a' && e.key <= 'z') {
+        if (!e.ctrlKey && (e.key >= 'a' && e.key <= 'z')) {
             e.preventDefault();
             return;
         }
