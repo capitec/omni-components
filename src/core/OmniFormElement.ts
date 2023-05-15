@@ -366,6 +366,7 @@ export class OmniFormElement extends OmniElement {
                     margin-right: var(--omni-form-clear-control-margin-right, 10px);
                     margin-left: var(--omni-form-clear-control-margin-left, 10px);
                     width: var(--omni-form-clear-control-width, 20px);
+                    align-items: center;
                 }
 
                 .clear-click {

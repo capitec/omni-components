@@ -4,7 +4,17 @@ import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { DateTime } from 'luxon';
-import { LabelStory, BaseArgs, HintStory, ErrorStory, PrefixStory, SuffixStory, DisabledStory, ClearableStory } from '../core/OmniInputStories.js';
+import {
+    LabelStory,
+    BaseArgs,
+    ClearableStory,
+    CustomClearableSlotIcon,
+    HintStory,
+    ErrorStory,
+    PrefixStory,
+    SuffixStory,
+    DisabledStory
+} from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
 import { assignToSlot, ComponentStoryFormat, CSFIdentifier, querySelectorAsync } from '../utils/StoryUtils.js';
@@ -183,7 +193,9 @@ export const Hint = HintStory<DatePicker, BaseArgs>('omni-date-picker');
 
 export const Error_Label = ErrorStory<DatePicker, BaseArgs>('omni-date-picker');
 
-export const Clear = ClearableStory<DatePicker, BaseArgs>('omni-date-picker', isoDate);
+export const Clearable = ClearableStory<DatePicker, BaseArgs>('omni-date-picker', isoDate);
+
+export const Custom_Clear_Slot_Icon = CustomClearableSlotIcon<DatePicker, BaseArgs>('omni-date-picker', isoDate);
 
 export const Prefix = PrefixStory<DatePicker, BaseArgs>('omni-date-picker');
 

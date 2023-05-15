@@ -9,6 +9,7 @@ import { RenderFunction } from '../render-element/RenderElement.js';
 import '../icons/Loading.icon.js';
 import '../render-element/RenderElement.js';
 import '../icons/ChevronDown.icon.js';
+import '../icons/Clear.icon.js';
 import '../icons/More.icon.js';
 
 /**
@@ -29,6 +30,8 @@ import '../icons/More.icon.js';
  *   items={'item1','item2','item3','item4'}
  *   display-field="label"
  *   id-field="id"
+ *   clearable
+ *   searchable
  *   disabled>
  * </omni-select>
  * ```
@@ -37,6 +40,7 @@ import '../icons/More.icon.js';
  *
  * @slot more - Replaces the icon for the more slot (Displays on mobile devices).
  * @slot arrow - Replaces the icon for the arrow slot (Displays on desktop and tablet devices).
+ * @slot search-clear - Replaces the icon in the Search field (Displays when searchable is set to true).
  *
  * @cssprop --omni-select-field-text-align - Select component input field text align.
  * @cssprop --omni-select-field-font-color -  Select component input field font color.
@@ -63,9 +67,10 @@ import '../icons/More.icon.js';
  * @cssprop --omni-select-dialog-left - Select dialog left.
  * @cssprop --omni-select-dialog-right - Select dialog right.
  * @cssprop --omni-select-dialog-bottom - Select dialog bottom.
+ * @cssprop --omni-select-dialog-background-color - Select dialog background color.
  * @cssprop --omni-select-dialog-modal-max-height - Select dialog height.
  * @cssprop --omni-select-dialog-modal-max-width - Select dialog modal max width.
- * @cssprop --omni-select-dialog-background-color - Select dialog background color.
+ * @cssprop --omni-select-dialog-backdrop-color - Select dialog background color.
  *
  * @cssprop --omni-select-items-container-width - Select items container width
  * @cssprop --omni-select-items-container-top - Select items container top.
@@ -105,18 +110,32 @@ import '../icons/More.icon.js';
  * @cssprop --omni-select-loading-indicator-width - Select loading indicator width.
  * @cssprop --omni-select-loading-indicator-height - Select loading indicator height.
  *
+ * @cssprop --omni-select-search-field-font-color - Select search field font color.
+ * @cssprop --omni-select-search-field-font-family - Select search field font family.
+ * @cssprop --omni-select-search-field-font-size - Select search field font size.
+ * @cssprop --omni-select-search-field-font-weight - Select search field font weight.
+ *
+ * @cssprop --omni-select-search-field-padding-top - Select search field top padding.
+ * @cssprop --omni-select-search-field-padding-bottom - Select search field bottom padding.
+ * @cssprop --omni-select-search-field-padding-left - Select search field left padding.
+ * @cssprop --omni-select-search-field-padding-right - Select search field right padding.
+ *
+ * @cssprop --omni-select-search-field-background-color - Select search field background color.
+ *
  */
 @customElement('omni-select')
 export class Select extends OmniFormElement {
     @query('#select')
     private _selectElement?: HTMLInputElement;
+    @query('#searchField')
+    private _searchElement?: HTMLInputElement;
     private _itemsContainer?: HTMLDivElement;
 
     /**
      * Selectable items of the select component.
      * @attr
      */
-    @property({ type: Array, reflect: true }) items?: SelectItems | (() => SelectItems);
+    @property({ type: Array, reflect: true }) items?: SelectItems | ((filterValue?: string) => SelectItems);
 
     /**
      * Field of the item to display as one of the selectable options.
@@ -137,15 +156,29 @@ export class Select extends OmniFormElement {
     @property({ type: String, reflect: true, attribute: 'empty-message' }) emptyMessage: string = 'No items provided';
 
     /**
+     * Toggles the ability to search the items of the select of the component.
+     * @attr
+     */
+    @property({ type: Boolean, reflect: true }) searchable = false;
+
+    /**
      * Render function for each item.
      * @no_attribute
      */
     @property({ type: Object, reflect: false }) renderItem?: RenderFunction;
 
+    /**
+     * Custom search function for items instead of using the default.
+     * @no_attribute
+     */
+    @property({ type: Object, reflect: false }) filterItems?: (filterValue: string, items: SelectTypes) => SelectItems;
+
+    //(...data: unknown[]) => RenderResult | Promise<RenderResult>;
     // Internal state properties
     @state() private _popUp: boolean = false;
     @state() private _bottomOfViewport: boolean = false;
     @state() private _isMobile: boolean = false;
+    @state() private _searchValue?: string;
 
     override connectedCallback() {
         super.connectedCallback();
@@ -161,7 +194,15 @@ export class Select extends OmniFormElement {
     }
 
     _inputClick(e: Event) {
-        this._togglePopup();
+        const composedPath = e.composedPath();
+        const searchControl = this.renderRoot.querySelector<HTMLDivElement>('#search-control') as HTMLDivElement;
+
+        //Stop the items container from closing when clicking the search input
+        if (this.searchable && composedPath.includes(searchControl)) {
+            return;
+        } else {
+            this._togglePopup();
+        }
     }
 
     // https://stackoverflow.com/a/39245638
@@ -189,6 +230,7 @@ export class Select extends OmniFormElement {
     _togglePopup() {
         if (this._popUp) {
             this._popUp = false;
+            this._searchValue = undefined;
             if (this._isMobile) {
                 const itemsDialog = this.renderRoot.querySelector<HTMLDialogElement>('#items-dialog');
                 if (itemsDialog) {
@@ -260,19 +302,48 @@ export class Select extends OmniFormElement {
             await this.updateComplete;
             if (visualViewport) {
                 if (this._bottomOfViewport) {
-                    const newHeight =
-                        visualViewport.height -
-                        this.getBoundingClientRect().height -
-                        (visualViewport.height - this.getBoundingClientRect().top) -
-                        10 +
-                        'px';
+                    let newHeight = '';
+                    if (this.searchable && this._searchElement) {
+                        newHeight =
+                            visualViewport.height -
+                            this.getBoundingClientRect().height -
+                            this._searchElement.height -
+                            (visualViewport.height - this.getBoundingClientRect().top) -
+                            10 +
+                            'px';
+                    } else {
+                        newHeight =
+                            visualViewport.height -
+                            this.getBoundingClientRect().height -
+                            (visualViewport.height - this.getBoundingClientRect().top) -
+                            10 +
+                            'px';
+                    }
+
                     this._itemsContainer.style.maxHeight = `var(--omni-select-items-max-height, ${newHeight})`;
                 } else {
-                    const newHeight = visualViewport.height - this.getBoundingClientRect().bottom - 10 + 'px';
+                    let newHeight = '';
+                    if (this.searchable && this._searchElement) {
+                        newHeight = visualViewport.height - this.getBoundingClientRect().bottom - this._searchElement.offsetHeight - 10 + 'px';
+                    } else {
+                        newHeight = visualViewport.height - this.getBoundingClientRect().bottom - 10 + 'px';
+                    }
+
                     this._itemsContainer.style.maxHeight = `var(--omni-select-items-max-height, ${newHeight})`;
                 }
             }
         }
+    }
+
+    _onSearchFieldInput() {
+        this._searchValue = this._searchElement?.value as string;
+        this.requestUpdate();
+    }
+
+    _onSearchFieldClear() {
+        this._searchValue = undefined;
+        this._searchElement!.value = '';
+        this.requestUpdate();
     }
 
     static override get styles() {
@@ -361,6 +432,10 @@ export class Select extends OmniFormElement {
                         top: var(--omni-select-items-container-render-bottom-top, 0px);
                         transform: translateY(-100%);
                     }
+
+                    .searchField {
+
+                    }
                 }
 
                 /* Only applies styles to transform the control icon if on Desktop */
@@ -375,34 +450,9 @@ export class Select extends OmniFormElement {
                         transition: all linear 0.15s;
                     }
                 }
-                
-                /* Mobile device styling */
-                @media screen and (max-width: 766px) {
-                    .items-dialog {
-                        position: fixed;
-                        top: inherit;
-                        margin: unset;
-                        border-style: none;
-                        padding: unset;
-                        width: 100%;
-                        left: var(--omni-select-dialog-left, 0px);
-                        right: var(--omni-select-dialog-right, 0px);
-                        bottom: var(--omni-select-dialog-bottom, 0px);
-                    }
-                    
-                    .items-dialog:modal{
-                        max-width: var(--omni-select-dialog-modal-max-width, 100%);
-                        max-height: var(--omni-select-dialog-modal-max-height, 240px);
-                    }
-
-                    .items-dialog::backdrop {
-                        background: var(--omni-select-dialog-background-color, rgba(0, 0, 0, 0.1));
-                    }
-                }
 
                 /* Should only display for mobile rendering */
                 .header {
-                    position: relative;
                     left: var(--omni-select-item-header-left, 0px);
                     right: var(--omni-select-item-header-right, 0px);
 
@@ -427,6 +477,7 @@ export class Select extends OmniFormElement {
 
                     height: var(--omni-select-items-height, auto);
                     width: var(--omni-select-items-width, 100%);
+                    background: var(--omni-select-items-background-color, var(--omni-background-color));              
                 }
 
                 .item,
@@ -464,6 +515,105 @@ export class Select extends OmniFormElement {
                     width: var(--omni-select-loading-indicator-width, 50px);
                     height: var(--omni-select-loading-indicator-height, 50px);
                 }
+
+                /* Search field styles */
+
+                .searchField {
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+
+                    color: var(--omni-select-search-field-font-color, var(--omni-font-color));
+
+                    font-family: var(--omni-select-search-field-font-family, var(--omni-font-family));
+                    font-size: var(--omni-select-search-field-font-size, var(--omni-font-size));
+                    font-weight: var(--omni-select-search-field-font-weight,var(--omni-font-weight));
+                    
+                    padding-top: var(--omni-select-search-field-padding-top, 14px);
+                    padding-bottom: var(--omni-select-search-field-padding-bottom, 14px);
+                    padding-left: var(--omni-select-search-field-padding-left, 10px);
+                    padding-right: var(--omni-select-search-field-padding-right, 10px);
+
+                    width: var(--omni-select-search-field-width,100%);
+
+
+                    border-top-width: var(--omni-select-search-field-top-border-width, 0);
+					border-left-width: var(--omni-select-search-field-left-border-width, 0);
+					border-right-width: var(--omni-select-search-field-right-border-width, 0);
+					border-bottom-width: var(--omni-select-search-field-bottom-border-width, 1px);
+					border-bottom-color: var(--omni-select-search-field-bottom-border-color, transparent);
+
+                    background: var(--omni-select-search-field-background-color, var(--omni-background-color));   
+                }
+
+                .searchField:focus {
+					outline: none;
+				}
+
+                /* Search field clear icons styles */
+
+                .search-control {
+                    display: flex;
+                  
+                    margin-right: var(--omni-select-search-clear-control-margin-right, 10px);
+                    margin-left: var(--omni-select-search-clear-control-margin-left, 10px);
+                }
+
+                .search-clear-click {
+                    display: flex;
+                }
+
+                .search-clear-icon {
+                    fill: var(--omni-select-search-clear-icon-color, var(--omni-primary-color));
+                }
+
+                .search-clear-icon,
+                ::slotted([slot='search-clear']){
+                    width: var(--omni-select-search-clear-icon-width, 20px);
+                    cursor: pointer;
+                }
+
+               /* Mobile device styling */
+               @media screen and (max-width: 766px) {
+                   .items-dialog {
+                       position: fixed;
+                       top: inherit;
+                       margin: unset;
+                       border-style: none;
+                       padding: unset;
+                       width: 100%;
+                       left: var(--omni-select-dialog-left, 0px);
+                       right: var(--omni-select-dialog-right, 0px);
+                       bottom: var(--omni-select-dialog-bottom, 0px);
+                       background-color: var(--omni-select-dialog-background-color, transparent);
+                   }
+                   
+                   .items-dialog:modal{
+                       max-width: var(--omni-select-dialog-modal-max-width, 100%);
+                       max-height: var(--omni-select-dialog-modal-max-height, 240px);
+                       
+                       display: flex;
+                       flex-direction: column;
+                   }
+               
+                   .items-dialog::backdrop {
+                       background: var(--omni-select-dialog-backdrop-color, rgba(0, 0, 0, 0.1));
+                   }
+               
+                   .search-control {
+                       display: flex;
+                     
+                       margin-right: var(--omni-select-search-clear-control-margin-right, 0px);
+                       margin-left: var(--omni-select-search-clear-control-margin-left, 0px);
+                       background-color: var(--omni-select-clear-div-color, var(--omni-background-color));
+                   }
+
+                   .search-clear-click {
+                       display: flex;
+                       margin-right: 10px;
+                       align-items: center;
+                   }
+               }
             `
         ];
     }
@@ -497,6 +647,7 @@ export class Select extends OmniFormElement {
             return html`
             <dialog id="items-dialog" class="items-dialog">
                 ${this._isMobile && this.label ? html`<div class="header">${this.label}</div>` : nothing}
+                ${this._renderSearchField()}
                 <div ${ref(this._itemsMaxHeightChange)} id="items" class="items"> ${until(
                 this._renderOptions(),
                 html`<div>${this.renderLoading()}</div>`
@@ -511,7 +662,7 @@ export class Select extends OmniFormElement {
         }
         return html`
             <div id="items-container" class="items-container ${this._bottomOfViewport ? `bottom` : ``}">
-                ${this._isMobile && this.label ? html`<div class="header">${this.label}</div>` : nothing}
+                ${this._renderSearchField()}
                 <div ${ref(this._itemsMaxHeightChange)} id="items" class="items"> ${until(
             this._renderOptions(),
             html`<div>${this.renderLoading()}</div>`
@@ -519,6 +670,28 @@ export class Select extends OmniFormElement {
                 </div>
             </div>
         `;
+    }
+
+    _renderSearchField() {
+        if (this.searchable) {
+            return html`
+            <div id="search-control" class='search-control'>
+                <input type="text" class="searchField" id="searchField" placeholder="Search..." @input="${this._onSearchFieldInput}" />
+                <div id="search-clear-click" class="search-clear-click" @click="${this._onSearchFieldClear}">
+                    ${
+                        this._searchValue
+                            ? html`
+                        <slot name="search-clear">
+                            <omni-clear-icon class="search-clear-icon"></omni-clear-icon>
+                        </slot>
+                    `
+                            : nothing
+                    }
+                </div>
+            </div>`;
+        } else {
+            return nothing;
+        }
     }
 
     protected override renderControl() {
@@ -541,12 +714,18 @@ export class Select extends OmniFormElement {
         let itemsLength = 0;
 
         if (typeof this.items === 'function') {
-            items = await this.items();
+            items = await this.items(this._searchValue);
         } else {
             items = (await this.items) as SelectTypes;
         }
 
         if (Array.isArray(items)) {
+            //If a custom filter function is provided and there is a value in the searchField then use it vs using the default.
+            if (this._searchValue && this.filterItems && typeof this.filterItems === 'function') {
+                items = (await this.filterItems(this._searchValue, items)) as SelectTypes;
+            } else {
+                items = (items as (string | Record<string, unknown>)[]).filter((i) => this._filterOption(i)) as SelectTypes;
+            }
             itemsLength = items.length;
         }
 
@@ -555,6 +734,25 @@ export class Select extends OmniFormElement {
         } else {
             return items.map((i) => this._renderOption(i));
         }
+    }
+
+    //Filter the items provided if the searchField has a value filter the items based on the value.
+    _filterOption(item: string | Record<string, unknown>) {
+        if (!this._searchValue) {
+            return true;
+        }
+
+        if (typeof item === `string`) {
+            return item.toString().toLowerCase().includes(this._searchValue.toLowerCase());
+        }
+
+        // eslint-disable-next-line no-prototype-builtins
+        /*
+		if (!this.displayField || !item.hasOwnProperty(this.displayField)) {
+			return true;
+		}*/
+
+        return (item[this.displayField!] as string).toString().toLowerCase().includes(this._searchValue.toLowerCase()) as unknown as string;
     }
 
     // Render the each option in the item container

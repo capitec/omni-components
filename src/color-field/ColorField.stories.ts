@@ -4,7 +4,17 @@ import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { OmniFormElement } from '../core/OmniFormElement.js';
-import { LabelStory, BaseArgs, ClearableStory, HintStory, ErrorStory, ValueStory, PrefixStory, SuffixStory } from '../core/OmniInputStories.js';
+import {
+    LabelStory,
+    BaseArgs,
+    ClearableStory,
+    CustomClearableSlotIcon,
+    HintStory,
+    ErrorStory,
+    ValueStory,
+    PrefixStory,
+    SuffixStory
+} from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
 import { assignToSlot, ComponentStoryFormat, CSFIdentifier } from '../utils/StoryUtils.js';
@@ -63,7 +73,9 @@ export const Error_Label = ErrorStory<ColorField, BaseArgs>('omni-color-field');
 
 export const Value = ValueStory<ColorField, BaseArgs>('omni-color-field', '#f6b73c');
 
-export const Clear = ClearableStory<ColorField, BaseArgs>('omni-color-field', '#f6b73c');
+export const Clearable = ClearableStory<ColorField, BaseArgs>('omni-color-field', '#f6b73c');
+
+export const Custom_Clear_Slot_Icon = CustomClearableSlotIcon<ColorField, BaseArgs>('omni-color-field', '#f6b73c');
 
 export const Prefix = PrefixStory<ColorField, BaseArgs>('omni-color-field');
 
