@@ -7,7 +7,16 @@ import { setUIValueClean } from '@testing-library/user-event/dist/esm/document/U
 import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { LabelStory, BaseArgs, ClearableStory, HintStory, ErrorStory, PrefixStory, SuffixStory } from '../core/OmniInputStories.js';
+import {
+    LabelStory,
+    BaseArgs,
+    ClearableStory,
+    CustomClearableSlotIcon,
+    HintStory,
+    ErrorStory,
+    PrefixStory,
+    SuffixStory
+} from '../core/OmniInputStories.js';
 import { RenderFunction } from '../render-element/RenderElement.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
@@ -53,7 +62,7 @@ async function promiseDisplayItems(data: Record<string, unknown>[]) {
 }
 
 async function promiseSearchFilter(filterValue: string, items: SelectTypes) {
-    await new Promise<void>((r) => setTimeout(() => r(), 3000));
+    await new Promise<void>((r) => setTimeout(() => r(), 2000));
     return customSearch(filterValue, items);
 }
 
@@ -931,7 +940,13 @@ export const Server_Side_Filtering: ComponentStoryFormat<Args> = {
         const items = select.shadowRoot?.getElementById('items');
         await expect(items).toBeTruthy();
 
-        const item = await querySelectorAsync(select!.shadowRoot!, '.item');
+        let item;
+        // TODO: Fix race conditions in tests
+        if (navigator.userAgent === 'Test Runner') {
+            item = await querySelectorAsync(select.shadowRoot!, '.item', undefined, 3000);
+        } else {
+            item = await querySelectorAsync(select.shadowRoot!, '.item', undefined, 5000);
+        }
 
         await expect(item).toBeTruthy();
         await userEvent.click(item as HTMLDivElement);
@@ -1027,6 +1042,8 @@ export const Hint = HintStory<Select, BaseArgs>('omni-select');
 export const Error_Label = ErrorStory<Select, BaseArgs>('omni-select');
 
 export const Clearable = ClearableStory<Select, BaseArgs>('omni-select');
+
+export const Custom_Clear_Slot_Icon = CustomClearableSlotIcon<Select, BaseArgs>('omni-select');
 
 export const Prefix = PrefixStory<Select, BaseArgs>('omni-select');
 
