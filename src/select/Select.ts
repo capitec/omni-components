@@ -195,10 +195,10 @@ export class Select extends OmniFormElement {
 
     _inputClick(e: Event) {
         const composedPath = e.composedPath();
-        const searchField = this.renderRoot.querySelector<HTMLInputElement>('#searchField') as HTMLInputElement;
+        const searchControl = this.renderRoot.querySelector<HTMLDivElement>('#search-control') as HTMLDivElement;
 
         //Stop the items container from closing when clicking the search input
-        if (this.searchable && composedPath.includes(searchField)) {
+        if (this.searchable && composedPath.includes(searchControl)) {
             return;
         } else {
             this._togglePopup();
@@ -322,9 +322,6 @@ export class Select extends OmniFormElement {
 
                     this._itemsContainer.style.maxHeight = `var(--omni-select-items-max-height, ${newHeight})`;
                 } else {
-                    /*const newHeight = visualViewport.height - this.getBoundingClientRect().bottom - 10 + 'px';
-                    this._itemsContainer.style.maxHeight = `var(--omni-select-items-max-height, ${newHeight})`;*/
-
                     let newHeight = '';
                     if (this.searchable && this._searchElement) {
                         newHeight = visualViewport.height - this.getBoundingClientRect().bottom - this._searchElement.offsetHeight - 10 + 'px';
@@ -345,6 +342,7 @@ export class Select extends OmniFormElement {
 
     _onSearchFieldClear() {
         this._searchValue = undefined;
+        this._searchElement!.value = '';
         this.requestUpdate();
     }
 
@@ -450,34 +448,6 @@ export class Select extends OmniFormElement {
                     .control.collapsed {
                         transform: none;
                         transition: all linear 0.15s;
-                    }
-                }
-                
-                /* Mobile device styling */
-                @media screen and (max-width: 766px) {
-                    .items-dialog {
-                        position: fixed;
-                        top: inherit;
-                        margin: unset;
-                        border-style: none;
-                        padding: unset;
-                        width: 100%;
-                        left: var(--omni-select-dialog-left, 0px);
-                        right: var(--omni-select-dialog-right, 0px);
-                        bottom: var(--omni-select-dialog-bottom, 0px);
-                        background-color: var(--omni-select-dialog-background-color, transparent);
-                    }
-                    
-                    .items-dialog:modal{
-                        max-width: var(--omni-select-dialog-modal-max-width, 100%);
-                        max-height: var(--omni-select-dialog-modal-max-height, 240px);
-                        
-                        display: flex;
-                        flex-direction: column;
-                    }
-
-                    .items-dialog::backdrop {
-                        background: var(--omni-select-dialog-backdrop-color, rgba(0, 0, 0, 0.1));
                     }
                 }
 
@@ -602,6 +572,48 @@ export class Select extends OmniFormElement {
                     width: var(--omni-select-search-clear-icon-width, 20px);
                     cursor: pointer;
                 }
+
+               /* Mobile device styling */
+               @media screen and (max-width: 766px) {
+                   .items-dialog {
+                       position: fixed;
+                       top: inherit;
+                       margin: unset;
+                       border-style: none;
+                       padding: unset;
+                       width: 100%;
+                       left: var(--omni-select-dialog-left, 0px);
+                       right: var(--omni-select-dialog-right, 0px);
+                       bottom: var(--omni-select-dialog-bottom, 0px);
+                       background-color: var(--omni-select-dialog-background-color, transparent);
+                   }
+                   
+                   .items-dialog:modal{
+                       max-width: var(--omni-select-dialog-modal-max-width, 100%);
+                       max-height: var(--omni-select-dialog-modal-max-height, 240px);
+                       
+                       display: flex;
+                       flex-direction: column;
+                   }
+               
+                   .items-dialog::backdrop {
+                       background: var(--omni-select-dialog-backdrop-color, rgba(0, 0, 0, 0.1));
+                   }
+               
+                   .search-control {
+                       display: flex;
+                     
+                       margin-right: var(--omni-select-search-clear-control-margin-right, 0px);
+                       margin-left: var(--omni-select-search-clear-control-margin-left, 0px);
+                       background-color: var(--omni-select-clear-div-color, var(--omni-background-color));
+                   }
+
+                   .search-clear-click {
+                       display: flex;
+                       margin-right: 10px;
+                       align-items: center;
+                   }
+               }
             `
         ];
     }
@@ -635,12 +647,7 @@ export class Select extends OmniFormElement {
             return html`
             <dialog id="items-dialog" class="items-dialog">
                 ${this._isMobile && this.label ? html`<div class="header">${this.label}</div>` : nothing}
-                ${
-                    this.searchable
-                        ? html`<input type="text" class="searchField" id="searchField" placeholder="Search..."
-                    @input="${this._onSearchFieldInput}" />`
-                        : nothing
-                }
+                ${this._renderSearchField()}
                 <div ${ref(this._itemsMaxHeightChange)} id="items" class="items"> ${until(
                 this._renderOptions(),
                 html`<div>${this.renderLoading()}</div>`
@@ -655,18 +662,7 @@ export class Select extends OmniFormElement {
         }
         return html`
             <div id="items-container" class="items-container ${this._bottomOfViewport ? `bottom` : ``}">
-                ${
-                    this.searchable
-                        ? html`<div class='search-control'>
-                                    <input type="text" class="searchField" id="searchField" placeholder="Search..." @input="${this._onSearchFieldInput}" />
-                                    <div id="search-clear-click" class="search-clear-click" @click="${this._onSearchFieldClear}">
-                                        <slot name="search-clear">
-                                            <omni-clear-icon class="search-clear-icon"></omni-clear-icon>
-                                        </slot>
-                                    </div>
-                                </div>`
-                        : nothing
-                }
+                ${this._renderSearchField()}
                 <div ${ref(this._itemsMaxHeightChange)} id="items" class="items"> ${until(
             this._renderOptions(),
             html`<div>${this.renderLoading()}</div>`
@@ -674,6 +670,28 @@ export class Select extends OmniFormElement {
                 </div>
             </div>
         `;
+    }
+
+    _renderSearchField() {
+        if (this.searchable) {
+            return html`
+            <div id="search-control" class='search-control'>
+                <input type="text" class="searchField" id="searchField" placeholder="Search..." @input="${this._onSearchFieldInput}" />
+                <div id="search-clear-click" class="search-clear-click" @click="${this._onSearchFieldClear}">
+                    ${
+                        this._searchValue
+                            ? html`
+                        <slot name="search-clear">
+                            <omni-clear-icon class="search-clear-icon"></omni-clear-icon>
+                        </slot>
+                    `
+                            : nothing
+                    }
+                </div>
+            </div>`;
+        } else {
+            return nothing;
+        }
     }
 
     protected override renderControl() {
@@ -702,13 +720,10 @@ export class Select extends OmniFormElement {
         }
 
         if (Array.isArray(items)) {
-            //itemsLength = items.length;
-            //itemsLength = items.filter((i: string) => this._filterOption(i)).length;
-            // let tempItems = items as (string | Record<string, unknown>)[];
-
-            if(this._searchValue && this.filterItems && typeof this.filterItems === 'function'){
-                items = await this.filterItems(this._searchValue, items);
-            }else {
+            //If a custom filter function is provided and there is a value in the searchField then use it vs using the default.
+            if (this._searchValue && this.filterItems && typeof this.filterItems === 'function') {
+                items = (await this.filterItems(this._searchValue, items)) as SelectTypes;
+            } else {
                 items = (items as (string | Record<string, unknown>)[]).filter((i) => this._filterOption(i)) as SelectTypes;
             }
             itemsLength = items.length;
@@ -721,6 +736,7 @@ export class Select extends OmniFormElement {
         }
     }
 
+    //Filter the items provided if the searchField has a value filter the items based on the value.
     _filterOption(item: string | Record<string, unknown>) {
         if (!this._searchValue) {
             return true;
