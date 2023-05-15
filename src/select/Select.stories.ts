@@ -737,24 +737,22 @@ export const Searchable: ComponentStoryFormat<Args> = {
 
 export const Custom_Search_Function: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
-    <omni-select data-testid="test-select" label="${ifNotEmpty(args.label)}" .items="${args.items}" display-field="${args.displayField}" id-field="${
-        args.idField
-    }" ?searchable="${args.searchable}" .filterItems="${args.filterItems}">
+    <omni-select data-testid="test-select" label="${ifNotEmpty(args.label)}" .items="${args.items}" ?searchable="${args.searchable}" .filterItems="${
+        args.filterItems
+    }">
     </omni-select>
     `,
     frameworkSources: [
         {
             framework: 'HTML',
-            load: (
-                args
-            ) => `<omni-select id='omni-select' label="${args.label}" display-field="${args.displayField}" id-field="${args.idField}" searchable></omni-select>
+            load: (args) => `<omni-select id='omni-select' label="${args.label}" searchable></omni-select>
 
         <script defer>
 
             const stringItems = ['Bruce Wayne', 'Clark Kent', 'Barry Allen', 'Arthur Curry', 'Hal Jordan'];   
 
 
-            function customSearch(filterValue: string, items: SelectTypes) {
+            function customSearch(filterValue, items) {
                 if(Array.isArray(items) && filterValue !== null){
                     return items = (items as (string | Record<string, unknown>)[]).filter((i) => itemFilter(filterValue,i)) as SelectTypes;
                 }else {
@@ -763,7 +761,7 @@ export const Custom_Search_Function: ComponentStoryFormat<Args> = {
             }
 
             
-            function itemFilter(filterValue: string, item: string | Record<string, unknown>) {
+            function itemFilter(filterValue, item) {
                     return item.toString().toLowerCase().includes(filterValue.toLowerCase());
             };
 
@@ -778,7 +776,7 @@ export const Custom_Search_Function: ComponentStoryFormat<Args> = {
 
         const stringItems = ['Bruce Wayne', 'Clark Kent', 'Barry Allen', 'Arthur Curry', 'Hal Jordan'];   
 
-        function customSearch(filterValue: string, items: SelectTypes) {
+        function customSearch(filterValue, items) {
             if(Array.isArray(items) && filterValue !== null){
                 return items = (items as (string | Record<string, unknown>)[]).filter((i) => itemFilter(filterValue,i)) as SelectTypes;
             }else {
@@ -786,12 +784,12 @@ export const Custom_Search_Function: ComponentStoryFormat<Args> = {
             }
         }
         
-        function itemFilter(filterValue: string, item: string | Record<string, unknown>) {
+        function itemFilter(filterValue, item) {
                 return item.toString().toLowerCase().includes(filterValue.toLowerCase());
         };
 
 
-        const App = () => <OmniSelect label="${args.label}" display-field="${args.displayField}" id-field="${args.idField}" items={stringItems} filterItems={customSearch} searchable></OmniSelect>`
+        const App = () => <OmniSelect label="${args.label}" items={stringItems} filterItems={customSearch} searchable></OmniSelect>`
         }
     ],
     name: 'Custom Search function',
@@ -848,20 +846,18 @@ export const Server_Side_Filtering: ComponentStoryFormat<Args> = {
     frameworkSources: [
         {
             framework: 'HTML',
-            load: (
-                args
-            ) => `<omni-select id='omni-select' label="${args.label}" display-field="${args.displayField}" id-field="${args.idField}" searchable></omni-select>
+            load: (args) => `<omni-select id='omni-select' label="${args.label}" searchable></omni-select>
 
         <script defer>
 
             const stringItems = ['Bruce Wayne', 'Clark Kent', 'Barry Allen', 'Arthur Curry', 'Hal Jordan'];   
 
-            async function promiseSearchFilter(filterValue: string, items: SelectTypes) {
+            async function promiseSearchFilter(filterValue, items) {
                 await new Promise<void>((r) => setTimeout(() => r(), 2000));
                 return customSearch(filterValue, items);
             }
             
-            function customSearch(filterValue: string, items: SelectTypes) {
+            function customSearch(filterValue, items) {
                 if (Array.isArray(items) && filterValue !== null) {
                     return (items = (items as (string | Record<string, unknown>)[]).filter((i) => itemFilter(filterValue, i)) as SelectTypes);
                 } else {
@@ -869,7 +865,7 @@ export const Server_Side_Filtering: ComponentStoryFormat<Args> = {
                 }
             }
             
-            function itemFilter(filterValue: string, item: string | Record<string, unknown>) {
+            function itemFilter(filterValue, item) {
                 return item.toString().toLowerCase().includes(filterValue.toLowerCase());
             }
 
@@ -885,12 +881,12 @@ export const Server_Side_Filtering: ComponentStoryFormat<Args> = {
         const stringItems = ['Bruce Wayne', 'Clark Kent', 'Barry Allen', 'Arthur Curry', 'Hal Jordan'];   
 
 
-        async function promiseSearchFilter(filterValue: string, items: SelectTypes) {
+        async function promiseSearchFilter(filterValue, items) {
             await new Promise<void>((r) => setTimeout(() => r(), 2000));
             return customSearch(filterValue, items);
         }
         
-        function customSearch(filterValue: string, items: SelectTypes) {
+        function customSearch(filterValue, items) {
             if (Array.isArray(items) && filterValue !== null) {
                 return (items = (items as (string | Record<string, unknown>)[]).filter((i) => itemFilter(filterValue, i)) as SelectTypes);
             } else {
@@ -898,18 +894,18 @@ export const Server_Side_Filtering: ComponentStoryFormat<Args> = {
             }
         }
         
-        function itemFilter(filterValue: string, item: string | Record<string, unknown>) {
+        function itemFilter(filterValue, item) {
             return item.toString().toLowerCase().includes(filterValue.toLowerCase());
         }
 
 
-        const App = () => <OmniSelect label="${args.label}" display-field="${args.displayField}" id-field="${args.idField}" items={stringItems} filterItems={customSearch} searchable></OmniSelect>`
+        const App = () => <OmniSelect label="${args.label}" items={stringItems} filterItems={customSearch} searchable></OmniSelect>`
         }
     ],
-    name: 'Custom Search function',
-    description: 'Select component with a custom search function',
+    name: 'Server Side Filtering',
+    description: 'Select component with server side filtering function',
     args: {
-        label: 'Custom Search function',
+        label: 'Server Side Filtering',
         displayField: 'label',
         idField: 'id',
         searchable: true,
