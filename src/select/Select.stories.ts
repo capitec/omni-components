@@ -853,7 +853,7 @@ export const Server_Side_Filtering: ComponentStoryFormat<Args> = {
             const stringItems = ['Bruce Wayne', 'Clark Kent', 'Barry Allen', 'Arthur Curry', 'Hal Jordan'];   
 
             async function promiseSearchFilter(filterValue, items) {
-                await new Promise<void>((r) => setTimeout(() => r(), 2000));
+                await new Promise((r) => setTimeout(() => r(), 2000));
                 return customSearch(filterValue, items);
             }
             
@@ -882,7 +882,7 @@ export const Server_Side_Filtering: ComponentStoryFormat<Args> = {
 
 
         async function promiseSearchFilter(filterValue, items) {
-            await new Promise<void>((r) => setTimeout(() => r(), 2000));
+            await new Promise((r) => setTimeout(() => r(), 2000));
             return customSearch(filterValue, items);
         }
         
