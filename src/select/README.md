@@ -13,6 +13,8 @@ Control to get / set a value within a list of options.
   items={'item1','item2','item3','item4'}
   display-field="label"
   id-field="id"
+  clearable
+  searchable
   disabled>
 </omni-select>
 ```
@@ -28,13 +30,15 @@ Control to get / set a value within a list of options.
 | `displayField` | `display-field` |           | `string \| undefined`                            |                     | Field of the item to display as one of the selectable options. |
 | `emptyMessage` | `empty-message` |           | `string`                                         | "No items provided" | Message displayed in the items container when no items are bound to the component. |
 | `error`        | `error`         |           | `string \| undefined`                            |                     | Error message guiding a user to correct a mistake. |
+| `filterItems`  | `filterItems`   |           | `((filterValue: string, items: SelectTypes) => SelectItems) \| undefined` |                     | Custom search function for items instead of using the default. |
 | `hint`         | `hint`          |           | `string \| undefined`                            |                     | Hint message to assist the user.                 |
 | `idField`      | `id-field`      |           | `string`                                         | "id"                | Id field of the items provided.                  |
-| `items`        | `items`         |           | `string[] \| Record<string, unknown>[] \| Promise<SelectTypes> \| (() => SelectItems) \| undefined` |                     | Selectable items of the select component.        |
+| `items`        | `items`         |           | `string[] \| Record<string, unknown>[] \| Promise<SelectTypes> \| ((filterValue?: string \| undefined) => SelectItems) \| undefined` |                     | Selectable items of the select component.        |
 | `label`        | `label`         |           | `string \| undefined`                            |                     | Text label.                                      |
 | `lang`         |                 |           | `string`                                         |                     |                                                  |
 | `override`     | `override`      |           |                                                  |                     | Used to set the base direction of text for display |
 | `renderItem`   | `renderItem`    |           | `RenderFunction \| undefined`                    |                     | Render function for each item.                   |
+| `searchable`   | `searchable`    |           | `boolean`                                        | false               | Toggles the ability to search the items of the select of the component. |
 | `styles`       |                 | readonly  | `CSSResultGroup[]`                               |                     |                                                  |
 | `value`        | `value`         |           | `string \| number \| Record<string, unknown> \| undefined` | null                | Value entered into the form component.           |
 
@@ -63,6 +67,7 @@ Control to get / set a value within a list of options.
 | `loading_indicator` | Used to define content that is displayed while async rendering is awaiting, or when renderLoading() is implicitly called |
 | `more`              | Replaces the icon for the more slot (Displays on mobile devices). |
 | `prefix`            | Replaces the icon for the prefix slot.           |
+| `search-clear`      | Replaces the icon in the Search field (Displays when searchable is set to true). |
 | `suffix`            | Replaces the icon for the suffix slot.           |
 
 ## CSS Custom Properties
@@ -132,6 +137,7 @@ Control to get / set a value within a list of options.
 | `--omni-select-control-icon-height`              | Select control icon height.                      |
 | `--omni-select-control-icon-width`               | Select control icon width.                       |
 | `--omni-select-control-padding`                  | Select component control padding.                |
+| `--omni-select-dialog-backdrop-color`            | Select dialog background color.                  |
 | `--omni-select-dialog-background-color`          | Select dialog background color.                  |
 | `--omni-select-dialog-bottom`                    | Select dialog bottom.                            |
 | `--omni-select-dialog-left`                      | Select dialog left.                              |
@@ -180,6 +186,15 @@ Control to get / set a value within a list of options.
 | `--omni-select-items-width`                      | Select items width.                              |
 | `--omni-select-loading-indicator-height`         | Select loading indicator height.                 |
 | `--omni-select-loading-indicator-width`          | Select loading indicator width.                  |
+| `--omni-select-search-field-background-color`    | Select search field background color.            |
+| `--omni-select-search-field-font-color`          | Select search field font color.                  |
+| `--omni-select-search-field-font-family`         | Select search field font family.                 |
+| `--omni-select-search-field-font-size`           | Select search field font size.                   |
+| `--omni-select-search-field-font-weight`         | Select search field font weight.                 |
+| `--omni-select-search-field-padding-bottom`      | Select search field bottom padding.              |
+| `--omni-select-search-field-padding-left`        | Select search field left padding.                |
+| `--omni-select-search-field-padding-right`       | Select search field right padding.               |
+| `--omni-select-search-field-padding-top`         | Select search field top padding.                 |
 | `--omni-theme-accent-active-color`               | Theme accent active color.                       |
 | `--omni-theme-accent-color`                      | Theme accent color.                              |
 | `--omni-theme-accent-hover-color`                | Theme accent hover color.                        |
