@@ -754,7 +754,7 @@ export const Custom_Search_Function: ComponentStoryFormat<Args> = {
 
             function customSearch(filterValue, items) {
                 if(Array.isArray(items) && filterValue !== null){
-                    return items = (items as (string | Record<string, unknown>)[]).filter((i) => itemFilter(filterValue,i)) as SelectTypes;
+                    return items = items.filter((i) => itemFilter(filterValue,i));
                 }else {
                     return items;
                 }
@@ -778,7 +778,7 @@ export const Custom_Search_Function: ComponentStoryFormat<Args> = {
 
         function customSearch(filterValue, items) {
             if(Array.isArray(items) && filterValue !== null){
-                return items = (items as (string | Record<string, unknown>)[]).filter((i) => itemFilter(filterValue,i)) as SelectTypes;
+                return items = items.filter((i) => itemFilter(filterValue,i));
             }else {
                 return items;
             }
@@ -859,7 +859,7 @@ export const Server_Side_Filtering: ComponentStoryFormat<Args> = {
             
             function customSearch(filterValue, items) {
                 if (Array.isArray(items) && filterValue !== null) {
-                    return (items = (items as (string | Record<string, unknown>)[]).filter((i) => itemFilter(filterValue, i)) as SelectTypes);
+                    return items = items.filter((i) => itemFilter(filterValue,i));
                 } else {
                     return items;
                 }
@@ -888,7 +888,7 @@ export const Server_Side_Filtering: ComponentStoryFormat<Args> = {
         
         function customSearch(filterValue, items) {
             if (Array.isArray(items) && filterValue !== null) {
-                return (items = (items as (string | Record<string, unknown>)[]).filter((i) => itemFilter(filterValue, i)) as SelectTypes);
+                return items = items.filter((i) => itemFilter(filterValue,i));
             } else {
                 return items;
             }
@@ -985,7 +985,7 @@ export const Custom_Search_Clear_Icon: ComponentStoryFormat<Args> = {
         const App = () => <OmniSelect label="${args.label}" display-field="${args.displayField}" id-field="${args.idField}" items={stringItems} searchable></OmniSelect>`
         }
     ],
-    name: 'Custom Search Clear ICon',
+    name: 'Custom Search Clear Icon',
     description: 'Select component with a custom search field clear icon',
     args: {
         label: 'Custom Search Clear Icon',
