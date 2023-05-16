@@ -22,6 +22,8 @@ import '../icons/ChevronRight.icon.js';
  * <omni-date-picker
  *  label="Enter a value"
  *  value="2023-03-01"
+ *  min-date="2023-02-01"
+ *  max-date="2023-04-01"
  *  hint="Required"
  *  error="Select a valid date"
  *  locale="en-US"
@@ -90,6 +92,18 @@ export class DatePicker extends OmniFormElement {
      * @attr
      */
     @property({ type: String, reflect: true }) locale: string = this.defaultLocale;
+
+    /**
+     * The minimum date inclusively allowed to be selected.
+     * @attr [min-date]
+     */
+    @property({ type: String, attribute: 'min-date', reflect: true }) minDate?: string;
+
+    /**
+     * The maximum date inclusively allowed to be selected.
+     * @attr [max-date]
+     */
+    @property({ type: String, attribute: 'max-date', reflect: true }) maxDate?: string;
 
     // Internal state properties for date picker and
     @state() private date: DateTime =
@@ -420,7 +434,9 @@ export class DatePicker extends OmniFormElement {
                 <omni-calendar 
                   id="calendar" 
                   locale=${this.locale} 
-                  .value=${this.value as string} 
+                  .value=${this.value as string}
+                  .minDate=${this.minDate}
+                  .maxDate=${this.maxDate} 
                   @change=${(e: Event) => this._dateSelected(e)}>
                 </omni-calendar>
             </div>`;
