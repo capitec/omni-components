@@ -517,6 +517,7 @@ export class Select extends OmniFormElement {
                 }
 
                 /* Search field styles */
+
                 .searchField {
                     white-space: nowrap;
                     overflow: hidden;
@@ -550,12 +551,12 @@ export class Select extends OmniFormElement {
 				}
 
                 /* Search field clear icons styles */
+
                 .search-control {
                     display: flex;
                   
                     margin-right: var(--omni-select-search-clear-control-margin-right, 10px);
                     margin-left: var(--omni-select-search-clear-control-margin-left, 10px);
-                    border-bottom: var(--omni-select-search-control-bottom-border, 1px solid var(--omni-primary-color));
                 }
 
                 .search-clear-click {
@@ -580,7 +581,7 @@ export class Select extends OmniFormElement {
                        margin: unset;
                        border-style: none;
                        padding: unset;
-                       width: 100%;
+                       width: 100vw;
                        left: var(--omni-select-dialog-left, 0px);
                        right: var(--omni-select-dialog-right, 0px);
                        bottom: var(--omni-select-dialog-bottom, 0px);
@@ -601,7 +602,7 @@ export class Select extends OmniFormElement {
 
                    .items {
                         min-height: var(--omni-select-items-min-height, 150px);
-                   }
+                    }
                
                    .search-control {
                        display: flex;
@@ -609,6 +610,7 @@ export class Select extends OmniFormElement {
                        margin-right: var(--omni-select-search-clear-control-margin-right, 0px);
                        margin-left: var(--omni-select-search-clear-control-margin-left, 0px);
                        background-color: var(--omni-select-clear-div-color, var(--omni-background-color));
+                       border-bottom: var(--omni-select-search-control-bottom-border, 1px solid var(--omni-primary-color));
                    }
 
                    .search-clear-click {
@@ -749,7 +751,7 @@ export class Select extends OmniFormElement {
             return item.toString().toLowerCase().includes(this._searchValue.toLowerCase());
         }
 
-        // eslint-disable-next-line no-prototype-builtins
+        // eslint-disable-next-line no-prototype-builtins      
 		if (!this.displayField || !item.hasOwnProperty(this.displayField)) {
 			return true;
 		}
