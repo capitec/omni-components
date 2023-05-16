@@ -517,7 +517,6 @@ export class Select extends OmniFormElement {
                 }
 
                 /* Search field styles */
-
                 .searchField {
                     white-space: nowrap;
                     overflow: hidden;
@@ -551,12 +550,12 @@ export class Select extends OmniFormElement {
 				}
 
                 /* Search field clear icons styles */
-
                 .search-control {
                     display: flex;
                   
                     margin-right: var(--omni-select-search-clear-control-margin-right, 10px);
                     margin-left: var(--omni-select-search-clear-control-margin-left, 10px);
+                    border-bottom: var(--omni-select-search-control-bottom-border, 1px solid var(--omni-primary-color));
                 }
 
                 .search-clear-click {
@@ -598,6 +597,10 @@ export class Select extends OmniFormElement {
                
                    .items-dialog::backdrop {
                        background: var(--omni-select-dialog-backdrop-color, rgba(0, 0, 0, 0.1));
+                   }
+
+                   .items {
+                        min-height: var(--omni-select-items-min-height, 150px);
                    }
                
                    .search-control {
@@ -747,10 +750,9 @@ export class Select extends OmniFormElement {
         }
 
         // eslint-disable-next-line no-prototype-builtins
-        /*
 		if (!this.displayField || !item.hasOwnProperty(this.displayField)) {
 			return true;
-		}*/
+		}
 
         return (item[this.displayField!] as string).toString().toLowerCase().includes(this._searchValue.toLowerCase()) as unknown as string;
     }
