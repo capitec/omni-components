@@ -6,6 +6,6 @@ import { nothing } from 'lit';
  * @param value
  * @returns value or nothing
  */
-export function ifNotEmpty(value: string): string | any {
+export function ifNotEmpty(value?: string | null): string | any {
     return null !== value && value ? value : nothing;
 }
