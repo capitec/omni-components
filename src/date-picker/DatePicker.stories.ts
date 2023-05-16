@@ -59,7 +59,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         locale: 'en-us',
         maxDate: '',
         minDate: '',
-        clearable: false,
+        clearable: false
     } as Args,
     play: async (context) => {
         const datePicker = within(context.canvasElement).getByTestId<DatePicker>('test-date-picker');
@@ -200,7 +200,9 @@ export const Min_Date: ComponentStoryFormat<Args> = {
             framework: 'React',
             load: (args) => `import { OmniDatePicker } from "@capitec/omni-components-react/date-picker";
 
-const App = () => <OmniDatePicker${args.label ? ` label='${args.label}'` : ''}${args.minDate ? ` min-date='${args.minDate}'` : ''}${args.value ? ` value='${args.value}'` : ''}/>;`
+const App = () => <OmniDatePicker${args.label ? ` label='${args.label}'` : ''}${args.minDate ? ` min-date='${args.minDate}'` : ''}${
+                args.value ? ` value='${args.value}'` : ''
+            }/>;`
         }
     ],
     name: 'Min Date',
@@ -217,7 +219,7 @@ const App = () => <OmniDatePicker${args.label ? ` label='${args.label}'` : ''}${
 
         const calendar = (await querySelectorAsync(datePicker.shadowRoot as ShadowRoot, '#calendar')) as Calendar;
         await expect(calendar).toBeTruthy();
-      
+
         await waitFor(() => expect(calendar).toHaveAttribute('min-date', context.args.minDate), {
             timeout: 3000
         });
@@ -262,7 +264,9 @@ export const Max_Date: ComponentStoryFormat<Args> = {
             framework: 'React',
             load: (args) => `import { OmniDatePicker } from "@capitec/omni-components-react/date-picker";
 
-const App = () => <OmniDatePicker${args.label ? ` label='${args.label}'` : ''}${args.maxDate ? ` max-date='${args.maxDate}'` : ''}${args.value ? ` value='${args.value}'` : ''}/>;`
+const App = () => <OmniDatePicker${args.label ? ` label='${args.label}'` : ''}${args.maxDate ? ` max-date='${args.maxDate}'` : ''}${
+                args.value ? ` value='${args.value}'` : ''
+            }/>;`
         }
     ],
     name: 'Max Date',
@@ -274,12 +278,12 @@ const App = () => <OmniDatePicker${args.label ? ` label='${args.label}'` : ''}${
     play: async (context) => {
         const datePicker = within(context.canvasElement).getByTestId<DatePicker>('test-date-picker');
         datePicker.value = context.args.value;
-        
+
         await userEvent.click(datePicker);
 
         const calendar = (await querySelectorAsync(datePicker.shadowRoot as ShadowRoot, '#calendar')) as Calendar;
         await expect(calendar).toBeTruthy();
-      
+
         await waitFor(() => expect(calendar).toHaveAttribute('max-date', context.args.maxDate), {
             timeout: 3000
         });

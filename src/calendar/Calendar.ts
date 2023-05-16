@@ -19,7 +19,7 @@ import '../icons/ChevronRight.icon.js';
  * ```html
  * <omni-calendar
  *   value="2023-02-23"
-*    min-date="2023-02-07"
+ *    min-date="2023-02-07"
  *   max-date="2023-02-25"
  *   locale="en-US">
  * </omni-calendar>
