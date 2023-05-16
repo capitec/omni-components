@@ -751,10 +751,10 @@ export class Select extends OmniFormElement {
             return item.toString().toLowerCase().includes(this._searchValue.toLowerCase());
         }
 
-        // eslint-disable-next-line no-prototype-builtins      
-		if (!this.displayField || !item.hasOwnProperty(this.displayField)) {
-			return true;
-		}
+        // eslint-disable-next-line no-prototype-builtins
+        if (!this.displayField || !item.hasOwnProperty(this.displayField)) {
+            return true;
+        }
 
         return (item[this.displayField!] as string).toString().toLowerCase().includes(this._searchValue.toLowerCase()) as unknown as string;
     }
