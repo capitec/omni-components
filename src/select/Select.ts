@@ -557,10 +557,12 @@ export class Select extends OmniFormElement {
                   
                     margin-right: var(--omni-select-search-clear-control-margin-right, 10px);
                     margin-left: var(--omni-select-search-clear-control-margin-left, 10px);
+                    border-bottom: var(--omni-select-search-control-bottom-border, 1px solid var(--omni-primary-color));
                 }
 
                 .search-clear-click {
                     display: flex;
+                    align-items: center;
                 }
 
                 .search-clear-icon {
@@ -610,7 +612,6 @@ export class Select extends OmniFormElement {
                        margin-right: var(--omni-select-search-clear-control-margin-right, 0px);
                        margin-left: var(--omni-select-search-clear-control-margin-left, 0px);
                        background-color: var(--omni-select-clear-div-color, var(--omni-background-color));
-                       border-bottom: var(--omni-select-search-control-bottom-border, 1px solid var(--omni-primary-color));
                    }
 
                    .search-clear-click {
