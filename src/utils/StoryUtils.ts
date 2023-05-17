@@ -9,6 +9,7 @@ import { githubLight as codeTheme } from '@ddietr/codemirror-themes/github-light
 import { Octokit } from '@octokit/core';
 import { Package, ClassDeclaration, CustomElementDeclaration, Declaration, CustomElement } from 'custom-elements-manifest/schema';
 export { Package, ClassDeclaration, CustomElementDeclaration, Declaration, CustomElement } from 'custom-elements-manifest/schema';
+import Fuse from 'fuse.js';
 import { html, TemplateResult } from 'lit';
 import { render } from 'lit-html';
 import pretty from 'pretty';
@@ -790,7 +791,9 @@ async function setupEleventy() {
     setupLoadingIndicator();
 
     // Setup search for component members
-    setupSearch();
+    setupComponentSearch();
+
+    setupGlobalSearch();
 
     await setupThemes();
 }
@@ -1054,7 +1057,7 @@ function setupLoadingIndicator() {
     }
 }
 
-function setupSearch() {
+function setupComponentSearch() {
     //Attribute search
     const attributeSearch = document.querySelector<SearchField>('#attribute-search');
     const attributeRows = document.querySelector<HTMLTableSectionElement>('#component-attributes')?.children;
@@ -1184,6 +1187,52 @@ function setupSearch() {
             }
         }
     }
+}
+
+function setupGlobalSearch() {
+    const searchInput = document.querySelector<HTMLInputElement>('#header-search-input');
+
+    document.getElementById('header-search-button')?.addEventListener('click', async (e) => {
+        // const books = [
+        //     {
+        //         title: "Old Man's War",
+        //         author: {
+        //             firstName: 'John',
+        //             lastName: 'Scalzi'
+        //         }
+        //     },
+        //     {
+        //         title: 'The Lock Artist',
+        //         author: {
+        //             firstName: 'Steve',
+        //             lastName: 'Hamilton'
+        //         }
+        //     },
+        //     {
+        //         title: 'The Door Artist',
+        //         author: {
+        //             firstName: 'Adam',
+        //             lastName: 'Scott'
+        //         }
+        //     }
+        // ];
+
+        const search = await fetch('search.json');
+        const data = await search.json();
+
+        // 2. Set up the Fuse instance
+        const fuse = new Fuse(data, {
+            keys: ['title'],
+            minMatchCharLength: 3,
+            includeScore: true
+        });
+
+        console.log(searchInput?.value);
+
+        const r = fuse.search(searchInput?.value as string);
+
+        console.log(r);
+    });
 }
 
 async function setupTheming() {

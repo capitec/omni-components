@@ -120,6 +120,7 @@
         "eslint-plugin-lit": "^1.6.1",
         "expect": "^29.2.2",
         "fs-extra": "^10.1.0",
+        "fuse.js": "^6.6.2",
         "github-slugger": "^2.0.0",
         "global": "^4.4.0",
         "globby": "^13.1.2",

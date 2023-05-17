@@ -1,6 +1,7 @@
 import { readFile } from 'fs/promises';
 import { globbySync } from 'globby';
 import { loadCustomElementsModuleByFileFor } from '../../../dist/utils/StoryUtils.js';
+import markdownIt from 'markdown-it';
 
 export async function components() {
     const stories = globbySync('./dist/**/*.stories.js');
@@ -32,4 +33,20 @@ export async function components() {
 export async function customElements() {
     const ce = await readFile('./custom-elements.json', 'utf-8');
     return JSON.parse(ce);
+}
+
+export async function installation() {
+    const text = await readFile('./INSTALLATION.md', 'utf-8');
+    const instance = new markdownIt();
+    const parsed = instance.parseInline(text);
+
+    return parsed;
+}
+
+export async function contributing() {
+    const text = await readFile('./CONTRIBUTING.md', 'utf-8');
+    const instance = new markdownIt();
+    const parsed = instance.parseInline(text);
+
+    return parsed;
 }
