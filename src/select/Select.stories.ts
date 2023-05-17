@@ -745,9 +745,7 @@ export const Custom_Search: ComponentStoryFormat<Args> = {
     frameworkSources: [
         {
             framework: 'HTML',
-            load: (
-                args
-            ) => `<omni-select id='omni-select' label="${args.label}" searchable></omni-select>
+            load: (args) => `<omni-select id='omni-select' label="${args.label}" searchable></omni-select>
     <script defer>
         const stringItems = [
             'Bruce Wayne', 
@@ -849,9 +847,7 @@ export const Server_Side_Filtering: ComponentStoryFormat<Args> = {
     frameworkSources: [
         {
             framework: 'HTML',
-            load: (
-                args
-            ) => `<omni-select id='omni-select' label="${args.label}" searchable></omni-select>
+            load: (args) => `<omni-select id='omni-select' label="${args.label}" searchable></omni-select>
     <script defer>
         const stringItems = [
             'Bruce Wayne', 
@@ -966,9 +962,7 @@ export const Custom_Search_Icon: ComponentStoryFormat<Args> = {
     frameworkSources: [
         {
             framework: 'HTML',
-            load: (
-                args
-            ) => `
+            load: (args) => `
             <omni-select id='omni-select' label="${args.label}" searchable>
                 <svg slot="search-clear" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px" style="fill: orange;"><path d="M12 2.25c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12 6.615 2.25 12 2.25Zm0 1.5a8.25 8.25 0 1 0 0 16.5 8.25 8.25 0 0 0 0-16.5ZM12 7a.75.75 0 0 1 .75.75v3.5h3.5a.75.75 0 0 1 .743.648L17 12a.75.75 0 0 1-.75.75h-3.5v3.5a.75.75 0 0 1-.648.743L12 17a.75.75 0 0 1-.75-.75v-3.5h-3.5a.75.75 0 0 1-.743-.648L7 12a.75.75 0 0 1 .75-.75h3.5v-3.5a.75.75 0 0 1 .648-.743Z"/></svg>
             </omni-select>
