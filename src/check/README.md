@@ -79,6 +79,8 @@ Control that allows a selection to be made.
 | `--omni-check-indicator-border-color`         | Indicator Border color.          |
 | `--omni-check-indicator-border-width`         | Indicator Border width.          |
 | `--omni-check-indicator-color`                | Indicator color.                 |
+| `--omni-check-indicator-icon-height`          | Indicator icon height.           |
+| `--omni-check-indicator-icon-width`           | Indicator icon width.            |
 | `--omni-check-label-font-color`               | Label font color.                |
 | `--omni-check-label-font-family`              | Label font family.               |
 | `--omni-check-label-font-size`                | Label font size.                 |

@@ -1,6 +1,6 @@
 import { html, TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import DOMTreeElement from '../core/DOMTreeElement';
+import DOMTreeElement from '../core/DOMTreeElement.js';
 
 /**
  * Plus icon component.
