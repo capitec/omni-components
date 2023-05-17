@@ -562,7 +562,7 @@ export class Select extends OmniFormElement {
 
                 .search-clear-click {
                     display: flex;
-                    align-items: center;
+                    align-items: center;                  
                 }
 
                 .search-clear-icon {
@@ -573,6 +573,7 @@ export class Select extends OmniFormElement {
                 ::slotted([slot='search-clear']){
                     width: var(--omni-select-search-clear-icon-width, 20px);
                     cursor: pointer;
+                    align-items: center;
                 }
 
                /* Mobile device styling */
