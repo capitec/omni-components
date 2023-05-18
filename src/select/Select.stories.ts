@@ -1019,6 +1019,12 @@ export const Custom_Search_Icon: ComponentStoryFormat<Args> = {
         const value = 'Bruce';
         await userEvent.type(searchField, value);
 
+        const slotElement = select.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=search-clear]');
+        await expect(slotElement).toBeTruthy();
+
+        const foundSlottedSvgElement = slotElement?.assignedElements().find((e) => e.tagName.toLocaleLowerCase() === 'svg');
+        await expect(foundSlottedSvgElement).toBeTruthy();
+
         //Add check to find the items-container once the component is opened.
         const itemContainer = await querySelectorAsync(select!.shadowRoot!, '#items-container');
         await expect(itemContainer).toBeTruthy();
