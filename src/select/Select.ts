@@ -111,9 +111,6 @@ import '../icons/More.icon.js';
  * @cssprop --omni-select-search-field-bottom-border-color - Select search field bottom border color.
  *
  * @cssprop --omni-select-search-field-background-color - Select search field background color.
- *
- * @cssprop --omni-select-search-clear-control-margin-right - Select search field clear control right margin.
- * @cssprop --omni-select-search-clear-control-margin-left - Select search field clear control left margin.
  * @cssprop --omni-select-search-control-bottom-border -  Select search field clear control bottom border.
  *
  * @cssprop --omni-select-search-clear-div-right-padding - Select search field clear div right padding.
@@ -150,9 +147,6 @@ import '../icons/More.icon.js';
  * @cssprop --omni-select-dialog-backdrop-color - Select dialog background color.
  *
  * @cssprop --omni-select-dialog-items-min-height - Select dialog items min height.
- *
- * @cssprop --omni-select-dialog-search-clear-control-margin-right - Select dialog search clear control right margin.
- * @cssprop --omni-select-dialog-search-clear-control-margin-left - Select dialog search clear control left margin.
  *
  */
 @customElement('omni-select')
@@ -559,9 +553,6 @@ export class Select extends OmniFormElement {
                 /* Search field clear icons styles */
                 .search-control {
                     display: flex;
-                  
-                    margin-right: var(--omni-select-search-clear-control-margin-right, 10px);
-                    margin-left: var(--omni-select-search-clear-control-margin-left, 10px);
                     border-bottom: var(--omni-select-search-control-bottom-border, 1px solid var(--omni-primary-color));
                 }
 
@@ -630,11 +621,6 @@ export class Select extends OmniFormElement {
                    .items {
                       min-height: var(--omni-select-dialog-items-min-height, 150px);
                     }
-               
-                   .search-control {              
-                       margin-right: var(--omni-select-dialog-search-clear-control-margin-right, 0px);
-                       margin-left: var(--omni-select-dialog-search-clear-control-margin-left, 0px);
-                   }
                }
             `
         ];
