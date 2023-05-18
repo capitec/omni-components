@@ -84,7 +84,7 @@ export const Error_Label = ErrorStory<TextField, BaseArgs>('omni-text-field');
 
 export const Value = ValueStory<TextField, BaseArgs>('omni-text-field');
 
-export const Clear = ClearableStory<TextField, BaseArgs>('omni-text-field');
+export const Clearable = ClearableStory<TextField, BaseArgs>('omni-text-field');
 
 export const Custom_Clear_Slot_Icon = CustomClearableSlotIcon<TextField, BaseArgs>('omni-text-field');
 
