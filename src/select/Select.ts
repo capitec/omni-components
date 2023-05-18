@@ -117,6 +117,7 @@ import '../icons/More.icon.js';
  * @cssprop --omni-select-search-control-bottom-border -  Select search field clear control bottom border.
  *
  * @cssprop --omni-select-search-clear-div-right-padding - Select search field clear div right padding.
+ * @cssprop --omni-select-search-clear-div-background-color - Select search field clear div background color.
  *
  * @cssprop --omni-select-search-clear-icon-height - Select search field clear icon height.
  * @cssprop --omni-select-search-clear-icon-width - Select search field clear icon width.
@@ -152,8 +153,6 @@ import '../icons/More.icon.js';
  *
  * @cssprop --omni-select-dialog-search-clear-control-margin-right - Select dialog search clear control right margin.
  * @cssprop --omni-select-dialog-search-clear-control-margin-left - Select dialog search clear control left margin.
- *
- * @cssprop --omni-select-dialog-search-clear-div-right-padding - Select dialog search clear div right padding.
  *
  */
 @customElement('omni-select')
@@ -570,7 +569,8 @@ export class Select extends OmniFormElement {
                     display: inline-flex;
                     align-items: center;
                     cursor: pointer;
-                    padding-right: var(--omni-select-search-clear-div-right-padding, 10px);        
+                    padding-right: var(--omni-select-search-clear-div-right-padding, 10px);    
+                    background: var(--omni-select-search-clear-div-background-color, var(--omni-background-color));
                 }
 
                 .search-clear-icon,
@@ -634,13 +634,6 @@ export class Select extends OmniFormElement {
                    .search-control {              
                        margin-right: var(--omni-select-dialog-search-clear-control-margin-right, 0px);
                        margin-left: var(--omni-select-dialog-search-clear-control-margin-left, 0px);
-                   }
-
-                   .search-clear-click {
-                       display: inline-flex;
-                       align-items: center;
-                       cursor: pointer;
-                       padding-right: var(--omni-select-dialog-search-clear-div-right-padding, 10px);
                    }
                }
             `
