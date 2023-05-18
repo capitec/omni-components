@@ -145,9 +145,6 @@ Control to get / set a value within a list of options.
 | `--omni-select-dialog-modal-max-height`          | Select dialog height.                            |
 | `--omni-select-dialog-modal-max-width`           | Select dialog modal max width.                   |
 | `--omni-select-dialog-right`                     | Select dialog right.                             |
-| `--omni-select-dialog-search-clear-control-margin-left` | Select dialog search clear control left margin.  |
-| `--omni-select-dialog-search-clear-control-margin-right` | Select dialog search clear control right margin. |
-| `--omni-select-dialog-search-clear-div-right-padding` | Select dialog search clear div right padding.    |
 | `--omni-select-dialog-width`                     | Select dialog width                              |
 | `--omni-select-field-disabled-font-color`        | Select component input field disabled font color. |
 | `--omni-select-field-error-font-color`           | Select component input field error font color.   |
@@ -196,8 +193,7 @@ Control to get / set a value within a list of options.
 | `--omni-select-items-width`                      | Select items width.                              |
 | `--omni-select-loading-indicator-height`         | Select loading indicator height.                 |
 | `--omni-select-loading-indicator-width`          | Select loading indicator width.                  |
-| `--omni-select-search-clear-control-margin-left` | Select search field clear control left margin.   |
-| `--omni-select-search-clear-control-margin-right` | Select search field clear control right margin.  |
+| `--omni-select-search-clear-div-background-color` | Select search field clear div background color.  |
 | `--omni-select-search-clear-div-right-padding`   | Select search field clear div right padding.     |
 | `--omni-select-search-clear-icon-color`          | Select search field clear icon color.            |
 | `--omni-select-search-clear-icon-height`         | Select search field clear icon height.           |
