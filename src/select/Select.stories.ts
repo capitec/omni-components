@@ -887,7 +887,7 @@ export const Server_Side_Filtering: ComponentStoryFormat<Args> = {
             'Arthur Curry', 
             'Hal Jordan'
         ];
-        async function searchFilter(){
+        async function searchFilter(filter, items){
             await new Promise((r) => setTimeout(() => r(), 2000));
             return customSearch(filter,items);
         }

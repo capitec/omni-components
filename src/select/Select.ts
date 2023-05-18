@@ -561,19 +561,18 @@ export class Select extends OmniFormElement {
                 }
 
                 .search-clear-click {
-                    display: flex;
-                    align-items: center;                  
-                }
-
-                .search-clear-icon {
-                    fill: var(--omni-select-search-clear-icon-color, var(--omni-primary-color));
+                    display: inline-flex;
+                    align-items: center;
+                    cursor: pointer;
+                    padding-right: 10px          
                 }
 
                 .search-clear-icon,
                 ::slotted([slot='search-clear']){
+                    height: var(--omni-select-search-clear-icon-height,20px);
                     width: var(--omni-select-search-clear-icon-width, 20px);
                     cursor: pointer;
-                    align-items: center;
+                    fill: var(--omni-select-search-clear-icon-color, var(--omni-primary-color));
                 }
 
                /* Mobile device styling */
@@ -616,9 +615,10 @@ export class Select extends OmniFormElement {
                    }
 
                    .search-clear-click {
-                       display: flex;
-                       margin-right: 10px;
+                       display: inline-flex;
                        align-items: center;
+                       cursor: pointer;
+                       padding-right: 10px
                    }
                }
             `
