@@ -64,17 +64,17 @@ import '../icons/More.icon.js';
  * @cssprop --omni-select-items-container-box-shadow - Select items container box shadow.
  * @cssprop --omni-select-items-container-background-color - Select items container background color.
  * @cssprop --omni-select-items-container-z-index - Select items container z-index.
- * 
+ *
  * @cssprop --omni-select-items-max-height - Select items max height.
- * 
+ *
  * @cssprop --omni-select-items-container-width - Select items container width
  * @cssprop --omni-select-items-container-top - Select items container top.
  * @cssprop --omni-select-items-container-render-bottom-top - Select items container top when rendered at the bottom.
- * 
+ *
  * @cssprop --omni-select-items-height - Select items height.
  * @cssprop --omni-select-items-width - Select items width.
  * @cssprop --omni-select-items-background-color - Select items background color.
- * 
+ *
  * @cssprop --omni-select-item-font-color - Select item font color.
  * @cssprop --omni-select-item-font-family - Select item font family.
  * @cssprop --omni-select-item-font-size - Select item font size.
@@ -84,14 +84,14 @@ import '../icons/More.icon.js';
  * @cssprop --omni-select-item-padding-left - Select item left padding.
  * @cssprop --omni-select-item-padding-right - Select item right padding.
  * @cssprop --omni-select-item-width - Select item width.
- * 
+ *
  * @cssprop --omni-select-item-hover-background-color - Select item hover background color.
  * @cssprop --omni-select-item-selected-color - Selected item color.
  * @cssprop --omni-select-item-none-hover - Select item hover.
- * 
+ *
  * @cssprop --omni-select-loading-indicator-width - Select loading indicator width.
  * @cssprop --omni-select-loading-indicator-height - Select loading indicator height.
- * 
+ *
  * @cssprop --omni-select-search-field-font-color - Select search field font color.
  * @cssprop --omni-select-search-field-font-family - Select search field font family.
  * @cssprop --omni-select-search-field-font-size - Select search field font size.
@@ -101,9 +101,9 @@ import '../icons/More.icon.js';
  * @cssprop --omni-select-search-field-padding-bottom - Select search field bottom padding.
  * @cssprop --omni-select-search-field-padding-left - Select search field left padding.
  * @cssprop --omni-select-search-field-padding-right - Select search field right padding.
- * 
+ *
  * @cssprop --omni-select-search-field-width - Select search field width.
- * 
+ *
  * @cssprop --omni-select-search-field-top-border-width - Select search field top border width.
  * @cssprop --omni-select-search-field-left-border-width - Select search field left border width.
  * @cssprop --omni-select-search-field-right-border-width - Select search field right border width.
@@ -111,17 +111,15 @@ import '../icons/More.icon.js';
  * @cssprop --omni-select-search-field-bottom-border-color - Select search field bottom border color.
  *
  * @cssprop --omni-select-search-field-background-color - Select search field background color.
- * 
- * @cssprop --omni-select-search-clear-control-margin-right - Select search field clear control right margin.
- * @cssprop --omni-select-search-clear-control-margin-left - Select search field clear control left margin.
  * @cssprop --omni-select-search-control-bottom-border -  Select search field clear control bottom border.
- * 
+ *
  * @cssprop --omni-select-search-clear-div-right-padding - Select search field clear div right padding.
- * 
+ * @cssprop --omni-select-search-clear-div-background-color - Select search field clear div background color.
+ *
  * @cssprop --omni-select-search-clear-icon-height - Select search field clear icon height.
  * @cssprop --omni-select-search-clear-icon-width - Select search field clear icon width.
  * @cssprop --omni-select-search-clear-icon-color - Select search field clear icon color.
- * 
+ *
  * @cssprop --omni-select-item-header-left - Select item header left.
  * @cssprop --omni-select-item-header-right - Select item header right.
  * @cssprop --omni-select-item-header-font-color - Select item header font color.
@@ -137,23 +135,18 @@ import '../icons/More.icon.js';
  *
  * @cssprop --omni-select-item-header-item-border-top-left-radius - Select item header top left border radius.
  * @cssprop --omni-select-item-header-item-border-top-right-radius - Select item header top right border radius.
- * 
+ *
  * @cssprop --omni-select-dialog-width - Select dialog width
  * @cssprop --omni-select-dialog-left - Select dialog left.
  * @cssprop --omni-select-dialog-right - Select dialog right.
  * @cssprop --omni-select-dialog-bottom - Select dialog bottom.
  * @cssprop --omni-select-dialog-background-color - Select dialog background color.
- * 
+ *
  * @cssprop --omni-select-dialog-modal-max-width - Select dialog modal max width.
  * @cssprop --omni-select-dialog-modal-max-height - Select dialog height.
  * @cssprop --omni-select-dialog-backdrop-color - Select dialog background color.
  *
  * @cssprop --omni-select-dialog-items-min-height - Select dialog items min height.
- *
- * @cssprop --omni-select-dialog-search-clear-control-margin-right - Select dialog search clear control right margin.
- * @cssprop --omni-select-dialog-search-clear-control-margin-left - Select dialog search clear control left margin.
- * 
- * @cssprop --omni-select-dialog-search-clear-div-right-padding - Select dialog search clear div right padding.
  *
  */
 @customElement('omni-select')
@@ -560,9 +553,6 @@ export class Select extends OmniFormElement {
                 /* Search field clear icons styles */
                 .search-control {
                     display: flex;
-                  
-                    margin-right: var(--omni-select-search-clear-control-margin-right, 10px);
-                    margin-left: var(--omni-select-search-clear-control-margin-left, 10px);
                     border-bottom: var(--omni-select-search-control-bottom-border, 1px solid var(--omni-primary-color));
                 }
 
@@ -570,7 +560,8 @@ export class Select extends OmniFormElement {
                     display: inline-flex;
                     align-items: center;
                     cursor: pointer;
-                    padding-right: var(--omni-select-search-clear-div-right-padding, 10px);        
+                    padding-right: var(--omni-select-search-clear-div-right-padding, 10px);    
+                    background: var(--omni-select-search-clear-div-background-color, var(--omni-background-color));
                 }
 
                 .search-clear-icon,
@@ -630,18 +621,6 @@ export class Select extends OmniFormElement {
                    .items {
                       min-height: var(--omni-select-dialog-items-min-height, 150px);
                     }
-               
-                   .search-control {              
-                       margin-right: var(--omni-select-dialog-search-clear-control-margin-right, 0px);
-                       margin-left: var(--omni-select-dialog-search-clear-control-margin-left, 0px);
-                   }
-
-                   .search-clear-click {
-                       display: inline-flex;
-                       align-items: center;
-                       cursor: pointer;
-                       padding-right: var(--omni-select-dialog-search-clear-div-right-padding, 10px);
-                   }
                }
             `
         ];
