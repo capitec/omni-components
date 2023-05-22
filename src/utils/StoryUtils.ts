@@ -1407,10 +1407,21 @@ function currentCodeTheme() {
     return codeTheme;
 }
 
-function getSourceFromLit(res: TemplateResult): string {
+function getSourceFromLit(
+    res: TemplateResult,
+    transformElement?: (container: HTMLDivElement) => void,
+    transformSourceContent?: (source: string) => string
+): string {
     let tempContainer = document.createElement('div');
     render(res, tempContainer);
-    const source = transformSource(tempContainer.innerHTML);
+    if (transformElement) {
+        transformElement(tempContainer);
+    }
+    let source = tempContainer.innerHTML;
+    if (transformSourceContent) {
+        source = transformSourceContent(source);
+    }
+    source = transformSource(source);
 
     //Cleanup
     tempContainer.innerHTML = '';
