@@ -1,9 +1,10 @@
-import { within } from '@testing-library/dom';
+import { waitFor, within } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { DateTime } from 'luxon';
+import { Calendar } from '../calendar/Calendar.js';
 import { LabelStory, BaseArgs, HintStory, ErrorStory, PrefixStory, SuffixStory, DisabledStory, ClearableStory } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
@@ -19,6 +20,8 @@ export default {
 
 interface Args extends BaseArgs {
     locale: string;
+    minDate?: string;
+    maxDate?: string;
 }
 const localDate = DateTime.local();
 const isoDate = localDate.toISODate();
@@ -35,6 +38,8 @@ export const Interactive: ComponentStoryFormat<Args> = {
             locale="${args.locale}"
             ?disabled="${args.disabled}"
             ?clearable="${args.clearable}"
+            min-date="${ifNotEmpty(args.minDate)}"
+            max-date="${ifNotEmpty(args.maxDate)}"
             >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}
             ${args.clear ? html`${'\r\n'}${unsafeHTML(assignToSlot('clear', args.clear))}` : nothing}${
         args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}` : nothing
@@ -51,7 +56,10 @@ export const Interactive: ComponentStoryFormat<Args> = {
         prefix: '',
         suffix: '',
         clear: '',
-        locale: 'en-us'
+        locale: 'en-us',
+        maxDate: '',
+        minDate: '',
+        clearable: false
     } as Args,
     play: async (context) => {
         const datePicker = within(context.canvasElement).getByTestId<DatePicker>('test-date-picker');
@@ -174,6 +182,134 @@ const App = () => <OmniDatePicker${args.label ? ` label='${args.label}'` : ''}${
 
         await expect(controlLabel).toHaveTextContent(localDate.monthLong + ' ' + localDate.year);
         await userEvent.click(datePicker);
+    }
+};
+
+export const Min_Date: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
+    <omni-date-picker
+        data-testid="test-date-picker"
+        label="${ifNotEmpty(args.label)}"
+        min-date="${ifNotEmpty(args.minDate)}"
+        value="${ifNotEmpty(args.value)}"
+    >
+    </omni-date-picker>
+    `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniDatePicker } from "@capitec/omni-components-react/date-picker";
+
+const App = () => <OmniDatePicker${args.label ? ` label='${args.label}'` : ''}${args.minDate ? ` min-date='${args.minDate}'` : ''}${
+                args.value ? ` value='${args.value}'` : ''
+            }/>;`
+        }
+    ],
+    name: 'Min Date',
+    description: 'Limit the Date Picker to only have selectable dates after and including the specified min-date.',
+    args: {
+        minDate: '2023-04-14',
+        value: '2023-04-15'
+    } as Args,
+    play: async (context) => {
+        const datePicker = within(context.canvasElement).getByTestId<DatePicker>('test-date-picker');
+        datePicker.value = context.args.value;
+
+        await userEvent.click(datePicker);
+
+        const calendar = (await querySelectorAsync(datePicker.shadowRoot as ShadowRoot, '#calendar')) as Calendar;
+        await expect(calendar).toBeTruthy();
+
+        await waitFor(() => expect(calendar).toHaveAttribute('min-date', context.args.minDate), {
+            timeout: 3000
+        });
+
+        const days = Array.from(calendar.shadowRoot?.querySelectorAll('.day') as NodeListOf<Element>);
+        const isExcluded = days[17];
+
+        await expect(isExcluded).toHaveClass('excluded');
+
+        const preValue = datePicker.value;
+
+        await userEvent.click(isExcluded, {
+            pointerEventsCheck: 0
+        });
+
+        await expect(datePicker).toHaveValue(preValue);
+
+        const isIncluded = days[20];
+
+        await expect(isIncluded).not.toHaveClass('excluded');
+
+        await userEvent.click(isIncluded, {
+            pointerEventsCheck: 0
+        });
+
+        await expect(datePicker).not.toHaveValue(preValue);
+    }
+};
+
+export const Max_Date: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
+    <omni-date-picker
+        data-testid="test-date-picker"
+        label="${ifNotEmpty(args.label)}"
+        max-date="${ifNotEmpty(args.maxDate)}"
+        value="${ifNotEmpty(args.value)}"
+    >
+    </omni-date-picker>
+    `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniDatePicker } from "@capitec/omni-components-react/date-picker";
+
+const App = () => <OmniDatePicker${args.label ? ` label='${args.label}'` : ''}${args.maxDate ? ` max-date='${args.maxDate}'` : ''}${
+                args.value ? ` value='${args.value}'` : ''
+            }/>;`
+        }
+    ],
+    name: 'Max Date',
+    description: 'Limit the Date Picker to only have selectable dates before and including the specified max-date.',
+    args: {
+        maxDate: '2023-04-14',
+        value: '2023-04-13'
+    } as Args,
+    play: async (context) => {
+        const datePicker = within(context.canvasElement).getByTestId<DatePicker>('test-date-picker');
+        datePicker.value = context.args.value;
+
+        await userEvent.click(datePicker);
+
+        const calendar = (await querySelectorAsync(datePicker.shadowRoot as ShadowRoot, '#calendar')) as Calendar;
+        await expect(calendar).toBeTruthy();
+
+        await waitFor(() => expect(calendar).toHaveAttribute('max-date', context.args.maxDate), {
+            timeout: 3000
+        });
+
+        const days = Array.from(calendar.shadowRoot?.querySelectorAll('.day') as NodeListOf<Element>);
+        const isExcluded = days[20];
+
+        await expect(isExcluded).toHaveClass('excluded');
+
+        const preValue = datePicker.value;
+
+        await userEvent.click(isExcluded, {
+            pointerEventsCheck: 0
+        });
+
+        await expect(datePicker).toHaveValue(preValue);
+
+        const isIncluded = days[15];
+
+        await expect(isIncluded).not.toHaveClass('excluded');
+
+        await userEvent.click(isIncluded, {
+            pointerEventsCheck: 0
+        });
+
+        await expect(datePicker).not.toHaveValue(preValue);
     }
 };
 

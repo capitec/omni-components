@@ -7,19 +7,23 @@ Calendar component to set specific date.
 ```html
 <omni-calendar
   value="2023-02-23"
+  min-date="2023-02-07"
+  max-date="2023-02-25"
   locale="en-US">
 </omni-calendar>
 ```
 
 ## Properties
 
-| Property | Attribute | Modifiers | Type                  | Default         | Description                                      |
-|----------|-----------|-----------|-----------------------|-----------------|--------------------------------------------------|
-| `dir`    |           |           | `string`              |                 |                                                  |
-| `lang`   |           |           | `string`              |                 |                                                  |
-| `locale` | `locale`  |           | `string`              | "defaultLocale" | The locale used for formatting the output of the Calendar. |
-| `styles` |           | readonly  | `CSSResultGroup[]`    |                 |                                                  |
-| `value`  | `value`   |           | `string \| undefined` |                 | The value of the Calendar component              |
+| Property  | Attribute  | Modifiers | Type                  | Default         | Description                                      |
+|-----------|------------|-----------|-----------------------|-----------------|--------------------------------------------------|
+| `dir`     |            |           | `string`              |                 |                                                  |
+| `lang`    |            |           | `string`              |                 |                                                  |
+| `locale`  | `locale`   |           | `string`              | "defaultLocale" | The locale used for formatting the output of the Calendar. |
+| `maxDate` | `max-date` |           | `string \| undefined` |                 | The maximum date inclusively allowed to be selected. |
+| `minDate` | `min-date` |           | `string \| undefined` |                 | The minimum date inclusively allowed to be selected. |
+| `styles`  |            | readonly  | `CSSResultGroup[]`    |                 |                                                  |
+| `value`   | `value`    |           | `string \| undefined` |                 | The value of the Calendar component              |
 
 ## Events
 

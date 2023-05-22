@@ -19,6 +19,8 @@ import '../icons/ChevronRight.icon.js';
  * ```html
  * <omni-calendar
  *   value="2023-02-23"
+ *   min-date="2023-02-07"
+ *   max-date="2023-02-25"
  *   locale="en-US">
  * </omni-calendar>
  * ```
@@ -149,6 +151,18 @@ export class Calendar extends OmniElement {
     @property({ type: String, reflect: true }) locale: string = this.defaultLocale;
 
     /**
+     * The minimum date inclusively allowed to be selected.
+     * @attr [min-date]
+     */
+    @property({ type: String, attribute: 'min-date', reflect: true }) minDate?: string;
+
+    /**
+     * The maximum date inclusively allowed to be selected.
+     * @attr [max-date]
+     */
+    @property({ type: String, attribute: 'max-date', reflect: true }) maxDate?: string;
+
+    /**
      * The value of the Calendar component
      * @attr
      */
@@ -202,6 +216,11 @@ export class Calendar extends OmniElement {
     _dateSelect(e: Event, date: DateTime) {
         e.preventDefault();
         e.stopImmediatePropagation();
+
+        if ((e.target as Element)?.classList?.contains('excluded')) {
+            // If an excluded date was selected (programmatically still possible, pointer-events: none only prevents physical clicks), ignore selection
+            return;
+        }
 
         this.date = date.setLocale(this.locale);
         this.value = this.date.toISODate();
@@ -307,6 +326,22 @@ export class Calendar extends OmniElement {
         }
 
         return decadeArray;
+    }
+
+    private _isOutOfRange(date: DateTime): boolean {
+        if (this.minDate) {
+            const minDateValue = DateTime.fromISO(this.minDate);
+            if (date < minDateValue) {
+                return true;
+            }
+        }
+        if (this.maxDate) {
+            const maxDateValue = DateTime.fromISO(this.maxDate);
+            if (date > maxDateValue) {
+                return true;
+            }
+        }
+        return false;
     }
 
     static override get styles() {
@@ -688,7 +723,7 @@ export class Calendar extends OmniElement {
                 this.date.hasSame(date, 'day') &&
                 date.month === this._selectedMonth &&
                 date.year === this._selectedYear,
-            excluded: date.month !== this._selectedMonth
+            excluded: date.month !== this._selectedMonth || this._isOutOfRange(date)
         };
 
         return html`
