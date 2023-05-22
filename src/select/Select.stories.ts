@@ -1050,7 +1050,7 @@ export const Error_Label = ErrorStory<Select, BaseArgs>('omni-select');
 
 export const Clearable = ClearableStory<Select, BaseArgs>('omni-select');
 
-export const Custom_Clear_Slot_Icon = CustomClearableSlot<Select, BaseArgs>('omni-select');
+export const Custom_Clear_Slot = CustomClearableSlot<Select, BaseArgs>('omni-select');
 
 export const Prefix = PrefixStory<Select, BaseArgs>('omni-select');
 
