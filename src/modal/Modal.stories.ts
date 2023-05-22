@@ -69,14 +69,13 @@ export const Interactive: ComponentStoryFormat<Args> = {
         {
             framework: 'HTML',
             load: (args) => raw`
-            ${getSourceFromLit(modalHtml(args))}
-            <script>
-                const modal = document.querySelector('omni-modal');
-                modal.hide = false;
-                modal.addEventListener('click-outside', (e) => {
-                    modal.hide = true;
-                });
-            </script>
+            ${getSourceFromLit(modalHtml(args), (container) => {
+                const modal = container.querySelector('omni-modal');
+                if (modal) {
+                    modal.removeAttribute('hide');
+                }
+            })}
+            
             `
         }
     ],
@@ -128,15 +127,30 @@ export const Header_Label: ComponentStoryFormat<Args> = {
         {
             framework: 'HTML',
             load: (args) => raw`
-            ${getSourceFromLit(modalHtml(args))}
-            <script>
-                const modal = document.querySelector('omni-modal');
-                modal.hide = false;
-                modal.addEventListener('click-outside', (e) => {
-                    modal.hide = true;
-                });
-            </script>
+            ${getSourceFromLit(modalHtml(args), (container) => {
+                const modal = container.querySelector('omni-modal');
+                if (modal) {
+                    modal.removeAttribute('hide');
+                }
+            })}
             `
+        },
+        {
+            framework: 'React',
+            load: (args) => `import { OmniModal } from "@capitec/omni-components-react/modal";
+            
+const App = () => <OmniModal${args.headerLabel ? ` header-label='${args.headerLabel}'` : ''}${
+                args.headerAlign ? ` header-align='${args.headerAlign}'` : ''
+            }${args.noFooter ? ` no-footer` : ''}${args.noHeader ? ` no-header` : ''}${args.noFullscreen ? ` no-fullscreen` : ''}>
+                    <span style={{
+                        minWidth: "777px",
+                        minHeight: "434px",
+                        display: "flex",
+                        justifyContent: "center",
+                        textAlign: "center",
+                        alignItems: "center"
+                      }}>Body Content</span>
+                  </OmniModal>;`
         }
     ],
     name: 'Header Label',
@@ -181,15 +195,31 @@ export const Header_Align: ComponentStoryFormat<Args> = {
         {
             framework: 'HTML',
             load: (args) => raw`
-            ${getSourceFromLit(modalHtml(args))}
-            <script>
-                const modal = document.querySelector('omni-modal');
-                modal.hide = false;
-                modal.addEventListener('click-outside', (e) => {
-                    modal.hide = true;
-                });
-            </script>
+            ${getSourceFromLit(modalHtml(args), (container) => {
+                const modal = container.querySelector('omni-modal');
+                if (modal) {
+                    modal.removeAttribute('hide');
+                }
+            })}
+            
             `
+        },
+        {
+            framework: 'React',
+            load: (args) => `import { OmniModal } from "@capitec/omni-components-react/modal";
+            
+const App = () => <OmniModal${args.headerLabel ? ` header-label='${args.headerLabel}'` : ''}${
+                args.headerAlign ? ` header-align='${args.headerAlign}'` : ''
+            }${args.noFooter ? ` no-footer` : ''}${args.noHeader ? ` no-header` : ''}${args.noFullscreen ? ` no-fullscreen` : ''}>
+                    <span style={{
+                        minWidth: "777px",
+                        minHeight: "434px",
+                        display: "flex",
+                        justifyContent: "center",
+                        textAlign: "center",
+                        alignItems: "center"
+                      }}>Body Content</span>
+                  </OmniModal>;`
         }
     ],
     name: 'Header Align',
@@ -235,15 +265,32 @@ export const Header_Slot: ComponentStoryFormat<Args> = {
         {
             framework: 'HTML',
             load: (args) => raw`
-            ${getSourceFromLit(modalHtml(args))}
-            <script>
-                const modal = document.querySelector('omni-modal');
-                modal.hide = false;
-                modal.addEventListener('click-outside', (e) => {
-                    modal.hide = true;
-                });
-            </script>
+            ${getSourceFromLit(modalHtml(args), (container) => {
+                const modal = container.querySelector('omni-modal');
+                if (modal) {
+                    modal.removeAttribute('hide');
+                }
+            })}
+            
             `
+        },
+        {
+            framework: 'React',
+            load: (args) => `import { OmniModal } from "@capitec/omni-components-react/modal";
+            
+const App = () => <OmniModal${args.headerLabel ? ` header-label='${args.headerLabel}'` : ''}${
+                args.headerAlign ? ` header-align='${args.headerAlign}'` : ''
+            }${args.noFooter ? ` no-footer` : ''}${args.noHeader ? ` no-header` : ''}${args.noFullscreen ? ` no-fullscreen` : ''}>
+                    <span slot="header">Header <strong>Slot</strong></span>
+                    <span style={{
+                        minWidth: "777px",
+                        minHeight: "434px",
+                        display: "flex",
+                        justifyContent: "center",
+                        textAlign: "center",
+                        alignItems: "center"
+                      }}>Body Content</span>
+                  </OmniModal>;`
         }
     ],
     name: 'Header Slot',
@@ -288,15 +335,31 @@ export const No_Header: ComponentStoryFormat<Args> = {
         {
             framework: 'HTML',
             load: (args) => raw`
-            ${getSourceFromLit(modalHtml(args))}
-            <script>
-                const modal = document.querySelector('omni-modal');
-                modal.hide = false;
-                modal.addEventListener('click-outside', (e) => {
-                    modal.hide = true;
-                });
-            </script>
+            ${getSourceFromLit(modalHtml(args), (container) => {
+                const modal = container.querySelector('omni-modal');
+                if (modal) {
+                    modal.removeAttribute('hide');
+                }
+            })}
+            
             `
+        },
+        {
+            framework: 'React',
+            load: (args) => `import { OmniModal } from "@capitec/omni-components-react/modal";
+            
+const App = () => <OmniModal${args.headerLabel ? ` header-label='${args.headerLabel}'` : ''}${
+                args.headerAlign ? ` header-align='${args.headerAlign}'` : ''
+            }${args.noFooter ? ` no-footer` : ''}${args.noHeader ? ` no-header` : ''}${args.noFullscreen ? ` no-fullscreen` : ''}>
+                    <span style={{
+                        minWidth: "777px",
+                        minHeight: "434px",
+                        display: "flex",
+                        justifyContent: "center",
+                        textAlign: "center",
+                        alignItems: "center"
+                      }}>Body Content</span>
+                  </OmniModal>;`
         }
     ],
     name: 'No Header',
@@ -341,15 +404,32 @@ export const Footer_Slot: ComponentStoryFormat<Args> = {
         {
             framework: 'HTML',
             load: (args) => raw`
-            ${getSourceFromLit(modalHtml(args))}
-            <script>
-                const modal = document.querySelector('omni-modal');
-                modal.hide = false;
-                modal.addEventListener('click-outside', (e) => {
-                    modal.hide = true;
-                });
-            </script>
+            ${getSourceFromLit(modalHtml(args), (container) => {
+                const modal = container.querySelector('omni-modal');
+                if (modal) {
+                    modal.removeAttribute('hide');
+                }
+            })}
+            
             `
+        },
+        {
+            framework: 'React',
+            load: (args) => `import { OmniModal } from "@capitec/omni-components-react/modal";
+            
+const App = () => <OmniModal${args.headerLabel ? ` header-label='${args.headerLabel}'` : ''}${
+                args.headerAlign ? ` header-align='${args.headerAlign}'` : ''
+            }${args.noFooter ? ` no-footer` : ''}${args.noHeader ? ` no-header` : ''}${args.noFullscreen ? ` no-fullscreen` : ''}>
+                    <span style={{
+                        minWidth: "777px",
+                        minHeight: "434px",
+                        display: "flex",
+                        justifyContent: "center",
+                        textAlign: "center",
+                        alignItems: "center"
+                      }}>Body Content</span>
+                      <span slot="footer">Footer <strong>Slot</strong></span>
+                  </OmniModal>;`
         }
     ],
     name: 'Footer Slot',
@@ -394,15 +474,31 @@ export const No_Footer: ComponentStoryFormat<Args> = {
         {
             framework: 'HTML',
             load: (args) => raw`
-            ${getSourceFromLit(modalHtml(args))}
-            <script>
-                const modal = document.querySelector('omni-modal');
-                modal.hide = false;
-                modal.addEventListener('click-outside', (e) => {
-                    modal.hide = true;
-                });
-            </script>
+            ${getSourceFromLit(modalHtml(args), (container) => {
+                const modal = container.querySelector('omni-modal');
+                if (modal) {
+                    modal.removeAttribute('hide');
+                }
+            })}
+            
             `
+        },
+        {
+            framework: 'React',
+            load: (args) => `import { OmniModal } from "@capitec/omni-components-react/modal";
+            
+const App = () => <OmniModal${args.headerLabel ? ` header-label='${args.headerLabel}'` : ''}${
+                args.headerAlign ? ` header-align='${args.headerAlign}'` : ''
+            }${args.noFooter ? ` no-footer` : ''}${args.noHeader ? ` no-header` : ''}${args.noFullscreen ? ` no-fullscreen` : ''}>
+                    <span style={{
+                        minWidth: "777px",
+                        minHeight: "434px",
+                        display: "flex",
+                        justifyContent: "center",
+                        textAlign: "center",
+                        alignItems: "center"
+                      }}>Body Content</span>
+                  </OmniModal>;`
         }
     ],
     name: 'No Footer',
@@ -491,13 +587,34 @@ export const Scripted_Modal: ComponentStoryFormat<Args> = {
                             headerAlign: 'right',
                             id: 'some-id'
                         });
-                        if (modal) {
-                            modal.addEventListener('click-outside', () => {
-                                modal.hide = true;
-                            });
-                        }
                 </script>
             `
+        },
+        {
+            framework: 'React',
+            load: (args) => `import { Modal } from "@capitec/omni-components-react/modal";
+
+const footerContainer = document.createElement('div');
+footerContainer.style.display = 'contents';
+
+const Footer = () => <>
+                        <div style={{ color: 'orange' }}>
+                            The footer
+                        </div>
+                     </>;
+ReactDOM.render(<Footer/>, footerContainer);
+
+const modal = Modal.show({
+    body: () => '<span style="min-width: 777px;min-height: 434px;display: flex;justify-content: center;text-align: center;align-items: center;">Body Content</span>',
+    footer: footerContainer,
+    header: 'Header Content',
+    headerAlign: 'right',
+    id: 'some-id'
+});
+            
+const App = () => <>
+                    App Content
+                  </>;`
         }
     ],
     name: 'Scripted Modal',
