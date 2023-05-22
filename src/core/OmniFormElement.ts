@@ -82,7 +82,10 @@ import '../icons/Clear.icon.js';
  * @cssprop --omni-form-clear-control-margin-right - Form clear control right margin.
  * @cssprop --omni-form-clear-control-margin-left -  Form clear control left margin.
  * @cssprop --omni-form-clear-control-width - Form clear control width.
- * @cssprop --omni-form-clear-icon-color - Form clear icon color.
+ *
+ * @cssprop --omni-form-clear-slot-color - Form clear icon color.
+ * @cssprop --omni-form-clear-slot-height - Form clear slot height.
+ * @cssprop --omni-form-clear-slot-width - Form clear slot width.
  *
  */
 export class OmniFormElement extends OmniElement {
@@ -362,7 +365,6 @@ export class OmniFormElement extends OmniElement {
 
                 .clear-control {
                     display: flex;
-                  
                     margin-right: var(--omni-form-clear-control-margin-right, 10px);
                     margin-left: var(--omni-form-clear-control-margin-left, 10px);
                     width: var(--omni-form-clear-control-width, 20px);
@@ -370,16 +372,20 @@ export class OmniFormElement extends OmniElement {
                 }
 
                 .clear-click {
-                    display: flex;
+                    display: inline-flex;
+                    align-items: center;
+                    cursor: pointer;
+                    /*padding-right: var(--omni-select-search-clear-div-right-padding, 10px);    */
                 }
 
                 .clear-icon {
-                    fill: var(--omni-form-clear-icon-color, var(--omni-primary-color));
+                    fill: var(--omni-form-clear-slot-color, var(--omni-primary-color));
                 }
 
                 .clear-icon,
                 ::slotted([slot='clear']){
-                    width: var(--omni-form-clear-icon-width, 20px);
+                    height: var(--omni-form-clear-slot-height,20px);
+                    width: var(--omni-form-clear-slot-width, 20px);
                     cursor: pointer;
                 }
 
