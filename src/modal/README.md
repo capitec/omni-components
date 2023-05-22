@@ -5,7 +5,11 @@ Control to display modal content with optional header and footer content.
 ## Example
 
 ```html
-<omni-modal header-label="Header Label" header-align="center">   <span slot="header">Rich Header Content</span>   <span>Body Content</span>   <span slot="footer">Footer Content</span></omni-modal>
+<omni-modal header-label="Header Label" header-align="center">
+   <span slot="header">Rich Header Content</span>
+   <span>Body Content</span>
+   <span slot="footer">Footer Content</span>
+</omni-modal>
 ```
 
 ## Properties
@@ -13,7 +17,7 @@ Control to display modal content with optional header and footer content.
 | Property       | Attribute       | Modifiers | Type                                         | Default | Description                                      |
 |----------------|-----------------|-----------|----------------------------------------------|---------|--------------------------------------------------|
 | `dir`          |                 |           | `string`                                     |         |                                                  |
-| `headerAlign`  | `header-align`  |           | `"left" \| "right" \| "center" \| undefined` |         | Header text alignment:<br />  - `left` Align header to the left.<br />  - `center` Align header to the center.<br />  - `right` Align header to the right. |
+| `headerAlign`  | `header-align`  |           | `"left" \| "right" \| "center" \| undefined` |         | Header text alignment:<br />  - `left` Align header to the left.<br />  - `center` Align header to the center.<br />  - `right` Align header to the right. |
 | `headerLabel`  | `header-label`  |           | `string`                                     | ""      | Title text to be displayed in header area.       |
 | `hide`         | `hide`          |           | `boolean \| undefined`                       |         | If true, will hide the modal.                    |
 | `lang`         |                 |           | `string`                                     |         |                                                  |
