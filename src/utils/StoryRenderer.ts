@@ -195,7 +195,7 @@ export class StoryRenderer extends LitElement {
             <div class="preview">
                 <div class="item">
                 <div class="${this.key}${this.interactive ? ' interactive-story' : ''}" .data=${this.story}>
-                    ${this.overrideInteractive ? unsafeHTML(this._interactiveSrc) : res}
+                    ${res /*this.overrideInteractive ? unsafeHTML(this._interactiveSrc) : res*/}
                 </div>
                 </div>
 
@@ -631,7 +631,10 @@ export class StoryRenderer extends LitElement {
         width: 100%;
         padding: 24px;
     ">
-        ${sourceCode}
+        ${sourceCode
+            // Cater for module imports in <script> tags
+            .replaceAll('@capitec/omni-components', `https://cdn.jsdelivr.net/npm/@capitec/omni-components@${esmVersion}`)
+            .replace(new RegExp(`(https://cdn.jsdelivr.net/npm/@capitec/omni-components@${esmVersion}/)([^/"'\`]+)`, 'g'), '$1dist/$2/index.js')}
     </body>
 </html>`;
                 js = `import 'https://cdn.jsdelivr.net/npm/@capitec/omni-components@${esmVersion}/dist/omni-components.js';`;

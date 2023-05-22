@@ -523,7 +523,7 @@ const asRenderString = (strings: TemplateStringsArray, values: unknown[]): strin
     }
 };
 
-function querySelectorAsync(parent: Element | ShadowRoot, selector: any, checkFrequencyMs: number = 500, timeoutMs: number = 3000) {
+function querySelectorAsync(parent: Element | ShadowRoot | Document, selector: any, checkFrequencyMs: number = 500, timeoutMs: number = 3000) {
     return new Promise((resolve, reject) => {
         let element = parent.querySelector(selector);
         if (element) {
@@ -543,7 +543,9 @@ function querySelectorAsync(parent: Element | ShadowRoot, selector: any, checkFr
                                 new Error(
                                     `Timed out waiting for query (${selector}) in ${timeoutMs} ms \n\n${parent.toString()} - ${parent.nodeName} - ${
                                         parent.nodeValue
-                                    } \n${parent.parentElement ? parent.parentElement.innerHTML : parent.textContent} \n${parent.innerHTML}`
+                                    } \n${parent.parentElement ? parent.parentElement.innerHTML : parent.textContent} \n${
+                                        (parent as Element).innerHTML
+                                    }`
                                 )
                             );
                         } catch (_: any) {
