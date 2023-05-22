@@ -8,7 +8,7 @@ import {
     LabelStory,
     BaseArgs,
     ClearableStory,
-    CustomClearableSlotIcon,
+    CustomClearableSlot,
     HintStory,
     ErrorStory,
     DisabledStory,
@@ -86,7 +86,7 @@ export const Value = ValueStory<SearchField, BaseArgs>('omni-search-field');
 
 export const Clearable = ClearableStory<SearchField, BaseArgs>('omni-search-field', 'Clear my name');
 
-export const Custom_Clear_Slot_Icon = CustomClearableSlotIcon<SearchField, BaseArgs>('omni-search-field', 'Clear my name');
+export const Custom_Clear_Slot_Icon = CustomClearableSlot<SearchField, BaseArgs>('omni-search-field', 'Clear my name');
 
 export const Prefix = PrefixStory<SearchField, BaseArgs>('omni-search-field');
 

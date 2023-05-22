@@ -9,7 +9,7 @@ import {
     LabelStory,
     BaseArgs,
     ClearableStory,
-    CustomClearableSlotIcon,
+    CustomClearableSlot,
     HintStory,
     ErrorStory,
     PrefixStory,
@@ -331,7 +331,7 @@ export const Error_Label = ErrorStory<DatePicker, BaseArgs>('omni-date-picker');
 
 export const Clearable = ClearableStory<DatePicker, BaseArgs>('omni-date-picker', isoDate);
 
-export const Custom_Clear_Slot_Icon = CustomClearableSlotIcon<DatePicker, BaseArgs>('omni-date-picker', isoDate);
+export const Custom_Clear_Slot_Icon = CustomClearableSlot<DatePicker, BaseArgs>('omni-date-picker', isoDate);
 
 export const Prefix = PrefixStory<DatePicker, BaseArgs>('omni-date-picker');
 
