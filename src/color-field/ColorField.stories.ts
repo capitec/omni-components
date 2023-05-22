@@ -75,7 +75,7 @@ export const Value = ValueStory<ColorField, BaseArgs>('omni-color-field', '#f6b7
 
 export const Clearable = ClearableStory<ColorField, BaseArgs>('omni-color-field', '#f6b73c');
 
-export const Custom_Clear_Slot_Icon = CustomClearableSlot<ColorField, BaseArgs>('omni-color-field', '#f6b73c');
+export const Custom_Clear_Slot = CustomClearableSlot<ColorField, BaseArgs>('omni-color-field', '#f6b73c');
 
 export const Prefix = PrefixStory<ColorField, BaseArgs>('omni-color-field');
 
