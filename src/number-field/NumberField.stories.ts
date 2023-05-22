@@ -8,7 +8,7 @@ import {
     LabelStory,
     BaseArgs,
     ClearableStory,
-    CustomClearableSlotIcon,
+    CustomClearableSlot,
     HintStory,
     ErrorStory,
     DisabledStory,
@@ -89,7 +89,7 @@ export const Value = ValueStory<NumberField, BaseArgs>('omni-number-field', 123)
 
 export const Clearable = ClearableStory<NumberField, BaseArgs>('omni-number-field', 123);
 
-export const Custom_Clear_Slot_Icon = CustomClearableSlotIcon<NumberField, BaseArgs>('omni-number-field', 123);
+export const Custom_Clear_Slot_Icon = CustomClearableSlot<NumberField, BaseArgs>('omni-number-field', 123);
 
 export const Prefix = PrefixStory<NumberField, BaseArgs>('omni-number-field');
 

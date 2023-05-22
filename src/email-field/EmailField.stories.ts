@@ -8,7 +8,7 @@ import {
     LabelStory,
     BaseArgs,
     ClearableStory,
-    CustomClearableSlotIcon,
+    CustomClearableSlot,
     HintStory,
     ErrorStory,
     DisabledStory,
@@ -88,7 +88,7 @@ export const Value = ValueStory<EmailField, BaseArgs>('omni-email-field', 'johnd
 
 export const Clearable = ClearableStory<EmailField, BaseArgs>('omni-email-field', 'johndoe@gmail.com');
 
-export const Custom_Clear_Slot_Icon = CustomClearableSlotIcon<EmailField, BaseArgs>('omni-email-field', 'johndoe@gmail.com');
+export const Custom_Clear_Slot_Icon = CustomClearableSlot<EmailField, BaseArgs>('omni-email-field', 'johndoe@gmail.com');
 
 export const Prefix = PrefixStory<EmailField, BaseArgs>('omni-email-field');
 

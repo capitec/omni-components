@@ -9,7 +9,7 @@ import {
     LabelStory,
     BaseArgs,
     ClearableStory,
-    CustomClearableSlotIcon,
+    CustomClearableSlot,
     HintStory,
     ErrorStory,
     DisabledStory,
@@ -170,7 +170,7 @@ export const Value = ValueStory<PinField, BaseArgs>('omni-pin-field', 1234);
 
 export const Clearable = ClearableStory<PinField, BaseArgs>('omni-pin-field', 1234);
 
-export const Custom_Clear_Slot_Icon = CustomClearableSlotIcon<PinField, BaseArgs>('omni-pin-field', 1234);
+export const Custom_Clear_Slot_Icon = CustomClearableSlot<PinField, BaseArgs>('omni-pin-field', 1234);
 
 export const Prefix = PrefixStory<PinField, BaseArgs>('omni-pin-field');
 
