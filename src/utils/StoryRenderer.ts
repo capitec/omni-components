@@ -4,7 +4,7 @@ import { html as langHtml } from '@codemirror/lang-html';
 import { javascript as langJs } from '@codemirror/lang-javascript';
 import { githubDark as codeThemeDark } from '@ddietr/codemirror-themes/github-dark.js';
 import { githubLight as codeTheme } from '@ddietr/codemirror-themes/github-light.js';
-import { html, LitElement, nothing, render, TemplateResult } from 'lit';
+import { html, LitElement, nothing, PropertyValueMap, render, TemplateResult } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { live } from 'lit/directives/live.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
@@ -124,6 +124,11 @@ export class StoryRenderer extends LitElement {
         }
     }
 
+    protected override updated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+        super.updated(_changedProperties);
+        window.Prism?.highlightAll();
+    }
+
     protected override render() {
         if (!this.controller?.story) {
             return html`<omni-loading-icon style="max-height: 64px;"></omni-loading-icon>`;
@@ -195,7 +200,7 @@ export class StoryRenderer extends LitElement {
             <div class="preview">
                 <div class="item">
                 <div class="${this.key}${this.interactive ? ' interactive-story' : ''}" .data=${this.story}>
-                    ${this.overrideInteractive ? unsafeHTML(this._interactiveSrc) : res}
+                    ${res /*this.overrideInteractive ? unsafeHTML(this._interactiveSrc) : res*/}
                 </div>
                 </div>
 
@@ -631,7 +636,10 @@ export class StoryRenderer extends LitElement {
         width: 100%;
         padding: 24px;
     ">
-        ${sourceCode}
+        ${sourceCode
+            // Cater for module imports in <script> tags
+            .replaceAll('@capitec/omni-components', `https://cdn.jsdelivr.net/npm/@capitec/omni-components@${esmVersion}`)
+            .replace(new RegExp(`(https://cdn.jsdelivr.net/npm/@capitec/omni-components@${esmVersion}/)([^/"'\`]+)`, 'g'), '$1dist/$2/index.js')}
     </body>
 </html>`;
                 js = `import 'https://cdn.jsdelivr.net/npm/@capitec/omni-components@${esmVersion}/dist/omni-components.js';`;
@@ -773,3 +781,9 @@ type CSSVariable = {
     value: string;
     name: string;
 };
+
+declare global {
+    interface Window {
+        Prism: any;
+    }
+}

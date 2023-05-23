@@ -257,7 +257,7 @@ const plugins = {
                                             classDeclaration.attributes = attributes;
 
                                             const field = classDeclaration.members.find(m => m.name === propertyName);
-                                            delete field.attribute;
+                                            delete field?.attribute;
                                         }
                                     });
                                 });

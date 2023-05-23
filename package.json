@@ -1,6 +1,6 @@
 {
     "name": "@capitec/omni-components",
-    "version": "0.5.36",
+    "version": "0.5.37",
     "type": "module",
     "description": "Modern UI component library for mobile and web",
     "scripts": {
@@ -61,7 +61,8 @@
         "email-field",
         "pin-field",
         "calendar",
-        "keyboard"
+        "keyboard",
+        "modal"
     ],
     "exports": {
         "./*": "./dist/*/index.js"
