@@ -523,7 +523,7 @@ const asRenderString = (strings: TemplateStringsArray, values: unknown[]): strin
     }
 };
 
-function querySelectorAsync(parent: Element | ShadowRoot, selector: any, checkFrequencyMs: number = 500, timeoutMs: number = 3000) {
+function querySelectorAsync(parent: Element | ShadowRoot | Document, selector: any, checkFrequencyMs: number = 500, timeoutMs: number = 3000) {
     return new Promise((resolve, reject) => {
         let element = parent.querySelector(selector);
         if (element) {
@@ -543,7 +543,9 @@ function querySelectorAsync(parent: Element | ShadowRoot, selector: any, checkFr
                                 new Error(
                                     `Timed out waiting for query (${selector}) in ${timeoutMs} ms \n\n${parent.toString()} - ${parent.nodeName} - ${
                                         parent.nodeValue
-                                    } \n${parent.parentElement ? parent.parentElement.innerHTML : parent.textContent} \n${parent.innerHTML}`
+                                    } \n${parent.parentElement ? parent.parentElement.innerHTML : parent.textContent} \n${
+                                        (parent as Element).innerHTML
+                                    }`
                                 )
                             );
                         } catch (_: any) {
@@ -1405,10 +1407,21 @@ function currentCodeTheme() {
     return codeTheme;
 }
 
-function getSourceFromLit(res: TemplateResult): string {
+function getSourceFromLit(
+    res: TemplateResult,
+    transformElement?: (container: HTMLDivElement) => void,
+    transformSourceContent?: (source: string) => string
+): string {
     let tempContainer = document.createElement('div');
     render(res, tempContainer);
-    const source = transformSource(tempContainer.innerHTML);
+    if (transformElement) {
+        transformElement(tempContainer);
+    }
+    let source = tempContainer.innerHTML;
+    if (transformSourceContent) {
+        source = transformSourceContent(source);
+    }
+    source = transformSource(source);
 
     //Cleanup
     tempContainer.innerHTML = '';
