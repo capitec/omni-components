@@ -445,7 +445,7 @@ function filterJsDocLinks(jsdoc: string) {
     const renderLink = (link: { tag: string; text: string; url: string; raw: string }) => {
         if (!link.url.includes(':')) {
             // Local markdown links are not valid
-            return raw`<strong>${link.text}</strong>`;
+            return raw`<code class="language-javascript">'${link.text}'</code>`;
         }
         return raw`<a href="${link.url}" target="_blank" >${link.text}</a>`; //`[${link.text}](${link.url}`;
     };
@@ -624,6 +624,7 @@ async function setupThemes() {
         const nativeOption = document.createElement('option');
         nativeOption.label = option.label;
         nativeOption.value = option.value;
+        nativeOption.innerText = option.label;
 
         const storedTheme = window.sessionStorage.getItem(themeStorageKey);
         if (
@@ -859,6 +860,7 @@ async function setupVersions() {
         const nativeOption = document.createElement('option');
         nativeOption.label = v;
         nativeOption.value = v;
+        nativeOption.innerText = v;
         if (v === currentVersion) {
             nativeOption.selected = true;
         }
