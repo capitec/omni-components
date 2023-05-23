@@ -93,7 +93,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
             id-field="${args.idField}"
             ?disabled="${args.disabled}"
             ?clearable="${args.clearable}"
-            ?seearchable="${args.searchable}"
+            ?searchable="${args.searchable}"
             empty-message="${args.emptyMessage}"
             >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}
             ${args.clear ? html`${'\r\n'}${unsafeHTML(assignToSlot('clear', args.clear))}` : nothing}${
