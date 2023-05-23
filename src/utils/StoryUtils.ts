@@ -445,7 +445,7 @@ function filterJsDocLinks(jsdoc: string) {
     const renderLink = (link: { tag: string; text: string; url: string; raw: string }) => {
         if (!link.url.includes(':')) {
             // Local markdown links are not valid
-            return raw`<strong>${link.text}</strong>`;
+            return raw`<code class="language-javascript">'${link.text}'</code>`;
         }
         return raw`<a href="${link.url}" target="_blank" >${link.text}</a>`; //`[${link.text}](${link.url}`;
     };
