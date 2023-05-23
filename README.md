@@ -487,6 +487,14 @@ Label component that renders styled text.
 
 </td></tr><tr><td>
 
+[omni-modal](src/modal/README.md)
+
+</td><td>
+
+Control to display modal content with optional header and footer content.
+
+</td></tr><tr><td>
+
 [omni-number-field](src/number-field/README.md)
 
 </td><td>

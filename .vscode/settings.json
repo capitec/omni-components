@@ -41,6 +41,7 @@
 		"email-field": true,
 		"pin-field": true,
 		"calendar": true,
-		"keyboard": true
+		"keyboard": true,
+		"modal": true
 	}
 }
