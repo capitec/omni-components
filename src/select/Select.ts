@@ -326,36 +326,25 @@ export class Select extends OmniFormElement {
         if (this._itemsContainer && !this._isMobile) {
             await this.updateComplete;
             if (visualViewport) {
+                let newHeight = '';
                 if (this._bottomOfViewport) {
-                    let newHeight = '';
-                    if (this.searchable && this._searchElement) {
-                        newHeight =
-                            visualViewport.height -
-                            this.getBoundingClientRect().height -
-                            this._searchElement.height -
-                            (visualViewport.height - this.getBoundingClientRect().top) -
-                            10 +
-                            'px';
-                    } else {
-                        newHeight =
-                            visualViewport.height -
-                            this.getBoundingClientRect().height -
-                            (visualViewport.height - this.getBoundingClientRect().top) -
-                            10 +
-                            'px';
-                    }
-
-                    this._itemsContainer.style.maxHeight = `var(--omni-select-items-max-height, ${newHeight})`;
+                    newHeight =
+                        visualViewport.height -
+                        this.getBoundingClientRect().height -
+                        (this.searchable ? this._searchElement!.height : 0) -
+                        (visualViewport.height - this.getBoundingClientRect().top) -
+                        10 +
+                        'px';
                 } else {
-                    let newHeight = '';
-                    if (this.searchable && this._searchElement) {
-                        newHeight = visualViewport.height - this.getBoundingClientRect().bottom - this._searchElement.offsetHeight - 10 + 'px';
-                    } else {
-                        newHeight = visualViewport.height - this.getBoundingClientRect().bottom - 10 + 'px';
-                    }
-
-                    this._itemsContainer.style.maxHeight = `var(--omni-select-items-max-height, ${newHeight})`;
+                    newHeight =
+                        visualViewport.height -
+                        this.getBoundingClientRect().bottom -
+                        (this.searchable ? this._searchElement!.offsetHeight : 0) -
+                        10 +
+                        'px';
                 }
+
+                this._itemsContainer.style.maxHeight = `var(--omni-select-items-max-height, ${newHeight})`;
             }
         }
     }
@@ -442,7 +431,7 @@ export class Select extends OmniFormElement {
                 /* Desktop and landscape tablet device styling, if element is at the bottom of the screen make items render above the input */
                 @media screen and (min-width: 767px) {
                     .items {
-                       max-height: var(--omni-select-items-max-height, 100%);
+                        max-height: var(--omni-select-items-max-height, 100%);
                     }
 
                     .items-container {
@@ -538,17 +527,17 @@ export class Select extends OmniFormElement {
                     width: var(--omni-select-search-field-width,100%);
 
                     border-top-width: var(--omni-select-search-field-top-border-width, 0);
-					border-left-width: var(--omni-select-search-field-left-border-width, 0);
-					border-right-width: var(--omni-select-search-field-right-border-width, 0);
-					border-bottom-width: var(--omni-select-search-field-bottom-border-width, 1px);
-					border-bottom-color: var(--omni-select-search-field-bottom-border-color, transparent);
+                    border-left-width: var(--omni-select-search-field-left-border-width, 0);
+                    border-right-width: var(--omni-select-search-field-right-border-width, 0);
+                    border-bottom-width: var(--omni-select-search-field-bottom-border-width, 1px);
+                    border-bottom-color: var(--omni-select-search-field-bottom-border-color, transparent);
 
                     background: var(--omni-select-search-field-background-color, var(--omni-background-color));   
                 }
 
                 .searchField:focus {
-					outline: none;
-				}
+                    outline: none;
+                }
 
                 /* Search field clear icons styles */
                 .search-control {
@@ -573,55 +562,55 @@ export class Select extends OmniFormElement {
                 }
 
                 /* Should only display for mobile rendering */
-               .header {
-                   left: var(--omni-select-item-header-left, 0px);
-                   right: var(--omni-select-item-header-right, 0px);
-               
-                   color: var(--omni-select-item-header-font-color, var(--omni-font-color));
-                   font-family: var(--omni-select-item-header-font-family, var(--omni-font-family));
-                   font-size: var(--omni-select-item-header-font-size, var(--omni-font-size));
-                   font-weight: var(--omni-select-item-header-font-weight, var(--omni-font-weight));
-                   background-color: var(--omni-select-item-header-background-color, var(--omni-primary-color));
-               
-                   padding-top: var(--omni-select-item-header-padding-top, 14px);
-                   padding-bottom: var(--omni-select-item-header-padding-bottom, 14px);
-                   padding-right: var(--omni-select-item-header-padding-right, 10px);
-                   padding-left: var(--omni-select-item-header-padding-left, 10px);
-               
-                   border-top-left-radius: var(--omni-select-item-header-border-top-left-radius, 10px);
-                   border-top-right-radius: var(--omni-select-item-header-border-top-right-radius, 10px);
-               }
+                .header {
+                    left: var(--omni-select-item-header-left, 0px);
+                    right: var(--omni-select-item-header-right, 0px);
 
-               /* Mobile device styling */
-               @media screen and (max-width: 766px) {
-                   .items-dialog {
-                       position: fixed;
-                       top: inherit;
-                       margin: unset;
-                       border-style: none;
-                       padding: unset;
-                       width: var(--omni-select-dialog-width,100vw);
-                       left: var(--omni-select-dialog-left, 0px);
-                       right: var(--omni-select-dialog-right, 0px);
-                       bottom: var(--omni-select-dialog-bottom, 0px);
-                       background-color: var(--omni-select-dialog-background-color, transparent);
-                   }
-                   
-                   .items-dialog:modal{
-                       display: flex;
-                       flex-direction: column;
-                       max-width: var(--omni-select-dialog-modal-max-width, 100vw);
-                       max-height: var(--omni-select-dialog-modal-max-height, 240px);                  
-                   }
-               
-                   .items-dialog::backdrop {
-                      background: var(--omni-select-dialog-backdrop-color, rgba(0, 0, 0, 0.1));
-                   }
+                    color: var(--omni-select-item-header-font-color, var(--omni-font-color));
+                    font-family: var(--omni-select-item-header-font-family, var(--omni-font-family));
+                    font-size: var(--omni-select-item-header-font-size, var(--omni-font-size));
+                    font-weight: var(--omni-select-item-header-font-weight, var(--omni-font-weight));
+                    background-color: var(--omni-select-item-header-background-color, var(--omni-primary-color));
 
-                   .items {
-                      min-height: var(--omni-select-dialog-items-min-height, 150px);
+                    padding-top: var(--omni-select-item-header-padding-top, 14px);
+                    padding-bottom: var(--omni-select-item-header-padding-bottom, 14px);
+                    padding-right: var(--omni-select-item-header-padding-right, 10px);
+                    padding-left: var(--omni-select-item-header-padding-left, 10px);
+
+                    border-top-left-radius: var(--omni-select-item-header-border-top-left-radius, 10px);
+                    border-top-right-radius: var(--omni-select-item-header-border-top-right-radius, 10px);
+                }
+
+                /* Mobile device styling */
+                @media screen and (max-width: 766px) {
+                    .items-dialog {
+                        position: fixed;
+                        top: inherit;
+                        margin: unset;
+                        border-style: none;
+                        padding: unset;
+                        width: var(--omni-select-dialog-width,100vw);
+                        left: var(--omni-select-dialog-left, 0px);
+                        right: var(--omni-select-dialog-right, 0px);
+                        bottom: var(--omni-select-dialog-bottom, 0px);
+                        background-color: var(--omni-select-dialog-background-color, transparent);
                     }
-               }
+                    
+                    .items-dialog:modal{
+                        display: flex;
+                        flex-direction: column;
+                        max-width: var(--omni-select-dialog-modal-max-width, 100vw);
+                        max-height: var(--omni-select-dialog-modal-max-height, 240px);                  
+                    }
+
+                    .items-dialog::backdrop {
+                        background: var(--omni-select-dialog-backdrop-color, rgba(0, 0, 0, 0.1));
+                    }
+
+                    .items {
+                        min-height: var(--omni-select-dialog-items-min-height, 150px);
+                    }
+                }
             `
         ];
     }
@@ -675,8 +664,7 @@ export class Select extends OmniFormElement {
                 <div ${ref(this._itemsMaxHeightChange)} id="items" class="items"> ${until(
             this._renderOptions(),
             html`<div>${this.renderLoading()}</div>`
-        )} 
-                </div>
+        )} </div>
             </div>
         `;
     }
@@ -711,7 +699,8 @@ export class Select extends OmniFormElement {
             disabled: this.disabled,
             error: this.error as string
         };
-        return html`<div id="control" class="control ${this._popUp ? `expanded` : `collapsed`}" @click="${() => this._controlClick()}">
+        return html`
+        <div id="control" class="control ${this._popUp ? `expanded` : `collapsed`}" @click="${() => this._controlClick()}">
             ${
                 this._isMobile
                     ? html`<slot name="more"><omni-more-icon class=${classMap(controlIcon)}></omni-more-icon></slot>`
