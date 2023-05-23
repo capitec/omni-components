@@ -1,7 +1,7 @@
 import { within, fireEvent, waitFor } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import * as jest from 'jest-mock';
-import { html, nothing } from 'lit';
+import { TemplateResult, html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { Button } from '../button/Button.js';
 import { RenderElement } from '../render-element/RenderElement.js';
@@ -23,7 +23,7 @@ interface Args {
     headerAlign: 'left' | 'center' | 'right';
     header: string;
     '[Default Slot]': string;
-    footer: string;
+    footer: string | ((args: Args) => TemplateResult);
     hide?: boolean;
     noHeader?: boolean;
     noFooter?: boolean;
@@ -49,9 +49,36 @@ const modalHtml = (args: Args) => html`
             ?no-header="${args.noHeader}"
             ?no-footer="${args.noFooter}">${args.header ? html`${'\r\n'}${unsafeHTML(assignToSlot('header', args.header))}` : nothing}${
     args['[Default Slot]'] ? html`${'\r\n'}${unsafeHTML(args['[Default Slot]'])}` : nothing
-}${args.footer ? html`${'\r\n'}${unsafeHTML(assignToSlot('footer', args.footer))}` : nothing}
+}${
+    args.footer
+        ? typeof args.footer === 'string'
+            ? html`${'\r\n'}${unsafeHTML(assignToSlot('footer', args.footer))}`
+            : html`${'\r\n'}${args.footer(args)}`
+        : nothing
+}
         </omni-modal>
 `;
+const footerSource: string = raw`<div slot="footer">
+    <omni-button id="modal-close-btn" label="Close"></omni-button>
+    <script defer>
+        document.getElementById('modal-close-btn').addEventListener('click', () => {
+            document.getElementById('omni-modal').hide = true;
+        });
+    </script>
+</div>`;
+const footerTemplate = (args: Args) => html`
+<div slot="footer">
+    <omni-button id="modal-close-btn" label="Close" @click="${() => {
+        args.hide = true;
+        document.dispatchEvent(
+            new CustomEvent('story-renderer-interactive-update', {
+                bubbles: true,
+                composed: true
+            })
+        );
+    }}"></omni-button>
+</div>`;
+
 export const Interactive: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
         <omni-button data-testid="test-modal-btn" @click="${() => {
@@ -74,14 +101,13 @@ export const Interactive: ComponentStoryFormat<Args> = {
                 if (modal) {
                     modal.removeAttribute('hide');
                 }
-            })}
-            
+            })}            
             `
         }
     ],
     name: 'Interactive',
     args: {
-        header: raw`<strong>Header Content</strong>`,
+        header: raw`<strong style="padding-left: 10px;">Slotted Header Content</strong>`,
         '[Default Slot]': raw`<span style="min-width: 777px;min-height: 434px;display: flex;justify-content: center;text-align: center;align-items: center;">Body Content</span>`,
         footer: raw`<span>Footer Content</span>`,
         hide: true,
@@ -111,6 +137,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
 };
 
 export const Header_Label: ComponentStoryFormat<Args> = {
+    description: 'Set text content to display in the modal header.',
     render: (args: Args) => html`
         <omni-button data-testid="test-modal-btn" @click="${() => {
             args.hide = false;
@@ -127,37 +154,57 @@ export const Header_Label: ComponentStoryFormat<Args> = {
         {
             framework: 'HTML',
             load: (args) => raw`
-            ${getSourceFromLit(modalHtml(args), (container) => {
-                const modal = container.querySelector('omni-modal');
-                if (modal) {
-                    modal.removeAttribute('hide');
+            ${getSourceFromLit(
+                modalHtml({
+                    ...args,
+                    footer: footerSource
+                }),
+                (container) => {
+                    const modal = container.querySelector('omni-modal');
+                    if (modal) {
+                        modal.removeAttribute('hide');
+                        modal.setAttribute('id', 'omni-modal');
+                    }
                 }
-            })}
+            )}
             `
         },
         {
             framework: 'React',
             load: (args) => `import { OmniModal } from "@capitec/omni-components-react/modal";
+import { OmniButton } from "@capitec/omni-components-react/button";
             
-const App = () => <OmniModal${args.headerLabel ? ` header-label='${args.headerLabel}'` : ''}${
+const App = () => {
+    let omniModal = null;
+    const setRef = e => {
+        omniModal = e;
+    }
+    return (<OmniModal ref={setRef}${args.headerLabel ? ` header-label='${args.headerLabel}'` : ''}${
                 args.headerAlign ? ` header-align='${args.headerAlign}'` : ''
-            }${args.noFooter ? ` no-footer` : ''}${args.noHeader ? ` no-header` : ''}${args.noFullscreen ? ` no-fullscreen` : ''}>
-                    <span style={{
-                        minWidth: "777px",
-                        minHeight: "434px",
-                        display: "flex",
-                        justifyContent: "center",
-                        textAlign: "center",
-                        alignItems: "center"
-                      }}>Body Content</span>
-                  </OmniModal>;`
+            }${args.noFooter ? ` no-footer` : ''}${args.noHeader ? ` no-header` : ''}${args.noFullscreen ? ` no-fullscreen` : ''}>        
+               <span style={{
+                   minWidth: "777px",
+                   minHeight: "434px",
+                   display: "flex",
+                   justifyContent: "center",
+                   textAlign: "center",
+                   alignItems: "center"
+                 }}>Body Content</span>
+               <div slot="footer">
+                 <OmniButton label="Close" onclick={() => {
+                     omniModal.hide = true;
+                 }}/>
+               </div>
+             </OmniModal>);
+}`
         }
     ],
     name: 'Header Label',
     args: {
         '[Default Slot]': raw`<span style="min-width: 777px;min-height: 434px;display: flex;justify-content: center;text-align: center;align-items: center;">Body Content</span>`,
         hide: true,
-        headerLabel: 'Header Label'
+        headerLabel: 'Header Label',
+        footer: footerTemplate
     },
     play: async (context) => {
         let modal = within(context.canvasElement).getByTestId<Modal>('test-modal');
@@ -179,6 +226,7 @@ const App = () => <OmniModal${args.headerLabel ? ` header-label='${args.headerLa
 };
 
 export const Header_Align: ComponentStoryFormat<Args> = {
+    description: 'Align header content horizontally.',
     render: (args: Args) => html`
         <omni-button data-testid="test-modal-btn" @click="${() => {
             args.hide = false;
@@ -195,31 +243,50 @@ export const Header_Align: ComponentStoryFormat<Args> = {
         {
             framework: 'HTML',
             load: (args) => raw`
-            ${getSourceFromLit(modalHtml(args), (container) => {
-                const modal = container.querySelector('omni-modal');
-                if (modal) {
-                    modal.removeAttribute('hide');
+            ${getSourceFromLit(
+                modalHtml({
+                    ...args,
+                    footer: footerSource
+                }),
+                (container) => {
+                    const modal = container.querySelector('omni-modal');
+                    if (modal) {
+                        modal.removeAttribute('hide');
+                        modal.setAttribute('id', 'omni-modal');
+                    }
                 }
-            })}
+            )}
             
             `
         },
         {
             framework: 'React',
             load: (args) => `import { OmniModal } from "@capitec/omni-components-react/modal";
+import { OmniButton } from "@capitec/omni-components-react/button";
             
-const App = () => <OmniModal${args.headerLabel ? ` header-label='${args.headerLabel}'` : ''}${
+const App = () => {
+    let omniModal = null;
+    const setRef = e => {
+        omniModal = e;
+    }
+    return (<OmniModal ref={setRef}${args.headerLabel ? ` header-label='${args.headerLabel}'` : ''}${
                 args.headerAlign ? ` header-align='${args.headerAlign}'` : ''
-            }${args.noFooter ? ` no-footer` : ''}${args.noHeader ? ` no-header` : ''}${args.noFullscreen ? ` no-fullscreen` : ''}>
-                    <span style={{
-                        minWidth: "777px",
-                        minHeight: "434px",
-                        display: "flex",
-                        justifyContent: "center",
-                        textAlign: "center",
-                        alignItems: "center"
-                      }}>Body Content</span>
-                  </OmniModal>;`
+            }${args.noFooter ? ` no-footer` : ''}${args.noHeader ? ` no-header` : ''}${args.noFullscreen ? ` no-fullscreen` : ''}>        
+                <span style={{
+                    minWidth: "777px",
+                    minHeight: "434px",
+                    display: "flex",
+                    justifyContent: "center",
+                    textAlign: "center",
+                    alignItems: "center"
+                    }}>Body Content</span>
+                <div slot="footer">
+                    <OmniButton label="Close" onclick={() => {
+                        omniModal.hide = true;
+                    }}/>
+                </div>
+            </OmniModal>);
+}`
         }
     ],
     name: 'Header Align',
@@ -227,7 +294,8 @@ const App = () => <OmniModal${args.headerLabel ? ` header-label='${args.headerLa
         '[Default Slot]': raw`<span style="min-width: 777px;min-height: 434px;display: flex;justify-content: center;text-align: center;align-items: center;">Body Content</span>`,
         hide: true,
         headerLabel: 'Header Aligned',
-        headerAlign: 'center'
+        headerAlign: 'center',
+        footer: footerTemplate
     },
     play: async (context) => {
         let modal = within(context.canvasElement).getByTestId<Modal>('test-modal');
@@ -249,6 +317,7 @@ const App = () => <OmniModal${args.headerLabel ? ` header-label='${args.headerLa
 };
 
 export const Header_Slot: ComponentStoryFormat<Args> = {
+    description: 'Set custom html content to display in modal header.',
     render: (args: Args) => html`
         <omni-button data-testid="test-modal-btn" @click="${() => {
             args.hide = false;
@@ -265,39 +334,59 @@ export const Header_Slot: ComponentStoryFormat<Args> = {
         {
             framework: 'HTML',
             load: (args) => raw`
-            ${getSourceFromLit(modalHtml(args), (container) => {
-                const modal = container.querySelector('omni-modal');
-                if (modal) {
-                    modal.removeAttribute('hide');
+            ${getSourceFromLit(
+                modalHtml({
+                    ...args,
+                    footer: footerSource
+                }),
+                (container) => {
+                    const modal = container.querySelector('omni-modal');
+                    if (modal) {
+                        modal.removeAttribute('hide');
+                        modal.setAttribute('id', 'omni-modal');
+                    }
                 }
-            })}
+            )}
             
             `
         },
         {
             framework: 'React',
             load: (args) => `import { OmniModal } from "@capitec/omni-components-react/modal";
+import { OmniButton } from "@capitec/omni-components-react/button";
             
-const App = () => <OmniModal${args.headerLabel ? ` header-label='${args.headerLabel}'` : ''}${
+const App = () => {
+    let omniModal = null;
+    const setRef = e => {
+        omniModal = e;
+    }
+    return (<OmniModal ref={setRef}${args.headerLabel ? ` header-label='${args.headerLabel}'` : ''}${
                 args.headerAlign ? ` header-align='${args.headerAlign}'` : ''
-            }${args.noFooter ? ` no-footer` : ''}${args.noHeader ? ` no-header` : ''}${args.noFullscreen ? ` no-fullscreen` : ''}>
-                    <span slot="header">Header <strong>Slot</strong></span>
-                    <span style={{
-                        minWidth: "777px",
-                        minHeight: "434px",
-                        display: "flex",
-                        justifyContent: "center",
-                        textAlign: "center",
-                        alignItems: "center"
-                      }}>Body Content</span>
-                  </OmniModal>;`
+            }${args.noFooter ? ` no-footer` : ''}${args.noHeader ? ` no-header` : ''}${args.noFullscreen ? ` no-fullscreen` : ''}>        
+                <span slot="header">Header <strong>Slot</strong></span>
+                <span style={{
+                    minWidth: "777px",
+                    minHeight: "434px",
+                    display: "flex",
+                    justifyContent: "center",
+                    textAlign: "center",
+                    alignItems: "center"
+                    }}>Body Content</span>
+                <div slot="footer">
+                    <OmniButton label="Close" onclick={() => {
+                        omniModal.hide = true;
+                    }}/>
+                </div>
+            </OmniModal>);
+}`
         }
     ],
     name: 'Header Slot',
     args: {
         '[Default Slot]': raw`<span style="min-width: 777px;min-height: 434px;display: flex;justify-content: center;text-align: center;align-items: center;">Body Content</span>`,
         hide: true,
-        header: raw`<span>Header <strong>Slot</strong></span>`
+        header: raw`<span>Header <strong>Slot</strong></span>`,
+        footer: footerTemplate
     },
     play: async (context) => {
         let modal = within(context.canvasElement).getByTestId<Modal>('test-modal');
@@ -319,6 +408,7 @@ const App = () => <OmniModal${args.headerLabel ? ` header-label='${args.headerLa
 };
 
 export const No_Header: ComponentStoryFormat<Args> = {
+    description: 'Remove the header section of the modal.',
     render: (args: Args) => html`
        <omni-button data-testid="test-modal-btn" @click="${() => {
            args.hide = false;
@@ -335,38 +425,58 @@ export const No_Header: ComponentStoryFormat<Args> = {
         {
             framework: 'HTML',
             load: (args) => raw`
-            ${getSourceFromLit(modalHtml(args), (container) => {
-                const modal = container.querySelector('omni-modal');
-                if (modal) {
-                    modal.removeAttribute('hide');
+            ${getSourceFromLit(
+                modalHtml({
+                    ...args,
+                    footer: footerSource
+                }),
+                (container) => {
+                    const modal = container.querySelector('omni-modal');
+                    if (modal) {
+                        modal.removeAttribute('hide');
+                        modal.setAttribute('id', 'omni-modal');
+                    }
                 }
-            })}
+            )}
             
             `
         },
         {
             framework: 'React',
             load: (args) => `import { OmniModal } from "@capitec/omni-components-react/modal";
+import { OmniButton } from "@capitec/omni-components-react/button";
             
-const App = () => <OmniModal${args.headerLabel ? ` header-label='${args.headerLabel}'` : ''}${
+const App = () => {
+    let omniModal = null;
+    const setRef = e => {
+        omniModal = e;
+    }
+    return (<OmniModal ref={setRef}${args.headerLabel ? ` header-label='${args.headerLabel}'` : ''}${
                 args.headerAlign ? ` header-align='${args.headerAlign}'` : ''
-            }${args.noFooter ? ` no-footer` : ''}${args.noHeader ? ` no-header` : ''}${args.noFullscreen ? ` no-fullscreen` : ''}>
-                    <span style={{
-                        minWidth: "777px",
-                        minHeight: "434px",
-                        display: "flex",
-                        justifyContent: "center",
-                        textAlign: "center",
-                        alignItems: "center"
-                      }}>Body Content</span>
-                  </OmniModal>;`
+            }${args.noFooter ? ` no-footer` : ''}${args.noHeader ? ` no-header` : ''}${args.noFullscreen ? ` no-fullscreen` : ''}>        
+                <span style={{
+                    minWidth: "777px",
+                    minHeight: "434px",
+                    display: "flex",
+                    justifyContent: "center",
+                    textAlign: "center",
+                    alignItems: "center"
+                    }}>Body Content</span>
+                <div slot="footer">
+                    <OmniButton label="Close" onclick={() => {
+                        omniModal.hide = true;
+                    }}/>
+                </div>
+            </OmniModal>);
+}`
         }
     ],
     name: 'No Header',
     args: {
         '[Default Slot]': raw`<span style="min-width: 777px;min-height: 434px;display: flex;justify-content: center;text-align: center;align-items: center;">Body Content</span>`,
         hide: true,
-        noHeader: true
+        noHeader: true,
+        footer: footerTemplate
     },
     play: async (context) => {
         let modal = within(context.canvasElement).getByTestId<Modal>('test-modal');
@@ -388,6 +498,7 @@ const App = () => <OmniModal${args.headerLabel ? ` header-label='${args.headerLa
 };
 
 export const Footer_Slot: ComponentStoryFormat<Args> = {
+    description: 'Set custom html content to display in modal footer.',
     render: (args: Args) => html`
         <omni-button data-testid="test-modal-btn" @click="${() => {
             args.hide = false;
@@ -458,6 +569,7 @@ const App = () => <OmniModal${args.headerLabel ? ` header-label='${args.headerLa
 };
 
 export const No_Footer: ComponentStoryFormat<Args> = {
+    description: 'Remove the footer section of the modal.',
     render: (args: Args) => html`
         <omni-button data-testid="test-modal-btn" @click="${() => {
             args.hide = false;
@@ -531,6 +643,7 @@ footer.textContent = 'The footer';
 footer.style.color = 'orange';
 let modal: Modal | undefined = undefined;
 export const Scripted_Modal: ComponentStoryFormat<Args> = {
+    description: () => html`Create and show an <code class="language-html">&lt;omni-modal&gt;</code> instance programmatically.`,
     render: (args: Args) => html`
                     <omni-button data-testid="test-modal-btn" @click="${() => {
                         args.hide = false;

@@ -4,7 +4,7 @@ import { html as langHtml } from '@codemirror/lang-html';
 import { javascript as langJs } from '@codemirror/lang-javascript';
 import { githubDark as codeThemeDark } from '@ddietr/codemirror-themes/github-dark.js';
 import { githubLight as codeTheme } from '@ddietr/codemirror-themes/github-light.js';
-import { html, LitElement, nothing, render, TemplateResult } from 'lit';
+import { html, LitElement, nothing, PropertyValueMap, render, TemplateResult } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { live } from 'lit/directives/live.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
@@ -122,6 +122,11 @@ export class StoryRenderer extends LitElement {
             document.body.removeChild(this.modal);
             this.modal = null as any;
         }
+    }
+
+    protected override updated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+        super.updated(_changedProperties);
+        window.Prism?.highlightAll();
     }
 
     protected override render() {
@@ -776,3 +781,9 @@ type CSSVariable = {
     value: string;
     name: string;
 };
+
+declare global {
+    interface Window {
+        Prism: any;
+    }
+}
