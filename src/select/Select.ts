@@ -649,8 +649,7 @@ export class Select extends OmniFormElement {
                 <div ${ref(this._itemsMaxHeightChange)} id="items" class="items"> ${until(
                 this._renderOptions(),
                 html`<div>${this.renderLoading()}</div>`
-            )} 
-                </div>
+            )}</div>
             </dialog>
             `;
         }
@@ -664,7 +663,7 @@ export class Select extends OmniFormElement {
                 <div ${ref(this._itemsMaxHeightChange)} id="items" class="items"> ${until(
             this._renderOptions(),
             html`<div>${this.renderLoading()}</div>`
-        )} </div>
+        )}</div>
             </div>
         `;
     }
