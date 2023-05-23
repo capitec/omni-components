@@ -624,6 +624,7 @@ async function setupThemes() {
         const nativeOption = document.createElement('option');
         nativeOption.label = option.label;
         nativeOption.value = option.value;
+        nativeOption.innerText = option.label;
 
         const storedTheme = window.sessionStorage.getItem(themeStorageKey);
         if (
@@ -859,6 +860,7 @@ async function setupVersions() {
         const nativeOption = document.createElement('option');
         nativeOption.label = v;
         nativeOption.value = v;
+        nativeOption.innerText = v;
         if (v === currentVersion) {
             nativeOption.selected = true;
         }
