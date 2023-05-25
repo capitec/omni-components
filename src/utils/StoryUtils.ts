@@ -11,12 +11,14 @@ import { Package, ClassDeclaration, CustomElementDeclaration, Declaration, Custo
 export { Package, ClassDeclaration, CustomElementDeclaration, Declaration, CustomElement } from 'custom-elements-manifest/schema';
 import { html, TemplateResult } from 'lit';
 import { render } from 'lit-html';
+import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import pretty from 'pretty';
 import { SearchField } from '../search-field/SearchField.js';
 import { Select } from '../select/Select.js';
 import { CodeEditor, CodeMirrorEditorEvent, CodeMirrorSourceUpdateEvent } from './CodeEditor.js';
 export * from './ComponentStoryFormat.js';
 export { PlayFunction, PlayFunctionContext } from './PlayFunction.js';
+import type { FrameworkOption } from './ComponentStoryFormat.js';
 import { StoryRenderer } from './StoryRenderer.js';
 
 import './CodeEditor.js';
@@ -25,6 +27,7 @@ import './CodeEditor.js';
 const codeSnippet = '```';
 const customThemeCssKey = 'omni-docs-custom-theme-css';
 const themeStorageKey = 'omni-docs-theme-selection';
+export const frameworkStorageKey = 'omni-docs-framework-selection';
 const customThemeKey = 'custom';
 const lightThemeKey = 'light';
 const darkThemeKey = 'dark';
@@ -772,7 +775,7 @@ async function setupEleventy() {
     windowAny.openTab = openTab;
 
     //Framework toggles
-    setupFrameworks();
+    await setupFrameworks();
 
     // Versions
     setupVersions();
@@ -799,32 +802,129 @@ async function setupEleventy() {
 }
 
 async function setupFrameworks() {
-    const htmlBtn = document.getElementById('select-html') as HTMLDivElement;
-    const reactBtn = document.getElementById('select-react') as HTMLDivElement;
     const htmlImports = document.getElementById('html-imports') as HTMLDivElement;
     const reactImports = document.getElementById('react-imports') as HTMLDivElement;
     const htmlPackage = document.getElementById('html-package') as HTMLLinkElement;
     const reactPackage = document.getElementById('react-package') as HTMLLinkElement;
 
-    htmlBtn?.addEventListener('click', () => {
-        htmlBtn.classList.add('selected-framework');
-        reactBtn.classList.remove('selected-framework');
-
-        htmlImports.classList.remove('no-display');
-        htmlPackage.classList.remove('no-display');
-
-        reactImports.classList.add('no-display');
-        reactPackage.classList.add('no-display');
+    document.addEventListener('story-renderer-interactive-update', () => {
+        changeFramework((window.localStorage.getItem(frameworkStorageKey) as any) ?? 'HTML');
     });
-    reactBtn?.addEventListener('click', () => {
-        reactBtn.classList.add('selected-framework');
-        htmlBtn.classList.remove('selected-framework');
+    document.addEventListener('omni-docs-framework-change', (e) => {
+        changeFramework((e as CustomEvent<FrameworkOption>).detail ?? 'HTML');
+    });
 
-        reactImports.classList.remove('no-display');
-        reactPackage.classList.remove('no-display');
+    const frameworkSelect = document.getElementById('header-framework-select') as Select;
+    const frameworkNativeSelect = document.getElementById('header-framework-native-select') as HTMLSelectElement;
+    const frameworkSelectBtn = document.getElementById('header-framework-select-btn') as HTMLDivElement;
+    const frameworkOptions: { value: FrameworkOption; label: string; icon: string }[] = [];
 
-        htmlImports.classList.add('no-display');
-        htmlPackage.classList.add('no-display');
+    function addOption(key: FrameworkOption, icon: string) {
+        const option = {
+            value: key,
+            label: key,
+            icon: icon
+        };
+        frameworkOptions.push(option);
+
+        const nativeOption = document.createElement('option');
+        nativeOption.label = option.label;
+        nativeOption.value = option.value;
+        nativeOption.innerText = option.label;
+
+        const storedFramework = (window.localStorage.getItem(frameworkStorageKey) as any) ?? 'HTML';
+        if (storedFramework === key) {
+            window.localStorage.setItem(frameworkStorageKey, key);
+            frameworkSelect.value = option;
+            nativeOption.selected = true;
+            changeFramework(key);
+        }
+        frameworkNativeSelect.add(nativeOption);
+        return option;
+    }
+
+    function changeFramework(framework: FrameworkOption) {
+        const currentSelection = window.localStorage.getItem(frameworkStorageKey);
+        window.localStorage.setItem(frameworkStorageKey, framework);
+        frameworkNativeSelect.value = framework;
+        const option = frameworkOptions.find((t) => t.value === framework) || {
+            value: framework,
+            label: framework,
+            icon: ''
+        };
+        frameworkSelect.value = option;
+        frameworkSelectBtn.innerHTML = option.icon;
+        switch (framework) {
+            case 'HTML':
+                htmlImports?.classList?.remove('no-display');
+                htmlPackage?.classList?.remove('no-display');
+
+                reactImports?.classList?.add('no-display');
+                reactPackage?.classList?.add('no-display');
+                break;
+            case 'React':
+                reactImports?.classList?.remove('no-display');
+                reactPackage?.classList?.remove('no-display');
+
+                htmlImports?.classList?.add('no-display');
+                htmlPackage?.classList?.add('no-display');
+                break;
+        }
+
+        if (currentSelection !== framework) {
+            document.dispatchEvent(
+                new CustomEvent('story-renderer-interactive-update', {
+                    bubbles: true,
+                    composed: true
+                })
+            );
+        }
+        const codeEditors = document.querySelectorAll<CodeEditor>('code-editor');
+        if (codeEditors) {
+            codeEditors.forEach((ce) => {
+                ce.updateExtensions();
+            });
+        }
+    }
+
+    addOption(
+        'HTML',
+        raw`
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="24" height="24">
+    <path fill="#E34F26" d="M71,460 L30,0 481,0 440,460 255,512"></path>
+    <path fill="#EF652A" d="M256,472 L405,431 440,37 256,37"></path>
+    <path fill="#EBEBEB" d="M256,208 L181,208 176,150 256,150 256,94 255,94 114,94 115,109 129,265 256,265zM256,355 L255,355 192,338 188,293 158,293 132,293 139,382 255,414 256,414z"></path>
+    <path fill="#FFF" d="M255,208 L255,265 325,265 318,338 255,355 255,414 371,382 372,372 385,223 387,208 371,208zM255,94 L255,129 255,150 255,150 392,150 392,150 392,150 393,138 396,109 397,94z"></path>
+</svg>`
+    );
+    addOption('React', raw`<img src="./assets/images/react.svg" style="width: 24px; height: 24px;" alt="">`);
+
+    frameworkSelect.items = frameworkOptions;
+    frameworkSelect.renderItem = (item: any) => html`
+    <style>
+        .framework-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .framework-item > * {
+            margin-right: 6px;
+        }
+    </style>
+    <div class="framework-item"> 
+        ${unsafeHTML(item.icon)} ${item.label}
+    </div>`;
+    frameworkSelect.renderSelection = (item: any) => html`${unsafeHTML(item.icon)}`;
+    frameworkSelect.displayField = 'label';
+    frameworkSelect.idField = 'value';
+    // frameworkSelect.style.display = 'flex';
+    frameworkSelect.addEventListener('change', (e) => {
+        const value = (e.target as Select).value as any;
+        changeFramework(value.value);
+    });
+    frameworkNativeSelect.addEventListener('change', (e) => {
+        const value = (e.target as HTMLSelectElement).value as any;
+        changeFramework(value);
     });
 }
 

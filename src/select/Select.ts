@@ -194,6 +194,12 @@ export class Select extends OmniFormElement {
     @property({ type: Object, reflect: false }) renderItem?: RenderFunction;
 
     /**
+     * Render function for selected item.
+     * @no_attribute
+     */
+    @property({ type: Object, reflect: false }) renderSelection?: RenderFunction;
+
+    /**
      * Custom search function for items instead of using the default provided.
      * @no_attribute
      */
@@ -623,6 +629,7 @@ export class Select extends OmniFormElement {
         };
         return html`
             <input
+                style="${this.renderSelection ? 'opacity: 0' : nothing}"
                 class=${classMap(field)}
                 data-omni-keyboard-hidden
                 id="select"
@@ -636,6 +643,23 @@ export class Select extends OmniFormElement {
                         : (this.value as string)) ?? ''
                 )}
                 tabindex="${this.disabled ? -1 : 0}" />
+            ${
+                this.renderSelection
+                    ? html`
+                        <div
+                            class=${classMap(field)} style="position: absolute; pointer-events: none;">
+                            ${
+                                this.value
+                                    ? html` 
+                                        <omni-render-element style="height: inherit; width: inherit;" .data="${this.value}" .renderer="${this.renderSelection}">
+                                            <omni-loading-icon slot="loading_indicator" style="height: 100%; max-width: 24px;"></omni-loading-icon>
+                                        </omni-render-element>
+                                        `
+                                    : nothing
+                            }
+                        </div>`
+                    : nothing
+            }
         `;
     }
 
@@ -649,8 +673,7 @@ export class Select extends OmniFormElement {
                 <div ${ref(this._itemsMaxHeightChange)} id="items" class="items"> ${until(
                 this._renderOptions(),
                 html`<div>${this.renderLoading()}</div>`
-            )} 
-                </div>
+            )}</div>
             </dialog>
             `;
         }
@@ -664,7 +687,7 @@ export class Select extends OmniFormElement {
                 <div ${ref(this._itemsMaxHeightChange)} id="items" class="items"> ${until(
             this._renderOptions(),
             html`<div>${this.renderLoading()}</div>`
-        )} </div>
+        )}</div>
             </div>
         `;
     }
