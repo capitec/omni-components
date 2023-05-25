@@ -8,6 +8,7 @@ import {
     LabelStory,
     BaseArgs,
     ClearableStory,
+    CustomClearableSlot,
     HintStory,
     ErrorStory,
     DisabledStory,
@@ -85,7 +86,9 @@ export const Error_Label = ErrorStory<EmailField, BaseArgs>('omni-email-field');
 
 export const Value = ValueStory<EmailField, BaseArgs>('omni-email-field', 'johndoe@gmail.com');
 
-export const Clear = ClearableStory<EmailField, BaseArgs>('omni-email-field', 'johndoe@gmail.com');
+export const Clearable = ClearableStory<EmailField, BaseArgs>('omni-email-field', 'johndoe@gmail.com');
+
+export const Custom_Clear_Slot = CustomClearableSlot<EmailField, BaseArgs>('omni-email-field', 'johndoe@gmail.com');
 
 export const Prefix = PrefixStory<EmailField, BaseArgs>('omni-email-field');
 

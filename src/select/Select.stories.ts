@@ -3,10 +3,20 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { within } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
+import { setUIValueClean } from '@testing-library/user-event/dist/esm/document/UI.js';
 import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { LabelStory, BaseArgs, ClearableStory, HintStory, ErrorStory, PrefixStory, SuffixStory } from '../core/OmniInputStories.js';
+import {
+    LabelStory,
+    BaseArgs,
+    ClearableStory,
+    CustomClearableSlot,
+    HintStory,
+    ErrorStory,
+    PrefixStory,
+    SuffixStory
+} from '../core/OmniInputStories.js';
 import { RenderFunction } from '../render-element/RenderElement.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
@@ -27,7 +37,9 @@ interface Args extends BaseArgs {
     idField: string;
     renderItem: RenderFunction;
     renderSelection: RenderFunction;
+    searchable: boolean;
     loading_indicator: string;
+    filterItems: (filterValue: string, items: SelectTypes) => SelectItems;
 }
 
 const displayItems = [
@@ -50,6 +62,23 @@ async function promiseDisplayItems(data: Record<string, unknown>[]) {
     return data as SelectTypes;
 }
 
+async function promiseSearchFilter(filterValue: string, items: SelectTypes) {
+    await new Promise<void>((r) => setTimeout(() => r(), 2000));
+    return customSearch(filterValue, items);
+}
+
+function customSearch(filterValue: string, items: SelectTypes) {
+    if (Array.isArray(items) && filterValue !== null) {
+        return (items = (items as (string | Record<string, unknown>)[]).filter((i) => itemFilter(filterValue, i)) as SelectTypes);
+    } else {
+        return items;
+    }
+}
+
+function itemFilter(filterValue: string, item: string | Record<string, unknown>) {
+    return item.toString().toLowerCase().includes(filterValue.toLowerCase());
+}
+
 export const Interactive: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
         <omni-select
@@ -62,9 +91,11 @@ export const Interactive: ComponentStoryFormat<Args> = {
             display-field="${args.displayField}"
             .renderItem="${args.renderItem}"
             .renderSelection="${args.renderSelection}"
+            .filterItems="${args.filterItems}"
             id-field="${args.idField}"
             ?disabled="${args.disabled}"
             ?clearable="${args.clearable}"
+            ?searchable="${args.searchable}"
             empty-message="${args.emptyMessage}"
             >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}
             ${args.clear ? html`${'\r\n'}${unsafeHTML(assignToSlot('clear', args.clear))}` : nothing}${
@@ -83,6 +114,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         error: '',
         disabled: false,
         clearable: false,
+        searchable: false,
         prefix: '',
         suffix: '',
         clear: '',
@@ -709,13 +741,411 @@ const App = () => <OmniSelect label="${args.label}" items={stringItems}>
     }
 };
 
+export const Searchable: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
+    <omni-select data-testid="test-select" label="${ifNotEmpty(args.label)}" .items="${args.items}" display-field="${args.displayField}" id-field="${
+        args.idField
+    }" ?searchable="${args.searchable}">
+    </omni-select>
+`,
+    frameworkSources: [
+        {
+            framework: 'HTML',
+            load: (
+                args
+            ) => `<omni-select id='omni-select' label="${args.label}" display-field="${args.displayField}" id-field="${args.idField}" searchable></omni-select>
+        <script defer>
+            const displayItems = [
+                { id: '1', label: 'Peter Parker' },
+                { id: '2', label: 'James Howlett' },
+                { id: '3', label: 'Tony Stark' },
+                { id: '4', label: 'Steve Rodgers' },
+                { id: '5', label: 'Bruce Banner' },
+                { id: '6', label: 'Wanda Maximoff' },
+                { id: '7', label: 'TChalla' },
+                { id: '8', label: 'Henry P. McCoy' },
+                { id: '9', label: 'Carl Lucas' },
+                { id: '10', label: 'Frank Castle' }
+            ];  
+            select = document.getElementById('omni-select');
+            select.items = displayItems;
+        </script>`
+        },
+        {
+            framework: 'React',
+            load: (args) => `import { OmniSelect } from "@capitec/omni-components-react/select";
+
+const displayItems = [
+    { id: '1', label: 'Peter Parker' },
+    { id: '2', label: 'James Howlett' },
+    { id: '3', label: 'Tony Stark' },
+    { id: '4', label: 'Steve Rodgers' },
+    { id: '5', label: 'Bruce Banner' },
+    { id: '6', label: 'Wanda Maximoff' },
+    { id: '7', label: 'TChalla' },
+    { id: '8', label: 'Henry P. McCoy' },
+    { id: '9', label: 'Carl Lucas' },
+    { id: '10', label: 'Frank Castle' }
+];
+const App = () => <OmniSelect label="${args.label}" display-field="${args.displayField}" id-field="${args.idField}" items={displayItems} searchable></OmniSelect>`
+        }
+    ],
+    name: 'Searchable',
+    description: 'Adds a search input to limit the options to Select',
+    args: {
+        label: 'Searchable',
+        displayField: 'label',
+        idField: 'id',
+        searchable: true,
+        items: displayItems as Record<string, unknown>[]
+    } as Args,
+    play: async (context) => {
+        const select = within(context.canvasElement).getByTestId<Select>('test-select');
+        const click = jest.fn();
+        select.addEventListener('click', click);
+
+        await userEvent.click(select);
+
+        const searchField = (await querySelectorAsync(select!.shadowRoot!, '#searchField')) as HTMLInputElement;
+        await expect(searchField).toBeTruthy();
+
+        // Required to clear userEvent Symbol that keeps hidden state of previously typed values via userEvent. If not cleared this cannot be run multiple times with the same results
+        setUIValueClean(searchField);
+        await userEvent.click(searchField);
+
+        const value = 'Peter';
+        await userEvent.type(searchField, value);
+
+        //Add check to find the items-container once the component is opened.
+        const itemContainer = await querySelectorAsync(select!.shadowRoot!, '#items-container');
+        await expect(itemContainer).toBeTruthy();
+
+        const items = select.shadowRoot?.getElementById('items');
+        await expect(items).toBeTruthy();
+
+        const item = await querySelectorAsync(select!.shadowRoot!, '.item');
+
+        await expect(item).toBeTruthy();
+        await userEvent.click(item as HTMLDivElement);
+
+        const selectField = select.shadowRoot?.getElementById('select');
+        await expect(selectField).toHaveValue(displayItems[0].label);
+    }
+};
+
+export const Custom_Search: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
+    <omni-select data-testid="test-select" label="${ifNotEmpty(args.label)}" .items="${args.items}" ?searchable="${args.searchable}" .filterItems="${
+        args.filterItems
+    }">
+    </omni-select>
+`,
+    frameworkSources: [
+        {
+            framework: 'HTML',
+            load: (args) => `<omni-select id='omni-select' label="${args.label}" searchable></omni-select>
+    <script defer>
+        const stringItems = [
+            'Bruce Wayne', 
+            'Clark Kent', 
+            'Barry Allen', 
+            'Arthur Curry', 
+            'Hal Jordan'
+        ];  
+        function customSearch(filter, items){
+            if(Array.isArray(items) && filter !== null) {
+                return items = items.filter((i) => itemFilter(filter,i));
+            } else {
+                return items;
+            }
+        }
+        function itemFilter(filter, item){
+            return item.includes(filter);
+        }
+        select = document.getElementById('omni-select');
+        select.items = stringItems;
+        select.filterItems = customSearch;
+    </script>`
+        },
+        {
+            framework: 'React',
+            load: (args) => `import { OmniSelect } from "@capitec/omni-components-react/select";
+
+const stringItems = [
+    'Bruce Wayne', 
+    'Clark Kent', 
+    'Barry Allen', 
+    'Arthur Curry', 
+    'Hal Jordan'
+];
+function customSearch(filter, items){
+    if(Array.isArray(items) && filter !== null){
+        return items = items.filter((i) => itemFilter(filter,i));
+    } else {
+        return items;
+    }
+}
+function itemFilter(filter, item){
+    return item.includes(filter);
+}
+const App = () => <OmniSelect label="${args.label}" items={stringItems} filterItems={customSearch} searchable>
+</OmniSelect>`
+        }
+    ],
+    name: 'Custom Search',
+    description: 'Custom search function',
+    args: {
+        label: 'Custom Search',
+        searchable: true,
+        items: stringItems,
+        filterItems: customSearch
+    } as Args,
+    play: async (context) => {
+        const select = within(context.canvasElement).getByTestId<Select>('test-select');
+        const click = jest.fn();
+        select.addEventListener('click', click);
+
+        await userEvent.click(select);
+
+        const searchField = (await querySelectorAsync(select!.shadowRoot!, '#searchField')) as HTMLInputElement;
+        await expect(searchField).toBeTruthy();
+
+        // Required to clear userEvent Symbol that keeps hidden state of previously typed values via userEvent. If not cleared this cannot be run multiple times with the same results
+        setUIValueClean(searchField);
+        await userEvent.click(searchField);
+
+        const value = 'Bruce';
+        await userEvent.type(searchField, value);
+
+        //Add check to find the items-container once the component is opened.
+        const itemContainer = await querySelectorAsync(select!.shadowRoot!, '#items-container');
+        await expect(itemContainer).toBeTruthy();
+
+        const items = select.shadowRoot?.getElementById('items');
+        await expect(items).toBeTruthy();
+
+        const item = await querySelectorAsync(select!.shadowRoot!, '.item');
+
+        await expect(item).toBeTruthy();
+        await userEvent.click(item as HTMLDivElement);
+
+        const selectField = select.shadowRoot?.getElementById('select');
+        await expect(selectField).toHaveValue(stringItems[0]);
+    }
+};
+
+export const Server_Side_Filtering: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
+    <omni-select data-testid="test-select" label="${ifNotEmpty(args.label)}" .items="${args.items}" ?searchable="${args.searchable}" .filterItems="${
+        args.filterItems
+    }">
+    </omni-select>
+`,
+    frameworkSources: [
+        {
+            framework: 'HTML',
+            load: (args) => `<omni-select id='omni-select' label="${args.label}" searchable></omni-select>
+    <script defer>
+        const stringItems = [
+            'Bruce Wayne', 
+            'Clark Kent', 
+            'Barry Allen', 
+            'Arthur Curry', 
+            'Hal Jordan'
+        ]; 
+        async function searchFilter(filter,items){
+            await new Promise((r) => setTimeout(() => r(), 2000));
+            return customSearch(filter,items);
+        }
+        
+        function customSearch(filter, items){
+            if(Array.isArray(items) && filter !== null) {
+                return items = items.filter((i) => itemFilter(filter,i));
+            } else {
+                return items;
+            }
+        }
+        function itemFilter(filter, item){
+            return item.includes(filter);
+        }
+        select = document.getElementById('omni-select');
+        select.items = stringItems;
+        select.filterItems = searchFilter;
+    </script>`
+        },
+        {
+            framework: 'React',
+            load: (args) => `import { OmniSelect } from "@capitec/omni-components-react/select";
+
+const stringItems = [
+    'Bruce Wayne', 
+    'Clark Kent', 
+    'Barry Allen', 
+    'Arthur Curry', 
+    'Hal Jordan'
+];
+async function searchFilter(filter, items){
+    await new Promise((r) => setTimeout(() => r(), 2000));
+    return customSearch(filter,items);
+}
+function customSearch(filter, items){
+    if(Array.isArray(items) && filter !== null){
+        return items = items.filter((i) => itemFilter(filter,i));
+    } else {
+        return items;
+    }
+}
+function itemFilter(filter, item){
+    return item.includes(filter);
+}
+const App = () => <OmniSelect label="${args.label}" items={stringItems} filterItems={searchFilter} searchable></OmniSelect>`
+        }
+    ],
+    name: 'Server Side Filtering',
+    description: 'Select with server side filtering',
+    args: {
+        label: 'Server Side Filtering',
+        searchable: true,
+        items: stringItems,
+        filterItems: promiseSearchFilter
+    } as Args,
+    play: async (context) => {
+        const select = within(context.canvasElement).getByTestId<Select>('test-select');
+        const click = jest.fn();
+        select.addEventListener('click', click);
+
+        await userEvent.click(select);
+
+        const searchField = (await querySelectorAsync(select!.shadowRoot!, '#searchField')) as HTMLInputElement;
+        await expect(searchField).toBeTruthy();
+
+        // Required to clear userEvent Symbol that keeps hidden state of previously typed values via userEvent. If not cleared this cannot be run multiple times with the same results
+        setUIValueClean(searchField);
+        await userEvent.click(searchField);
+
+        const value = 'Bruce';
+        await userEvent.type(searchField, value);
+
+        //Add check to find the items-container once the component is opened.
+        const itemContainer = await querySelectorAsync(select!.shadowRoot!, '#items-container');
+        await expect(itemContainer).toBeTruthy();
+
+        const items = select.shadowRoot?.getElementById('items');
+        await expect(items).toBeTruthy();
+
+        let item;
+        // TODO: Fix race conditions in tests
+        if (navigator.userAgent === 'Test Runner') {
+            item = await querySelectorAsync(select.shadowRoot!, '.item', undefined, 3000);
+        } else {
+            item = await querySelectorAsync(select.shadowRoot!, '.item', undefined, 5000);
+        }
+
+        await expect(item).toBeTruthy();
+        await userEvent.click(item as HTMLDivElement);
+
+        const selectField = select.shadowRoot?.getElementById('select');
+        await expect(selectField).toHaveValue(stringItems[0]);
+    }
+};
+
+export const Custom_Search_Slot: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
+    <omni-select data-testid="test-select" label="${ifNotEmpty(args.label)}" .items="${args.items}" ?searchable="${args.searchable}">
+    <svg slot="search-clear" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  width="24px" height="24px" style="fill: orange;"><path d="M12 2.25c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12 6.615 2.25 12 2.25Zm0 1.5a8.25 8.25 0 1 0 0 16.5 8.25 8.25 0 0 0 0-16.5ZM8.47 8.47a.75.75 0 0 1 1.06 0L12 10.939l2.47-2.47a.75.75 0 0 1 .976-.072l.084.073a.75.75 0 0 1 0 1.06L13.061 12l2.47 2.47a.75.75 0 0 1 .072.976l-.073.084a.75.75 0 0 1-1.06 0L12 13.061l-2.47 2.47a.75.75 0 0 1-.976.072l-.084-.073a.75.75 0 0 1 0-1.06L10.939 12l-2.47-2.47a.75.75 0 0 1-.072-.976Z" /></svg>
+    </omni-select>
+`,
+    frameworkSources: [
+        {
+            framework: 'HTML',
+            load: (args) => `
+            <omni-select id='omni-select' label="${args.label}" searchable>
+              <svg slot="search-clear" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  width="24px" height="24px" style="fill: orange;"><path d="M12 2.25c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12 6.615 2.25 12 2.25Zm0 1.5a8.25 8.25 0 1 0 0 16.5 8.25 8.25 0 0 0 0-16.5ZM8.47 8.47a.75.75 0 0 1 1.06 0L12 10.939l2.47-2.47a.75.75 0 0 1 .976-.072l.084.073a.75.75 0 0 1 0 1.06L13.061 12l2.47 2.47a.75.75 0 0 1 .072.976l-.073.084a.75.75 0 0 1-1.06 0L12 13.061l-2.47 2.47a.75.75 0 0 1-.976.072l-.084-.073a.75.75 0 0 1 0-1.06L10.939 12l-2.47-2.47a.75.75 0 0 1-.072-.976Z" /></svg>
+            </omni-select>
+    <script defer>
+        const stringItems = [
+            'Bruce Wayne', 
+            'Clark Kent', 
+            'Barry Allen', 
+            'Arthur Curry', 
+            'Hal Jordan'
+        ];  
+        select = document.getElementById('omni-select');
+        select.items = stringItems;
+    </script>`
+        },
+        {
+            framework: 'React',
+            load: (args) => `import { OmniSelect } from "@capitec/omni-components-react/select";
+
+const stringItems = [
+    'Bruce Wayne', 
+    'Clark Kent', 
+    'Barry Allen', 
+    'Arthur Curry', 
+    'Hal Jordan'
+];
+const App = () => <OmniSelect label="${args.label}" items={stringItems} searchable>
+<svg slot="search-clear" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px" style={{fill: 'orange'}}><path d="M12 2.25c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12 6.615 2.25 12 2.25Zm0 1.5a8.25 8.25 0 1 0 0 16.5 8.25 8.25 0 0 0 0-16.5ZM8.47 8.47a.75.75 0 0 1 1.06 0L12 10.939l2.47-2.47a.75.75 0 0 1 .976-.072l.084.073a.75.75 0 0 1 0 1.06L13.061 12l2.47 2.47a.75.75 0 0 1 .072.976l-.073.084a.75.75 0 0 1-1.06 0L12 13.061l-2.47 2.47a.75.75 0 0 1-.976.072l-.084-.073a.75.75 0 0 1 0-1.06L10.939 12l-2.47-2.47a.75.75 0 0 1-.072-.976Z" /></svg>
+</OmniSelect>`
+        }
+    ],
+    name: 'Custom Search Field Slot',
+    description: 'Select component with search field custom slotted icon.',
+    args: {
+        label: 'Custom Search Slot',
+        searchable: true,
+        items: stringItems
+    } as Args,
+    play: async (context) => {
+        const select = within(context.canvasElement).getByTestId<Select>('test-select');
+        const click = jest.fn();
+        select.addEventListener('click', click);
+
+        await userEvent.click(select);
+
+        const searchField = (await querySelectorAsync(select!.shadowRoot!, '#searchField')) as HTMLInputElement;
+        await expect(searchField).toBeTruthy();
+
+        // Required to clear userEvent Symbol that keeps hidden state of previously typed values via userEvent. If not cleared this cannot be run multiple times with the same results
+        setUIValueClean(searchField);
+        await userEvent.click(searchField);
+
+        const value = 'Bruce';
+        await userEvent.type(searchField, value);
+
+        const slotElement = select.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=search-clear]');
+        await expect(slotElement).toBeTruthy();
+
+        const foundSlottedSvgElement = slotElement?.assignedElements().find((e) => e.tagName.toLocaleLowerCase() === 'svg');
+        await expect(foundSlottedSvgElement).toBeTruthy();
+
+        //Add check to find the items-container once the component is opened.
+        const itemContainer = await querySelectorAsync(select!.shadowRoot!, '#items-container');
+        await expect(itemContainer).toBeTruthy();
+
+        const items = select.shadowRoot?.getElementById('items');
+        await expect(items).toBeTruthy();
+
+        const item = await querySelectorAsync(select!.shadowRoot!, '.item');
+
+        await expect(item).toBeTruthy();
+        await userEvent.click(item as HTMLDivElement);
+
+        const selectField = select.shadowRoot?.getElementById('select');
+        await expect(selectField).toHaveValue(stringItems[0]);
+    }
+};
+
 export const Label = LabelStory<Select, BaseArgs>('omni-select');
 
 export const Hint = HintStory<Select, BaseArgs>('omni-select');
 
 export const Error_Label = ErrorStory<Select, BaseArgs>('omni-select');
 
-export const Clear = ClearableStory<Select, BaseArgs>('omni-select');
+export const Clearable = ClearableStory<Select, BaseArgs>('omni-select');
+
+export const Custom_Clear_Slot = CustomClearableSlot<Select, BaseArgs>('omni-select');
 
 export const Prefix = PrefixStory<Select, BaseArgs>('omni-select');
 

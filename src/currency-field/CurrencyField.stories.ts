@@ -8,6 +8,7 @@ import {
     LabelStory,
     BaseArgs,
     ClearableStory,
+    CustomClearableSlot,
     HintStory,
     ErrorStory,
     DisabledStory,
@@ -163,7 +164,9 @@ export const Error_Label = ErrorStory<CurrencyField, BaseArgs>('omni-currency-fi
 
 export const Value = ValueStory<CurrencyField, BaseArgs>('omni-currency-field', '1200.50');
 
-export const Clear = ClearableStory<CurrencyField, BaseArgs>('omni-currency-field', '1200.50');
+export const Clearable = ClearableStory<CurrencyField, BaseArgs>('omni-currency-field', '1200.50');
+
+export const Custom_Clear_Slot = CustomClearableSlot<CurrencyField, BaseArgs>('omni-currency-field', '1200.50');
 
 export const Prefix = PrefixStory<CurrencyField, BaseArgs>('omni-currency-field');
 
