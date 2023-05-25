@@ -177,7 +177,6 @@ const dynamicTests = async () => {
         const storyImport = path.join(process.cwd(), stories[index]);       
         const storyName = splitPascalCase(path.basename(stories[index].replace('.stories.js', '')));
         const storyPath = `http://localhost:6006/components/${storyName.replaceAll(' ', '-').toLowerCase()}/`;
-
         let storyObj;
         try {
             storyObj = await import('file://' + storyImport);
