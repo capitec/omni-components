@@ -249,7 +249,8 @@ const App = () => <OmniIcon${args.size ? ` size='${args.size}'` : ''}${args.symm
                   </OmniIcon>;`
         }
     ],
-    description: () => html`Renders the icon by aligning only the inner height to the <strong>size</strong> attribute, this is the default behavior.`,
+    description: () =>
+        html`Renders the icon by aligning only the inner height to the <code class="language-javascript">'size'</code> attribute, this is the default behavior.`,
     args: {
         size: 'large',
         symmetrical: false
@@ -303,7 +304,7 @@ const App = () => <OmniIcon${args.size ? ` size='${args.size}'` : ''}${args.symm
         }
     ],
     description: () =>
-        html`Renders the icon by aligning both the inner height and width to the <strong>size</strong> attribute, creating a 1:1 aspect ratio.`,
+        html`Renders the icon by aligning both the inner height and width to the <code class="language-javascript">'size'</code> attribute, creating a 1:1 aspect ratio.`,
     args: {
         size: 'large',
         symmetrical: true
