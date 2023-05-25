@@ -86,7 +86,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
             <omni-email-field label="Email Field"  tabindex="7"></omni-email-field>
         </div>
         `
-            : html`<span>To illustrate this, update the <strong>Interactive</strong> Keyboard properties to have '<strong>attach-mode</strong>' attribute set to '<strong>all</strong>'.</span>`
+            : html`<span>To illustrate this, update the <strong>Interactive</strong> Keyboard properties to have the <code class="language-javascript">'attach-mode'</code> attribute set to <code class="language-javascript">'all'</code>.</span>`
     }
      
   `,
@@ -142,7 +142,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
             <h1 class="experimental-warning">The Keyboard is an experimental component and subject to breaking changes!</h1>
             <br/>
             <br/>
-            <span>The Keyboard supports <strong>input</strong> and <strong>textarea</strong> elements as well as custom web components that internally utilise <strong>input</strong> or <strong>textarea</strong> elements.</span>
+            <span>The Keyboard supports <code class="language-html">&lt;input&gt;</code> and <code class="language-html">&lt;textarea&gt;</code> elements as well as custom web components that internally utilise <code class="language-html">&lt;input&gt;</code> or <code class="language-html">&lt;textarea&gt;</code> elements.</span>
             <br/>
             <span>All Omni Components input fields are fully supported.</span>
         `,
@@ -181,7 +181,7 @@ const attachByAttribute = html`
 export const Attach_By_Attribute: ComponentStoryFormat<Args> = {
     ...Interactive,
     description: () => html`
-    <span>When the '<strong>attach-mode</strong>' attribute is set to '<strong>attribute</strong>' on the Keyboard, then the Keyboard will only react to supported inputs with the '<strong>data-omni-keyboard-attach</strong>' attribute without a value.</span>
+    <span>When the <code class="language-javascript">'attach-mode'</code> attribute is set to <code class="language-javascript">'attribute'</code> on the Keyboard, then the Keyboard will only react to supported inputs with the <code class="language-javascript">'data-omni-keyboard-attach'</code> attribute without a value.</span>
     `,
     frameworkSources: [{ framework: 'HTML', load: () => getSourceFromLit(attachByAttribute), disableCodePen: true }],
     render: (args: Args) =>
@@ -189,7 +189,7 @@ export const Attach_By_Attribute: ComponentStoryFormat<Args> = {
             ? attachByAttribute
             : html`
         <div class="keyboard-showcase">
-            <span>To illustrate this, update the <strong>Interactive</strong> Keyboard properties to have '<strong>attach-mode</strong>' attribute set to '<strong>attribute</strong>'.</span>
+            <span>To illustrate this, update the <strong>Interactive</strong> Keyboard properties to have the <code class="language-javascript">'attach-mode'</code> attribute set to <code class="language-javascript">'attribute'</code>.</span>
             <omni-button @click="${() => {
                 Interactive.args!.attachMode = 'attribute';
                 document.dispatchEvent(
@@ -198,7 +198,7 @@ export const Attach_By_Attribute: ComponentStoryFormat<Args> = {
                         composed: true
                     })
                 );
-            }}" class="docs-omni-component"><span>Update <strong>attach-mode</strong> to <strong>attribute</strong></span></omni-button>
+            }}" class="docs-omni-component"><span>Update <code class="language-javascript">'attach-mode'</code> to <code class="language-javascript">'attribute'</code></span></omni-button>
         </div>
         `,
     name: 'Attach By Attribute'
@@ -221,14 +221,14 @@ const attachById = html`
 export const Attach_By_Id: ComponentStoryFormat<Args> = {
     ...Interactive,
     description: () => html`
-    <span>When the '<strong>attach-mode</strong>' attribute is set to '<strong>id</strong>' on the Keyboard, then the Keyboard will only react to supported inputs with the '<strong>data-omni-keyboard-attach</strong>' attribute set equal to the Keyboard id.</span>
+    <span>When the <code class="language-javascript">'attach-mode'</code> attribute is set to <code class="language-javascript">'id'</code> on the Keyboard, then the Keyboard will only react to supported inputs with the <code class="language-javascript">'data-omni-keyboard-attach'</code> attribute set equal to the Keyboard id.</span>
     `,
     render: (args: Args) =>
         Interactive.args!.attachMode === 'id'
             ? attachById
             : html`
     <div class="keyboard-showcase">
-    <span>To illustrate this, update the <strong>Interactive</strong> Keyboard properties to have '<strong>attach-mode</strong>' attribute set to '<strong>id</strong>'.</span>
+    <span>To illustrate this, update the <strong>Interactive</strong> Keyboard properties to have <code class="language-javascript">'attach-mode'</code> attribute set to <code class="language-javascript">'id'</code>.</span>
         <omni-button @click="${() => {
             Interactive.args!.attachMode = 'id';
             document.dispatchEvent(
@@ -237,7 +237,7 @@ export const Attach_By_Id: ComponentStoryFormat<Args> = {
                     composed: true
                 })
             );
-        }}" class="docs-omni-component"><span>Update <strong>attach-mode</strong> to <strong>id</strong></span></omni-button>
+        }}" class="docs-omni-component"><span>Update <code class="language-javascript">'attach-mode'</code> to <code class="language-javascript">'id'</code></span></omni-button>
     </div>
     `,
     frameworkSources: [{ framework: 'HTML', load: () => getSourceFromLit(attachByAttribute), disableCodePen: true }],
@@ -247,17 +247,17 @@ export const Attach_By_Id: ComponentStoryFormat<Args> = {
 export const Enter_Key_Hint_Variations: ComponentStoryFormat<Args> = {
     ...Interactive,
     description: () => html`
-    <span>When the '<strong>enterkeyhint</strong>' attribute is set on a supported input, the Keyboard's call to action button will react to it accordingly.</span>
+    <span>When the <code class="language-javascript">'enterkeyhint'</code> attribute is set on a supported input, the Keyboard's call to action button will react to it accordingly.</span>
     <br/>
-    <span>The '<strong>enterkeyhint</strong>' attribute is supported as follows:
+    <span>The <code class="language-javascript">'enterkeyhint'</code> attribute is supported as follows:
         <ul>
-            <li><strong>enter</strong> (Default) - The '<strong>action-enter</strong>' slot will apply to the call to action button. If not provided, the value defined with the '<strong>action-label</strong>' attribute on the keyboard will be displayed on the call to action button.</li>
-            <li><strong>go</strong> - The '<strong>action-go</strong>' slot will apply to the call to action button. If not provided, a right arrow icon <omni-arrow-right-icon class="example-icon-preview"></omni-arrow-right-icon> will be displayed by default.</li>
-            <li><strong>done</strong> - The '<strong>action-done</strong>' slot will apply to the call to action button. If not provided, a checkmark icon <omni-check-icon class="example-icon-preview"></omni-check-icon> will be displayed by default.</li>
-            <li><strong>next</strong> - The '<strong>action-next</strong>' slot will apply to the call to action button. If not provided, an icon of a right arrow within a circle <omni-next-icon class="example-icon-preview"></omni-next-icon> will be displayed by default.</li>
-            <li><strong>previous</strong> - The '<strong>action-previous</strong>' slot will apply to the call to action button. If not provided, an icon of a left arrow within a circle <omni-previous-icon class="example-icon-preview"></omni-previous-icon> will be displayed by default. The Keyboard's default behaviour of focusing the next '<strong>tabIndex</strong>' will also reverse to focus the previous instead.</li>
-            <li><strong>search</strong> - The '<strong>action-search</strong>' slot will apply to the call to action button. If not provided, a magnifying glass icon <omni-search-icon class="example-icon-preview"></omni-search-icon> will be displayed by default.</li>
-            <li><strong>send</strong> - The '<strong>action-send</strong>' slot will apply to the call to action button. If not provided, a paper plane icon <omni-send-icon class="example-icon-preview"></omni-send-icon> will be displayed by default.</li>
+            <li><code class="language-javascript">'enter'</code> (Default) - The <code class="language-javascript">'action-enter'</code> slot will apply to the call to action button. If not provided, the value defined with the <code class="language-javascript">'action-label'</code> attribute on the keyboard will be displayed on the call to action button.</li>
+            <li><code class="language-javascript">'go'</code> - The <code class="language-javascript">'action-go'</code> slot will apply to the call to action button. If not provided, a right arrow icon <omni-arrow-right-icon class="example-icon-preview"></omni-arrow-right-icon> will be displayed by default.</li>
+            <li><code class="language-javascript">'done'</code> - The <code class="language-javascript">'action-done'</code> slot will apply to the call to action button. If not provided, a checkmark icon <omni-check-icon class="example-icon-preview"></omni-check-icon> will be displayed by default.</li>
+            <li><code class="language-javascript">'next'</code> - The <code class="language-javascript">'action-next'</code> slot will apply to the call to action button. If not provided, an icon of a right arrow within a circle <omni-next-icon class="example-icon-preview"></omni-next-icon> will be displayed by default.</li>
+            <li><code class="language-javascript">'previous'</code> - The <code class="language-javascript">'action-previous'</code> slot will apply to the call to action button. If not provided, an icon of a left arrow within a circle <omni-previous-icon class="example-icon-preview"></omni-previous-icon> will be displayed by default. The Keyboard's default behaviour of focusing the next <code class="language-javascript">'tabIndex'</code> will also reverse to focus the previous instead.</li>
+            <li><code class="language-javascript">'search'</code> - The <code class="language-javascript">'action-search'</code> slot will apply to the call to action button. If not provided, a magnifying glass icon <omni-search-icon class="example-icon-preview"></omni-search-icon> will be displayed by default.</li>
+            <li><code class="language-javascript">'send'</code> - The <code class="language-javascript">'action-send'</code> slot will apply to the call to action button. If not provided, a paper plane icon <omni-send-icon class="example-icon-preview"></omni-send-icon> will be displayed by default.</li>
         </ul>
     </span>
     `,
@@ -300,7 +300,7 @@ export const Enter_Key_Hint_Variations: ComponentStoryFormat<Args> = {
   `
             : html`
             <div class="keyboard-showcase">
-                <span>To illustrate this, update the <strong>Interactive</strong> Keyboard properties to have '<strong>attach-mode</strong>' attribute set to '<strong>all</strong>'.</span>
+                <span>To illustrate this, update the <strong>Interactive</strong> Keyboard properties to have <code class="language-javascript">'attach-mode'</code> attribute set to <code class="language-javascript">'attach-mode'</code>.</span>
                 <omni-button @click="${() => {
                     Interactive.args!.attachMode = 'all';
                     document.dispatchEvent(
@@ -309,7 +309,7 @@ export const Enter_Key_Hint_Variations: ComponentStoryFormat<Args> = {
                             composed: true
                         })
                     );
-                }}" class="docs-omni-component"><span>Update <strong>attach-mode</strong> to <strong>all</strong></span></omni-button>
+                }}" class="docs-omni-component"><span>Update <code class="language-javascript">'attach-mode'</code> to <code class="language-javascript">'all'</code></span></omni-button>
             </div>`,
     name: 'Enter Key Hint Variations'
 };
@@ -320,9 +320,9 @@ export const Masked_Values: ComponentStoryFormat<Args> = {
     <span>The Keyboard supports masking of the input value on the display preview.</span>
     <span>Masking will apply to the following:
         <ul>
-            <li>Any elements with the '<strong>data-omni-keyboard-mask</strong>' attribute .</li>
-            <li>Any supported web component with the '<strong>type</strong>' attribute set to '<strong>password</strong>' on their internal <strong>input</strong> elements.</li>
-            <li>Any supported web component utilising '<strong>data-omni-keyboard-mask</strong>' on their internal <strong>input</strong> elements.</li>
+            <li>Any elements with the <code class="language-javascript">'data-omni-keyboard-mask'</code> attribute .</li>
+            <li>Any supported web component with the <code class="language-javascript">'type'</code> attribute set to <code class="language-javascript">'password'</code> on their internal <code class="language-html">&lt;input&gt;</code> elements.</li>
+            <li>Any supported web component utilising <code class="language-javascript">'data-omni-keyboard-mask'</code> on their internal <code class="language-html">&lt;input&gt;</code> elements.</li>
         </ul>
     </span>
     `,
@@ -343,7 +343,7 @@ export const Masked_Values: ComponentStoryFormat<Args> = {
   `
             : html`
             <div class="keyboard-showcase">
-                <span>To illustrate this, update the <strong>Interactive</strong> Keyboard properties to have '<strong>attach-mode</strong>' attribute set to '<strong>all</strong>'.</span>
+                <span>To illustrate this, update the <strong>Interactive</strong> Keyboard properties to have <code class="language-javascript">'attach-mode'</code> attribute set to <code class="language-javascript">'all'</code>.</span>
                 <omni-button @click="${() => {
                     Interactive.args!.attachMode = 'all';
                     document.dispatchEvent(
@@ -352,7 +352,7 @@ export const Masked_Values: ComponentStoryFormat<Args> = {
                             composed: true
                         })
                     );
-                }}" class="docs-omni-component"><span>Update <strong>attach-mode</strong> to <strong>all</strong></span></omni-button>
+                }}" class="docs-omni-component"><span>Update <code class="language-javascript">'attach-mode'</code> to <code class="language-javascript">'all'</code></span></omni-button>
             </div>`,
     name: 'Masked Values'
 };
@@ -360,7 +360,7 @@ export const Masked_Values: ComponentStoryFormat<Args> = {
 export const Hide_Display_Value: ComponentStoryFormat<Args> = {
     ...Interactive,
     description: () => html`
-    <span>When the '<strong>data-omni-keyboard-no-display</strong>' attribute is set on a supported input, the display preview on the Keyboard header will not be visible.</span>
+    <span>When the <code class="language-javascript">'data-omni-keyboard-no-display'</code> attribute is set on a supported input, the display preview on the Keyboard header will not be visible.</span>
     `,
     frameworkSources: [{ framework: 'HTML', load: () => getSourceFromLit(attachByAttribute), disableCodePen: true }],
     render: (args: Args) =>
@@ -377,7 +377,7 @@ export const Hide_Display_Value: ComponentStoryFormat<Args> = {
   `
             : html`
             <div class="keyboard-showcase">
-                <span>To illustrate this, update the <strong>Interactive</strong> Keyboard properties to have '<strong>attach-mode</strong>' attribute set to '<strong>all</strong>'.</span>
+                <span>To illustrate this, update the <strong>Interactive</strong> Keyboard properties to have <code class="language-javascript">'attach-mode'</code> attribute set to <code class="language-javascript">'all'</code>.</span>
                 <omni-button @click="${() => {
                     Interactive.args!.attachMode = 'all';
                     document.dispatchEvent(
@@ -386,7 +386,7 @@ export const Hide_Display_Value: ComponentStoryFormat<Args> = {
                             composed: true
                         })
                     );
-                }}" class="docs-omni-component"><span>Update <strong>attach-mode</strong> to <strong>all</strong></span></omni-button>
+                }}" class="docs-omni-component"><span>Update <code class="language-javascript">'attach-mode'</code> to <code class="language-javascript">'all'</code></span></omni-button>
             </div>`,
     name: 'Hide Display Value'
 };
@@ -394,7 +394,7 @@ export const Hide_Display_Value: ComponentStoryFormat<Args> = {
 export const Hide_Keyboard: ComponentStoryFormat<Args> = {
     ...Interactive,
     description: () => html`
-    <span>When the '<strong>data-omni-keyboard-hidden</strong>' attribute is set on a supported input, the Keyboard will not apply to that input.</span>
+    <span>When the <code class="language-javascript">'data-omni-keyboard-hidden'</code> attribute is set on a supported input, the Keyboard will not apply to that input.</span>
     
     `,
     frameworkSources: [{ framework: 'HTML', load: () => getSourceFromLit(attachByAttribute), disableCodePen: true }],
@@ -414,7 +414,7 @@ export const Hide_Keyboard: ComponentStoryFormat<Args> = {
 export const Alternate_Modes: ComponentStoryFormat<Args> = {
     ...Interactive,
     description: () => html`
-    <span>The Keyboard will react accordingly to the '<strong>data-omni-keyboard-mode</strong>' attribute on supported target elements.</span>
+    <span>The Keyboard will react accordingly to the <code class="language-javascript">'data-omni-keyboard-mode'</code> attribute on supported target elements.</span>
         
     `,
     frameworkSources: [{ framework: 'HTML', load: () => getSourceFromLit(attachByAttribute), disableCodePen: true }],
@@ -432,7 +432,7 @@ export const Alternate_Modes: ComponentStoryFormat<Args> = {
   `
             : html`
             <div class="keyboard-showcase">
-                <span>To illustrate this, update the <strong>Interactive</strong> Keyboard properties to have '<strong>attach-mode</strong>' attribute set to '<strong>all</strong>'.</span>
+                <span>To illustrate this, update the <strong>Interactive</strong> Keyboard properties to have <code class="language-javascript">'attach-mode'</code> attribute set to <code class="language-javascript">'all'</code>.</span>
                 <omni-button @click="${() => {
                     Interactive.args!.attachMode = 'all';
                     document.dispatchEvent(
@@ -441,7 +441,7 @@ export const Alternate_Modes: ComponentStoryFormat<Args> = {
                             composed: true
                         })
                     );
-                }}" class="docs-omni-component"><span>Update <strong>attach-mode</strong> to <strong>all</strong></span></omni-button>
+                }}" class="docs-omni-component"><span>Update <code class="language-javascript">'attach-mode'</code> to <code class="language-javascript">'all'</code></span></omni-button>
             </div>`,
     name: 'Alternate Modes'
 };
@@ -578,13 +578,14 @@ export const Via_Script: ComponentStoryFormat<Args> = {
     frameworkSources: [
         {
             framework: 'HTML',
-            disableCodePen: true,
+            disableCodePen: false,
             load: () => raw`
 <!-- Add an input that targets the keyboard id created from script -->
 <omni-text-field data-omni-keyboard-attach="keyboard-script-generated" label="Keyboard from script" tabindex="49"></omni-text-field> 
 
 <!-- A script that creates a keyboard to its default parent container (document.body) with some custom button labels including a custom backspace via render function -->
-<script defer>
+<script type="module">
+    import { Keyboard } from '@capitec/omni-components/keyboard';
     Keyboard.create({
         id: 'keyboard-script-generated',
         attachMode: 'id',
@@ -619,7 +620,7 @@ export const Via_Script: ComponentStoryFormat<Args> = {
 export const Vanilla_Inputs: ComponentStoryFormat<Args> = {
     ...Interactive,
     description: () => html`
-    <span>The Keyboard supports vanilla native HTML <strong>input</strong> and <strong>textarea</strong> elements.</span>
+    <span>The Keyboard supports vanilla native HTML <code class="language-html">&lt;input&gt;</code> and <code class="language-html">&lt;textarea&gt;</code> elements.</span>
     `,
     frameworkSources: [{ framework: 'HTML', load: () => getSourceFromLit(attachByAttribute), disableCodePen: true }],
     render: (args: Args) =>
@@ -648,7 +649,7 @@ export const Vanilla_Inputs: ComponentStoryFormat<Args> = {
   `
             : html`
             <div class="keyboard-showcase">
-                <span>To illustrate this, update the <strong>Interactive</strong> Keyboard properties to have '<strong>attach-mode</strong>' attribute set to '<strong>all</strong>'.</span>
+                <span>To illustrate this, update the <strong>Interactive</strong> Keyboard properties to have <code class="language-javascript">'attach-mode'</code> attribute set to <code class="language-javascript">'all'</code>.</span>
                 <omni-button @click="${() => {
                     Interactive.args!.attachMode = 'all';
                     document.dispatchEvent(
@@ -657,7 +658,7 @@ export const Vanilla_Inputs: ComponentStoryFormat<Args> = {
                             composed: true
                         })
                     );
-                }}" class="docs-omni-component"><span>Update <strong>attach-mode</strong> to <strong>all</strong></span></omni-button>
+                }}" class="docs-omni-component"><span>Update <code class="language-javascript">'attach-mode'</code> to <code class="language-javascript">'all'</code></span></omni-button>
             </div>`,
     name: 'Vanilla Inputs'
 };
