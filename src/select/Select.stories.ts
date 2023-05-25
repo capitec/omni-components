@@ -26,6 +26,7 @@ interface Args extends BaseArgs {
     emptyMessage: string;
     idField: string;
     renderItem: RenderFunction;
+    renderSelection: RenderFunction;
     loading_indicator: string;
 }
 
@@ -60,6 +61,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
             .items="${args.items}"
             display-field="${args.displayField}"
             .renderItem="${args.renderItem}"
+            .renderSelection="${args.renderSelection}"
             id-field="${args.idField}"
             ?disabled="${args.disabled}"
             ?clearable="${args.clearable}"
@@ -462,6 +464,103 @@ const App = () => <OmniSelect label="${args.label}" display-field="${args.displa
         items: stringItems,
         displayField: 'label',
         idField: 'id'
+    } as Args,
+    play: async (context) => {
+        const select = within(context.canvasElement).getByTestId<Select>('test-select');
+        const click = jest.fn();
+        const change = jest.fn();
+        select.addEventListener('click', click);
+        select.addEventListener('change', change);
+
+        await userEvent.click(select);
+
+        const item = await querySelectorAsync(select.shadowRoot!, '.item');
+        await userEvent.click(item as HTMLDivElement);
+
+        const selectField = select.shadowRoot?.getElementById('select');
+        await expect(selectField).toHaveValue(stringItems[0]);
+    }
+};
+
+export const Selection_Renderer: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
+        <omni-select
+            data-testid="test-select"
+            label="${ifNotEmpty(args.label)}"
+            hint="${ifNotEmpty(args.hint)}"
+            error="${ifNotEmpty(args.error)}"
+            .renderSelection="${args.renderSelection}"
+            value="${args.value}"
+            .items="${args.items}"
+            display-field="${args.displayField}"
+            id-field="${args.idField}">
+        </omni-select>
+    `,
+    frameworkSources: [
+        {
+            framework: 'HTML',
+            load: (args) => `
+            
+<omni-select
+    id="omni-select"
+    value="${args.value}"
+    label="${args.label}">
+</omni-select>
+<script defer>
+    const stringItems = ['Bruce Wayne', 'Clark Kent', 'Barry Allen', 'Arthur Curry', 'Hal Jordan'];  
+    select = document.getElementById('omni-select');
+
+
+    async function renderSelection(item) {
+        await new Promise((resolve, reject) => {
+            // Setting 2000 ms time
+            setTimeout(resolve, 2000);
+        });
+        const i = document.createElement('i');
+        i.innerText = item;
+        i.style.color = 'blue';
+        return i;
+    }
+
+    select.renderSelection = renderSelection;
+    select.items = stringItems;
+</script>
+`
+        },
+        {
+            framework: 'React',
+            load: (args) => `import { OmniSelect } from "@capitec/omni-components-react/select";
+
+async function renderSelection(item) {
+    await new Promise((resolve, reject) => {
+        // Setting 2000 ms time
+        setTimeout(resolve, 2000);
+    });
+    const i = document.createElement('i');
+    i.innerText = item;
+    i.style.color = 'blue';
+    return i;
+}
+const stringItems = ['Bruce Wayne', 'Clark Kent', 'Barry Allen', 'Arthur Curry', 'Hal Jordan'];    
+const App = () => <OmniSelect label="${args.label}" value="${args.value}" items={stringItems} renderSelection={renderSelection}/>;`
+        }
+    ],
+    name: 'Selection Renderer',
+    description: 'Provide a function to render custom html content for the selection.',
+    args: {
+        label: 'Selection Renderer',
+        items: stringItems,
+        renderSelection: async (item: any) => {
+            await new Promise((resolve, reject) => {
+                // Setting 2000 ms time
+                setTimeout(resolve, 2000);
+            });
+            const i = document.createElement('i');
+            i.innerText = item;
+            i.style.color = 'blue';
+            return i;
+        },
+        value: 'Clark Kent'
     } as Args,
     play: async (context) => {
         const select = within(context.canvasElement).getByTestId<Select>('test-select');

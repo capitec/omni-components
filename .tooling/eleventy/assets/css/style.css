@@ -197,14 +197,14 @@ header .header-version-select {
 }
 
 .header-actions > .action,
-.header-actions > .header-theme-section {
+.header-actions > .header-action-section {
     --header-action-background-color:var(--omni-theme-background-color);
     background-color: var(--omni-theme-background-color);
     color: var(--omni-theme-font-color);
 }
 
 .header-actions > .action,
-.header-actions > .header-theme-section > * {
+.header-actions > .header-action-section > * {
     color: var(--omni-theme-font-color);
     background-color: var(--header-action-background-color);
 }
@@ -214,22 +214,22 @@ header .header-version-select {
 }
 
 .header-actions > .action:hover,
-.header-actions > .header-theme-section:hover {
+.header-actions > .header-action-section:hover {
     --header-action-background-color:var(--omni-theme-background-hover-color);
 }
 
 .header-actions > .action:hover,
-.header-actions  > .header-theme-section:hover > .action {
+.header-actions  > .header-action-section:hover > .action {
     box-shadow: inset 0px 0px 0px 1px var(--omni-form-hover-color, var(--omni-theme-primary-color));
 }
 
-.header-actions > .header-theme-section {
+.header-actions > .header-action-section {
     position: relative;
     margin-right: 12px;
-    margin-left: 12px;
+    /* margin-left: 12px; */
 }
 
-.header-actions > .header-theme-section > .theme-select {
+.header-actions > .header-action-section > .theme-select {
     width: 132px;
     position: absolute;
     right: 0;
@@ -237,7 +237,7 @@ header .header-version-select {
     height: 37px;
 }
 
-.header-actions > .header-theme-section > .action {
+.header-actions > .header-action-section > .action {
     padding: 5px;
     cursor: pointer;
     border-radius: 6px;
@@ -420,6 +420,13 @@ header .header-version-select {
 
 .transparent {
     opacity: 0;
+}
+
+.shrink-omni-select {
+    --omni-select-field-width: 0px;
+    --omni-select-control-padding: 0px 2px 0px 0px;
+    --omni-form-clear-control-width: 0px;
+    --omni-select-items-container-width: auto;
 }
 
 .docs-select {
@@ -1473,7 +1480,7 @@ pre[class*='language-'] {
         flex: 1;
     }
     
-    .header-actions > .header-theme-section > .theme-select {
+    .header-actions > .header-action-section > .theme-select {
         width: 37px;
         height: 37px;
         position: absolute;
