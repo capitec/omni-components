@@ -83,9 +83,6 @@ export class PinField extends OmniFormElement {
         this.addEventListener('input', this._keyInput.bind(this), {
             capture: true
         });
-        this.addEventListener('keydown', this._keyDown.bind(this), {
-            capture: true
-        });
         this.addEventListener('keyup', this._blurOnEnter.bind(this), {
             capture: true
         });
@@ -134,14 +131,6 @@ export class PinField extends OmniFormElement {
         }
     }
 
-    _keyDown(e: KeyboardEvent) {
-        // Stop alpha keys unless its a ctrl key combination ie: ctrl+c and specific characters
-        if (e.key === 'e' || e.key === '-' || e.key === '=' || e.key === '+' || e.key === '.') {
-            e.preventDefault();
-            return;
-        }
-    }
-
     _keyInput() {
         const input = this._inputElement;
         if (input?.value && this.maxLength && typeof this.maxLength === 'number') {
@@ -150,7 +139,9 @@ export class PinField extends OmniFormElement {
                 input.value = String(input?.value).slice(0, this.maxLength);
             }
         }
+        // Required to not apply valid numeric symbols and the letter e to the input value
         this.value = input?.value;
+        input!.value = this.value as string;
     }
 
     _iconClicked(e: MouseEvent) {
