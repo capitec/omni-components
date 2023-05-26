@@ -136,7 +136,7 @@ export class PinField extends OmniFormElement {
 
     _keyDown(e: KeyboardEvent) {
         // Stop alpha keys unless its a ctrl key combination ie: ctrl+c and specific characters
-        if ((!e.ctrlKey && e.key >= 'a' && e.key <= 'z') || e.key === '-' || e.key === '=' || e.key === '+' || e.key === '.') {
+        if (e.key === 'e' || e.key === '-' || e.key === '=' || e.key === '+' || e.key === '.') {
             e.preventDefault();
             return;
         }
