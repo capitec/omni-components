@@ -2,7 +2,7 @@ import { css, html, nothing, PropertyValueMap, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { ClassInfo, classMap } from 'lit/directives/class-map.js';
 import { debounce } from 'lodash';
-import { DateTime, Info } from 'luxon';
+import { DateTime, Info, PossibleDaysInMonth } from 'luxon';
 import OmniElement from '../core/OmniElement.js';
 import '../icons/ChevronLeft.icon.js';
 import '../icons/ChevronRight.icon.js';
@@ -223,7 +223,7 @@ export class Calendar extends OmniElement {
         }
 
         this.date = date.setLocale(this.locale);
-        this.value = this.date.toISODate();
+        this.value = this.date.toISODate() as string;
 
         this.dispatchEvent(
             new CustomEvent('change', {
@@ -677,13 +677,13 @@ export class Calendar extends OmniElement {
         //Get the end weekday of the month.
         const monthLastDay = date.endOf('month').weekday;
         //Get the amount of days in the month
-        const daysInMonth = date.daysInMonth;
+        const daysInMonth = date.daysInMonth as PossibleDaysInMonth;
 
         /* Previous month */
         // Get the first day of the previous month
         const previousMonth = monthStartDate.minus({ months: 1 });
         // Get the amount of days in the previous month.
-        const daysInPreviousMonth = previousMonth.daysInMonth;
+        const daysInPreviousMonth = previousMonth.daysInMonth as PossibleDaysInMonth;
         // Get the amount days from the previous month to display in the calendar.
         const previousMonthDays = monthFirstDay - 1;
 

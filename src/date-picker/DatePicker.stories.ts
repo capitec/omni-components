@@ -34,7 +34,7 @@ interface Args extends BaseArgs {
     maxDate?: string;
 }
 const localDate = DateTime.local();
-const isoDate = localDate.toISODate();
+const isoDate = localDate.toISODate() as string;
 const testLocale = localDate.locale;
 
 export const Interactive: ComponentStoryFormat<Args> = {
