@@ -936,9 +936,7 @@ const App = () => <OmniSelect label="${args.label}" items={stringItems} filterIt
 
 export const Server_Side_Filtering: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
-    <omni-select data-testid="test-select" label="${ifNotEmpty(args.label)}" .items="${args.items}" ?searchable="${args.searchable}" .filterItems="${
-        args.filterItems
-    }">
+    <omni-select data-testid="test-select" label="${ifNotEmpty(args.label)}" .items="${args.items}" ?searchable="${args.searchable}">
     </omni-select>
 `,
     frameworkSources: [
@@ -953,7 +951,7 @@ export const Server_Side_Filtering: ComponentStoryFormat<Args> = {
             'Arthur Curry', 
             'Hal Jordan'
         ]; 
-        async function searchServerFilter(filter){
+        async function searchFilter(filter){
             await new Promise((r) => setTimeout(() => r(), 2000));
             return customSearch(filter,stringItems);
         }
