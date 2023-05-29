@@ -13,30 +13,35 @@ Control to get / set a value within a list of options.
   items={'item1','item2','item3','item4'}
   display-field="label"
   id-field="id"
+  clearable
+  searchable
   disabled>
 </omni-select>
 ```
 
 ## Properties
 
-| Property       | Attribute       | Modifiers | Type                                             | Default             | Description                                      |
-|----------------|-----------------|-----------|--------------------------------------------------|---------------------|--------------------------------------------------|
-| `clearable`    | `clearable`     |           | `boolean`                                        | false               | Toggles the ability to clear the value of the component. |
-| `data`         | `data`          |           | `object \| undefined`                            |                     | Data associated with the component.              |
-| `dir`          |                 |           | `string`                                         |                     |                                                  |
-| `disabled`     | `disabled`      |           | `boolean`                                        | false               | Indicator if the component should be disabled.   |
-| `displayField` | `display-field` |           | `string \| undefined`                            |                     | Field of the item to display as one of the selectable options. |
-| `emptyMessage` | `empty-message` |           | `string`                                         | "No items provided" | Message displayed in the items container when no items are bound to the component. |
-| `error`        | `error`         |           | `string \| undefined`                            |                     | Error message guiding a user to correct a mistake. |
-| `hint`         | `hint`          |           | `string \| undefined`                            |                     | Hint message to assist the user.                 |
-| `idField`      | `id-field`      |           | `string`                                         | "id"                | Id field of the items provided.                  |
-| `items`        | `items`         |           | `string[] \| Record<string, unknown>[] \| Promise<SelectTypes> \| (() => SelectItems) \| undefined` |                     | Selectable items of the select component.        |
-| `label`        | `label`         |           | `string \| undefined`                            |                     | Text label.                                      |
-| `lang`         |                 |           | `string`                                         |                     |                                                  |
-| `override`     | `override`      |           |                                                  |                     | Used to set the base direction of text for display |
-| `renderItem`   | `renderItem`    |           | `RenderFunction \| undefined`                    |                     | Render function for each item.                   |
-| `styles`       |                 | readonly  | `CSSResultGroup[]`                               |                     |                                                  |
-| `value`        | `value`         |           | `string \| number \| Record<string, unknown> \| undefined` | null                | Value entered into the form component.           |
+| Property          | Attribute         | Modifiers | Type                                             | Default             | Description                                      |
+|-------------------|-------------------|-----------|--------------------------------------------------|---------------------|--------------------------------------------------|
+| `clearable`       | `clearable`       |           | `boolean`                                        | false               | Toggles the ability to clear the value of the component. |
+| `data`            | `data`            |           | `object \| undefined`                            |                     | Data associated with the component.              |
+| `dir`             |                   |           | `string`                                         |                     |                                                  |
+| `disabled`        | `disabled`        |           | `boolean`                                        | false               | Indicator if the component should be disabled.   |
+| `displayField`    | `display-field`   |           | `string \| undefined`                            |                     | Field of the item to display as one of the selectable options. |
+| `emptyMessage`    | `empty-message`   |           | `string`                                         | "No items provided" | Message displayed in the items container when no items are bound to the component. |
+| `error`           | `error`           |           | `string \| undefined`                            |                     | Error message guiding a user to correct a mistake. |
+| `filterItems`     | `filterItems`     |           | `((filterValue: string, items: SelectTypes) => SelectItems) \| undefined` |                     | Custom search function for items instead of using the default provided. |
+| `hint`            | `hint`            |           | `string \| undefined`                            |                     | Hint message to assist the user.                 |
+| `idField`         | `id-field`        |           | `string`                                         | "id"                | Id field of the items provided.                  |
+| `items`           | `items`           |           | `string[] \| Record<string, unknown>[] \| Promise<SelectTypes> \| ((filterValue?: string \| undefined) => SelectItems) \| undefined` |                     | Selectable items of the select component.        |
+| `label`           | `label`           |           | `string \| undefined`                            |                     | Text label.                                      |
+| `lang`            |                   |           | `string`                                         |                     |                                                  |
+| `override`        | `override`        |           |                                                  |                     | Used to set the base direction of text for display |
+| `renderItem`      | `renderItem`      |           | `RenderFunction \| undefined`                    |                     | Render function for each item.                   |
+| `renderSelection` | `renderSelection` |           | `RenderFunction \| undefined`                    |                     | Render function for selected item.               |
+| `searchable`      | `searchable`      |           | `boolean`                                        | false               | Toggles the ability to search the items of the select of the component. |
+| `styles`          |                   | readonly  | `CSSResultGroup[]`                               |                     |                                                  |
+| `value`           | `value`           |           | `string \| number \| Record<string, unknown> \| undefined` | null                | Value entered into the form component.           |
 
 ## Methods
 
@@ -63,6 +68,7 @@ Control to get / set a value within a list of options.
 | `loading_indicator` | Used to define content that is displayed while async rendering is awaiting, or when renderLoading() is implicitly called |
 | `more`              | Replaces the icon for the more slot (Displays on mobile devices). |
 | `prefix`            | Replaces the icon for the prefix slot.           |
+| `search-clear`      | Replaces the icon in the Search field (Displays when searchable is set to true). |
 | `suffix`            | Replaces the icon for the suffix slot.           |
 
 ## CSS Custom Properties
@@ -83,7 +89,9 @@ Control to get / set a value within a list of options.
 | `--omni-form-clear-control-margin-left`          | Form clear control left margin.                  |
 | `--omni-form-clear-control-margin-right`         | Form clear control right margin.                 |
 | `--omni-form-clear-control-width`                | Form clear control width.                        |
-| `--omni-form-clear-icon-color`                   | Form clear icon color.                           |
+| `--omni-form-clear-slot-color`                   | Form clear icon color.                           |
+| `--omni-form-clear-slot-height`                  | Form clear slot height.                          |
+| `--omni-form-clear-slot-width`                   | Form clear slot width.                           |
 | `--omni-form-disabled-background-color`          | Form disabled background color.                  |
 | `--omni-form-disabled-border-color`              | Form disabled border color.                      |
 | `--omni-form-disabled-focussed-label-background-color` | Form disabled label focussed background color.   |
@@ -132,12 +140,15 @@ Control to get / set a value within a list of options.
 | `--omni-select-control-icon-height`              | Select control icon height.                      |
 | `--omni-select-control-icon-width`               | Select control icon width.                       |
 | `--omni-select-control-padding`                  | Select component control padding.                |
+| `--omni-select-dialog-backdrop-color`            | Select dialog background color.                  |
 | `--omni-select-dialog-background-color`          | Select dialog background color.                  |
 | `--omni-select-dialog-bottom`                    | Select dialog bottom.                            |
+| `--omni-select-dialog-items-min-height`          | Select dialog items min height.                  |
 | `--omni-select-dialog-left`                      | Select dialog left.                              |
 | `--omni-select-dialog-modal-max-height`          | Select dialog height.                            |
 | `--omni-select-dialog-modal-max-width`           | Select dialog modal max width.                   |
 | `--omni-select-dialog-right`                     | Select dialog right.                             |
+| `--omni-select-dialog-width`                     | Select dialog width                              |
 | `--omni-select-field-disabled-font-color`        | Select component input field disabled font color. |
 | `--omni-select-field-error-font-color`           | Select component input field error font color.   |
 | `--omni-select-field-font-color`                 | Select component input field font color.         |
@@ -150,8 +161,10 @@ Control to get / set a value within a list of options.
 | `--omni-select-field-width`                      | Select component input field width.              |
 | `--omni-select-item-font-color`                  | Select item font color.                          |
 | `--omni-select-item-font-family`                 | Select item font family.                         |
+| `--omni-select-item-font-size`                   | Select item font size.                           |
 | `--omni-select-item-font-weight`                 | Select item font weight.                         |
 | `--omni-select-item-header-font-background-color` | Select item header font background color.        |
+| `--omni-select-item-header-font-color`           | Select item header font color.                   |
 | `--omni-select-item-header-font-family`          | Select item header font family.                  |
 | `--omni-select-item-header-font-size`            | Select item header font size.                    |
 | `--omni-select-item-header-font-weight`          | Select item header font weight.                  |
@@ -171,15 +184,39 @@ Control to get / set a value within a list of options.
 | `--omni-select-item-padding-top`                 | Select item top padding.                         |
 | `--omni-select-item-selected-color`              | Selected item color.                             |
 | `--omni-select-item-width`                       | Select item width.                               |
+| `--omni-select-items-background-color`           | Select items background color.                   |
 | `--omni-select-items-container-background-color` | Select items container background color.         |
 | `--omni-select-items-container-box-shadow`       | Select items container box shadow.               |
 | `--omni-select-items-container-render-bottom-top` | Select items container top when rendered at the bottom. |
 | `--omni-select-items-container-top`              | Select items container top.                      |
 | `--omni-select-items-container-width`            | Select items container width                     |
+| `--omni-select-items-container-z-index`          | Select items container z-index.                  |
 | `--omni-select-items-height`                     | Select items height.                             |
+| `--omni-select-items-max-height`                 | Select items max height.                         |
 | `--omni-select-items-width`                      | Select items width.                              |
 | `--omni-select-loading-indicator-height`         | Select loading indicator height.                 |
 | `--omni-select-loading-indicator-width`          | Select loading indicator width.                  |
+| `--omni-select-search-clear-div-background-color` | Select search field clear div background color.  |
+| `--omni-select-search-clear-div-right-padding`   | Select search field clear div right padding.     |
+| `--omni-select-search-clear-icon-color`          | Select search field clear icon color.            |
+| `--omni-select-search-clear-icon-height`         | Select search field clear icon height.           |
+| `--omni-select-search-clear-icon-width`          | Select search field clear icon width.            |
+| `--omni-select-search-control-bottom-border`     | Select search field clear control bottom border. |
+| `--omni-select-search-field-background-color`    | Select search field background color.            |
+| `--omni-select-search-field-bottom-border-color` | Select search field bottom border color.         |
+| `--omni-select-search-field-bottom-border-width` | Select search field bottom border width.         |
+| `--omni-select-search-field-font-color`          | Select search field font color.                  |
+| `--omni-select-search-field-font-family`         | Select search field font family.                 |
+| `--omni-select-search-field-font-size`           | Select search field font size.                   |
+| `--omni-select-search-field-font-weight`         | Select search field font weight.                 |
+| `--omni-select-search-field-left-border-width`   | Select search field left border width.           |
+| `--omni-select-search-field-padding-bottom`      | Select search field bottom padding.              |
+| `--omni-select-search-field-padding-left`        | Select search field left padding.                |
+| `--omni-select-search-field-padding-right`       | Select search field right padding.               |
+| `--omni-select-search-field-padding-top`         | Select search field top padding.                 |
+| `--omni-select-search-field-right-border-width`  | Select search field right border width.          |
+| `--omni-select-search-field-top-border-width`    | Select search field top border width.            |
+| `--omni-select-search-field-width`               | Select search field width.                       |
 | `--omni-theme-accent-active-color`               | Theme accent active color.                       |
 | `--omni-theme-accent-color`                      | Theme accent color.                              |
 | `--omni-theme-accent-hover-color`                | Theme accent hover color.                        |

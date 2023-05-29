@@ -7,13 +7,14 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import {
     LabelStory,
     BaseArgs,
+    ClearableStory,
+    CustomClearableSlot,
     HintStory,
     ErrorStory,
     DisabledStory,
     ValueStory,
     PrefixStory,
-    SuffixStory,
-    ClearableStory
+    SuffixStory
 } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
@@ -83,7 +84,9 @@ export const Error_Label = ErrorStory<TextField, BaseArgs>('omni-text-field');
 
 export const Value = ValueStory<TextField, BaseArgs>('omni-text-field');
 
-export const Clear = ClearableStory<TextField, BaseArgs>('omni-text-field');
+export const Clearable = ClearableStory<TextField, BaseArgs>('omni-text-field');
+
+export const Custom_Clear_Slot = CustomClearableSlot<TextField, BaseArgs>('omni-text-field');
 
 export const Prefix = PrefixStory<TextField, BaseArgs>('omni-text-field');
 

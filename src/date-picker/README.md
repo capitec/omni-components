@@ -8,6 +8,8 @@ Control to get / set a specific date using a calendar.
 <omni-date-picker
  label="Enter a value"
  value="2023-03-01"
+ min-date="2023-02-01"
+ max-date="2023-04-01"
  hint="Required"
  error="Select a valid date"
  locale="en-US"
@@ -28,6 +30,8 @@ Control to get / set a specific date using a calendar.
 | `label`     | `label`     |           | `string \| undefined`                            |                 | Text label.                                      |
 | `lang`      |             |           | `string`                                         |                 |                                                  |
 | `locale`    | `locale`    |           | `string`                                         | "defaultLocale" | The locale used for formatting the output of the Date time picker. |
+| `maxDate`   | `max-date`  |           | `string \| undefined`                            |                 | The maximum date inclusively allowed to be selected. |
+| `minDate`   | `min-date`  |           | `string \| undefined`                            |                 | The minimum date inclusively allowed to be selected. |
 | `override`  | `override`  |           |                                                  |                 | Used to set the base direction of text for display |
 | `styles`    |             | readonly  | `CSSResultGroup[]`                               |                 |                                                  |
 | `value`     | `value`     |           | `string \| number \| Record<string, unknown> \| undefined` | null            | Value entered into the form component.           |
@@ -106,7 +110,9 @@ Control to get / set a specific date using a calendar.
 | `--omni-form-clear-control-margin-left`          | Form clear control left margin.                |
 | `--omni-form-clear-control-margin-right`         | Form clear control right margin.               |
 | `--omni-form-clear-control-width`                | Form clear control width.                      |
-| `--omni-form-clear-icon-color`                   | Form clear icon color.                         |
+| `--omni-form-clear-slot-color`                   | Form clear icon color.                         |
+| `--omni-form-clear-slot-height`                  | Form clear slot height.                        |
+| `--omni-form-clear-slot-width`                   | Form clear slot width.                         |
 | `--omni-form-disabled-background-color`          | Form disabled background color.                |
 | `--omni-form-disabled-border-color`              | Form disabled border color.                    |
 | `--omni-form-disabled-focussed-label-background-color` | Form disabled label focussed background color. |
