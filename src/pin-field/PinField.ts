@@ -133,15 +133,18 @@ export class PinField extends OmniFormElement {
 
     _keyInput() {
         const input = this._inputElement;
-        if (input?.value && this.maxLength && typeof this.maxLength === 'number') {
-            if (String(input?.value).length > this.maxLength) {
-                // Restrict the input characters to the length of specified in the args.
-                input.value = String(input?.value).slice(0, this.maxLength);
+        // Check if the value of the input field is valid based on the regex.
+        if (new RegExp('^[0-9]+$').test(input?.value as string) === true) {
+            if (input?.value && this.maxLength && typeof this.maxLength === 'number') {
+                if (String(input?.value).length > this.maxLength) {
+                    // Restrict the input characters to the length of specified in the args.
+                    input.value = String(input?.value).slice(0, this.maxLength);
+                }
             }
+            // Required to not apply valid numeric symbols and the letter e to the input value
+            this.value = input?.value;
+            input!.value = this.value as string;
         }
-        // Required to not apply valid numeric symbols and the letter e to the input value
-        this.value = input?.value;
-        input!.value = this.value as string;
     }
 
     _iconClicked(e: MouseEvent) {
