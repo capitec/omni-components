@@ -1222,8 +1222,10 @@ function setupGlobalSearch() {
 
         // 2. Set up the Fuse instance
         const fuse = new Fuse(data, {
-            keys: ['title'],
+            keys: ['matches'],
+            includeMatches: true,
             minMatchCharLength: 3,
+            threshold: 0.3,
             includeScore: true
         });
 

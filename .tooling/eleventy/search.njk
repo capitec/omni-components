@@ -1,10 +1,4 @@
 ---
 permalink: /search.json
 ---
-[
-    {% for component in components -%}
-    {
-        "title": "{{component.name}}"
-    }{% if not loop.last %},{% endif %}
-    {% endfor %}
-]
+{{ search | dump | safe }}
