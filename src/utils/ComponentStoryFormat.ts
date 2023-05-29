@@ -50,15 +50,40 @@ export type FrameworkSource<T> = {
     /**
      * Function that generates a source string from provided args.
      */
-    load?: (args: T) => string;
+    load?: (args: T, self: FrameworkSource<T>) => string;
 
     /**
      * Indicates that code is not valid for translating to CodePen.
      */
     disableCodePen?: boolean;
+
+    /**
+     * Optional specific source parts for use when additional source is required.
+     */
+    sourceParts?: SourceParts<T>;
 };
 
-export type FrameworkOption = 'HTML' | 'React';
+export type SourceParts<T = any> = {
+    /**
+     * Fragment source that will be injected after imports and before content in CodePen js file.
+     */
+    jsFragment?: string | ((args: T) => string);
+
+    /**
+     * Fragment source that will be injected in relevant html part for CodePen.
+     */
+    htmlFragment?: string | ((args: T) => string);
+    /**
+     * Fragment source that will be injected at the end of CodePen css file.
+     */
+    cssFragment?: string | ((args: T) => string);
+    /**
+     * Will force CodePen generation as fallback HTML framework even if specified as other framework.
+     */
+    fallbackFramework?: boolean;
+};
+
+export type FrameworkOption = 'HTML' | 'Lit' | 'React' | 'Vue';
 
 export type CSFIdentifier = {
     title: string;

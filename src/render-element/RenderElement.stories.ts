@@ -43,6 +43,47 @@ async function renderAsString(data: object) {
 export const Lit_Template: ComponentStoryFormat<Args> = {
     frameworkSources: [
         {
+            framework: 'Vue',
+            sourceParts: {
+                jsFragment: () => `import { html } from 'https://unpkg.com/lit/index.js?module';
+import { render } from 'https://unpkg.com/lit-html/lit-html.js?module';
+
+window.vueData = {
+    someData: {
+        hello: 'world',
+        'other-data': false
+    },
+    renderAsLit: async (data) => {
+        await new Promise((r) => setTimeout(() => r(), 3000));
+        return html\`<span>\${JSON.stringify(data)}</span>\`;
+    }
+}`,
+                htmlFragment: `
+<omni-render-element 
+    .data="someData" 
+    .renderer="renderAsLit">
+</omni-render-element>`
+            }
+        },
+        {
+            framework: 'Lit',
+            sourceParts: {
+                jsFragment: () => `const someData = {
+    hello: 'world',
+    'other-data': false
+};
+async function renderAsLit(data) {
+    await new Promise((r) => setTimeout(() => r(), 3000));
+    return html\`<span>\${JSON.stringify(data)}</span>\`;
+}`,
+                htmlFragment: `
+<omni-render-element 
+    .data="\${someData}" 
+    .renderer="\${renderAsLit}">
+</omni-render-element>`
+            }
+        },
+        {
             framework: 'HTML',
             load: () => `
  
@@ -153,6 +194,43 @@ export const HTML_Element_Instance: ComponentStoryFormat<Args> = {
     description: 'Render an HTMLElement instance from the renderer function.',
     frameworkSources: [
         {
+            framework: 'Vue',
+            sourceParts: {
+                jsFragment: `window.vueData = {
+    someData: {
+        hello: 'world',
+        'other-data': false
+    },
+    renderAsElement: async (data) => {
+        await new Promise((r) => setTimeout(() => r(), 3000));
+        const span = document.createElement('span');
+        span.appendChild(document.createTextNode(JSON.stringify(data)));
+        span.addEventListener('click', (ev) => alert('Clicked'));
+        return span;
+    }
+}`,
+                htmlFragment: `
+<omni-render-element .renderer="renderAsElement" .data="someData"></omni-render-element>`
+            }
+        },
+        {
+            framework: 'Lit',
+            sourceParts: {
+                jsFragment: () => `async function renderAsElement(data) {
+    await new Promise((r) => setTimeout(() => r(), 3000));
+    const span = document.createElement('span');
+    span.appendChild(document.createTextNode(JSON.stringify(data)));
+    span.addEventListener('click', (ev) => alert('Clicked'));
+    return span;
+}`,
+                htmlFragment: `
+<omni-render-element .renderer="\${renderAsElement}" .data="\${{
+    hello: 'world',
+    'other-data': false
+}}"></omni-render-element>`
+            }
+        },
+        {
             framework: 'HTML',
             load: () => `
 <omni-render-element id="renderElI"></omni-render-element>
@@ -257,6 +335,37 @@ export const HTML_String: ComponentStoryFormat<Args> = {
     name: 'HTML String',
     description: 'Render a string from the renderer function as html.',
     frameworkSources: [
+        {
+            framework: 'Vue',
+            sourceParts: {
+                jsFragment: `window.vueData = {
+    someData: {
+        hello: 'world',
+        'other-data': false
+    },
+    renderAsString: async (data) => {
+        await new Promise((r) => setTimeout(() => r(), 3000));
+        return \`<span>\${JSON.stringify(data)}</span>\`;
+    }
+}`,
+                htmlFragment: `
+<omni-render-element .renderer="renderAsString" .data="someData"></omni-render-element>`
+            }
+        },
+        {
+            framework: 'Lit',
+            sourceParts: {
+                jsFragment: () => `async function renderAsString(data) {
+    await new Promise((r) => setTimeout(() => r(), 3000));
+    return \`<span>\${JSON.stringify(data)}</span>\`;
+}`,
+                htmlFragment: `
+<omni-render-element .renderer="\${renderAsString}" .data="\${{
+    hello: 'world',
+    'other-data': false
+}}"></omni-render-element>`
+            }
+        },
         {
             framework: 'HTML',
             load: () => `

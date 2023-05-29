@@ -1006,6 +1006,13 @@ header .header-version-select {
     /* max-width: calc(100vw - 648px);  */
 }
 
+.component-stories .story .code-title {
+    padding: 12px;
+    padding-right: 0px;
+    border-top: 1px solid var(--docs-border-color);
+    align-items: center;
+}
+
 .component-stories .story .two-part {
     display: flex;
     flex-direction: row;
