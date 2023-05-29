@@ -68,7 +68,7 @@ async function promiseSearchFilter(filterValue: string) {
 }
 
 function customSearch(filterValue: string, items: SelectTypes) {
-    if (Array.isArray(items) && filterValue !== null) {
+    if (Array.isArray(items) && filterValue) {
         return (items = (items as (string | Record<string, unknown>)[]).filter((i) => itemFilter(filterValue, i)) as SelectTypes);
     } else {
         return items;
@@ -957,7 +957,7 @@ export const Server_Side_Filtering: ComponentStoryFormat<Args> = {
         }
         
         function customSearch(filter, items){
-            if(Array.isArray(items) && filter !== null) {
+            if(Array.isArray(items) && filter) {
                 return items = items.filter((i) => itemFilter(filter,i));
             } else {
                 return items;
@@ -987,7 +987,7 @@ async function searchFilter(filter){
     return customSearch(filter,stringItems);
 }
 function customSearch(filter, items){
-    if(Array.isArray(items) && filter !== null){
+    if(Array.isArray(items) && filter){
         return items = items.filter((i) => itemFilter(filter,i));
     } else {
         return items;
