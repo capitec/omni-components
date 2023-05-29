@@ -62,9 +62,9 @@ async function promiseDisplayItems(data: Record<string, unknown>[]) {
     return data as SelectTypes;
 }
 
-async function promiseSearchFilter(filterValue: string, items: SelectTypes) {
+async function promiseSearchFilter(filterValue: string) {
     await new Promise<void>((r) => setTimeout(() => r(), 2000));
-    return customSearch(filterValue, items);
+    return customSearch(filterValue, stringItems);
 }
 
 function customSearch(filterValue: string, items: SelectTypes) {
@@ -953,9 +953,9 @@ export const Server_Side_Filtering: ComponentStoryFormat<Args> = {
             'Arthur Curry', 
             'Hal Jordan'
         ]; 
-        async function searchFilter(filter,items){
+        async function searchServerFilter(filter){
             await new Promise((r) => setTimeout(() => r(), 2000));
-            return customSearch(filter,items);
+            return customSearch(filter,stringItems);
         }
         
         function customSearch(filter, items){
@@ -965,12 +965,12 @@ export const Server_Side_Filtering: ComponentStoryFormat<Args> = {
                 return items;
             }
         }
+
         function itemFilter(filter, item){
             return item.includes(filter);
         }
         select = document.getElementById('omni-select');
-        select.items = stringItems;
-        select.filterItems = searchFilter;
+        select.items = searchFilter;
     </script>`
         },
         {
@@ -984,9 +984,9 @@ const stringItems = [
     'Arthur Curry', 
     'Hal Jordan'
 ];
-async function searchFilter(filter, items){
+async function searchFilter(filter){
     await new Promise((r) => setTimeout(() => r(), 2000));
-    return customSearch(filter,items);
+    return customSearch(filter,stringItems);
 }
 function customSearch(filter, items){
     if(Array.isArray(items) && filter !== null){
@@ -998,7 +998,8 @@ function customSearch(filter, items){
 function itemFilter(filter, item){
     return item.includes(filter);
 }
-const App = () => <OmniSelect label="${args.label}" items={stringItems} filterItems={searchFilter} searchable></OmniSelect>`
+
+const App = () => <OmniSelect label="${args.label}" items={searchFilter} searchable></OmniSelect>`
         }
     ],
     name: 'Server Side Filtering',
@@ -1006,8 +1007,7 @@ const App = () => <OmniSelect label="${args.label}" items={stringItems} filterIt
     args: {
         label: 'Server Side Filtering',
         searchable: true,
-        items: stringItems,
-        filterItems: promiseSearchFilter
+        items: promiseSearchFilter
     } as Args,
     play: async (context) => {
         const select = within(context.canvasElement).getByTestId<Select>('test-select');
