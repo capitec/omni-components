@@ -141,10 +141,10 @@ export class PinField extends OmniFormElement {
                     input.value = String(input?.value).slice(0, this.maxLength);
                 }
             }
-            // Required to not apply valid numeric symbols and the letter e to the input value
-            this.value = input?.value;
-            input!.value = this.value as string;
         }
+        // Required to not apply valid numeric symbols and the letter e to the input value
+        this.value = input?.value;
+        input!.value = this.value as string;
     }
 
     _iconClicked(e: MouseEvent) {
