@@ -577,6 +577,74 @@ export const Via_Script: ComponentStoryFormat<Args> = {
     },
     frameworkSources: [
         {
+            framework: 'Vue',
+            sourceParts: {
+                htmlFragment: `<!-- Add an input that targets the keyboard id created from script -->
+<omni-text-field data-omni-keyboard-attach="keyboard-script-generated" label="Keyboard from script" tabindex="49"></omni-text-field> `,
+                jsFragment: `import { Keyboard } from '@capitec/omni-components/keyboard';
+
+Keyboard.create({
+    id: 'keyboard-script-generated',
+    attachMode: 'id',
+    clearLabel: 'Clear',
+    actionLabel: '↵',
+    closeLabel: 'Close',
+    spaceLabel: 'Space',
+    backspace: () => {
+        const elm = document.createElement('span');
+        elm.textContent = '⌫';
+        elm.style.height = '100%';
+        elm.style.display = 'inline-flex';
+        elm.style.alignItems = 'center';
+        let color = elm.style.color;
+        elm.addEventListener('mouseenter', () => {
+            color = elm.style.color;
+            elm.style.color = 'lightgreen';
+        })
+        elm.addEventListener('mouseleave', () => {
+            elm.style.color = color;
+        })
+
+        return elm;
+    }
+});`
+            }
+        },
+        {
+            framework: 'Lit',
+            sourceParts: {
+                htmlFragment: `<!-- Add an input that targets the keyboard id created from script -->
+<omni-text-field data-omni-keyboard-attach="keyboard-script-generated" label="Keyboard from script" tabindex="49"></omni-text-field> `,
+                jsFragment: `import { Keyboard } from '@capitec/omni-components/keyboard';
+
+Keyboard.create({
+    id: 'keyboard-script-generated',
+    attachMode: 'id',
+    clearLabel: 'Clear',
+    actionLabel: '↵',
+    closeLabel: 'Close',
+    spaceLabel: 'Space',
+    backspace: () => {
+        const elm = document.createElement('span');
+        elm.textContent = '⌫';
+        elm.style.height = '100%';
+        elm.style.display = 'inline-flex';
+        elm.style.alignItems = 'center';
+        let color = elm.style.color;
+        elm.addEventListener('mouseenter', () => {
+            color = elm.style.color;
+            elm.style.color = 'lightgreen';
+        })
+        elm.addEventListener('mouseleave', () => {
+            elm.style.color = color;
+        })
+
+        return elm;
+    }
+});`
+            }
+        },
+        {
             framework: 'HTML',
             disableCodePen: false,
             load: () => raw`

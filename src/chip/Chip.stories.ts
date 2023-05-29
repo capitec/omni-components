@@ -5,7 +5,7 @@ import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
-import { assignToSlot, ComponentStoryFormat, CSFIdentifier, raw } from '../utils/StoryUtils.js';
+import { assignToSlot, ComponentStoryFormat, CSFIdentifier, getSourceFromLit, raw } from '../utils/StoryUtils.js';
 import { Chip } from './Chip.js';
 
 import './Chip.js';
@@ -41,6 +41,15 @@ export const Interactive: ComponentStoryFormat<Args> = {
     }
     </omni-chip>
   `,
+    frameworkSources: [
+        {
+            framework: 'Vue',
+            load: (args) =>
+                getSourceFromLit(Interactive!.render!(args), undefined, (s) =>
+                    s.replace(' disabled', ' :disabled="true"').replace(' closable', ' :closable="true"')
+                )
+        }
+    ],
     name: 'Interactive',
     args: {
         label: 'Chip',
@@ -94,6 +103,13 @@ export const Closable: ComponentStoryFormat<Args> = {
             load: (args) => `import { OmniChip } from "@capitec/omni-components-react/chip";
 
 const App = () => <OmniChip${args.label ? ` label='${args.label}'` : ''}${args.closable ? ` closable` : ''}/>;`
+        },
+        {
+            framework: 'Vue',
+            load: (args) =>
+                getSourceFromLit(Closable!.render!(args), undefined, (s) =>
+                    s.replace(' disabled', ' :disabled="true"').replace(' closable', ' :closable="true"')
+                )
         }
     ],
     name: 'Closable',
@@ -127,6 +143,13 @@ export const Disabled: ComponentStoryFormat<Args> = {
             load: (args) => `import { OmniChip } from "@capitec/omni-components-react/chip";
 
 const App = () => <OmniChip${args.label ? ` label='${args.label}'` : ''}${args.disabled ? ` disabled` : ''}/>;`
+        },
+        {
+            framework: 'Vue',
+            load: (args) =>
+                getSourceFromLit(Disabled!.render!(args), undefined, (s) =>
+                    s.replace(' disabled', ' :disabled="true"').replace(' closable', ' :closable="true"')
+                )
         }
     ],
     name: 'Disabled',
@@ -195,6 +218,13 @@ export const Custom_Close_Icon: ComponentStoryFormat<Args> = {
 const App = () => <OmniChip${args.label ? ` label='${args.label}'` : ''}${args.closable ? ` closable` : ''}>
                     <svg slot="close_icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100%" height="100%"><path d="m7.446 6.397.084.073L13 11.939l5.47-5.47a.75.75 0 0 1 1.133.977l-.073.084L14.061 13l5.47 5.47a.75.75 0 0 1-.977 1.133l-.084-.073L13 14.061l-5.47 5.47a.75.75 0 0 1-1.133-.977l.073-.084L11.939 13l-5.47-5.47a.75.75 0 0 1 .977-1.133Z"/></svg>
                   </OmniChip>;`
+        },
+        {
+            framework: 'Vue',
+            load: (args) =>
+                getSourceFromLit(Custom_Close_Icon!.render!(args), undefined, (s) =>
+                    s.replace(' disabled', ' :disabled="true"').replace(' closable', ' :closable="true"')
+                )
         }
     ],
     name: 'Custom Close Icon',

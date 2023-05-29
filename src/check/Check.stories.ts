@@ -5,7 +5,7 @@ import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
-import { assignToSlot, ComponentStoryFormat, CSFIdentifier, raw } from '../utils/StoryUtils.js';
+import { assignToSlot, ComponentStoryFormat, CSFIdentifier, getSourceFromLit, raw } from '../utils/StoryUtils.js';
 import { Check } from './Check.js';
 import './Check.js';
 
@@ -52,6 +52,18 @@ export const Interactive: ComponentStoryFormat<Args> = {
         args.check_icon || args.indeterminate_icon ? '\r\n' : nothing
     }${unsafeHTML(args['[Default Slot]'])}</omni-check>
     `,
+    frameworkSources: [
+        {
+            framework: 'Vue',
+            load: (args) =>
+                getSourceFromLit(Interactive!.render!(args), undefined, (s) =>
+                    s
+                        .replace(' disabled', ' :disabled="true"')
+                        .replace(' indeterminate', ' :indeterminate="true"')
+                        .replace(' checked', ' :checked="true"')
+                )
+        }
+    ],
     name: 'Interactive',
     args: {
         label: '',
@@ -160,6 +172,16 @@ export const Checked: ComponentStoryFormat<Args> = {
             load: (args) => `import { OmniCheck } from "@capitec/omni-components-react/check";
 
 const App = () => <OmniCheck${args.label ? ` label='${args.label}'` : ''}${args.checked ? ` checked` : ''}/>;`
+        },
+        {
+            framework: 'Vue',
+            load: (args) =>
+                getSourceFromLit(Checked!.render!(args), undefined, (s) =>
+                    s
+                        .replace(' disabled', ' :disabled="true"')
+                        .replace(' indeterminate', ' :indeterminate="true"')
+                        .replace(' checked', ' :checked="true"')
+                )
         }
     ],
     description: 'Set the component to a checked state.',
@@ -182,6 +204,16 @@ export const Indeterminate: ComponentStoryFormat<Args> = {
             load: (args) => `import { OmniCheck } from "@capitec/omni-components-react/check";
 
 const App = () => <OmniCheck${args.label ? ` label='${args.label}'` : ''}${args.indeterminate ? ` indeterminate` : ''}/>;`
+        },
+        {
+            framework: 'Vue',
+            load: (args) =>
+                getSourceFromLit(Indeterminate!.render!(args), undefined, (s) =>
+                    s
+                        .replace(' disabled', ' :disabled="true"')
+                        .replace(' indeterminate', ' :indeterminate="true"')
+                        .replace(' checked', ' :checked="true"')
+                )
         }
     ],
     description: 'Set the component to an indeterminate/partial state.',
@@ -204,6 +236,16 @@ export const Disabled: ComponentStoryFormat<Args> = {
             load: (args) => `import { OmniCheck } from "@capitec/omni-components-react/check";
 
 const App = () => <OmniCheck${args.label ? ` label='${args.label}'` : ''}${args.disabled ? ` disabled` : ''}/>;`
+        },
+        {
+            framework: 'Vue',
+            load: (args) =>
+                getSourceFromLit(Disabled!.render!(args), undefined, (s) =>
+                    s
+                        .replace(' disabled', ' :disabled="true"')
+                        .replace(' indeterminate', ' :indeterminate="true"')
+                        .replace(' checked', ' :checked="true"')
+                )
         }
     ],
     description: 'Prevent interaction (pointer events).',
@@ -271,6 +313,16 @@ const App = () => <OmniCheck${args.label ? ` label='${args.label}'` : ''}${args.
                             transform="translate(843.77 509.04) scale(.48018)" />
                     </svg>
                 </OmniCheck>;`
+        },
+        {
+            framework: 'Vue',
+            load: (args) =>
+                getSourceFromLit(Custom_Check_Icon!.render!(args), undefined, (s) =>
+                    s
+                        .replace(' disabled', ' :disabled="true"')
+                        .replace(' indeterminate', ' :indeterminate="true"')
+                        .replace(' checked', ' :checked="true"')
+                )
         }
     ],
     description: 'Set html content to render when the component is in a checked state.',
@@ -324,6 +376,16 @@ const App = () => <OmniCheck${args.label ? ` label='${args.label}'` : ''}${args.
                         d="M2.875 13.938c-1.067 0-1.938.884-1.938 2.062s.87 2.062 1.938 2.062h26.25c1.067 0 1.937-.884 1.937-2.062s-.87-2.062-1.937-2.062H2.875z" />
                     </svg>
                 </OmniCheck>;`
+        },
+        {
+            framework: 'Vue',
+            load: (args) =>
+                getSourceFromLit(Custom_Indeterminate_Icon!.render!(args), undefined, (s) =>
+                    s
+                        .replace(' disabled', ' :disabled="true"')
+                        .replace(' indeterminate', ' :indeterminate="true"')
+                        .replace(' checked', ' :checked="true"')
+                )
         }
     ],
     description: 'Set html content to render when the component is in an indeterminate state.',
