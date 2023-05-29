@@ -33,6 +33,12 @@ Object.keys(window).forEach((key) => {
     }
 });
 
+export function splitPascalCase(word) {
+	var wordRe = /($[a-z])|[A-Z][^A-Z]+/g;
+	return word.match(wordRe).join(' ');
+}
+
+
 /**
  * Test whether file is available and not locked 
  * @param {*} filePath 
@@ -168,9 +174,10 @@ const dynamicTests = async () => {
     const stories = globbySync('./dist/**/*.stories.js');
 
     for (let index = 0; index < stories.length; index++) {
-        const storyImport = path.join(process.cwd(), stories[index]);
-        const storyName = path.basename(stories[index].toLowerCase().replace('.stories.js', ''));
-        const storyPath = `http://localhost:6006/components/${storyName.replaceAll('-', '')}/`;
+        const storyImport = path.join(process.cwd(), stories[index]);       
+        const storyName = splitPascalCase(path.basename(stories[index].replace('.stories.js', '')));
+        const storyPath = `http://localhost:6006/components/${storyName.replaceAll(' ', '-').toLowerCase()}/`;
+        
         let storyObj;
         try {
             storyObj = await import('file://' + storyImport);
@@ -190,7 +197,7 @@ const dynamicTests = async () => {
             const storyTest = storyTests[index2];
             const story = storyObj[storyTest];
 
-            test(`${storyName} - ${storyTest}`, async () => {
+            test(`${storyName} - ${storyTest.replaceAll('_',' ')}`, async () => {
                 await page.goto(storyPath);
 
                 if (!story || !story.play) {

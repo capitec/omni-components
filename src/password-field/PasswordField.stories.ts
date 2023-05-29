@@ -8,6 +8,7 @@ import {
     LabelStory,
     BaseArgs,
     ClearableStory,
+    CustomClearableSlot,
     HintStory,
     ErrorStory,
     DisabledStory,
@@ -111,7 +112,9 @@ export const Error_Label = ErrorStory<PasswordField, BaseArgs>('omni-password-fi
 
 export const Value = ValueStory<PasswordField, BaseArgs>('omni-password-field', 'Password123');
 
-export const Clear = ClearableStory<PasswordField, BaseArgs>('omni-password-field', 'Password123');
+export const Clearable = ClearableStory<PasswordField, BaseArgs>('omni-password-field', 'Password123');
+
+export const Custom_Clear_Slot = CustomClearableSlot<PasswordField, BaseArgs>('omni-password-field', 'Password123');
 
 export const Prefix = PrefixStory<PasswordField, BaseArgs>('omni-password-field');
 
