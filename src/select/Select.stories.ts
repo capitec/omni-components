@@ -68,7 +68,7 @@ async function promiseSearchFilter(filterValue: string) {
 }
 
 function customSearch(filterValue: string, items: SelectTypes) {
-    if (Array.isArray(items) && filterValue !== null) {
+    if (Array.isArray(items) && filterValue) {
         return (items = (items as (string | Record<string, unknown>)[]).filter((i) => itemFilter(filterValue, i)) as SelectTypes);
     } else {
         return items;
@@ -936,9 +936,7 @@ const App = () => <OmniSelect label="${args.label}" items={stringItems} filterIt
 
 export const Server_Side_Filtering: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
-    <omni-select data-testid="test-select" label="${ifNotEmpty(args.label)}" .items="${args.items}" ?searchable="${args.searchable}" .filterItems="${
-        args.filterItems
-    }">
+    <omni-select data-testid="test-select" label="${ifNotEmpty(args.label)}" .items="${args.items}" ?searchable="${args.searchable}">
     </omni-select>
 `,
     frameworkSources: [
@@ -953,13 +951,13 @@ export const Server_Side_Filtering: ComponentStoryFormat<Args> = {
             'Arthur Curry', 
             'Hal Jordan'
         ]; 
-        async function searchServerFilter(filter){
+        async function searchFilter(filter){
             await new Promise((r) => setTimeout(() => r(), 2000));
             return customSearch(filter,stringItems);
         }
         
         function customSearch(filter, items){
-            if(Array.isArray(items) && filter !== null) {
+            if(Array.isArray(items) && filter) {
                 return items = items.filter((i) => itemFilter(filter,i));
             } else {
                 return items;
@@ -989,7 +987,7 @@ async function searchFilter(filter){
     return customSearch(filter,stringItems);
 }
 function customSearch(filter, items){
-    if(Array.isArray(items) && filter !== null){
+    if(Array.isArray(items) && filter){
         return items = items.filter((i) => itemFilter(filter,i));
     } else {
         return items;
