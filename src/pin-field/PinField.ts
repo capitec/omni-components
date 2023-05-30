@@ -58,7 +58,7 @@ export class PinField extends OmniFormElement {
     /**
      * @ignore
      */
-    @state() protected type: 'password' | 'number' = 'number';
+    @state() protected type: 'password' | 'text' = 'text';
 
     /**
      * Disables native on screen keyboards for the component.
@@ -80,15 +80,24 @@ export class PinField extends OmniFormElement {
 
     override connectedCallback() {
         super.connectedCallback();
-        this.addEventListener('input', this._keyInput.bind(this), {
+        // Used instead of keydown to catch inputs for mobile devices.
+        this.addEventListener('beforeinput', this._beforeInput.bind(this), {
             capture: true
         });
+        // Used to catch and format paste actions.
+        this.addEventListener('paste', this._onPaste.bind(this), {
+            capture: true
+        });
+        /*
+        this.addEventListener('input', this._keyInput.bind(this), {
+            capture: true
+        });*/
         this.addEventListener('keyup', this._blurOnEnter.bind(this), {
             capture: true
         });
     }
 
-    //Added for non webkit supporting browsers
+    //Added for non webkit supporting browsers and to stop the component from having a non-valid value (non-numeric) value bound.
     protected override async firstUpdated(): Promise<void> {
         const style: any = window.getComputedStyle(this._inputElement as HTMLInputElement);
         this.isWebkit = style.webkitTextSecurity;
@@ -117,6 +126,17 @@ export class PinField extends OmniFormElement {
         }
     }
 
+    // Dispatch a custom change event required as we manipulate and format the value of the input.
+    _dispatchChange(pinValue: number) {
+        this.dispatchEvent(
+            new CustomEvent('change', {
+                detail: {
+                    value: pinValue
+                }
+            })
+        );
+    }
+    
     override focus(options?: FocusOptions | undefined): void {
         if (this._inputElement) {
             this._inputElement.focus(options);
@@ -131,7 +151,44 @@ export class PinField extends OmniFormElement {
         }
     }
 
+    // Used to check if the value provided in a valid numeric value.
+    _isNumber(number: string) {
+        return /\d/.test(number);
+    }
+
+    //The type of the input is set to text which will allow alpha-numeric characters this function is to block all non numeric input values.
+    _beforeInput(e: InputEvent) {
+        const input = this._inputElement as HTMLInputElement;
+        if(input) {
+            e.preventDefault();
+            if (input && this._isNumber(e.data as string)) {
+                input.value = input.value += e.data;
+                this.value = input.value;
+            }else {
+                return;
+            }
+        }
+    }
+
+    // When a value is pasted in the input.
+    _onPaste(e: ClipboardEvent) {
+        console.log('Pasted value');
+        const input = this._inputElement as HTMLInputElement;
+        const clipboardData = e.clipboardData;
+        const pastedData = clipboardData?.getData('Text');
+
+       // Try to parse the value pasted into a valid numeric amount.
+       const numericPastedData = this._isNumber(pastedData as string);
+
+       // Check if the numeric pasted data is not null then update the value in the input.
+       if (input && numericPastedData) {
+            console.log(numericPastedData);
+       }
+    }
+
+    /*
     _keyInput() {
+        console.log('Key input');
         const input = this._inputElement;
         // Check if the value of the input field is valid based on the regex.
         if (new RegExp('^[0-9]+$').test(input?.value as string) === true) {
@@ -145,7 +202,7 @@ export class PinField extends OmniFormElement {
         // Required to not apply valid numeric symbols and the letter e to the input value
         this.value = input?.value;
         input!.value = this.value as string;
-    }
+    }*/
 
     _iconClicked(e: MouseEvent) {
         if (this.disabled) {
@@ -164,7 +221,7 @@ export class PinField extends OmniFormElement {
             this._inputElement?.removeAttribute('data-omni-keyboard-mask');
 
             if (!this.isWebkit) {
-                this.type = 'number';
+                this.type = 'text';
             }
         }
 
