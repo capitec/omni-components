@@ -83,6 +83,9 @@ export class PinField extends OmniFormElement {
         this.addEventListener('input', this._keyInput.bind(this), {
             capture: true
         });
+        this.addEventListener('keydown', this._keyDown.bind(this), {
+            capture: true
+        });
         this.addEventListener('keyup', this._blurOnEnter.bind(this), {
             capture: true
         });
@@ -131,20 +134,23 @@ export class PinField extends OmniFormElement {
         }
     }
 
+    _keyDown(e: KeyboardEvent) {
+        // Stop alpha keys unless its a ctrl key combination ie: ctrl+c and specific characters
+        if (e.key === 'e' || e.key === '-' || e.key === '=' || e.key === '+' || e.key === '.') {
+            e.preventDefault();
+            return;
+        }
+    }
+
     _keyInput() {
         const input = this._inputElement;
-        // Check if the value of the input field is valid based on the regex.
-        if (new RegExp('^[0-9]+$').test(input?.value as string) === true) {
-            if (input?.value && this.maxLength && typeof this.maxLength === 'number') {
-                if (String(input?.value).length > this.maxLength) {
-                    // Restrict the input characters to the length of specified in the args.
-                    input.value = String(input?.value).slice(0, this.maxLength);
-                }
+        if (input?.value && this.maxLength && typeof this.maxLength === 'number') {
+            if (String(input?.value).length > this.maxLength) {
+                // Restrict the input characters to the length of specified in the args.
+                input.value = String(input?.value).slice(0, this.maxLength);
             }
         }
-        // Required to not apply valid numeric symbols and the letter e to the input value
         this.value = input?.value;
-        input!.value = this.value as string;
     }
 
     _iconClicked(e: MouseEvent) {
