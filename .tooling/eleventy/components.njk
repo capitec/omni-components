@@ -86,7 +86,7 @@ eleventyComputed:
                         <div class="component-toc-wrapper">
                             <div class="component-toc">
                                 {% for story in component.stories %}
-                                    <a href="components/{{ component.name | splitPascalCase()  | slugify }}/#story-{{ story | replace("_", "-") | lower }}" id="story-{{ story | replace("_", "-") | lower }}-a" class="item">
+                                    <a href="components/{{ component.name | splitPascalCase() | slugify }}/#story-{{ story | replace("_", "-") | lower }}" id="story-{{ story | replace("_", "-") | lower }}-a" class="item">
                                         {{ story | replace("_", " ") }}
                                     </a>
                                 {%- endfor %}

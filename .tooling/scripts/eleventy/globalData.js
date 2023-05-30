@@ -38,7 +38,7 @@ export async function customElements() {
 
 export async function search() {
 
-    async function createMarkdownIndex(fileName, prefix) {
+    async function createMarkdownIndex(fileName, prefix, title) {
 
         // Read and parse the file.
         const text = await readFile(fileName, 'utf-8');
@@ -55,8 +55,9 @@ export async function search() {
                 matches = [];
                 result.push({
                     path: prefix + link,
-                    matches: matches,
-                    type: 'md'
+                    data: matches,
+                    type: 'md',
+                    title: title
                 })
             } else if (token.type === 'inline') {
                 matches.push(token.content);
@@ -74,35 +75,37 @@ export async function search() {
 
         for (const component of components) {
             const name = component.match(/([A-Z])\w+/g)[0];
+            const moduleForStories = loadCustomElementsModuleByFileFor(`${name}.stories`, customElementDefinitions);
+            const moduleForComponent = loadCustomElementsModuleByFileFor(`${name}`, customElementDefinitions);
+            const moduleDescription = moduleForComponent.declarations.find(d => d.name === name).description;
+            const moduleStories = moduleForStories.declarations.filter(s => s.name !== 'Interactive');
 
             // Add component itself to the index.
             result.push({
                 path: `./components/${name.toLowerCase()}/`,
-                matches: [name.toLowerCase()],
-                type: 'component'
+                data: [name.toLowerCase(), moduleDescription],
+                type: 'component',
+                title: name
             });
 
             // Add component stories to the index.
-            const module = loadCustomElementsModuleByFileFor(`${name}.stories`, customElementDefinitions);
-            const moduleStories = module.exports.map(e => e.name).filter(s => s !== 'default' && s !== 'Interactive');
-
-            // for (const story of moduleStories) {
-
-            //     result.push({
-            //         path: `./components/${name.toLowerCase()}/#`,
-            //         matches: [name.toLowerCase()],
-            //         type: 'story'
-            //     });
-            // }
+            for (const story of moduleStories) {
+                result.push({
+                    path: `./components/${name.toLowerCase()}/#story-${story.name.toLowerCase().replace('_', '-')}`,
+                    data: [story.name.toLowerCase(), story.description ?? ''],
+                    type: 'story',
+                    title: name
+                });
+            }
         }
 
         return result;
     }
 
     const response = [
-        ... await createMarkdownIndex('./INSTALLATION.md', './getting-started/#'),
-        ... await createMarkdownIndex('./CONTRIBUTING.md', './contributing/#'),
-        ... await createComponentIndex()
+        ... await createComponentIndex(),
+        ... await createMarkdownIndex('./INSTALLATION.md', './getting-started/#', 'Getting Started'),
+        ... await createMarkdownIndex('./CONTRIBUTING.md', './contributing/#', 'Contributing')
     ];
 
     return response;

@@ -14,6 +14,7 @@ import { html, TemplateResult } from 'lit';
 import { render } from 'lit-html';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import pretty from 'pretty';
+import { Modal } from '../modal/Modal.js';
 import { SearchField } from '../search-field/SearchField.js';
 import { Select } from '../select/Select.js';
 import { CodeEditor, CodeMirrorEditorEvent, CodeMirrorSourceUpdateEvent } from './CodeEditor.js';
@@ -1321,13 +1322,16 @@ function setupGlobalSearch() {
         //     }
         // ];
 
+        Modal.show({ header: 'Search', body: 'body' });
+
         const search = await fetch('search.json');
         const data = await search.json();
 
         // 2. Set up the Fuse instance
         const fuse = new Fuse(data, {
-            keys: ['matches'],
+            keys: ['data', 'title'],
             includeMatches: true,
+            ignoreLocation: true,
             minMatchCharLength: 3,
             threshold: 0.3,
             includeScore: true
