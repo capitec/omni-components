@@ -141,8 +141,8 @@ export class StoryRenderer extends LitElement {
                     frameworkDefinition = this.story!.frameworkSources?.find((fs) => fs.framework === sourceTab);
                 }
 
-                await this.codeEditor.refresh(() =>
-                    frameworkDefinition?.sourceParts?.htmlFragment
+                await this.codeEditor.refresh(() => {
+                    const source = frameworkDefinition?.sourceParts?.htmlFragment
                         ? typeof frameworkDefinition?.sourceParts?.htmlFragment === 'string'
                             ? frameworkDefinition?.sourceParts?.htmlFragment
                             : frameworkDefinition?.sourceParts?.htmlFragment(this.story!.args)
@@ -150,8 +150,16 @@ export class StoryRenderer extends LitElement {
                         ? frameworkDefinition.load(this.story!.args, frameworkDefinition)
                         : this.sourceFallbacks.find((sf) => sf.frameworks.includes(sourceTab))?.allowRenderFromResult
                         ? getSourceFromLit(this.story!.render!(this.story!.args))
-                        : ''
-                );
+                        : '';
+
+                    if (source) {
+                        this.renderRoot.querySelector<HTMLDivElement>('.primary-code-block')?.classList.remove('no-display');
+                    } else {
+                        this.renderRoot.querySelector<HTMLDivElement>('.primary-code-block')?.classList.add('no-display');
+                    }
+
+                    return source;
+                });
                 if (this.secondaryCodeEditor) {
                     await this.secondaryCodeEditor.refresh(() => {
                         const source = frameworkDefinition?.sourceParts?.jsFragment
@@ -380,7 +388,7 @@ export class StoryRenderer extends LitElement {
                 }
             </div>
             <div class="code-title ${secondarySource ? '' : 'no-display'}">HTML</div>
-            <div class="code-block ${frameworkSource ? '' : 'no-display'}">
+            <div class="code-block primary-code-block ${frameworkSource ? '' : 'no-display'}">
                 <code-editor
                 class="source-code primary-source-code"
                 .transformSource="${(s: string) => transformSource(s)}"
