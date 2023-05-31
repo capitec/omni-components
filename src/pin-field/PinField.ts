@@ -84,14 +84,9 @@ export class PinField extends OmniFormElement {
         this.addEventListener('beforeinput', this._beforeInput.bind(this), {
             capture: true
         });
-        // Used to catch and format paste actions.
-        this.addEventListener('paste', this._onPaste.bind(this), {
+        this.addEventListener('input', this._onInput.bind(this), {
             capture: true
         });
-        /*
-        this.addEventListener('input', this._keyInput.bind(this), {
-            capture: true
-        });*/
         this.addEventListener('keyup', this._blurOnEnter.bind(this), {
             capture: true
         });
@@ -104,37 +99,24 @@ export class PinField extends OmniFormElement {
         if (!this.isWebkit) {
             this.type = 'password';
         }
-
-        if (this.value !== null && this.value !== undefined && this.value !== '') {
-            //Check if the value provided is valid and numeric else remove the value attribute.
-            if (new RegExp('^[0-9]+$').test(this.value as string) === false) {
-                this.removeAttribute('value');
-            } else if (this.maxLength && (this.value as string).length > this.maxLength) {
-                this.value = String(this.value).slice(0, this.maxLength);
-            }
-        }
     }
 
     override async attributeChangedCallback(name: string, _old: string | null, value: string | null): Promise<void> {
         super.attributeChangedCallback(name, _old, value);
-        if (name === 'value' && value !== null && value !== undefined && value !== '') {
-            if (new RegExp('^[0-9]+$').test(value as string) === false) {
-                this.removeAttribute('value');
-            } else if (this.maxLength && (value as string).length > this.maxLength) {
-                this.value = value?.slice(0, this.maxLength) as string;
-            }
-        }
-    }
-
-    // Dispatch a custom change event required as we manipulate and format the value of the input.
-    _dispatchChange(pinValue: number) {
-        this.dispatchEvent(
-            new CustomEvent('change', {
-                detail: {
-                    value: pinValue
+        if (name === 'value') {
+            if( value !== null && value !== undefined && value !== ''){
+                if (new RegExp('^[0-9]+$').test(value as string) === false) {
+                    this.removeAttribute('value');
+                } else if (this.maxLength && (value as string).length > this.maxLength) {
+                    this.value = value?.slice(0, this.maxLength) as string;
                 }
-            })
-        );
+            }
+
+            if(this._inputElement){
+                this._inputElement.value = this.value as string;
+            }
+ 
+        }
     }
     
     override focus(options?: FocusOptions | undefined): void {
@@ -160,49 +142,24 @@ export class PinField extends OmniFormElement {
     _beforeInput(e: InputEvent) {
         const input = this._inputElement as HTMLInputElement;
         if(input) {
-            e.preventDefault();
-            if (input && this._isNumber(e.data as string)) {
-                input.value = input.value += e.data;
-                this.value = input.value;
-            }else {
+            if (input && !this._isNumber(e.data as string)) {
+                e.preventDefault();
                 return;
             }
         }
     }
 
-    // When a value is pasted in the input.
-    _onPaste(e: ClipboardEvent) {
-        console.log('Pasted value');
-        const input = this._inputElement as HTMLInputElement;
-        const clipboardData = e.clipboardData;
-        const pastedData = clipboardData?.getData('Text');
-
-       // Try to parse the value pasted into a valid numeric amount.
-       const numericPastedData = this._isNumber(pastedData as string);
-
-       // Check if the numeric pasted data is not null then update the value in the input.
-       if (input && numericPastedData) {
-            console.log(numericPastedData);
-       }
-    }
-
-    /*
-    _keyInput() {
-        console.log('Key input');
+    _onInput() {
         const input = this._inputElement;
         // Check if the value of the input field is valid based on the regex.
-        if (new RegExp('^[0-9]+$').test(input?.value as string) === true) {
-            if (input?.value && this.maxLength && typeof this.maxLength === 'number') {
-                if (String(input?.value).length > this.maxLength) {
-                    // Restrict the input characters to the length of specified in the args.
-                    input.value = String(input?.value).slice(0, this.maxLength);
-                }
+        if (input?.value && this.maxLength && typeof this.maxLength === 'number') {
+            if (String(input?.value).length > this.maxLength) {
+                // Restrict the input characters to the length of specified in the args.
+                input.value = String(input?.value).slice(0, this.maxLength);
             }
         }
-        // Required to not apply valid numeric symbols and the letter e to the input value
         this.value = input?.value;
-        input!.value = this.value as string;
-    }*/
+    }
 
     _iconClicked(e: MouseEvent) {
         if (this.disabled) {
@@ -337,7 +294,6 @@ export class PinField extends OmniFormElement {
         inputmode="${this.noNativeKeyboard ? 'none' : 'numeric'}"
         data-omni-keyboard-mode="numeric"
         type="${this.type}"
-        value=${live(this.value as string)}
         ?readOnly=${this.disabled}
         tabindex="${this.disabled ? -1 : 0}"
         data-omni-keyboard-mask />
