@@ -220,9 +220,10 @@ header .header-version-select {
 
 .header-actions > .action:hover,
 .header-actions  > .header-action-section:hover > .action {
-    box-shadow: inset 0px 0px 0px 1px var(--omni-form-hover-color, var(--omni-theme-primary-color));
+    border-color: var(--omni-form-hover-color, var(--omni-primary-hover-color));
 }
 
+/* border: 1px solid var(--docs-border-hover-color); */
 .header-actions > .header-action-section {
     position: relative;
     margin-right: 12px;
@@ -246,6 +247,30 @@ header .header-version-select {
 
 /* MODAL SUPPORT */
 
+/* .search-modal {
+    max-height: 50vh;
+} */
+
+.search-modal::part(backdrop) {
+    justify-content: flex-start;
+    padding-top: 15vh;
+    padding-bottom: 15vh;
+}
+
+.search-modal::part(container) {
+    min-width: 480px;
+}
+
+.search-modal::part(body) {
+    /* max-height: 70vh; */
+    padding: 0;
+}
+
+.search-modal::part(header) {
+    width: 100%;
+}
+
+/* TODO: Review below all under Modal section */
 .code-modal {
     min-width: 700px;
     min-height: 500px;
@@ -739,6 +764,7 @@ header .header-version-select {
     border-style: solid;
     border-radius: 3px;
     border-color: var(--omni-theme-primary-color);
+    width: -moz-fit-content;
     width: fit-content;
     overflow: hidden;
 }
@@ -1476,6 +1502,9 @@ pre[class*='language-'] {
         justify-content: center;
     }
 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                .header-text {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    display: none;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
     .header-actions {
         flex: 1;
     }
@@ -1488,6 +1517,9 @@ pre[class*='language-'] {
         bottom: 0;
     }
 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                .search-modal::part(container) {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    min-width: 90vw;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
     .menu {
         display: none;
     }
@@ -1669,10 +1701,6 @@ pre[class*='language-'] {
 }
 
 @media screen and (max-width: 484px) {
-    .header-text {
-        display: none;
-    }
-
     .home-header .title {
         font-size: 30px;
     }

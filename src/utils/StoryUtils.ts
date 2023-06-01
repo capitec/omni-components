@@ -10,11 +10,13 @@ import { Octokit } from '@octokit/core';
 import { Package, ClassDeclaration, CustomElementDeclaration, Declaration, CustomElement } from 'custom-elements-manifest/schema';
 export { Package, ClassDeclaration, CustomElementDeclaration, Declaration, CustomElement } from 'custom-elements-manifest/schema';
 import Fuse from 'fuse.js';
-import { html, TemplateResult } from 'lit';
+import { html, nothing, TemplateResult, svg } from 'lit';
 import { render } from 'lit-html';
+import { ref } from 'lit-html/directives/ref.js';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import pretty from 'pretty';
 import { Modal } from '../modal/Modal.js';
+import { RenderElement } from '../render-element/RenderElement.js';
 import { SearchField } from '../search-field/SearchField.js';
 import { Select } from '../select/Select.js';
 import { CodeEditor, CodeMirrorEditorEvent, CodeMirrorSourceUpdateEvent } from './CodeEditor.js';
@@ -1295,54 +1297,186 @@ function setupComponentSearch() {
 }
 
 function setupGlobalSearch() {
-    const searchInput = document.querySelector<HTMLInputElement>('#header-search-input');
+    let modal: Modal;
+    let searchField: SearchField;
+    let renderResults: RenderElement;
+    let data: [];
+    let fuse: Fuse<any>;
 
     document.getElementById('header-search-button')?.addEventListener('click', async (e) => {
-        // const books = [
-        //     {
-        //         title: "Old Man's War",
-        //         author: {
-        //             firstName: 'John',
-        //             lastName: 'Scalzi'
-        //         }
-        //     },
-        //     {
-        //         title: 'The Lock Artist',
-        //         author: {
-        //             firstName: 'Steve',
-        //             lastName: 'Hamilton'
-        //         }
-        //     },
-        //     {
-        //         title: 'The Door Artist',
-        //         author: {
-        //             firstName: 'Adam',
-        //             lastName: 'Scott'
-        //         }
-        //     }
-        // ];
+        if (!data) {
+            const search = await fetch('search.json');
+            data = await search.json();
+        }
 
-        Modal.show({ header: 'Search', body: 'body' });
+        if (!fuse) {
+            fuse = new Fuse(data, {
+                keys: ['data', 'title'],
+                includeMatches: true,
+                ignoreLocation: true,
+                minMatchCharLength: 3,
+                threshold: 0.3,
+                includeScore: true,
+                findAllMatches: false,
+                shouldSort: true
+            });
+        }
 
-        const search = await fetch('search.json');
-        const data = await search.json();
+        if (!modal) {
+            modal = Modal.show({
+                noFooter: true,
+                header: () => html`
+                    <omni-search-field 
+                        tabindex="1"
+                        ${ref((e) => {
+                            searchField = e as SearchField;
+                            searchField.focus();
+                        })}
+                        clearable 
+                        @input="${() => (renderResults.data = searchField.value as any)}"
+                        @change="${() => (renderResults.data = searchField.value as any)}">
+                    </omni-search-field>
+                `,
+                body: () => html`
+                    <omni-render-element 
+                        ${ref((e) => (renderResults = e as RenderElement))} 
+                        .renderer="${(searchValue: string) => {
+                            if (!searchValue) return nothing;
 
-        // 2. Set up the Fuse instance
-        const fuse = new Fuse(data, {
-            keys: ['data', 'title'],
-            includeMatches: true,
-            ignoreLocation: true,
-            minMatchCharLength: 3,
-            threshold: 0.3,
-            includeScore: true
-        });
+                            const results = fuse.search(searchValue ?? '') as [];
+                            const order: any = {
+                                component: 1,
+                                story: 2,
+                                md: 3
+                            };
 
-        console.log(searchInput?.value);
+                            results.sort((a: any, b: any) => {
+                                return order[a.item.type] - order[b.item.type];
+                            });
 
-        const r = fuse.search(searchInput?.value as string);
+                            // console.log(results);
 
-        console.log(r);
+                            return html`
+                                <style>
+                                    .search-item {
+                                        display: flex;
+                                        color: var(--omni-theme-font-color);
+                                        
+                                        text-decoration: none;
+                                        cursor: pointer;
+                                        padding: 3px;
+                                    }
+
+                                    .search-item:hover {
+                                        background-color: #209cee1a;
+                                        text-decoration: underline;
+                                    }
+
+                                    .search-item-icon {
+                                        display: flex;
+                                        align-items: center;
+                                        padding-left: 6px;
+                                        padding-right: 6px;
+                                    }
+
+                                    .search-item-title {
+                                        display: flex;
+                                        flex-direction: column;
+                                        align-items: left;
+                                        padding-left: 6px;
+                                        padding-right: 6px;
+                                    }
+
+                                </style>
+                                ${results.map((r: any) => {
+                                    return html`
+                                        <omni-hyperlink href="${r.item.path}">
+                                            <div class="search-item">
+                                                <div class="search-item-icon">
+                                                    <omni-icon size="large">
+                                                        ${getIcon(r.item.type)}
+                                                    </omni-icon>
+                                                </div>
+                                                <div class="search-item-title">
+                                                    <omni-label type="subtitle">${r.item.title}</omni-label>
+                                                    <omni-label type="default">${getSubText(r.item)}</omni-label>
+                                                </div>
+                                            </div>
+                                        </omni-hyperlink>
+                                    `;
+                                })}
+                            `;
+                        }}"></omni-render-element>
+                `
+            }) as Modal;
+            modal?.addEventListener('click-outside', (e) => {
+                modal.hide = true;
+                searchField.value = '';
+                renderResults.data = '' as any;
+            });
+            modal.classList.add('search-modal');
+        } else {
+            modal.hide = false;
+        }
+
+        // The below needs to be revisited to accurately hook into the lifecycle to focus the search field.
+
+        // await modal?.updateComplete;
+        // await Promise.all(Array.from(modal.querySelectorAll('omni-render-element')).map((re) => re.updateComplete));
+        // searchField?.focus();
+        setTimeout(() => {
+            searchField?.focus();
+        }, 10);
     });
+
+    function getIcon(type: string) {
+        switch (type) {
+            case 'component':
+                return svg`
+                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" >
+                        <path d="M0 0h24v24H0V0z" fill="none"/>
+                        <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+                    </svg>
+                `;
+                break;
+            case 'story':
+                return svg`
+                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0V0z" fill="none"/>
+                        <path d="M12 7.77L18.39 18H5.61L12 7.77M12 4L2 20h20L12 4z"/>
+                    </svg>
+                `;
+                break;
+            case 'md':
+                return svg`
+                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24">
+                        <g>
+                            <rect fill="none" height="24" width="24"/>
+                            <g>
+                                <path d="M19,5v14H5V5H19 M19,3H5C3.9,3,3,3.9,3,5v14c0,1.1,0.9,2,2,2h14c1.1,0,2-0.9,2-2V5C21,3.9,20.1,3,19,3L19,3z"/>
+                            </g>
+                            <path d="M14,17H7v-2h7V17z M17,13H7v-2h10V13z M17,9H7V7h10V9z"/>
+                        </g>
+                    </svg>
+                `;
+            default:
+                break;
+        }
+        return html``;
+    }
+
+    function getSubText(item: any) {
+        switch (item.type) {
+            case 'component':
+                return 'Component';
+            case 'md':
+                return 'Documentation';
+            case 'story':
+                return 'Story';
+            default:
+                return '';
+        }
+    }
 }
 
 async function setupTheming() {

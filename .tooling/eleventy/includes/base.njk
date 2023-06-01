@@ -98,14 +98,16 @@
                     </div>
                 </div>
                 <div class="header-actions">
+                    {# <omni-button>
+                        <omni-icon icon="@material/search" id="header-search-button"></omni-icon>
+                    </omni-button> #}
                     <span class="header-action-section">
-                        <input type="text" id="header-search-input" value="color" />
-                        <button id="header-search-button">S</button>
+                        <span class="material-icons docs-omni-component action" style="height: 37px; width: 37px;" id="header-search-button">
+                            search
+                        </span>
                     </span>
                     <span class="header-action-section">
-                        <div class="docs-omni-component action hidden-until-760 action" style="height: 37px; width: 37px;" id="header-framework-select-btn">
-                            
-                        </div>
+                        <div class="docs-omni-component action hidden-until-760 action" style="height: 37px; width: 37px;" id="header-framework-select-btn"></div>
                         <select class="docs-select theme-select transparent hidden-until-760" id="header-framework-native-select"></select>
                         <omni-select class="shrink-omni-select docs-omni-component hidden-after-760" id="header-framework-select"></omni-select>
                     </span>
@@ -117,7 +119,7 @@
                             format_color_fill
                         </span>
                         <select class="docs-select theme-select transparent hidden-until-760" id="header-theme-native-select"></select>
-                        <omni-select class="docs-omni-component hidden-after-760" id="header-theme-select"></omni-select>
+                        <omni-select class="docs-omni-component hidden-after-760" id="header-theme-select" style="height: 37px;"></omni-select>
                     </span>
                     <a href="https://github.com/capitec/omni-components" target="_blank" class="docs-omni-component action">                        
                         <svg style="cursor: pointer;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="24" height="24" fill="currentColor">
