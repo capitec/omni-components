@@ -816,9 +816,6 @@ async function setupFrameworks() {
     document.addEventListener('story-renderer-interactive-update', () => {
         changeFramework((window.localStorage.getItem(frameworkStorageKey) as any) ?? 'HTML');
     });
-    document.addEventListener('omni-docs-framework-change', (e) => {
-        changeFramework((e as CustomEvent<FrameworkOption>).detail ?? 'HTML');
-    });
 
     const frameworkSelect = document.getElementById('header-framework-select') as Select;
     const frameworkNativeSelect = document.getElementById('header-framework-native-select') as HTMLSelectElement;
@@ -861,6 +858,8 @@ async function setupFrameworks() {
         frameworkSelect.value = option;
         frameworkSelectBtn.innerHTML = option.icon;
         switch (framework) {
+            case 'Lit':
+            case 'Vue':
             case 'HTML':
                 htmlImports?.classList?.remove('no-display');
                 htmlPackage?.classList?.remove('no-display');
@@ -879,7 +878,7 @@ async function setupFrameworks() {
 
         if (currentSelection !== framework) {
             document.dispatchEvent(
-                new CustomEvent('story-renderer-interactive-update', {
+                new CustomEvent('omni-docs-framework-change', {
                     bubbles: true,
                     composed: true
                 })
@@ -893,17 +892,10 @@ async function setupFrameworks() {
         }
     }
 
-    addOption(
-        'HTML',
-        raw`
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="24" height="24">
-    <path fill="#E34F26" d="M71,460 L30,0 481,0 440,460 255,512"></path>
-    <path fill="#EF652A" d="M256,472 L405,431 440,37 256,37"></path>
-    <path fill="#EBEBEB" d="M256,208 L181,208 176,150 256,150 256,94 255,94 114,94 115,109 129,265 256,265zM256,355 L255,355 192,338 188,293 158,293 132,293 139,382 255,414 256,414z"></path>
-    <path fill="#FFF" d="M255,208 L255,265 325,265 318,338 255,355 255,414 371,382 372,372 385,223 387,208 371,208zM255,94 L255,129 255,150 255,150 392,150 392,150 392,150 393,138 396,109 397,94z"></path>
-</svg>`
-    );
+    addOption('HTML', raw`<img src="./assets/images/html5.svg" style="width: 24px; height: 24px;" alt="">`);
+    addOption('Lit', raw`<img src="./assets/images/lit-logo.svg#flame" style="width: 24px; height: 24px;" alt="">`);
     addOption('React', raw`<img src="./assets/images/react.svg" style="width: 24px; height: 24px;" alt="">`);
+    addOption('Vue', raw`<img src="./assets/images/vue.svg" style="width: 24px; height: 24px;" alt="">`);
 
     frameworkSelect.items = frameworkOptions;
     frameworkSelect.renderItem = (item: any) => html`
@@ -911,7 +903,7 @@ async function setupFrameworks() {
         .framework-item {
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
         }
         .framework-item > * {
             margin-right: 6px;

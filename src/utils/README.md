@@ -101,16 +101,18 @@
 
 ## Properties
 
-| Property          | Attribute     | Type                              |
-|-------------------|---------------|-----------------------------------|
-| `htmlCodeEditor`  |               | `CodeEditor \| undefined`         |
-| `interactive`     | `interactive` | `boolean \| undefined`            |
-| `key`             | `key`         | `string \| undefined`             |
-| `override`        |               |                                   |
-| `path`            | `path`        | `string \| undefined`             |
-| `propertyEditor`  |               | `LivePropertyEditor \| undefined` |
-| `reactCodeEditor` |               | `CodeEditor \| undefined`         |
-| `tag`             | `tag`         | `string \| undefined`             |
+| Property               | Attribute     | Modifiers | Type                                             | Default                                          |
+|------------------------|---------------|-----------|--------------------------------------------------|--------------------------------------------------|
+| `codeEditor`           |               |           | `CodeEditor \| undefined`                        |                                                  |
+| `interactive`          | `interactive` |           | `boolean \| undefined`                           |                                                  |
+| `key`                  | `key`         |           | `string \| undefined`                            |                                                  |
+| `noInteractiveCodePen` |               | readonly  | `FrameworkOption[]`                              | ["React"]                                        |
+| `override`             |               |           |                                                  |                                                  |
+| `path`                 | `path`        |           | `string \| undefined`                            |                                                  |
+| `propertyEditor`       |               |           | `LivePropertyEditor \| undefined`                |                                                  |
+| `secondaryCodeEditor`  |               |           | `CodeEditor \| undefined`                        |                                                  |
+| `sourceFallbacks`      |               | readonly  | `[{ fallbackFramework: FrameworkOption; frameworks: FrameworkOption[]; allowRenderFromResult?: boolean \| undefined; }]` | [{"fallbackFramework":"HTML","frameworks":["HTML","Lit","Vue"],"allowRenderFromResult":true}] |
+| `tag`                  | `tag`         |           | `string \| undefined`                            |                                                  |
 
 ## Methods
 

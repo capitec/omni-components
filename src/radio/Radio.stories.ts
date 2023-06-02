@@ -5,7 +5,7 @@ import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
-import { ComponentStoryFormat, CSFIdentifier } from '../utils/StoryUtils.js';
+import { ComponentStoryFormat, CSFIdentifier, getSourceFromLit } from '../utils/StoryUtils.js';
 import { Radio } from './Radio.js';
 
 import './Radio.js';
@@ -36,6 +36,15 @@ export const Interactive: ComponentStoryFormat<Args> = {
             ?checked="${args.checked}"
             ?disabled="${args.disabled}">${unsafeHTML(args['[Default Slot]'])}</omni-radio>
     `,
+    frameworkSources: [
+        {
+            framework: 'Vue',
+            load: (args) =>
+                getSourceFromLit(Interactive!.render!(args), undefined, (s) =>
+                    s.replace(' disabled', ' :disabled="true"').replace(' checked', ' :checked="true"')
+                )
+        }
+    ],
     name: 'Interactive',
     args: {
         label: '',
@@ -140,6 +149,13 @@ export const Checked: ComponentStoryFormat<Args> = {
             load: (args) => `import { OmniRadio } from "@capitec/omni-components-react/radio";
 
 const App = () => <OmniRadio${args.label ? ` label='${args.label}'` : ''}${args.checked ? ` checked` : ''}/>;`
+        },
+        {
+            framework: 'Vue',
+            load: (args) =>
+                getSourceFromLit(Error_Label!.render!(args), undefined, (s) =>
+                    s.replace(' disabled', ' :disabled="true"').replace(' checked', ' :checked="true"')
+                )
         }
     ],
     description: 'Set the component to a checked state.',
@@ -162,6 +178,13 @@ export const Disabled: ComponentStoryFormat<Args> = {
             load: (args) => `import { OmniRadio } from "@capitec/omni-components-react/radio";
 
 const App = () => <OmniRadio${args.label ? ` label='${args.label}'` : ''}${args.disabled ? ` disabled` : ''}/>;`
+        },
+        {
+            framework: 'Vue',
+            load: (args) =>
+                getSourceFromLit(Disabled!.render!(args), undefined, (s) =>
+                    s.replace(' disabled', ' :disabled="true"').replace(' checked', ' :checked="true"')
+                )
         }
     ],
     description: 'Prevent interaction (pointer events).',

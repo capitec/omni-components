@@ -103,6 +103,26 @@ export const Interactive: ComponentStoryFormat<Args> = {
                 }
             })}            
             `
+        },
+        {
+            framework: 'Vue',
+            load: (args) => raw`
+            ${getSourceFromLit(
+                modalHtml(args),
+                (container) => {
+                    const modal = container.querySelector('omni-modal');
+                    if (modal) {
+                        modal.removeAttribute('hide');
+                    }
+                },
+                (s) =>
+                    s
+                        .replace(' hide', ' :hide="true"')
+                        .replace(' no-header', ' :no-header="true"')
+                        .replace(' no-footer', ' :no-footer="true"')
+                        .replace(' no-fullscreen', ' :no-fullscreen="true"')
+            )}            
+            `
         }
     ],
     name: 'Interactive',
@@ -151,6 +171,42 @@ export const Header_Label: ComponentStoryFormat<Args> = {
         ${modalHtml(args)}
     `,
     frameworkSources: [
+        {
+            framework: 'Lit',
+            load: (args) => raw`
+${getSourceFromLit(
+    modalHtml(args),
+    (container) => {
+        const modal = container.querySelector('omni-modal');
+        if (modal) {
+            modal.removeAttribute('hide');
+            modal.setAttribute('id', 'omni-modal');
+        }
+    },
+    (s) => s.replace('id="modal-close-btn"', '@click="${() => document.getElementById(\'omni-modal\').hide = true}"')
+)}
+            `
+        },
+        {
+            framework: 'Vue',
+            sourceParts: {
+                htmlFragment: (args) => raw`
+${getSourceFromLit(
+    modalHtml(args),
+    (container) => {
+        const modal = container.querySelector('omni-modal');
+        if (modal) {
+            modal.removeAttribute('hide');
+            modal.setAttribute('id', 'omni-modal');
+        }
+    },
+    (s) => s.replace('id="modal-close-btn"', '@click="closeModal"')
+)}`,
+                jsFragment: `window.vueData = {
+        closeModal: () => document.getElementById("omni-modal").hide = true
+};`
+            }
+        },
         {
             framework: 'HTML',
             load: (args) => raw`
@@ -240,6 +296,42 @@ export const Header_Align: ComponentStoryFormat<Args> = {
         ${modalHtml(args)}
     `,
     frameworkSources: [
+        {
+            framework: 'Vue',
+            sourceParts: {
+                htmlFragment: (args) => raw`
+${getSourceFromLit(
+    modalHtml(args),
+    (container) => {
+        const modal = container.querySelector('omni-modal');
+        if (modal) {
+            modal.removeAttribute('hide');
+            modal.setAttribute('id', 'omni-modal');
+        }
+    },
+    (s) => s.replace('id="modal-close-btn"', '@click="closeModal"')
+)}`,
+                jsFragment: `window.vueData = {
+        closeModal: () => document.getElementById("omni-modal").hide = true
+};`
+            }
+        },
+        {
+            framework: 'Lit',
+            load: (args) => raw`
+${getSourceFromLit(
+    modalHtml(args),
+    (container) => {
+        const modal = container.querySelector('omni-modal');
+        if (modal) {
+            modal.removeAttribute('hide');
+            modal.setAttribute('id', 'omni-modal');
+        }
+    },
+    (s) => s.replace('id="modal-close-btn"', '@click="${() => document.getElementById(\'omni-modal\').hide = true}"')
+)}
+            `
+        },
         {
             framework: 'HTML',
             load: (args) => raw`
@@ -332,6 +424,42 @@ export const Header_Slot: ComponentStoryFormat<Args> = {
     `,
     frameworkSources: [
         {
+            framework: 'Vue',
+            sourceParts: {
+                htmlFragment: (args) => raw`
+${getSourceFromLit(
+    modalHtml(args),
+    (container) => {
+        const modal = container.querySelector('omni-modal');
+        if (modal) {
+            modal.removeAttribute('hide');
+            modal.setAttribute('id', 'omni-modal');
+        }
+    },
+    (s) => s.replace('id="modal-close-btn"', '@click="closeModal"')
+)}`,
+                jsFragment: `window.vueData = {
+        closeModal: () => document.getElementById("omni-modal").hide = true
+};`
+            }
+        },
+        {
+            framework: 'Lit',
+            load: (args) => raw`
+${getSourceFromLit(
+    modalHtml(args),
+    (container) => {
+        const modal = container.querySelector('omni-modal');
+        if (modal) {
+            modal.removeAttribute('hide');
+            modal.setAttribute('id', 'omni-modal');
+        }
+    },
+    (s) => s.replace('id="modal-close-btn"', '@click="${() => document.getElementById(\'omni-modal\').hide = true}"')
+)}
+            `
+        },
+        {
             framework: 'HTML',
             load: (args) => raw`
             ${getSourceFromLit(
@@ -423,6 +551,48 @@ export const No_Header: ComponentStoryFormat<Args> = {
     `,
     frameworkSources: [
         {
+            framework: 'Vue',
+            sourceParts: {
+                htmlFragment: (args) => raw`
+${getSourceFromLit(
+    modalHtml(args),
+    (container) => {
+        const modal = container.querySelector('omni-modal');
+        if (modal) {
+            modal.removeAttribute('hide');
+            modal.setAttribute('id', 'omni-modal');
+        }
+    },
+    (s) =>
+        s
+            .replace('id="modal-close-btn"', '@click="closeModal"')
+            .replace(' hide', ' :hide="true"')
+            .replace(' no-header', ' :no-header="true"')
+            .replace(' no-footer', ' :no-footer="true"')
+            .replace(' no-fullscreen', ' :no-fullscreen="true"')
+)}`,
+                jsFragment: `window.vueData = {
+        closeModal: () => document.getElementById("omni-modal").hide = true
+};`
+            }
+        },
+        {
+            framework: 'Lit',
+            load: (args) => raw`
+${getSourceFromLit(
+    modalHtml(args),
+    (container) => {
+        const modal = container.querySelector('omni-modal');
+        if (modal) {
+            modal.removeAttribute('hide');
+            modal.setAttribute('id', 'omni-modal');
+        }
+    },
+    (s) => s.replace('id="modal-close-btn"', '@click="${() => document.getElementById(\'omni-modal\').hide = true}"')
+)}
+            `
+        },
+        {
             framework: 'HTML',
             load: (args) => raw`
             ${getSourceFromLit(
@@ -513,6 +683,29 @@ export const Footer_Slot: ComponentStoryFormat<Args> = {
     `,
     frameworkSources: [
         {
+            framework: 'Vue',
+            sourceParts: {
+                htmlFragment: (args) => raw`
+${getSourceFromLit(
+    modalHtml(args),
+    (container) => {
+        const modal = container.querySelector('omni-modal');
+        if (modal) {
+            modal.removeAttribute('hide');
+            modal.setAttribute('id', 'omni-modal');
+        }
+    },
+    (s) =>
+        s
+            .replace('id="modal-close-btn"', '@click="closeModal"')
+            .replace(' hide', ' :hide="true"')
+            .replace(' no-header', ' :no-header="true"')
+            .replace(' no-footer', ' :no-footer="true"')
+            .replace(' no-fullscreen', ' :no-fullscreen="true"')
+)}`
+            }
+        },
+        {
             framework: 'HTML',
             load: (args) => raw`
             ${getSourceFromLit(modalHtml(args), (container) => {
@@ -583,6 +776,29 @@ export const No_Footer: ComponentStoryFormat<Args> = {
         ${modalHtml(args)}
     `,
     frameworkSources: [
+        {
+            framework: 'Vue',
+            sourceParts: {
+                htmlFragment: (args) => raw`
+${getSourceFromLit(
+    modalHtml(args),
+    (container) => {
+        const modal = container.querySelector('omni-modal');
+        if (modal) {
+            modal.removeAttribute('hide');
+            modal.setAttribute('id', 'omni-modal');
+        }
+    },
+    (s) =>
+        s
+            .replace('id="modal-close-btn"', '@click="closeModal"')
+            .replace(' hide', ' :hide="true"')
+            .replace(' no-header', ' :no-header="true"')
+            .replace(' no-footer', ' :no-footer="true"')
+            .replace(' no-fullscreen', ' :no-fullscreen="true"')
+)}`
+            }
+        },
         {
             framework: 'HTML',
             load: (args) => raw`
@@ -683,6 +899,46 @@ export const Scripted_Modal: ComponentStoryFormat<Args> = {
                     }}" label="Show Modal" ></omni-button>
      `,
     frameworkSources: [
+        {
+            framework: 'Vue',
+            sourceParts: {
+                htmlFragment: raw`<span>Page Content</span>`,
+                jsFragment: `import { Modal } from '@capitec/omni-components/modal';
+
+const footer = document.createElement('div');
+footer.textContent = 'The footer';
+footer.style.color = 'orange';
+
+const modal = Modal.show({
+    body: () => '<span style="min-width: 777px;min-height: 434px;display: flex;justify-content: center;text-align: center;align-items: center;">Body Content</span>',
+    footer: footer,
+    header: 'Header Content',
+    headerAlign: 'right',
+    id: 'some-id'
+});
+                `
+            }
+        },
+        {
+            framework: 'Lit',
+            sourceParts: {
+                htmlFragment: raw`<span>Page Content</span>`,
+                jsFragment: `import { Modal } from '@capitec/omni-components/modal';
+
+const footer = document.createElement('div');
+footer.textContent = 'The footer';
+footer.style.color = 'orange';
+
+const modal = Modal.show({
+    body: () => html\`<span style="min-width: 777px;min-height: 434px;display: flex;justify-content: center;text-align: center;align-items: center;">Body Content</span>\`,
+    footer: footer,
+    header: 'Header Content',
+    headerAlign: 'right',
+    id: 'some-id'
+});
+                `
+            }
+        },
         {
             framework: 'HTML',
             load: (args) => raw`

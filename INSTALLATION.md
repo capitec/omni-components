@@ -79,6 +79,48 @@ import { OmniButton } from "https://cdn.jsdelivr.net/npm/@capitec/omni-component
 const App = () => <OmniButton label='Click' type='primary'/>; 
 ```
 
+## Vue Support ⚙
+
+By default, Vue will attempt to resolve a non-native HTML tag as a registered Vue component before falling back to rendering it as a custom element. 
+This means that in order for custom web components like Omni Components to behave correctly, Vue needs to be made aware that they are custom elements and not Vue components.
+
+In Browser (no bundler):
+```js
+// Only works if using in-browser compilation.
+// If using build tools, see config example.
+app.config.compilerOptions.isCustomElement = (tag) => tag.startsWith('omni-');
+```
+
+Config Example (Vite as bundler): 
+```js
+// vite.config.js
+import vue from '@vitejs/plugin-vue';
+
+export default {
+  plugins: [
+    vue({
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => tag.includes('omni-')
+        }
+      }
+    })
+  ]
+}
+```
+
+Additionally, Vue makes some assumptions regarding property naming, which does not alway apply to custom elements like Omni Components.
+Vue expects bound properties to be `kebab-case` named, which means by default `camelCase` named properties will have incorrect bindings.
+
+Use the `:kebab-prop.camel` syntax in order to enforce `camelCase` bindings. See the [`.camel` modifier for `v-bind`](https://vuejs.org/api/built-in-directives.html#v-bind) for more detail.
+
+For example: To bind to a property named `renderItem` with Vue, the property would be bound as `:render-item.camel`.
+
+<br/>
+
+Refer to [Vue and Web Components](https://vuejs.org/guide/extras/web-components.html#using-custom-elements-in-vue) for additional context on Vue support for custom elements.
+
+
 
 ## Starter Templates 🔰
 
