@@ -215,7 +215,7 @@ header .header-version-select {
 
 .header-actions > .action:hover,
 .header-actions > .header-action-section:hover {
-    --header-action-background-color:var(--omni-theme-background-hover-color);
+    --header-action-background-color: var(--omni-theme-background-hover-color);
 }
 
 .header-actions > .action:hover,
