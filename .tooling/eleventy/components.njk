@@ -5,7 +5,7 @@ pagination:
     data: components
     size: 1
     alias: component
-permalink: "components/{{ component.name | splitPascalCase()  | slugify }}/"
+permalink: "components/{{ component.name | splitPascalCase() | slugify }}/"
 eleventyComputed:
   title: "{{ component.name | splitPascalCase() }} - Omni Components"
 ---

@@ -1325,6 +1325,7 @@ function setupGlobalSearch() {
         if (!modal) {
             modal = Modal.show({
                 noFooter: true,
+                noFullscreen: true,
                 header: () => html`
                     <omni-search-field 
                         tabindex="1"
@@ -1358,18 +1359,27 @@ function setupGlobalSearch() {
 
                             return html`
                                 <style>
+
+                                    omni-hyperlink {
+                                        --omni-hyperlink-text-decorator-hover: none;
+                                    }
+
                                     .search-item {
                                         display: flex;
                                         color: var(--omni-theme-font-color);
-                                        
                                         text-decoration: none;
-                                        cursor: pointer;
                                         padding: 3px;
+                                        cursor: pointer;
+                                    }
+
+                                    omni-label {
+                                        cursor: pointer;
                                     }
 
                                     .search-item:hover {
-                                        background-color: #209cee1a;
-                                        text-decoration: underline;
+                                        background-color: #209cee;
+                                        text-decoration: none;
+                                        /* text-decoration: underline; */
                                     }
 
                                     .search-item-icon {
@@ -1386,14 +1396,13 @@ function setupGlobalSearch() {
                                         padding-left: 6px;
                                         padding-right: 6px;
                                     }
-
                                 </style>
                                 ${results.map((r: any) => {
                                     return html`
                                         <omni-hyperlink href="${r.item.path}">
                                             <div class="search-item">
                                                 <div class="search-item-icon">
-                                                    <omni-icon size="large">
+                                                    <omni-icon size="medium">
                                                         ${getIcon(r.item.type)}
                                                     </omni-icon>
                                                 </div>
@@ -1409,7 +1418,7 @@ function setupGlobalSearch() {
                         }}"></omni-render-element>
                 `
             }) as Modal;
-            modal?.addEventListener('click-outside', (e) => {
+            modal?.addEventListener('click-outside', () => {
                 modal.hide = true;
                 searchField.value = '';
                 renderResults.data = '' as any;
@@ -1471,8 +1480,11 @@ function setupGlobalSearch() {
                 return 'Component';
             case 'md':
                 return 'Documentation';
-            case 'story':
-                return 'Story';
+            case 'story': {
+                const story = item.data[0];
+                // return `Story - ${story}`;
+                return story;
+            }
             default:
                 return '';
         }

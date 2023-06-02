@@ -3,6 +3,7 @@ import { globbySync } from 'globby';
 import { loadCustomElementsModuleByFileFor } from '../../../dist/utils/StoryUtils.js';
 import markdownIt from 'markdown-it';
 import { slug } from 'github-slugger';
+import { splitPascalCase } from './filters.js';
 
 export async function components() {
     const stories = globbySync('./dist/**/*.stories.js');
@@ -49,20 +50,35 @@ export async function search() {
         const result = [];
         let matches = [];
 
+        // Create single index entry for entire file.
         md.forEach((token, index, arr) => {
-            if (token.type === 'heading_open') {
-                const link = slug(arr[index + 1].content);
-                matches = [];
-                result.push({
-                    path: prefix + link,
-                    data: matches,
-                    type: 'md',
-                    title: title
-                })
-            } else if (token.type === 'inline') {
+            if (token.content) {
                 matches.push(token.content);
             }
         });
+
+        result.push({
+            path: prefix,
+            type: 'md',
+            title: title,
+            data: matches
+        });
+
+        // Create index entry per line in the file.
+        // md.forEach((token, index, arr) => {
+        //     if (token.type === 'heading_open') {
+        //         const link = slug(arr[index + 1].content);
+        //         matches = [];
+        //         result.push({
+        //             path: prefix + link,
+        //             data: matches,
+        //             type: 'md',
+        //             title: title
+        //         })
+        //     } else if (token.type === 'inline') {
+        //         matches.push(token.content);
+        //     }
+        // });
 
         return result;
     }
@@ -83,18 +99,18 @@ export async function search() {
             // Add component itself to the index.
             result.push({
                 path: `./components/${name.toLowerCase()}/`,
-                data: [name.toLowerCase(), moduleDescription],
+                data: [slug(splitPascalCase(name)).toLowerCase(), moduleDescription],
                 type: 'component',
-                title: name
+                title: splitPascalCase(name)
             });
 
             // Add component stories to the index.
             for (const story of moduleStories) {
                 result.push({
-                    path: `./components/${name.toLowerCase()}/#story-${story.name.toLowerCase().replace('_', '-')}`,
-                    data: [story.name.toLowerCase(), story.description ?? ''],
+                    path: `./components/${slug(splitPascalCase(name)).toLowerCase()}/#story-${story.name.toLowerCase().replaceAll('_', '-')}`,
+                    data: [story.name.replaceAll('_', ' '), story.description ?? ''],
                     type: 'story',
-                    title: name
+                    title: splitPascalCase(name)
                 });
             }
         }
@@ -104,8 +120,8 @@ export async function search() {
 
     const response = [
         ... await createComponentIndex(),
-        ... await createMarkdownIndex('./INSTALLATION.md', './getting-started/#', 'Getting Started'),
-        ... await createMarkdownIndex('./CONTRIBUTING.md', './contributing/#', 'Contributing')
+        ... await createMarkdownIndex('./INSTALLATION.md', './getting-started', 'Getting Started'),
+        ... await createMarkdownIndex('./CONTRIBUTING.md', './contributing', 'Contributing')
     ];
 
     return response;
