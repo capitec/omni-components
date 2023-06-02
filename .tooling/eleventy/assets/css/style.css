@@ -198,7 +198,7 @@ header .header-version-select {
 
 .header-actions > .action,
 .header-actions > .header-action-section {
-    --header-action-background-color:var(--omni-theme-background-color);
+    --header-action-background-color: var(--omni-theme-background-color);
     background-color: var(--omni-theme-background-color);
     color: var(--omni-theme-font-color);
 }
@@ -211,11 +211,6 @@ header .header-version-select {
 
 .header-actions {    
     --omni-select-items-max-height: 300px;
-}
-
-.header-actions > .action:hover,
-.header-actions > .header-action-section:hover {
-    --header-action-background-color: var(--omni-theme-background-hover-color);
 }
 
 .header-actions > .action:hover,
