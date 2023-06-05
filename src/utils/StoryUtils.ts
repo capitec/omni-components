@@ -623,11 +623,13 @@ async function setupThemes() {
         });
     }
 
-    function addOption(key: string) {
+    function addOption(key: string, icon: any) {
         const option = {
             value: key,
-            label: `${titleCase(key)} Theme`
+            label: titleCase(key),
+            icon: icon
         };
+
         const nativeOption = document.createElement('option');
         nativeOption.label = option.label;
         nativeOption.value = option.value;
@@ -746,11 +748,54 @@ async function setupThemes() {
         }
     }
 
-    addOption(lightThemeKey);
-    addOption(darkThemeKey);
-    addOption(customThemeKey);
+    addOption(
+        lightThemeKey,
+        raw`
+            <omni-icon symmetrical>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100%" height="100%">
+                    <path d="M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0 c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2 c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1 C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06 c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41 l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41 c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36 c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/>
+                </svg>
+            </omni-icon>
+        `
+    );
+    addOption(
+        darkThemeKey,
+        raw`
+            <omni-icon symmetrical>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100%" height="100%">
+                    <path d="M9.37 5.51A7.35 7.35 0 0 0 9.1 7.5c0 4.08 3.32 7.4 7.4 7.4.68 0 1.35-.09 1.99-.27A7.014 7.014 0 0 1 12 19c-3.86 0-7-3.14-7-7 0-2.93 1.81-5.45 4.37-6.49zM12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/>
+                </svg>
+            </omni-icon>
+        `
+    );
+    addOption(
+        customThemeKey,
+        raw`
+            <omni-icon symmetrical>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100%" height="100%">
+                    <path d="M16.56 8.94 7.62 0 6.21 1.41l2.38 2.38-5.15 5.15a1.49 1.49 0 0 0 0 2.12l5.5 5.5c.29.29.68.44 1.06.44s.77-.15 1.06-.44l5.5-5.5c.59-.58.59-1.53 0-2.12zM5.21 10 10 5.21 14.79 10H5.21zM19 11.5s-2 2.17-2 3.5c0 1.1.9 2 2 2s2-.9 2-2c0-1.33-2-3.5-2-3.5zM2 20h20v4H2v-4z"/>
+                </svg>
+            </omni-icon>
+        `
+    );
 
     themeSelect.items = themeOptions;
+    themeSelect.renderItem = (item: any) => html`
+        <style>
+            .theme-item {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+            }
+            .theme-item > * {
+                margin-right: 6px;
+            }
+        </style>
+        <div class="theme-item"> 
+            ${unsafeHTML(item.icon)} ${item.label}
+        </div>
+    `;
+    themeSelect.renderSelection = (item: any) => html`${unsafeHTML(item.icon || 'none')}`;
     themeSelect.displayField = 'label';
     themeSelect.idField = 'value';
     // themeSelect.style.display = 'flex';
@@ -1334,8 +1379,12 @@ function setupGlobalSearch() {
                     <omni-render-element 
                         ${ref((e) => (renderResults = e as RenderElement))} 
                         .renderer="${(searchValue: string) => {
-                            if (!searchValue) return nothing;
+                            if (!searchValue) {
+                                modal.style.setProperty('--omni-modal-header-border-radius', '4px');
+                                return nothing;
+                            }
 
+                            // Do the search via fuse library.
                             const results = fuse.search(searchValue ?? '') as [];
                             const order: any = {
                                 component: 1,
@@ -1346,6 +1395,8 @@ function setupGlobalSearch() {
                             results.sort((a: any, b: any) => {
                                 return order[a.item.type] - order[b.item.type];
                             });
+
+                            modal.style.setProperty('--omni-modal-header-border-radius', results.length > 0 ? 'unset' : '4px');
 
                             // console.log(results);
 
