@@ -186,14 +186,11 @@ header .header-version-select {
 }
 
 .header-actions>.action {
-    padding: 5px;
+    padding: 7px;
     cursor: pointer;
     border-radius: 6px;
     border: 1px solid var(--docs-border-color);
     display: flex;
-
-    /* Height */
-    height: 37px;
 }
 
 .header-actions>.action,
