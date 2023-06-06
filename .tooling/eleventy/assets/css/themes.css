@@ -126,6 +126,7 @@ header {
     --omni-text-field-padding: 8px;
     --omni-select-field-width: 110px;
     --omni-switch-checked-track-background-color: var(--omni-accent-color);
+    --omni-button-slot-margin-right: 0;
     --omni-button-secondary-border-color: var(--docs-border-color);
     --omni-button-secondary-hover-box-shadow: 'none';
     --omni-button-secondary-hover-border-color: var(--omni-primary-hover-color);
@@ -136,6 +137,10 @@ header {
     --omni-button-padding-right: 7px;
 }
 
+.play-tests .docs-omni-component,
+#header-search-button>omni-icon {
+    --omni-icon-fill: black;
+}
 
 /* START DARK THEME */
 
@@ -241,4 +246,8 @@ header {
     --docs-prism-function-name-color: #6196cc;
 }
 
+*[theme="dark"] #header-search-button>omni-icon,
+*[theme="dark"] .play-tests .docs-omni-component {
+    --omni-icon-fill: white;
+}
 /* END DARK THEME */
