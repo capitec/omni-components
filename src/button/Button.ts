@@ -68,11 +68,11 @@ import { OmniElement } from '../core/OmniElement.js';
  * @cssprop --omni-button-white-hover-background-color - White "type" hover background color.
  * @cssprop --omni-button-white-hover-box-shadow - White "type" hover box shadow.
  * @cssprop --omni-button-white-hover-border-color - White "type" hover border color.
- * 
+ *
  * @cssprop --omni-button-disabled-border-color - Disabled border color.
  * @cssprop --omni-button-disabled-background-color - Disabled background color.
  * @cssprop --omni-button-disabled-active-hover-background-color - Disabled active background color.
- * 
+ *
  * @cssprop --omni-button-slot-margin-right - Slot margin left (When positioned right of label).
  * @cssprop --omni-button-slot-margin-bottom - Slot margin bottom (When positioned top of label).
  * @cssprop --omni-button-slot-margin-left - Slot margin left (When positioned right of label).
