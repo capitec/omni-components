@@ -273,7 +273,37 @@ const plugins = {
                     // console.log(customElementsManifest);
                 }
             };
-        }()
+        }(),
+        function storyDescriptionPlugin() {
+            return {
+                // Runs for each module
+                analyzePhase({ ts, node, moduleDoc }) {
+
+                    // if (node?.getText()?.includes('type of button') && node?.name?.getText() === 'description') {
+                    //     const x = 1;
+                    // }
+
+                    switch (node.kind) {
+                        case ts.SyntaxKind.PropertyAssignment:
+                            if (node?.name?.getText() === 'description' &&
+                                moduleDoc?.path?.endsWith('stories.ts')) {
+                                const declaration = moduleDoc.declarations[moduleDoc.declarations.length - 1];
+                                declaration.description = node?.initializer?.text || node?.initializer?.getText();
+                                declaration.description = declaration.description?.replace('() => html', '')?.replaceAll('`', '')
+                            }
+                            break;
+                    }
+                },
+                // Runs for each module, after analyzing, all information about your module should now be available
+                moduleLinkPhase({ moduleDoc }) {
+                    // console.log(moduleDoc);
+                },
+                // Runs after all modules have been parsed, and after post processing
+                packageLinkPhase(customElementsManifest) {
+                    // console.log(customElementsManifest);
+                },
+            };
+        }(),
     ]
 };
 

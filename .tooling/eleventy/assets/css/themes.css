@@ -9,7 +9,7 @@
     --omni-theme-accent-active-color:  #b4b4b4; /* 6% darker */
 
     --omni-theme-background-color:  #ffffff;
-    --omni-theme-background-hover-color:  #f7f7f71a; /* 3% darker */
+    --omni-theme-background-hover-color: #F7F7F7; /* 3% darker */ 
     --omni-theme-background-active-color:  #f0f0f0; /* 6% darker */
 
     --omni-theme-font-color:  black;
@@ -93,7 +93,7 @@ header {
 .docs-omni-component {
 
     --omni-theme-primary-color:  #808080;
-    --omni-theme-primary-hover-color: #7878781a ; /* 3% darker */
+    --omni-theme-primary-hover-color: black;
     --omni-theme-primary-active-color: #787878 ; /* 6% darker */
 
     --omni-theme-accent-color: #c3c3c3;
@@ -101,7 +101,7 @@ header {
     --omni-theme-accent-active-color:  #b4b4b4; /* 6% darker */
 
     --omni-theme-background-color:  #ffffff;
-    --omni-theme-background-hover-color:  #f7f7f71a; /* 3% darker */
+    --omni-theme-background-hover-color: #F7F7F7; /* 3% darker */
     --omni-theme-background-active-color:  #f0f0f0; /* 6% darker */
 
     --omni-theme-font-color:  black;
@@ -120,11 +120,20 @@ header {
     --omni-theme-border-radius: 4px;
     --omni-theme-border-width: 2px;
 
+    /* COMPONENT SPECIFIC STYLES */
     --omni-form-border-color: var(--docs-border-color);
     --omni-select-field-padding: 8px;
     --omni-text-field-padding: 8px;
     --omni-select-field-width: 110px;
     --omni-switch-checked-track-background-color: var(--omni-accent-color);
+    --omni-button-secondary-border-color: var(--docs-border-color);
+    --omni-button-secondary-hover-box-shadow: 'none';
+    --omni-button-secondary-hover-border-color: var(--omni-primary-hover-color);
+    --omni-button-secondary-border-width: 1px;
+    --omni-button-padding-top: 7px;
+    --omni-button-padding-bottom: 7px;
+    --omni-button-padding-left: 7px;
+    --omni-button-padding-right: 7px;
 }
 
 
@@ -135,8 +144,8 @@ header {
 *[theme="dark"] .docs-omni-component {
 
     --omni-theme-primary-color:  #b4b4b4;
-    --omni-theme-primary-hover-color: #f7f7f71a ;
-    --omni-theme-primary-active-color: #ffffff ;
+    --omni-theme-primary-hover-color: #FFFFFF;
+    --omni-theme-primary-active-color: #FFFFFF;
 
     --omni-theme-accent-color: #808080;
     --omni-theme-accent-hover-color:  #bbbbbb1a;
