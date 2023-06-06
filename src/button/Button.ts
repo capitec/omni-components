@@ -327,22 +327,29 @@ export class Button extends OmniElement {
     }
 
     protected override render(): TemplateResult {
+        // If the label set, apply slot position class selector.
+        const slotPositionProp = this.label
+            ? {
+                  [`slot-${this.slotPosition}`]: this.slotPosition
+              }
+            : {};
+
         return html`
-      <button
-        id="button"
-        class=${classMap({
-            button: true,
-            [`slot-${this.slotPosition}`]: this.slotPosition,
-            [`${this.type}`]: this.type,
-            disabled: this.disabled ?? false
-        })}
-        ?disabled=${this.disabled}
-        aria-disabled=${this.disabled ? 'true' : 'false'}
-        tabindex=${this.disabled ? '-1' : '0'}>
-        <slot></slot>
-        ${this.label ? html`<label id="label" class="label">${this.label}</label>` : nothing}
-      </button>
-    `;
+            <button
+                id="button"
+                class=${classMap({
+                    button: true,
+                    ...slotPositionProp,
+                    [`${this.type}`]: this.type,
+                    disabled: this.disabled ?? false
+                })}
+                ?disabled=${this.disabled}
+                aria-disabled=${this.disabled ? 'true' : 'false'}
+                tabindex=${this.disabled ? '-1' : '0'}>
+                <slot></slot>
+                ${this.label ? html`<label id="label" class="label">${this.label}</label>` : nothing}
+            </button>
+        `;
     }
 }
 
