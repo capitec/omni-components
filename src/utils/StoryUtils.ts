@@ -586,13 +586,12 @@ async function setupThemes() {
         document.getElementById('cssValue')?.click();
     }
 
-    const themeEdit = document.getElementById('header-theme-edit-btn') as HTMLSpanElement;
-    if (themeEdit) {
-        themeEdit.style.display = 'none';
-        themeEdit.addEventListener('click', () => showCustomCssSource());
-    }
+    // const themeEdit = document.getElementById('header-theme-edit-btn') as HTMLSpanElement;
+    // if (themeEdit) {
+    //     themeEdit.style.display = 'none';
+    //     themeEdit.addEventListener('click', () => showCustomCssSource());
+    // }
     const themeSelect = document.getElementById('header-theme-select') as Select;
-    const themeNativeSelect = document.getElementById('header-theme-native-select') as HTMLSelectElement;
     const themeStyle = document.getElementById('theme-styles') as HTMLStyleElement;
     let darkThemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     const themeOptions: { value: string; label: string }[] = [];
@@ -607,7 +606,6 @@ async function setupThemes() {
                     label: `${titleCase(darkThemeKey)} Theme`
                 };
                 themeSelect.value = option;
-                themeNativeSelect.value = darkThemeKey;
                 window.sessionStorage.setItem(themeStorageKey, darkThemeKey);
                 changeTheme(event, darkThemeKey);
             } else if (!darkThemePreferred && storedTheme === darkThemeKey) {
@@ -616,7 +614,6 @@ async function setupThemes() {
                     label: `${titleCase(lightThemeKey)} Theme`
                 };
                 themeSelect.value = option;
-                themeNativeSelect.value = lightThemeKey;
                 window.sessionStorage.setItem(themeStorageKey, lightThemeKey);
                 changeTheme(event, lightThemeKey);
             }
@@ -646,7 +643,6 @@ async function setupThemes() {
             changeTheme(null as any, key);
         }
         themeOptions.push(option);
-        themeNativeSelect.add(nativeOption);
         return option;
     }
 
@@ -697,9 +693,9 @@ async function setupThemes() {
     }
 
     function changeTheme(e: Event, theme: string) {
-        if (themeEdit) {
-            themeEdit.style.display = 'none';
-        }
+        // if (themeEdit) {
+        //     themeEdit.style.display = 'none';
+        // }
 
         if (theme === lightThemeKey) {
             themeStyle.innerHTML = '';
@@ -707,9 +703,9 @@ async function setupThemes() {
         } else if (theme === customThemeKey) {
             document.documentElement.setAttribute('theme', theme);
 
-            if (themeEdit) {
-                themeEdit.style.display = 'flex';
-            }
+            // if (themeEdit) {
+            //     themeEdit.style.display = 'flex';
+            // }
             let customCss = window.sessionStorage.getItem(customThemeCssKey);
             if (!customCss) {
                 const link = document.getElementById('theme-styles-link') as HTMLLinkElement;
@@ -798,22 +794,10 @@ async function setupThemes() {
     themeSelect.renderSelection = (item: any) => html`${unsafeHTML(item.icon || 'none')}`;
     themeSelect.displayField = 'label';
     themeSelect.idField = 'value';
-    // themeSelect.style.display = 'flex';
     themeSelect.addEventListener('change', (e) => {
         const value = (e.target as Select).value as any;
         window.sessionStorage.setItem(themeStorageKey, value.value);
-        themeNativeSelect.value = value.value;
         changeTheme(e, value.value);
-    });
-    themeNativeSelect.addEventListener('change', (e) => {
-        const value = (e.target as HTMLSelectElement).value as any;
-        window.sessionStorage.setItem(themeStorageKey, value);
-        const option = themeOptions.find((t) => t.value === value) || {
-            value: value,
-            label: `${titleCase(value)} Theme`
-        };
-        themeSelect.value = option;
-        changeTheme(e, value);
     });
 }
 
@@ -863,8 +847,6 @@ async function setupFrameworks() {
     });
 
     const frameworkSelect = document.getElementById('header-framework-select') as Select;
-    const frameworkNativeSelect = document.getElementById('header-framework-native-select') as HTMLSelectElement;
-    const frameworkSelectBtn = document.getElementById('header-framework-select-btn') as HTMLDivElement;
     const frameworkOptions: { value: FrameworkOption; label: string; icon: string }[] = [];
 
     function addOption(key: FrameworkOption, icon: string) {
@@ -887,21 +869,18 @@ async function setupFrameworks() {
             nativeOption.selected = true;
             changeFramework(key);
         }
-        frameworkNativeSelect.add(nativeOption);
         return option;
     }
 
     function changeFramework(framework: FrameworkOption) {
         const currentSelection = window.localStorage.getItem(frameworkStorageKey);
         window.localStorage.setItem(frameworkStorageKey, framework);
-        frameworkNativeSelect.value = framework;
         const option = frameworkOptions.find((t) => t.value === framework) || {
             value: framework,
             label: framework,
             icon: ''
         };
         frameworkSelect.value = option;
-        frameworkSelectBtn.innerHTML = option.icon;
         switch (framework) {
             case 'Lit':
             case 'Vue':
@@ -937,10 +916,10 @@ async function setupFrameworks() {
         }
     }
 
-    addOption('HTML', raw`<img src="./assets/images/html5.svg" style="width: 24px; height: 24px;" alt="">`);
-    addOption('Lit', raw`<img src="./assets/images/lit-logo.svg#flame" style="width: 24px; height: 24px;" alt="">`);
-    addOption('React', raw`<img src="./assets/images/react.svg" style="width: 24px; height: 24px;" alt="">`);
-    addOption('Vue', raw`<img src="./assets/images/vue.svg" style="width: 24px; height: 24px;" alt="">`);
+    addOption('HTML', raw`<omni-icon symmetrical icon="./assets/images/html5.svg"></omni-icon>`);
+    addOption('Lit', raw`<omni-icon symmetrical icon="./assets/images/lit-logo.svg#flame"></omni-icon>`);
+    addOption('React', raw`<omni-icon symmetrical icon="./assets/images/react.svg"></omni-icon>`);
+    addOption('Vue', raw`<omni-icon symmetrical icon="./assets/images/vue.svg"></omni-icon>`);
 
     frameworkSelect.items = frameworkOptions;
     frameworkSelect.renderItem = (item: any) => html`
@@ -960,14 +939,9 @@ async function setupFrameworks() {
     frameworkSelect.renderSelection = (item: any) => html`${unsafeHTML(item.icon)}`;
     frameworkSelect.displayField = 'label';
     frameworkSelect.idField = 'value';
-    // frameworkSelect.style.display = 'flex';
     frameworkSelect.addEventListener('change', (e) => {
         const value = (e.target as Select).value as any;
         changeFramework(value.value);
-    });
-    frameworkNativeSelect.addEventListener('change', (e) => {
-        const value = (e.target as HTMLSelectElement).value as any;
-        changeFramework(value);
     });
 }
 
@@ -1340,7 +1314,7 @@ function setupGlobalSearch() {
     let data: [];
     let fuse: Fuse<any>;
 
-    document.getElementById('header-search-button')?.addEventListener('click', async (e) => {
+    document.getElementById('header-search-button')?.addEventListener('click', async () => {
         if (!data) {
             const search = await fetch('search.json');
             data = await search.json();

@@ -444,7 +444,7 @@ header .header-version-select {
 
 .shrink-omni-select {
     --omni-select-field-width: 0px;
-    --omni-select-control-padding: 0px 2px 0px 0px;
+    --omni-select-control-padding: 0px 4px 0px 0px;
     --omni-form-clear-control-width: 0px;
     --omni-select-items-container-width: auto;
 }
@@ -1111,9 +1111,9 @@ h2 {
 
 .component-stories .story .two-part .play-tests .success {
     flex-direction: row;
-    margin: 6px;
+    margin: 6px 6px 6px 10px;
     border-radius: 100%;
-    padding: 0;
+    padding: 2px;
     color: #155724;
     background-color: #d4edda;
     border-color: #c3e6cb;
@@ -1175,10 +1175,12 @@ table {
     table-layout: fixed;
 }
 
-table thead tr th,
+/*table thead tr th,
 table tbody tr td {
-    /* border-bottom: 1px solid #ddd; */
-}
+    border-bottom: 1px solid #ddd;
+    }
+    
+    */
 
 table tr {
     /* background-color: #f8f8f8; */
@@ -1515,6 +1517,7 @@ pre[class*='language-'] {
 
     .header-actions {
         flex: 1;
+        padding-right: 0;
     }
 
     .header-actions>.header-action-section>.theme-select {
@@ -1639,9 +1642,9 @@ pre[class*='language-'] {
     }
 
     .component-stories .story .two-part .play-tests .success {
-        margin: 6px;
+        margin: 6px 6px 6px 10px;
         border-radius: 100%;
-        padding: 6px;
+        padding: 2px;
     }
 
     table {
@@ -1729,9 +1732,6 @@ pre[class*='language-'] {
         font-size: 0.9em;
     }
 
-    .component-stories .story .two-part .play-tests .success>* {
-        font-size: 12px;
-    }
 }
 
 /* LOADING INDICATOR: https://loading.io/css/ */
