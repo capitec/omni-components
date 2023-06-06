@@ -623,6 +623,15 @@ h2 {
     font-family: monospace;
 }
 
+.static-article code:not([class]) {
+    font-family: ui-monospace, monospace;
+    padding: 2px 6px;
+    margin: 0;
+    font-size: 14px;
+    white-space: break-spaces;
+    background: var(--docs-border-color) !important;
+    border-radius: 6px;
+}
 .static-article blockquote {
     border-left: 5px solid var(--docs-secondary-background-color);
     margin-top: 12px;
