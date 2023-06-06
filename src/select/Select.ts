@@ -631,7 +631,7 @@ export class Select extends OmniFormElement {
         };
         return html`
             <input
-                style="${this.renderSelection ? 'opacity: 0' : nothing}"
+                style="${this.renderSelection ? 'display: none' : nothing}"
                 class=${classMap(field)}
                 data-omni-keyboard-hidden
                 id="select"
@@ -648,8 +648,9 @@ export class Select extends OmniFormElement {
             ${
                 this.renderSelection
                     ? html`
-                        <div
-                            class=${classMap(field)} style="position: absolute; pointer-events: none;">
+                        <div 
+                            class=${classMap(field)} 
+                            style="pointer-events: none;">
                             ${
                                 this.value
                                     ? html` 
