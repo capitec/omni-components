@@ -19,7 +19,7 @@ import {
 } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
-import { assignToSlot, ComponentStoryFormat, CSFIdentifier } from '../utils/StoryUtils.js';
+import { assignToSlot, ComponentStoryFormat, CSFIdentifier, getSourceFromLit } from '../utils/StoryUtils.js';
 import { PinField } from './PinField.js';
 
 import './PinField.js';
@@ -55,6 +55,15 @@ export const Interactive: ComponentStoryFormat<Args> = {
         args.show ? html`${'\r\n'}${unsafeHTML(assignToSlot('show', args.show))}` : nothing
     }</omni-pin-field>
   `,
+    frameworkSources: [
+        {
+            framework: 'Vue',
+            load: (args) =>
+                getSourceFromLit(Interactive!.render!(args), undefined, (s) =>
+                    s.replace(' disabled', ' :disabled="true"').replace(' clearable', ' :clearable="true"')
+                )
+        }
+    ],
     name: 'Interactive',
     args: {
         label: 'Label',

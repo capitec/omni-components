@@ -337,7 +337,7 @@ export class Select extends OmniFormElement {
                     newHeight =
                         visualViewport.height -
                         this.getBoundingClientRect().height -
-                        (this.searchable ? this._searchElement!.height : 0) -
+                        (this.searchable && this._searchElement ? this._searchElement.height : 0) -
                         (visualViewport.height - this.getBoundingClientRect().top) -
                         10 +
                         'px';
@@ -345,7 +345,7 @@ export class Select extends OmniFormElement {
                     newHeight =
                         visualViewport.height -
                         this.getBoundingClientRect().bottom -
-                        (this.searchable ? this._searchElement!.offsetHeight : 0) -
+                        (this.searchable && this._searchElement ? this._searchElement.offsetHeight : 0) -
                         10 +
                         'px';
                 }
@@ -362,7 +362,9 @@ export class Select extends OmniFormElement {
 
     _onSearchFieldClear() {
         this._searchValue = undefined;
-        this._searchElement!.value = '';
+        if (this._searchElement) {
+            this._searchElement.value = '';
+        }
         this.requestUpdate();
     }
 
@@ -629,7 +631,7 @@ export class Select extends OmniFormElement {
         };
         return html`
             <input
-                style="${this.renderSelection ? 'opacity: 0' : nothing}"
+                style="${this.renderSelection ? 'display: none' : nothing}"
                 class=${classMap(field)}
                 data-omni-keyboard-hidden
                 id="select"
@@ -646,8 +648,9 @@ export class Select extends OmniFormElement {
             ${
                 this.renderSelection
                     ? html`
-                        <div
-                            class=${classMap(field)} style="position: absolute; pointer-events: none;">
+                        <div 
+                            class=${classMap(field)} 
+                            style="pointer-events: none;">
                             ${
                                 this.value
                                     ? html` 

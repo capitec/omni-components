@@ -375,7 +375,6 @@ export class OmniFormElement extends OmniElement {
                     display: inline-flex;
                     align-items: center;
                     cursor: pointer;
-                    /*padding-right: var(--omni-select-search-clear-div-right-padding, 10px);    */
                 }
 
                 .clear-icon {

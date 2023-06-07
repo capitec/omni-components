@@ -6,7 +6,7 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { Label as OmniLabel } from '../label/Label.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
-import { ComponentStoryFormat, CSFIdentifier, raw } from '../utils/StoryUtils.js';
+import { ComponentStoryFormat, CSFIdentifier, raw, getSourceFromLit } from '../utils/StoryUtils.js';
 import { CheckableElement, Radio, RadioChangeEventDetail, RadioGroup } from './index.js';
 
 import './Radio.js';
@@ -33,6 +33,15 @@ export const Interactive: ComponentStoryFormat<Args> = {
       ${unsafeHTML(args['[Default Slot]'])}
     </omni-radio-group>
   `,
+    frameworkSources: [
+        {
+            framework: 'Vue',
+            load: (args) =>
+                getSourceFromLit(Interactive!.render!(args), undefined, (s) =>
+                    s.replace(' horizontal', ' :horizontal="true"').replace(' allow-deselect', ' :allow-deselect="true"')
+                )
+        }
+    ],
     name: 'Interactive',
     args: {
         label: 'Radio Group',
@@ -124,6 +133,13 @@ const App = () => <OmniRadioGroup label="${args.label}" horizontal>
                     <OmniRadio label="Two" /> 
                     <OmniRadio label="Three"/> 
                   </OmniRadioGroup>;`
+        },
+        {
+            framework: 'Vue',
+            load: (args) =>
+                getSourceFromLit(Horizontal!.render!(args), undefined, (s) =>
+                    s.replace(' horizontal', ' :horizontal="true"').replace(' allow-deselect', ' :allow-deselect="true"')
+                )
         }
     ],
     description: 'Arrange radio elements horizontally.',
@@ -157,6 +173,13 @@ const App = () => <OmniRadioGroup label="${args.label}" allow-deselect>
                     <input type="radio" id="native_radio_2" />
                     <label for="native_radio_2">Three</label><br/>
                   </OmniRadioGroup>;`
+        },
+        {
+            framework: 'Vue',
+            load: (args) =>
+                getSourceFromLit(Allow_Deselect!.render!(args), undefined, (s) =>
+                    s.replace(' horizontal', ' :horizontal="true"').replace(' allow-deselect', ' :allow-deselect="true"')
+                )
         }
     ],
     description: 'Allow radios in the group to be deselected.',

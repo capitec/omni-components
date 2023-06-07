@@ -3,7 +3,7 @@ import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
-import { ComponentStoryFormat, CSFIdentifier, raw } from '../utils/StoryUtils.js';
+import { ComponentStoryFormat, CSFIdentifier, getSourceFromLit, raw } from '../utils/StoryUtils.js';
 import { Icon } from './Icon.js';
 import './Icon.js';
 
@@ -32,6 +32,12 @@ export const Interactive: ComponentStoryFormat<Args> = {
             ${unsafeHTML(args['[Default Slot]'])}
         </omni-icon>
     `,
+    frameworkSources: [
+        {
+            framework: 'Vue',
+            load: (args) => getSourceFromLit(Interactive!.render!(args), undefined, (s) => s.replace(' symmetrical', ' :symmetrical="true"'))
+        }
+    ],
     name: 'Interactive',
     args: {
         size: 'default',
@@ -301,6 +307,10 @@ const App = () => <OmniIcon${args.size ? ` size='${args.size}'` : ''}${args.symm
                             <path d="M15 8a7 7 0 1 0 0 10m7-8.7L33 2l11 7.3v7.4L33 24l-11-7.3zm0 0 11 7.4 11-7.4m0 7.4L33 9.3l-11 7.4M33 2v7.3m0 7.4V24M52 6h5a7 7 0 0 1 0 14h-5zm28 0h-9v14h9m-9-7h6m11 1h6a4 4 0 0 0 0-8h-6v14m26-14h-9v14h9m-9-7h6m11 7V6l11 14V6"></path>
                     </svg>
                   </OmniIcon>;`
+        },
+        {
+            framework: 'Vue',
+            load: (args) => getSourceFromLit(Symmetrical!.render!(args), undefined, (s) => s.replace(' symmetrical', ' :symmetrical="true"'))
         }
     ],
     description: () =>

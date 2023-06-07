@@ -46,7 +46,7 @@ import fs from 'fs-extra';
     });    
 
     // Clean up package files for non-existent components
-    packageFile.files = packageFile.files.filter(file => file.startsWith('dist') || file.startsWith('src') || file.startsWith('!') || directories.includes(file));
+    packageFile.files = packageFile.files.filter(file => (file.startsWith('dist') || file.startsWith('src') || file.startsWith('!') || directories.includes(file)) && !file.includes('utils'));
             
 
     // Write out updated files

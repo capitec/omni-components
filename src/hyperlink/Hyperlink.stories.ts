@@ -5,7 +5,7 @@ import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
-import { ComponentStoryFormat, CSFIdentifier } from '../utils/StoryUtils.js';
+import { ComponentStoryFormat, CSFIdentifier, getSourceFromLit } from '../utils/StoryUtils.js';
 import './Hyperlink.js';
 
 const linkTarget = ['_self', '_blank', '_parent', '_top'] as const;
@@ -45,6 +45,15 @@ export const Interactive: ComponentStoryFormat<Args> = {
       ${unsafeHTML(args['[Default Slot]'])}
     </omni-hyperlink>
   `,
+    frameworkSources: [
+        {
+            framework: 'Vue',
+            load: (args) =>
+                getSourceFromLit(Interactive!.render!(args), undefined, (s) =>
+                    s.replace(' disabled', ' :disabled="true"').replace(' inline', ' :inline="true"')
+                )
+        }
+    ],
     name: 'Interactive',
     args: {
         label: 'Click',
@@ -151,6 +160,13 @@ export const Disabled: ComponentStoryFormat<Args> = {
             load: (args) => `import { OmniHyperlink } from "@capitec/omni-components-react/hyperlink";
 
 const App = () => <OmniHyperlink href="https://example.com"${args.label ? ` label='${args.label}'` : ''}${args.disabled ? ` disabled` : ''}/>;`
+        },
+        {
+            framework: 'Vue',
+            load: (args) =>
+                getSourceFromLit(Interactive!.render!(args), undefined, (s) =>
+                    s.replace(' disabled', ' :disabled="true"').replace(' inline', ' :inline="true"')
+                )
         }
     ],
     name: 'Disabled',
@@ -186,6 +202,13 @@ export const Inline: ComponentStoryFormat<Args> = {
             load: (args) => `import { OmniHyperlink } from "@capitec/omni-components-react/hyperlink";
 
 const App = () => <p> Inline <OmniHyperlink${args.label ? ` label='${args.label}'` : ''}${args.inline ? ` inline` : ''}/> example </p>;`
+        },
+        {
+            framework: 'Vue',
+            load: (args) =>
+                getSourceFromLit(Inline!.render!(args), undefined, (s) =>
+                    s.replace(' disabled', ' :disabled="true"').replace(' inline', ' :inline="true"')
+                )
         }
     ],
     name: 'Inline',
