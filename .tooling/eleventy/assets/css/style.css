@@ -313,34 +313,15 @@ header .header-version-select {
     margin-top: 0px;
     /* color:  #4E6066; */
     padding: 24px;
-        font-size: 14px;
-        border-radius: 4px 4px 0px 0px;
-        background-color: var(--omni-theme-background-color);
+    font-size: 14px;
+    border-radius: 4px 4px 0px 0px;
+    background-color: var(--omni-theme-background-color);
     z-index: 1105;
     line-height: 24px;
     font-size: 16px;
     max-width: 80vw;
     max-height: 80vh;
     overflow: auto;
-}
-
-.modal-body::-webkit-scrollbar {
-    width: 14px;
-}
-
-.modal-body::-webkit-scrollbar-track {
-    border-radius: 10px;
-    background-color: transparent;
-}
-
-.modal-body::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    background-color: #d9d9d9;
-    border-top: 2px solid transparent;
-    border-bottom: 2px solid transparent;
-    border-left: 2px solid transparent;
-    border-right: 2px solid transparent;
-    background-clip: padding-box;
 }
 
 /* HOME */
