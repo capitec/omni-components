@@ -37,17 +37,21 @@ import { OmniElement } from '../core/OmniElement.js';
  * @cssprop --omni-button-primary-border-color - Primary "type" border color.
  * @cssprop --omni-button-primary-border-width - Primary "type" border width.
  * @cssprop --omni-button-primary-color - Primary "type" color.
- * @cssprop --omni-button-primary-active-background-color - Primary "type" active back color.
- * @cssprop --omni-button-primary-hover-box-shadow - Primary "type" hover box shadow.
+ * @cssprop --omni-button-primary-hover-background-color - Primary "type" hover background color.
  * @cssprop --omni-button-primary-hover-border-color - Primary "type" hover border color.
+ * @cssprop --omni-button-primary-hover-border-width - Primary "type" hover border width.
+ * @cssprop --omni-button-primary-hover-box-shadow - Primary "type" hover box shadow.
+ * @cssprop --omni-button-primary-active-background-color - Primary "type" active back color.
  *
  * @cssprop --omni-button-secondary-background-color - Secondary "type" background color.
  * @cssprop --omni-button-secondary-border-color - Secondary "type" border color.
  * @cssprop --omni-button-secondary-border-width - Secondary "type" border width.
  * @cssprop --omni-button-secondary-color - Secondary "type" color.
- * @cssprop --omni-button-secondary-active-background-color - Secondary "type" active background color.
- * @cssprop --omni-button-secondary-hover-box-shadow - Secondary "type" hover box shadow.
+ * @cssprop --omni-button-secondary-hover-background-color - Secondary "type" hover background color.
  * @cssprop --omni-button-secondary-hover-border-color - Secondary "type" hover border color.
+ * @cssprop --omni-button-secondary-hover-border-width - Secondary "type" hover border width.
+ * @cssprop --omni-button-secondary-hover-box-shadow - Secondary "type" hover box shadow.
+ * @cssprop --omni-button-secondary-active-background-color - Secondary "type" active background color.
  *
  * @cssprop --omni-button-clear-background-color - Clear "type" background color.
  * @cssprop --omni-button-clear-border-color - Clear "type" border color.
@@ -62,12 +66,13 @@ import { OmniElement } from '../core/OmniElement.js';
  * @cssprop --omni-button-white-border-color - White "type" border color.
  * @cssprop --omni-button-white-border-width - White "type" border width.
  * @cssprop --omni-button-white-color - White "type" color.
+ * @cssprop --omni-button-white-hover-background-color - White "type" hover background color.
+ * @cssprop --omni-button-white-hover-border-color - White "type" hover border color.
+ * @cssprop --omni-button-white-hover-border-width - White "type" hover border width.
+ * @cssprop --omni-button-white-hover-box-shadow - White "type" hover box shadow.
  * @cssprop --omni-button-white-active-background-color - White "type" active background color.
  * @cssprop --omni-button-white-active-border-color - White "type" active border color.
  * @cssprop --omni-button-white-active-border-width - White "type" active border width.
- * @cssprop --omni-button-white-hover-background-color - White "type" hover background color.
- * @cssprop --omni-button-white-hover-box-shadow - White "type" hover box shadow.
- * @cssprop --omni-button-white-hover-border-color - White "type" hover border color.
  *
  * @cssprop --omni-button-disabled-border-color - Disabled border color.
  * @cssprop --omni-button-disabled-background-color - Disabled background color.
@@ -161,7 +166,7 @@ export class Button extends OmniElement {
                     cursor: default;
                 }
 
-                /* primary */
+                /* PRIMARY */
 
                 .button.primary {
                     background-color: var(--omni-button-primary-background-color, var(--omni-primary-color));
@@ -171,8 +176,10 @@ export class Button extends OmniElement {
                 }
 
                 .button.primary:hover {
+                    background-color: var(--omni-button-primary-hover-background-color, var(--omni-primary-color));
+                    border-color: var(--omni-button-primary-hover-border-color, var(--omni-primary-color));
+                    border-width: var(--omni-button-primary-hover-border-width, var(--omni-border-width));
                     box-shadow: var(--omni-button-primary-hover-box-shadow, 0 2px 4px 0 rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.15));
-                    border-color: var(--omni-button-primary-hover-border-color, default);
                 }
 
                 .button.primary:active {
@@ -180,7 +187,7 @@ export class Button extends OmniElement {
                     box-shadow: none;
                 }
 
-                /* secondary */
+                /* SECONDARY */
 
                 .button.secondary {
                     background-color: var(--omni-button-secondary-background-color, var(--omni-background-color));
@@ -190,8 +197,10 @@ export class Button extends OmniElement {
                 }
 
                 .button.secondary:hover {
-                    box-shadow: var(--omni-button-secondary-hover-box-shadow, 0 2px 4px 0 rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.15));
+                    background-color: var(--omni-button-secondary-hover-background-color, var(--omni-background-hover-color));
                     border-color: var(--omni-button-secondary-hover-border-color, default);
+                    border-width: var(--omni-button-secondary-hover-border-width, var(--omni-border-width));
+                    box-shadow: var(--omni-button-secondary-hover-box-shadow, 0 2px 4px 0 rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.15));
                 }
 
                 .button.secondary:active {
@@ -199,7 +208,7 @@ export class Button extends OmniElement {
                     box-shadow: none;
                 }
 
-                /* clear */
+                /* CLEAR */
 
                 .button.clear {
                     background-color: var(--omni-button-clear-background-color, transparent);
@@ -220,7 +229,7 @@ export class Button extends OmniElement {
                     outline: none;
                 }
 
-                /* white */
+                /* WHITE */
 
                 .button.white {
                     background-color: var(--omni-button-white-background-color, white);
@@ -231,8 +240,9 @@ export class Button extends OmniElement {
 
                 .button.white:hover {
                     background-color: var(--omni-button-white-hover-background-color, white);
+                    border-color: var(--omni-button-white-hover-border-color, white);
+                    border-width: var(--omni-button-white-hover-border-width, var(--omni-border-width));
                     box-shadow: var(--omni-button-white-hover-box-shadow, 0 2px 4px 0 rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.15));
-                    border-color: var(--omni-button-white-hover-border-color, default);
                 }
 
                 .button.white:active {
@@ -243,7 +253,7 @@ export class Button extends OmniElement {
                     outline: none;
                 }
 
-                /* disabled */
+                /* DISABLED */
 
                 .button.disabled {
                     cursor: default;
@@ -272,7 +282,7 @@ export class Button extends OmniElement {
                  */
                 @media (hover: none) {
                     .button.clear:hover:not(.disabled) {
-                        background-color: unset;
+                        background-color: var(--omni-button-clear-background-color, transparent);
                     }
 
                     .button.primary:hover,
@@ -283,7 +293,7 @@ export class Button extends OmniElement {
                     }
                 }
 
-                /* slot position */
+                /* SLOT POSITION */
 
                 .button.slot-left {
                     flex-direction: row;
@@ -305,7 +315,7 @@ export class Button extends OmniElement {
                     text-align: center;
                 }
 
-                /* slot margins */
+                /* SLOT MARGINS */
 
                 .button.slot-left > ::slotted(*) {
                     margin-right: var(--omni-button-slot-margin-right, 10px);
