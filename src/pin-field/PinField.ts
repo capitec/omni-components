@@ -1,7 +1,6 @@
 import { css, html } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { ClassInfo, classMap } from 'lit/directives/class-map.js';
-import { live } from 'lit/directives/live.js';
 import { OmniFormElement } from '../core/OmniFormElement.js';
 
 import '../icons/EyeHidden.icon.js';
@@ -280,6 +279,7 @@ export class PinField extends OmniFormElement {
     `;
     }
 
+    /* inputmode is set to decimal to avoid the virtual keyboard input event with cancelable read-only property.*/
     protected override renderContent() {
         const field: ClassInfo = {
             field: true,
