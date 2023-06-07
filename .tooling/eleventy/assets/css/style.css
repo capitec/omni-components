@@ -1,17 +1,19 @@
 * {
     box-sizing: border-box;
-    margin: 0;
-    font-family: var(--omni-theme-font-family, 'Hind Vadodara');
+    /* margin: 0; */
 }
 
 html {
     scroll-padding-top: 84px;
-
+    font-family: var(--omni-theme-font-family, 'Hind Vadodara');
     color: var(--omni-theme-font-color);
     background-color: var(--omni-theme-background-color);
     color-scheme: var(--docs-color-scheme);
 }
 
+body {
+    scroll-behavior: smooth;
+}
 .no-display {
     display: none !important;
 }
@@ -24,15 +26,14 @@ a:visited {
     color: var(--docs-link-visited-color);
 }
 
-body {
-    scroll-behavior: smooth;
-}
-
 a,
 a>* {
     cursor: pointer;
 }
 
+p {
+    margin: 4px 0 4px 0;
+}
 *,
 ::before,
 ::after {
@@ -43,6 +44,7 @@ a>* {
 
 body {
     -webkit-font-smoothing: antialiased;
+    margin: 0;
 }
 
 .container {
@@ -311,34 +313,15 @@ header .header-version-select {
     margin-top: 0px;
     /* color:  #4E6066; */
     padding: 24px;
-        font-size: 14px;
-        border-radius: 4px 4px 0px 0px;
-        background-color: var(--omni-theme-background-color);
+    font-size: 14px;
+    border-radius: 4px 4px 0px 0px;
+    background-color: var(--omni-theme-background-color);
     z-index: 1105;
     line-height: 24px;
     font-size: 16px;
     max-width: 80vw;
     max-height: 80vh;
     overflow: auto;
-}
-
-.modal-body::-webkit-scrollbar {
-    width: 14px;
-}
-
-.modal-body::-webkit-scrollbar-track {
-    border-radius: 10px;
-    background-color: transparent;
-}
-
-.modal-body::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    background-color: #d9d9d9;
-    border-top: 2px solid transparent;
-    border-bottom: 2px solid transparent;
-    border-left: 2px solid transparent;
-    border-right: 2px solid transparent;
-    background-clip: padding-box;
 }
 
 /* HOME */
@@ -615,11 +598,6 @@ h2 {
     margin-bottom: 6px;
 }
 
-.static-article pre.language-html * {
-    font-size: 13px;
-    font-family: monospace;
-}
-
 .static-article code:not([class]) {
     font-family: ui-monospace, monospace;
     font-size: 14px;
@@ -638,6 +616,8 @@ h2 {
     border-left: 5px solid var(--docs-secondary-background-color);
     margin-top: 12px;
     padding-left: 6px;
+    margin-left: 0;
+    margin-right: 0;
     color: var(--docs-static-blockquote-color);
 }
 
@@ -818,11 +798,12 @@ h2 {
     align-items: center;
     display: flex;
     overflow-y: auto;
+    margin: 0;
 }
 
 .component-info-item-code .copy-icon {
     font-size: 16px;
-        cursor: pointer;
+    cursor: pointer;
     margin-left: 12px;
     opacity: 50%;
     -webkit-user-select: none;
@@ -1053,59 +1034,9 @@ h2 {
     display: flex;
     flex-direction: row;
     padding: 12px;
-    padding-right: 0px;
     border-top: 1px solid var(--docs-border-color);
     justify-content: space-between;
     align-items: center;
-}
-
-.component-stories .story .two-part .framework-toggles {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-
-.component-stories .story .two-part .framework-toggles>* {
-    margin-right: 6px;
-
-    padding: 5px;
-    cursor: pointer;
-    border-radius: 6px;
-    border: 1px solid var(--docs-border-color);
-    display: flex;
-
-    height: 37px;
-
-    --framework-toggle-background-color: var(--omni-theme-background-color);
-    color: var(--omni-theme-font-color);
-    background-color: var(--framework-toggle-background-color);
-}
-
-.component-stories .story .two-part .framework-toggles>.selected {
-    --framework-toggle-background-color: var(--omni-theme-background-active-color);
-}
-
-.component-stories .story .two-part .framework-toggles>.codepen-gen-btn {
-    border: none;
-}
-
-.component-stories .story .two-part .framework-toggles>*:not(.selected):hover {
-    --framework-toggle-background-color: var(--omni-theme-background-hover-color);
-    box-shadow: inset 0px 0px 0px 1px var(--omni-form-hover-color, var(--omni-theme-primary-color));
-}
-
-.component-stories .story .two-part .framework-toggles>.codepen-gen-btn:hover {
-    box-shadow: none;
-}
-
-.component-stories .story .two-part .framework-toggles .codepen-gen-btn {
-    cursor: pointer;
-    margin-right: 4px;
-}
-
-.component-stories .story .two-part .framework-toggles .codepen-gen-btn:hover {
-    background-color: var(--omni-theme-background-hover-color);
 }
 
 .component-stories .story .failure {
@@ -1263,7 +1194,7 @@ code[class*='language-']>span {
     word-break: normal;
     word-wrap: normal;
     line-height: 1.5;
-
+    margin: 0;
     -moz-tab-size: 4;
     -o-tab-size: 4;
     tab-size: 4;
