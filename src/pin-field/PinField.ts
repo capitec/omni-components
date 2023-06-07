@@ -141,7 +141,7 @@ export class PinField extends OmniFormElement {
     //The type of the input is set to text which will allow alpha-numeric characters this function is to block all non numeric input values.
     _beforeInput(e: InputEvent) {
         const input = this._inputElement as HTMLInputElement;
-        if(input) {
+        if(input && e.data !== null) {
             if (input && !this._isNumber(e.data as string)) {
                 e.preventDefault();
                 return;
@@ -291,8 +291,8 @@ export class PinField extends OmniFormElement {
       <input
         class=${classMap(field)}
         id="inputField"
-        inputmode="${this.noNativeKeyboard ? 'none' : 'numeric'}"
-        data-omni-keyboard-mode="numeric"
+        inputmode="${this.noNativeKeyboard ? 'none' : 'decimal'}"
+        data-omni-keyboard-mode="decimal"
         type="${this.type}"
         ?readOnly=${this.disabled}
         tabindex="${this.disabled ? -1 : 0}"
