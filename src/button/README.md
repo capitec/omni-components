@@ -60,11 +60,15 @@ Control that allows an action to be executed.
 | `--omni-button-primary-border-color`             | Primary "type" border color.                     |
 | `--omni-button-primary-border-width`             | Primary "type" border width.                     |
 | `--omni-button-primary-color`                    | Primary "type" color.                            |
+| `--omni-button-primary-hover-border-color`       | Primary "type" hover border color.               |
+| `--omni-button-primary-hover-box-shadow`         | Primary "type" hover box shadow.                 |
 | `--omni-button-secondary-active-background-color` | Secondary "type" active background color.        |
 | `--omni-button-secondary-background-color`       | Secondary "type" background color.               |
 | `--omni-button-secondary-border-color`           | Secondary "type" border color.                   |
 | `--omni-button-secondary-border-width`           | Secondary "type" border width.                   |
 | `--omni-button-secondary-color`                  | Secondary "type" color.                          |
+| `--omni-button-secondary-hover-border-color`     | Secondary "type" hover border color.             |
+| `--omni-button-secondary-hover-box-shadow`       | Secondary "type" hover box shadow.               |
 | `--omni-button-slot-margin-bottom`               | Slot margin bottom (When positioned top of label). |
 | `--omni-button-slot-margin-left`                 | Slot margin left (When positioned right of label). |
 | `--omni-button-slot-margin-right`                | Slot margin left (When positioned right of label). |
@@ -77,6 +81,8 @@ Control that allows an action to be executed.
 | `--omni-button-white-border-width`               | White "type" border width.                       |
 | `--omni-button-white-color`                      | White "type" color.                              |
 | `--omni-button-white-hover-background-color`     | White "type" hover background color.             |
+| `--omni-button-white-hover-border-color`         | White "type" hover border color.                 |
+| `--omni-button-white-hover-box-shadow`           | White "type" hover box shadow.                   |
 | `--omni-theme-accent-active-color`               | Theme accent active color.                       |
 | `--omni-theme-accent-color`                      | Theme accent color.                              |
 | `--omni-theme-accent-hover-color`                | Theme accent hover color.                        |
