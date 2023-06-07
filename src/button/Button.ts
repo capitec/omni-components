@@ -327,19 +327,12 @@ export class Button extends OmniElement {
     }
 
     protected override render(): TemplateResult {
-        // If the label set, apply slot position class selector.
-        const slotPositionProp = this.label
-            ? {
-                  [`slot-${this.slotPosition}`]: this.slotPosition
-              }
-            : {};
-
         return html`
             <button
                 id="button"
                 class=${classMap({
                     button: true,
-                    ...slotPositionProp,
+                    [`slot-${this.slotPosition}`]: this.label ? this.slotPosition : false,
                     [`${this.type}`]: this.type,
                     disabled: this.disabled ?? false
                 })}
