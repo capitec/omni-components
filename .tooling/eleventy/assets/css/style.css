@@ -598,11 +598,6 @@ h2 {
     margin-bottom: 6px;
 }
 
-.static-article pre.language-html * {
-    /* font-size: 13px; */
-        /* font-family: monospace; */
-}
-
 .static-article code:not([class]) {
     font-family: ui-monospace, monospace;
     font-size: 14px;
@@ -622,7 +617,7 @@ h2 {
     margin-top: 12px;
     padding-left: 6px;
     margin-left: 0;
-        margin-right: 0;
+    margin-right: 0;
     color: var(--docs-static-blockquote-color);
 }
 
