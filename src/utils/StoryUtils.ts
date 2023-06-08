@@ -9,10 +9,14 @@ import { githubLight as codeTheme } from '@ddietr/codemirror-themes/github-light
 import { Octokit } from '@octokit/core';
 import { Package, ClassDeclaration, CustomElementDeclaration, Declaration, CustomElement } from 'custom-elements-manifest/schema';
 export { Package, ClassDeclaration, CustomElementDeclaration, Declaration, CustomElement } from 'custom-elements-manifest/schema';
-import { html, TemplateResult } from 'lit';
+import Fuse from 'fuse.js';
+import { html, nothing, TemplateResult, svg } from 'lit';
 import { render } from 'lit-html';
+import { ref } from 'lit-html/directives/ref.js';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import pretty from 'pretty';
+import { Modal } from '../modal/Modal.js';
+import { RenderElement } from '../render-element/RenderElement.js';
 import { SearchField } from '../search-field/SearchField.js';
 import { Select } from '../select/Select.js';
 import { CodeEditor, CodeMirrorEditorEvent, CodeMirrorSourceUpdateEvent } from './CodeEditor.js';
@@ -582,13 +586,12 @@ async function setupThemes() {
         document.getElementById('cssValue')?.click();
     }
 
-    const themeEdit = document.getElementById('header-theme-edit-btn') as HTMLSpanElement;
-    if (themeEdit) {
-        themeEdit.style.display = 'none';
-        themeEdit.addEventListener('click', () => showCustomCssSource());
-    }
+    // const themeEdit = document.getElementById('header-theme-edit-btn') as HTMLSpanElement;
+    // if (themeEdit) {
+    //     themeEdit.style.display = 'none';
+    //     themeEdit.addEventListener('click', () => showCustomCssSource());
+    // }
     const themeSelect = document.getElementById('header-theme-select') as Select;
-    const themeNativeSelect = document.getElementById('header-theme-native-select') as HTMLSelectElement;
     const themeStyle = document.getElementById('theme-styles') as HTMLStyleElement;
     let darkThemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     const themeOptions: { value: string; label: string }[] = [];
@@ -603,7 +606,6 @@ async function setupThemes() {
                     label: `${titleCase(darkThemeKey)} Theme`
                 };
                 themeSelect.value = option;
-                themeNativeSelect.value = darkThemeKey;
                 window.sessionStorage.setItem(themeStorageKey, darkThemeKey);
                 changeTheme(event, darkThemeKey);
             } else if (!darkThemePreferred && storedTheme === darkThemeKey) {
@@ -612,18 +614,19 @@ async function setupThemes() {
                     label: `${titleCase(lightThemeKey)} Theme`
                 };
                 themeSelect.value = option;
-                themeNativeSelect.value = lightThemeKey;
                 window.sessionStorage.setItem(themeStorageKey, lightThemeKey);
                 changeTheme(event, lightThemeKey);
             }
         });
     }
 
-    function addOption(key: string) {
+    function addOption(key: string, icon: any) {
         const option = {
             value: key,
-            label: `${titleCase(key)} Theme`
+            label: titleCase(key),
+            icon: icon
         };
+
         const nativeOption = document.createElement('option');
         nativeOption.label = option.label;
         nativeOption.value = option.value;
@@ -640,7 +643,6 @@ async function setupThemes() {
             changeTheme(null as any, key);
         }
         themeOptions.push(option);
-        themeNativeSelect.add(nativeOption);
         return option;
     }
 
@@ -691,9 +693,9 @@ async function setupThemes() {
     }
 
     function changeTheme(e: Event, theme: string) {
-        if (themeEdit) {
-            themeEdit.style.display = 'none';
-        }
+        // if (themeEdit) {
+        //     themeEdit.style.display = 'none';
+        // }
 
         if (theme === lightThemeKey) {
             themeStyle.innerHTML = '';
@@ -701,9 +703,9 @@ async function setupThemes() {
         } else if (theme === customThemeKey) {
             document.documentElement.setAttribute('theme', theme);
 
-            if (themeEdit) {
-                themeEdit.style.display = 'flex';
-            }
+            // if (themeEdit) {
+            //     themeEdit.style.display = 'flex';
+            // }
             let customCss = window.sessionStorage.getItem(customThemeCssKey);
             if (!customCss) {
                 const link = document.getElementById('theme-styles-link') as HTMLLinkElement;
@@ -742,29 +744,60 @@ async function setupThemes() {
         }
     }
 
-    addOption(lightThemeKey);
-    addOption(darkThemeKey);
-    addOption(customThemeKey);
+    addOption(
+        lightThemeKey,
+        raw`
+            <omni-icon symmetrical>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100%" height="100%">
+                    <path d="M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0 c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2 c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1 C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06 c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41 l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41 c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36 c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/>
+                </svg>
+            </omni-icon>
+        `
+    );
+    addOption(
+        darkThemeKey,
+        raw`
+            <omni-icon symmetrical>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100%" height="100%">
+                    <path d="M9.37 5.51A7.35 7.35 0 0 0 9.1 7.5c0 4.08 3.32 7.4 7.4 7.4.68 0 1.35-.09 1.99-.27A7.014 7.014 0 0 1 12 19c-3.86 0-7-3.14-7-7 0-2.93 1.81-5.45 4.37-6.49zM12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/>
+                </svg>
+            </omni-icon>
+        `
+    );
+    addOption(
+        customThemeKey,
+        raw`
+            <omni-icon symmetrical>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100%" height="100%">
+                    <path d="M16.56 8.94 7.62 0 6.21 1.41l2.38 2.38-5.15 5.15a1.49 1.49 0 0 0 0 2.12l5.5 5.5c.29.29.68.44 1.06.44s.77-.15 1.06-.44l5.5-5.5c.59-.58.59-1.53 0-2.12zM5.21 10 10 5.21 14.79 10H5.21zM19 11.5s-2 2.17-2 3.5c0 1.1.9 2 2 2s2-.9 2-2c0-1.33-2-3.5-2-3.5zM2 20h20v4H2v-4z"/>
+                </svg>
+            </omni-icon>
+        `
+    );
 
     themeSelect.items = themeOptions;
+    themeSelect.renderItem = (item: any) => html`
+        <style>
+            .theme-item {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+            }
+            .theme-item > * {
+                margin-right: 6px;
+            }
+        </style>
+        <div class="theme-item"> 
+            ${unsafeHTML(item.icon)} ${item.label}
+        </div>
+    `;
+    themeSelect.renderSelection = (item: any) => html`${unsafeHTML(item.icon || 'none')}`;
     themeSelect.displayField = 'label';
     themeSelect.idField = 'value';
-    // themeSelect.style.display = 'flex';
     themeSelect.addEventListener('change', (e) => {
         const value = (e.target as Select).value as any;
         window.sessionStorage.setItem(themeStorageKey, value.value);
-        themeNativeSelect.value = value.value;
         changeTheme(e, value.value);
-    });
-    themeNativeSelect.addEventListener('change', (e) => {
-        const value = (e.target as HTMLSelectElement).value as any;
-        window.sessionStorage.setItem(themeStorageKey, value);
-        const option = themeOptions.find((t) => t.value === value) || {
-            value: value,
-            label: `${titleCase(value)} Theme`
-        };
-        themeSelect.value = option;
-        changeTheme(e, value);
     });
 }
 
@@ -796,6 +829,8 @@ async function setupEleventy() {
     setupLoadingIndicator();
 
     // Setup search for component members
+    setupComponentSearch();
+
     setupSearch();
 
     await setupThemes();
@@ -810,13 +845,8 @@ async function setupFrameworks() {
     document.addEventListener('story-renderer-interactive-update', () => {
         changeFramework((window.localStorage.getItem(frameworkStorageKey) as any) ?? 'HTML');
     });
-    document.addEventListener('omni-docs-framework-change', (e) => {
-        changeFramework((e as CustomEvent<FrameworkOption>).detail ?? 'HTML');
-    });
 
     const frameworkSelect = document.getElementById('header-framework-select') as Select;
-    const frameworkNativeSelect = document.getElementById('header-framework-native-select') as HTMLSelectElement;
-    const frameworkSelectBtn = document.getElementById('header-framework-select-btn') as HTMLDivElement;
     const frameworkOptions: { value: FrameworkOption; label: string; icon: string }[] = [];
 
     function addOption(key: FrameworkOption, icon: string) {
@@ -839,22 +869,21 @@ async function setupFrameworks() {
             nativeOption.selected = true;
             changeFramework(key);
         }
-        frameworkNativeSelect.add(nativeOption);
         return option;
     }
 
     function changeFramework(framework: FrameworkOption) {
         const currentSelection = window.localStorage.getItem(frameworkStorageKey);
         window.localStorage.setItem(frameworkStorageKey, framework);
-        frameworkNativeSelect.value = framework;
         const option = frameworkOptions.find((t) => t.value === framework) || {
             value: framework,
             label: framework,
             icon: ''
         };
         frameworkSelect.value = option;
-        frameworkSelectBtn.innerHTML = option.icon;
         switch (framework) {
+            case 'Lit':
+            case 'Vue':
             case 'HTML':
                 htmlImports?.classList?.remove('no-display');
                 htmlPackage?.classList?.remove('no-display');
@@ -873,7 +902,7 @@ async function setupFrameworks() {
 
         if (currentSelection !== framework) {
             document.dispatchEvent(
-                new CustomEvent('story-renderer-interactive-update', {
+                new CustomEvent('omni-docs-framework-change', {
                     bubbles: true,
                     composed: true
                 })
@@ -887,17 +916,10 @@ async function setupFrameworks() {
         }
     }
 
-    addOption(
-        'HTML',
-        raw`
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="24" height="24">
-    <path fill="#E34F26" d="M71,460 L30,0 481,0 440,460 255,512"></path>
-    <path fill="#EF652A" d="M256,472 L405,431 440,37 256,37"></path>
-    <path fill="#EBEBEB" d="M256,208 L181,208 176,150 256,150 256,94 255,94 114,94 115,109 129,265 256,265zM256,355 L255,355 192,338 188,293 158,293 132,293 139,382 255,414 256,414z"></path>
-    <path fill="#FFF" d="M255,208 L255,265 325,265 318,338 255,355 255,414 371,382 372,372 385,223 387,208 371,208zM255,94 L255,129 255,150 255,150 392,150 392,150 392,150 393,138 396,109 397,94z"></path>
-</svg>`
-    );
-    addOption('React', raw`<img src="./assets/images/react.svg" style="width: 24px; height: 24px;" alt="">`);
+    addOption('HTML', raw`<omni-icon symmetrical icon="./assets/images/html5.svg"></omni-icon>`);
+    addOption('Lit', raw`<omni-icon symmetrical icon="./assets/images/lit-logo.svg#flame"></omni-icon>`);
+    addOption('React', raw`<omni-icon symmetrical icon="./assets/images/react.svg"></omni-icon>`);
+    addOption('Vue', raw`<omni-icon symmetrical icon="./assets/images/vue.svg"></omni-icon>`);
 
     frameworkSelect.items = frameworkOptions;
     frameworkSelect.renderItem = (item: any) => html`
@@ -905,7 +927,7 @@ async function setupFrameworks() {
         .framework-item {
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
         }
         .framework-item > * {
             margin-right: 6px;
@@ -917,14 +939,9 @@ async function setupFrameworks() {
     frameworkSelect.renderSelection = (item: any) => html`${unsafeHTML(item.icon)}`;
     frameworkSelect.displayField = 'label';
     frameworkSelect.idField = 'value';
-    // frameworkSelect.style.display = 'flex';
     frameworkSelect.addEventListener('change', (e) => {
         const value = (e.target as Select).value as any;
         changeFramework(value.value);
-    });
-    frameworkNativeSelect.addEventListener('change', (e) => {
-        const value = (e.target as HTMLSelectElement).value as any;
-        changeFramework(value);
     });
 }
 
@@ -1158,7 +1175,7 @@ function setupLoadingIndicator() {
     }
 }
 
-function setupSearch() {
+function setupComponentSearch() {
     //Attribute search
     const attributeSearch = document.querySelector<SearchField>('#attribute-search');
     const attributeRows = document.querySelector<HTMLTableSectionElement>('#component-attributes')?.children;
@@ -1286,6 +1303,206 @@ function setupSearch() {
             } else {
                 element.classList.add('hidden');
             }
+        }
+    }
+}
+
+function setupSearch() {
+    let modal: Modal;
+    let searchField: SearchField;
+    let renderResults: RenderElement;
+    let data: [];
+    let fuse: Fuse<any>;
+
+    document.getElementById('header-search-button')?.addEventListener('click', async () => {
+        if (!data) {
+            const search = await fetch('search.json');
+            data = await search.json();
+        }
+
+        if (!fuse) {
+            fuse = new Fuse(data, {
+                keys: ['data', 'title'],
+                includeMatches: true,
+                ignoreLocation: true,
+                minMatchCharLength: 3,
+                threshold: 0.3,
+                includeScore: true,
+                findAllMatches: false,
+                shouldSort: true
+            });
+        }
+
+        if (!modal) {
+            modal = Modal.show({
+                noFooter: true,
+                noFullscreen: true,
+                header: () => html`
+                    <omni-search-field 
+                        tabindex="1"
+                        ${ref((e) => {
+                            searchField = e as SearchField;
+                            searchField.focus();
+                        })}
+                        clearable 
+                        @input="${() => (renderResults.data = searchField.value as any)}"
+                        @change="${() => (renderResults.data = searchField.value as any)}">
+                    </omni-search-field>
+                `,
+                body: () => html`
+                    <omni-render-element 
+                        ${ref((e) => (renderResults = e as RenderElement))} 
+                        .renderer="${(searchValue: string) => {
+                            if (!searchValue) {
+                                modal.style.setProperty('--omni-modal-header-border-radius', '4px');
+                                return nothing;
+                            }
+
+                            // Do the search via fuse library.
+                            const results = fuse.search(searchValue ?? '') as [];
+                            const order: any = {
+                                component: 1,
+                                story: 2,
+                                md: 3
+                            };
+
+                            results.sort((a: any, b: any) => {
+                                return order[a.item.type] - order[b.item.type];
+                            });
+
+                            modal.style.setProperty('--omni-modal-header-border-radius', results.length > 0 ? 'unset' : '4px');
+
+                            // console.log(results);
+
+                            return html`
+                                <style>
+
+                                    omni-hyperlink {
+                                        --omni-hyperlink-text-decorator-hover: none;
+                                    }
+
+                                    .search-item {
+                                        display: flex;
+                                        text-decoration: none;
+                                        padding: 3px;
+                                        cursor: pointer;
+                                    }
+
+                                    omni-label {
+                                        cursor: pointer;
+                                    }
+
+                                    .search-item:hover {
+                                        background-color: #209cee;
+                                        text-decoration: none;
+                                        /* text-decoration: underline; */
+                                    }
+
+                                    .search-item-icon {
+                                        display: flex;
+                                        align-items: center;
+                                        padding-left: 6px;
+                                        padding-right: 6px;
+                                    }
+
+                                    .search-item-title {
+                                        display: flex;
+                                        flex-direction: column;
+                                        align-items: left;
+                                        padding-left: 6px;
+                                        padding-right: 6px;
+                                    }
+                                </style>
+                                ${results.map((r: any) => {
+                                    return html`
+                                        <omni-hyperlink href="${r.item.path}">
+                                            <div class="search-item">
+                                                <div class="search-item-icon">
+                                                    <omni-icon size="medium">
+                                                        ${getIcon(r.item.type)}
+                                                    </omni-icon>
+                                                </div>
+                                                <div class="search-item-title">
+                                                    <omni-label type="subtitle">${r.item.title}</omni-label>
+                                                    <omni-label type="default">${getSubText(r.item)}</omni-label>
+                                                </div>
+                                            </div>
+                                        </omni-hyperlink>
+                                    `;
+                                })}
+                            `;
+                        }}"></omni-render-element>
+                `
+            }) as Modal;
+            modal?.addEventListener('click-outside', () => {
+                modal.hide = true;
+                searchField.value = '';
+                renderResults.data = '' as any;
+            });
+            modal.classList.add('search-modal');
+        } else {
+            modal.hide = false;
+        }
+
+        // The below needs to be revisited to accurately hook into the lifecycle to focus the search field.
+
+        // await modal?.updateComplete;
+        // await Promise.all(Array.from(modal.querySelectorAll('omni-render-element')).map((re) => re.updateComplete));
+        // searchField?.focus();
+        setTimeout(() => {
+            searchField?.focus();
+        }, 10);
+    });
+
+    function getIcon(type: string) {
+        switch (type) {
+            case 'component':
+                return svg`
+                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0V0z" fill="none"/>
+                        <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+                    </svg>
+                `;
+                break;
+            case 'story':
+                return svg`
+                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                `;
+                break;
+            case 'md':
+                return svg`
+                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24">
+                        <g>
+                            <rect fill="none" height="24" width="24"/>
+                            <g>
+                                <path d="M19,5v14H5V5H19 M19,3H5C3.9,3,3,3.9,3,5v14c0,1.1,0.9,2,2,2h14c1.1,0,2-0.9,2-2V5C21,3.9,20.1,3,19,3L19,3z"/>
+                            </g>
+                            <path d="M14,17H7v-2h7V17z M17,13H7v-2h10V13z M17,9H7V7h10V9z"/>
+                        </g>
+                    </svg>
+                `;
+            default:
+                break;
+        }
+        return html``;
+    }
+
+    function getSubText(item: any) {
+        switch (item.type) {
+            case 'component':
+                return 'Component';
+            case 'md':
+                return 'Documentation';
+            case 'story': {
+                const story = item.data[0];
+                // return `Story - ${story}`;
+                return story;
+            }
+            default:
+                return '';
         }
     }
 }

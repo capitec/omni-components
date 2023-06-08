@@ -18,7 +18,7 @@ import {
 } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
-import { assignToSlot, ComponentStoryFormat, CSFIdentifier } from '../utils/StoryUtils.js';
+import { assignToSlot, ComponentStoryFormat, CSFIdentifier, getSourceFromLit } from '../utils/StoryUtils.js';
 import { CurrencyField } from './CurrencyField.js';
 
 import './CurrencyField.js';
@@ -56,6 +56,21 @@ export const Interactive: ComponentStoryFormat<Args> = {
         args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}` : nothing
     }${args.prefix || args.suffix || args.clear ? '\r\n' : nothing}</omni-currency-field>
     `,
+    frameworkSources: [
+        {
+            framework: 'Lit',
+            sourceParts: {
+                htmlFragment: (args) => getSourceFromLit(Interactive!.render!(args), undefined, (s) => s.replace('formatter', '.formatter'))
+            }
+        },
+        {
+            framework: 'Vue',
+            load: (args) =>
+                getSourceFromLit(Interactive!.render!(args), undefined, (s) =>
+                    s.replace(' disabled', ' :disabled="true"').replace(' clearable', ' :clearable="true"')
+                )
+        }
+    ],
     name: 'Interactive',
     args: {
         label: 'Label',

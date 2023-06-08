@@ -17,7 +17,7 @@ import {
 } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
-import { assignToSlot, ComponentStoryFormat, CSFIdentifier } from '../utils/StoryUtils.js';
+import { assignToSlot, ComponentStoryFormat, CSFIdentifier, getSourceFromLit } from '../utils/StoryUtils.js';
 import { ColorField } from './ColorField.js';
 
 import './ColorField.js';
@@ -43,6 +43,15 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
     }${args.prefix || args.suffix || args.clear ? '\r\n' : nothing}</omni-color-field
     >
   `,
+    frameworkSources: [
+        {
+            framework: 'Vue',
+            load: (args) =>
+                getSourceFromLit(Interactive!.render!(args), undefined, (s) =>
+                    s.replace(' disabled', ' :disabled="true"').replace(' clearable', ' :clearable="true"')
+                )
+        }
+    ],
     name: 'Interactive',
     args: {
         label: 'Label',
@@ -89,6 +98,13 @@ export const Disabled: ComponentStoryFormat<BaseArgs> = {
             load: (args) => `import { OmniColorField } from "@capitec/omni-components-react/color-field";
 
 const App = () => <OmniColorField${args.label ? ` label='${args.label}'` : ''}${args.disabled ? ` disabled` : ''}/>;`
+        },
+        {
+            framework: 'Vue',
+            load: (args) =>
+                getSourceFromLit(Disabled!.render!(args), undefined, (s) =>
+                    s.replace(' disabled', ' :disabled="true"').replace(' clearable', ' :clearable="true"')
+                )
         }
     ],
     name: 'Disabled',
