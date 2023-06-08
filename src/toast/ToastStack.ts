@@ -21,6 +21,16 @@ import '../render-element/RenderElement.js';
  * @element omni-toast-stack
  *
  * @slot - Toast(s) to be displayed
+ *
+ * @cssprop --omni-toast-stack-z-index - The z-index of the stack.
+ * @cssprop --omni-toast-stack-font-color - The font color applied to the stack.
+ *
+ * @cssprop --omni-toast-stack-anchor-bottom - The position from the bottom toast `position` is set to `bottom`, `bottom-left`, or `bottom-right`.
+ * @cssprop --omni-toast-stack-anchor-top - The position from the bottom toast `position` is set to `top`, `top-left`, or `top-right`.
+ * @cssprop --omni-toast-stack-anchor-left - The position from the bottom toast `position` is set to `left`, `top-left`, or `bottom-left`.
+ * @cssprop --omni-toast-stack-anchor-right - The position from the bottom toast `position` is set to `right`, `top-right`, or `bottom-right`.
+ *
+ * @cssprop --omni-toast-stack-gap - The vertical gap between toast elements in the stack.
  */
 @customElement('omni-toast-stack')
 export class ToastStack extends OmniElement {
@@ -57,7 +67,9 @@ export class ToastStack extends OmniElement {
     public static create(init: ToastStackInit) {
         if (!init.parent) {
             // If no parent element is specified, the ToastStack will be appended directly on the document body.
-            init.parent = document.body;
+            init.parent = document.createElement('div');
+            init.parent.style.display = 'contents';
+            document.body.appendChild(init.parent);
         }
 
         if (typeof init.parent === 'string') {
@@ -215,8 +227,12 @@ export class ToastStack extends OmniElement {
         }
     }
 
-    private slideIn(toast: Toast): void {
+    private async slideIn(toast: Toast) {
         // Using the FLIP animation technique for performance. See more here: https://aerotwist.com/blog/flip-your-animations/
+
+        if (!this.toastContainer) {
+            await this.updateComplete;
+        }
 
         // FIRST
         const first = this.toastContainer.offsetHeight;
@@ -248,7 +264,7 @@ export class ToastStack extends OmniElement {
 				z-index: var(--omni-toast-stack-z-index, 10000);
 
 				gap: 20px;
-                color: var(--omni-font-color);
+                color: var(--omni-toast-stack-font-color, var(--omni-font-color));
                 
 			}
 
@@ -338,7 +354,7 @@ export type ToastStackInit = {
     id?: string;
 
     /**
-     * The container to append the ToastStack as child. If not provided will append to the document body.
+     * The container to append the ToastStack as child. If not provided will append to a new div element on the document body.
      */
     parent?: string | HTMLElement | DocumentFragment | null;
 

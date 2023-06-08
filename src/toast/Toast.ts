@@ -6,7 +6,7 @@ import { OmniElement } from '../core/OmniElement.js';
 import '../icons/Close.icon.js';
 
 /**
- * Popup to visually notify a user of a message.
+ * Popup to visually notify a user of a header.
  *
  * @import
  * ```js
@@ -18,7 +18,7 @@ import '../icons/Close.icon.js';
  * <omni-toast
  *   type="info"
  *   header="Toast Title"
- *   detail="Short Description Text"
+ *   detail="Short detail Text"
  *   closable>
  * </omni-toast>
 
@@ -28,13 +28,60 @@ import '../icons/Close.icon.js';
  *
  * Registry of all properties defined by the component.
  *
- * @slot prefix - Content to render before toast message area.
- * @slot - Content to render inside the component message area.
+ * @slot prefix - Content to render before toast header area.
+ * @slot - Content to render inside the component header area.
  * @slot close - Content to render as the close button when `closeable`.
  *
  * @fires {CustomEvent<{ old: Boolean; new: Boolean; }>} value-change - Dispatched when the control value is changed to either on or off.
  *
- * @cssprop --omni-radio-width - Width.
+ * @cssprop --omni-toast-min-width - Min Width.
+ * @cssprop --omni-toast-max-width - Max Width.
+ * @cssprop --omni-toast-width - Width.
+ * @cssprop --omni-toast-z-index - The z-index.
+ * @cssprop --omni-toast-border-width - Border width.
+ * @cssprop --omni-toast-border-radius - Border radius.
+ * @cssprop --omni-toast-box-shadow - Box shadow.
+ * @cssprop --omni-toast-padding - Container padding.
+ * @cssprop --omni-toast-horizontal-gap - Horizontal spacing between icon from `type` and content.
+ * @cssprop --omni-toast-icon-size - Symmetrical size of icon from `type`.
+ * 
+ * @cssprop --omni-toast-header-font-family - Font family for header.
+ * @cssprop --omni-toast-header-font-size - Font size for header.
+ * @cssprop --omni-toast-header-font-weight - Font weight for header.
+ * @cssprop --omni-toast-header-line-height - Line height for header.
+ * 
+ * @cssprop --omni-toast-detail-font-family - Font family for detail.
+ * @cssprop --omni-toast-detail-font-size - Font size for detail.
+ * @cssprop --omni-toast-detail-font-weight - Font weight for detail.
+ * @cssprop --omni-toast-detail-line-height - Line height for detail.
+ * @cssprop --omni-toast-vertical-gap - Vertical space between detail and header.
+ * 
+ * @cssprop --omni-toast-background - The default background applied when no `type` is set.
+ * @cssprop --omni-toast-default-font-color - The default font color applied when no `type` is set.
+ * @cssprop --omni-toast-border-color - Border color. * 
+ * 
+ * @cssprop --omni-toast-success-background - The background applied when  `type` is set to `success`.
+ * @cssprop --omni-toast-success-font-color - The font color applied when `type` is set to `success`.
+ * @cssprop --omni-toast-success-border-color - The border color applied when  `type` is set to `success`.
+ * @cssprop --omni-toast-success-icon-color - The icon color applied when  `type` is set to `success`.
+ * 
+ * @cssprop --omni-toast-warning-background - The background applied when  `type` is set to `warning`.
+ * @cssprop --omni-toast-warning-font-color - The font color applied when `type` is set to `warning`.
+ * @cssprop --omni-toast-warning-border-color - The border color applied when  `type` is set to `warning`.
+ * @cssprop --omni-toast-warning-icon-color - The icon color applied when  `type` is set to `warning`.
+ * 
+ * @cssprop --omni-toast-error-background - The background applied when  `type` is set to `error`.
+ * @cssprop --omni-toast-error-font-color - The font color applied when `type` is set to `error`.
+ * @cssprop --omni-toast-error-border-color - The border color applied when  `type` is set to `error`.
+ * @cssprop --omni-toast-error-icon-color - The icon color applied when  `type` is set to `error`.
+ * 
+ * @cssprop --omni-toast-info-background - The background applied when  `type` is set to `info`.
+ * @cssprop --omni-toast-info-font-color - The font color applied when `type` is set to `info`.
+ * @cssprop --omni-toast-info-border-color - The border color applied when  `type` is set to `info`.
+ * @cssprop --omni-toast-info-icon-color - The icon color applied when  `type` is set to `info`.
+ * 
+ * @cssprop --omni-toast-close-padding - Padding applied to close button when `closeable`.
+ * @cssprop --omni-toast-close-size - Symmetrical size applied to close button when `closeable`.
  *
  */
 @customElement('omni-toast')
@@ -52,7 +99,7 @@ export class Toast extends OmniElement {
     @property({ type: String, reflect: true }) header?: string;
 
     /**
-     * The toast description.
+     * The toast detail.
      * @attr
      */
     @property({ type: String, reflect: true }) detail?: string;
@@ -148,31 +195,31 @@ export class Toast extends OmniElement {
 				align-items: flex-start;
 			}
 
-			.content .message {
+			.content .header {
 				grid-column: 2;
 				grid-row: 1;
 
-				font-family: var(--omni-toast-message-font-family, sans-serif);
-				font-size: var(--omni-toast-message-font-size, 16px);
-				font-weight: var(--omni-toast-message-font-weight, bold);
-				line-height: var(--omni-toast-message-line-height, 1.2);
+				font-family: var(--omni-toast-header-font-family, sans-serif);
+				font-size: var(--omni-toast-header-font-size, 16px);
+				font-weight: var(--omni-toast-header-font-weight, bold);
+				line-height: var(--omni-toast-header-line-height, 1.2);
 			}
 
             ::slotted(*) {
-				font-family: var(--omni-toast-description-font-family, sans-serif);
-				font-size: var(--omni-toast-description-font-size, 16px);
-				font-weight: var(--omni-toast-description-font-weight, normal);
-				line-height: var(--omni-toast-description-line-height, 1.2);
+				font-family: var(--omni-toast-detail-font-family, sans-serif);
+				font-size: var(--omni-toast-detail-font-size, 16px);
+				font-weight: var(--omni-toast-detail-font-weight, normal);
+				line-height: var(--omni-toast-detail-line-height, 1.2);
             }
 
-			.content .description {
+			.content .detail {
 				grid-column: 2;
 				grid-row: 2;
 
-				font-family: var(--omni-toast-description-font-family, sans-serif);
-				font-size: var(--omni-toast-description-font-size, 16px);
-				font-weight: var(--omni-toast-description-font-weight, normal);
-				line-height: var(--omni-toast-description-line-height, 1.2);
+				font-family: var(--omni-toast-detail-font-family, sans-serif);
+				font-size: var(--omni-toast-detail-font-size, 16px);
+				font-weight: var(--omni-toast-detail-font-weight, normal);
+				line-height: var(--omni-toast-detail-line-height, 1.2);
 
 				margin-top: var(--omni-toast-vertical-gap);
 			}
@@ -184,7 +231,7 @@ export class Toast extends OmniElement {
 				border-color: var(--omni-toast-info-border-color, cyan);
 			}
 
-			:host([type="info"]) .message {
+			:host([type="info"]) .header {
 				color: var(--omni-toast-info-font-color, var(--omni-toast-default-font-color, --omni-font-color));
 			}
 
@@ -192,7 +239,7 @@ export class Toast extends OmniElement {
 				color: var(--omni-toast-info-font-color, var(--omni-toast-default-font-color, --omni-font-color));
             }
 
-			:host([type="info"]) .description {
+			:host([type="info"]) .detail {
 				color: var(--omni-toast-info-font-color, var(--omni-toast-default-font-color, --omni-font-color));
 			}
 
@@ -211,7 +258,7 @@ export class Toast extends OmniElement {
 				border-color: var(--omni-toast-success-border-color, darkgreen);
 			}
 
-			:host([type="success"]) .message {
+			:host([type="success"]) .header {
 				color: var(--omni-toast-success-font-color, var(--omni-toast-default-font-color, --omni-font-color));
 			}
 
@@ -219,7 +266,7 @@ export class Toast extends OmniElement {
 				color: var(--omni-toast-success-font-color, var(--omni-toast-default-font-color, --omni-font-color));
             }
 
-			:host([type="success"]) .description {
+			:host([type="success"]) .detail {
 				color: var(--omni-toast-success-font-color, var(--omni-toast-default-font-color, --omni-font-color));
 			}
 
@@ -238,7 +285,7 @@ export class Toast extends OmniElement {
 				border-color: var(--omni-toast-error-border-color, darkred);
 			}
 
-			:host([type="error"]) .message {
+			:host([type="error"]) .header {
 				color: var(--omni-toast-error-font-color, var(--omni-toast-default-font-color, --omni-font-color));
 			}
 
@@ -246,7 +293,7 @@ export class Toast extends OmniElement {
 				color: var(--omni-toast-error-font-color, var(--omni-toast-default-font-color, --omni-font-color));
             }
 
-			:host([type="error"]) .description{
+			:host([type="error"]) .detail{
 				color: var(--omni-toast-error-font-color, var(--omni-toast-default-font-color, --omni-font-color));
 			}
 
@@ -265,7 +312,7 @@ export class Toast extends OmniElement {
 				border-color: var(--omni-toast-warning-border-color, orange);
 			}
 
-			:host([type="warning"]) .message {
+			:host([type="warning"]) .header {
 				color: var(--omni-toast-warning-font-color, var(--omni-toast-default-font-color, --omni-font-color));
 			}
 
@@ -273,7 +320,7 @@ export class Toast extends OmniElement {
 				color: var(--omni-toast-warning-font-color, var(--omni-toast-default-font-color, --omni-font-color));
             }
 
-			:host([type="warning"]) .description {
+			:host([type="warning"]) .detail {
 				color: var(--omni-toast-warning-font-color, var(--omni-toast-default-font-color, --omni-font-color));
 			}
 
@@ -287,7 +334,7 @@ export class Toast extends OmniElement {
 
             .closer {
                 display: flex;
-                padding: 4px;
+                padding: var(--omni-toast-close-padding,4px);
             }
 
             .close-btn {
@@ -296,8 +343,8 @@ export class Toast extends OmniElement {
                 box-sizing: border-box;
                 padding: 0px;
                 margin: 0px;
-                width: 24px;
-                height: 24px;
+                width: var(--omni-toast-close-size,24px);
+                height: var(--omni-toast-close-size,24px);
                 cursor: pointer;
             }
 
@@ -314,8 +361,8 @@ export class Toast extends OmniElement {
                     </slot>
     
                     <div class="content">
-                        ${this.header ? html`<label class="message">${this.header}</label>` : nothing}
-                        ${this.detail ? html`<label class="description">${this.detail}</label>` : nothing} 
+                        ${this.header ? html`<label class="header">${this.header}</label>` : nothing}
+                        ${this.detail ? html`<label class="detail">${this.detail}</label>` : nothing} 
                         <slot></slot>
                     </div>
             </div>
