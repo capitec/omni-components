@@ -170,6 +170,11 @@ header {
     --omni-hyperlink-color-active: white;
     --omni-hyperlink-color-disabled: #34393E;
     --omni-hyperlink-color-visited: rgb(108 108 108);
+
+    --omni-toast-info-font-color: black;
+    --omni-toast-warning-font-color: black;
+    --omni-toast-error-font-color: black;
+    --omni-toast-success-font-color: black;
 }
 
 /* DOCS SPECIFIC */

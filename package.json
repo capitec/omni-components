@@ -62,7 +62,8 @@
         "pin-field",
         "calendar",
         "keyboard",
-        "modal"
+        "modal",
+        "toast"
     ],
     "exports": {
         "./*": "./dist/*/index.js"
