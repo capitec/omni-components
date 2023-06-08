@@ -99,35 +99,13 @@ export class PinField extends OmniFormElement {
             this.type = 'password';
         }
 
-        // Required when the component is rendered for the first time to set the value of the property and the input elements value.
-        if (this.value !== null && this.value !== undefined && this.value !== '') {
-            //Check if the value provided is valid and numeric else remove the value attribute.
-            if (new RegExp('^[0-9]+$').test(this.value as string) === false) {
-                this.removeAttribute('value');
-            } else if (this.maxLength && (this.value as string).length > this.maxLength) {
-                this.value = String(this.value).slice(0, this.maxLength);
-            }
-        }
-        // Set the value of the input element 
-        if (this._inputElement) {
-            this._inputElement.value = this.value as string;
-        }
+        this._sanitiseValue(this.value as string);
     }
 
     override async attributeChangedCallback(name: string, _old: string | null, value: string | null): Promise<void> {
         super.attributeChangedCallback(name, _old, value);
         if (name === 'value') {
-            if (value !== null && value !== undefined && value !== '') {
-                if (new RegExp('^[0-9]+$').test(value as string) === false) {
-                    this.removeAttribute('value');
-                } else if (this.maxLength && (value as string).length > this.maxLength) {
-                    this.value = value?.slice(0, this.maxLength) as string;
-                }
-            }
-
-            if (this._inputElement) {
-                this._inputElement.value = this.value as string;
-            }
+            this._sanitiseValue(value as string);
         }
     }
 
@@ -136,6 +114,20 @@ export class PinField extends OmniFormElement {
             this._inputElement.focus(options);
         } else {
             super.focus(options);
+        }
+    }
+
+    _sanitiseValue(value: string) {
+        if (value !== null && value !== undefined && value !== '') {
+            if (new RegExp('^[0-9]+$').test(value as string) === false) {
+                this.removeAttribute('value');
+            } else if (this.maxLength && (value as string).length > this.maxLength) {
+                this.value = value?.slice(0, this.maxLength) as string;
+            }
+        }
+
+        if (this._inputElement) {
+            this._inputElement.value = this.value as string;
         }
     }
 
