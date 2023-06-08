@@ -98,12 +98,26 @@ export class PinField extends OmniFormElement {
         if (!this.isWebkit) {
             this.type = 'password';
         }
+
+        // Required when the component is rendered for the first time to set the value of the property and the input elements value.
+        if (this.value !== null && this.value !== undefined && this.value !== '') {
+            //Check if the value provided is valid and numeric else remove the value attribute.
+            if (new RegExp('^[0-9]+$').test(this.value as string) === false) {
+                this.removeAttribute('value');
+            } else if (this.maxLength && (this.value as string).length > this.maxLength) {
+                this.value = String(this.value).slice(0, this.maxLength);
+            }
+        }
+        // Set the value of the input element 
+        if (this._inputElement) {
+            this._inputElement.value = this.value as string;
+        }
     }
 
     override async attributeChangedCallback(name: string, _old: string | null, value: string | null): Promise<void> {
         super.attributeChangedCallback(name, _old, value);
         if (name === 'value') {
-            if( value !== null && value !== undefined && value !== ''){
+            if (value !== null && value !== undefined && value !== '') {
                 if (new RegExp('^[0-9]+$').test(value as string) === false) {
                     this.removeAttribute('value');
                 } else if (this.maxLength && (value as string).length > this.maxLength) {
@@ -111,13 +125,12 @@ export class PinField extends OmniFormElement {
                 }
             }
 
-            if(this._inputElement){
+            if (this._inputElement) {
                 this._inputElement.value = this.value as string;
             }
- 
         }
     }
-    
+
     override focus(options?: FocusOptions | undefined): void {
         if (this._inputElement) {
             this._inputElement.focus(options);
@@ -140,7 +153,7 @@ export class PinField extends OmniFormElement {
     //The type of the input is set to text which will allow alpha-numeric characters this function is to block all non numeric input values.
     _beforeInput(e: InputEvent) {
         const input = this._inputElement as HTMLInputElement;
-        if(input && e.data !== null) {
+        if (input && e.data !== null) {
             if (input && !this._isNumber(e.data as string)) {
                 e.preventDefault();
                 return;
