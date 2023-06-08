@@ -328,21 +328,21 @@ export class Button extends OmniElement {
 
     protected override render(): TemplateResult {
         return html`
-      <button
-        id="button"
-        class=${classMap({
-            button: true,
-            [`slot-${this.slotPosition}`]: this.slotPosition,
-            [`${this.type}`]: this.type,
-            disabled: this.disabled ?? false
-        })}
-        ?disabled=${this.disabled}
-        aria-disabled=${this.disabled ? 'true' : 'false'}
-        tabindex=${this.disabled ? '-1' : '0'}>
-        <slot></slot>
-        ${this.label ? html`<label id="label" class="label">${this.label}</label>` : nothing}
-      </button>
-    `;
+            <button
+                id="button"
+                class=${classMap({
+                    button: true,
+                    [`slot-${this.slotPosition}`]: this.label ? this.slotPosition : false,
+                    [`${this.type}`]: this.type,
+                    disabled: this.disabled ?? false
+                })}
+                ?disabled=${this.disabled}
+                aria-disabled=${this.disabled ? 'true' : 'false'}
+                tabindex=${this.disabled ? '-1' : '0'}>
+                <slot></slot>
+                ${this.label ? html`<label id="label" class="label">${this.label}</label>` : nothing}
+            </button>
+        `;
     }
 }
 
