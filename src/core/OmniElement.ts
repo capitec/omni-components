@@ -69,11 +69,11 @@ export abstract class OmniElement extends LitElement {
         --omni-primary-active-color: var(--omni-theme-primary-active-color, #717171); /* 6% darker */
 
         --omni-accent-color: var(--omni-theme-accent-color, #c3c3c3);
-        --omni-accent-hover-color: var(--omni-theme-accent-hover-color, #bbbbbb1a); /* 3% darker */
+        --omni-accent-hover-color: var(--omni-theme-accent-hover-color, #bbbbbb1a); /* 3% darker with alpha blend */
         --omni-accent-active-color: var(--omni-theme-accent-active-color, #b4b4b4); /* 6% darker */
 
         --omni-background-color: var(--omni-theme-background-color, #ffffff);
-        --omni-background-hover-color: var(--omni-theme-background-hover-color, #f7f7f71a); /* 3% darker */
+        --omni-background-hover-color: var(--omni-theme-background-hover-color, #f7f7f71a); /* 3% darker with alpha blend */
         --omni-background-active-color: var(--omni-theme-background-active-color, #f0f0f0); /* 6% darker */
 
         --omni-font-color: var(--omni-theme-font-color, black);
