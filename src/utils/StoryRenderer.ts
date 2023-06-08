@@ -133,14 +133,13 @@ export class StoryRenderer extends LitElement {
                 });
             }
 
+            let sourceTab = (window.localStorage.getItem(frameworkStorageKey) ?? 'HTML') as FrameworkOption;
+            let frameworkDefinition = this.story!.frameworkSources?.find((fs) => fs.framework === sourceTab);
+            if (!frameworkDefinition) {
+                sourceTab = this.sourceFallbacks.find((sf) => sf.frameworks.includes(sourceTab))?.fallbackFramework ?? sourceTab;
+                frameworkDefinition = this.story!.frameworkSources?.find((fs) => fs.framework === sourceTab);
+            }
             if (this.codeEditor) {
-                let sourceTab = (window.localStorage.getItem(frameworkStorageKey) ?? 'HTML') as FrameworkOption;
-                let frameworkDefinition = this.story!.frameworkSources?.find((fs) => fs.framework === sourceTab);
-                if (!frameworkDefinition) {
-                    sourceTab = this.sourceFallbacks.find((sf) => sf.frameworks.includes(sourceTab))?.fallbackFramework ?? sourceTab;
-                    frameworkDefinition = this.story!.frameworkSources?.find((fs) => fs.framework === sourceTab);
-                }
-
                 await this.codeEditor.refresh(() => {
                     const source = frameworkDefinition?.sourceParts?.htmlFragment
                         ? typeof frameworkDefinition?.sourceParts?.htmlFragment === 'string'
@@ -178,6 +177,15 @@ export class StoryRenderer extends LitElement {
 
                         return source;
                     });
+                }
+            }
+            const codePenGen = this.renderRoot.querySelector('.code-pen-gen-btn');
+            if (codePenGen) {
+                const noDisplay = frameworkDefinition?.disableCodePen || (this.noInteractiveCodePen.includes(sourceTab) && this.interactive);
+                if (noDisplay) {
+                    codePenGen?.classList.add('no-display');
+                } else {
+                    codePenGen?.classList.remove('no-display');
                 }
             }
         });
@@ -463,7 +471,7 @@ export class StoryRenderer extends LitElement {
                     }
                 </div>     
                 <omni-button 
-                    class="docs-omni-component ${
+                    class="code-pen-gen-btn docs-omni-component ${
                         this.story!.frameworkSources?.find((fs) => fs.framework === sourceTab)?.disableCodePen ||
                         (this.noInteractiveCodePen.includes(sourceTab) && this.interactive)
                             ? 'no-display'
@@ -825,7 +833,7 @@ app.mount('#app');`;
         width: 100%;
         padding: 24px;
     ">
-        <div id="root" style="display: contents;"></div>
+        <div id="root" ></div>
     </body>
 </html>`;
                 js = `import 'https://cdn.jsdelivr.net/npm/@capitec/omni-components@${esmVersion}/dist/omni-components.js';
