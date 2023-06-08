@@ -45,40 +45,41 @@ export const Interactive: ComponentStoryFormat<Args> = {
 </div>
     `,
     render: (args: Args) => {
+        const parent = interactiveStack?.parentElement ?? document.createElement('div');
+        if (interactiveStack) {
+            renderToElement(
+                renderStack(args, (el) => (interactiveStack = el as ToastStack)),
+                parent
+            );
+        }
         return html`<omni-button @click="${() => {
             if (!interactiveStack) {
-                const parent = document.createElement('div');
                 parent.style.display = 'contents';
                 document.body.appendChild(parent);
-                renderToElement(
-                    renderStack(args, (el) => (interactiveStack = el as ToastStack)),
-                    parent
-                );
-                document.dispatchEvent(
-                    new CustomEvent('story-renderer-interactive-update', {
-                        bubbles: true,
-                        composed: true
-                    })
-                );
             } else {
-                interactiveStack.showToast({ type: 'info', header: 'Test', detail: 'Test Info', closeable: true, duration: 15000 });
-                interactiveStack.showToast({
-                    type: 'info',
-                    header: 'Test',
-                    detail: 'Test Info',
-                    closeable: true,
-                    // duration: 15000,
-                    prefix: html`✅`,
-                    close: html`❎`,
-                    content: html`<span>My Extra <strong>Content</strong></span>`
-                });
+                interactiveStack.innerHTML = args['[Default Slot]'];
             }
+            renderToElement(
+                renderStack(args, (el) => (interactiveStack = el as ToastStack)),
+                parent
+            );
+            document.dispatchEvent(
+                new CustomEvent('story-renderer-interactive-update', {
+                    bubbles: true,
+                    composed: true
+                })
+            );
         }}">Show Toasts</omni-button>`;
     },
     frameworkSources: [
         {
             framework: 'HTML',
             load: (args) => getSourceFromLit(renderStack(args))
+        },
+        {
+            framework: 'Vue',
+            load: (args) =>
+                getSourceFromLit(renderStack(args)).replaceAll(' closeable', ' :closeable="true"').replaceAll(' reverse', ' :reverse="true"')
         }
     ],
     name: 'Interactive',
@@ -174,6 +175,50 @@ export const Slotted_Toasts: ComponentStoryFormat<Args> = {
         {
             framework: 'HTML',
             load: (args) => getSourceFromLit(renderStack(args))
+        },
+        {
+            framework: 'Vue',
+            load: (args) =>
+                getSourceFromLit(renderStack(args)).replaceAll(' closeable', ' :closeable="true"').replaceAll(' reverse', ' :reverse="true"')
+        },
+        {
+            framework: 'React',
+            load: (args) => `import { OmniToast, OmniToastStack } from "@capitec/omni-components-react/toast";
+
+const App = () => <OmniToastStack position="${args.position}" >
+                    <OmniToast
+                        data-toast-duration="15000"
+                        detail="The toast description"
+                        header="The toast message"
+                        type="success"
+                        closeable>
+                    </OmniToast>
+                    <OmniToast
+                        detail="The toast description"
+                        header="The toast message"
+                        type="warning"
+                        closeable>
+                    </OmniToast>
+                    <OmniToast
+                        data-toast-duration="3000"
+                        detail="The toast description"
+                        header="The toast message"
+                        type="info"
+                        >
+                    </OmniToast>
+                    <OmniToast
+                        data-toast-duration="10000"
+                        detail="The toast description"
+                        header="The toast message"
+                        type="error"
+                        closeable>
+                    </OmniToast>
+                    <OmniToast
+                        data-toast-duration="15000"
+                        detail="The toast description"
+                        header="The toast message">
+                    </OmniToast>
+                  </OmniToastStack>;`
         }
     ],
     name: 'Slotted Toasts',
@@ -277,7 +322,6 @@ export const Show_From_Script: ComponentStoryFormat<Args> = {
     frameworkSources: [
         {
             framework: 'HTML',
-            load: (args) => getSourceFromLit(renderStack(args)),
             sourceParts: {
                 htmlFragment: (args) => getSourceFromLit(renderStack(args)),
                 jsFragment: `const toastStack = document.querySelector('omni-toast-stack');
@@ -293,6 +337,94 @@ toastStack.showToast({
     content: '<span>My Extra <strong>Content</strong></span>'
 });
                 `
+            }
+        },
+        { 
+            framework: 'React',
+            load: (args) => `import { OmniToastStack } from "@capitec/omni-components-react/toast";
+
+const App = () => {
+    let toastStack = null;
+    const setRef = e => {
+        toastStack = e;
+        
+        toastStack.showToast({ type: 'info', header: 'Test', detail: 'Test Info', closeable: true, duration: 15000 });
+        toastStack.showToast({
+            type: 'info',
+            header: 'Test',
+            detail: 'Test Info',
+            closeable: true,
+            // duration: 15000, // Do not set duration to keep toast until closed by user.
+            prefix: '✅',
+            close: '❎',
+            content: '<span>My Extra <strong>Content</strong></span>'
+        });
+    }
+            
+    return <OmniToastStack ref={setRef} position="${args.position}" />;                    
+}`
+        },
+        {
+            framework: 'Lit',
+            sourceParts: {
+                htmlFragment: (args) =>
+                    getSourceFromLit(
+                        renderStack(args),
+                        (container) => container.firstElementChild?.setAttribute('data-replace-token', ''),
+                        (s) => s.replace(' data-replace-token=""', ' ${ref(onRef)}')
+                    ),
+                jsFragment: `import { ref } from 'https://unpkg.com/lit-html/directives/ref.js?module';
+                
+const onRef = e => {
+    const toastStack = e;
+    toastStack.showToast({ type: 'info', header: 'Test', detail: 'Test Info', closeable: true, duration: 15000 });
+    toastStack.showToast({
+        type: 'info',
+        header: 'Test',
+        detail: 'Test Info',
+        closeable: true,
+        // duration: 15000, // Do not set duration to keep toast until closed by user.
+        prefix: '✅',
+        close: '❎',
+        content: '<span>My Extra <strong>Content</strong></span>'
+    });
+}`
+            }
+        },
+        {
+            framework: 'Vue',
+            sourceParts: {
+                htmlFragment: (args) =>
+                    getSourceFromLit(renderStack(args)).replaceAll(' closeable', ' :closeable="true"').replaceAll(' reverse', ' :reverse="true"') +
+                    `
+<!-- Execute function on Vue load -->
+{{ (() =>  { run() })() }}
+`,
+                jsFragment: `window.vueData = {
+    run: async () => {
+
+        let toastStack = document.querySelector('omni-toast-stack');
+
+        // Wait for Vue to complete loading and the Toast Stack to be available
+        while (!toastStack) {
+            await Promise.resolve();
+            toastStack = document.querySelector('omni-toast-stack');
+        }
+        toastStack.showToast({ type: 'info', header: 'Test', detail: 'Test Info', closeable: true, duration: 15000 });
+
+        toastStack.showToast({
+            type: 'info',
+            header: 'Test',
+            detail: 'Test Info',
+            closeable: true,
+            // duration: 15000, // Do not set duration to keep toast until closed by user.
+            prefix: '✅',
+            close: '❎',
+            content: '<span>My Extra <strong>Content</strong></span>'
+        });
+        
+    }
+};`
             }
         }
     ],
@@ -357,7 +489,6 @@ export const Create_From_Script: ComponentStoryFormat<Args> = {
     frameworkSources: [
         {
             framework: 'HTML',
-            load: (args) => getSourceFromLit(renderStack(args)),
             sourceParts: {
                 htmlFragment: raw`<div>HTML Content</div>`,
                 jsFragment: `import { ToastStack } from '@capitec/omni-components/toast';
@@ -376,8 +507,53 @@ toastStack.showToast({
     prefix: '✅',
     close: '❎',
     content: '<span>My Extra <strong>Content</strong></span>'
+});`
+            }
+        },
+        { 
+            framework: 'React',
+            load: (args) => `import { ToastStack } from '@capitec/omni-components-react/toast';
+
+const App = () => <div>HTML Content</div>;
+
+const toastStack = ToastStack.create({
+    position: 'top',
+    reverse: true
 });
-                `
+
+toastStack.showToast({ type: 'info', header: 'Test', detail: 'Test Info', closeable: true, duration: 15000 });
+toastStack.showToast({
+    type: 'info',
+    header: 'Test',
+    detail: 'Test Info',
+    closeable: true,
+    // duration: 15000, // Do not set duration to keep toast until closed by user.
+    prefix: '✅',
+    close: '❎',
+    content: '<span>My Extra <strong>Content</strong></span>'
+});`
+        },
+        {
+            framework: 'Vue',
+            sourceParts: {
+                htmlFragment: raw`<div>HTML Content</div>`,
+                jsFragment: `import { ToastStack } from '@capitec/omni-components/toast';
+const toastStack = ToastStack.create({
+    position: 'top',
+    reverse: true
+});
+
+toastStack.showToast({ type: 'info', header: 'Test', detail: 'Test Info', closeable: true, duration: 15000 });
+toastStack.showToast({
+    type: 'info',
+    header: 'Test',
+    detail: 'Test Info',
+    closeable: true,
+    // duration: 15000, // Do not set duration to keep toast until closed by user.
+    prefix: '✅',
+    close: '❎',
+    content: '<span>My Extra <strong>Content</strong></span>'
+});`
             }
         }
     ],
@@ -461,7 +637,6 @@ export const Position: ComponentStoryFormat<Args> = {
     frameworkSources: [
         {
             framework: 'HTML',
-            load: (args) => getSourceFromLit(renderStack(args)),
             sourceParts: {
                 htmlFragment: (args) => getSourceFromLit(renderStack(args)),
                 jsFragment: `const toastStack = document.querySelector('omni-toast-stack');
@@ -477,6 +652,94 @@ toastStack.showToast({
     content: '<span>My Extra <strong>Content</strong></span>'
 });
                 `
+            }
+        },
+        { 
+            framework: 'React',
+            load: (args) => `import { OmniToastStack } from "@capitec/omni-components-react/toast";
+
+const App = () => {
+    let toastStack = null;
+    const setRef = e => {
+        toastStack = e;
+        
+        toastStack.showToast({ type: 'info', header: 'Test', detail: 'Test Info', closeable: true, duration: 15000 });
+        toastStack.showToast({
+            type: 'info',
+            header: 'Test',
+            detail: 'Test Info',
+            closeable: true,
+            // duration: 15000, // Do not set duration to keep toast until closed by user.
+            prefix: '✅',
+            close: '❎',
+            content: '<span>My Extra <strong>Content</strong></span>'
+        });
+    }
+            
+    return <OmniToastStack ref={setRef} position="${args.position}" />;                    
+}`
+        },
+        {
+            framework: 'Lit',
+            sourceParts: {
+                htmlFragment: (args) =>
+                    getSourceFromLit(
+                        renderStack(args),
+                        (container) => container.firstElementChild?.setAttribute('data-replace-token', ''),
+                        (s) => s.replace(' data-replace-token=""', ' ${ref(onRef)}')
+                    ),
+                jsFragment: `import { ref } from 'https://unpkg.com/lit-html/directives/ref.js?module';
+                
+const onRef = e => {
+    const toastStack = e;
+    toastStack.showToast({ type: 'info', header: 'Test', detail: 'Test Info', closeable: true, duration: 15000 });
+    toastStack.showToast({
+        type: 'info',
+        header: 'Test',
+        detail: 'Test Info',
+        closeable: true,
+        // duration: 15000, // Do not set duration to keep toast until closed by user.
+        prefix: '✅',
+        close: '❎',
+        content: '<span>My Extra <strong>Content</strong></span>'
+    });
+}`
+            }
+        },
+        {
+            framework: 'Vue',
+            sourceParts: {
+                htmlFragment: (args) =>
+                    getSourceFromLit(renderStack(args)).replaceAll(' closeable', ' :closeable="true"').replaceAll(' reverse', ' :reverse="true"') +
+                    `
+<!-- Execute function on Vue load -->
+{{ (() =>  { run() })() }}
+`,
+                jsFragment: `window.vueData = {
+    run: async () => {
+
+        let toastStack = document.querySelector('omni-toast-stack');
+
+        // Wait for Vue to complete loading and the Toast Stack to be available
+        while (!toastStack) {
+            await Promise.resolve();
+            toastStack = document.querySelector('omni-toast-stack');
+        }
+        toastStack.showToast({ type: 'info', header: 'Test', detail: 'Test Info', closeable: true, duration: 15000 });
+
+        toastStack.showToast({
+            type: 'info',
+            header: 'Test',
+            detail: 'Test Info',
+            closeable: true,
+            // duration: 15000, // Do not set duration to keep toast until closed by user.
+            prefix: '✅',
+            close: '❎',
+            content: '<span>My Extra <strong>Content</strong></span>'
+        });
+        
+    }
+};`
             }
         }
     ],
@@ -545,7 +808,6 @@ export const Reverse: ComponentStoryFormat<Args> = {
     frameworkSources: [
         {
             framework: 'HTML',
-            load: (args) => getSourceFromLit(renderStack(args)),
             sourceParts: {
                 htmlFragment: (args) => getSourceFromLit(renderStack(args)),
                 jsFragment: `const toastStack = document.querySelector('omni-toast-stack');
@@ -561,6 +823,94 @@ toastStack.showToast({
     content: '<span>My Extra <strong>Content</strong></span>'
 });
                 `
+            }
+        },
+        { 
+            framework: 'React',
+            load: (args) => `import { OmniToastStack } from "@capitec/omni-components-react/toast";
+
+const App = () => {
+    let toastStack = null;
+    const setRef = e => {
+        toastStack = e;
+        
+        toastStack.showToast({ type: 'info', header: 'Test', detail: 'Test Info', closeable: true, duration: 15000 });
+        toastStack.showToast({
+            type: 'info',
+            header: 'Test',
+            detail: 'Test Info',
+            closeable: true,
+            // duration: 15000, // Do not set duration to keep toast until closed by user.
+            prefix: '✅',
+            close: '❎',
+            content: '<span>My Extra <strong>Content</strong></span>'
+        });
+    }
+            
+    return <OmniToastStack ref={setRef} position="${args.position}" reverse/>;                    
+}`
+        },
+        {
+            framework: 'Lit',
+            sourceParts: {
+                htmlFragment: (args) =>
+                    getSourceFromLit(
+                        renderStack(args),
+                        (container) => container.firstElementChild?.setAttribute('data-replace-token', ''),
+                        (s) => s.replace(' data-replace-token=""', ' ${ref(onRef)}')
+                    ),
+                jsFragment: `import { ref } from 'https://unpkg.com/lit-html/directives/ref.js?module';
+
+const onRef = e => {
+    const toastStack = e;
+    toastStack.showToast({ type: 'info', header: 'Test', detail: 'Test Info', closeable: true, duration: 15000 });
+    toastStack.showToast({
+        type: 'info',
+        header: 'Test',
+        detail: 'Test Info',
+        closeable: true,
+        // duration: 15000, // Do not set duration to keep toast until closed by user.
+        prefix: '✅',
+        close: '❎',
+        content: '<span>My Extra <strong>Content</strong></span>'
+    });
+}`
+            }
+        },
+        {
+            framework: 'Vue',
+            sourceParts: {
+                htmlFragment: (args) =>
+                    getSourceFromLit(renderStack(args)).replaceAll(' closeable', ' :closeable="true"').replaceAll(' reverse', ' :reverse="true"') +
+                    `
+<!-- Execute function on Vue load -->
+{{ (() =>  { run() })() }}
+`,
+                jsFragment: `window.vueData = {
+    run: async () => {
+
+        let toastStack = document.querySelector('omni-toast-stack');
+
+        // Wait for Vue to complete loading and the Toast Stack to be available
+        while (!toastStack) {
+            await Promise.resolve();
+            toastStack = document.querySelector('omni-toast-stack');
+        }
+        toastStack.showToast({ type: 'info', header: 'Test', detail: 'Test Info', closeable: true, duration: 15000 });
+
+        toastStack.showToast({
+            type: 'info',
+            header: 'Test',
+            detail: 'Test Info',
+            closeable: true,
+            // duration: 15000, // Do not set duration to keep toast until closed by user.
+            prefix: '✅',
+            close: '❎',
+            content: '<span>My Extra <strong>Content</strong></span>'
+        });
+        
+    }
+};`
             }
         }
     ],

@@ -17,6 +17,18 @@ import '../render-element/RenderElement.js';
  * import '@capitec/omni-components/toast';
  * ```
  *
+ * @example
+ * ```html
+ * <omni-toast-stack position="bottom" reverse>
+ *      <omni-toast
+ *        type="info"
+ *        header="Toast Title"
+ *        detail="Short detail Text"
+ *        closable>
+ *      </omni-toast>
+ * </omni-toast-stack>
+
+ * ```
  *
  * @element omni-toast-stack
  *
