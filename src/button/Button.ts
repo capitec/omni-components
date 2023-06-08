@@ -169,87 +169,90 @@ export class Button extends OmniElement {
                 /* PRIMARY */
 
                 .button.primary {
-                    background-color: var(--omni-button-primary-background-color, var(--omni-primary-color));
+                    background: var(--omni-button-primary-background-color, var(--omni-primary-color));
                     border-color: var(--omni-button-primary-border-color, var(--omni-primary-color));
                     border-width: var(--omni-button-primary-border-width, var(--omni-border-width));
                     color: var(--omni-button-primary-color, var(--omni-background-color));
                 }
 
                 .button.primary:hover {
-                    background-color: var(--omni-button-primary-hover-background-color, var(--omni-primary-color));
-                    border-color: var(--omni-button-primary-hover-border-color, var(--omni-primary-color));
+                    background: var(--omni-button-primary-hover-background-color, var(--omni-primary-hover-color));
+                    border-color: var(--omni-button-primary-hover-border-color, var(--omni-primary-hover-color));
                     border-width: var(--omni-button-primary-hover-border-width, var(--omni-border-width));
                     box-shadow: var(--omni-button-primary-hover-box-shadow, 0 2px 4px 0 rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.15));
                 }
 
                 .button.primary:active {
-                    background-color: var(--omni-button-primary-active-background-color, var(--omni-primary-active-color));
+                    background: var(--omni-button-primary-active-background-color, var(--omni-primary-active-color));
                     box-shadow: none;
                 }
 
                 /* SECONDARY */
 
                 .button.secondary {
-                    background-color: var(--omni-button-secondary-background-color, var(--omni-background-color));
+                    background: var(--omni-button-secondary-background-color, var(--omni-background-color));
                     border-color: var(--omni-button-secondary-border-color, var(--omni-primary-color));
                     border-width: var(--omni-button-secondary-border-width, var(--omni-border-width));
                     color: var(--omni-button-secondary-color, var(--omni-primary-color));
                 }
 
                 .button.secondary:hover {
-                    background-color: var(--omni-button-secondary-hover-background-color, var(--omni-background-hover-color));
-                    border-color: var(--omni-button-secondary-hover-border-color, default);
+                    background: var(--omni-button-secondary-hover-background-color, var(--omni-background-hover-color));
+                    border-color: var(--omni-button-secondary-hover-border-color, var(--omni-primary-hover-color));
                     border-width: var(--omni-button-secondary-hover-border-width, var(--omni-border-width));
                     box-shadow: var(--omni-button-secondary-hover-box-shadow, 0 2px 4px 0 rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.15));
                 }
 
                 .button.secondary:active {
-                    background-color: var(--omni-button-secondary-active-background-color, var(--omni-background-active-color));
+                    background: var(--omni-button-secondary-active-background-color, var(--omni-background-active-color));
                     box-shadow: none;
                 }
 
                 /* CLEAR */
 
                 .button.clear {
-                    background-color: var(--omni-button-clear-background-color, transparent);
+                    background: var(--omni-button-clear-background-color, transparent);
                     border-color: var(--omni-button-clear-border-color, transparent);
                     border-width: var(--omni-button-clear-border-width, var(--omni-border-width));
                     color: var(--omni-button-clear-color, var(--omni-primary-color));
                 }
 
                 .button.clear:hover {
-                    background-color: var(--omni-button-clear-hover-background-color, var(--omni-background-hover-color));
+                    background: var(--omni-button-clear-hover-background-color, var(--omni-background-hover-color));
+                    border-color: var(--omni-button-clear-hover-border-color, transparent);
+                    border-width: var(--omni-button-clear-hover-border-width, var(--omni-border-width));
+                    color: var(--omni-button-clear-hover-color, var(--omni-primary-color));
                 }
 
                 .button.clear:active {
-                    background-color: var(--omni-button-clear-active-background-color, var(--omni-background-active-color));
-                    box-shadow: none;
+                    background: var(--omni-button-clear-active-background-color, var(--omni-background-active-color));
                     border-color: var(--omni-button-clear-active-border-color, transparent);
                     border-width: var(--omni-button-clear-active-border-width, var(--omni-border-width));
+                    box-shadow: none;
                     outline: none;
                 }
 
                 /* WHITE */
 
                 .button.white {
-                    background-color: var(--omni-button-white-background-color, white);
+                    background: var(--omni-button-white-background-color, white);
                     border-color: var(--omni-button-white-border-color, white);
                     border-width: var(--omni-button-white-border-width, var(--omni-border-width));
                     color: var(--omni-button-white-color, var(--omni-primary-color));
                 }
 
                 .button.white:hover {
-                    background-color: var(--omni-button-white-hover-background-color, white);
+                    background: var(--omni-button-white-hover-background-color, white);
                     border-color: var(--omni-button-white-hover-border-color, white);
                     border-width: var(--omni-button-white-hover-border-width, var(--omni-border-width));
                     box-shadow: var(--omni-button-white-hover-box-shadow, 0 2px 4px 0 rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.15));
                 }
 
                 .button.white:active {
-                    background-color: var(--omni-button-white-active-background-color, var(--omni-background-active-color));
-                    box-shadow: none;
+                    background: var(--omni-button-white-active-background-color, var(--omni-background-active-color));
                     border-color: var(--omni-button-white-active-border-color, transparent);
                     border-width: var(--omni-button-white-active-border-width, var(--omni-border-width));
+                    box-shadow: none;
                     outline: none;
                 }
 
@@ -258,13 +261,13 @@ export class Button extends OmniElement {
                 .button.disabled {
                     cursor: default;
                     border-color: var(--omni-button-disabled-border-color, var(--omni-disabled-border-color));
-                    background-color: var(--omni-button-disabled-background-color, var(--omni-disabled-background-color));
+                    background: var(--omni-button-disabled-background-color, var(--omni-disabled-background-color));
                 }
 
                 .button.disabled:hover,
                 .button.disabled:active {
                     box-shadow: none;
-                    background-color: var(--omni-button-disabled-active-hover-background-color, var(--omni-disabled-background-color));
+                    background: var(--omni-button-disabled-active-hover-background-color, var(--omni-disabled-background-color));
                 }
 
                 .button.disabled:focus {
@@ -282,7 +285,7 @@ export class Button extends OmniElement {
                  */
                 @media (hover: none) {
                     .button.clear:hover:not(.disabled) {
-                        background-color: var(--omni-button-clear-background-color, transparent);
+                        background: var(--omni-button-clear-hover-background-color, unset);
                     }
 
                     .button.primary:hover,
