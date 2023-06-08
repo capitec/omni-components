@@ -253,6 +253,11 @@ export class StoryRenderer extends LitElement {
 
         this.story = this.controller.story[this.key as string];
         this.story!.originalArgs = this.story?.originalArgs ?? JSON.parse(JSON.stringify(this.story?.args));
+        Object.keys(this.story?.args ?? {}).forEach((o) => {
+            if (this.story!.args![o] === undefined) {
+                this.story!.originalArgs[o] = undefined;
+            }
+        });
 
         const res = this.story!.render!(this.story!.args);
 
@@ -639,6 +644,11 @@ export class StoryRenderer extends LitElement {
 
     private async _resetLivePropertyEditor() {
         this.story!.args = JSON.parse(JSON.stringify(this.story?.originalArgs));
+        Object.keys(this.story?.originalArgs ?? {}).forEach((o) => {
+            if (this.story!.originalArgs![o] === undefined) {
+                this.story!.args![o] = undefined;
+            }
+        });
         const css = this.customCss?.sheet;
         for (let index = 0; index < css!.cssRules.length; index++) {
             const rule = css?.cssRules[index] as CSSStyleRule;
