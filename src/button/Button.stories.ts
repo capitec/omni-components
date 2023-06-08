@@ -57,7 +57,7 @@ export const Interactive = {
     frameworkSources: [
         {
             framework: 'Vue',
-            load: (args) => getSourceFromLit(Interactive!.render!(args), undefined, (s) => s.replace(' disabled', ' :disabled="true"'))
+            load: (args) => getSourceFromLit(Interactive?.render?.(args), undefined, (s) => s.replace(' disabled', ' :disabled="true"'))
         }
     ],
     name: 'Interactive',
@@ -138,7 +138,7 @@ export const Slot = {
     frameworkSources: [
         {
             framework: 'React',
-            load: (args) => `import { OmniButton } from "@capitec/omni-components-react/button";
+            load: () => `import { OmniButton } from "@capitec/omni-components-react/button";
 import { OmniIcon } from "@capitec/omni-components-react/icon";
 
 const App = () => <OmniButton>
@@ -168,7 +168,7 @@ const App = () => <OmniButton${args.label ? ` label='${args.label}'` : ''}${args
         },
         {
             framework: 'Vue',
-            load: (args) => getSourceFromLit(Disabled!.render!(args), undefined, (s) => s.replace(' disabled', ' :disabled="true"'))
+            load: (args) => getSourceFromLit(Disabled?.render?.(args), undefined, (s) => s.replace(' disabled', ' :disabled="true"'))
         }
     ],
     name: 'Disabled',
