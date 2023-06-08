@@ -199,14 +199,14 @@ export class Toast extends OmniElement {
 				grid-column: 2;
 				grid-row: 1;
 
-				font-family: var(--omni-toast-header-font-family, sans-serif);
+				font-family: var(--omni-toast-header-font-family, var(--omni-font-family));
 				font-size: var(--omni-toast-header-font-size, 16px);
 				font-weight: var(--omni-toast-header-font-weight, bold);
 				line-height: var(--omni-toast-header-line-height, 1.2);
 			}
 
             ::slotted(*) {
-				font-family: var(--omni-toast-detail-font-family, sans-serif);
+				font-family: var(--omni-toast-detail-font-family, var(--omni-font-family));
 				font-size: var(--omni-toast-detail-font-size, 16px);
 				font-weight: var(--omni-toast-detail-font-weight, normal);
 				line-height: var(--omni-toast-detail-line-height, 1.2);
@@ -216,7 +216,7 @@ export class Toast extends OmniElement {
 				grid-column: 2;
 				grid-row: 2;
 
-				font-family: var(--omni-toast-detail-font-family, sans-serif);
+				font-family: var(--omni-toast-detail-font-family, var(--omni-font-family));
 				font-size: var(--omni-toast-detail-font-size, 16px);
 				font-weight: var(--omni-toast-detail-font-weight, normal);
 				line-height: var(--omni-toast-detail-line-height, 1.2);
