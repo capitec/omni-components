@@ -148,7 +148,7 @@ export class PinField extends OmniFormElement {
         const input = this._inputElement as HTMLInputElement;
         if (input && e.data !== null && !this._isNumber(e.data as string)) {
             e.preventDefault();
-            return;       
+            return;
         }
     }
 
