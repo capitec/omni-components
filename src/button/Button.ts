@@ -33,53 +33,53 @@ import { OmniElement } from '../core/OmniElement.js';
  * @cssprop --omni-button-padding-left - Component padding left.
  * @cssprop --omni-button-padding-right - Component padding right.
  *
- * @cssprop --omni-button-primary-background - Primary "type" background color.
+ * @cssprop --omni-button-primary-background - Primary "type" background.
  * @cssprop --omni-button-primary-border-color - Primary "type" border color.
  * @cssprop --omni-button-primary-border-width - Primary "type" border width.
  * @cssprop --omni-button-primary-color - Primary "type" color.
- * @cssprop --omni-button-primary-hover-background - Primary "type" hover background color.
+ * @cssprop --omni-button-primary-hover-background - Primary "type" hover background.
  * @cssprop --omni-button-primary-hover-border-color - Primary "type" hover border color.
  * @cssprop --omni-button-primary-hover-border-width - Primary "type" hover border width.
  * @cssprop --omni-button-primary-hover-box-shadow - Primary "type" hover box shadow.
  * @cssprop --omni-button-primary-active-background - Primary "type" active back color.
  *
- * @cssprop --omni-button-secondary-background - Secondary "type" background color.
+ * @cssprop --omni-button-secondary-background - Secondary "type" background.
  * @cssprop --omni-button-secondary-border-color - Secondary "type" border color.
  * @cssprop --omni-button-secondary-border-width - Secondary "type" border width.
  * @cssprop --omni-button-secondary-color - Secondary "type" color.
- * @cssprop --omni-button-secondary-hover-background - Secondary "type" hover background color.
+ * @cssprop --omni-button-secondary-hover-background - Secondary "type" hover background.
  * @cssprop --omni-button-secondary-hover-border-color - Secondary "type" hover border color.
  * @cssprop --omni-button-secondary-hover-border-width - Secondary "type" hover border width.
  * @cssprop --omni-button-secondary-hover-box-shadow - Secondary "type" hover box shadow.
- * @cssprop --omni-button-secondary-active-background - Secondary "type" active background color.
+ * @cssprop --omni-button-secondary-active-background - Secondary "type" active background.
  *
- * @cssprop --omni-button-clear-background - Clear "type" background color.
+ * @cssprop --omni-button-clear-background - Clear "type" background.
  * @cssprop --omni-button-clear-border-color - Clear "type" border color.
  * @cssprop --omni-button-clear-border-width - Clear "type" border width.
  * @cssprop --omni-button-clear-color - Clear "type" color.
- * @cssprop --omni-button-clear-hover-background - Clear "type" hover background color.
+ * @cssprop --omni-button-clear-hover-background - Clear "type" hover background.
  * @cssprop --omni-button-clear-hover-border-color - Clear "type" hover border color.
  * @cssprop --omni-button-clear-hover-border-width - Clear "type" hover border width.
  * @cssprop --omni-button-clear-hover-color - Clear "type" hover color.
- * @cssprop --omni-button-clear-active-background - Clear "type" active background color.
+ * @cssprop --omni-button-clear-active-background - Clear "type" active background.
  * @cssprop --omni-button-clear-active-border-color - Clear "type" active border color.
  * @cssprop --omni-button-clear-active-border-width - Clear "type" active border width.
  *
- * @cssprop --omni-button-white-background - White "type" background color.
+ * @cssprop --omni-button-white-background - White "type" background.
  * @cssprop --omni-button-white-border-color - White "type" border color.
  * @cssprop --omni-button-white-border-width - White "type" border width.
  * @cssprop --omni-button-white-color - White "type" color.
- * @cssprop --omni-button-white-hover-background - White "type" hover background color.
+ * @cssprop --omni-button-white-hover-background - White "type" hover background.
  * @cssprop --omni-button-white-hover-border-color - White "type" hover border color.
  * @cssprop --omni-button-white-hover-border-width - White "type" hover border width.
  * @cssprop --omni-button-white-hover-box-shadow - White "type" hover box shadow.
- * @cssprop --omni-button-white-active-background - White "type" active background color.
+ * @cssprop --omni-button-white-active-background - White "type" active background.
  * @cssprop --omni-button-white-active-border-color - White "type" active border color.
  * @cssprop --omni-button-white-active-border-width - White "type" active border width.
  *
  * @cssprop --omni-button-disabled-border-color - Disabled border color.
- * @cssprop --omni-button-disabled-background - Disabled background color.
- * @cssprop --omni-button-disabled-active-hover-background - Disabled hover and active background color.
+ * @cssprop --omni-button-disabled-background - Disabled background.
+ * @cssprop --omni-button-disabled-active-hover-background - Disabled hover and active background.
  *
  * @cssprop --omni-button-slot-margin-right - Slot margin left (When positioned right of label).
  * @cssprop --omni-button-slot-margin-bottom - Slot margin bottom (When positioned top of label).
