@@ -33,6 +33,8 @@ import '../render-element/RenderElement.js';
  * @element omni-toast-stack
  *
  * @slot - Toast(s) to be displayed
+ * 
+ * @global_attribute {number} data-toast-duration - Duration milliseconds that a slotted toast must be shown in the stack before it is removed.
  *
  * @cssprop --omni-toast-stack-z-index - The z-index of the stack.
  * @cssprop --omni-toast-stack-font-color - The font color applied to the stack.
@@ -59,6 +61,7 @@ export class ToastStack extends OmniElement {
         | 'top-right'
         | 'bottom-left'
         | 'bottom-right' = 'bottom';
+
     /**
      * Reverse the order of toast with newest toasts showed on top of the stack. By default newest toasts are showed at the bottom of the stack.
      * @attr
@@ -68,14 +71,11 @@ export class ToastStack extends OmniElement {
     @query('.toast-box') private toastContainer!: HTMLDivElement;
     @query('slot') private slotElement!: HTMLSlotElement;
 
-    override connectedCallback(): void {
-        super.connectedCallback();
-    }
-
-    override disconnectedCallback(): void {
-        super.disconnectedCallback();
-    }
-
+    /**
+     * Creates a new `<omni-toast-stack>` element with the provided context and appends it to the DOM (either to document body or to provided target parent element).
+     * @param init Initialisation context for the element.
+     * @returns The {@link ToastStack} instance that was created.
+     */
     public static create(init: ToastStackInit) {
         if (!init.parent) {
             // If no parent element is specified, the ToastStack will be appended directly on the document body.
@@ -110,6 +110,7 @@ export class ToastStack extends OmniElement {
 
     /**
      * Push a toast message onto the toast stack.
+     * @returns The {@link Toast} instance that was created.
      */
     public showToast(init: ShowToastInit) {
         // Create the toast element.
@@ -119,8 +120,10 @@ export class ToastStack extends OmniElement {
         toast.detail = init.detail;
         toast.closeable = init.closeable;
         if (init.duration) {
-            toast.setAttribute('data-toast-duration', init.duration.toString());
+            toast.setAttribute(toastDurationAttribute, init.duration.toString());
         }
+
+        // Setup optional renderers for slot(s)
         if (init.prefix) {
             const renderElement = document.createElement('omni-render-element');
             renderElement.slot = 'prefix';
@@ -139,10 +142,10 @@ export class ToastStack extends OmniElement {
             toast.appendChild(renderElement);
         }
 
-        // Animate in the toast if the user allows motion.
-        const { matches: motionOK } = window.matchMedia('(prefers-reduced-motion: no-preference)');
+        const { matches: motionOK } = window.matchMedia(animationAllowedMedia);
 
         if (motionOK && document.timeline) {
+            // Animate in the toast if the user allows motion.
             this.slideIn(toast);
         } else {
             // Add the toast to the stack without animation.
@@ -152,23 +155,34 @@ export class ToastStack extends OmniElement {
         return toast;
     }
 
-    private onSlotChange(evt: Event) {
-        const { matches: motionOK } = window.matchMedia('(prefers-reduced-motion: no-preference)');
+    private onSlotChange() {
+        const closeClickEvent = 'close-click';
+        const toastLoadedAttribute = 'data-toast-loaded';
+
+        const { matches: motionOK } = window.matchMedia(animationAllowedMedia);
         const animationsAllowed = motionOK && document.timeline;
 
         this.slotElement.assignedElements({ flatten: true }).forEach(async (slotted) => {
-            slotted.removeEventListener('close-click', this.closeToast);
-            slotted.addEventListener('close-click', this.closeToast);
-            if (!slotted.hasAttribute('data-toast-loaded')) {
-                slotted.setAttribute('data-toast-loaded', '');
-                if (slotted.hasAttribute('data-toast-duration')) {
+            // Reset the close listeners so any new elements also have close listeners added now.
+            slotted.removeEventListener(closeClickEvent, this.closeToast);
+            slotted.addEventListener(closeClickEvent, this.closeToast);
+
+            if (!slotted.hasAttribute(toastLoadedAttribute)) {
+                // Slotted element has not been loaded before, set the loaded attribute so it wont load again after this.
+                slotted.setAttribute(toastLoadedAttribute, '');
+
+                // If the slotted element has a duration attribute it needs to be removed after the provided milliseconds.
+                if (slotted.hasAttribute(toastDurationAttribute)) {
                     if (!animationsAllowed) {
-                        await new Promise((resolve) => setTimeout(resolve, Number(slotted.getAttribute('data-toast-duration') ?? '5000')));
+                        //No animations, just wait for the time to pass.
+                        await new Promise((resolve) => setTimeout(resolve, Number(slotted.getAttribute(toastDurationAttribute) ?? '5000')));
+
                         // Remove the toast from the stack after allocated time.
                         if (slotted.parentElement) {
                             slotted.remove();
                         }
                     } else {
+                        // Animations are allowed, animate the fade in and out of the toast for the duration provided.
                         const anim = slotted.animate(
                             [
                                 // key frames
@@ -179,12 +193,13 @@ export class ToastStack extends OmniElement {
                             ],
                             {
                                 // sync options
-                                duration: Number(slotted.getAttribute('data-toast-duration') ?? '5000'),
+                                duration: Number(slotted.getAttribute(toastDurationAttribute) ?? '5000'),
                                 easing: 'ease'
                             }
                         );
 
                         await anim.finished;
+
                         // Remove the toast from the stack once it finishes animation out.
                         if (slotted.parentElement) {
                             slotted.remove();
@@ -212,9 +227,9 @@ export class ToastStack extends OmniElement {
     private async closeToast(e: Event) {
         const toast = e.currentTarget as HTMLElement;
 
-        // Animate the toast fading out if the user allows motion.
-        const { matches: motionOK } = window.matchMedia('(prefers-reduced-motion: no-preference)');
+        const { matches: motionOK } = window.matchMedia(animationAllowedMedia);
 
+        // Animate the toast fading out if the user allows motion.
         if (motionOK && document.timeline) {
             // Get current opacity to cater for existing fade out of timed toasts.
             const currentOpacity = Number(getComputedStyle(toast).getPropertyValue('opacity'));
@@ -242,6 +257,7 @@ export class ToastStack extends OmniElement {
     private async slideIn(toast: Toast) {
         // Using the FLIP animation technique for performance. See more here: https://aerotwist.com/blog/flip-your-animations/
 
+        // Ensure the toast has rendered at least the first update before adding toasts to the container.
         if (!this.toastContainer) {
             await this.updateComplete;
         }
@@ -350,11 +366,18 @@ export class ToastStack extends OmniElement {
     override render() {
         return html`
 			<div class="toast-box">
-                <slot @slotchange="${this.onSlotChange}"></slot>
+                <slot @slotchange="${this.onSlotChange.bind(this)}"></slot>
             </div>
 		`;
     }
 }
+
+const animationAllowedMedia = '(prefers-reduced-motion: no-preference)';
+
+/**
+ * Attribute for the duration milliseconds that a slotted toast must be shown in an `<omni-toast-stack>` before it is removed.
+ */
+export const toastDurationAttribute = 'data-toast-duration';
 
 /**
  * Context for `ToastStack.create` function to programmatically create a new `<omni-toast-stack>` instance.

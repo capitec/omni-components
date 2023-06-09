@@ -339,7 +339,7 @@ toastStack.showToast({
                 `
             }
         },
-        { 
+        {
             framework: 'React',
             load: (args) => `import { OmniToastStack } from "@capitec/omni-components-react/toast";
 
@@ -510,7 +510,7 @@ toastStack.showToast({
 });`
             }
         },
-        { 
+        {
             framework: 'React',
             load: (args) => `import { ToastStack } from '@capitec/omni-components-react/toast';
 
@@ -654,7 +654,7 @@ toastStack.showToast({
                 `
             }
         },
-        { 
+        {
             framework: 'React',
             load: (args) => `import { OmniToastStack } from "@capitec/omni-components-react/toast";
 
@@ -825,7 +825,7 @@ toastStack.showToast({
                 `
             }
         },
-        { 
+        {
             framework: 'React',
             load: (args) => `import { OmniToastStack } from "@capitec/omni-components-react/toast";
 

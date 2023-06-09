@@ -1,12 +1,11 @@
 import { html, css, TemplateResult, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
 import { OmniElement } from '../core/OmniElement.js';
 
 import '../icons/Close.icon.js';
 
 /**
- * Popup to visually notify a user of a header.
+ * Component to visually notify a user of a message.
  *
  * @import
  * ```js
@@ -28,11 +27,11 @@ import '../icons/Close.icon.js';
  *
  * Registry of all properties defined by the component.
  *
- * @slot prefix - Content to render before toast header area.
- * @slot - Content to render inside the component header area.
+ * @slot prefix - Content to render before toast message area.
+ * @slot - Content to render inside the component message area.
  * @slot close - Content to render as the close button when `closeable`.
  *
- * @fires {CustomEvent<{ old: Boolean; new: Boolean; }>} value-change - Dispatched when the control value is changed to either on or off.
+ * @fires close-click - Dispatched when the close button is clicked when `closeable`.
  *
  * @cssprop --omni-toast-min-width - Min Width.
  * @cssprop --omni-toast-max-width - Max Width.
@@ -110,12 +109,7 @@ export class Toast extends OmniElement {
      */
     @property({ type: Boolean, reflect: true }) closeable?: boolean;
 
-    /**
-     * Raise `close-click` event.
-     *
-     * @param event - The mouse click event.
-     */
-    _raiseCloseClick(event: MouseEvent) {
+    private _raiseCloseClick(event: MouseEvent) {
         // Notify any subscribers that the close button was clicked.
         this.dispatchEvent(
             new CustomEvent(`close-click`, {
@@ -382,11 +376,6 @@ export class Toast extends OmniElement {
 		`;
     }
 
-    /**
-     * Generate the toast status icon template.
-     *
-     * @returns The HTML component template.
-     */
     private iconTemplate(): TemplateResult | typeof nothing {
         switch (this.type) {
             case 'info':
