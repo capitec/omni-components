@@ -1,7 +1,6 @@
 import { css, html } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { ClassInfo, classMap } from 'lit/directives/class-map.js';
-import { live } from 'lit/directives/live.js';
 import { OmniFormElement } from '../core/OmniFormElement.js';
 
 import '../icons/EyeHidden.icon.js';
@@ -58,7 +57,7 @@ export class PinField extends OmniFormElement {
     /**
      * @ignore
      */
-    @state() protected type: 'password' | 'number' = 'number';
+    @state() protected type: 'password' | 'text' = 'text';
 
     /**
      * Disables native on screen keyboards for the component.
@@ -80,10 +79,11 @@ export class PinField extends OmniFormElement {
 
     override connectedCallback() {
         super.connectedCallback();
-        this.addEventListener('input', this._keyInput.bind(this), {
+        // Used instead of keydown to catch inputs for mobile devices.
+        this.addEventListener('beforeinput', this._beforeInput.bind(this), {
             capture: true
         });
-        this.addEventListener('keydown', this._keyDown.bind(this), {
+        this.addEventListener('input', this._onInput.bind(this), {
             capture: true
         });
         this.addEventListener('keyup', this._blurOnEnter.bind(this), {
@@ -91,21 +91,21 @@ export class PinField extends OmniFormElement {
         });
     }
 
-    //Added for non webkit supporting browsers
+    // Added for non webkit supporting browsers and to stop the component from having a non-valid value (non-numeric) value bound.
     protected override async firstUpdated(): Promise<void> {
         const style: any = window.getComputedStyle(this._inputElement as HTMLInputElement);
         this.isWebkit = style.webkitTextSecurity;
         if (!this.isWebkit) {
             this.type = 'password';
         }
+
+        this._sanitiseValue(this.value as string);
     }
 
     override async attributeChangedCallback(name: string, _old: string | null, value: string | null): Promise<void> {
         super.attributeChangedCallback(name, _old, value);
         if (name === 'value') {
-            if (new RegExp('^[0-9]+$').test(value as string) === false) {
-                return;
-            }
+            this._sanitiseValue(value as string);
         }
     }
 
@@ -117,22 +117,44 @@ export class PinField extends OmniFormElement {
         }
     }
 
+    // Checks if the value provided is numeric, if valid set the value property and input element value if not value remove the value attribute
+    _sanitiseValue(value: string) {
+        if (value) {
+            if (!this._isNumber(value as string)) {
+                this.removeAttribute('value');
+            } else if (this.maxLength && (value as string).length > this.maxLength) {
+                this.value = value?.slice(0, this.maxLength) as string;
+            }
+        }
+
+        if (this._inputElement) {
+            this._inputElement.value = this.value as string;
+        }
+    }
+
     _blurOnEnter(e: KeyboardEvent) {
         if (e.code === 'Enter' || e.keyCode === 13) {
             (e.currentTarget as HTMLElement).blur();
         }
     }
 
-    _keyDown(e: KeyboardEvent) {
-        // Stop alpha keys
-        if (e.key >= 'a' && e.key <= 'z') {
+    // Used to check if the value provided in a valid numeric value.
+    _isNumber(number: string) {
+        return /\d/.test(number);
+    }
+
+    // Check the beforeinput event data and prevent default if it is a non-numeric value.
+    _beforeInput(e: InputEvent) {
+        const input = this._inputElement as HTMLInputElement;
+        if (input && e.data !== null && !this._isNumber(e.data as string)) {
             e.preventDefault();
             return;
         }
     }
 
-    _keyInput() {
+    _onInput() {
         const input = this._inputElement;
+        // Check if the value of the input field is valid based on the regex.
         if (input?.value && this.maxLength && typeof this.maxLength === 'number') {
             if (String(input?.value).length > this.maxLength) {
                 // Restrict the input characters to the length of specified in the args.
@@ -159,7 +181,7 @@ export class PinField extends OmniFormElement {
             this._inputElement?.removeAttribute('data-omni-keyboard-mask');
 
             if (!this.isWebkit) {
-                this.type = 'number';
+                this.type = 'text';
             }
         }
 
@@ -261,6 +283,7 @@ export class PinField extends OmniFormElement {
     `;
     }
 
+    /* inputmode is set to decimal to avoid the virtual keyboard input event with cancelable read-only property.*/
     protected override renderContent() {
         const field: ClassInfo = {
             field: true,
@@ -272,10 +295,9 @@ export class PinField extends OmniFormElement {
       <input
         class=${classMap(field)}
         id="inputField"
-        inputmode="${this.noNativeKeyboard ? 'none' : 'numeric'}"
-        data-omni-keyboard-mode="numeric"
+        inputmode="${this.noNativeKeyboard ? 'none' : 'decimal'}"
+        data-omni-keyboard-mode="decimal"
         type="${this.type}"
-        value=${live(this.value as string)}
         ?readOnly=${this.disabled}
         tabindex="${this.disabled ? -1 : 0}"
         data-omni-keyboard-mask />
