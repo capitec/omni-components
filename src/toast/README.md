@@ -5,7 +5,12 @@ Component to visually notify a user of a message.
 ## Example
 
 ```html
-<omni-toast  type="info"  header="Toast Title"  detail="Short detail Text"  closable></omni-toast>
+<omni-toast
+  type="info"
+  header="Toast Title"
+  detail="Short detail Text"
+  closable>
+</omni-toast>
 ```
 
 ## Properties
@@ -112,7 +117,14 @@ A toast container that animates in and stacks toast elements.
 ## Example
 
 ```html
-<omni-toast-stack position="bottom" reverse>     <omni-toast       type="info"       header="Toast Title"       detail="Short detail Text"       closable>     </omni-toast></omni-toast-stack>
+<omni-toast-stack position="bottom" reverse>
+     <omni-toast
+       type="info"
+       header="Toast Title"
+       detail="Short detail Text"
+       closable>
+     </omni-toast>
+</omni-toast-stack>
 ```
 
 ## Properties
