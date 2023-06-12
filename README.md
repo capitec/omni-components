@@ -567,6 +567,22 @@ Control to switch a value on or off.
 
 </td></tr><tr><td>
 
+[omni-tab](src/tab/README.md)
+
+</td><td>
+
+Control that can be used to display slotted content used within a omni-tab-group component.
+
+</td></tr><tr><td>
+
+[omni-tab-group](src/tab/README.md)
+
+</td><td>
+
+Component that displays content in tabs.
+
+</td></tr><tr><td>
+
 [omni-text-field](src/text-field/README.md)
 
 </td><td>
