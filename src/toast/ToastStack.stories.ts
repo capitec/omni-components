@@ -131,7 +131,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         toastStack.focus();
         const shown = toastStack.showToast({ type: 'info', header: 'Test', detail: 'Test Info', closeable: true, duration: 2000 });
         const toastStackRemove = jest.fn();
-        shown.addEventListener('toast-stack-remove', () => toastStackRemove())
+        shown.addEventListener('toast-stack-remove', () => toastStackRemove());
         toastStack.showToast({
             type: 'info',
             header: 'Test',
@@ -144,7 +144,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         });
 
         // Wait for toast removals
-        await new Promise(resolve => setTimeout(resolve, 6000));
+        await new Promise((resolve) => setTimeout(resolve, 6000));
 
         await expect(toastRemove).toBeCalledTimes(5);
         await expect(toastStackRemove).toBeCalled();
