@@ -61,7 +61,8 @@
         "pin-field",
         "calendar",
         "keyboard",
-        "modal"
+        "modal",
+        "tab"
     ],
     "exports": {
         "./*": "./dist/*/index.js"
