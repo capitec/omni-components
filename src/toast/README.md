@@ -144,6 +144,13 @@ A toast container that animates in and stacks toast elements.
 |-------------|--------------------------------|--------------------------------------------|
 | `showToast` | `(init: ShowToastInit): Toast` | Push a toast message onto the toast stack. |
 
+## Events
+
+| Event                | Type                      | Description                                      |
+|----------------------|---------------------------|--------------------------------------------------|
+| `toast-remove`       | `CustomEvent<Toast>`      | Dispatched when the a toast is removed from the stack. |
+| `toast-stack-remove` | `CustomEvent<ToastStack>` | Dispatched from a toast when it is removed from the stack. |
+
 ## Slots
 
 | Name                | Description                                      |
