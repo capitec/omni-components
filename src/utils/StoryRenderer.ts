@@ -133,14 +133,13 @@ export class StoryRenderer extends LitElement {
                 });
             }
 
+            let sourceTab = (window.localStorage.getItem(frameworkStorageKey) ?? 'HTML') as FrameworkOption;
+            let frameworkDefinition = this.story!.frameworkSources?.find((fs) => fs.framework === sourceTab);
+            if (!frameworkDefinition) {
+                sourceTab = this.sourceFallbacks.find((sf) => sf.frameworks.includes(sourceTab))?.fallbackFramework ?? sourceTab;
+                frameworkDefinition = this.story!.frameworkSources?.find((fs) => fs.framework === sourceTab);
+            }
             if (this.codeEditor) {
-                let sourceTab = (window.localStorage.getItem(frameworkStorageKey) ?? 'HTML') as FrameworkOption;
-                let frameworkDefinition = this.story!.frameworkSources?.find((fs) => fs.framework === sourceTab);
-                if (!frameworkDefinition) {
-                    sourceTab = this.sourceFallbacks.find((sf) => sf.frameworks.includes(sourceTab))?.fallbackFramework ?? sourceTab;
-                    frameworkDefinition = this.story!.frameworkSources?.find((fs) => fs.framework === sourceTab);
-                }
-
                 await this.codeEditor.refresh(() => {
                     const source = frameworkDefinition?.sourceParts?.htmlFragment
                         ? typeof frameworkDefinition?.sourceParts?.htmlFragment === 'string'
@@ -178,6 +177,15 @@ export class StoryRenderer extends LitElement {
 
                         return source;
                     });
+                }
+            }
+            const codePenGen = this.renderRoot.querySelector('.code-pen-gen-btn');
+            if (codePenGen) {
+                const noDisplay = frameworkDefinition?.disableCodePen || (this.noInteractiveCodePen.includes(sourceTab) && this.interactive);
+                if (noDisplay) {
+                    codePenGen?.classList.add('no-display');
+                } else {
+                    codePenGen?.classList.remove('no-display');
                 }
             }
         });
@@ -253,6 +261,11 @@ export class StoryRenderer extends LitElement {
 
         this.story = this.controller.story[this.key as string];
         this.story!.originalArgs = this.story?.originalArgs ?? JSON.parse(JSON.stringify(this.story?.args));
+        Object.keys(this.story?.args ?? {}).forEach((o) => {
+            if (this.story!.args![o] === undefined) {
+                this.story!.originalArgs[o] = undefined;
+            }
+        });
 
         const res = this.story!.render!(this.story!.args);
 
@@ -391,7 +404,7 @@ export class StoryRenderer extends LitElement {
             <div class="code-block primary-code-block ${frameworkSource ? '' : 'no-display'}">
                 <code-editor
                 class="source-code primary-source-code"
-                .transformSource="${(s: string) => transformSource(s)}"
+                .transformSource="${(s: string) => (getSourceTab() === 'React' ? s : transformSource(s))}"
                 .extensions="${async () => [
                     this._currentCodeTheme(),
                     getSourceTab() === 'React'
@@ -458,14 +471,13 @@ export class StoryRenderer extends LitElement {
                     }
                 </div>     
                 <omni-button 
-                    class="docs-omni-component ${
+                    class="code-pen-gen-btn docs-omni-component ${
                         this.story!.frameworkSources?.find((fs) => fs.framework === sourceTab)?.disableCodePen ||
                         (this.noInteractiveCodePen.includes(sourceTab) && this.interactive)
                             ? 'no-display'
                             : ''
                     }" 
-                    @click="${() =>
-                        this._generateCodePen((window.localStorage.getItem(frameworkStorageKey) ?? 'HTML') as FrameworkOption, frameworkSource)}">
+                    @click="${() => this._generateCodePen((window.localStorage.getItem(frameworkStorageKey) ?? 'HTML') as FrameworkOption)}">
                     <omni-icon size="default">
                         <!-- <svg class="hidden-after-760" viewBox="0 0 138 26" fill="none" stroke="var(--omni-button-secondary-hover-border-color, currentColor)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" width="100%" height="100%" title="CodePen">
                             <path d="M15 8a7 7 0 1 0 0 10m7-8.7L33 2l11 7.3v7.4L33 24l-11-7.3zm0 0 11 7.4 11-7.4m0 7.4L33 9.3l-11 7.4M33 2v7.3m0 7.4V24M52 6h5a7 7 0 0 1 0 14h-5zm28 0h-9v14h9m-9-7h6m11 1h6a4 4 0 0 0 0-8h-6v14m26-14h-9v14h9m-9-7h6m11 7V6l11 14V6"></path>
@@ -640,6 +652,11 @@ export class StoryRenderer extends LitElement {
 
     private async _resetLivePropertyEditor() {
         this.story!.args = JSON.parse(JSON.stringify(this.story?.originalArgs));
+        Object.keys(this.story?.originalArgs ?? {}).forEach((o) => {
+            if (this.story!.originalArgs![o] === undefined) {
+                this.story!.args![o] = undefined;
+            }
+        });
         const css = this.customCss?.sheet;
         for (let index = 0; index < css!.cssRules.length; index++) {
             const rule = css?.cssRules[index] as CSSStyleRule;
@@ -706,14 +723,28 @@ export class StoryRenderer extends LitElement {
         }
     }
 
-    private async _generateCodePen(source: FrameworkOption, sourceCode: string) {
+    private async _generateCodePen(source: FrameworkOption) {
         const version = (document.getElementById('header-version-indicator')?.innerText ?? '').toLowerCase();
 
         const elementModule = this.customElements!.modules.find((module) => module.exports?.find((e) => e.name === this.tag));
         const splitPath = elementModule!.path.split('/');
         const componentDirectory = splitPath[splitPath.length - 2];
 
-        const frameworkDefinition = this.story!.frameworkSources?.find((fs) => fs.framework === source);
+        const frameworkDefinition =
+            this.story!.frameworkSources?.find((fs) => fs.framework === source) ??
+            this.story!.frameworkSources?.find(
+                (fs) => fs.framework === this.sourceFallbacks.find((sf) => sf.frameworks.includes(source))?.fallbackFramework
+            );
+
+        const sourceCode = frameworkDefinition?.sourceParts?.htmlFragment
+            ? typeof frameworkDefinition?.sourceParts?.htmlFragment === 'string'
+                ? frameworkDefinition?.sourceParts?.htmlFragment
+                : frameworkDefinition?.sourceParts?.htmlFragment(this.story!.args)
+            : frameworkDefinition?.load
+            ? frameworkDefinition.load(this.story!.args, frameworkDefinition)
+            : this.sourceFallbacks.find((sf) => sf.frameworks.includes(source))?.allowRenderFromResult
+            ? getSourceFromLit(this.story!.render!(this.story!.args))
+            : '';
 
         const esmVersion =
             version && version !== 'latest' && version !== 'local'
@@ -802,7 +833,7 @@ app.mount('#app');`;
         width: 100%;
         padding: 24px;
     ">
-        <div id="root" style="display: contents;"></div>
+        <div id="root" ></div>
     </body>
 </html>`;
                 js = `import 'https://cdn.jsdelivr.net/npm/@capitec/omni-components@${esmVersion}/dist/omni-components.js';

@@ -1,6 +1,6 @@
 # omni-toast
 
-Popup to visually notify a user of a header.
+Component to visually notify a user of a message.
 
 ## Example
 
@@ -28,19 +28,18 @@ Popup to visually notify a user of a header.
 
 ## Events
 
-| Event          | Type                                           | Description                                      |
-|----------------|------------------------------------------------|--------------------------------------------------|
-| `close-click`  | `CustomEvent<{}>`                              |                                                  |
-| `value-change` | `CustomEvent<{ old: Boolean; new: Boolean; }>` | Dispatched when the control value is changed to either on or off. |
+| Event         | Type              | Description                                      |
+|---------------|-------------------|--------------------------------------------------|
+| `close-click` | `CustomEvent<{}>` | Dispatched when the close button is clicked when `closeable`. |
 
 ## Slots
 
 | Name                | Description                                      |
 |---------------------|--------------------------------------------------|
-|                     | Content to render inside the component header area. |
+|                     | Content to render inside the component message area. |
 | `close`             | Content to render as the close button when `closeable`. |
 | `loading_indicator` | Used to define content that is displayed while async rendering is awaiting, or when renderLoading() is implicitly called |
-| `prefix`            | Content to render before toast header area.      |
+| `prefix`            | Content to render before toast message area.     |
 
 ## CSS Custom Properties
 
@@ -114,6 +113,19 @@ Popup to visually notify a user of a header.
 # omni-toast-stack
 
 A toast container that animates in and stacks toast elements.
+
+## Example
+
+```html
+<omni-toast-stack position="bottom" reverse>
+     <omni-toast
+       type="info"
+       header="Toast Title"
+       detail="Short detail Text"
+       closable>
+     </omni-toast>
+</omni-toast-stack>
+```
 
 ## Properties
 

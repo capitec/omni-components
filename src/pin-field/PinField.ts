@@ -1,7 +1,6 @@
 import { css, html } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { ClassInfo, classMap } from 'lit/directives/class-map.js';
-import { live } from 'lit/directives/live.js';
 import { OmniFormElement } from '../core/OmniFormElement.js';
 
 import '../icons/EyeHidden.icon.js';
@@ -92,38 +91,44 @@ export class PinField extends OmniFormElement {
         });
     }
 
-    //Added for non webkit supporting browsers and to stop the component from having a non-valid value (non-numeric) value bound.
+    // Added for non webkit supporting browsers and to stop the component from having a non-valid value (non-numeric) value bound.
     protected override async firstUpdated(): Promise<void> {
         const style: any = window.getComputedStyle(this._inputElement as HTMLInputElement);
         this.isWebkit = style.webkitTextSecurity;
         if (!this.isWebkit) {
             this.type = 'password';
         }
+
+        this._sanitiseValue(this.value as string);
     }
 
     override async attributeChangedCallback(name: string, _old: string | null, value: string | null): Promise<void> {
         super.attributeChangedCallback(name, _old, value);
         if (name === 'value') {
-            if( value !== null && value !== undefined && value !== ''){
-                if (new RegExp('^[0-9]+$').test(value as string) === false) {
-                    this.removeAttribute('value');
-                } else if (this.maxLength && (value as string).length > this.maxLength) {
-                    this.value = value?.slice(0, this.maxLength) as string;
-                }
-            }
-
-            if(this._inputElement){
-                this._inputElement.value = this.value as string;
-            }
- 
+            this._sanitiseValue(value as string);
         }
     }
-    
+
     override focus(options?: FocusOptions | undefined): void {
         if (this._inputElement) {
             this._inputElement.focus(options);
         } else {
             super.focus(options);
+        }
+    }
+
+    // Checks if the value provided is numeric, if valid set the value property and input element value if not value remove the value attribute
+    _sanitiseValue(value: string) {
+        if (value) {
+            if (!this._isNumber(value as string)) {
+                this.removeAttribute('value');
+            } else if (this.maxLength && (value as string).length > this.maxLength) {
+                this.value = value?.slice(0, this.maxLength) as string;
+            }
+        }
+
+        if (this._inputElement) {
+            this._inputElement.value = this.value as string;
         }
     }
 
@@ -138,14 +143,12 @@ export class PinField extends OmniFormElement {
         return /\d/.test(number);
     }
 
-    //The type of the input is set to text which will allow alpha-numeric characters this function is to block all non numeric input values.
+    // Check the beforeinput event data and prevent default if it is a non-numeric value.
     _beforeInput(e: InputEvent) {
         const input = this._inputElement as HTMLInputElement;
-        if(input && e.data !== null) {
-            if (input && !this._isNumber(e.data as string)) {
-                e.preventDefault();
-                return;
-            }
+        if (input && e.data !== null && !this._isNumber(e.data as string)) {
+            e.preventDefault();
+            return;
         }
     }
 
@@ -279,6 +282,7 @@ export class PinField extends OmniFormElement {
     `;
     }
 
+    /* inputmode is set to decimal to avoid the virtual keyboard input event with cancelable read-only property.*/
     protected override renderContent() {
         const field: ClassInfo = {
             field: true,
