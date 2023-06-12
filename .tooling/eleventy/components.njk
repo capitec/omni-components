@@ -16,7 +16,7 @@ eleventyComputed:
 
 <article class="component">
     <div class="component-meta">
-        <div class="component-name">{{ component.name | splitPascalCase() }}</div>
+        <div class="component-name">{{ component.name | splitPascalCase() }} {% set status = customElements | getStatus(component.name) %} {% if status %} <span class="badge-{{ status }}">{{ status }}</span> {% endif %}</div>
         <div class="component-desc">{{ customElements | getDescription(component.name) | safe }}</div> 
         <div class="component-info">
             <div class="component-info-item">

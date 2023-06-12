@@ -172,7 +172,8 @@ const App = () => <OmniButton${args.label ? ` label='${args.label}'` : ''}${args
         }
     ],
     name: 'Disabled',
-    description: 'Prevent interaction (pointer events).',
+    description: () =>
+        html`<span>Set this in order to prevent interaction. Done internally via <code class="language-css">pointer-events: none</code></span>.`,
     args: {
         label: 'Disabled',
         disabled: true
