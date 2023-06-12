@@ -178,6 +178,12 @@ export class Toast extends OmniElement {
 
 				width: var(--omni-toast-icon-size, 24px);
 				height: var(--omni-toast-icon-size, 24px);
+
+				min-width: var(--omni-toast-icon-size, 24px);
+				min-height: var(--omni-toast-icon-size, 24px);
+
+				max-width: var(--omni-toast-icon-size, 24px);
+				max-height: var(--omni-toast-icon-size, 24px);
 			}
 
 			.content {
