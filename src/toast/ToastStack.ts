@@ -34,6 +34,9 @@ import '../render-element/RenderElement.js';
  *
  * @slot - Toast(s) to be displayed
  * 
+ * @fires {CustomEvent<Toast>} toast-remove - Dispatched when the a toast is removed from the stack.
+ * @fires {CustomEvent<ToastStack>} toast-stack-remove - Dispatched from a toast when it is removed from the stack.
+ * 
  * @global_attribute {number} data-toast-duration - Duration milliseconds that a slotted toast must be shown in the stack before it is removed.
  *
  * @cssprop --omni-toast-stack-z-index - The z-index of the stack.
@@ -70,6 +73,8 @@ export class ToastStack extends OmniElement {
 
     @query('.toast-box') private toastContainer!: HTMLDivElement;
     @query('slot') private slotElement!: HTMLSlotElement;
+
+    private toastCloseClickBound = this.closeToast.bind(this);
 
     /**
      * Creates a new `<omni-toast-stack>` element with the provided context and appends it to the DOM (either to document body or to provided target parent element).
@@ -164,8 +169,8 @@ export class ToastStack extends OmniElement {
 
         this.slotElement.assignedElements({ flatten: true }).forEach(async (slotted) => {
             // Reset the close listeners so any new elements also have close listeners added now.
-            slotted.removeEventListener(closeClickEvent, this.closeToast);
-            slotted.addEventListener(closeClickEvent, this.closeToast);
+            slotted.removeEventListener(closeClickEvent, this.toastCloseClickBound);
+            slotted.addEventListener(closeClickEvent, this.toastCloseClickBound);
 
             if (!slotted.hasAttribute(toastLoadedAttribute)) {
                 // Slotted element has not been loaded before, set the loaded attribute so it wont load again after this.
@@ -180,6 +185,7 @@ export class ToastStack extends OmniElement {
                         // Remove the toast from the stack after allocated time.
                         if (slotted.parentElement) {
                             slotted.remove();
+                            this.raiseToastRemove(slotted);
                         }
                     } else {
                         // Animations are allowed, animate the fade in and out of the toast for the duration provided.
@@ -203,6 +209,7 @@ export class ToastStack extends OmniElement {
                         // Remove the toast from the stack once it finishes animation out.
                         if (slotted.parentElement) {
                             slotted.remove();
+                            this.raiseToastRemove(slotted);
                         }
                     }
                 } else if (animationsAllowed) {
@@ -251,7 +258,27 @@ export class ToastStack extends OmniElement {
 
         if (toast.parentElement) {
             toast.remove();
+            this.raiseToastRemove(toast);
         }
+    }
+
+    private raiseToastRemove(toast: Element) {
+        this.dispatchEvent(
+            new CustomEvent<Toast>('toast-remove', {
+                bubbles: true,
+                composed: true,
+                cancelable: false,
+                detail: toast as Toast
+            })
+        );
+        toast?.dispatchEvent(
+            new CustomEvent<ToastStack>('toast-stack-remove', {
+                bubbles: true,
+                composed: true,
+                cancelable: false,
+                detail: this
+            })
+        );
     }
 
     private async slideIn(toast: Toast) {

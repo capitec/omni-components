@@ -434,9 +434,7 @@ export class StoryRenderer extends LitElement {
             </div>
 
             <div class="two-part ${
-                !this.story?.play && this.story!.frameworkSources?.find((fs) => fs.framework === sourceTab)?.disableCodePen && !frameworkSource
-                    ? 'no-display'
-                    : ''
+                !this.story?.play && this.story!.frameworkSources?.find((fs) => fs.framework === sourceTab)?.disableCodePen ? 'no-display' : ''
             }">
             
                 <div class="play-tests">

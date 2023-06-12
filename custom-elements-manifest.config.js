@@ -116,6 +116,38 @@ const plugins = {
                 },
             };
         }(),
+        function statusPlugin() {
+            return {
+                // Runs for each module
+                analyzePhase({ ts, node, moduleDoc }) {
+                    switch (node.kind) {
+                        case ts.SyntaxKind.ClassDeclaration:
+                            const className = node.name.getText();
+
+                            node.jsDoc?.forEach(jsDoc => {
+                                jsDoc.tags?.forEach(tag => {
+                                    const tagName = tag.tagName.getText();
+                                    if (tagName && (tagName.toLowerCase() === 'status')) {
+                                        const value = tag.comment;
+                                        const classDeclaration = moduleDoc.declarations.find(declaration => declaration.name === className);
+                                        classDeclaration.status = value;
+                                    }
+                                });
+                            });
+
+                            break;
+                    }
+                },
+                // Runs for each module, after analyzing, all information about your module should now be available
+                moduleLinkPhase({ moduleDoc }) {
+                    // console.log(moduleDoc);
+                },
+                // Runs after all modules have been parsed, and after post processing
+                packageLinkPhase(customElementsManifest) {
+                    // console.log(customElementsManifest);
+                },
+            };
+        }(),
         function typesPlugin() {
             const exportedTypes = {};
             return {

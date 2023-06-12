@@ -13,6 +13,12 @@ export function getDescription(value, componentName) {
     return description;
 }
 
+export function getStatus(value, componentName) {
+    const declaration = getComponentDeclaration(value, componentName);
+    const status = declaration.status;
+    return status;
+}
+
 export function getImport(value, componentName) {
     const component = loadCustomElementsModuleByFileFor(componentName, value);
     const declaration = component.declarations.find(d => d.name === componentName);
