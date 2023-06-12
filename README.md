@@ -579,7 +579,7 @@ Control to input text.
 
 </td><td>
 
-Popup to visually notify a user of a header.
+Component to visually notify a user of a message.
 
 </td></tr><tr><td>
 
