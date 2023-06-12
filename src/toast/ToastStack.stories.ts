@@ -87,7 +87,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         reverse: false,
         position: 'bottom',
         '[Default Slot]': raw`<omni-toast
-    data-toast-duration="15000"
+    data-toast-duration="4000"
     detail="The toast description"
     header="The toast message"
     type="success"
@@ -107,14 +107,14 @@ export const Interactive: ComponentStoryFormat<Args> = {
     >
 </omni-toast>
 <omni-toast
-    data-toast-duration="10000"
+    data-toast-duration="4500"
     detail="The toast description"
     header="The toast message"
     type="error"
     closeable>
 </omni-toast>
 <omni-toast
-    data-toast-duration="15000"
+    data-toast-duration="2000"
     detail="The toast description"
     header="The toast message">
 </omni-toast>`
@@ -125,9 +125,13 @@ export const Interactive: ComponentStoryFormat<Args> = {
             btn.click();
         }
         const toastStack = within(document.body).getByTestId<ToastStack>('test-toast-stack');
+        const toastRemove = jest.fn();
+        toastStack.addEventListener('toast-remove', () => toastRemove());
         await toastStack.updateComplete;
         toastStack.focus();
-        toastStack.showToast({ type: 'info', header: 'Test', detail: 'Test Info', closeable: true, duration: 15000 });
+        const shown = toastStack.showToast({ type: 'info', header: 'Test', detail: 'Test Info', closeable: true, duration: 2000 });
+        const toastStackRemove = jest.fn();
+        shown.addEventListener('toast-stack-remove', () => toastStackRemove());
         toastStack.showToast({
             type: 'info',
             header: 'Test',
@@ -138,6 +142,16 @@ export const Interactive: ComponentStoryFormat<Args> = {
             close: html`❎`,
             content: html`<span>My Extra <strong>Content</strong></span>`
         });
+
+        // Wait for toast removals
+        await new Promise((resolve) => setTimeout(resolve, 6000));
+
+        await expect(toastRemove).toBeCalledTimes(5);
+        await expect(toastStackRemove).toBeCalled();
+
+        await expect(toastStack.childElementCount).toBe(2);
+
+        toastStack.innerHTML = '';
     }
 };
 
