@@ -573,6 +573,22 @@ Control to switch a value on or off.
 
 Control to input text.
 
+</td></tr><tr><td>
+
+[omni-toast](src/toast/README.md)
+
+</td><td>
+
+Component to visually notify a user of a message.
+
+</td></tr><tr><td>
+
+[omni-toast-stack](src/toast/README.md)
+
+</td><td>
+
+A toast container that animates in and stacks toast elements.
+
 </td></tr></tbody></table>
 
 

@@ -38,7 +38,7 @@ import './KeyboardButton.js';
  * ```
  *
  * @element omni-keyboard
- *
+ * @status experimental
  *
  * @slot caps-off - Content to display on case change button when in a lowercase state.
  * @slot caps-on - Content to display on case change button when in a single uppercase state.

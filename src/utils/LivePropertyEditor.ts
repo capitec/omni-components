@@ -280,7 +280,7 @@ export class LivePropertyEditor extends OmniElement {
                             const typesRaw = attribute.type?.text.split(' | ');
                             const types = [];
                             for (const type in typesRaw) {
-                                const typeValue = typesRaw[type];
+                                const typeValue = typesRaw[type].replaceAll('| ', '').replaceAll('\r\n', '').replaceAll(' ', '');
                                 types.push(typeValue.substring(1, typeValue.length - 1));
                             }
                             const startValue = this.data

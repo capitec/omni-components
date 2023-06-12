@@ -43,6 +43,7 @@
 		"calendar": true,
 		"keyboard": true,
 		"modal": true,
-		"tab": true
+		"tab": true,
+		"toast": true
 	}
 }
