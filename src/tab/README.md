@@ -118,10 +118,12 @@ Component that displays content in tabs.
 | `--omni-tab-group-tab-indicator-width`         | .                                        |
 | `--omni-tab-group-tab-label-container`         | height -                                 |
 | `--omni-tab-group-tab-label-font-color`        | Tab group tab label font color.          |
+| `--omni-tab-group-tab-label-font-family`       | Tab group tab label font family.         |
 | `--omni-tab-group-tab-label-font-size`         | Tab group tab label font size.           |
 | `--omni-tab-group-tab-label-font-weight`       | Tab group tab label font weight.         |
 | `--omni-tab-group-tab-max-width`               | Tab group tab max width.                 |
 | `--omni-tab-group-tab-min-width`               | Tab group tab min width.                 |
+| `--omni-tab-group-tab-selected-font-color`     | Tab group selected tab label font color. |
 | `--omni-tab-group-tab-tab-indicator`           | height -                                 |
 | `--omni-theme-accent-active-color`             | Theme accent active color.               |
 | `--omni-theme-accent-color`                    | Theme accent color.                      |
