@@ -51,6 +51,9 @@ import { OmniElement } from '../core/OmniElement.js';
  * @cssprop --omni-tab-group-tab-label-font-size - Tab group tab label font size.
  * @cssprop --omni-tab-group-tab-label-font-weight - Tab group tab label font weight.
  * @cssprop --omni-tab-group-tab-label-font-color - Tab group tab label font color.
+ * @cssprop --omni-tab-group-tab-label-font-family - Tab group tab label font family.
+ * 
+ * @cssprop --omni-tab-group-tab-selected-font-color - Tab group selected tab label font color.
  *
  * @cssprop --theme-tab-selected-font-color - Tab group selected Tab font color.
  *
@@ -168,6 +171,7 @@ export class TabGroup extends OmniElement {
                 font-size: var(--omni-tab-group-tab-label-font-size, var(--omni-font-size));
                 font-weight: var(--omni-tab-group-tab-label-font-weight, var(--omni-font-weight));
                 color: var(--omni-tab-group-tab-label-font-color, var(--omni-font-color));
+                font-family: var(--omni-tab-group-tab-label-font-family, var(--omni-font-family));
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
