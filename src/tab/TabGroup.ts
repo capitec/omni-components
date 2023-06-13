@@ -52,7 +52,7 @@ import { OmniElement } from '../core/OmniElement.js';
  * @cssprop --omni-tab-group-tab-label-font-weight - Tab group tab label font weight.
  * @cssprop --omni-tab-group-tab-label-font-color - Tab group tab label font color.
  * @cssprop --omni-tab-group-tab-label-font-family - Tab group tab label font family.
- * 
+ *
  * @cssprop --omni-tab-group-tab-selected-font-color - Tab group selected tab label font color.
  *
  * @cssprop --theme-tab-selected-font-color - Tab group selected Tab font color.
@@ -221,7 +221,9 @@ export class TabGroup extends OmniElement {
                     (tab: Element) => html`
                     <div class='tab' @click='${() => this.selectTab(tab)}'>
                         <div class="tab-label-container">
-                            <div class="tab-label ${tab.hasAttribute(activeAttribute) ? `selected` : ``}">${tab.getAttribute('data-omni-tab-label')}</div>
+                            <div class="tab-label ${tab.hasAttribute(activeAttribute) ? `selected` : ``}">${tab.getAttribute(
+                        'data-omni-tab-label'
+                    )}</div>
                         </div>
                         ${tab.hasAttribute(activeAttribute) ? html`<div class="indicator"></div>` : nothing}
                     </div>
