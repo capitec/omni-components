@@ -217,7 +217,9 @@ export class TabGroup extends OmniElement {
                     (tab: Element) => html`
                     <div class='tab' @click='${() => this.selectTab(tab)}'>
                         <div class="tab-label-container">
-                            <div class="tab-label ${tab.hasAttribute(activeAttribute) ? `selected` : ``}">${tab.getAttribute('data-omni-tab-label')}</div>
+                            <div class="tab-label ${tab.hasAttribute(activeAttribute) ? `selected` : ``}">${tab.getAttribute(
+                        'data-omni-tab-label'
+                    )}</div>
                         </div>
                         ${tab.hasAttribute(activeAttribute) ? html`<div class="indicator"></div>` : nothing}
                     </div>
