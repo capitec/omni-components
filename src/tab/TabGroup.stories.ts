@@ -22,7 +22,6 @@ export default {
 } as CSFIdentifier;
 
 interface Args {
-    selectedIndex?: number;
     '[Default Slot]': string;
 }
 
@@ -31,14 +30,13 @@ export const Interactive: ComponentStoryFormat<Args> = {
     <div style="height: 400px; width: 400px;">
     <omni-tab-group
         data-testid='test-tab-group'
-        selected-index="${ifDefined(args.selectedIndex)}"
         >
         ${unsafeHTML(args['[Default Slot]'])}
-    </omni-tab-group></div>
+    </omni-tab-group>
+    </div>
 `,
     name: 'Interactive',
     args: {
-        selectedIndex: undefined,
         '[Default Slot]': raw`<omni-tab data-omni-tab-label="Tab-1">
     <div>
         <omni-label label="Tab 1 content label"></omni-label>
@@ -54,19 +52,19 @@ export const Interactive: ComponentStoryFormat<Args> = {
 </omni-tab>`
     },
     play: async (context) => {
-        const tab = within(context.canvasElement).getByTestId<Tab>('test-tab');
+        const tabGroup = within(context.canvasElement).getByTestId<TabGroup>('test-tab-group');
     }
 };
 
 export const Active: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
-
     <omni-tab-group
         data-testid='test-tab-group'>
         <omni-tab             
         data-omni-tab-label="Tab 1">
         </omni-tab>
-        <omni-tab             
+        <omni-tab 
+        data-omni-tab-active            
         data-omni-tab-label="Tab 2">
         </omni-tab>
         <omni-tab             
@@ -75,24 +73,64 @@ export const Active: ComponentStoryFormat<Args> = {
     </omni-tab-group>
 
 `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniTabGroup } from "@capitec/omni-components-react/tab-group";
+import { OmniTab } from "@capitec/omni-components-react/tab";
+import { OmniLabel } from "@capitec/omni-components-react/label";
+
+const App = () =>
+<OmniTabGroup>
+<OmniTab data-omni-tab-label="Tab 1">
+    <OmniLabel label='Label of Tab 1' type='title'>;
+</OmniTab>
+<OmniTab data-omni-tab-active  data-omni-tab-label="Tab 2">
+    <OmniLabel label='Label of Tab 2' type='title'/>;
+</OmniTab>
+<OmniTab data-omni-tab-label="Tab 3">
+    <OmniLabel label='Label of Tab 3' type='title'/>;
+</OmniTab>
+</OmniTabGroup>;`
+        }
+    ],
+    args: {},
     name: 'Active',
-    description: 'Set a text value to display within the omni-tab.',
-    args: {
-        selectedIndex: 0
-    },
+    description: 'Set a slotted tab that should be active.',
     play: async (context) => {
-        const tab = within(context.canvasElement).getByTestId<Tab>('test-tab');
+        const tabGroup = within(context.canvasElement).getByTestId<TabGroup>('test-tab-group');
     }
 };
 
 export const Tabs: ComponentStoryFormat<Args> = {
-    render: (args) => html`
+    render: (args: Args) => html`
     <omni-tab-group
         data-testid='test-tab-group'>
         ${unsafeHTML(args['[Default Slot]'])}
-
     </omni-tab-group>
 `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniTabGroup } from "@capitec/omni-components-react/tab-group";
+import { OmniTab } from "@capitec/omni-components-react/tab";
+import { OmniLabel } from "@capitec/omni-components-react/label";
+
+// Note that styles are applied to the slotted content via the style property
+const App = () => 
+<OmniTabGroup>
+    <OmniTab data-omni-tab-label="Tab 1">
+        <OmniLabel label='Label of Tab 1' type='title'>;
+    </OmniTab>
+    <OmniTab data-omni-tab-label="Tab 2">
+        <OmniLabel label='Label of Tab 2' type='title'/>;
+    </OmniTab>
+    <OmniTab data-omni-tab-label="Tab 3">
+        <OmniLabel label='Label of Tab 3' type='title'/>;
+    </OmniTab>
+</OmniTabGroup>;`
+        }
+    ],
     name: 'Tabs',
     description: 'Render a omni-tab-group component with nested omni-tab components',
     args: {
@@ -123,6 +161,6 @@ export const Tabs: ComponentStoryFormat<Args> = {
     </omni-tab>`
     },
     play: async (context) => {
-        const tab = within(context.canvasElement).getByTestId<Tab>('test-tab');
+        const tabGroup = within(context.canvasElement).getByTestId<TabGroup>('test-tab');
     }
 };
