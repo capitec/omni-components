@@ -27,7 +27,7 @@ interface Args {
 
 export const Interactive: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
-    <div style="height: 400px; width: 400px;">
+    <div style="height: 200px; width: 250px;">
     <omni-tab-group
         data-testid='test-tab-group'
         >
@@ -38,11 +38,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
     name: 'Interactive',
     args: {
         '[Default Slot]': raw`<omni-tab data-omni-tab-label="Tab-1">
-    <div>
-        <omni-label label="Tab 1 content label"></omni-label>
-        <omni-label label="Tab 1 content label"></omni-label>
-        <omni-label label="Tab 1 content label"></omni-label>
-    </div>
+    <omni-label label="Tab 1 content label"></omni-label>
 </omni-tab>
 <omni-tab data-omni-tab-label="Tab-2">
     <omni-label label="Tab 2 content label"></omni-label>
@@ -76,14 +72,13 @@ export const Active: ComponentStoryFormat<Args> = {
     frameworkSources: [
         {
             framework: 'React',
-            load: (args) => `import { OmniTabGroup } from "@capitec/omni-components-react/tab-group";
-import { OmniTab } from "@capitec/omni-components-react/tab";
+            load: (args) => `import { OmniTabGroup, OmniTab } from "@capitec/omni-components-react/tab";
 import { OmniLabel } from "@capitec/omni-components-react/label";
 
 const App = () =>
 <OmniTabGroup>
 <OmniTab data-omni-tab-label="Tab 1">
-    <OmniLabel label='Label of Tab 1' type='title'>;
+    <OmniLabel label='Label of Tab 1' type='title'/>;
 </OmniTab>
 <OmniTab data-omni-tab-active  data-omni-tab-label="Tab 2">
     <OmniLabel label='Label of Tab 2' type='title'/>;
@@ -112,15 +107,14 @@ export const Tabs: ComponentStoryFormat<Args> = {
     frameworkSources: [
         {
             framework: 'React',
-            load: (args) => `import { OmniTabGroup } from "@capitec/omni-components-react/tab-group";
-import { OmniTab } from "@capitec/omni-components-react/tab";
+            load: (args) => `import { OmniTabGroup, OmniTab } from "@capitec/omni-components-react/tab";
 import { OmniLabel } from "@capitec/omni-components-react/label";
 
 // Note that styles are applied to the slotted content via the style property
 const App = () => 
 <OmniTabGroup>
     <OmniTab data-omni-tab-label="Tab 1">
-        <OmniLabel label='Label of Tab 1' type='title'>;
+        <OmniLabel label='Label of Tab 1' type='title'/>;
     </OmniTab>
     <OmniTab data-omni-tab-label="Tab 2">
         <OmniLabel label='Label of Tab 2' type='title'/>;
@@ -139,23 +133,17 @@ const App = () =>
         data-testid="test-tab-1">
         <div>
             <omni-label label="Tab 1 content label"></omni-label>
-            <omni-label label="Tab 1 content label"></omni-label>
-            <omni-label label="Tab 1 content label"></omni-label>
         </div>
     </omni-tab>
     <omni-tab           
         data-omni-tab-label="Tab 2">
         <div>
             <omni-label label="Tab 2 content label"></omni-label>
-            <omni-label label="Tab 2 content label"></omni-label>
-            <omni-label label="Tab 2 content label"></omni-label>
         </div>
     </omni-tab>
     <omni-tab            
         data-omni-tab-label="Tab 3">
         <div>
-            <omni-label label="Tab 3 content label"></omni-label>
-            <omni-label label="Tab 3 content label"></omni-label>
             <omni-label label="Tab 3 content label"></omni-label>
         </div>
     </omni-tab>`
