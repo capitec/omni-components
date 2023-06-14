@@ -14,10 +14,10 @@ import { OmniElement } from '../core/OmniElement.js';
  * @example
  * ```html
  * <omni-tab-group>
- *  <omni-tab label="Details">
+ *  <omni-tab data-omni-tab-label="Details">
  *   <omni-label label="Tab 1"></omni-label>
  *  </omni-tab>
- *  <omni-tab label="Comments (3)">
+ *  <omni-tab data-omni-tab-label="Comments (3)">
  *   <omni-label label="Tab 2"></omni-label>
  *  </omni-tab>
  * </omni-tab-group>
@@ -35,7 +35,7 @@ import { OmniElement } from '../core/OmniElement.js';
  * @global_attribute {boolean} data-omni-tab-active - Set the active tab in the group.
  *
  * @cssprop --omni-tab-group-tab-bar-width - Tab group tab bar width.
- * @cssprop --omni-tab-bar-height - Tab group tab bar height.
+ * @cssprop --omni-tab-group-tab-bar-height - Tab group tab bar height.
  * @cssprop --omni-tab-group-tab-bar-border-bottom - Tab group tab bar bottom border.
  * @cssprop --omni-tab-group-tab-bar-background-color - Tab group tab bar background color.
  *
@@ -45,24 +45,22 @@ import { OmniElement } from '../core/OmniElement.js';
  *
  * @cssprop --omni-tab-group-tab-hover-background-color - Tab group tab hover background.
  *
- * @cssprop --omni-tab-group-tab-label-container-height -
- * @cssprop --omni-tab-group-tab-tab-indicator-height -
+ * @cssprop --omni-tab-group-tab-label-container-height - Tab group tab label container height.
+ * @cssprop --omni-tab-group-tab-tab-indicator-height - Tab group tab active indicator height.
  *
  * @cssprop --omni-tab-group-tab-label-font-size - Tab group tab label font size.
  * @cssprop --omni-tab-group-tab-label-font-weight - Tab group tab label font weight.
  * @cssprop --omni-tab-group-tab-label-font-color - Tab group tab label font color.
  * @cssprop --omni-tab-group-tab-label-font-family - Tab group tab label font family.
  *
- * @cssprop --omni-tab-group-tab-selected-font-color - Tab group selected tab label font color.
+ * @cssprop --omni-tab-group-tab-selected-font-color - Tab group active tab label font color.
  *
- * @cssprop --theme-tab-selected-font-color - Tab group selected Tab font color.
+ * @cssprop --theme-tab-selected-font-color - Tab group active Tab font color.
  *
- * @cssprop --omni-tab-group-tab-indicator-height - Tab group selected tab indicator height.
- *
- * @cssprop --omni-tab-group-tab-indicator-height - .
- * @cssprop --omni-tab-group-tab-indicator-color - .
- * @cssprop --omni-tab-group-tab-indicator-border-radius - .
- * @cssprop --omni-tab-group-tab-indicator-width - .
+ * @cssprop --omni-tab-group-tab-indicator-height - Tab group active tab indicator height..
+ * @cssprop --omni-tab-group-tab-indicator-color - Tab group active tab indicator color.
+ * @cssprop --omni-tab-group-tab-indicator-border-radius - Tab group active tab indicator border radius.
+ * @cssprop --omni-tab-group-tab-indicator-width - Tab group active tab indicator width.
  *
  */
 @customElement('omni-tab-group')
@@ -178,8 +176,8 @@ export class TabGroup extends OmniElement {
 
             }
 
-            :host > .tab-bar > .tab > .tab-label-container > .tab-label.selected {
-                color: var(--omni-tab-group-tab-selected-font-color, var(--omni-accent-color));
+            :host > .tab-bar > .tab > .tab-label-container > .tab-label.active {
+                color: var(--omni-tab-group-tab-active-font-color, var(--omni-accent-color));
             }
 
             :host > .tab-bar > div > .indicator {
@@ -187,19 +185,6 @@ export class TabGroup extends OmniElement {
                 background-color: var(--omni-tab-group-tab-indicator-color, var(--omni-primary-color));
                 border-radius: var(--omni-tab-group-tab-indicator-border-radius, 100px 100px 0 0);
                 width: var(--omni-tab-group-tab-indicator-width, 100%);
-            }
-
-            :host > .tab-slot {
-                display: flex;
-                flex: 1 1 auto;
-					
-                width: 100%;
-                height: 100%;
-
-                padding-left: var(--omni-tab-group-tab-content-padding-left, 10px);
-                padding-right: var(--omni-tab-group-tab-content-padding-right, 10px);
-                padding-top: var(--omni-tab-group-tab-content-padding-top, 10px);
-                padding-bottom: var(--omni-tab-group-tab-content-padding-bottom, 10px);
             }
 
             ::slotted(*:not([data-omni-tab-active])) {
@@ -221,7 +206,7 @@ export class TabGroup extends OmniElement {
                     (tab: Element) => html`
                     <div class='tab' @click='${() => this.selectTab(tab)}'>
                         <div class="tab-label-container">
-                            <div class="tab-label ${tab.hasAttribute(activeAttribute) ? `selected` : ``}">${tab.getAttribute(
+                            <div class="tab-label ${tab.hasAttribute(activeAttribute) ? `active` : ``}">${tab.getAttribute(
                         'data-omni-tab-label'
                     )}</div>
                         </div>
