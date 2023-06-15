@@ -6,7 +6,7 @@ import { OmniElement } from '../core/OmniElement.js';
 /**
  * Component that displays content in tabs.
  *
- *   @import
+ * @import
  * ```js
  * import '@capitec/omni-components/tab-group';
  * ```

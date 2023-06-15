@@ -31,7 +31,11 @@ export const Interactive: ComponentStoryFormat<Args> = {
         </omni-tab>
     `,
     name: 'Interactive',
-    description: 'Content rendered within a omni-tab component for best practice examples check the tab group examples',
+    description: () => html`
+    <div>
+        Content rendered within a <code class="language-html">&lt;omni-tab&gt;</code> component for best practice examples check the <code class="language-html">&lt;omni-tab-group&gt;</code> examples.
+    <div>
+    `,
     args: {
         '[Default Slot]': raw`<div>
     <omni-label label="Tab 1 content label"></omni-label>
