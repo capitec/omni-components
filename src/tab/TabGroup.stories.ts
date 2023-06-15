@@ -109,7 +109,11 @@ const App = () =>
     ],
     args: {},
     name: 'Active',
-    description: 'Set a slotted tab that should be active.',
+    description: () => html`
+    <div>
+        Set which <code class="language-html">&lt;omni-tab&gt;</code> component in the <code class="language-html">&lt;omni-tab-group&gt;</code> component should be selected on initial render. This is based on setting the <code class="language-js">data-omni-tab-active</code> attribute.
+    <div>
+    `,
     play: async (context) => {
         const tabGroup = within(context.canvasElement).getByTestId<TabGroup>('test-tab-group');
         const click = jest.fn();
@@ -161,7 +165,11 @@ const App = () =>
         }
     ],
     name: 'Tabs',
-    description: 'Render a omni-tab-group component with nested omni-tab components',
+    description: () => html`
+    <div>
+        Render a <code class="language-html">&lt;omni-tab-group&gt;</code> component with nested <code class="language-html">&lt;omni-tab&gt;</code> components.
+    <div>
+    `,
     args: {
         '[Default Slot]': raw`<omni-tab 
         data-omni-tab-label="Tab 1"            
