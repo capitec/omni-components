@@ -18,8 +18,6 @@ import { OmniElement } from '../core/OmniElement.js';
  *
  * @element omni-tab
  *
- * Registry of all properties defined by the component.
- *
  * @slot - Content to render inside the component body.
  */
 @customElement('omni-tab')
