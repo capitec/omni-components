@@ -65,12 +65,12 @@ Component that displays content in tabs.
 
 ```html
 <omni-tab-group>
-<omni-tab data-omni-tab-label="Details">
-<omni-label label="Tab 1"></omni-label>
-</omni-tab>
-<omni-tab data-omni-tab-label="Comments (3)">
-<omni-label label="Tab 2"></omni-label>
-</omni-tab>
+ <omni-tab data-omni-tab-label="Details">
+  <omni-label label="Tab 1"></omni-label>
+ </omni-tab>
+ <omni-tab data-omni-tab-label="Comments (3)">
+  <omni-label label="Tab 2"></omni-label>
+ </omni-tab>
 </omni-tab-group>
 ```
 
