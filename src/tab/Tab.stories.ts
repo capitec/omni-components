@@ -1,14 +1,9 @@
 import { within } from '@testing-library/dom';
-import userEvent from '@testing-library/user-event';
-import * as jest from 'jest-mock';
-import { html, nothing } from 'lit';
+import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { ifNotEmpty } from '../utils/Directives.js';
-import expect from '../utils/ExpectDOM.js';
-import { assignToSlot, ComponentStoryFormat, CSFIdentifier, getSourceFromLit, raw } from '../utils/StoryUtils.js';
+import { ComponentStoryFormat, CSFIdentifier, raw } from '../utils/StoryUtils.js';
 
 import { Tab } from './Tab.js';
-import { TabGroup } from './TabGroup.js';
 
 import '../hyperlink/Hyperlink.js';
 import '../label/Label.js';

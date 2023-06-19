@@ -1,6 +1,5 @@
 import { html, css, TemplateResult, nothing } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
+import { customElement, state } from 'lit/decorators.js';
 import { OmniElement } from '../core/OmniElement.js';
 
 /**

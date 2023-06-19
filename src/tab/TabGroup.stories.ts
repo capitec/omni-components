@@ -1,14 +1,11 @@
 import { within } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import * as jest from 'jest-mock';
-import { html, nothing } from 'lit';
-import { ifDefined } from 'lit/directives/if-defined.js';
+import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
-import { assignToSlot, ComponentStoryFormat, CSFIdentifier, getSourceFromLit, querySelectorAsync, raw } from '../utils/StoryUtils.js';
+import {ComponentStoryFormat, CSFIdentifier, querySelectorAsync, raw } from '../utils/StoryUtils.js';
 
-import { Tab } from './Tab.js';
 import { TabGroup } from './TabGroup.js';
 
 import '../label/Label.js';
