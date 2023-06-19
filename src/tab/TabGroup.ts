@@ -42,6 +42,7 @@ import { OmniElement } from '../core/OmniElement.js';
  * @cssprop --omni-tab-group-tab-height - Tab group tab height.
  * @cssprop --omni-tab-group-tab-min-width - Tab group tab min width.
  * @cssprop --omni-tab-group-tab-max-width - Tab group tab max width.
+ * @cssprop --omni-tab-group-tab-margin - Tab group tab margin.
  *
  * @cssprop --omni-tab-group-tab-hover-background-color - Tab group tab hover background.
  *
@@ -149,12 +150,16 @@ export class TabGroup extends OmniElement {
             /* Tab */
             :host > .tab-bar > .tab {
                 height: var(--omni-tab-group-tab-height, 100%);
-                min-width: var(--omni-tab-group-tab-min-width, 100px);
-                max-width: var(--omni-tab-group-tab-max-width, 300px);
+                min-width: var(--omni-tab-group-tab-min-width, auto);
+                max-width: var(--omni-tab-group-tab-max-width, auto);
+                margin: var(--omni-tab-group-tab-margin, 6px);
             }
 
-            :host > .tab-bar > .tab:hover {
-                background-color: var(--omni-tab-group-tab-hover-background-color, var(--omni-accent-hover-color));
+            /* Added to resolve sticky hover state on mobile devices */
+            @media (hover: hover) {
+                :host > .tab-bar > .tab:hover {
+                    background-color: var(--omni-tab-group-tab-hover-background-color, var(--omni-accent-hover-color));
+                }
             }
 
             :host > .tab-bar > .tab > .tab-label-container {
@@ -184,7 +189,7 @@ export class TabGroup extends OmniElement {
                 height: var(--omni-tab-group-tab-indicator-height, 4px);
                 background-color: var(--omni-tab-group-tab-indicator-color, var(--omni-primary-color));
                 border-radius: var(--omni-tab-group-tab-indicator-border-radius, 100px 100px 0 0);
-                width: var(--omni-tab-group-tab-indicator-width, 100%);
+                width: var(--omni-tab-group-tab-indicator-width, auto);
             }
 
             ::slotted(*:not([data-omni-tab-active])) {

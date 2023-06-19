@@ -10,6 +10,7 @@ import { assignToSlot, ComponentStoryFormat, CSFIdentifier, getSourceFromLit, ra
 import { Tab } from './Tab.js';
 import { TabGroup } from './TabGroup.js';
 
+import '../hyperlink/Hyperlink.js';
 import '../label/Label.js';
 import './Tab.js';
 import './TabGroup.js';
@@ -33,7 +34,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
     name: 'Interactive',
     description: () => html`
     <div>
-        Content rendered within a <code class="language-html">&lt;omni-tab&gt;</code> component for best practice examples check the <code class="language-html">&lt;omni-tab-group&gt;</code> examples.
+        Content rendered within a <code class="language-html">&lt;omni-tab&gt;</code> component which is typically used in the <omni-hyperlink href='../components/tab-group'><code class="language-html">&lt;omni-tab-group&gt;</code></omni-hyperlink>.
     <div>
     `,
     args: {
