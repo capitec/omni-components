@@ -121,6 +121,7 @@ Component that displays content in tabs.
 | `--omni-tab-group-tab-label-font-family`       | Tab group tab label font family.              |
 | `--omni-tab-group-tab-label-font-size`         | Tab group tab label font size.                |
 | `--omni-tab-group-tab-label-font-weight`       | Tab group tab label font weight.              |
+| `--omni-tab-group-tab-margin`                  | Tab group tab margin.                         |
 | `--omni-tab-group-tab-max-width`               | Tab group tab max width.                      |
 | `--omni-tab-group-tab-min-width`               | Tab group tab min width.                      |
 | `--omni-tab-group-tab-selected-font-color`     | Tab group active tab label font color.        |
