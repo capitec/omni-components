@@ -10,7 +10,7 @@ import { assignToSlot, ComponentStoryFormat, CSFIdentifier, getSourceFromLit, ra
 import { Tab } from './Tab.js';
 import { TabGroup } from './TabGroup.js';
 
-import '../hyperlink/Hyperlink.js'
+import '../hyperlink/Hyperlink.js';
 import '../label/Label.js';
 import './Tab.js';
 import './TabGroup.js';
