@@ -133,9 +133,9 @@ export default function setupTests(getPage: () => Page) {
         await page.waitForSelector('[data-testid]', {});
 
         const button = page.locator('.Disabled').locator('[data-testid=test-button]');
-        
+
         const buttonElement = button.locator('#button');
-        
+
         await expect(await buttonElement.isDisabled()).toBeTruthy();
 
         const foundDisabledClass = await buttonElement.evaluate((btn) => btn?.classList.contains('disabled'));

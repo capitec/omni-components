@@ -39,7 +39,12 @@ function extendExpect<T, U = jest.Expect>(initialExpect: T): U {
     const validMatchers: any = { ...(matchers.default || matchers) };
     Object.keys(validMatchers).forEach((matcherName) => {
         const matcher = validMatchers[matcherName];
-        if (typeof matcher === 'undefined' || typeof matcher === 'boolean' || playwrightMatchers.includes(matcherName) || playwrightMatchers.includes(matcher)) {
+        if (
+            typeof matcher === 'undefined' ||
+            typeof matcher === 'boolean' ||
+            playwrightMatchers.includes(matcherName) ||
+            playwrightMatchers.includes(matcher)
+        ) {
             delete validMatchers[matcherName];
         }
     });
@@ -52,4 +57,4 @@ function extendExpect<T, U = jest.Expect>(initialExpect: T): U {
 const expect = extendExpect<Expect, Expect>(expectPatched);
 const expectJest = expect as any as jest.Expect;
 
-export { expect, expectJest};
+export { expect, expectJest };
