@@ -12,7 +12,11 @@ import { devices } from '@playwright/test';
  * @type {import('@playwright/test').PlaywrightTestConfig}
  */
 const config = {
+    globalSetup: './.tooling/playwright/globalSetup.js',
+    globalTeardown: './.tooling/playwright/globalTeardown.js',
     testDir: './.tooling/tests',
+    snapshotDir: './.tooling/tests/screenshots',
+    snapshotPathTemplate: '{snapshotDir}/{testName}/{projectName}/{arg}{ext}',
     /* Maximum time one test can run for. */
     timeout: 30 * 1000,
     expect: {
@@ -55,13 +59,13 @@ const config = {
             },
         },
 
-        // {
-        //     name: 'firefox',
-        //     use: {
-        //         ...devices['Desktop Firefox'],
-        //         userAgent: 'Test Runner'
-        //     },
-        // },
+        {
+            name: 'firefox',
+            use: {
+                ...devices['Desktop Firefox'],
+                userAgent: 'Test Runner'
+            },
+        },
 
         // {
         //     name: 'webkit',
@@ -72,13 +76,13 @@ const config = {
         // },
 
         /* Test against mobile viewports. */
-        // {
-        //   name: 'Mobile Chrome',
-        //   use: {
-        //     ...devices['Pixel 5'],
-        //         userAgent: 'Test Runner'
-        //   },
-        // },
+        {
+          name: 'Mobile Chrome',
+          use: {
+            ...devices['Pixel 5'],
+                userAgent: 'Test Runner'
+          },
+        },
         // {
         //   name: 'Mobile Safari',
         //   use: {
