@@ -118,8 +118,11 @@ async function build() {
     console.log(chalk.yellow('Analyzing custom elements...'));
     execSync('npm run docs:custom-elements', { stdio: 'inherit' });
 
+    console.log(chalk.yellow('Generating playwright output...'));
+    execSync('npx -p typescript tsc -p tsconfig.playwright.json', { stdio: 'inherit' });
+
     console.log(chalk.yellow('Reading entry points...'));
-    const entryPoints = await globby('./src/**/*.ts');
+    const entryPoints = (await globby('./src/**/*.ts')).filter(f => !f.toLowerCase().includes('playwright'));
 
     console.log(chalk.yellow('Running esbuild...'));
 
