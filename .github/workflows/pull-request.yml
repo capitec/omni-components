@@ -102,7 +102,7 @@ jobs:
       - name: Auto Commit Changes 👩‍💻
         uses: stefanzweifel/git-auto-commit-action@v4
         # Only on branches
-        if: ${{ startsWith(github.ref, 'refs/heads/') }} && github.ref != 'refs/heads/main && github.ref != 'refs/heads/develop && github.ref != 'refs/heads/alpha
+        if: ${{ startsWith(github.ref, 'refs/heads/') }} && github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' && github.ref != 'refs/heads/alpha'
         with:
           commit_message: Added Missing Screenshots
           branch: ${{ env.GITHUB_REF_NAME }}

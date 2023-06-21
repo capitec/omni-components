@@ -13,7 +13,7 @@ on:
 
 jobs:
   screenshot-add:
-    if: github.event_name != 'workflow_dispatch' || (github.ref != 'refs/heads/main && github.ref != 'refs/heads/develop && github.ref != 'refs/heads/alpha)'
+    if: github.event_name != 'workflow_dispatch' || (github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' && github.ref != 'refs/heads/alpha')
     name: "Add Missing Screenshots"
     timeout-minutes: 15 
     runs-on: ubuntu-latest
