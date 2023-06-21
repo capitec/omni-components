@@ -48,6 +48,7 @@ jobs:
         run: npm run test:ci-add-screenshots
         env:
           CI: true
+          PW_NO_RETRIES: true
 
       - name: Auto Commit Changes 👩‍💻
         uses: stefanzweifel/git-auto-commit-action@v4
