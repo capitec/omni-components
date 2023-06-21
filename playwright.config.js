@@ -16,7 +16,7 @@ const config = {
     globalTeardown: './.tooling/playwright/globalTeardown.js',
     testDir: './.tooling/tests',
     snapshotDir: './.tooling/tests/screenshots',
-    snapshotPathTemplate: '{snapshotDir}/{testName}/{projectName}/{arg}{ext}',
+    snapshotPathTemplate: '{snapshotDir}/{testName}/{platform}/{projectName}/{arg}{ext}',
     /* Maximum time one test can run for. */
     timeout: 30 * 1000,
     expect: {
@@ -42,7 +42,12 @@ const config = {
     /* Limit parallel tests on CI. */
     workers: process.env.CI ? 4 : undefined,
     /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-    reporter: 'html',
+    reporter: [
+        [
+            'html',
+            { open: process.env.PWTEST_SKIP_TEST_OUTPUT ? 'never' : 'on-failure' }
+        ]
+    ],
     /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
     use: {
         /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
@@ -53,7 +58,8 @@ const config = {
         /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
         trace: 'on-first-retry',
 
-        userAgent: 'Test Runner'
+        userAgent: 'Test Runner',
+        baseURL: `http://${process.env.PLAYWRIGHT_HOST_ORIGIN ?? 'localhost'}:6006`
     },
 
     /* Configure projects for major browsers */

@@ -64,7 +64,7 @@ async function globalTeardown() {
         try {
 
             //Skip any scripts that aren't from dist, we only care about code coverage related to our source code
-            if (entry.url === '' || !entry.url.startsWith('http://localhost:6006/dist')) {
+            if (entry.url === '' || !entry.url.startsWith(`http://${process.env.PLAYWRIGHT_HOST_ORIGIN ?? 'localhost'}:6006/dist`)) {
                 continue;
             }
             const scriptPath = `${cwd}${new URL(entry.url).pathname}`;

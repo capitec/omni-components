@@ -54,9 +54,20 @@ const saveV8Coverage = async (page) => {
 
 test.beforeAll(async ({ browser }) => {
     page = await browser.newPage();
+    await page.on('console', (msg) => {
+        if (msg && msg.text) {
+          if (typeof msg.text === 'function') {
+            console.log('PAGE LOG:', msg.text());
+          } else {
+            console.log('PAGE LOG:', msg.text);
+          }
+        } else {
+            console.log('PAGE LOG:', msg);
+        }
+    });
     
     const url = page.url();
-    await page.goto('http://localhost:6006');
+    await page.goto(`http://${process.env.PLAYWRIGHT_HOST_ORIGIN ?? 'localhost'}:6006`);
     await page.evaluate(() => {
         window.sessionStorage.setItem('omni-docs-theme-selection', 'light');
         window.localStorage.setItem('omni-docs-framework-selection', 'HTML');
@@ -98,7 +109,7 @@ const dynamicComponentStoryPlayFunctions = async () => {
     for (let index = 0; index < stories.length; index++) {
         const storyImport = path.join(process.cwd(), stories[index]);
         const storyName = splitPascalCase(path.basename(stories[index].replace('.stories.js', '')));
-        const storyPath = `http://localhost:6006/components/${storyName.replaceAll(' ', '-').toLowerCase()}/`;
+        const storyPath = `http://${process.env.PLAYWRIGHT_HOST_ORIGIN ?? 'localhost'}:6006/components/${storyName.replaceAll(' ', '-').toLowerCase()}/`;
         let storyObj;
         try {
             storyObj = await import('file://' + storyImport);

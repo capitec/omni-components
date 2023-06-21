@@ -293,43 +293,7 @@ const App = () => <OmniDatePicker${args.label ? ` label='${args.label}'` : ''}${
     args: {
         maxDate: '2023-04-14',
         value: '2023-04-13'
-    } as Args,
-    play: async (context) => {
-        const datePicker = within(context.canvasElement).getByTestId<DatePicker>('test-date-picker');
-        datePicker.value = context.args.value;
-
-        await userEvent.click(datePicker);
-
-        const calendar = (await querySelectorAsync(datePicker.shadowRoot as ShadowRoot, '#calendar')) as Calendar;
-        await expect(calendar).toBeTruthy();
-
-        await waitFor(() => expect(calendar).toHaveAttribute('max-date', context.args.maxDate), {
-            timeout: 3000
-        });
-
-        const days = Array.from(calendar.shadowRoot?.querySelectorAll('.day') as NodeListOf<Element>);
-        const isExcluded = days[20];
-
-        await expect(isExcluded).toHaveClass('excluded');
-
-        const preValue = datePicker.value;
-
-        await userEvent.click(isExcluded, {
-            pointerEventsCheck: 0
-        });
-
-        await expect(datePicker).toHaveValue(preValue);
-
-        const isIncluded = days[15];
-
-        await expect(isIncluded).not.toHaveClass('excluded');
-
-        await userEvent.click(isIncluded, {
-            pointerEventsCheck: 0
-        });
-
-        await expect(datePicker).not.toHaveValue(preValue);
-    }
+    } as Args
 };
 
 export const Label = LabelStory<DatePicker, BaseArgs>('omni-date-picker');

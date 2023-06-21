@@ -23,7 +23,10 @@
         "serve": "npm run clean && tsc -p tsconfig.utils.json && eleventy --serve --config=.eleventy.cjs --port 6006",
         "test": "concurrently -k -r -s first \"npm run serve\" \"npm run test:only\"",
         "test:only": "npx wait-on tcp:6006 && cross-env PW_EXPERIMENTAL_TS_ESM=1 npx playwright test",
-        "test:screenshots": "npx wait-on tcp:6006 && cross-env PW_EXPERIMENTAL_TS_ESM=1 npx playwright test --update-snapshots",
+        "test:update-screenshots": "npx wait-on tcp:6006 && cross-env PW_EXPERIMENTAL_TS_ESM=1 npx playwright test --update-snapshots",
+        "test:add-screenshots": "npx wait-on tcp:6006 && (cross-env PW_EXPERIMENTAL_TS_ESM=1 PWTEST_SKIP_TEST_OUTPUT=1 npx playwright test || echo \"Generated missing screenshots\")",
+        "test:ci-update-screenshots": "concurrently -k -r -s first \"npm run serve\" \"npm run test:update-screenshots\"",
+        "test:ci-add-screenshots": "concurrently -k -r -s first \"npm run serve\" \"npm run test:add-screenshots\"",
         "format": "prettier --config .prettierrc \"src/**/*.ts\" --write",
         "format:check": "prettier --config .prettierrc \"src/**/*.ts\" --check"
     },
