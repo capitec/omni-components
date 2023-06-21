@@ -45,7 +45,7 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run Tests
-        run: npm run test:ci-add-screenshots
+        run: npm run test:add-screenshots
         env:
           CI: true
           PW_NO_RETRIES: true
