@@ -23,6 +23,7 @@
         "serve": "npm run clean && tsc -p tsconfig.utils.json && eleventy --serve --config=.eleventy.cjs --port 6006",
         "test": "concurrently -k -r -s first \"npm run serve\" \"npm run test:only\"",
         "test:only": "npx wait-on tcp:6006 && cross-env PW_EXPERIMENTAL_TS_ESM=1 npx playwright test",
+        "test:screenshots": "npx wait-on tcp:6006 && cross-env PW_EXPERIMENTAL_TS_ESM=1 npx playwright test --update-snapshots",
         "format": "prettier --config .prettierrc \"src/**/*.ts\" --write",
         "format:check": "prettier --config .prettierrc \"src/**/*.ts\" --check"
     },
@@ -92,7 +93,7 @@
         "@ddietr/codemirror-themes": "^1.2.1",
         "@geut/esbuild-plugin-brode": "^2.0.14",
         "@octokit/core": "^4.2.0",
-        "@playwright/test": "^1.27.1",
+        "@playwright/test": "^1.35.1",
         "@testing-library/dom": "^8.19.0",
         "@testing-library/jest-dom": "^5.16.5",
         "@testing-library/user-event": "^14.4.3",
