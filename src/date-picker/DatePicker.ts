@@ -422,6 +422,8 @@ export class DatePicker extends OmniFormElement {
                     id="calendar" 
                     locale=${this.locale} 
                     .value=${this.value as string} 
+                    .minDate=${this.minDate}
+                    .maxDate=${this.maxDate} 
                     @change=${(e: Event) => this._dateSelected(e)}>
                 </omni-calendar>
             </dialog>`;
