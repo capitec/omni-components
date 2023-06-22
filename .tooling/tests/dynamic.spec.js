@@ -7,7 +7,6 @@ import jsdom from 'jsdom';
 import XMLHttpRequest from 'xhr2';
 import { v4 } from 'uuid';
 import fetch from 'node-fetch';
-
 import playwrightConfig from '../../playwright.config.js';
 
 global.window = global.window || new jsdom.JSDOM().window;
