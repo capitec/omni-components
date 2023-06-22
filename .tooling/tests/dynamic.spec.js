@@ -1,6 +1,5 @@
 /* eslint-disable no-useless-catch */
 import path from 'path';
-import fsp from 'fs/promises';
 import fs from 'fs';
 import { test } from '@playwright/test';
 import { globbySync } from 'globby';
@@ -38,13 +37,6 @@ export function splitPascalCase(word) {
 
 const saveV8Coverage = async (page) => {
     let coverage = await page.coverage.stopJSCoverage();
-
-    // Create coverage output directory if necessary
-    if (!fs.existsSync(`./coverage`)) {
-        await fsp.mkdir(`./coverage`, {
-            recursive: true
-        });
-    }
 
     //Save coverage information for current test worker
     fs.writeFileSync(`coverage/${v4()}.json`, JSON.stringify(coverage), {

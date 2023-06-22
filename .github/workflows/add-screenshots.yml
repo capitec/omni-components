@@ -15,7 +15,7 @@ jobs:
   screenshot-add:
     if: github.event_name != 'workflow_dispatch' || (github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' && github.ref != 'refs/heads/alpha')
     name: "Add Missing Screenshots"
-    timeout-minutes: 15 
+    timeout-minutes: 35 
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
@@ -54,7 +54,7 @@ jobs:
       - name: Auto Commit Changes 👩‍💻
         uses: stefanzweifel/git-auto-commit-action@v4
         # Only on branches
-        if: ${{ startsWith(github.ref, 'refs/heads/') }}
+        if: ${{ always() && startsWith(github.ref, 'refs/heads/') }}
         with:
           commit_message: Added Missing Screenshots
           branch: ${{ env.GITHUB_REF_NAME }}
