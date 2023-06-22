@@ -168,6 +168,12 @@ export class DatePicker extends OmniFormElement {
     }
 
     _inputClick(e: Event) {
+        if (this.disabled) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            return;
+        }
+
         const pickerContainer = this.renderRoot.querySelector<HTMLDivElement>('#picker-container');
         const pickerDialog = this.renderRoot.querySelector<HTMLDialogElement>('#picker-dialog');
 

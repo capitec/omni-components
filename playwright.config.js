@@ -80,13 +80,13 @@ const config = {
             },
         },
 
-        // {
-        //     name: 'webkit',
-        //     use: {
-        //         ...devices['Desktop Safari'],
-        //         userAgent: 'Test Runner'
-        //     },
-        // },
+        {
+            name: 'webkit',
+            use: {
+                ...devices['Desktop Safari'],
+                userAgent: 'Test Runner'
+            },
+        },
 
         /* Test against mobile viewports. */
         {
@@ -96,13 +96,14 @@ const config = {
                 userAgent: 'Test Runner'
             },
         },
-        // {
-        //   name: 'Mobile Safari',
-        //   use: {
-        //     ...devices['iPhone 12'],
-        //         userAgent: 'Test Runner'
-        //   },
-        // },
+
+        {
+            name: 'Mobile Safari',
+            use: {
+                ...devices['iPhone 12'],
+                userAgent: 'Test Runner'
+            },
+        },
 
         /* Test against branded browsers. */
         // {

@@ -37,7 +37,7 @@ function asDirectoryName(omniElementTag: string) {
     return omniElementTag.replace('omni-', '');
 }
 
-export const LabelStory = <T extends HTMLElement, U extends BaseArgs>(tagName: string) => {
+export const LabelStory = <T extends HTMLElement, U extends BaseArgs>(tagName: string, noPlay = false) => {
     const Label: ComponentStoryFormat<U> = {
         render: (args: U) => html`${unsafeHTML(`<${tagName}  data-testid="test-field" label="${ifNotEmpty(args.label)}"></${tagName}>`)}`,
         frameworkSources: [
@@ -53,7 +53,7 @@ const App = () => <${toPascalCase(tagName)}${args.label ? ` label='${args.label}
         args: {
             label: 'The Label'
         } as U,
-        play: async (context) => {
+        play: noPlay ? undefined : async (context) => {
             const input = within(context.canvasElement).getByTestId<T>('test-field');
             await expect(input.shadowRoot?.querySelector<HTMLElement>('.label > div')).toHaveTextContent(Label.args?.label as string);
         }
@@ -61,7 +61,7 @@ const App = () => <${toPascalCase(tagName)}${args.label ? ` label='${args.label}
     return Label;
 };
 
-export const HintStory = <T extends HTMLElement, U extends BaseArgs>(tagName: string) => {
+export const HintStory = <T extends HTMLElement, U extends BaseArgs>(tagName: string, noPlay = false) => {
     const Hint: ComponentStoryFormat<U> = {
         render: (args: U) =>
             html`${unsafeHTML(`<${tagName}  data-testid="test-field" label="${ifNotEmpty(args.label)}" hint="${args.hint}"></${tagName}>`)}`,
@@ -79,7 +79,7 @@ const App = () => <${toPascalCase(tagName)}${args.label ? ` label='${args.label}
             label: 'Hint',
             hint: 'The Hint label'
         } as U,
-        play: async (context) => {
+        play: noPlay ? undefined : async (context) => {
             const input = within(context.canvasElement).getByTestId<T>('test-field');
             const hintElement = input.shadowRoot!.querySelector<HTMLElement>('.hint-label');
             await expect(hintElement).toBeTruthy();
@@ -89,7 +89,7 @@ const App = () => <${toPascalCase(tagName)}${args.label ? ` label='${args.label}
     return Hint;
 };
 
-export const ErrorStory = <T extends HTMLElement, U extends BaseArgs>(tagName: string) => {
+export const ErrorStory = <T extends HTMLElement, U extends BaseArgs>(tagName: string, noPlay = false) => {
     const Error: ComponentStoryFormat<U> = {
         render: (args: U) =>
             html`${unsafeHTML(`<${tagName} data-testid="test-field" label="${args.label}" error="${ifNotEmpty(args.error)}"></${tagName}>`)}`,
@@ -107,7 +107,7 @@ const App = () => <${toPascalCase(tagName)}${args.label ? ` label='${args.label}
             label: 'Error',
             error: 'The Error label'
         } as U,
-        play: async (context) => {
+        play: noPlay ? undefined : async (context) => {
             const input = within(context.canvasElement).getByTestId<T>('test-field');
             const errorElement = input.shadowRoot!.querySelector<HTMLElement>('.error-label');
             await expect(errorElement).toBeTruthy();
@@ -119,7 +119,8 @@ const App = () => <${toPascalCase(tagName)}${args.label ? ` label='${args.label}
 
 export const ValueStory = <T extends HTMLElement, U extends BaseArgs>(
     tagName: string,
-    inputValue: string | number | string[] = 'The input value'
+    inputValue: string | number | string[] = 'The input value',
+    noPlay = false
 ) => {
     const Value: ComponentStoryFormat<U> = {
         render: (args: U) =>
@@ -138,7 +139,7 @@ const App = () => <${toPascalCase(tagName)}${args.label ? ` label='${args.label}
             label: 'Value',
             value: inputValue
         } as U,
-        play: async (context) => {
+        play: noPlay ? undefined : async (context) => {
             const input = within(context.canvasElement).getByTestId<T>('test-field');
 
             const inputField = input.shadowRoot?.getElementById('inputField');
@@ -148,7 +149,7 @@ const App = () => <${toPascalCase(tagName)}${args.label ? ` label='${args.label}
     return Value;
 };
 
-export const PrefixStory = <T extends HTMLElement, U extends BaseArgs>(tagName: string) => {
+export const PrefixStory = <T extends HTMLElement, U extends BaseArgs>(tagName: string, noPlay = false) => {
     const Prefix: ComponentStoryFormat<U> = {
         render: (args: U) =>
             html`${unsafeHTML(`
@@ -173,7 +174,7 @@ const App = () => <${toPascalCase(tagName)}${args.label ? ` label='${args.label}
             label: 'Prefix',
             prefix: raw`<svg slot="prefix" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px" style="fill: orange; margin-left: 10px;"><path d="M12 2.25c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12 6.615 2.25 12 2.25Zm0 1.5a8.25 8.25 0 1 0 0 16.5 8.25 8.25 0 0 0 0-16.5ZM12 7a.75.75 0 0 1 .75.75v3.5h3.5a.75.75 0 0 1 .743.648L17 12a.75.75 0 0 1-.75.75h-3.5v3.5a.75.75 0 0 1-.648.743L12 17a.75.75 0 0 1-.75-.75v-3.5h-3.5a.75.75 0 0 1-.743-.648L7 12a.75.75 0 0 1 .75-.75h3.5v-3.5a.75.75 0 0 1 .648-.743Z"/></svg>`
         } as U,
-        play: async (context) => {
+        play: noPlay ? undefined : async (context) => {
             const input = within(context.canvasElement).getByTestId<T>('test-field');
 
             const slotElement = input.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=prefix]');
@@ -186,7 +187,7 @@ const App = () => <${toPascalCase(tagName)}${args.label ? ` label='${args.label}
     return Prefix;
 };
 
-export const SuffixStory = <T extends HTMLElement, U extends BaseArgs>(tagName: string) => {
+export const SuffixStory = <T extends HTMLElement, U extends BaseArgs>(tagName: string, noPlay = false) => {
     const Suffix: ComponentStoryFormat<U> = {
         render: (args: U) =>
             html`${unsafeHTML(`
@@ -211,7 +212,7 @@ const App = () => <${toPascalCase(tagName)}${args.label ? ` label='${args.label}
             label: 'Suffix',
             suffix: raw`<svg slot="suffix" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px" style="fill: orange; margin-right:10px;"><path d="M12 2.25c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12 6.615 2.25 12 2.25Zm0 1.5a8.25 8.25 0 1 0 0 16.5 8.25 8.25 0 0 0 0-16.5ZM12 7a.75.75 0 0 1 .75.75v3.5h3.5a.75.75 0 0 1 .743.648L17 12a.75.75 0 0 1-.75.75h-3.5v3.5a.75.75 0 0 1-.648.743L12 17a.75.75 0 0 1-.75-.75v-3.5h-3.5a.75.75 0 0 1-.743-.648L7 12a.75.75 0 0 1 .75-.75h3.5v-3.5a.75.75 0 0 1 .648-.743Z"/></svg>`
         } as U,
-        play: async (context) => {
+        play: noPlay ? undefined : async (context) => {
             const input = within(context.canvasElement).getByTestId<T>('test-field');
 
             const slotElement = input.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=suffix]');
@@ -226,7 +227,8 @@ const App = () => <${toPascalCase(tagName)}${args.label ? ` label='${args.label}
 
 export const ClearableStory = <T extends HTMLElement, U extends BaseArgs>(
     tagName: string,
-    inputValue: string | number | string[] = 'The input value'
+    inputValue: string | number | string[] = 'The input value',
+    noPlay = false
 ) => {
     const Clearable: ComponentStoryFormat<U> = {
         render: (args: U) =>
@@ -255,7 +257,7 @@ const App = () => <${toPascalCase(tagName)}${args.label ? ` label='${args.label}
             clearable: true,
             value: inputValue
         } as U,
-        play: async (context) => {
+        play: noPlay ? undefined : async (context) => {
             const input = within(context.canvasElement).getByTestId<T>('test-field');
 
             //Clearable attribute test.
@@ -273,7 +275,8 @@ const App = () => <${toPascalCase(tagName)}${args.label ? ` label='${args.label}
 
 export const CustomClearableSlot = <T extends HTMLElement, U extends BaseArgs>(
     tagName: string,
-    inputValue: string | number | string[] = 'The input value'
+    inputValue: string | number | string[] = 'The input value',
+    noPlay = false
 ) => {
     const Clearable: ComponentStoryFormat<U> = {
         render: (args: U) =>
@@ -307,7 +310,7 @@ const App = () => <${toPascalCase(tagName)}${args.label ? ` label='${args.label}
             value: inputValue,
             clear: raw`<svg slot="clear" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  width="24px" height="24px" style="fill: orange;"><path d="M12 2.25c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12 6.615 2.25 12 2.25Zm0 1.5a8.25 8.25 0 1 0 0 16.5 8.25 8.25 0 0 0 0-16.5ZM8.47 8.47a.75.75 0 0 1 1.06 0L12 10.939l2.47-2.47a.75.75 0 0 1 .976-.072l.084.073a.75.75 0 0 1 0 1.06L13.061 12l2.47 2.47a.75.75 0 0 1 .072.976l-.073.084a.75.75 0 0 1-1.06 0L12 13.061l-2.47 2.47a.75.75 0 0 1-.976.072l-.084-.073a.75.75 0 0 1 0-1.06L10.939 12l-2.47-2.47a.75.75 0 0 1-.072-.976Z" /></svg>`
         } as U,
-        play: async (context) => {
+        play: noPlay ? undefined : async (context) => {
             const input = within(context.canvasElement).getByTestId<T>('test-field');
 
             //Clearable attribute test.
@@ -325,7 +328,8 @@ const App = () => <${toPascalCase(tagName)}${args.label ? ` label='${args.label}
 
 export const DisabledStory = <T extends HTMLElement, U extends BaseArgs>(
     tagName: string,
-    inputValue: string | number | string[] = 'The input value'
+    inputValue: string | number | string[] = 'The input value',
+    noPlay = false
 ) => {
     const Disabled: ComponentStoryFormat<U> = {
         render: (args: U) =>
@@ -354,7 +358,7 @@ const App = () => <${toPascalCase(tagName)}${args.label ? ` label='${args.label}
             disabled: true,
             value: inputValue
         } as U,
-        play: async (context) => {
+        play: noPlay ? undefined : async (context) => {
             const input = within(context.canvasElement).getByTestId<T>('test-field');
 
             //Disabled class test.

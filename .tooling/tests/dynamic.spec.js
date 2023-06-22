@@ -54,17 +54,19 @@ const saveV8Coverage = async (page) => {
 
 test.beforeAll(async ({ browser }) => {
     page = await browser.newPage();
-    await page.on('console', (msg) => {
-        if (msg && msg.text) {
-          if (typeof msg.text === 'function') {
-            console.log('PAGE LOG:', msg.text());
-          } else {
-            console.log('PAGE LOG:', msg.text);
-          }
-        } else {
-            console.log('PAGE LOG:', msg);
-        }
-    });
+    
+    // Uncomment for verbose logging from browser console.
+    // await page.on('console', (msg) => {
+    //     if (msg && msg.text) {
+    //       if (typeof msg.text === 'function') {
+    //         console.log('PAGE LOG:', msg.text());
+    //       } else {
+    //         console.log('PAGE LOG:', msg.text);
+    //       }
+    //     } else {
+    //         console.log('PAGE LOG:', msg);
+    //     }
+    // });
     
     const url = page.url();
     await page.goto(`http://${process.env.PLAYWRIGHT_HOST_ORIGIN ?? 'localhost'}:6006`);

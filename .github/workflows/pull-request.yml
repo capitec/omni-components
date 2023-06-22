@@ -52,16 +52,7 @@ jobs:
     name: "Test"
     timeout-minutes: 15 
     runs-on: ubuntu-latest
-    steps:
-
-      - name: Dump env 💩
-        run: env | sort
-
-      - name: Dump GitHub context 💩
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
-        
+    steps:        
       - name: Checkout 🛎️
         uses: actions/checkout@v3
         with:
@@ -110,8 +101,8 @@ jobs:
 
       - name: Auto Commit Changes 👩‍💻
         uses: stefanzweifel/git-auto-commit-action@v4
-        # Only on branches even on failures
-        if: ${{ (success() || failure()) && startsWith(github.ref, 'refs/heads/') }}
+        # Only on branches with failures (in case the failure was caused by missing screenshots)
+        if: ${{ failure() && startsWith(github.ref, 'refs/heads/') }}
         with:
           commit_message: Added Missing Screenshots
           branch: ${{ env.GITHUB_REF_NAME }}
