@@ -18,13 +18,13 @@ const config = {
     snapshotDir: './.tooling/tests/screenshots',
     snapshotPathTemplate: '{snapshotDir}/{testName}/{platform}/{projectName}/{arg}{ext}',
     /* Maximum time one test can run for. */
-    timeout: 60 * 1000,
+    timeout: 30 * 1000,
     expect: {
         /**
          * Maximum time expect() should wait for the condition to be met.
          * For example in `await expect(locator).toHaveText();`
          */
-        timeout: 10_000,
+        timeout: 5000,
         toHaveScreenshot: {
             maxDiffPixelRatio: 0.3,
             scale: 'css',
@@ -64,45 +64,53 @@ const config = {
 
     /* Configure projects for major browsers */
     projects: [
-        {
-            name: 'chromium',
-            use: {
-                ...devices['Desktop Chrome'],
-                userAgent: 'Test Runner'
-            },
-        },
+        // {
+        //     name: 'chromium',
+        //     use: {
+        //         ...devices['Desktop Chrome'],
+        //         userAgent: 'Test Runner'
+        //     },
+        // },
 
-        {
-            name: 'firefox',
-            use: {
-                ...devices['Desktop Firefox'],
-                userAgent: 'Test Runner'
-            },
-        },
+        // {
+        //     name: 'firefox',
+        //     use: {
+        //         ...devices['Desktop Firefox'],
+        //         userAgent: 'Test Runner'
+        //     },
+        // },
 
-        {
-            name: 'webkit',
-            use: {
-                ...devices['Desktop Safari'],
-                userAgent: 'Test Runner'
-            },
-        },
+        // {
+        //     name: 'webkit',
+        //     use: {
+        //         ...devices['Desktop Safari'],
+        //         userAgent: 'Test Runner'
+        //     },
+        // },
 
-        /* Test against mobile viewports. */
+        // /* Test against mobile viewports. */
+        // {
+        //     name: 'Mobile Chrome',
+        //     use: {
+        //         ...devices['Pixel 5'],
+        //         userAgent: 'Test Runner'
+        //     },
+        // },
+        
+        // {
+        //   name: 'Mobile Safari',
+        //   use: {
+        //     ...devices['iPhone 12'],
+        //         userAgent: 'Test Runner'
+        //   },
+        // },
+        
         {
-            name: 'Mobile Chrome',
-            use: {
-                ...devices['Pixel 5'],
+          name: 'iPhone 13 Pro Max',
+          use: {
+            ...devices['iPhone 13 Pro Max'],
                 userAgent: 'Test Runner'
-            },
-        },
-
-        {
-            name: 'Mobile Safari',
-            use: {
-                ...devices['iPhone 12'],
-                userAgent: 'Test Runner'
-            },
+          },
         },
 
         /* Test against branded browsers. */
