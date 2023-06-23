@@ -101,8 +101,8 @@ jobs:
 
       - name: Auto Commit Changes 👩‍💻
         uses: stefanzweifel/git-auto-commit-action@v4
-        # Only on branches with failures (in case the failure was caused by missing screenshots)
-        if: ${{ failure() && startsWith(github.ref, 'refs/heads/') }}
+        # Only on branches with failures (in case the failure was caused by missing screenshots) or cancelled (usually caused by timeouts of too many missing screenshots)
+        if: ${{ (failure() || cancelled()) && startsWith(github.ref, 'refs/heads/') }}
         with:
           commit_message: Added Missing Screenshots
           branch: ${{ env.GITHUB_REF_NAME }}
