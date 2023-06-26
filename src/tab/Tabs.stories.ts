@@ -10,6 +10,7 @@ import { Tabs } from './Tabs.js';
 
 import '../label/Label.js';
 import './TabHeader.js';
+import './Tab.js';
 import './Tabs.js';
 import '../icon/Icon.js';
 
@@ -362,18 +363,38 @@ const App = () =>
     play: async (context) => {
         const tabs = within(context.canvasElement).getByTestId<Tabs>('test-tabs');
 
+        const click = jest.fn();
+        tabs.addEventListener('click', click);
         // Get the tab bar element
         const tabBar = (await querySelectorAsync(tabs.shadowRoot as ShadowRoot, '.tab-bar')) as HTMLElement;
         await expect(tabBar).toBeTruthy();
 
         // Get all the tabs in the tab bar
-        const nestedTabs = tabBar.querySelectorAll('omni-tab-header');
-        await expect(nestedTabs).toBeTruthy();
-        const tabsArray = [...nestedTabs];
+        //const nestedTabs = tabBar.querySelectorAll('omni-tab-header');
+        // Check for the slot then check the content of the slot
+        const slotElement = tabBar.querySelector<HTMLSlotElement>('slot[name="header"]');
+        await expect(slotElement).toBeTruthy();
+        console.log(slotElement);
 
-        //Get the active tab.
-        const disabledTab = tabsArray.find((c) => c.hasAttribute('data-disabled'));
-        await expect(disabledTab).toBeTruthy;
-        await expect(disabledTab).toEqual(tabsArray[2]);
+        //Get all the tab headers in the header slot.
+        const tabHeaders = slotElement?.assignedElements().filter((e) => e.tagName.toLowerCase() === 'omni-tab-header') as HTMLElement[];
+        await expect(tabHeaders).toBeTruthy();
+
+        //Get the active tab header.
+        const activeTabHeader = tabHeaders?.find((c) => c.hasAttribute('data-active'));
+        await expect(activeTabHeader).toBeTruthy();
+
+        //Get nested omni-icon.
+        const omniIcon = activeTabHeader?.querySelector<HTMLElement>('omni-icon');
+        await expect(omniIcon).toBeTruthy();
+
+        //Get nested svg
+        const svgElement = activeTabHeader?.querySelector<HTMLElement>('svg');
+        await expect(svgElement).toBeTruthy();
+
+        //Click the second tab.
+        await userEvent.click(tabHeaders[1]);
+        const nextActiveTab = tabHeaders.find((c) => c.hasAttribute('data-active'));
+        await expect(nextActiveTab).toBeTruthy;
     }
 };
