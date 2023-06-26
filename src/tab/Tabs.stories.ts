@@ -123,8 +123,6 @@ const App = () =>
     },
     play: async (context) => {
         const tabs = within(context.canvasElement).getByTestId<Tabs>('test-tabs');
-        const click = jest.fn();
-        tabs.addEventListener('click', click);
 
         // Get the tab bar element
         const tabBar = (await querySelectorAsync(tabs.shadowRoot as ShadowRoot, '.tab-bar')) as HTMLElement;
@@ -134,19 +132,10 @@ const App = () =>
         const nestedTabHeaders = tabBar.querySelectorAll('omni-tab-header');
         await expect(nestedTabHeaders).toBeTruthy();
         const tabsArray = [...nestedTabHeaders];
-        nestedTabHeaders;
+        await expect(tabsArray.length).toBe(3);
         //Get the active tab header.
         const activeTab = tabsArray.find((c) => c.hasAttribute('data-active'));
         await expect(activeTab).toBeTruthy;
-
-        //Click the second tab.
-        await userEvent.click(tabsArray[1]);
-
-        const nextActiveTab = tabsArray.find((c) => c.hasAttribute('data-active'));
-        await expect(nextActiveTab).toBeTruthy;
-
-        const nestedTabs = (await querySelectorAsync(tabs.shadowRoot as ShadowRoot, 'omni-tab')) as HTMLElement[];
-        await expect(nestedTabs).toBeTruthy;
     }
 };
 
@@ -369,12 +358,9 @@ const App = () =>
         const tabBar = (await querySelectorAsync(tabs.shadowRoot as ShadowRoot, '.tab-bar')) as HTMLElement;
         await expect(tabBar).toBeTruthy();
 
-        // Get all the tabs in the tab bar
-        //const nestedTabs = tabBar.querySelectorAll('omni-tab-header');
         // Check for the slot then check the content of the slot
         const slotElement = tabBar.querySelector<HTMLSlotElement>('slot[name="header"]');
         await expect(slotElement).toBeTruthy();
-        console.log(slotElement);
 
         //Get all the tab headers in the header slot.
         const tabHeaders = slotElement?.assignedElements().filter((e) => e.tagName.toLowerCase() === 'omni-tab-header') as HTMLElement[];

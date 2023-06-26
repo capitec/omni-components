@@ -31,7 +31,7 @@ import { TabHeader } from './TabHeader.js';
  *
  * Registry of all properties defined by the component.
  *
- * @fires {CustomEvent<{}>} tab-select - Dispatched when one of the omni-tabs is clicked.
+ * @fires {CustomEvent<{}>} tab-select - Dispatched when one of the omni-tab(s) is selected.
  *
  * @slot - Content to render inside the component body.
  * @slot header - The header slot used to slot omni-tab-header components.
@@ -165,7 +165,7 @@ export class Tabs extends OmniElement {
          */
         const tabHeaders = Array.from(this.querySelectorAll('omni-tab-header')).filter((oth) => oth.slot === 'header');
         const tabContent = Array.from(this.querySelectorAll('omni-tab'));
-        //const tabContent = Array.from(this.querySelectorAll('*:not([slot])'));
+
         if (tabContent.length > 0) {
             if (!tabContent.find((c) => c.hasAttribute(activeAttribute))) {
                 tabContent[0].setAttribute(activeAttribute, '');
