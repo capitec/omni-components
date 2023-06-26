@@ -1,2 +1,4 @@
 export * from './Tab.js';
-export * from './TabGroup.js';
+export * from './TabHeader.js';
+export * from './Tabs.js';
+
