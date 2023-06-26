@@ -51,6 +51,17 @@ function extendExpect<T, U = jest.Expect>(initialExpect: T): U {
 
     expect.extend(validMatchers);
 
+    if (!process.env.CI && !process.env.PW_SCREENSHOT_TESTING) {
+        expect.extend({
+            toHaveScreenshot: (received, actual) => {
+                return {
+                    pass: true,
+                    message: () => 'No "CI" or "PW_SCREENSHOT_TESTING" environment variables set. Skipping screenshot assertion!'
+                };
+            }
+        });
+    }
+
     return expect as any as U;
 }
 

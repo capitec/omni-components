@@ -2,6 +2,7 @@
 /* eslint-disable no-useless-catch */
 import fsp from 'fs/promises';
 import fs from 'fs';
+import chalk from 'chalk';
 import libCoverage from 'istanbul-lib-coverage';
 import libReport from 'istanbul-lib-report';
 import reports from 'istanbul-reports';
@@ -92,6 +93,10 @@ async function globalTeardown() {
     //Report both to html for detailed coverage report as well as console for terminal output
     reports.create('html').execute(context);
     reports.create('text').execute(context);
+    
+    if (!process.env.CI && !process.env.PW_SCREENSHOT_TESTING) {
+        console.error(chalk.yellow('No "CI" or "PW_SCREENSHOT_TESTING" environment variables set. Screenshot assertion was skipped!'));
+    }
 }
 
 export default globalTeardown;
