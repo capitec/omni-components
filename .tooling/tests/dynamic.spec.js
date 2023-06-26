@@ -18,6 +18,11 @@ global.fetch = global.window.fetch = fetch;
 
 let page;
 
+const parameters = {
+    component: process.env.PW_COMPONENT_FILTER?.toLowerCase()?.replace('omni-', '')
+};
+
+
 //Setup browser shims 
 Object.keys(window).forEach((key) => {
     if (!global[key]) {
@@ -45,7 +50,7 @@ const saveV8Coverage = async (page) => {
 
 test.beforeAll(async ({ browser }) => {
     page = await browser.newPage();
-    
+
     // Uncomment for verbose logging from browser console.
     // await page.on('console', (msg) => {
     //     if (msg && msg.text) {
@@ -58,7 +63,7 @@ test.beforeAll(async ({ browser }) => {
     //         console.log('PAGE LOG:', msg);
     //     }
     // });
-    
+
     const url = page.url();
     await page.goto(`http://${process.env.PLAYWRIGHT_HOST_ORIGIN ?? 'localhost'}:6006`);
     await page.evaluate(() => {
@@ -103,6 +108,11 @@ const dynamicComponentStoryPlayFunctions = async () => {
         const storyImport = path.join(process.cwd(), stories[index]);
         const storyName = splitPascalCase(path.basename(stories[index].replace('.stories.js', '')));
         const storyPath = `http://${process.env.PLAYWRIGHT_HOST_ORIGIN ?? 'localhost'}:6006/components/${storyName.replaceAll(' ', '-').toLowerCase()}/`;
+
+        if (parameters.component && storyName.replaceAll(' ', '-').toLowerCase() !== parameters.component) {
+            continue;
+        }
+
         let storyObj;
         try {
             storyObj = await import('file://' + storyImport);
@@ -181,6 +191,11 @@ const dynamicComponentPlaywrightTests = async () => {
     for (let index = 0; index < playwrightTests.length; index++) {
         const testImport = path.join(process.cwd(), playwrightTests[index]);
         const testName = splitPascalCase(path.basename(playwrightTests[index].replace('.playwright.js', '')));
+
+        if (parameters.component && testName.replaceAll(' ', '-').toLowerCase() !== parameters.component) {
+            continue;
+        }
+
         const testSetup = await import('file://' + testImport);
 
         await testSetup.default(() => page);
