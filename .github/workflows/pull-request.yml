@@ -51,7 +51,7 @@ jobs:
     needs: ["pr-lint", "pr-format"]
     name: "Test"
     timeout-minutes: 60 
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:        
       - name: Checkout 🛎️
         uses: actions/checkout@v3
