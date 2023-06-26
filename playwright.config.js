@@ -97,21 +97,21 @@ const config = {
             },
         },
         
-        // {
-        //   name: 'Mobile Safari',
-        //   use: {
-        //     ...devices['iPhone 12'],
-        //         userAgent: 'Test Runner'
-        //   },
-        // },
+        {
+          name: 'Mobile Safari',
+          use: {
+            ...devices['iPhone 12'],
+                userAgent: 'Test Runner'
+          },
+        },
         
-        // {
-        //   name: 'iPhone 13 Pro Max',
-        //   use: {
-        //     ...devices['iPhone 13 Pro Max'],
-        //         userAgent: 'Test Runner'
-        //   },
-        // },
+        {
+          name: 'iPhone 13 Pro Max',
+          use: {
+            ...devices['iPhone 13 Pro Max'],
+                userAgent: 'Test Runner'
+          },
+        },
 
         /* Test against branded browsers. */
         // {
