@@ -24,7 +24,7 @@ jobs:
       group: ${{ github.ref }}
       cancel-in-progress: true
 
-    runs-on: macos-13
+    runs-on: macos-latest
 
     strategy:
       matrix:

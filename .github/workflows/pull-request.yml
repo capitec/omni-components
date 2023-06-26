@@ -10,7 +10,7 @@ jobs:
   pr-lint:
     name: Lint
     timeout-minutes: 15 
-    runs-on: macos-13
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -30,7 +30,7 @@ jobs:
   pr-format:
     name: Format
     timeout-minutes: 15 
-    runs-on: macos-13
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -51,7 +51,7 @@ jobs:
     needs: ["pr-lint", "pr-format"]
     name: "Test"
     timeout-minutes: 60 
-    runs-on: macos-13
+    runs-on: macos-latest
     steps:        
       - name: Checkout 🛎️
         uses: actions/checkout@v3
