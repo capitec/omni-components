@@ -18,12 +18,7 @@ jobs:
     if: github.event_name != 'workflow_dispatch' || (github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' && github.ref != 'refs/heads/alpha')
     name: "Add Missing Screenshots"
     timeout-minutes: 60 
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-        matrix:
-            # os: [ubuntu-latest, macos-latest]
-            os: [macos-latest]
+    runs-on: macos-latest
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3

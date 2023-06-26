@@ -10,7 +10,7 @@ jobs:
   pr-lint:
     name: Lint
     timeout-minutes: 15 
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -30,7 +30,7 @@ jobs:
   pr-format:
     name: Format
     timeout-minutes: 15 
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
