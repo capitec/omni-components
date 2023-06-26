@@ -90,7 +90,7 @@ export class Tabs extends OmniElement {
         tabHeader = tabHeader.closest('omni-tab-header') as TabHeader;
         const children = Array.from(this.children);
 
-        const tab = children.find((t) => (t.id === tabHeader.for && t.id !== '' && tabHeader.for !== '')|| t === tabHeader.data);
+        const tab = children.find((t) => (t.id === tabHeader.for && t.id !== '' && tabHeader.for !== '') || t === tabHeader.data);
 
         if (!tab || tab.hasAttribute(disabledAttribute)) {
             return;

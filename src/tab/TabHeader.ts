@@ -19,15 +19,15 @@ import { OmniElement } from '../core/OmniElement.js';
  * @element omni-tab-header
  *
  * @slot - Content to render inside the component body.
- * 
+ *
  * @cssprop --omni-tab-header-font-color - Tab header font color.
  * @cssprop --omni-tab-header-font-family - Tab header font family.
  * @cssprop --omni-tab-header-font-size - Tab header font size.
  * @cssprop --omni-tab-header-font-weight - Tab header font weight.
- * 
+ *
  * @cssprop --omni-tab-header-disabled-background-color - Tab header disabled background color.
  * @cssprop --omni-tab-header-active-font-color - Tab header active font color.
- * 
+ *
  * @cssprop --omni-tab-header-height - Tab header tab height.
  * @cssprop --omni-tab-header-min-width - Tab header tab min width.
  * @cssprop --omni-tab-header-max-width - Tab header tab max width.
@@ -49,7 +49,6 @@ import { OmniElement } from '../core/OmniElement.js';
  */
 @customElement('omni-tab-header')
 export class TabHeader extends OmniElement {
-
     /**
      * Indicator of which omni-tab element with the matching corresponding id attribute should be displayed.
      * @attr

@@ -28,15 +28,15 @@ export const Interactive: ComponentStoryFormat<Args> = {
         ${args['[Default Slot]'] ? html`${'\r\n'}${unsafeHTML(args['[Default Slot]'])}` : nothing}
     </omni-tabs>
 `,
-frameworkSources: [
-    {
-        framework: 'Vue',
-        load: (args) =>
-            getSourceFromLit(Interactive!.render!(args), undefined, (s) =>
-                s.replace(' active', ' :active="true"').replace(' disabled', ' :disabled="true"')
-            )
-    }
-],
+    frameworkSources: [
+        {
+            framework: 'Vue',
+            load: (args) =>
+                getSourceFromLit(Interactive!.render!(args), undefined, (s) =>
+                    s.replace(' active', ' :active="true"').replace(' disabled', ' :disabled="true"')
+                )
+        }
+    ],
     name: 'Interactive',
     args: {
         '[Default Slot]': raw`<omni-tab header='Tab 1'>
@@ -62,7 +62,7 @@ frameworkSources: [
         const nestedTabs = tabBar.querySelectorAll('omni-tab-header');
         await expect(nestedTabs).toBeTruthy();
         const tabsArray = [...nestedTabs];
-        
+
         //Get the active tab.
         const activeTab = tabsArray.find((c) => c.hasAttribute('data-active'));
         await expect(activeTab).toBeTruthy;
@@ -73,7 +73,6 @@ frameworkSources: [
         const nextActiveTab = tabsArray.find((c) => c.hasAttribute('data-active'));
 
         await expect(nextActiveTab).toBeTruthy;
-
     }
 };
 
@@ -83,10 +82,10 @@ export const Basic: ComponentStoryFormat<Args> = {
         ${args['[Default Slot]'] ? html`${'\r\n'}${unsafeHTML(args['[Default Slot]'])}` : nothing}
     </omni-tabs>
 `,
-frameworkSources: [
-    {
-        framework: 'React',
-        load: () => `import { OmniTabs, OmniTab } from "@capitec/omni-components-react/tab";
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: () => `import { OmniTabs, OmniTab } from "@capitec/omni-components-react/tab";
 import { OmniLabel } from "@capitec/omni-components-react/label";
 
 const App = () =>
@@ -101,8 +100,8 @@ const App = () =>
     <OmniLabel label='Label of Tab 3'/>
 </OmniTab>
 </OmniTabs>;`
-    }
-],
+        }
+    ],
     name: 'Basic',
     description: () => html`
     <div>
@@ -134,7 +133,7 @@ const App = () =>
         const nestedTabHeaders = tabBar.querySelectorAll('omni-tab-header');
         await expect(nestedTabHeaders).toBeTruthy();
         const tabsArray = [...nestedTabHeaders];
-        nestedTabHeaders
+        nestedTabHeaders;
         //Get the active tab header.
         const activeTab = tabsArray.find((c) => c.hasAttribute('data-active'));
         await expect(activeTab).toBeTruthy;
@@ -208,7 +207,7 @@ const App = () =>
         const nestedTabs = tabBar.querySelectorAll('omni-tab-header');
         await expect(nestedTabs).toBeTruthy();
         const tabsArray = [...nestedTabs];
-        
+
         //Get the active tab.
         const activeTab = tabsArray.find((c) => c.hasAttribute('data-active'));
         await expect(activeTab).toBeTruthy;
@@ -273,13 +272,13 @@ const App = () =>
         const nestedTabs = tabBar.querySelectorAll('omni-tab-header');
         await expect(nestedTabs).toBeTruthy();
         const tabsArray = [...nestedTabs];
-        
+
         //Get the active tab.
         const disabledTab = tabsArray.find((c) => c.hasAttribute('data-disabled'));
         await expect(disabledTab).toBeTruthy;
         await expect(disabledTab).toEqual(tabsArray[2]);
     }
-} as ComponentStoryFormat<Args>;;
+} as ComponentStoryFormat<Args>;
 
 export const Advanced: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
@@ -287,10 +286,10 @@ export const Advanced: ComponentStoryFormat<Args> = {
         ${args['[Default Slot]'] ? html`${'\r\n'}${unsafeHTML(args['[Default Slot]'])}` : nothing}
     </omni-tabs>
 `,
-frameworkSources: [
-    {
-        framework: 'React',
-        load: () => `import { OmniTabs, OmniTab } from "@capitec/omni-components-react/tab";
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: () => `import { OmniTabs, OmniTab } from "@capitec/omni-components-react/tab";
 import { OmniIcon } from "@capitec/omni-components-react/icon";
 
 const App = () =>
@@ -316,8 +315,8 @@ const App = () =>
   </OmniIcon>
  </OmniTabHeader>
 </OmniTabs>;`
-    }
-],
+        }
+    ],
     name: 'Advanced',
     args: {
         '[Default Slot]': raw`
@@ -371,7 +370,7 @@ const App = () =>
         const nestedTabs = tabBar.querySelectorAll('omni-tab-header');
         await expect(nestedTabs).toBeTruthy();
         const tabsArray = [...nestedTabs];
-        
+
         //Get the active tab.
         const disabledTab = tabsArray.find((c) => c.hasAttribute('data-disabled'));
         await expect(disabledTab).toBeTruthy;
