@@ -99,6 +99,9 @@ export class TabHeader extends OmniElement {
                 min-width: var(--omni-tab-header-min-width, auto);
                 max-width: var(--omni-tab-header-max-width, auto);
                 margin: var(--omni-tab-header-margin, 6px);
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
         
             /* Added to resolve sticky hover state on mobile devices */
@@ -111,7 +114,7 @@ export class TabHeader extends OmniElement {
 
             :host > .indicator-bar {
                 height: var(--omni-tab-header-indicator-bar-height, 4px);
-                border-radius: var(--omni-tab-header-indicato-bar-border-radius, 100px 100px 0 0);
+                border-radius: var(--omni-tab-header-indicator-bar-border-radius, 100px 100px 0 0);
                 width: var(--omni-tab-header-indicator-bar-width, auto);
             }
 
