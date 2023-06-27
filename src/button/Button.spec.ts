@@ -6,8 +6,6 @@ test(`Button - Visual Secondary`, async ({ page }) => {
         await page.goto('/components/button/');
         await page.evaluate(() => document.fonts.ready);
 
-        await page.waitForSelector('[data-testid]', {});
-
         const button = page.locator('[data-testid]').first();
         await expect(button).toHaveScreenshot('button-secondary.png');
 
@@ -30,8 +28,6 @@ test(`Button - Visual Primary`, async ({ page }) => {
         await page.goto('/components/button/');
         await page.evaluate(() => document.fonts.ready);
 
-        await page.waitForSelector('[data-testid]', {});
-
         const select = await page.locator('omni-select[value=secondary]');
 
         await select.click();
@@ -45,8 +41,6 @@ test(`Button - Visual Clear`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/button/');
         await page.evaluate(() => document.fonts.ready);
-
-        await page.waitForSelector('[data-testid]', {});
 
         const select = await page.locator('omni-select[value=secondary]');
 
@@ -62,8 +56,6 @@ test(`Button - Visual White`, async ({ page }) => {
         await page.goto('/components/button/');
         await page.evaluate(() => document.fonts.ready);
 
-        await page.waitForSelector('[data-testid]', {});
-
         const select = await page.locator('omni-select[value=secondary]');
 
         await select.click();
@@ -76,8 +68,6 @@ test(`Button - Visual White`, async ({ page }) => {
 test(`Button - Interactive Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/button/');
-
-        await page.waitForSelector('[data-testid]', {});
 
         const button = page.locator('.Interactive').locator('[data-testid=test-button]');
 
@@ -98,8 +88,6 @@ test(`Button - Type Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/button/');
 
-        await page.waitForSelector('[data-testid]', {});
-
         const button = page.locator('.Type').locator('[data-testid=test-button]');
         const buttonElement = button.locator('#button');
         const foundPrimaryClass = await buttonElement.evaluate((btn) => btn?.classList.contains('primary'));
@@ -111,8 +99,6 @@ test(`Button - Label Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/button/');
 
-        await page.waitForSelector('[data-testid]', {});
-
         const args = await page.locator('story-renderer[key=Label]').evaluate((storyRenderer) => (storyRenderer as any).story.args);
         const button = page.locator('.Label').locator('[data-testid=test-button]');
         const labelElement = button.locator('#label');
@@ -123,8 +109,6 @@ test(`Button - Label Behaviour`, async ({ page }) => {
 test(`Button - Slot Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/button/');
-
-        await page.waitForSelector('[data-testid]', {});
 
         const button = page.locator('.Slot').locator('[data-testid=test-button]');
 
@@ -140,8 +124,6 @@ test(`Button - Slot Behaviour`, async ({ page }) => {
 test(`Button - Disabled Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/button/');
-
-        await page.waitForSelector('[data-testid]', {});
 
         const button = page.locator('.Disabled').locator('[data-testid=test-button]');
 
