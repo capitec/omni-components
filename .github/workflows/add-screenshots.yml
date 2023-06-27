@@ -55,7 +55,7 @@ jobs:
 
       - name: Auto Commit Changes 👩‍💻
         uses: stefanzweifel/git-auto-commit-action@v4
-        # Only on branches
+        # Only on branches even when failed
         if: ${{ always() && startsWith(github.ref, 'refs/heads/') }}
         with:
           commit_message: Added Missing Screenshots
