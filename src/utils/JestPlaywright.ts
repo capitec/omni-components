@@ -1,4 +1,12 @@
-import { expect as expectPatched, type Expect } from '@playwright/test';
+import {
+    expect as expectPatched,
+    test,
+    type Expect,
+    type Locator,
+    type Page,
+    type PageScreenshotOptions,
+    type LocatorScreenshotOptions
+} from '@playwright/test';
 export * from '@playwright/test';
 import * as matchers from '@testing-library/jest-dom/matchers.js';
 
@@ -53,7 +61,25 @@ function extendExpect<T, U = jest.Expect>(initialExpect: T): U {
 
     if (!process.env.CI && !process.env.PW_SCREENSHOT_TESTING) {
         expect.extend({
-            toHaveScreenshot: (received, actual) => {
+            toHaveScreenshot: async function (
+                received: Locator | Page,
+                name: string | Array<string>,
+                options?: PageScreenshotOptions | LocatorScreenshotOptions
+            ) {
+                const testInfo = test.info();
+
+                if (Array.isArray(name)) {
+                    name = name.join('/');
+                }
+
+                if (testInfo && received) {
+                    testInfo.annotations.push({ type: 'warning', description: `Screenshot assertion was skipped! (${name})` });
+
+                    if (received.screenshot) {
+                        const screenshot = await received.screenshot(options);
+                        await testInfo.attach(name, { body: screenshot, contentType: 'image/png' });
+                    }
+                }
                 return {
                     pass: true,
                     message: () => 'No "CI" or "PW_SCREENSHOT_TESTING" environment variables set. Skipping screenshot assertion!'
