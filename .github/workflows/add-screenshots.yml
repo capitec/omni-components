@@ -4,7 +4,7 @@ on:
   push:
     branches-ignore: [ main,develop,alpha ]
     paths: 
-      - '**/*.playwright.ts'
+      - '**/*.spec.ts'
       - '**/*.spec.js'
       - '**/OmniInputPlaywright.ts'
       - 'playwright.config.js'

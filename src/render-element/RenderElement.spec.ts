@@ -1,10 +1,9 @@
 import * as jestMock from 'jest-mock';
-import { test, expect, expectJest, type Page } from '../utils/JestPlaywright.js';
+import { test, expect, expectJest, withCoverage, type Page } from '../utils/JestPlaywright.js';
 import type { RenderElement } from './RenderElement.js';
 
-export default function setupTests(getPage: () => Page) {
-    test(`Render Element - Lit Template Visual and Behaviour`, async ({ page }) => {
-        page = getPage();
+test(`Render Element - Lit Template Visual and Behaviour`, async ({ page }) => {
+    await withCoverage(page, async () => {
         await page.goto('/components/render-element/');
 
         await page.waitForSelector('[data-testid]', {});
@@ -29,9 +28,10 @@ export default function setupTests(getPage: () => Page) {
         await expect(span2).toHaveText(JSON.stringify(data));
         await expect(renderElement).toHaveScreenshot('render-element-after.png');
     });
+});
 
-    test(`Render Element - HTML Element Instance Visual and Behaviour`, async ({ page }) => {
-        page = getPage();
+test(`Render Element - HTML Element Instance Visual and Behaviour`, async ({ page }) => {
+    await withCoverage(page, async () => {
         await page.goto('/components/render-element/');
 
         await page.waitForSelector('[data-testid]', {});
@@ -67,9 +67,10 @@ export default function setupTests(getPage: () => Page) {
 
         await expectJest(clickDialog).toBeCalledTimes(1);
     });
+});
 
-    test(`Render Element - HTML String Visual and Behaviour`, async ({ page }) => {
-        page = getPage();
+test(`Render Element - HTML String Visual and Behaviour`, async ({ page }) => {
+    await withCoverage(page, async () => {
         await page.goto('/components/render-element/');
 
         await page.waitForSelector('[data-testid]', {});
@@ -94,4 +95,4 @@ export default function setupTests(getPage: () => Page) {
         await expect(span2).toHaveText(JSON.stringify(data));
         await expect(renderElement).toHaveScreenshot('render-element-after.png');
     });
-}
+});

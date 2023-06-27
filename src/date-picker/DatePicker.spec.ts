@@ -10,12 +10,11 @@ import {
     PrefixBehaviour,
     SuffixBehaviour
 } from '../core/OmniInputPlaywright.js';
-import { test, expect, expectJest, type Page } from '../utils/JestPlaywright.js';
+import { test, expect, expectJest, withCoverage, type Page } from '../utils/JestPlaywright.js';
 import type { DatePicker } from './DatePicker.js';
 
-export default function setupTests(getPage: () => Page) {
-    test(`Date Picker - Visual and Behaviour`, async ({ page, isMobile }) => {
-        page = getPage();
+test(`Date Picker - Visual and Behaviour`, async ({ page, isMobile }) => {
+    await withCoverage(page, async () => {
         await page.goto('/components/date-picker/');
 
         await page.waitForSelector('[data-testid]', {});
@@ -89,9 +88,10 @@ export default function setupTests(getPage: () => Page) {
         await expect(datePicker).toHaveAttribute('value', '2020-12-15');
         await expect(datePicker).toHaveScreenshot('date-picker-after.png');
     });
+});
 
-    test(`Date Picker - Value Behaviour`, async ({ page, isMobile }) => {
-        page = getPage();
+test(`Date Picker - Value Behaviour`, async ({ page, isMobile }) => {
+    await withCoverage(page, async () => {
         await page.goto('/components/date-picker/');
 
         await page.waitForSelector('[data-testid]', {});
@@ -112,13 +112,14 @@ export default function setupTests(getPage: () => Page) {
         await expect(calendar).toHaveCount(1);
         await expect(calendar).toHaveAttribute('value', (await datePicker.getAttribute('value')) as string);
     });
+});
 
-    test(`Date Picker - Locale Behaviour`, async ({ page, isMobile }) => {
+test(`Date Picker - Locale Behaviour`, async ({ page, isMobile }) => {
+    await withCoverage(page, async () => {
         const localDate = DateTime.fromISO('2022-06-21');
         const isoDate = localDate.toISODate() as string;
         const testLocale = 'en-ZA';
 
-        page = getPage();
         await page.goto('/components/date-picker/');
 
         await page.waitForSelector('[data-testid]', {});
@@ -149,9 +150,10 @@ export default function setupTests(getPage: () => Page) {
 
         await expect(controlLabel).toHaveText(localDate.monthLong + ' ' + localDate.year);
     });
+});
 
-    test(`Date Picker - Min Date Behaviour`, async ({ page }) => {
-        page = getPage();
+test(`Date Picker - Min Date Behaviour`, async ({ page }) => {
+    await withCoverage(page, async () => {
         await page.goto('/components/date-picker/');
 
         await page.waitForSelector('[data-testid]', {});
@@ -196,9 +198,10 @@ export default function setupTests(getPage: () => Page) {
 
         await expect(datePicker).not.toHaveAttribute('value', preValue as string);
     });
+});
 
-    test(`Date Picker - Max Date Behaviour`, async ({ page }) => {
-        page = getPage();
+test(`Date Picker - Max Date Behaviour`, async ({ page }) => {
+    await withCoverage(page, async () => {
         await page.goto('/components/date-picker/');
 
         await page.waitForSelector('[data-testid]', {});
@@ -243,17 +246,18 @@ export default function setupTests(getPage: () => Page) {
 
         await expect(datePicker).not.toHaveAttribute('value', preValue as string);
     });
+});
 
-    LabelBehaviour(getPage, 'omni-date-picker');
-    HintBehaviour(getPage, 'omni-date-picker');
-    ErrorBehaviour(getPage, 'omni-date-picker');
-    ClearableBehaviour(getPage, 'omni-date-picker');
-    CustomClearableSlotBehaviour(getPage, 'omni-date-picker');
-    PrefixBehaviour(getPage, 'omni-date-picker');
-    SuffixBehaviour(getPage, 'omni-date-picker');
+LabelBehaviour('omni-date-picker');
+HintBehaviour('omni-date-picker');
+ErrorBehaviour('omni-date-picker');
+ClearableBehaviour('omni-date-picker');
+CustomClearableSlotBehaviour('omni-date-picker');
+PrefixBehaviour('omni-date-picker');
+SuffixBehaviour('omni-date-picker');
 
-    test(`Date Picker - Disabled Behaviour`, async ({ page, isMobile }) => {
-        page = getPage();
+test(`Date Picker - Disabled Behaviour`, async ({ page, isMobile }) => {
+    await withCoverage(page, async () => {
         await page.goto('/components/date-picker/');
 
         await page.waitForSelector('[data-testid]', {});
@@ -300,4 +304,4 @@ export default function setupTests(getPage: () => Page) {
         await expect(calendar).toHaveCount(1);
         await expect(calendar).toBeVisible();
     });
-}
+});

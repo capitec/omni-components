@@ -64,13 +64,6 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
         prefix: '',
         suffix: '',
         clear: ''
-    },
-    play: async (context) => {
-        const field = within(context.canvasElement).getByTestId<ColorField>('test-color-field');
-
-        const inputField = field.shadowRoot?.getElementById('inputField') as HTMLInputElement;
-
-        await expect(inputField.type).toBe('color');
     }
 };
 

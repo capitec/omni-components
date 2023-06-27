@@ -14,7 +14,6 @@ import { devices } from '@playwright/test';
 const config = {
     globalSetup: './.tooling/playwright/globalSetup.js',
     globalTeardown: './.tooling/playwright/globalTeardown.js',
-    testDir: './.tooling/tests',
     snapshotDir: './.tooling/tests/screenshots',
     snapshotPathTemplate: '{snapshotDir}/{testName}/{platform}/{projectName}/{arg}{ext}',
     /* Maximum time one test can run for. */

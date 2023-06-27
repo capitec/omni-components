@@ -1,9 +1,8 @@
 import * as jestMock from 'jest-mock';
-import { test, expect, expectJest, type Page } from '../utils/JestPlaywright.js';
+import { test, expect, expectJest, withCoverage, type Page } from '../utils/JestPlaywright.js';
 
-export default function setupTests(getPage: () => Page) {
-    test(`Button - Visual Secondary`, async ({ page }) => {
-        page = getPage();
+test(`Button - Visual Secondary`, async ({ page }) => {
+    await withCoverage(page, async () => {
         await page.goto('/components/button/');
         await page.evaluate(() => document.fonts.ready);
 
@@ -24,9 +23,10 @@ export default function setupTests(getPage: () => Page) {
         await button.blur();
         await expect(button).toHaveScreenshot('button-secondary-after.png');
     });
+});
 
-    test(`Button - Visual Primary`, async ({ page }) => {
-        page = getPage();
+test(`Button - Visual Primary`, async ({ page }) => {
+    await withCoverage(page, async () => {
         await page.goto('/components/button/');
         await page.evaluate(() => document.fonts.ready);
 
@@ -39,9 +39,10 @@ export default function setupTests(getPage: () => Page) {
 
         await expect(page.locator('[data-testid]').first()).toHaveScreenshot('button-primary.png');
     });
+});
 
-    test(`Button - Visual Clear`, async ({ page }) => {
-        page = getPage();
+test(`Button - Visual Clear`, async ({ page }) => {
+    await withCoverage(page, async () => {
         await page.goto('/components/button/');
         await page.evaluate(() => document.fonts.ready);
 
@@ -54,9 +55,10 @@ export default function setupTests(getPage: () => Page) {
 
         await expect(page.locator('[data-testid]').first()).toHaveScreenshot('button-clear.png');
     });
+});
 
-    test(`Button - Visual White`, async ({ page }) => {
-        page = getPage();
+test(`Button - Visual White`, async ({ page }) => {
+    await withCoverage(page, async () => {
         await page.goto('/components/button/');
         await page.evaluate(() => document.fonts.ready);
 
@@ -69,9 +71,10 @@ export default function setupTests(getPage: () => Page) {
 
         await expect(page.locator('[data-testid]').first()).toHaveScreenshot('button-white.png');
     });
+});
 
-    test(`Button - Interactive Behaviour`, async ({ page }) => {
-        page = getPage();
+test(`Button - Interactive Behaviour`, async ({ page }) => {
+    await withCoverage(page, async () => {
         await page.goto('/components/button/');
 
         await page.waitForSelector('[data-testid]', {});
@@ -89,9 +92,10 @@ export default function setupTests(getPage: () => Page) {
 
         await expectJest(click).toBeCalledTimes(2);
     });
+});
 
-    test(`Button - Type Behaviour`, async ({ page }) => {
-        page = getPage();
+test(`Button - Type Behaviour`, async ({ page }) => {
+    await withCoverage(page, async () => {
         await page.goto('/components/button/');
 
         await page.waitForSelector('[data-testid]', {});
@@ -101,9 +105,10 @@ export default function setupTests(getPage: () => Page) {
         const foundPrimaryClass = await buttonElement.evaluate((btn) => btn?.classList.contains('primary'));
         await expect(foundPrimaryClass).toBeTruthy();
     });
+});
 
-    test(`Button - Label Behaviour`, async ({ page }) => {
-        page = getPage();
+test(`Button - Label Behaviour`, async ({ page }) => {
+    await withCoverage(page, async () => {
         await page.goto('/components/button/');
 
         await page.waitForSelector('[data-testid]', {});
@@ -113,9 +118,10 @@ export default function setupTests(getPage: () => Page) {
         const labelElement = button.locator('#label');
         await expect(labelElement).toHaveText(args.label);
     });
+});
 
-    test(`Button - Slot Behaviour`, async ({ page }) => {
-        page = getPage();
+test(`Button - Slot Behaviour`, async ({ page }) => {
+    await withCoverage(page, async () => {
         await page.goto('/components/button/');
 
         await page.waitForSelector('[data-testid]', {});
@@ -129,9 +135,10 @@ export default function setupTests(getPage: () => Page) {
 
         await expect(foundSlottedOmniIconElement.asElement()).toBeTruthy();
     });
+});
 
-    test(`Button - Disabled Behaviour`, async ({ page }) => {
-        page = getPage();
+test(`Button - Disabled Behaviour`, async ({ page }) => {
+    await withCoverage(page, async () => {
         await page.goto('/components/button/');
 
         await page.waitForSelector('[data-testid]', {});
@@ -161,4 +168,4 @@ export default function setupTests(getPage: () => Page) {
 
         await expectJest(click).toBeCalledTimes(0);
     });
-}
+});
