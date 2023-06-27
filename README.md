@@ -571,11 +571,19 @@ Control to switch a value on or off.
 
 </td><td>
 
-Control that can be used to display slotted content used within a omni-tab-group component.
+Control that can be used to display slotted content used within a omni-tabs component.
 
 </td></tr><tr><td>
 
-[omni-tab-group](src/tab/README.md)
+[omni-tab-header](src/tab/README.md)
+
+</td><td>
+
+Control that can be used to display custom slotted content used within a omni-tabs component with an associated omni-tab component.
+
+</td></tr><tr><td>
+
+[omni-tabs](src/tab/README.md)
 
 </td><td>
 
