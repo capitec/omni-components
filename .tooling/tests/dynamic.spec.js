@@ -128,56 +128,59 @@ const dynamicComponentStoryPlayFunctions = async () => {
             return true;
         });
 
-        for (let index2 = 0; index2 < storyTests.length; index2++) {
-            const storyTest = storyTests[index2];
-            const story = storyObj[storyTest];
+        test.describe(storyName, () => {
 
-            test(`${storyName} - ${storyTest.replaceAll('_', ' ')}`, async () => {
-                await page.goto(storyPath);
+            for (let index2 = 0; index2 < storyTests.length; index2++) {
+                const storyTest = storyTests[index2];
+                const story = storyObj[storyTest];
 
-                if (!story || !story.play) {
-                    return;
-                }
+                test(`${storyName} - ${storyTest.replaceAll('_', ' ')}`, async () => {
+                    await page.goto(storyPath);
 
-                const fullPage = await page.content();
-                try {
-                    await page.waitForSelector(`.${storyTest}`, {
-                        state: 'attached'
-                    });
-                } catch (error) {
-                    throw new Error(`${error.toString()} \r\n\r\n${fullPage}`);
-                }
+                    if (!story || !story.play) {
+                        return;
+                    }
 
-                const res = await page.evaluate(async ([storyTest]) => {
+                    const fullPage = await page.content();
                     try {
-                        const canvas = document.querySelector(
-                            `.${storyTest}`
-                        );
-
-                        if (!canvas) {
-                            throw new Error(`Canvas not found for ${storyTest}`);
-                        }
-
-                        const story = canvas.data;
-                        if (!story || !story.play) {
-                            return;
-                        }
-
-                        await story.play({
-                            story: story,
-                            args: story.args,
-                            canvasElement: canvas,
+                        await page.waitForSelector(`.${storyTest}`, {
+                            state: 'attached'
                         });
                     } catch (error) {
-                        return error;
+                        throw new Error(`${error.toString()} \r\n\r\n${fullPage}`);
                     }
-                }, [storyTest]);
 
-                if (res) {
-                    throw res;
-                }
-            });
-        }
+                    const res = await page.evaluate(async ([storyTest]) => {
+                        try {
+                            const canvas = document.querySelector(
+                                `.${storyTest}`
+                            );
+
+                            if (!canvas) {
+                                throw new Error(`Canvas not found for ${storyTest}`);
+                            }
+
+                            const story = canvas.data;
+                            if (!story || !story.play) {
+                                return;
+                            }
+
+                            await story.play({
+                                story: story,
+                                args: story.args,
+                                canvasElement: canvas,
+                            });
+                        } catch (error) {
+                            return error;
+                        }
+                    }, [storyTest]);
+
+                    if (res) {
+                        throw res;
+                    }
+                });
+            }
+        });
     }
 };
 
@@ -198,10 +201,17 @@ const dynamicComponentPlaywrightTests = async () => {
 
         const testSetup = await import('file://' + testImport);
 
-        await testSetup.default(() => page);
+        await new Promise(resolve => {
+            test.describe(testName, async () => {
+                await testSetup.default(() => page);
+
+                resolve();
+            })
+        })
+
     }
 };
 
 await dynamicComponentPlaywrightTests();
 
-// await dynamicComponentStoryPlayFunctions();
+await dynamicComponentStoryPlayFunctions();
