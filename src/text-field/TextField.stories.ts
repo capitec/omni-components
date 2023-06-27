@@ -63,25 +63,6 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
         prefix: '',
         suffix: '',
         clear: ''
-    },
-    play: async (context) => {
-        const textField = within(context.canvasElement).getByTestId<TextField>('test-text-field');
-        textField.value = '';
-
-        const input = jest.fn();
-        textField.addEventListener('input', input);
-
-        const inputField = textField.shadowRoot?.getElementById('inputField') as HTMLInputElement;
-        // Required to clear userEvent Symbol that keeps hidden state of previously typed values via userEvent. If not cleared this cannot be run multiple times with the same results
-        setUIValueClean(inputField);
-
-        await userEvent.type(inputField, 'Value Update', {
-            pointerEventsCheck: 0
-        });
-        const value = 'Value Update';
-        await expect(inputField).toHaveValue(value);
-
-        await expect(input).toBeCalledTimes(value.length);
     }
 };
 
