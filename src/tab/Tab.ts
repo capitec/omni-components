@@ -1,9 +1,9 @@
-import { html, css, TemplateResult } from 'lit';
+import { css, html, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { OmniElement } from '../core/OmniElement.js';
 
 /**
- * Control that can be used to display slotted content used within a omni-tab-group component.
+ * Control that can be used to display slotted content used within a omni-tabs component.
  *
  * @import
  * ```js
@@ -11,17 +11,36 @@ import { OmniElement } from '../core/OmniElement.js';
  * ```
  * @example
  * html```
- * <omni-tab>
- *  <span>Slotted Content</span>
+ * <omni-tab header='Tab 1'>
+ *  <span>Tab 1 Content</span>
  * </omni-tab>
  * ```
  *
  * @element omni-tab
  *
  * @slot - Content to render inside the component body.
+ *
  */
 @customElement('omni-tab')
 export class Tab extends OmniElement {
+    /**
+     * Tab header label.
+     * @attr
+     */
+    @property({ type: String, reflect: true }) header?: string;
+
+    /**
+     * Indicator if the component is disabled.
+     * @attr
+     */
+    @property({ type: Boolean, reflect: true }) disabled?: boolean;
+
+    /**
+     * Indicator if the component is active.
+     * @attr
+     */
+    @property({ type: Boolean, reflect: true }) active?: boolean;
+
     static override get styles() {
         return [
             super.styles,
@@ -29,13 +48,18 @@ export class Tab extends OmniElement {
             :host {
                 width: 100%;
                 height: 100%;
+                overflow: auto;
             }
-      `
+            
+           :host(*:not([active])) {
+                display: none !important;
+            }
+            `
         ];
     }
 
     protected override render(): TemplateResult {
-        return html`
+        return html`		
             <slot></slot>
         `;
     }
