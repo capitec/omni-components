@@ -235,7 +235,7 @@ const App = () =>
     <OmniTab header="Tab 1">
         <OmniLabel label='Label of Tab 1'/>
     </OmniTab>
-    <OmniTab header="Tab 2" disabled>
+    <OmniTab header="Tab 2">
         <OmniLabel label='Label of Tab 2'/>
     </OmniTab>
     <OmniTab header="Tab 3" disabled>
@@ -279,7 +279,7 @@ export const Advanced: ComponentStoryFormat<Args> = {
     frameworkSources: [
         {
             framework: 'React',
-            load: () => `import { OmniTabs, OmniTab } from "@capitec/omni-components-react/tab";
+            load: () => `import { OmniTabs, OmniTab, OmniTabHeader } from "@capitec/omni-components-react/tab";
 import { OmniIcon } from "@capitec/omni-components-react/icon";
 
 const App = () =>
@@ -304,6 +304,18 @@ const App = () =>
    <svg xmlns="http://www.w3.org/2000/svg" fill="red" width="20px" height="20px"><path d="M15.53 5.47a.75.75 0 0 0-1.06 1.06l4.72 4.72H3a.75.75 0 0 0-.743.648L2.25 12c0 .414.336.75.75.75h16.19l-4.72 4.72a.75.75 0 0 0-.073.976l.073.084a.75.75 0 0 0 1.06 0l6-6a.75.75 0 0 0 0-1.06Z"/></svg>
   </OmniIcon>
  </OmniTabHeader>
+ <OmniTab id="up">
+ <div>Up</div>
+</OmniTab>
+<OmniTab id="down">
+ <div>Down</div>
+</OmniTab>
+<OmniTab id="left">
+ <div>Left</div>
+</OmniTab>
+<OmniTab id="right">
+ <div>Right</div>
+</OmniTab>
 </OmniTabs>;`
         }
     ],
