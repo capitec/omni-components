@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import fs from 'fs';
+import { platform } from 'os';
 import {
     expect as expectPatched,
     test,
@@ -195,4 +196,23 @@ async function withCoverage<T>(this: any, page: Page, testAction: () => T | Prom
     return result;
 }
 
-export { expect, expectJest, withCoverage };
+async function keyboardCopy(page: Page): Promise<void> {
+    await page.context().grantPermissions(['clipboard-read', 'clipboard-write']);
+    const isMac = platform() === 'darwin';
+    const modifier = isMac ? 'Meta' : 'Control';
+    await page.keyboard.press(`${modifier}+KeyC`);
+}
+
+async function clipboardCopy(page: Page, content: string): Promise<void> {
+    await page.context().grantPermissions(['clipboard-read', 'clipboard-write']);
+    await page.evaluate(`navigator.clipboard.writeText('${content}')`);
+}
+
+async function keyboardPaste(page: Page): Promise<void> {
+    await page.context().grantPermissions(['clipboard-read', 'clipboard-write']);
+    const isMac = platform() === 'darwin';
+    const modifier = isMac ? 'Meta' : 'Control';
+    await page.keyboard.press(`${modifier}+KeyV`);
+}
+
+export { expect, expectJest, withCoverage, keyboardCopy, keyboardPaste, clipboardCopy };
