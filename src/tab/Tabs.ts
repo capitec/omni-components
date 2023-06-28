@@ -83,7 +83,6 @@ export class Tabs extends OmniElement {
     }
 
     selectTab(tabHeader: TabHeader) {
-
         if (!tabHeader || tabHeader.classList.contains('tab-bar')) {
             return;
         }
