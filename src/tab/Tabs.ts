@@ -59,7 +59,7 @@ export class Tabs extends OmniElement {
             // Start observing child attribute changes.
             this._observer?.observe(this, {
                 attributes: true,
-                attributeFilter: [`label`],
+                attributeFilter: [`header`],
                 subtree: true
             });
         });
@@ -83,10 +83,12 @@ export class Tabs extends OmniElement {
     }
 
     selectTab(tabHeader: TabHeader) {
-        //Also check if the tab is disabled
+
         if (!tabHeader || tabHeader.classList.contains('tab-bar')) {
             return;
         }
+
+        // set tab header used in cases where the tab header has slotted content.
         tabHeader = tabHeader.closest('omni-tab-header') as TabHeader;
         const children = Array.from(this.children);
 
@@ -96,13 +98,14 @@ export class Tabs extends OmniElement {
             return;
         }
 
-        //Set active tab header
         const tabHeaders = [
             ...children.filter((oth) => oth.slot === 'header'),
             ...(this.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=header]')?.children || [])
         ] as TabHeader[];
 
         const previous = children.find((c) => c.hasAttribute(activeAttribute));
+
+        // Remove active attributes from tab headers and tabs.
         tabHeaders.forEach((header) => {
             header.removeAttribute(activeHeaderAttribute);
             header.requestUpdate();
@@ -111,7 +114,7 @@ export class Tabs extends OmniElement {
             element.removeAttribute(activeAttribute);
         });
 
-        //Set active tab
+        // Set active tab-header and tab
         tab.setAttribute(activeAttribute, '');
         tabHeader.setAttribute(activeHeaderAttribute, '');
         tabHeader.requestUpdate();
