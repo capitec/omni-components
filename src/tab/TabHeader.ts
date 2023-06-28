@@ -33,19 +33,16 @@ import { OmniElement } from '../core/OmniElement.js';
  * @cssprop --omni-tab-header-max-width - Tab header tab max width.
  * @cssprop --omni-tab-header-margin - Tab header tab margin.
  *
- * @cssprop --omni-tab-header-hover-background-color - Tab group tab hover background.
+ * @cssprop --omni-tab-header-hover-background-color - Tab header tab hover background.
  *
- * @cssprop --omni-tab-header-tab-label-container-height - Tab group tab label container height.
- * @cssprop --omni-tab-header-tab-tab-indicator-height - Tab group tab active indicator height.
+ * @cssprop --omni-tab-header-indicator-bar-height - Tab header indicator bar height.
+ * @cssprop --omni-tab-header-indicator-bar-border-radius -  Tab header indicator bar border radius.
+ * @cssprop --omni-tab-header-indicator-bar-width - Tab header indicator bar width.
  *
- * @cssprop --omni-tab-header-group-tab-selected-font-color - Tab group active tab label font color.
- *
- * @cssprop --theme-tab-selected-font-color - Tab group active Tab font color.
- *
- * @cssprop --omni-tab-header-group-tab-indicator-height - Tab group active tab indicator height.
- * @cssprop --omni-tab-header-group-tab-indicator-color - Tab group active tab indicator color.
- * @cssprop --omni-tab-header-group-tab-indicator-border-radius - Tab group active tab indicator border radius.
- * @cssprop --omni-tab-header-group-tab-indicator-width - Tab group active tab indicator width.
+ * @cssprop --omni-tab-header-indicator-height - Tab header indicator height.
+ * @cssprop --omni-tab-header-indicator-color - Tab header indicator color.
+ * @cssprop --omni-tab-header-indicator-border-radius - Tab header indicator border radius.
+ * @cssprop --omni-tab-header-indicator-width - Tab header indicator width.
  */
 @customElement('omni-tab-header')
 export class TabHeader extends OmniElement {
@@ -90,7 +87,7 @@ export class TabHeader extends OmniElement {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                height: calc(var(--omni-tab-header-group-tab-label-container-height, 100%) - var(--omni-tab-header-group-tab-tab-indicator-height, 4px));
+                height: calc(var(--omni-tab-header-height, 100%) - var(--omni-tab-header-indicator-height, 4px));
             }
         
             /* Tab */
