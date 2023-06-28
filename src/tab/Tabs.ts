@@ -9,7 +9,7 @@ import { TabHeader } from './TabHeader.js';
  *
  * @import
  * ```js
- * import '@capitec/omni-components/tab-group';
+ * import '@capitec/omni-components/tab';
  * ```
  *
  * @example
