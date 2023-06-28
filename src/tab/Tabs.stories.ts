@@ -20,12 +20,14 @@ export default {
 } as CSFIdentifier;
 
 interface Args {
+    header: string;
     '[Default Slot]': string;
 }
 
 export const Interactive: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
     <omni-tabs data-testid='test-tabs'>
+        ${args.header ? html`${'\r\n'}${unsafeHTML(args.header)}` : nothing}
         ${args['[Default Slot]'] ? html`${'\r\n'}${unsafeHTML(args['[Default Slot]'])}` : nothing}
     </omni-tabs>
 `,
@@ -44,13 +46,14 @@ export const Interactive: ComponentStoryFormat<Args> = {
         The <code class="language-html">&lt;omni-tabs&gt;</code> component will display content based on the nested <code class="language-html">&lt;omni-tab&gt;</code> component(s). 
         </p>
         <p>
-        This results in dynamically generated tab headers for each tab based on the value of the <code class="language-js">header</code> attribute of the <code class="language-html">&lt;omni-tab&gt;</code> component and displays the slotted content of the <code class="language-html">&lt;omni-tab&gt;</code> with the <code class="language-js">active</code> attribute. 
+        Headers are managed by either setting the <code>header</code> attribute of the <code class="language-html">&lt;omni-tab&gt;</code> component or via slotted <code class="language-html">&lt;omni-tab-header&gt;</code> component(s) that targets the <code class="language-html">&lt;omni-tabs&gt;</code> header slot and displays the slotted content of the <code class="language-html">&lt;omni-tab&gt;</code> with the <code>active</code> attribute. 
         </p>
         <p>
-        The active attribute is applied to the first nested tab, if the active attribute is not specified on a nested <code class="language-html">&lt;omni-tab&gt;</code>. Clicking on one of the tab headers will result in its associated tab being active and the tab's slotted content being displayed.
+        The <code>active</code> attribute is applied to the first nested tab, if the <code>active</code> attribute is not specified on a nested <code class="language-html">&lt;omni-tab&gt;</code>. Clicking on one of the tab headers will result in its associated tab being active and the tab's slotted content being displayed.
         </p>
     `,
     args: {
+        header: '',
         '[Default Slot]': raw`<omni-tab header='Tab 1'>
     <div>Tab 1 Content</div>
 </omni-tab>
@@ -194,7 +197,7 @@ const App = () =>
     name: 'Active',
     description: () => html`
     <div>
-        Set which <code class="language-html">&lt;omni-tab&gt;</code> in the <code class="language-html">&lt;omni-tabs&gt;</code> should be active by default. This is based on setting the <code class="language-js">active</code> attribute of one of the nested <code class="language-html">&lt;omni-tab&gt;</code> components.
+        Set which <code class="language-html">&lt;omni-tab&gt;</code> nested in the <code class="language-html">&lt;omni-tabs&gt;</code> should be active by default. This is based on setting the <code>active</code> attribute of one of the nested <code class="language-html">&lt;omni-tab&gt;</code> component.
     <div>
     `,
     play: async (context) => {
@@ -258,7 +261,7 @@ const App = () =>
     name: 'Disabled',
     description: () => html`
     <div>
-        Set which <code class="language-html">&lt;omni-tab&gt;</code> in the <code class="language-html">&lt;omni-tabs&gt;</code> component should be disabled. This is based on setting the <code class="language-js">disabled</code> attribute.
+        Set which <code class="language-html">&lt;omni-tab&gt;</code> nested in the <code class="language-html">&lt;omni-tabs&gt;</code> component should be disabled. This is based on setting the <code>disabled</code> attribute.
     <div>
     `,
     args: {},
@@ -369,7 +372,7 @@ const App = () =>
     },
     description: () => html`
     <div>
-        For slotting custom content into the header use the <code class="language-html">&lt;omni-tab-header&gt;</code> component in the <code class="language-html">&lt;omni-tabs&gt;</code> component and ensure you have a <code class="language-html">&lt;omni-tab&gt;</code> component which has a <code class="language-js">for</code> attribute that matches the <code class="language-html">&lt;omni-tab-header&gt;</code> <code class="language-js">id</code> attribute to display slotted content.
+        For slotting custom content into the header use the <code class="language-html">&lt;omni-tab-header&gt;</code> component that targets the header slot of the <code class="language-html">&lt;omni-tabs&gt;</code> component and ensure you have a <code class="language-html">&lt;omni-tab&gt;</code> component which has a <code>id</code> attribute that matches the <code class="language-html">&lt;omni-tab-header&gt;</code> <code>for</code> attribute to display slotted content.
     <div>
     `,
     play: async (context) => {
