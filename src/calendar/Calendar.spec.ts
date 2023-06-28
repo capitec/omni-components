@@ -1,15 +1,5 @@
-import * as jestMock from 'jest-mock';
 import { DateTime } from 'luxon';
-import {
-    LabelBehaviour,
-    HintBehaviour,
-    ErrorBehaviour,
-    ClearableBehaviour,
-    CustomClearableSlotBehaviour,
-    PrefixBehaviour,
-    SuffixBehaviour
-} from '../core/OmniInputPlaywright.js';
-import { test, expect, expectJest, withCoverage } from '../utils/JestPlaywright.js';
+import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
 import type { Calendar } from './Calendar.js';
 
 test(`Calendar - Visual and Behaviour`, async ({ page, isMobile }) => {

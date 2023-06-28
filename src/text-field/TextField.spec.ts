@@ -1,14 +1,14 @@
 import * as jestMock from 'jest-mock';
 import {
-    LabelBehaviour,
-    HintBehaviour,
-    ErrorBehaviour,
-    ValueBehaviour,
-    ClearableBehaviour,
-    CustomClearableSlotBehaviour,
-    PrefixBehaviour,
-    SuffixBehaviour,
-    DisabledBehaviour
+    testLabelBehaviour,
+    testHintBehaviour,
+    testErrorBehaviour,
+    testValueBehaviour,
+    testClearableBehaviour,
+    testCustomClearableSlotBehaviour,
+    testPrefixBehaviour,
+    testSuffixBehaviour,
+    testDisabledBehaviour
 } from '../core/OmniInputPlaywright.js';
 import { test, expect, expectJest, withCoverage, type Page } from '../utils/JestPlaywright.js';
 import type { TextField } from './TextField.js';
@@ -45,12 +45,12 @@ test(`Text Field - Interactive`, async ({ page, browserName }) => {
     });
 });
 
-LabelBehaviour('omni-text-field');
-HintBehaviour('omni-text-field');
-ErrorBehaviour('omni-text-field');
-ValueBehaviour('omni-text-field');
-ClearableBehaviour('omni-text-field');
-CustomClearableSlotBehaviour('omni-text-field');
-PrefixBehaviour('omni-text-field');
-SuffixBehaviour('omni-text-field');
-DisabledBehaviour('omni-text-field');
+testLabelBehaviour('omni-text-field');
+testHintBehaviour('omni-text-field');
+testErrorBehaviour('omni-text-field');
+testValueBehaviour('omni-text-field');
+testClearableBehaviour('omni-text-field');
+testCustomClearableSlotBehaviour('omni-text-field');
+testPrefixBehaviour('omni-text-field');
+testSuffixBehaviour('omni-text-field');
+testDisabledBehaviour('omni-text-field');

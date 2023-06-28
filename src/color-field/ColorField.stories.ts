@@ -105,29 +105,5 @@ const App = () => <OmniColorField${args.label ? ` label='${args.label}'` : ''}${
     args: {
         label: 'Disabled',
         disabled: true
-    },
-    play: async (context) => {
-        const input = within(context.canvasElement).getByTestId<ColorField>('test-field');
-
-        //Disabled class test.
-        const disabledAttribute = input.attributes.getNamedItem('disabled');
-        await expect(disabledAttribute).toBeTruthy();
-
-        //Input event test.
-        const inputTest = jest.fn();
-        input.addEventListener('input', inputTest);
-
-        const inputField = input.shadowRoot?.getElementById('inputField') as OmniFormElement;
-
-        await userEvent.type(inputField, 'Value Update 3', {
-            pointerEventsCheck: 0
-        });
-
-        await waitFor(() => expect(input.value).toBeFalsy(), {
-            timeout: 3000
-        });
-        await waitFor(() => expect(inputTest).toBeCalledTimes(0), {
-            timeout: 3000
-        });
     }
 };

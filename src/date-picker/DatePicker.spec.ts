@@ -2,13 +2,13 @@ import * as jestMock from 'jest-mock';
 import { DateTime } from 'luxon';
 import type { Calendar } from '../calendar/Calendar.js';
 import {
-    LabelBehaviour,
-    HintBehaviour,
-    ErrorBehaviour,
-    ClearableBehaviour,
-    CustomClearableSlotBehaviour,
-    PrefixBehaviour,
-    SuffixBehaviour
+    testLabelBehaviour,
+    testHintBehaviour,
+    testErrorBehaviour,
+    testClearableBehaviour,
+    testCustomClearableSlotBehaviour,
+    testPrefixBehaviour,
+    testSuffixBehaviour
 } from '../core/OmniInputPlaywright.js';
 import { test, expect, expectJest, withCoverage, type Page } from '../utils/JestPlaywright.js';
 import type { DatePicker } from './DatePicker.js';
@@ -248,13 +248,13 @@ test(`Date Picker - Max Date Behaviour`, async ({ page }) => {
     });
 });
 
-LabelBehaviour('omni-date-picker');
-HintBehaviour('omni-date-picker');
-ErrorBehaviour('omni-date-picker');
-ClearableBehaviour('omni-date-picker');
-CustomClearableSlotBehaviour('omni-date-picker');
-PrefixBehaviour('omni-date-picker');
-SuffixBehaviour('omni-date-picker');
+testLabelBehaviour('omni-date-picker');
+testHintBehaviour('omni-date-picker');
+testErrorBehaviour('omni-date-picker');
+testClearableBehaviour('omni-date-picker');
+testCustomClearableSlotBehaviour('omni-date-picker');
+testPrefixBehaviour('omni-date-picker');
+testSuffixBehaviour('omni-date-picker');
 
 test(`Date Picker - Disabled Behaviour`, async ({ page, isMobile }) => {
     await withCoverage(page, async () => {

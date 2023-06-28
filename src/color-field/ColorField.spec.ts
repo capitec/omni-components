@@ -1,13 +1,13 @@
 import * as jestMock from 'jest-mock';
 import {
-    LabelBehaviour,
-    HintBehaviour,
-    ErrorBehaviour,
-    ValueBehaviour,
-    ClearableBehaviour,
-    CustomClearableSlotBehaviour,
-    PrefixBehaviour,
-    SuffixBehaviour
+    testLabelBehaviour,
+    testHintBehaviour,
+    testErrorBehaviour,
+    testValueBehaviour,
+    testClearableBehaviour,
+    testCustomClearableSlotBehaviour,
+    testPrefixBehaviour,
+    testSuffixBehaviour
 } from '../core/OmniInputPlaywright.js';
 import { test, expect, expectJest, withCoverage, type Page } from '../utils/JestPlaywright.js';
 import type { ColorField } from './ColorField.js';
@@ -34,14 +34,14 @@ test(`Color Field - Interactive`, async ({ page, browserName }) => {
     });
 });
 
-LabelBehaviour('omni-color-field');
-HintBehaviour('omni-color-field');
-ErrorBehaviour('omni-color-field');
-ValueBehaviour('omni-color-field');
-ClearableBehaviour('omni-color-field');
-CustomClearableSlotBehaviour('omni-color-field');
-PrefixBehaviour('omni-color-field');
-SuffixBehaviour('omni-color-field');
+testLabelBehaviour('omni-color-field');
+testHintBehaviour('omni-color-field');
+testErrorBehaviour('omni-color-field');
+testValueBehaviour('omni-color-field');
+testClearableBehaviour('omni-color-field');
+testCustomClearableSlotBehaviour('omni-color-field');
+testPrefixBehaviour('omni-color-field');
+testSuffixBehaviour('omni-color-field');
 
 test(`Color Field - Disabled Behaviour`, async ({ page, isMobile }) => {
     await withCoverage(page, async () => {

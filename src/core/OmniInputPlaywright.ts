@@ -15,7 +15,7 @@ function asDirectoryName(omniElementTag: string) {
     return omniElementTag.replace('omni-', '');
 }
 
-export const LabelBehaviour = <T extends HTMLElement, U extends BaseArgs>(tagName: string, storyExport = 'Label') => {
+export const testLabelBehaviour = (tagName: string, storyExport = 'Label') => {
     test(`${toComponentName(tagName)} - ${storyExport} Behaviour`, async ({ page }) => {
         await withCoverage(page, async () => {
             await page.goto(`/components/${asDirectoryName(tagName)}/`);
@@ -24,7 +24,7 @@ export const LabelBehaviour = <T extends HTMLElement, U extends BaseArgs>(tagNam
 
             const args = (await page
                 .locator(`story-renderer[key=${storyExport}]`)
-                .evaluate((storyRenderer) => (storyRenderer as any).story.args)) as U;
+                .evaluate((storyRenderer) => (storyRenderer as any).story.args)) as BaseArgs;
             const input = page.locator(`.${storyExport}`).getByTestId('test-field');
 
             await expect(input.locator(`.label > div`)).toHaveText(args?.label as string);
@@ -32,7 +32,7 @@ export const LabelBehaviour = <T extends HTMLElement, U extends BaseArgs>(tagNam
     });
 };
 
-export const HintBehaviour = <T extends HTMLElement, U extends BaseArgs>(tagName: string, storyExport = 'Hint') => {
+export const testHintBehaviour = (tagName: string, storyExport = 'Hint') => {
     test(`${toComponentName(tagName)} - ${storyExport} Behaviour`, async ({ page }) => {
         await withCoverage(page, async () => {
             await page.goto(`/components/${asDirectoryName(tagName)}/`);
@@ -41,7 +41,7 @@ export const HintBehaviour = <T extends HTMLElement, U extends BaseArgs>(tagName
 
             const args = (await page
                 .locator(`story-renderer[key=${storyExport}]`)
-                .evaluate((storyRenderer) => (storyRenderer as any).story.args)) as U;
+                .evaluate((storyRenderer) => (storyRenderer as any).story.args)) as BaseArgs;
             const input = page.locator(`.${storyExport}`).getByTestId('test-field');
 
             const hintElement = input.locator('.hint-label');
@@ -51,7 +51,7 @@ export const HintBehaviour = <T extends HTMLElement, U extends BaseArgs>(tagName
     });
 };
 
-export const ErrorBehaviour = <T extends HTMLElement, U extends BaseArgs>(tagName: string, storyExport = 'Error_Label') => {
+export const testErrorBehaviour = (tagName: string, storyExport = 'Error_Label') => {
     test(`${toComponentName(tagName)} - ${storyExport} Behaviour`, async ({ page }) => {
         await withCoverage(page, async () => {
             await page.goto(`/components/${asDirectoryName(tagName)}/`);
@@ -60,7 +60,7 @@ export const ErrorBehaviour = <T extends HTMLElement, U extends BaseArgs>(tagNam
 
             const args = (await page
                 .locator(`story-renderer[key=${storyExport}]`)
-                .evaluate((storyRenderer) => (storyRenderer as any).story.args)) as U;
+                .evaluate((storyRenderer) => (storyRenderer as any).story.args)) as BaseArgs;
             const input = page.locator(`.${storyExport}`).getByTestId('test-field');
 
             const errorElement = input.locator('.error-label');
@@ -70,7 +70,7 @@ export const ErrorBehaviour = <T extends HTMLElement, U extends BaseArgs>(tagNam
     });
 };
 
-export const ValueBehaviour = <T extends HTMLElement, U extends BaseArgs>(tagName: string, storyExport = 'Value') => {
+export const testValueBehaviour = (tagName: string, storyExport = 'Value') => {
     test(`${toComponentName(tagName)} - ${storyExport} Behaviour`, async ({ page }) => {
         await withCoverage(page, async () => {
             await page.goto(`/components/${asDirectoryName(tagName)}/`);
@@ -79,7 +79,7 @@ export const ValueBehaviour = <T extends HTMLElement, U extends BaseArgs>(tagNam
 
             const args = (await page
                 .locator(`story-renderer[key=${storyExport}]`)
-                .evaluate((storyRenderer) => (storyRenderer as any).story.args)) as U;
+                .evaluate((storyRenderer) => (storyRenderer as any).story.args)) as BaseArgs;
             const input = page.locator(`.${storyExport}`).getByTestId('test-field');
 
             const inputField = input.locator('input#inputField');
@@ -88,7 +88,7 @@ export const ValueBehaviour = <T extends HTMLElement, U extends BaseArgs>(tagNam
     });
 };
 
-export const PrefixBehaviour = <T extends HTMLElement, U extends BaseArgs>(tagName: string, storyExport = 'Prefix') => {
+export const testPrefixBehaviour = (tagName: string, storyExport = 'Prefix') => {
     test(`${toComponentName(tagName)} - ${storyExport} Behaviour`, async ({ page }) => {
         await withCoverage(page, async () => {
             await page.goto(`/components/${asDirectoryName(tagName)}/`);
@@ -97,7 +97,7 @@ export const PrefixBehaviour = <T extends HTMLElement, U extends BaseArgs>(tagNa
 
             const args = (await page
                 .locator(`story-renderer[key=${storyExport}]`)
-                .evaluate((storyRenderer) => (storyRenderer as any).story.args)) as U;
+                .evaluate((storyRenderer) => (storyRenderer as any).story.args)) as BaseArgs;
             const input = page.locator(`.${storyExport}`).getByTestId('test-field');
 
             const slotElement = input.locator('slot[name=prefix]');
@@ -111,7 +111,7 @@ export const PrefixBehaviour = <T extends HTMLElement, U extends BaseArgs>(tagNa
     });
 };
 
-export const SuffixBehaviour = <T extends HTMLElement, U extends BaseArgs>(tagName: string, storyExport = 'Suffix') => {
+export const testSuffixBehaviour = (tagName: string, storyExport = 'Suffix') => {
     test(`${toComponentName(tagName)} - ${storyExport} Behaviour`, async ({ page }) => {
         await withCoverage(page, async () => {
             await page.goto(`/components/${asDirectoryName(tagName)}/`);
@@ -120,7 +120,7 @@ export const SuffixBehaviour = <T extends HTMLElement, U extends BaseArgs>(tagNa
 
             const args = (await page
                 .locator(`story-renderer[key=${storyExport}]`)
-                .evaluate((storyRenderer) => (storyRenderer as any).story.args)) as U;
+                .evaluate((storyRenderer) => (storyRenderer as any).story.args)) as BaseArgs;
             const input = page.locator(`.${storyExport}`).getByTestId('test-field');
 
             const slotElement = input.locator('slot[name=suffix]');
@@ -134,7 +134,7 @@ export const SuffixBehaviour = <T extends HTMLElement, U extends BaseArgs>(tagNa
     });
 };
 
-export const ClearableBehaviour = <T extends HTMLElement, U extends BaseArgs>(tagName: string, storyExport = 'Clearable') => {
+export const testClearableBehaviour = (tagName: string, storyExport = 'Clearable') => {
     test(`${toComponentName(tagName)} - ${storyExport} Behaviour`, async ({ page }) => {
         await withCoverage(page, async () => {
             await page.goto(`/components/${asDirectoryName(tagName)}/`);
@@ -143,7 +143,7 @@ export const ClearableBehaviour = <T extends HTMLElement, U extends BaseArgs>(ta
 
             const args = (await page
                 .locator(`story-renderer[key=${storyExport}]`)
-                .evaluate((storyRenderer) => (storyRenderer as any).story.args)) as U;
+                .evaluate((storyRenderer) => (storyRenderer as any).story.args)) as BaseArgs;
             const input = page.locator(`.${storyExport}`).getByTestId('test-field');
 
             //Clearable attribute test.
@@ -157,7 +157,7 @@ export const ClearableBehaviour = <T extends HTMLElement, U extends BaseArgs>(ta
     });
 };
 
-export const CustomClearableSlotBehaviour = <T extends HTMLElement, U extends BaseArgs>(tagName: string, storyExport = 'Custom_Clear_Slot') => {
+export const testCustomClearableSlotBehaviour = (tagName: string, storyExport = 'Custom_Clear_Slot') => {
     test(`${toComponentName(tagName)} - ${storyExport} Behaviour`, async ({ page }) => {
         await withCoverage(page, async () => {
             await page.goto(`/components/${asDirectoryName(tagName)}/`);
@@ -166,7 +166,7 @@ export const CustomClearableSlotBehaviour = <T extends HTMLElement, U extends Ba
 
             const args = (await page
                 .locator(`story-renderer[key=${storyExport}]`)
-                .evaluate((storyRenderer) => (storyRenderer as any).story.args)) as U;
+                .evaluate((storyRenderer) => (storyRenderer as any).story.args)) as BaseArgs;
             const input = page.locator(`.${storyExport}`).getByTestId('test-field');
 
             //Clearable attribute test.
@@ -180,7 +180,7 @@ export const CustomClearableSlotBehaviour = <T extends HTMLElement, U extends Ba
     });
 };
 
-export const DisabledBehaviour = <T extends HTMLElement, U extends BaseArgs>(tagName: string, storyExport = 'Disabled') => {
+export const testDisabledBehaviour = (tagName: string, storyExport = 'Disabled') => {
     test(`${toComponentName(tagName)} - ${storyExport} Behaviour`, async ({ page }) => {
         await withCoverage(page, async () => {
             await page.goto(`/components/${asDirectoryName(tagName)}/`);
@@ -189,7 +189,7 @@ export const DisabledBehaviour = <T extends HTMLElement, U extends BaseArgs>(tag
 
             const args = (await page
                 .locator(`story-renderer[key=${storyExport}]`)
-                .evaluate((storyRenderer) => (storyRenderer as any).story.args)) as U;
+                .evaluate((storyRenderer) => (storyRenderer as any).story.args)) as BaseArgs;
             const input = page.locator(`.${storyExport}`).getByTestId('test-field');
 
             //Disabled class test.

@@ -1,16 +1,5 @@
 import * as jestMock from 'jest-mock';
-import { DateTime } from 'luxon';
-import {
-    LabelBehaviour,
-    HintBehaviour,
-    ErrorBehaviour,
-    ClearableBehaviour,
-    CustomClearableSlotBehaviour,
-    PrefixBehaviour,
-    SuffixBehaviour
-} from '../core/OmniInputPlaywright.js';
 import { test, expect, expectJest, withCoverage } from '../utils/JestPlaywright.js';
-import type { Chip } from './Chip.js';
 
 test(`Chip - Visual and Behaviour`, async ({ page, isMobile }) => {
     await withCoverage(page, async () => {
