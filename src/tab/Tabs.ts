@@ -41,6 +41,29 @@ import { TabHeader } from './TabHeader.js';
  * @cssprop --omni-tabs-tab-bar-border-bottom - Tabs tab bar bottom border.
  * @cssprop --omni-tabs-tab-bar-background-color - Tabs tab bar background color.
  *
+ * @cssprop --omni-tab-header-font-color - Tab header component font color.
+ * @cssprop --omni-tab-header-font-family - Tab header component font family.
+ * @cssprop --omni-tab-header-font-size - Tab header component font size.
+ * @cssprop --omni-tab-header-font-weight - Tab header component font weight.
+ *
+ * @cssprop --omni-tab-header-disabled-background-color - Tab header component disabled background color.
+ * @cssprop --omni-tab-header-active-font-color - Tab component header active font color.
+ *
+ * @cssprop --omni-tab-header-height - Tab header component tab height.
+ * @cssprop --omni-tab-header-min-width - Tab header component tab min width.
+ * @cssprop --omni-tab-header-max-width - Tab header component tab max width.
+ * @cssprop --omni-tab-header-margin - Tab header component tab margin.
+ *
+ * @cssprop --omni-tab-header-hover-background-color - Tab header component tab hover background.
+ *
+ * @cssprop --omni-tab-header-indicator-bar-height - Tab header component indicator bar height.
+ * @cssprop --omni-tab-header-indicator-bar-border-radius -  Tab header component indicator bar border radius.
+ * @cssprop --omni-tab-header-indicator-bar-width - Tab header component indicator bar width.
+ *
+ * @cssprop --omni-tab-header-indicator-height - Tab header component indicator height.
+ * @cssprop --omni-tab-header-indicator-color - Tab header component indicator color.
+ * @cssprop --omni-tab-header-indicator-border-radius - Tab header component indicator border radius.
+ * @cssprop --omni-tab-header-indicator-width - Tab header component indicator width.
  */
 @customElement('omni-tabs')
 export class Tabs extends OmniElement {
@@ -59,7 +82,7 @@ export class Tabs extends OmniElement {
             // Start observing child attribute changes.
             this._observer?.observe(this, {
                 attributes: true,
-                attributeFilter: [`label`],
+                attributeFilter: [`header`],
                 subtree: true
             });
         });
@@ -83,10 +106,11 @@ export class Tabs extends OmniElement {
     }
 
     selectTab(tabHeader: TabHeader) {
-        //Also check if the tab is disabled
         if (!tabHeader || tabHeader.classList.contains('tab-bar')) {
             return;
         }
+
+        // set tab header used in cases where the tab header has slotted content.
         tabHeader = tabHeader.closest('omni-tab-header') as TabHeader;
         const children = Array.from(this.children);
 
@@ -96,13 +120,14 @@ export class Tabs extends OmniElement {
             return;
         }
 
-        //Set active tab header
         const tabHeaders = [
             ...children.filter((oth) => oth.slot === 'header'),
             ...(this.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=header]')?.children || [])
         ] as TabHeader[];
 
         const previous = children.find((c) => c.hasAttribute(activeAttribute));
+
+        // Remove active attributes from tab headers and tabs.
         tabHeaders.forEach((header) => {
             header.removeAttribute(activeHeaderAttribute);
             header.requestUpdate();
@@ -111,7 +136,7 @@ export class Tabs extends OmniElement {
             element.removeAttribute(activeAttribute);
         });
 
-        //Set active tab
+        // Set active tab-header and tab
         tab.setAttribute(activeAttribute, '');
         tabHeader.setAttribute(activeHeaderAttribute, '');
         tabHeader.requestUpdate();
