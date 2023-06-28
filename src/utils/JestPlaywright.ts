@@ -175,18 +175,21 @@ async function withCoverage<T>(this: any, page: Page, testAction: () => T | Prom
         await page.coverage.startJSCoverage();
     }
 
-    const result = await testAction.apply(this);
+    let result: any;
+    try {
+        result = await testAction.apply(this);
+    } finally {
+        // Only chromium supports coverage
+        if (page.coverage && browserName === 'chromium') {
+            //Each test worker must collect and save its coverage information. The last worker will also report the coverage
 
-    // Only chromium supports coverage
-    if (page.coverage && browserName === 'chromium') {
-        //Each test worker must collect and save its coverage information. The last worker will also report the coverage
+            const coverage = await page.coverage.stopJSCoverage();
 
-        const coverage = await page.coverage.stopJSCoverage();
-
-        //Save coverage information for current test worker
-        fs.writeFileSync(`coverage/${v4()}.json`, JSON.stringify(coverage), {
-            encoding: 'utf-8'
-        });
+            //Save coverage information for current test worker
+            fs.writeFileSync(`coverage/${v4()}.json`, JSON.stringify(coverage), {
+                encoding: 'utf-8'
+            });
+        }
     }
 
     return result;
