@@ -1486,14 +1486,15 @@ pre[class*='language-'] {
     }
 
     .menu {
-        display: none;
+        width: 0;
+        transition: all 0.3s;
     }
 
     .mobile {
-        display: block;
         width: 100%;
         right: 0px;
         border-right: 0;
+        transition: all 0.3s;
     }
 
     .container {
