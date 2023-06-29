@@ -3,7 +3,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { OmniElement } from '../core/OmniElement.js';
 
 /**
- * Control that can be used to display custom slotted content used within a omni-tabs component with an associated omni-tab component.
+ * Control that can be used to display custom slotted content, for use within an omni-tabs component and associated omni-tab component.
  *
  * @import
  * ```js
@@ -11,7 +11,7 @@ import { OmniElement } from '../core/OmniElement.js';
  * ```
  * @example
  * html```
- * <omni-tab-header for="Tab 1">
+ * <omni-tab-header for="tab-id">
  *  <span>Slotted Content</span>
  * </omni-tab-header>
  * ```

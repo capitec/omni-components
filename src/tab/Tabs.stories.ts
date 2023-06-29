@@ -4,7 +4,7 @@ import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import expect from '../utils/ExpectDOM.js';
-import { ComponentStoryFormat, CSFIdentifier, querySelectorAsync, raw, getSourceFromLit } from '../utils/StoryUtils.js';
+import { assignToSlot, ComponentStoryFormat, CSFIdentifier, querySelectorAsync, raw, getSourceFromLit } from '../utils/StoryUtils.js';
 
 import { Tabs } from './Tabs.js';
 
@@ -16,7 +16,12 @@ import '../icon/Icon.js';
 
 export default {
     title: 'UI Components/Tabs',
-    component: 'omni-tabs'
+    component: 'omni-tabs',
+    argTypes: {
+        header: {
+            control: 'text'
+        }
+    }
 } as CSFIdentifier;
 
 interface Args {
@@ -27,7 +32,7 @@ interface Args {
 export const Interactive: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
     <omni-tabs data-testid='test-tabs'>
-        ${args.header ? html`${'\r\n'}${unsafeHTML(args.header)}` : nothing}
+        ${args.header ? html`${'\r\n'}${unsafeHTML(assignToSlot('header', args.header))}` : nothing}
         ${args['[Default Slot]'] ? html`${'\r\n'}${unsafeHTML(args['[Default Slot]'])}` : nothing}
     </omni-tabs>
 `,
@@ -46,7 +51,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         The <code class="language-html">&lt;omni-tabs&gt;</code> component will display content based on the nested <code class="language-html">&lt;omni-tab&gt;</code> component(s). 
         </p>
         <p>
-        Headers are managed by either setting the <code>header</code> attribute of the <code class="language-html">&lt;omni-tab&gt;</code> component or via slotted <code class="language-html">&lt;omni-tab-header&gt;</code> component(s) that targets the <code class="language-html">&lt;omni-tabs&gt;</code> header slot by setting the <code>slot</code> attribute like the following "<code class="language-js">slot="header"</code>", and displays the slotted content of the <code class="language-html">&lt;omni-tab&gt;</code> with the <code>active</code> attribute set. 
+        Headers are managed by either setting the <code>header</code> attribute of the <code class="language-html">&lt;omni-tab&gt;</code> component or via slotted <code class="language-html">&lt;omni-tab-header&gt;</code> component(s) that targets the <code class="language-html">&lt;omni-tabs&gt;</code> header slot by setting the <code>slot</code> attribute to <code class="language-js">"header"</code>, and displays the slotted content of the <code class="language-html">&lt;omni-tab&gt;</code> with the <code>active</code> attribute set. 
         </p>
         <p>
         The <code>active</code> attribute is applied to the first nested tab, if the <code>active</code> attribute is not specified on a nested <code class="language-html">&lt;omni-tab&gt;</code>. Clicking on one of the tab headers will result in its associated tab being active and the tab's slotted content being displayed.
@@ -87,7 +92,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
 
         const nextActiveTab = tabsArray.find((c) => c.hasAttribute('data-active'));
 
-        await expect(nextActiveTab).toBeTruthy;
+        await expect(nextActiveTab).toBeTruthy();
     }
 };
 
@@ -120,7 +125,7 @@ const App = () =>
     name: 'Basic',
     description: () => html`
     <div>
-        This is the recommended use of the <code class="language-html">&lt;omni-tabs&gt;</code> with nested <code class="language-html">&lt;omni-tab&gt;</code> component(s), this results in dynamically generated headers for each tab based on the value of the <code class="language-js">header</code> attribute of the <code class="language-html">&lt;omni-tab&gt;</code>.
+        This is the recommended use of the <code class="language-html">&lt;omni-tabs&gt;</code> with nested <code class="language-html">&lt;omni-tab&gt;</code> component(s), headers for each tab is set by setting the <code class="language-js">header</code> attribute of the <code class="language-html">&lt;omni-tab&gt;</code>.
     <div>
     `,
     args: {
@@ -147,6 +152,7 @@ const App = () =>
         await expect(nestedTabHeaders).toBeTruthy();
         const tabsArray = [...nestedTabHeaders];
         await expect(tabsArray.length).toBe(3);
+
         //Get the active tab header.
         const activeTab = tabsArray.find((c) => c.hasAttribute('data-active'));
         await expect(activeTab).toBeTruthy;
@@ -197,7 +203,7 @@ const App = () =>
     name: 'Active',
     description: () => html`
     <div>
-        Set which <code class="language-html">&lt;omni-tab&gt;</code> nested in the <code class="language-html">&lt;omni-tabs&gt;</code> should be active by default. This is based on setting the <code>active</code> attribute of one of the nested <code class="language-html">&lt;omni-tab&gt;</code> component.
+        Set which <code class="language-html">&lt;omni-tab&gt;</code> nested in the <code class="language-html">&lt;omni-tabs&gt;</code> should be active by default. By setting the <code>active</code> attribute of one of the nested <code class="language-html">&lt;omni-tab&gt;</code> component.
     <div>
     `,
     play: async (context) => {
@@ -261,7 +267,7 @@ const App = () =>
     name: 'Disabled',
     description: () => html`
     <div>
-        Set which <code class="language-html">&lt;omni-tab&gt;</code> nested in the <code class="language-html">&lt;omni-tabs&gt;</code> component should be disabled. This is based on setting the <code>disabled</code> attribute.
+        Set a <code class="language-html">&lt;omni-tab&gt;</code> nested in the <code class="language-html">&lt;omni-tabs&gt;</code> component to be disabled by setting <code>disabled</code> attribute.
     <div>
     `,
     args: {},
@@ -277,7 +283,7 @@ const App = () =>
         await expect(nestedTabs).toBeTruthy();
         const tabsArray = [...nestedTabs];
 
-        //Get the active tab.
+        //Get the disabled tab.
         const disabledTab = tabsArray.find((c) => c.hasAttribute('data-disabled'));
         await expect(disabledTab).toBeTruthy;
         await expect(disabledTab).toEqual(tabsArray[2]);
@@ -372,7 +378,7 @@ const App = () =>
     },
     description: () => html`
     <div>
-        For slotting custom content into the header use the <code class="language-html">&lt;omni-tab-header&gt;</code> component that targets the header slot of the <code class="language-html">&lt;omni-tabs&gt;</code> component and ensure you have a <code class="language-html">&lt;omni-tab&gt;</code> component which has a <code>id</code> attribute that matches the <code class="language-html">&lt;omni-tab-header&gt;</code> <code>for</code> attribute to display slotted content.
+        For slotting custom content into the header use the <code class="language-html">&lt;omni-tab-header&gt;</code> component that targets the header slot of the <code class="language-html">&lt;omni-tabs&gt;</code> component and ensure you have a <code class="language-html">&lt;omni-tab&gt;</code> component which has an <code>id</code> attribute that matches the <code class="language-html">&lt;omni-tab-header&gt;</code> <code>for</code> attribute to display slotted content.
     <div>
     `,
     play: async (context) => {
