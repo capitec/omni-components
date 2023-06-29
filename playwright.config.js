@@ -58,7 +58,9 @@ const config = {
         trace: 'on-first-retry',
 
         userAgent: 'Test Runner',
-        baseURL: `http://${process.env.PLAYWRIGHT_HOST_ORIGIN ?? 'localhost'}:6006`
+        baseURL: `http://${process.env.PLAYWRIGHT_HOST_ORIGIN ?? 'localhost'}:6006`,
+
+        colorScheme: 'light',
     },
 
     /* Configure projects for major browsers */

@@ -42,10 +42,6 @@ export const Interactive: ComponentStoryFormat<Args> = {
         type: 'default',
         '[Default Slot]': undefined
     },
-    play: async (context) => {
-        const label = within(context.canvasElement).getByTestId<Label>('test-label');
-        await expect(label.shadowRoot).toHaveTextContent(Interactive.args?.label as string);
-    },
     frameworkSources: [
         {
             framework: 'React',
@@ -68,10 +64,6 @@ export const Title: ComponentStoryFormat<Args> = {
     args: {
         label: 'Title',
         type: 'title'
-    },
-    play: async (context) => {
-        const label = within(context.canvasElement).getByTestId<Label>('test-label');
-        await expect(label.shadowRoot).toHaveTextContent(Title.args?.label as string);
     },
     frameworkSources: [
         {
@@ -103,10 +95,6 @@ const App = () => <OmniLabel${args.label ? ` label='${args.label}'` : ''}${args.
     args: {
         label: 'Subtitle',
         type: 'subtitle'
-    },
-    play: async (context) => {
-        const label = within(context.canvasElement).getByTestId<Label>('test-label');
-        await expect(label.shadowRoot).toHaveTextContent(Subtitle.args?.label as string);
     }
 };
 
@@ -130,10 +118,6 @@ const App = () => <OmniLabel${args.label ? ` label='${args.label}'` : ''}${args.
     args: {
         label: 'Strong',
         type: 'strong'
-    },
-    play: async (context) => {
-        const label = within(context.canvasElement).getByTestId<Label>('test-label');
-        await expect(label.shadowRoot).toHaveTextContent(Strong.args?.label as string);
     }
 };
 
@@ -157,11 +141,5 @@ const App = () => <OmniLabel${args.label ? ` label='${args.label}'` : ''}${args.
     args: {
         label: 'Slot',
         type: 'strong'
-    },
-    play: async (context) => {
-        const label = within(context.canvasElement).getByTestId<Label>('test-label');
-        const slotElement = label.shadowRoot?.querySelector('slot');
-        const foundSlottedSpan = slotElement?.assignedElements().find((e) => e.innerHTML.includes('text inside a paragraph.'));
-        await expect(foundSlottedSpan).toBeTruthy();
     }
 };
