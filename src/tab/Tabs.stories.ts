@@ -84,16 +84,16 @@ export const Interactive: ComponentStoryFormat<Args> = {
         const tabHeadersArray = [...nestedTabHeaders];
         // Get the active tab header.
         const activeTabHeader = tabHeadersArray.find((c) => c.hasAttribute('data-active'));
-        // Confirm that the active tab header is the second one in the tab header array
+        // Confirm that the active tab header is the first one in the tab header array
         await expect(activeTabHeader).toEqual(tabHeadersArray[0]);
         // Click the second tab header.
         await userEvent.click(tabHeadersArray[1]);
-        // Check that tab-select event was called once.
+        // Get the updated active tab and confirm that it is the one that was clicked.
         const nextActiveTab = tabHeadersArray.find((c) => c.hasAttribute('data-active'));
         await expect(nextActiveTab).toEqual(tabHeadersArray[1]);
         // Confirm that the tab select event was emitted.
         await expect(tabSelect).toBeCalledTimes(1);
-        // Get the default slot for all the Tabs
+        // Get the default slot for Tabs element and get the new active Tab
         const tabsSlotElement = (await querySelectorAsync(tabsElement.shadowRoot as ShadowRoot, 'slot:not([name])')) as HTMLSlotElement;
         const activeTabElement = tabsSlotElement.assignedElements().find((e) => e.hasAttribute('active')) as Tab;
         // Confirm that the active tabs header is equal to the expected value.
@@ -154,14 +154,9 @@ const App = () =>
 
         // Get all the tab headers in the tab bar
         const nestedTabHeaders = tabBar.querySelectorAll('omni-tab-header');
-        await expect(nestedTabHeaders).toBeTruthy();
-        const tabsArray = [...nestedTabHeaders];
+        const tabHeadersArray = [...nestedTabHeaders];
         // Confirm that 3 Tab headers exist.
-        await expect(tabsArray.length).toBe(3);
-
-        //Get the active tab header.
-        const activeTab = tabsArray.find((c) => c.hasAttribute('data-active'));
-        await expect(activeTab).toBeTruthy();
+        await expect(tabHeadersArray.length).toBe(3);
 
         // Get the default slot of the Tab element.
         const tabsSlotElement = (await querySelectorAsync(tabsElement.shadowRoot as ShadowRoot, 'slot:not([name])')) as HTMLSlotElement;
@@ -305,19 +300,23 @@ const App = () =>
         const tabBar = (await querySelectorAsync(tabsElement.shadowRoot as ShadowRoot, '.tab-bar')) as HTMLElement;
 
         // Get all the tabs in the tab bar
-        const nestedTabs = tabBar.querySelectorAll('omni-tab-header');
-        await expect(nestedTabs).toBeTruthy();
-        const tabsArray = [...nestedTabs];
+        const tabHeaders = tabBar.querySelectorAll('omni-tab-header');
+        const tabsHeadersArray = [...tabHeaders];
 
         //Get the disabled tab.
-        const disabledTab = tabsArray.find((c) => c.hasAttribute('data-disabled')) as TabHeader;
+        const disabledTabHeader = tabsHeadersArray.find((c) => c.hasAttribute('data-disabled')) as TabHeader;
         // Confirm that the disabled tab the last tab in the tab header array.
-        await expect(disabledTab).toEqual(tabsArray[2]);
+        await expect(disabledTabHeader).toEqual(tabsHeadersArray[2]);
 
-        //Click the disabled tab.
-        await userEvent.click(disabledTab);
-        // Confirm that the tab select event was emitted.
+        //Click the disabled tab header twice
+        await userEvent.click(disabledTabHeader);
+        await userEvent.click(disabledTabHeader);
+        // Confirm that the tab select event was emitted zero times.
         await expect(tabSelect).toBeCalledTimes(0);
+        // Click the second tab header
+        await userEvent.click(tabsHeadersArray[1]);
+        // Confirm that the tab select event was emitted once.
+        await expect(tabSelect).toBeCalledTimes(1);
     }
 } as ComponentStoryFormat<Args>;
 
