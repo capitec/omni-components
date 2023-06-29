@@ -165,7 +165,7 @@ const App = () =>
 
         // Get the default slot of the Tab element.
         const tabsSlotElement = (await querySelectorAsync(tabsElement.shadowRoot as ShadowRoot, 'slot:not([name])')) as HTMLSlotElement;
-        // Get the all the Tab elements in the default slot. 
+        // Get the all the Tab elements in the default slot.
         const tabElements = tabsSlotElement.assignedElements();
         // Confirm that there is 3 tab elements in the default slot.
         await expect(tabElements.length).toBe(3);
@@ -240,7 +240,7 @@ const App = () =>
 
         // Get the default slot for all the Tabs
         const tabsSlotElement = (await querySelectorAsync(tabsElement.shadowRoot as ShadowRoot, 'slot:not([name])')) as HTMLSlotElement;
-        // Get the active tab 
+        // Get the active tab
         const tabElement = tabsSlotElement.assignedElements().find((e) => e.hasAttribute('active')) as Tab;
         // Get the active tab component slot
         const tabElementSlot = (await querySelectorAsync(tabElement.shadowRoot as ShadowRoot, 'slot')) as HTMLSlotElement;
@@ -318,7 +318,6 @@ const App = () =>
         await userEvent.click(disabledTab);
         // Confirm that the tab select event was emitted.
         await expect(tabSelect).toBeCalledTimes(0);
-        
     }
 } as ComponentStoryFormat<Args>;
 
