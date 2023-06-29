@@ -1,6 +1,6 @@
 # omni-tab
 
-Control that can be used to display slotted content used within a omni-tabs component.
+Control that can be used to display slotted content, for use within an omni-tabs component.
 
 ## Example
 
@@ -62,14 +62,14 @@ html
 
 # omni-tab-header
 
-Control that can be used to display custom slotted content used within a omni-tabs component with an associated omni-tab component.
+Control that can be used to display custom slotted content, for use within an omni-tabs component and associated omni-tab component.
 
 ## Example
 
 html
 
 ```
-<omni-tab-header for="Tab 1">
+<omni-tab-header for="tab-id">
  <span>Slotted Content</span>
 </omni-tab-header>
 ```
@@ -176,16 +176,16 @@ Component that displays content in tabs.
 
 ## Events
 
-| Event        | Type              | Description                                      |
-|--------------|-------------------|--------------------------------------------------|
-| `tab-select` | `CustomEvent<{}>` | Dispatched when one of the omni-tab(s) is selected. |
+| Event        | Type                                             | Description                              |
+|--------------|--------------------------------------------------|------------------------------------------|
+| `tab-select` | `CustomEvent<{ previous: HTMLElement, selected: HTMLElement}>` | Dispatched when an omni-tab is selected. |
 
 ## Slots
 
 | Name                | Description                                      |
 |---------------------|--------------------------------------------------|
-|                     | Content to render inside the component body.     |
-| `header`            | The header slot used to slot omni-tab-header components. |
+|                     | All omni-tab components that are managed by this component. |
+| `header`            | Optional omni-tab-header components associated with each omni-tab component. |
 | `loading_indicator` | Used to define content that is displayed while async rendering is awaiting, or when renderLoading() is implicitly called |
 
 ## CSS Custom Properties

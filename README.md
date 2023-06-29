@@ -571,7 +571,7 @@ Control to switch a value on or off.
 
 </td><td>
 
-Control that can be used to display slotted content used within a omni-tabs component.
+Control that can be used to display slotted content, for use within an omni-tabs component.
 
 </td></tr><tr><td>
 
@@ -579,7 +579,7 @@ Control that can be used to display slotted content used within a omni-tabs comp
 
 </td><td>
 
-Control that can be used to display custom slotted content used within a omni-tabs component with an associated omni-tab component.
+Control that can be used to display custom slotted content, for use within an omni-tabs component and associated omni-tab component.
 
 </td></tr><tr><td>
 
