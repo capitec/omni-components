@@ -6,8 +6,9 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import expect from '../utils/ExpectDOM.js';
 import { assignToSlot, ComponentStoryFormat, CSFIdentifier, querySelectorAsync, raw, getSourceFromLit } from '../utils/StoryUtils.js';
 
+import { Tab } from './Tab.js';
+import { TabHeader } from './TabHeader.js';
 import { Tabs } from './Tabs.js';
-
 import '../label/Label.js';
 import './TabHeader.js';
 import './Tab.js';
@@ -70,29 +71,33 @@ export const Interactive: ComponentStoryFormat<Args> = {
 </omni-tab>`
     },
     play: async (context) => {
-        const tabs = within(context.canvasElement).getByTestId<Tabs>('test-tabs');
-        const click = jest.fn();
-        tabs.addEventListener('click', click);
+        const tabsElement = within(context.canvasElement).getByTestId<Tabs>('test-tabs');
+        const tabSelect = jest.fn();
+        tabsElement.addEventListener('tab-select', tabSelect);
 
         // Get the tab bar element
-        const tabBar = (await querySelectorAsync(tabs.shadowRoot as ShadowRoot, '.tab-bar')) as HTMLElement;
+        const tabBar = (await querySelectorAsync(tabsElement.shadowRoot as ShadowRoot, '.tab-bar')) as HTMLElement;
         await expect(tabBar).toBeTruthy();
 
-        // Get all the tabs in the tab bar
-        const nestedTabs = tabBar.querySelectorAll('omni-tab-header');
-        await expect(nestedTabs).toBeTruthy();
-        const tabsArray = [...nestedTabs];
-
-        //Get the active tab.
-        const activeTab = tabsArray.find((c) => c.hasAttribute('data-active'));
-        await expect(activeTab).toBeTruthy();
-
-        //Click the second tab.
-        await userEvent.click(tabsArray[1]);
-
-        const nextActiveTab = tabsArray.find((c) => c.hasAttribute('data-active'));
-
-        await expect(nextActiveTab).toBeTruthy();
+        // Get all the tab headers in the tab bar
+        const nestedTabHeaders = tabBar.querySelectorAll('omni-tab-header');
+        const tabHeadersArray = [...nestedTabHeaders];
+        // Get the active tab header.
+        const activeTabHeader = tabHeadersArray.find((c) => c.hasAttribute('data-active'));
+        // Confirm that the active tab header is the second one in the tab header array
+        await expect(activeTabHeader).toEqual(tabHeadersArray[0]);
+        // Click the second tab header.
+        await userEvent.click(tabHeadersArray[1]);
+        // Check that tab-select event was called once.
+        const nextActiveTab = tabHeadersArray.find((c) => c.hasAttribute('data-active'));
+        await expect(nextActiveTab).toEqual(tabHeadersArray[1]);
+        // Confirm that the tab select event was emitted.
+        await expect(tabSelect).toBeCalledTimes(1);
+        // Get the default slot for all the Tabs
+        const tabsSlotElement = (await querySelectorAsync(tabsElement.shadowRoot as ShadowRoot, 'slot:not([name])')) as HTMLSlotElement;
+        const activeTabElement = tabsSlotElement.assignedElements().find((e) => e.hasAttribute('active')) as Tab;
+        // Confirm that the active tabs header is equal to the expected value.
+        await expect(activeTabElement.header).toEqual('Tab 2');
     }
 };
 
@@ -141,21 +146,29 @@ const App = () =>
         `
     },
     play: async (context) => {
-        const tabs = within(context.canvasElement).getByTestId<Tabs>('test-tabs');
+        const tabsElement = within(context.canvasElement).getByTestId<Tabs>('test-tabs');
 
         // Get the tab bar element
-        const tabBar = (await querySelectorAsync(tabs.shadowRoot as ShadowRoot, '.tab-bar')) as HTMLElement;
+        const tabBar = (await querySelectorAsync(tabsElement.shadowRoot as ShadowRoot, '.tab-bar')) as HTMLElement;
         await expect(tabBar).toBeTruthy();
 
         // Get all the tab headers in the tab bar
         const nestedTabHeaders = tabBar.querySelectorAll('omni-tab-header');
         await expect(nestedTabHeaders).toBeTruthy();
         const tabsArray = [...nestedTabHeaders];
+        // Confirm that 3 Tab headers exist.
         await expect(tabsArray.length).toBe(3);
 
         //Get the active tab header.
         const activeTab = tabsArray.find((c) => c.hasAttribute('data-active'));
         await expect(activeTab).toBeTruthy();
+
+        // Get the default slot of the Tab element.
+        const tabsSlotElement = (await querySelectorAsync(tabsElement.shadowRoot as ShadowRoot, 'slot:not([name])')) as HTMLSlotElement;
+        // Get the all the Tab elements in the default slot. 
+        const tabElements = tabsSlotElement.assignedElements();
+        // Confirm that there is 3 tab elements in the default slot.
+        await expect(tabElements.length).toBe(3);
     }
 };
 
@@ -207,21 +220,33 @@ const App = () =>
     <div>
     `,
     play: async (context) => {
-        const tabs = within(context.canvasElement).getByTestId<Tabs>('test-tabs');
+        const tabsElement = within(context.canvasElement).getByTestId<Tabs>('test-tabs');
 
         // Get the tab bar element
-        const tabBar = (await querySelectorAsync(tabs.shadowRoot as ShadowRoot, '.tab-bar')) as HTMLElement;
+        const tabBar = (await querySelectorAsync(tabsElement.shadowRoot as ShadowRoot, '.tab-bar')) as HTMLElement;
         await expect(tabBar).toBeTruthy();
 
-        // Get all the tabs in the tab bar
-        const nestedTabs = tabBar.querySelectorAll('omni-tab-header');
-        await expect(nestedTabs).toBeTruthy();
-        const tabsArray = [...nestedTabs];
+        // Get all the tab headers in the tab bar
+        const nestedTabHeaders = tabBar.querySelectorAll('omni-tab-header');
+        const tabHeadersArray = [...nestedTabHeaders];
 
-        //Get the active tab.
-        const activeTab = tabsArray.find((c) => c.hasAttribute('data-active'));
-        await expect(activeTab).toBeTruthy();
-        await expect(activeTab).toEqual(tabsArray[1]);
+        //Get the active tab header.
+        const activeTabHeader = tabHeadersArray.find((c) => c.hasAttribute('data-active'));
+        await expect(activeTabHeader).toBeTruthy();
+        // Confirm that the active tab header is the second one in the tab header array
+        await expect(activeTabHeader).toEqual(tabHeadersArray[1]);
+        // Click on the first tab header
+        await userEvent.click(tabHeadersArray[0]);
+
+        // Get the default slot for all the Tabs
+        const tabsSlotElement = (await querySelectorAsync(tabsElement.shadowRoot as ShadowRoot, 'slot:not([name])')) as HTMLSlotElement;
+        // Get the active tab 
+        const tabElement = tabsSlotElement.assignedElements().find((e) => e.hasAttribute('active')) as Tab;
+        // Get the active tab component slot
+        const tabElementSlot = (await querySelectorAsync(tabElement.shadowRoot as ShadowRoot, 'slot')) as HTMLSlotElement;
+        // Get the active tab label element based on the value of the label attribute and confirm that the label exists.
+        const labelElement = tabElementSlot.assignedElements().find((e) => e.getAttribute('label') === 'Label of Tab 1') as Tab;
+        await expect(labelElement).toBeTruthy();
     }
 };
 
@@ -272,11 +297,12 @@ const App = () =>
     `,
     args: {},
     play: async (context) => {
-        const tabs = within(context.canvasElement).getByTestId<Tabs>('test-tabs');
+        const tabsElement = within(context.canvasElement).getByTestId<Tabs>('test-tabs');
+        const tabSelect = jest.fn();
+        tabsElement.addEventListener('tab-select', tabSelect);
 
         // Get the tab bar element
-        const tabBar = (await querySelectorAsync(tabs.shadowRoot as ShadowRoot, '.tab-bar')) as HTMLElement;
-        await expect(tabBar).toBeTruthy();
+        const tabBar = (await querySelectorAsync(tabsElement.shadowRoot as ShadowRoot, '.tab-bar')) as HTMLElement;
 
         // Get all the tabs in the tab bar
         const nestedTabs = tabBar.querySelectorAll('omni-tab-header');
@@ -284,9 +310,15 @@ const App = () =>
         const tabsArray = [...nestedTabs];
 
         //Get the disabled tab.
-        const disabledTab = tabsArray.find((c) => c.hasAttribute('data-disabled'));
-        await expect(disabledTab).toBeTruthy();
+        const disabledTab = tabsArray.find((c) => c.hasAttribute('data-disabled')) as TabHeader;
+        // Confirm that the disabled tab the last tab in the tab header array.
         await expect(disabledTab).toEqual(tabsArray[2]);
+
+        //Click the disabled tab.
+        await userEvent.click(disabledTab);
+        // Confirm that the tab select event was emitted.
+        await expect(tabSelect).toBeCalledTimes(0);
+        
     }
 } as ComponentStoryFormat<Args>;
 
@@ -383,9 +415,6 @@ const App = () =>
     `,
     play: async (context) => {
         const tabs = within(context.canvasElement).getByTestId<Tabs>('test-tabs');
-
-        const click = jest.fn();
-        tabs.addEventListener('click', click);
         // Get the tab bar element
         const tabBar = (await querySelectorAsync(tabs.shadowRoot as ShadowRoot, '.tab-bar')) as HTMLElement;
         await expect(tabBar).toBeTruthy();
