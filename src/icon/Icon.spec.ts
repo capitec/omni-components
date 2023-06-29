@@ -1,5 +1,4 @@
-import * as jestMock from 'jest-mock';
-import { test, expect, expectJest, withCoverage } from '../utils/JestPlaywright.js';
+import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
 
 test(`Icon - Visual`, async ({ page }) => {
     await withCoverage(page, async () => {
