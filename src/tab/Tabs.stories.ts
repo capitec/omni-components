@@ -85,7 +85,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
 
         //Get the active tab.
         const activeTab = tabsArray.find((c) => c.hasAttribute('data-active'));
-        await expect(activeTab).toBeTruthy;
+        await expect(activeTab).toBeTruthy();
 
         //Click the second tab.
         await userEvent.click(tabsArray[1]);
@@ -155,7 +155,7 @@ const App = () =>
 
         //Get the active tab header.
         const activeTab = tabsArray.find((c) => c.hasAttribute('data-active'));
-        await expect(activeTab).toBeTruthy;
+        await expect(activeTab).toBeTruthy();
     }
 };
 
@@ -220,7 +220,7 @@ const App = () =>
 
         //Get the active tab.
         const activeTab = tabsArray.find((c) => c.hasAttribute('data-active'));
-        await expect(activeTab).toBeTruthy;
+        await expect(activeTab).toBeTruthy();
         await expect(activeTab).toEqual(tabsArray[1]);
     }
 };
@@ -285,7 +285,7 @@ const App = () =>
 
         //Get the disabled tab.
         const disabledTab = tabsArray.find((c) => c.hasAttribute('data-disabled'));
-        await expect(disabledTab).toBeTruthy;
+        await expect(disabledTab).toBeTruthy();
         await expect(disabledTab).toEqual(tabsArray[2]);
     }
 } as ComponentStoryFormat<Args>;
@@ -413,6 +413,6 @@ const App = () =>
         //Click the second tab.
         await userEvent.click(tabHeaders[1]);
         const nextActiveTab = tabHeaders.find((c) => c.hasAttribute('data-active'));
-        await expect(nextActiveTab).toBeTruthy;
+        await expect(nextActiveTab).toBeTruthy();
     }
 };
