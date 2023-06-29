@@ -157,29 +157,28 @@ export class Tabs extends OmniElement {
         return [
             super.styles,
             css`
-            :host {
-                width:100%;
-                height:100%;
-                overflow: hidden;
-            }
+                :host {
+                    width:100%;
+                    height:100%;
+                    overflow: hidden;
+                }
 
-            /* Tab bar */
-            :host > .tab-bar {
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                width: var(--omni-tabs-tab-bar-width, 100%);
-                height: var(--omni-tabs-tab-bar-height, 50px);
-                border-bottom: var(--omni-tabs-tab-bar-border-bottom, none);
-                background: var(--omni-tabs-tab-bar-background-color, transparent);
-            }
+                /* Tab bar */
+                :host > .tab-bar {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    width: var(--omni-tabs-tab-bar-width, 100%);
+                    height: var(--omni-tabs-tab-bar-height, 50px);
+                    border-bottom: var(--omni-tabs-tab-bar-border-bottom, none);
+                    background: var(--omni-tabs-tab-bar-background-color, transparent);
+                }
 
-            /* CONTENT */
-            ::slotted(*:not([active]):not([slot])) {
-                display: none !important;
-            }
-
-        `
+                /* CONTENT */
+                ::slotted(*:not([active]):not([slot])) {
+                    display: none !important;
+                }
+            `
         ];
     }
 

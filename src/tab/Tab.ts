@@ -24,19 +24,19 @@ import { OmniElement } from '../core/OmniElement.js';
 @customElement('omni-tab')
 export class Tab extends OmniElement {
     /**
-     * Tab header label.
+     * Tab header label, use the omni-tab-header component for more complex header layouts
      * @attr
      */
     @property({ type: String, reflect: true }) header?: string;
 
     /**
-     * Indicator if the component is disabled.
+     * Indicator if the tab is disabled.
      * @attr
      */
     @property({ type: Boolean, reflect: true }) disabled?: boolean;
 
     /**
-     * Indicator if the component is active.
+     * Indicator if the tab is active.
      * @attr
      */
     @property({ type: Boolean, reflect: true }) active?: boolean;
@@ -45,15 +45,15 @@ export class Tab extends OmniElement {
         return [
             super.styles,
             css`
-            :host {
-                width: 100%;
-                height: 100%;
-                overflow: auto;
-            }
+                :host {
+                    width: 100%;
+                    height: 100%;
+                    overflow: auto;
+                }
             
-           :host(*:not([active])) {
-                display: none !important;
-            }
+                :host(*:not([active])) {
+                    display: none !important;
+                }
             `
         ];
     }
