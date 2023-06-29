@@ -196,23 +196,30 @@ async function withCoverage<T>(this: any, page: Page, testAction: () => T | Prom
     return result;
 }
 
-async function keyboardCopy(page: Page): Promise<void> {
-    await page.context().grantPermissions(['clipboard-read', 'clipboard-write']);
-    const isMac = platform() === 'darwin';
-    const modifier = isMac ? 'Meta' : 'Control';
-    await page.keyboard.press(`${modifier}+KeyC`);
-}
+// TODO: Revisit once playwright clipboard support is completed
+/*
+    clipboard isolation: [feature] clipboard isolation: https://github.com/microsoft/playwright/issues/13097
+    dedicated clipboard API: [Feature] a dedicated clipboard API: https://github.com/microsoft/playwright/issues/15860
+    basic clipboard support via shortcuts: Ctrl+C/V and Cmd+C/V: https://github.com/microsoft/playwright/issues/8114
+*/
 
-async function clipboardCopy(page: Page, content: string): Promise<void> {
-    await page.context().grantPermissions(['clipboard-read', 'clipboard-write']);
-    await page.evaluate(`navigator.clipboard.writeText('${content}')`);
-}
+// async function keyboardCopy(page: Page): Promise<void> {
+//     await page.context().grantPermissions(['clipboard-read', 'clipboard-write']);
+//     const isMac = platform() === 'darwin';
+//     const modifier = isMac ? 'Meta' : 'Control';
+//     await page.keyboard.press(`${modifier}+KeyC`);
+// }
 
-async function keyboardPaste(page: Page): Promise<void> {
-    await page.context().grantPermissions(['clipboard-read', 'clipboard-write']);
-    const isMac = platform() === 'darwin';
-    const modifier = isMac ? 'Meta' : 'Control';
-    await page.keyboard.press(`${modifier}+KeyV`);
-}
+// async function clipboardCopy(page: Page, content: string): Promise<void> {
+//     await page.context().grantPermissions(['clipboard-read', 'clipboard-write']);
+//     await page.evaluate(`navigator.clipboard.writeText('${content}')`);
+// }
 
-export { expect, expectJest, withCoverage, keyboardCopy, keyboardPaste, clipboardCopy };
+// async function keyboardPaste(page: Page): Promise<void> {
+//     await page.context().grantPermissions(['clipboard-read', 'clipboard-write']);
+//     const isMac = platform() === 'darwin';
+//     const modifier = isMac ? 'Meta' : 'Control';
+//     await page.keyboard.press(`${modifier}+KeyV`);
+// }
+
+export { expect, expectJest, withCoverage /*keyboardCopy, keyboardPaste, clipboardCopy*/ };

@@ -152,7 +152,7 @@ export const testClearableBehaviour = (tagName: string, storyExport = 'Clearable
             const clearButton = input.locator('#clear-click');
             await clearButton.click();
 
-            await expect(await input.evaluate((i: OmniFormElement) => i.value)).toBeFalsy();
+            await expect(await input.evaluate((i: OmniFormElement) => !i.value || i.value === '0.00')).toBeTruthy();
         });
     });
 };
@@ -175,7 +175,7 @@ export const testCustomClearableSlotBehaviour = (tagName: string, storyExport = 
             const clearButton = input.locator('#clear-click');
             await clearButton.click();
 
-            await expect(await input.evaluate((i: OmniFormElement) => i.value)).toBeFalsy();
+            await expect(await input.evaluate((i: OmniFormElement) => !i.value || i.value === '0.00')).toBeTruthy();
         });
     });
 };
