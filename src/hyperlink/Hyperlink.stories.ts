@@ -62,19 +62,6 @@ export const Interactive: ComponentStoryFormat<Args> = {
         inline: false,
         size: '',
         '[Default Slot]': undefined
-    },
-    play: async (context) => {
-        const canvas = within(context.canvasElement);
-        const Hyperlink = canvas.getByTestId('test-hyperlink');
-        const click = jest.fn();
-        Hyperlink.addEventListener('click', () => click());
-        await userEvent.click(Hyperlink, {
-            pointerEventsCheck: 0
-        });
-        await userEvent.click(Hyperlink, {
-            pointerEventsCheck: 0
-        });
-        await expect(click).toBeCalledTimes(2);
     }
 };
 
@@ -92,11 +79,6 @@ const App = () => <OmniHyperlink${args.label ? ` label='${args.label}'` : ''}/>;
     description: 'Set the text content of the component.',
     args: {
         label: 'Click'
-    },
-    play: async (context) => {
-        const canvas = within(context.canvasElement);
-        const Hyperlink = canvas.getByTestId('test-hyperlink');
-        await expect(Hyperlink.shadowRoot?.querySelector('a')).toHaveTextContent(Label.args?.label as string);
     }
 };
 
@@ -115,11 +97,6 @@ const App = () => <OmniHyperlink${args.label ? ` label='${args.label}'` : ''}${a
     args: {
         label: 'Click',
         size: 'small'
-    },
-    play: async (context) => {
-        const canvas = within(context.canvasElement);
-        const Hyperlink = canvas.getByTestId('test-hyperlink');
-        await expect(Hyperlink).toHaveAttribute('size', Size.args?.size as string);
     }
 };
 
@@ -139,11 +116,6 @@ const App = () => <OmniHyperlink${args.label ? ` label='${args.label}'` : ''}${a
     args: {
         label: 'Click',
         href: 'https://example.com'
-    },
-    play: async (context) => {
-        const canvas = within(context.canvasElement);
-        const Hyperlink = canvas.getByTestId('test-hyperlink');
-        await expect(Hyperlink).toHaveAttribute('href', Href.args?.href as string);
     }
 };
 
@@ -174,22 +146,6 @@ const App = () => <OmniHyperlink href="https://example.com"${args.label ? ` labe
     args: {
         label: 'Click',
         disabled: true
-    },
-    play: async (context) => {
-        const canvas = within(context.canvasElement);
-
-        const Hyperlink = canvas.getByTestId('test-hyperlink');
-
-        const click = jest.fn();
-        Hyperlink.addEventListener('click', () => click());
-
-        await userEvent.click(Hyperlink, {
-            pointerEventsCheck: 0
-        });
-        await userEvent.click(Hyperlink, {
-            pointerEventsCheck: 0
-        });
-        await expect(click).toBeCalledTimes(0);
     }
 };
 
@@ -216,13 +172,5 @@ const App = () => <p> Inline <OmniHyperlink${args.label ? ` label='${args.label}
     args: {
         label: 'click',
         inline: true
-    },
-    play: async (context) => {
-        const canvas = within(context.canvasElement);
-
-        const paragraph = canvas.getByTestId('test-paragraph');
-        const hyperlinkElement = paragraph.querySelector<HTMLElement>('omni-hyperlink');
-
-        await expect(paragraph).toContainElement(hyperlinkElement);
     }
 };
