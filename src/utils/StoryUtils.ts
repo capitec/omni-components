@@ -63,6 +63,22 @@ function loadCssProperties(
     );
 
     let superModule = elementModule;
+
+    /**
+     * Hack implemented to combine styles from the Tabs, Tab and Tab header component respectively
+     * Added as there is no stories for the Tab and Tab Header components as both of these components are related to the Tabs component.
+     * This will combine all the css variables from these components and display them on the styles tab of the docs site.
+     */
+    if (elementModule.path === 'src/tab/Tabs.ts') {
+        const tabModule = JSON.parse(
+            JSON.stringify(customElements.modules.find((module) => module.exports?.find((e: { name: string }) => e.name === 'omni-tab')))
+        );
+        const tabHeaderModule = JSON.parse(
+            JSON.stringify(customElements.modules.find((module) => module.exports?.find((e: { name: string }) => e.name === 'omni-tab-header')))
+        );
+        elementModule.declarations = [...tabModule.declarations, ...tabHeaderModule.declarations, ...elementModule.declarations];
+    }
+
     do {
         if (superModule.declarations.find((sd: any) => sd.superclass)) {
             superModule = customElements.modules.find((module) =>
