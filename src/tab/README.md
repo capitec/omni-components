@@ -16,10 +16,10 @@ html
 
 | Property   | Attribute  | Modifiers | Type                   | Description                                      |
 |------------|------------|-----------|------------------------|--------------------------------------------------|
-| `active`   | `active`   |           | `boolean \| undefined` | Indicator if the component is active.            |
+| `active`   | `active`   |           | `boolean \| undefined` | Indicator if the tab is active.                  |
 | `dir`      |            |           | `string`               |                                                  |
-| `disabled` | `disabled` |           | `boolean \| undefined` | Indicator if the component is disabled.          |
-| `header`   | `header`   |           | `string \| undefined`  | Tab header label.                                |
+| `disabled` | `disabled` |           | `boolean \| undefined` | Indicator if the tab is disabled.                |
+| `header`   | `header`   |           | `string \| undefined`  | Tab header label, use the omni-tab-header component for more complex header layouts |
 | `lang`     |            |           | `string`               |                                                  |
 | `override` | `override` |           |                        | Used to set the base direction of text for display |
 | `styles`   |            | readonly  | `CSSResultGroup[]`     |                                                  |
