@@ -41,6 +41,8 @@ import { TabHeader } from './TabHeader.js';
  * @cssprop --omni-tabs-tab-bar-border-bottom - Tabs tab bar bottom border.
  * @cssprop --omni-tabs-tab-bar-background-color - Tabs tab bar background color.
  *
+ * @cssinherit omni-tab-header
+ * @cssinherit omni-tab
  */
 @customElement('omni-tabs')
 export class Tabs extends OmniElement {
