@@ -114,7 +114,11 @@ export class Tabs extends OmniElement {
         tabHeader = tabHeader.closest('omni-tab-header') as TabHeader;
         const children = Array.from(this.children);
 
-        const tab = children.find((t) => (t.id && t.id === tabHeader.for) || t === tabHeader.data);
+        let tab;
+        // Added check for cases where clicking between tabs results in the tabHeader being null.
+        if (tabHeader) {
+            tab = children.find((t) => (t.id && t.id === tabHeader.for) || t === tabHeader.data);
+        }
 
         if (!tab || tab.hasAttribute(disabledAttribute)) {
             return;
