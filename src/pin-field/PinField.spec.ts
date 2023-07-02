@@ -18,8 +18,6 @@ test(`Pin Field - Interactive`, async ({ page, browserName }) => {
         await page.goto('/components/pin-field/');
         await page.evaluate(() => document.fonts.ready);
 
-        await page.waitForSelector('[data-testid]', {});
-
         const pinField = page.locator('[data-testid]').first();
         pinField.evaluate(async (t: PinField) => {
             t.value = '';
