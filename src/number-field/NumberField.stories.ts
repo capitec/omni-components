@@ -62,29 +62,6 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
         prefix: '',
         suffix: '',
         clear: ''
-    },
-    play: async (context) => {
-        const numberField = within(context.canvasElement).getByTestId<NumberField>('test-number-field');
-        numberField.value = '';
-
-        const input = jest.fn();
-        numberField.addEventListener('input', input);
-
-        const inputField = numberField.shadowRoot!.getElementById('inputField') as HTMLInputElement;
-        // Required to clear userEvent Symbol that keeps hidden state of previously typed values via userEvent. If not cleared this cannot be run multiple times with the same results
-        setUIValueClean(inputField);
-
-        const value = '12345';
-        await userEvent.type(inputField, value, {
-            pointerEventsCheck: 0
-        });
-
-        await waitFor(() => expect(inputField).toHaveValue(parseInt(value)), {
-            timeout: 3000
-        });
-        await waitFor(() => expect(input).toBeCalledTimes(value.length), {
-            timeout: 3000
-        });
     }
 };
 

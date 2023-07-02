@@ -83,7 +83,7 @@ export const testValueBehaviour = (tagName: string, storyExport = 'Value') => {
             const input = page.locator(`.${storyExport}`).getByTestId('test-field');
 
             const inputField = input.locator('input#inputField');
-            await expect(inputField).toHaveValue(args?.value as string);
+            await expect(inputField).toHaveValue(args?.value?.toString() as string);
         });
     });
 };
