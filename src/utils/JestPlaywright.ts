@@ -181,7 +181,7 @@ async function withCoverage<T>(this: any, page: Page, testAction: () => T | Prom
         result = await testAction.apply(this);
     } finally {
         // Only chromium supports coverage
-        if (page.coverage && browserName === 'chromium') {
+        if (page.coverage && browserName === 'chromium' && !page.isClosed()) {
             //Each test worker must collect and save its coverage information. The last worker will also report the coverage
 
             const coverage = await page.coverage.stopJSCoverage();

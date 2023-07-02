@@ -15,7 +15,7 @@ export default {
     component: 'omni-switch'
 } as CSFIdentifier;
 
-interface Args {
+export interface Args {
     label: string;
     data: object;
     hint: string;
@@ -54,22 +54,6 @@ export const Interactive: ComponentStoryFormat<Args> = {
         checked: false,
         disabled: false,
         '[Default Slot]': undefined
-    },
-    play: async (context) => {
-        const switchElement = within(context.canvasElement).getByTestId<Switch>('test-switch');
-        const valueChange = jest.fn();
-        switchElement.addEventListener('value-change', valueChange);
-
-        const content = switchElement.shadowRoot?.getElementById('content') as HTMLElement;
-        await userEvent.click(content, {
-            pointerEventsCheck: 0
-        });
-        await fireEvent.keyDown(content, {
-            key: ' ',
-            code: 'Space'
-        });
-
-        await expect(valueChange).toBeCalledTimes(2);
     }
 };
 
@@ -86,11 +70,6 @@ const App = () => <OmniSwitch${args.label ? ` label='${args.label}'` : ''}/>;`
     description: 'Set text content to display next to the component.',
     args: {
         label: 'Label'
-    },
-    play: async (context) => {
-        const switchElement = within(context.canvasElement).getByTestId<Switch>('test-switch');
-        const labelElement = switchElement.shadowRoot?.querySelector<HTMLElement>('.label');
-        await expect(labelElement).toHaveTextContent(Label.args?.label as string);
     }
 };
 
@@ -108,11 +87,6 @@ const App = () => <OmniSwitch${args.label ? ` label='${args.label}'` : ''}${args
     args: {
         label: 'Hint',
         hint: 'This is a hint'
-    },
-    play: async (context) => {
-        const switchElement = within(context.canvasElement).getByTestId<Switch>('test-switch');
-        const element = switchElement.shadowRoot?.querySelector<HTMLElement>('.hint');
-        await expect(element).toHaveTextContent(Hint.args?.hint as string);
     }
 };
 
@@ -131,11 +105,6 @@ const App = () => <OmniSwitch${args.label ? ` label='${args.label}'` : ''}${args
     args: {
         label: 'Error',
         error: 'This is an error state'
-    },
-    play: async (context) => {
-        const switchElement = within(context.canvasElement).getByTestId<Switch>('test-switch');
-        const element = switchElement.shadowRoot?.querySelector<HTMLElement>('.error');
-        await expect(element).toHaveTextContent(Error_Label.args?.error as string);
     }
 };
 
@@ -160,11 +129,6 @@ const App = () => <OmniSwitch${args.label ? ` label='${args.label}'` : ''}${args
     args: {
         label: 'Checked',
         checked: true
-    },
-    play: async (context) => {
-        const switchElement = within(context.canvasElement).getByTestId<Switch>('test-switch');
-        const checkedElement = switchElement.shadowRoot?.querySelector<HTMLElement>('.checked');
-        await expect(checkedElement).toBeTruthy();
     }
 };
 
@@ -189,24 +153,6 @@ const App = () => <OmniSwitch${args.label ? ` label='${args.label}'` : ''}${args
     args: {
         label: 'Disabled',
         disabled: true
-    },
-    play: async (context) => {
-        const switchElement = within(context.canvasElement).getByTestId<Switch>('test-switch');
-        const valueChange = jest.fn();
-        switchElement.addEventListener('value-change', valueChange);
-
-        const disabledElement = switchElement.shadowRoot?.querySelector<HTMLElement>('.disabled');
-        await expect(disabledElement).toBeTruthy();
-
-        const content = switchElement.shadowRoot?.getElementById('content') as HTMLElement;
-        await userEvent.click(content, {
-            pointerEventsCheck: 0
-        });
-        await fireEvent.keyDown(content, {
-            key: ' ',
-            code: 'Space'
-        });
-        await expect(valueChange).toBeCalledTimes(0);
     }
 };
 
@@ -226,10 +172,5 @@ const App = () => <OmniSwitch>
     ],
     name: 'Slot',
     description: 'Set content to display within.',
-    args: {},
-    play: async (context) => {
-        const switchElement = within(context.canvasElement).getByTestId<Switch>('test-switch');
-        const slottedText = switchElement.innerHTML;
-        await expect(slottedText).toEqual('Slotted');
-    }
+    args: {}
 } as ComponentStoryFormat<Args>;
