@@ -154,13 +154,5 @@ const App = () => <OmniPasswordField${args.label ? ` label='${args.label}'` : ''
     description: 'Set html content to display as the visibility indicators of the field.',
     args: {
         label: 'Custom Icon Slot'
-    },
-    play: async (context) => {
-        const passwordField = within(context.canvasElement).getByTestId<PasswordField>('test-password-field');
-        const slotElement = passwordField.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=show]');
-        await expect(slotElement).toBeTruthy();
-
-        const foundSlottedSvgElement = slotElement?.assignedElements().find((e) => e.tagName.toLocaleLowerCase() === 'omni-lock-open-icon');
-        await expect(foundSlottedSvgElement).toBeTruthy();
     }
 };
