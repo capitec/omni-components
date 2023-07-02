@@ -191,8 +191,14 @@ async function withCoverage<T>(this: any, page: Page, testAction: () => T | Prom
 
     // Only chromium supports coverage
     if (page.coverage && browserName === 'chromium') {
-        //Each test worker must start collecting coverage information for the duration of its tests
-        await page.coverage.startJSCoverage();
+        try {
+            //Each test worker must start collecting coverage information for the duration of its tests
+            await page.coverage.startJSCoverage();
+        } catch (error: any) {
+            if (!error.toString().includes('JSCoverage is already enabled')) {
+                throw error;
+            }
+        }
     }
 
     let result: any;
