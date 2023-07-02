@@ -53,10 +53,6 @@ export const Interactive: ComponentStoryFormat<Args> = {
         prefix: undefined,
         '[Default Slot]': undefined,
         close: undefined
-    },
-    play: async (context) => {
-        const toast = within(context.canvasElement).getByTestId<Toast>('test-toast');
-        toast.focus();
     }
 };
 
@@ -99,10 +95,6 @@ const App = () =>   <OmniToast${args.detail ? ` detail="${args.detail}"` : ''}${
         prefix: undefined,
         '[Default Slot]': raw`<span>Custom Slotted Toast <strong>Content</strong></span>`,
         close: undefined
-    },
-    play: async (context) => {
-        const toast = within(context.canvasElement).getByTestId<Toast>('test-toast');
-        toast.focus();
     }
 };
 
@@ -150,10 +142,6 @@ const App = () =>   <OmniToast${args.detail ? ` detail="${args.detail}"` : ''}${
 </svg>`,
         '[Default Slot]': undefined,
         close: undefined
-    },
-    play: async (context) => {
-        const toast = within(context.canvasElement).getByTestId<Toast>('test-toast');
-        toast.focus();
     }
 };
 
@@ -194,10 +182,6 @@ const App = () => <OmniToast${args.detail ? ` detail="${args.detail}"` : ''}${ar
         prefix: undefined,
         '[Default Slot]': undefined,
         close: undefined
-    },
-    play: async (context) => {
-        const toast = within(context.canvasElement).getByTestId<Toast>('test-toast');
-        toast.focus();
     }
 };
 
@@ -252,10 +236,6 @@ const App = () =>   <OmniToast${args.detail ? ` detail="${args.detail}"` : ''}${
         <path d="M5 10.75v-1.5h10v1.5Z"></path>
     </g>
 </svg>`
-    },
-    play: async (context) => {
-        const toast = within(context.canvasElement).getByTestId<Toast>('test-toast');
-        toast.focus();
     }
 };
 
@@ -306,9 +286,5 @@ const App = () => <OmniToast${args.detail ? ` detail="${args.detail}"` : ''}${ar
         prefix: undefined,
         '[Default Slot]': undefined,
         close: undefined
-    },
-    play: async (context) => {
-        const toast = within(context.canvasElement).getByTestId<Toast>('test-toast');
-        toast.focus();
     }
 };

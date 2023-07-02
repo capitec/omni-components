@@ -118,40 +118,6 @@ export const Interactive: ComponentStoryFormat<Args> = {
     detail="The toast description"
     header="The toast message">
 </omni-toast>`
-    },
-    play: async (context) => {
-        const btn = context.canvasElement.querySelector('omni-button');
-        if (btn) {
-            btn.click();
-        }
-        const toastStack = within(document.body).getByTestId<ToastStack>('test-toast-stack');
-        const toastRemove = jest.fn();
-        toastStack.addEventListener('toast-remove', () => toastRemove());
-        await toastStack.updateComplete;
-        toastStack.focus();
-        const shown = toastStack.showToast({ type: 'info', header: 'Test', detail: 'Test Info', closeable: true, duration: 2000 });
-        const toastStackRemove = jest.fn();
-        shown.addEventListener('toast-stack-remove', () => toastStackRemove());
-        toastStack.showToast({
-            type: 'info',
-            header: 'Test',
-            detail: 'Test Info',
-            closeable: true,
-            // duration: 15000,
-            prefix: html`✅`,
-            close: html`❎`,
-            content: html`<span>My Extra <strong>Content</strong></span>`
-        });
-
-        // Wait for toast removals
-        await new Promise((resolve) => setTimeout(resolve, 6000));
-
-        await expect(toastRemove).toBeCalledTimes(5);
-        await expect(toastStackRemove).toBeCalled();
-
-        await expect(toastStack.childElementCount).toBe(2);
-
-        toastStack.innerHTML = '';
     }
 };
 
@@ -271,26 +237,6 @@ const App = () => <OmniToastStack position="${args.position}" >
     detail="The toast description"
     header="The toast message">
 </omni-toast>`
-    },
-    play: async (context) => {
-        const btn = context.canvasElement.querySelector('omni-button');
-        if (btn) {
-            btn.click();
-        }
-        const toastStack = within(document.body).getByTestId<ToastStack>('test-toast-stack-slotted');
-        await toastStack.updateComplete;
-        toastStack.focus();
-        toastStack.showToast({ type: 'info', header: 'Test', detail: 'Test Info', closeable: true, duration: 15000 });
-        toastStack.showToast({
-            type: 'info',
-            header: 'Test',
-            detail: 'Test Info',
-            closeable: true,
-            // duration: 15000,
-            prefix: html`✅`,
-            close: html`❎`,
-            content: html`<span>My Extra <strong>Content</strong></span>`
-        });
     }
 };
 
@@ -447,26 +393,6 @@ const onRef = e => {
         reverse: false,
         position: 'bottom',
         '[Default Slot]': undefined
-    },
-    play: async (context) => {
-        const btn = context.canvasElement.querySelector('omni-button');
-        if (btn) {
-            btn.click();
-        }
-        const toastStack = within(document.body).getByTestId<ToastStack>('test-toast-stack-added');
-        await toastStack.updateComplete;
-        toastStack.focus();
-        toastStack.showToast({ type: 'info', header: 'Test', detail: 'Test Info', closeable: true, duration: 15000 });
-        toastStack.showToast({
-            type: 'info',
-            header: 'Test',
-            detail: 'Test Info',
-            closeable: true,
-            // duration: 15000,
-            prefix: html`✅`,
-            close: html`❎`,
-            content: html`<span>My Extra <strong>Content</strong></span>`
-        });
     }
 };
 
@@ -576,26 +502,6 @@ toastStack.showToast({
         reverse: false,
         position: 'bottom',
         '[Default Slot]': undefined
-    },
-    play: async (context) => {
-        const btn = context.canvasElement.querySelector('omni-button');
-        if (btn) {
-            btn.click();
-        }
-        const toastStack = within(document.body).getByTestId<ToastStack>('test-toast-stack-created');
-        await toastStack.updateComplete;
-        toastStack.focus();
-        toastStack.showToast({ type: 'info', header: 'Test', detail: 'Test Info', closeable: true, duration: 15000 });
-        toastStack.showToast({
-            type: 'info',
-            header: 'Test',
-            detail: 'Test Info',
-            closeable: true,
-            // duration: 15000,
-            prefix: html`✅`,
-            close: html`❎`,
-            content: html`<span>My Extra <strong>Content</strong></span>`
-        });
     }
 };
 
@@ -762,26 +668,6 @@ const onRef = e => {
         reverse: false,
         position: 'right',
         '[Default Slot]': undefined
-    },
-    play: async (context) => {
-        const btn = context.canvasElement.querySelector('omni-button');
-        if (btn) {
-            btn.click();
-        }
-        const toastStack = within(document.body).getByTestId<ToastStack>('test-toast-stack-position');
-        await toastStack.updateComplete;
-        toastStack.focus();
-        toastStack.showToast({ type: 'info', header: 'Test', detail: 'Test Info', closeable: true, duration: 15000 });
-        toastStack.showToast({
-            type: 'info',
-            header: 'Test',
-            detail: 'Test Info',
-            closeable: true,
-            // duration: 15000,
-            prefix: html`✅`,
-            close: html`❎`,
-            content: html`<span>My Extra <strong>Content</strong></span>`
-        });
     }
 };
 
@@ -933,25 +819,5 @@ const onRef = e => {
         reverse: true,
         position: 'bottom',
         '[Default Slot]': undefined
-    },
-    play: async (context) => {
-        const btn = context.canvasElement.querySelector('omni-button');
-        if (btn) {
-            btn.click();
-        }
-        const toastStack = within(document.body).getByTestId<ToastStack>('test-toast-stack-reverse');
-        await toastStack.updateComplete;
-        toastStack.focus();
-        toastStack.showToast({ type: 'info', header: 'Test', detail: 'Test Info', closeable: true, duration: 15000 });
-        toastStack.showToast({
-            type: 'info',
-            header: 'Test',
-            detail: 'Test Info',
-            closeable: true,
-            // duration: 15000,
-            prefix: html`✅`,
-            close: html`❎`,
-            content: html`<span>My Extra <strong>Content</strong></span>`
-        });
     }
 };

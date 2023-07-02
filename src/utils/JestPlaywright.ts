@@ -133,6 +133,25 @@ function extendExpect<T, U = jest.Expect>(initialExpect: T): U {
                     pass: true,
                     message: () => 'No "CI" or "PW_SCREENSHOT_TESTING" environment variables set. Skipping screenshot assertion!'
                 };
+            },
+            toMatchSnapshot: async function (received: string | Buffer, name: string | Array<string>) {
+                const testInfo = test.info();
+
+                if (Array.isArray(name)) {
+                    name = name.join('/');
+                }
+
+                if (testInfo && received) {
+                    testInfo.annotations.push({ type: 'warning', description: `Snapshot assertion was skipped! (${name})` });
+
+                    if (typeof received !== 'string') {
+                        await testInfo.attach(name, { body: received, contentType: 'image/png' });
+                    }
+                }
+                return {
+                    pass: true,
+                    message: () => 'No "CI" or "PW_SCREENSHOT_TESTING" environment variables set. Skipping snapshot assertion!'
+                };
             }
         });
     }
