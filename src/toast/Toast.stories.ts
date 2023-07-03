@@ -102,6 +102,42 @@ document.querySelector('omni-button').addEventListener('click', () => {
             }
         },
         {
+            framework: 'Vue',
+            sourceParts: {
+                htmlFragment: raw`<omni-button label="Show Toast" @click="showToast"></omni-button>`,
+                jsFragment: `import { Toast } from '@capitec/omni-components/toast';
+
+window.vueData = {
+    showToast: () => {
+        Toast.show({
+            type: 'success',
+            header: 'Success!',
+            detail: 'It was successful.',
+            closeable: true,
+            duration: 3000
+        });
+    }
+};`
+            }
+        },
+        {
+            framework: 'Lit',
+            sourceParts: {
+                htmlFragment: raw`<omni-button label="Show Toast" @click="\${showToast}"></omni-button>`,
+                jsFragment: `import { Toast } from '@capitec/omni-components/toast';
+
+const showToast = () => {
+    Toast.show({
+        type: 'success',
+        header: 'Success!',
+        detail: 'It was successful.',
+        closeable: true,
+        duration: 3000
+    });
+}`
+            }
+        },
+        {
             framework: 'React',
             load: (args) => `import { OmniButton } from "@capitec/omni-components-react/button";
 import { Toast } from '@capitec/omni-components-react/toast';
@@ -169,6 +205,50 @@ document.querySelector('omni-button').addEventListener('click', () => {
         duration: 3000
     });
 });`
+            }
+        },
+        {
+            framework: 'Vue',
+            sourceParts: {
+                htmlFragment: raw`<omni-button label="Show Toast" @click="showToast"></omni-button>`,
+                jsFragment: `import { Toast } from '@capitec/omni-components/toast';
+
+Toast.configure({
+    position: 'top'
+});
+
+window.vueData = {
+    showToast: () => {
+        Toast.show({
+            type: 'success',
+            header: 'Success!',
+            detail: 'It was successful.',
+            closeable: true,
+            duration: 3000
+        });
+    }
+};`
+            }
+        },
+        {
+            framework: 'Lit',
+            sourceParts: {
+                htmlFragment: raw`<omni-button label="Show Toast" @click="\${showToast}"></omni-button>`,
+                jsFragment: `import { Toast } from '@capitec/omni-components/toast';
+
+Toast.configure({
+    position: 'top'
+});
+
+const showToast = () => {
+    Toast.show({
+        type: 'success',
+        header: 'Success!',
+        detail: 'It was successful.',
+        closeable: true,
+        duration: 3000
+    });
+}`
             }
         },
         {
@@ -241,6 +321,44 @@ document.querySelector('omni-button').addEventListener('click', () => {
         duration: 3000
     });
 });`
+            }
+        },
+        {
+            framework: 'Vue',
+            sourceParts: {
+                htmlFragment: raw`<omni-button label="Show Toast" @click="showToast"></omni-button>`,
+                jsFragment: `import { Toast } from '@capitec/omni-components/toast';
+
+window.vueData = {
+    showToast: () => {
+        Toast.show({
+            stack: true,
+            type: 'success',
+            header: 'Success!',
+            detail: 'It was successful.',
+            closeable: true,
+            duration: 3000
+        });
+    }
+};`
+            }
+        },
+        {
+            framework: 'Lit',
+            sourceParts: {
+                htmlFragment: raw`<omni-button label="Show Toast" @click="\${showToast}"></omni-button>`,
+                jsFragment: `import { Toast } from '@capitec/omni-components/toast';
+
+const showToast = () => {
+    Toast.show({
+        stack: true,
+        type: 'success',
+        header: 'Success!',
+        detail: 'It was successful.',
+        closeable: true,
+        duration: 3000
+    });
+}`
             }
         },
         {
