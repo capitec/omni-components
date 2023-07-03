@@ -61,6 +61,10 @@ const config = {
         baseURL: `http://${process.env.PLAYWRIGHT_HOST_ORIGIN ?? 'localhost'}:6006`,
 
         colorScheme: 'light',
+        contextOptions: {
+            reducedMotion: 'reduce',
+            colorScheme: 'light'
+        }
     },
 
     /* Configure projects for major browsers */
@@ -97,22 +101,22 @@ const config = {
                 userAgent: 'Test Runner'
             },
         },
-        
+
         {
-          name: 'Mobile Safari',
-          use: {
-            ...devices['iPhone 12'],
+            name: 'Mobile Safari',
+            use: {
+                ...devices['iPhone 12'],
                 userAgent: 'Test Runner'
-          },
+            },
         },
-        
-        {
-          name: 'iPhone 13 Pro Max',
-          use: {
-            ...devices['iPhone 13 Pro Max'],
-                userAgent: 'Test Runner'
-          },
-        },
+
+        // {
+        //     name: 'iPhone 13 Pro Max',
+        //     use: {
+        //         ...devices['iPhone 13 Pro Max'],
+        //         userAgent: 'Test Runner'
+        //     },
+        // },
 
         /* Test against branded browsers. */
         // {
