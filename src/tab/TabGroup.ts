@@ -182,8 +182,8 @@ export class TabGroup extends OmniElement {
                     activeTabHeader.requestUpdate();
                 }
             } else {
-                const activeTab = tabContent.find((c) => c.hasAttribute(activeAttribute)) as Element;
-                const activeTabHeader = tabHeaders.find((x) => x.for === activeTab.id);
+                const activeTab = tabContent.find((c) => c.hasAttribute(activeAttribute) || c.active);
+                const activeTabHeader = tabHeaders.find((x) => x.for === activeTab?.id);
                 if (activeTabHeader) {
                     activeTabHeader.setAttribute(activeHeaderAttribute, '');
                     activeTabHeader.requestUpdate();
