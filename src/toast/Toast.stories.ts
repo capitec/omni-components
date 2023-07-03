@@ -9,6 +9,7 @@ import { assignToSlot, ComponentStoryFormat, CSFIdentifier, getSourceFromLit, ra
 import { Toast } from './Toast.js';
 
 import './Toast.js';
+import '../button/Button.js';
 
 export default {
     title: 'UI Components/Toast',
@@ -54,6 +55,215 @@ export const Interactive: ComponentStoryFormat<Args> = {
         '[Default Slot]': undefined,
         close: undefined
     }
+};
+
+export const Showing_Toasts: ComponentStoryFormat<Args> = {
+    description: () => html`
+    <div>
+        Toasts can be shown programmatically using the static <code class="language-js">Toast.show()</code> function. 
+    <div>
+    `,
+    render: (args: Args) => html`
+        <omni-button
+            data-testid="test-toast-show"
+            label="Show Toast"
+            @click="${() => {
+                Toast.configure({
+                    position: 'bottom',
+                    reverse: false
+                });
+                Toast.show({
+                    type: 'success',
+                    header: 'Success!',
+                    detail: 'It was successful.',
+                    closeable: true,
+                    duration: 3000
+                });
+            }}"
+            >
+        </omni-button>
+    `,
+    frameworkSources: [
+        {
+            framework: 'HTML',
+            sourceParts: {
+                htmlFragment: raw`<omni-button label="Show Toast"></omni-button>`,
+                jsFragment: `import { Toast } from '@capitec/omni-components/toast';
+
+document.querySelector('omni-button').addEventListener('click', () => {
+    Toast.show({
+        type: 'success',
+        header: 'Success!',
+        detail: 'It was successful.',
+        closeable: true,
+        duration: 3000
+    });
+});`
+            }
+        },
+        {
+            framework: 'React',
+            load: (args) => `import { OmniButton } from "@capitec/omni-components-react/button";
+import { Toast } from '@capitec/omni-components-react/toast';
+
+const showToast = () => {
+    Toast.show({
+        type: 'success',
+        header: 'Success!',
+        detail: 'It was successful.',
+        closeable: true,
+        duration: 3000
+    });
+};
+
+const App = () => <OmniButton label="Show Toast" onclick={showToast}/>;`
+        }
+    ],
+    name: 'Showing Toast Programmatically',
+    args: {}
+};
+
+export const Configure_Toast: ComponentStoryFormat<Args> = {
+    description: () => html`
+    <div>
+       Programmatically shown Toasts can be configured using the static <code class="language-js">Toast.configure()</code> function. 
+    <div>
+    `,
+    render: (args: Args) => html`
+        <omni-button
+            data-testid="test-toast-configure"
+            label="Show Toast"
+            @click="${() => {
+                Toast.configure({
+                    position: 'top',
+                    reverse: false
+                });
+                Toast.show({
+                    type: 'success',
+                    header: 'Success!',
+                    detail: 'It was successful.',
+                    closeable: true,
+                    duration: 3000
+                });
+            }}"
+            >
+        </omni-button>
+    `,
+    frameworkSources: [
+        {
+            framework: 'HTML',
+            sourceParts: {
+                htmlFragment: raw`<omni-button label="Show Toast"></omni-button>`,
+                jsFragment: `import { Toast } from '@capitec/omni-components/toast';
+
+Toast.configure({
+    position: 'top'
+});
+
+document.querySelector('omni-button').addEventListener('click', () => {
+    Toast.show({
+        type: 'success',
+        header: 'Success!',
+        detail: 'It was successful.',
+        closeable: true,
+        duration: 3000
+    });
+});`
+            }
+        },
+        {
+            framework: 'React',
+            load: (args) => `import { OmniButton } from "@capitec/omni-components-react/button";
+import { Toast } from '@capitec/omni-components-react/toast';
+
+Toast.configure({
+    position: 'top'
+});
+
+const showToast = () => {
+    Toast.show({
+        type: 'success',
+        header: 'Success!',
+        detail: 'It was successful.',
+        closeable: true,
+        duration: 3000
+    });
+};
+
+const App = () => <OmniButton label="Show Toast" onclick={showToast}/>;`
+        }
+    ],
+    name: 'Configure Toast Programmatically',
+    args: {}
+};
+
+export const Stacking_Toasts: ComponentStoryFormat<Args> = {
+    description: () => html`
+    <div>
+        Toasts can be stacked instead of replaced when shown programmatically via the static <code class="language-js">Toast.show()</code> function by setting <code>stack</code> to <code class="language-js">true</code>. 
+    <div>
+    `,
+    render: (args: Args) => html`
+        <omni-button
+            data-testid="test-toast-show"
+            label="Stack Toast"
+            @click="${() => {
+                Toast.configure({
+                    position: 'bottom',
+                    reverse: false
+                });
+                Toast.show({
+                    stack: true,
+                    type: 'success',
+                    header: 'Success!',
+                    detail: 'It was successful.',
+                    closeable: true,
+                    duration: 3000
+                });
+            }}"
+            >
+        </omni-button>
+    `,
+    frameworkSources: [
+        {
+            framework: 'HTML',
+            sourceParts: {
+                htmlFragment: raw`<omni-button label="Stack Toast"></omni-button>`,
+                jsFragment: `import { Toast } from '@capitec/omni-components/toast';
+
+document.querySelector('omni-button').addEventListener('click', () => {
+    Toast.show({
+        stack: true,
+        type: 'success',
+        header: 'Success!',
+        detail: 'It was successful.',
+        closeable: true,
+        duration: 3000
+    });
+});`
+            }
+        },
+        {
+            framework: 'React',
+            load: (args) => `import { OmniButton } from "@capitec/omni-components-react/button";
+import { Toast } from '@capitec/omni-components-react/toast';
+
+const showToast = () => {
+    Toast.show({
+        stack: true,
+        type: 'success',
+        header: 'Success!',
+        detail: 'It was successful.',
+        closeable: true,
+        duration: 3000
+    });
+};
+
+const App = () => <OmniButton label="Stack Toast" onclick={showToast}/>;`
+        }
+    ],
+    name: 'Stacking Toast Programmatically',
+    args: {}
 };
 
 export const Custom_Slotted_Content: ComponentStoryFormat<Args> = {
