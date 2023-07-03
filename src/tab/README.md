@@ -98,6 +98,7 @@ html
 |-------------------------------------------------|-----------------------------------------|
 | `--omni-tab-header-active-font-color`           | Tab header active font color.           |
 | `--omni-tab-header-disabled-background-color`   | Tab header disabled background color.   |
+| `--omni-tab-header-disabled-cursor`             | Tab header disabled cursor.             |
 | `--omni-tab-header-font-color`                  | Tab header font color.                  |
 | `--omni-tab-header-font-family`                 | Tab header font family.                 |
 | `--omni-tab-header-font-size`                   | Tab header font size.                   |
