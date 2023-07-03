@@ -25,6 +25,7 @@ import { OmniElement } from '../core/OmniElement.js';
  * @cssprop --omni-tab-header-font-size - Tab header font size.
  * @cssprop --omni-tab-header-font-weight - Tab header font weight.
  *
+ * @cssprop --omni-tab-header-disabled-cursor - Tab header disabled cursor.
  * @cssprop --omni-tab-header-disabled-background-color - Tab header disabled background color.
  * @cssprop --omni-tab-header-active-font-color - Tab header active font color.
  *
@@ -74,7 +75,7 @@ export class TabHeader extends OmniElement {
                 }
 
                 :host([data-disabled]){
-                    cursor: not-allowed;
+                    cursor: var(--omni-tab-header-disabled-cursor, not-allowed);
                     background-color: var(--omni-tab-header-disabled-background-color, var(--omni-disabled-background-color)); 
                 }
 
