@@ -3,7 +3,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { OmniElement } from '../core/OmniElement.js';
 
 /**
- * Control that can be used to display custom slotted content, for use within an omni-tabs component and associated omni-tab component.
+ * Control that can be used to display custom slotted content, for use within Tab Group component with associated Tab component.
  *
  * @import
  * ```js

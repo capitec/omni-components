@@ -41,7 +41,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         The <code class="language-html">&lt;omni-tab-group&gt;</code> component will display content based on the slotted <code class="language-html">&lt;omni-tab&gt;</code> component(s). 
         </p>
         <p>
-        Tab headers are rendered by either setting the <code>header</code> attribute of the <code class="language-html">&lt;omni-tab&gt;</code> component or via slotted <code class="language-html">&lt;omni-tab-header&gt;</code> component(s) that targets the <code class="language-html">&lt;omni-tab-group&gt;</code> header slot. 
+        For an advanced use case check the <omni-hyperlink href='./components/tab-header'><code class="language-html">&lt;omni-tab-header&gt;</code></omni-hyperlink> example.
         </p>
     `,
     args: {

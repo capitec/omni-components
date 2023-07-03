@@ -36,13 +36,12 @@ import { TabHeader } from './TabHeader.js';
  * @slot - All omni-tab components that are managed by this component.
  * @slot header - Optional omni-tab-header components associated with each omni-tab component.
  *
- * @cssprop --omni-tabs-tab-bar-width - Tabs tab bar width.
- * @cssprop --omni-tabs-tab-bar-height - Tabs tab bar height.
- * @cssprop --omni-tabs-tab-bar-border-bottom - Tabs tab bar bottom border.
- * @cssprop --omni-tabs-tab-bar-background-color - Tabs tab bar background color.
+ * @cssprop --omni-tab-group-tab-bar-width - Tabs tab bar width.
+ * @cssprop --omni-tab-group-tab-bar-height - Tabs tab bar height.
+ * @cssprop --omni-tab-group-tab-bar-border-bottom - Tabs tab bar bottom border.
+ * @cssprop --omni-tab-group-tab-bar-background-color - Tabs tab bar background color.
  *
  * @cssinherit omni-tab-header
- * @cssinherit omni-tab
  */
 @customElement('omni-tab-group')
 export class TabGroup extends OmniElement {
@@ -151,10 +150,10 @@ export class TabGroup extends OmniElement {
                     display: flex;
                     flex-direction: row;
                     align-items: center;
-                    width: var(--omni-tabs-tab-bar-width, 100%);
-                    height: var(--omni-tabs-tab-bar-height, 50px);
-                    border-bottom: var(--omni-tabs-tab-bar-border-bottom, none);
-                    background: var(--omni-tabs-tab-bar-background-color, transparent);
+                    width: var(--omni-tab-group-tab-bar-width, 100%);
+                    height: var(--omni-tab-group-tab-bar-height, 50px);
+                    border-bottom: var(--omni-tab-group-tab-bar-border-bottom, none);
+                    background: var(--omni-tab-group-tab-bar-background-color, transparent);
                 }
 
                 /* CONTENT */
