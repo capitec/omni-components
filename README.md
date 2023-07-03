@@ -575,19 +575,19 @@ Control that can be used to display slotted content, for use within an omni-tabs
 
 </td></tr><tr><td>
 
-[omni-tab-header](src/tab/README.md)
-
-</td><td>
-
-Control that can be used to display custom slotted content, for use within an omni-tabs component and associated omni-tab component.
-
-</td></tr><tr><td>
-
 [omni-tabs](src/tab/README.md)
 
 </td><td>
 
 Component that displays content in tabs.
+
+</td></tr><tr><td>
+
+[omni-tab-header](src/tab/README.md)
+
+</td><td>
+
+Control that can be used to display custom slotted content, for use within an omni-tabs component and associated omni-tab component.
 
 </td></tr><tr><td>
 
