@@ -21,7 +21,7 @@ interface Args {
 
 export const Interactive: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
-    <omni-tab-group data-testid="test-tabs">
+    <omni-tab-group data-testid="test-tab-group">
         ${args.header ? html`${'\r\n'}${unsafeHTML(assignToSlot('header', args.header))}` : nothing}
         ${args['[Default Slot]'] ? html`${'\r\n'}${unsafeHTML(args['[Default Slot]'])}` : nothing}
     </omni-tab-group>
@@ -38,7 +38,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
     name: 'Interactive',
     description: () => html`
         <p>
-        The <code class="language-html">&lt;omni-tab-group&gt;</code> component will display content based on the nested <code class="language-html">&lt;omni-tab&gt;</code> component(s). 
+        The <code class="language-html">&lt;omni-tab-group&gt;</code> component will display content based on the slotted <code class="language-html">&lt;omni-tab&gt;</code> component(s). 
         </p>
         <p>
         Tab headers are rendered by either setting the <code>header</code> attribute of the <code class="language-html">&lt;omni-tab&gt;</code> component or via slotted <code class="language-html">&lt;omni-tab-header&gt;</code> component(s) that targets the <code class="language-html">&lt;omni-tab-group&gt;</code> header slot. 
@@ -57,12 +57,12 @@ export const Interactive: ComponentStoryFormat<Args> = {
 </omni-tab>`
     },
     play: async (context) => {
-        const tabsElement = within(context.canvasElement).getByTestId<TabGroup>('test-tabs');
+        const tabGroupElement = within(context.canvasElement).getByTestId<TabGroup>('test-tab-group');
         const tabSelect = jest.fn();
-        tabsElement.addEventListener('tab-select', tabSelect);
+        tabGroupElement.addEventListener('tab-select', tabSelect);
 
         // Get the tab bar element
-        const tabBar = (await querySelectorAsync(tabsElement.shadowRoot as ShadowRoot, '.tab-bar')) as HTMLElement;
+        const tabBar = (await querySelectorAsync(tabGroupElement.shadowRoot as ShadowRoot, '.tab-bar')) as HTMLElement;
         await expect(tabBar).toBeTruthy();
 
         // Get all the tab headers in the tab bar
@@ -80,7 +80,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         // Confirm that the tab select event was emitted.
         await expect(tabSelect).toBeCalledTimes(1);
         // Get the default slot for Tabs element and get the new active Tab
-        const tabsSlotElement = (await querySelectorAsync(tabsElement.shadowRoot as ShadowRoot, 'slot:not([name])')) as HTMLSlotElement;
+        const tabsSlotElement = (await querySelectorAsync(tabGroupElement.shadowRoot as ShadowRoot, 'slot:not([name])')) as HTMLSlotElement;
         const activeTabElement = tabsSlotElement.assignedElements().find((e) => e.hasAttribute('active')) as Tab;
         // Confirm that the active tabs header is equal to the expected value.
         await expect(activeTabElement.header).toEqual('Tab 2');

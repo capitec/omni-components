@@ -18,7 +18,7 @@ interface Args {
 
 export const Advanced: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
-    <omni-tab-group data-testid='test-tabs'>
+    <omni-tab-group data-testid='test-tab-group'>
         ${args['[Default Slot]'] ? html`${'\r\n'}${unsafeHTML(args['[Default Slot]'])}` : nothing}
     </omni-tab-group>
 `,
@@ -108,9 +108,9 @@ const App = () =>
     <div>
     `,
     play: async (context) => {
-        const tabs = within(context.canvasElement).getByTestId<TabGroup>('test-tabs');
+        const tabGroupElement = within(context.canvasElement).getByTestId<TabGroup>('test-tab-group');
         // Get the tab bar element
-        const tabBar = (await querySelectorAsync(tabs.shadowRoot as ShadowRoot, '.tab-bar')) as HTMLElement;
+        const tabBar = (await querySelectorAsync(tabGroupElement.shadowRoot as ShadowRoot, '.tab-bar')) as HTMLElement;
         await expect(tabBar).toBeTruthy();
 
         // Check for the slot then check the content of the slot

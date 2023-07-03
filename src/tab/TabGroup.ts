@@ -27,7 +27,7 @@ import { TabHeader } from './TabHeader.js';
  * </omni-tab-group>
  *```
  *
- * @element omni-tabs
+ * @element omni-tab-group
  *
  * Registry of all properties defined by the component.
  *
