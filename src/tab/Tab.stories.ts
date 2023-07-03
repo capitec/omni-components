@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import * as jest from 'jest-mock';
 import { html } from 'lit';
 import expect from '../utils/ExpectDOM.js';
-import { ComponentStoryFormat, CSFIdentifier, querySelectorAsync, raw, getSourceFromLit } from '../utils/StoryUtils.js';
+import { ComponentStoryFormat, querySelectorAsync, raw, getSourceFromLit } from '../utils/StoryUtils.js';
 
 import { Tab } from './Tab.js';
 import { TabHeader } from './TabHeader.js';
@@ -40,22 +40,22 @@ import { OmniLabel } from "@capitec/omni-components-react/label";
 
 const App = () =>
 <OmniTabs>
-<OmniTab header="Tab 1">
-    <OmniLabel label="Label of Tab 1"/>
-</OmniTab>
-<OmniTab header="Tab 2">
-    <OmniLabel label="Label of Tab 2"/>
-</OmniTab>
-<OmniTab header="Tab 3">
-    <OmniLabel label="Label of Tab 3"/>
-</OmniTab>
+    <OmniTab header="Tab 1">
+        <OmniLabel label="Label of Tab 1"/>
+    </OmniTab>
+    <OmniTab header="Tab 2">
+        <OmniLabel label="Label of Tab 2"/>
+    </OmniTab>
+    <OmniTab header="Tab 3">
+        <OmniLabel label="Label of Tab 3"/>
+    </OmniTab>
 </OmniTabs>;`
         }
     ],
     name: 'Basic',
     description: () => html`
     <div>
-        This is the recommended use of the <code class="language-html">&lt;omni-tabs&gt;</code> with nested <code class="language-html">&lt;omni-tab&gt;</code> component(s), headers for each tab is set by setting the <code>header</code> attribute of the <code class="language-html">&lt;omni-tab&gt;</code>.
+        This is the recommended use of the <code class="language-html">&lt;omni-tabs&gt;</code> with slotted <code class="language-html">&lt;omni-tab&gt;</code> component(s), headers for each tab are set by setting the <code>header</code> attribute of the <code class="language-html">&lt;omni-tab&gt;</code>(s).
     <div>
     `,
     play: async (context) => {
@@ -124,7 +124,7 @@ const App = () =>
     name: 'Active',
     description: () => html`
     <div>
-        Set which <code class="language-html">&lt;omni-tab&gt;</code> nested in the <code class="language-html">&lt;omni-tabs&gt;</code> should be active by default. By setting the <code>active</code> attribute of one of the nested <code class="language-html">&lt;omni-tab&gt;</code> component.
+        Set which <code class="language-html">&lt;omni-tab&gt;</code> slotted in the <code class="language-html">&lt;omni-tabs&gt;</code> should be active by default. By setting the <code>active</code> attribute of one of the slotted <code class="language-html">&lt;omni-tab&gt;</code> component.
     <div>
     `,
     play: async (context) => {
@@ -200,7 +200,7 @@ const App = () =>
     name: 'Disabled',
     description: () => html`
     <div>
-        Set a <code class="language-html">&lt;omni-tab&gt;</code> nested in the <code class="language-html">&lt;omni-tabs&gt;</code> component to be disabled by setting <code>disabled</code> attribute.
+        Set a <code class="language-html">&lt;omni-tab&gt;</code> slotted in the <code class="language-html">&lt;omni-tabs&gt;</code> component to be disabled by setting <code>disabled</code> attribute.
     <div>
     `,
     args: {},

@@ -61,7 +61,7 @@ export class Tabs extends OmniElement {
             // Start observing child attribute changes.
             this._observer?.observe(this, {
                 attributes: true,
-                attributeFilter: [`header`],
+                attributeFilter: [`header`, `active`, `disabled`],
                 subtree: true
             });
         });
