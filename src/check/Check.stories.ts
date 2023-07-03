@@ -22,7 +22,7 @@ export default {
     }
 } as CSFIdentifier;
 
-interface Args {
+export interface Args {
     label: string;
     data: object;
     hint: string;

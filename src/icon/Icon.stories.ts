@@ -52,12 +52,6 @@ export const Interactive: ComponentStoryFormat<Args> = {
     </g>
 </svg>`,
         icon: undefined as unknown as string
-    },
-    play: async (context) => {
-        const icon = within(context.canvasElement).getByTestId<Icon>('test-icon');
-        const slotElement = icon.shadowRoot?.querySelector('slot') as HTMLSlotElement;
-        const foundSlottedSvgElement = slotElement.assignedElements().find((e) => e.tagName.toLowerCase() === 'svg');
-        await expect(foundSlottedSvgElement).toBeTruthy();
     }
 };
 
@@ -98,12 +92,6 @@ const App = () => <OmniIcon${args.size ? ` size='${args.size}'` : ''}${args.symm
                 </g>
               </svg>
         `
-    },
-    play: async (context) => {
-        const icon = within(context.canvasElement).getByTestId<Icon>('test-icon');
-        const slotElement = icon.shadowRoot?.querySelector('slot') as HTMLSlotElement;
-        const foundSlottedSvgElement = slotElement.assignedElements().find((e) => e.tagName.toLowerCase() === 'svg');
-        await expect(foundSlottedSvgElement).toBeTruthy();
     }
 };
 
@@ -136,12 +124,6 @@ const App = () => <OmniIcon${args.size ? ` size='${args.size}'` : ''}${args.icon
     args: {
         size: 'default',
         icon: './assets/images/colors.svg'
-    },
-    play: async (context) => {
-        const icon = within(context.canvasElement).getByTestId<Icon>('test-icon');
-        const imgElement = icon.shadowRoot?.querySelector('img') as HTMLImageElement;
-        await expect(imgElement).toBeTruthy();
-        await expect(imgElement.src.endsWith(context.args.icon.replace('./', '/'))).toBeTruthy();
     }
 };
 
@@ -169,12 +151,6 @@ const App = () => <OmniIcon${args.size ? ` size='${args.size}'` : ''}${args.icon
     args: {
         size: 'default',
         icon: 'https://img.shields.io/badge/Source-remote-lightgrey.svg'
-    },
-    play: async (context) => {
-        const icon = within(context.canvasElement).getByTestId<Icon>('test-icon');
-        const imgElement = icon.shadowRoot?.querySelector('img') as HTMLImageElement;
-        await expect(imgElement).toBeTruthy();
-        await expect(imgElement?.src).toEqual(context.args.icon);
     }
 };
 
@@ -205,12 +181,6 @@ const App = () => <OmniIcon${args.size ? ` size='${args.size}'` : ''}${args.icon
     args: {
         size: 'default',
         icon: '@material/receipt_long'
-    },
-    play: async (context) => {
-        const icon = within(context.canvasElement).getByTestId<Icon>('test-icon');
-        const materialElement = icon.shadowRoot?.querySelector<HTMLElement>('.material-icon');
-        await expect(materialElement).toBeTruthy();
-        await expect(materialElement?.innerText).toEqual(Material.args?.icon?.replace('@material/', ''));
     }
 };
 
@@ -260,11 +230,6 @@ const App = () => <OmniIcon${args.size ? ` size='${args.size}'` : ''}${args.symm
     args: {
         size: 'large',
         symmetrical: false
-    },
-    play: async (context) => {
-        const icon = within(context.canvasElement).getByTestId<Icon>('test-icon');
-        const svg = icon.querySelector('svg') as SVGElement;
-        await expect(svg.clientWidth).not.toEqual(svg.clientHeight);
     }
 };
 

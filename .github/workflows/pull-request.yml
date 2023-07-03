@@ -10,7 +10,7 @@ jobs:
   pr-lint:
     name: Lint
     timeout-minutes: 15 
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -30,7 +30,7 @@ jobs:
   pr-format:
     name: Format
     timeout-minutes: 15 
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -50,11 +50,24 @@ jobs:
   pr-test:
     needs: ["pr-lint", "pr-format"]
     name: "Test"
-    timeout-minutes: 15 
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+    timeout-minutes: 60 
+    runs-on: macos-latest
+    steps:        
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+          token: ${{ secrets.PROTECTED_TOKEN }}
+
+      - name: Ensure branch up to date 🌿 
+        # Only on branches
+        if: ${{ startsWith(github.ref, 'refs/heads/') }}
+        run: |
+          git pull
+
+      - name: Use Node.js 16.x ✔
+        uses: actions/setup-node@v3
         with:
           node-version: 16.x
           registry-url: 'https://registry.npmjs.org'
@@ -85,4 +98,13 @@ jobs:
           name: coverage
           path: coverage/
           retention-days: 30
+
+      - name: Auto Commit Changes 👩‍💻
+        uses: stefanzweifel/git-auto-commit-action@v4
+        # Only on branches with failures (in case the failure was caused by missing screenshots) or cancelled (usually caused by timeouts of too many missing screenshots)
+        if: ${{ (failure() || cancelled()) && startsWith(github.ref, 'refs/heads/') }}
+        with:
+          commit_message: Added Missing Screenshots
+          branch: ${{ env.GITHUB_REF_NAME }}
+          file_pattern: '*.png'
 

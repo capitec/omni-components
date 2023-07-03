@@ -78,46 +78,6 @@ export const Interactive: ComponentStoryFormat<Args> = {
         hide: '',
         show: '',
         maxLength: undefined
-    },
-    play: async (context) => {
-        const pinField = within(context.canvasElement).getByTestId<PinField>('test-pin-field');
-        pinField.value = '';
-
-        const interactions = jest.fn();
-        pinField.addEventListener('input', interactions);
-        pinField.addEventListener('click', interactions);
-
-        const inputField = pinField.shadowRoot?.getElementById('inputField') as HTMLInputElement;
-        // Required to clear userEvent Symbol that keeps hidden state of previously typed values via userEvent. If not cleared this cannot be run multiple times with the same results
-        setUIValueClean(inputField);
-
-        const showSlotElement = pinField.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=show]');
-        await expect(showSlotElement).toBeTruthy();
-        await userEvent.click(showSlotElement as HTMLSlotElement, {
-            pointerEventsCheck: 0
-        });
-        const hideSlotElement = pinField.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=hide]');
-        await expect(hideSlotElement).toBeTruthy();
-        await userEvent.click(hideSlotElement as HTMLSlotElement, {
-            pointerEventsCheck: 0
-        });
-
-        await userEvent.type(inputField, '1234', {
-            pointerEventsCheck: 0
-        });
-
-        const value = '1234';
-
-        // Required to clear userEvent Symbol that keeps hidden state of previously typed values via userEvent. If not cleared this cannot be run multiple times with the same results
-        setUIValueClean(inputField);
-
-        await waitFor(() => expect(inputField).toHaveValue(value), {
-            timeout: 3000
-        });
-
-        await waitFor(() => expect(interactions).toBeCalledTimes(value.toString().length + 1), {
-            timeout: 3000
-        });
     }
 };
 
@@ -145,28 +105,6 @@ const App = () => <OmniPinField${args.label ? ` label='${args.label}'` : ''}${ar
     args: {
         label: 'Max Length',
         maxLength: 5
-    },
-    play: async (context) => {
-        const pinField = within(context.canvasElement).getByTestId<PinField>('test-pin-field');
-        pinField.value = '';
-
-        const interactions = jest.fn();
-        pinField.addEventListener('input', interactions);
-
-        const inputField = pinField.shadowRoot?.getElementById('inputField') as HTMLInputElement;
-
-        await userEvent.type(inputField, '12345678910', {
-            pointerEventsCheck: 0
-        });
-        const value = '12345';
-
-        await waitFor(() => expect(inputField).toHaveValue(value), {
-            timeout: 3000
-        });
-
-        await waitFor(() => expect(inputField.value).toBe(String(value)), {
-            timeout: 3000
-        });
     }
 };
 

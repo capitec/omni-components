@@ -61,27 +61,6 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
         prefix: '',
         suffix: '',
         clear: ''
-    },
-    play: async (context) => {
-        const searchField = within(context.canvasElement).getByTestId<SearchField>('test-search-field');
-        const interaction = jest.fn();
-        const click = jest.fn();
-        searchField.addEventListener('input', interaction);
-        searchField.addEventListener('click', click);
-
-        const inputField = searchField.shadowRoot?.getElementById('inputField') as HTMLInputElement;
-        // Required to clear userEvent Symbol that keeps hidden state of previously typed values via userEvent. If not cleared this cannot be run multiple times with the same results
-        setUIValueClean(inputField);
-
-        const value = 'Batman';
-        await userEvent.type(inputField, value);
-
-        await waitFor(() => expect(inputField).toHaveValue(value), {
-            timeout: 3000
-        });
-        await waitFor(() => expect(interaction).toBeCalledTimes(value.length), {
-            timeout: 3000
-        });
     }
 };
 
@@ -89,7 +68,7 @@ export const Label = LabelStory<SearchField, BaseArgs>('omni-search-field');
 
 export const Hint = HintStory<SearchField, BaseArgs>('omni-search-field');
 
-export const ErrorLabel = ErrorStory<SearchField, BaseArgs>('omni-search-field');
+export const Error_Label = ErrorStory<SearchField, BaseArgs>('omni-search-field');
 
 export const Value = ValueStory<SearchField, BaseArgs>('omni-search-field');
 

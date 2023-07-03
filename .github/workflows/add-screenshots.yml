@@ -1,0 +1,64 @@
+name: Generate Playwright Screenshots
+
+on: 
+  push:
+    branches-ignore: [ main,develop,alpha ]
+    paths: 
+      - '**/*.spec.ts'
+      - '**/*.spec.js'
+      - '**/OmniInputPlaywright.ts'
+      - '**/JestPlaywright.ts'
+      - 'playwright.config.js'
+      - '.github/workflows/add-screenshots.yml'
+  
+  # Allows you to run this workflow manually from the Actions tab.
+  workflow_dispatch:
+
+jobs:
+  screenshot-add:
+    if: github.event_name != 'workflow_dispatch' || (github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' && github.ref != 'refs/heads/alpha')
+    name: "Add Missing Screenshots"
+    timeout-minutes: 60 
+    runs-on: macos-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+          token: ${{ secrets.PROTECTED_TOKEN }}
+
+      - name: Ensure branch up to date 🌿 
+        # Only on branches
+        if: ${{ startsWith(github.ref, 'refs/heads/') }}
+        run: |
+          git pull
+
+      - name: Use Node.js 16.x ✔
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          registry-url: 'https://registry.npmjs.org'
+          always-auth: true
+
+      - name: Install Package Dependencies
+        run: |
+          npm ci --force
+
+      - name: Install Playwright Chrome Dependencies
+        run: npx playwright install --with-deps
+
+      - name: Run Tests
+        run: npm run test:add-screenshots
+        env:
+          CI: true
+          PW_NO_RETRIES: true
+
+      - name: Auto Commit Changes 👩‍💻
+        uses: stefanzweifel/git-auto-commit-action@v4
+        # Only on branches even when failed
+        if: ${{ always() && startsWith(github.ref, 'refs/heads/') }}
+        with:
+          commit_message: Added Missing Screenshots
+          branch: ${{ env.GITHUB_REF_NAME }}
+          file_pattern: '*.png'

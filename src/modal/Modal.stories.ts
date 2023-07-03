@@ -136,23 +136,6 @@ export const Interactive: ComponentStoryFormat<Args> = {
         noFullscreen: false,
         noHeader: false,
         noFooter: false
-    },
-    play: async (context) => {
-        let modal = within(context.canvasElement).getByTestId<Modal>('test-modal');
-        await expect(modal && !modal.hide).toBeFalsy();
-
-        const btn = within(context.canvasElement).getByTestId<Button>('test-modal-btn');
-        btn.click();
-
-        modal = (await querySelectorAsync(context.canvasElement, '[data-testid="test-modal"]')) as Modal;
-
-        await expect(modal && !modal.hide).toBeTruthy();
-
-        await userEvent.click(modal.dialog, {
-            pointerEventsCheck: 0
-        });
-
-        await expect(modal && !modal.hide).toBeFalsy();
     }
 };
 
@@ -261,23 +244,6 @@ const App = () => {
         hide: true,
         headerLabel: 'Header Label',
         footer: footerTemplate
-    },
-    play: async (context) => {
-        let modal = within(context.canvasElement).getByTestId<Modal>('test-modal');
-        await expect(modal && !modal.hide).toBeFalsy();
-
-        const btn = within(context.canvasElement).getByTestId<Button>('test-modal-btn');
-        btn.click();
-
-        modal = (await querySelectorAsync(context.canvasElement, '[data-testid="test-modal"]')) as Modal;
-
-        await expect(modal && !modal.hide).toBeTruthy();
-
-        await userEvent.click(modal.dialog, {
-            pointerEventsCheck: 0
-        });
-
-        await expect(modal && !modal.hide).toBeFalsy();
     }
 };
 
@@ -388,23 +354,6 @@ const App = () => {
         headerLabel: 'Header Aligned',
         headerAlign: 'center',
         footer: footerTemplate
-    },
-    play: async (context) => {
-        let modal = within(context.canvasElement).getByTestId<Modal>('test-modal');
-        await expect(modal && !modal.hide).toBeFalsy();
-
-        const btn = within(context.canvasElement).getByTestId<Button>('test-modal-btn');
-        btn.click();
-
-        modal = (await querySelectorAsync(context.canvasElement, '[data-testid="test-modal"]')) as Modal;
-
-        await expect(modal && !modal.hide).toBeTruthy();
-
-        await userEvent.click(modal.dialog, {
-            pointerEventsCheck: 0
-        });
-
-        await expect(modal && !modal.hide).toBeFalsy();
     }
 };
 
@@ -515,23 +464,6 @@ const App = () => {
         hide: true,
         header: raw`<span>Header <strong>Slot</strong></span>`,
         footer: footerTemplate
-    },
-    play: async (context) => {
-        let modal = within(context.canvasElement).getByTestId<Modal>('test-modal');
-        await expect(modal && !modal.hide).toBeFalsy();
-
-        const btn = within(context.canvasElement).getByTestId<Button>('test-modal-btn');
-        btn.click();
-
-        modal = (await querySelectorAsync(context.canvasElement, '[data-testid="test-modal"]')) as Modal;
-
-        await expect(modal && !modal.hide).toBeTruthy();
-
-        await userEvent.click(modal.dialog, {
-            pointerEventsCheck: 0
-        });
-
-        await expect(modal && !modal.hide).toBeFalsy();
     }
 };
 
@@ -647,23 +579,6 @@ const App = () => {
         hide: true,
         noHeader: true,
         footer: footerTemplate
-    },
-    play: async (context) => {
-        let modal = within(context.canvasElement).getByTestId<Modal>('test-modal');
-        await expect(modal && !modal.hide).toBeFalsy();
-
-        const btn = within(context.canvasElement).getByTestId<Button>('test-modal-btn');
-        btn.click();
-
-        modal = (await querySelectorAsync(context.canvasElement, '[data-testid="test-modal"]')) as Modal;
-
-        await expect(modal && !modal.hide).toBeTruthy();
-
-        await userEvent.click(modal.dialog, {
-            pointerEventsCheck: 0
-        });
-
-        await expect(modal && !modal.hide).toBeFalsy();
     }
 };
 
@@ -741,23 +656,6 @@ const App = () => <OmniModal${args.headerLabel ? ` header-label='${args.headerLa
         '[Default Slot]': raw`<span style="min-width: 777px;min-height: 434px;display: flex;justify-content: center;text-align: center;align-items: center;">Body Content</span>`,
         hide: true,
         footer: raw`<span>Footer <strong>Slot</strong></span>`
-    },
-    play: async (context) => {
-        let modal = within(context.canvasElement).getByTestId<Modal>('test-modal');
-        await expect(modal && !modal.hide).toBeFalsy();
-
-        const btn = within(context.canvasElement).getByTestId<Button>('test-modal-btn');
-        btn.click();
-
-        modal = (await querySelectorAsync(context.canvasElement, '[data-testid="test-modal"]')) as Modal;
-
-        await expect(modal && !modal.hide).toBeTruthy();
-
-        await userEvent.click(modal.dialog, {
-            pointerEventsCheck: 0
-        });
-
-        await expect(modal && !modal.hide).toBeFalsy();
     }
 };
 
@@ -991,36 +889,5 @@ const App = () => <>
         hide: true,
         header: 'Header Content',
         headerAlign: 'right'
-    },
-    play: async (context) => {
-        let modal = document.querySelector('[data-testid="test-modal-scripted"]') as Modal;
-
-        await expect(modal && !modal.hide).toBeFalsy();
-
-        const btn = within(context.canvasElement).getByTestId<Button>('test-modal-btn');
-        btn.click();
-
-        modal = (await querySelectorAsync(document, '[data-testid="test-modal-scripted"]')) as Modal;
-
-        await expect(modal && !modal.hide).toBeTruthy();
-
-        const footerSlot = modal.shadowRoot?.querySelector('slot[name="footer"]') as HTMLSlotElement;
-        const footerRenderer = footerSlot.assignedElements().find((e) => (e as RenderElement).renderer) as RenderElement;
-
-        await waitFor(async () => await expect(Array.from(footerRenderer.shadowRoot!.children)).toContain(footer));
-
-        const footerContent = Array.from(footerRenderer.shadowRoot!.children);
-        await expect(footerContent.length).toBe(1);
-
-        const headerSlot = modal.shadowRoot?.querySelector('slot[name="header"]') as HTMLSlotElement;
-        const headerRenderer = headerSlot.assignedElements().find((e) => (e as RenderElement).renderer) as RenderElement;
-
-        await waitFor(async () => await expect(headerRenderer.shadowRoot!.textContent).toBe(context.args.header));
-
-        await userEvent.click(modal.dialog, {
-            pointerEventsCheck: 0
-        });
-
-        await expect(modal && !modal.hide).toBeFalsy();
     }
 };
