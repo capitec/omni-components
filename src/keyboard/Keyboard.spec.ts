@@ -17,6 +17,7 @@ import { test, expect, withCoverage, expectJest } from '../utils/JestPlaywright.
 } from './Keyboard.js';*/
 
 // keyboard-script-generated
+
 test(`Keyboard - Visual and Behaviour`, async ({ page, isMobile }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/keyboard/');
@@ -107,5 +108,132 @@ test(`Keyboard - Visual and Behaviour`, async ({ page, isMobile }) => {
         await expect(currencyInput).toHaveScreenshot('keyboard-interacted-number-field.png');
         await expect(keyboardArea).not.toBeVisible();
         await expect(page).toHaveScreenshot('keyboard-page-interacted-number-field.png');
+    });
+});
+
+/*
+    'enter' | 'go' | 'done' | 'next' | 'previous' | 'search' | 'send' 
+*/
+test(`Keyboard - Enter Key Hint Variations`, async ({ page, isMobile }) => {
+    await withCoverage(page, async () => {
+        await page.goto('/components/keyboard/');
+
+        const args = await page
+            .locator('story-renderer[key=Enter_Key_Hint_Variations]')
+            .evaluate((storyRenderer) => (storyRenderer as any).story.args);
+        const container = page.locator('.Enter_Key_Hint_Variations');
+        const keyboard = page.locator('#keyboard-interactive');
+        const keyboardArea = keyboard.locator('.footer').first();
+        const keyboardOnly = keyboardArea.locator('.shadow');
+
+        const firstTextInput = container.locator('omni-text-field').first();
+
+        await firstTextInput.click();
+        await expect(keyboardArea).toBeVisible();
+
+        await expect(keyboardArea).toHaveScreenshot('keyboard-open-alpha-enter.png');
+        await expect(keyboardOnly).toHaveScreenshot('keyboard-only-open-alpha-enter.png');
+
+        // Click Enter
+        await keyboardArea.getByRole('button', { name: 'Enter' }).click({
+            force: true
+        });
+
+        await expect(keyboardArea).toHaveScreenshot('keyboard-open-number-enter.png');
+        await expect(keyboardOnly).toHaveScreenshot('keyboard-only-open-number-enter.png');
+
+        // Click Enter
+        await keyboardArea.getByRole('button', { name: 'Enter' }).click({
+            force: true
+        });
+
+        await expect(keyboardArea).toHaveScreenshot('keyboard-open-alpha-go.png');
+        await expect(keyboardOnly).toHaveScreenshot('keyboard-only-open-alpha-go.png');
+
+        // Click Enter
+        await keyboardArea.locator('.action-button').click({
+            force: true
+        });
+
+        await expect(keyboardArea).toHaveScreenshot('keyboard-open-number-go.png');
+        await expect(keyboardOnly).toHaveScreenshot('keyboard-only-open-number-go.png');
+
+        // Click Enter
+        await keyboardArea.locator('.action-button').click({
+            force: true
+        });
+
+        await expect(keyboardArea).toHaveScreenshot('keyboard-open-alpha-done.png');
+        await expect(keyboardOnly).toHaveScreenshot('keyboard-only-open-alpha-done.png');
+
+        // Click Enter
+        await keyboardArea.locator('.action-button').click({
+            force: true
+        });
+
+        await expect(keyboardArea).toHaveScreenshot('keyboard-open-number-done.png');
+        await expect(keyboardOnly).toHaveScreenshot('keyboard-only-open-number-done.png');
+
+        // Click Enter
+        await keyboardArea.locator('.action-button').click({
+            force: true
+        });
+
+        await expect(keyboardArea).toHaveScreenshot('keyboard-open-alpha-next.png');
+        await expect(keyboardOnly).toHaveScreenshot('keyboard-only-open-alpha-next.png');
+
+        // Click Enter
+        await keyboardArea.locator('.action-button').click({
+            force: true
+        });
+
+        await expect(keyboardArea).toHaveScreenshot('keyboard-open-number-next.png');
+        await expect(keyboardOnly).toHaveScreenshot('keyboard-only-open-number-next.png');
+
+        // Click Enter
+        await keyboardArea.locator('.action-button').click({
+            force: true
+        });
+
+        await expect(keyboardArea).toHaveScreenshot('keyboard-open-alpha-previous.png');
+        await expect(keyboardOnly).toHaveScreenshot('keyboard-only-open-alpha-previous.png');
+
+        // Explicitly focus element as pressing Enter would cause keyboard to focus previous tabIndex
+        const previousNumberInput = container.locator('omni-number-field[enterkeyhint=previous]').first();
+        await previousNumberInput.click();
+
+        await expect(keyboardArea).toHaveScreenshot('keyboard-open-number-previous.png');
+        await expect(keyboardOnly).toHaveScreenshot('keyboard-only-open-number-previous.png');
+
+        // Explicitly focus element as pressing Enter would cause keyboard to focus previous tabIndex
+        const searchInput = container.locator('omni-text-field[enterkeyhint=search]').first();
+        await searchInput.click();
+
+        await expect(keyboardArea).toHaveScreenshot('keyboard-open-alpha-search.png');
+        await expect(keyboardOnly).toHaveScreenshot('keyboard-only-open-alpha-search.png');
+
+        // Click Enter
+        await keyboardArea.locator('.action-button').click({
+            force: true
+        });
+
+        await expect(keyboardArea).toHaveScreenshot('keyboard-open-number-search.png');
+        await expect(keyboardOnly).toHaveScreenshot('keyboard-only-open-number-search.png');
+
+        // Click Enter
+        await keyboardArea.locator('.action-button').click({
+            force: true
+        });
+
+        await expect(keyboardArea).toHaveScreenshot('keyboard-open-alpha-send.png');
+        await expect(keyboardOnly).toHaveScreenshot('keyboard-only-open-alpha-send.png');
+
+        // Click Enter
+        await keyboardArea.locator('.action-button').click({
+            force: true
+        });
+
+        await expect(keyboardArea).toHaveScreenshot('keyboard-open-number-send.png');
+        await expect(keyboardOnly).toHaveScreenshot('keyboard-only-open-number-send.png');
     });
 });
