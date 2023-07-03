@@ -41,29 +41,8 @@ import { TabHeader } from './TabHeader.js';
  * @cssprop --omni-tabs-tab-bar-border-bottom - Tabs tab bar bottom border.
  * @cssprop --omni-tabs-tab-bar-background-color - Tabs tab bar background color.
  *
- * @cssprop --omni-tab-header-font-color - Tab header component font color.
- * @cssprop --omni-tab-header-font-family - Tab header component font family.
- * @cssprop --omni-tab-header-font-size - Tab header component font size.
- * @cssprop --omni-tab-header-font-weight - Tab header component font weight.
- *
- * @cssprop --omni-tab-header-disabled-background-color - Tab header component disabled background color.
- * @cssprop --omni-tab-header-active-font-color - Tab component header active font color.
- *
- * @cssprop --omni-tab-header-height - Tab header component tab height.
- * @cssprop --omni-tab-header-min-width - Tab header component tab min width.
- * @cssprop --omni-tab-header-max-width - Tab header component tab max width.
- * @cssprop --omni-tab-header-margin - Tab header component tab margin.
- *
- * @cssprop --omni-tab-header-hover-background-color - Tab header component tab hover background.
- *
- * @cssprop --omni-tab-header-indicator-bar-height - Tab header component indicator bar height.
- * @cssprop --omni-tab-header-indicator-bar-border-radius -  Tab header component indicator bar border radius.
- * @cssprop --omni-tab-header-indicator-bar-width - Tab header component indicator bar width.
- *
- * @cssprop --omni-tab-header-indicator-height - Tab header component indicator height.
- * @cssprop --omni-tab-header-indicator-color - Tab header component indicator color.
- * @cssprop --omni-tab-header-indicator-border-radius - Tab header component indicator border radius.
- * @cssprop --omni-tab-header-indicator-width - Tab header component indicator width.
+ * @cssinherit omni-tab-header
+ * @cssinherit omni-tab
  */
 @customElement('omni-tabs')
 export class Tabs extends OmniElement {

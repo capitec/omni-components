@@ -63,6 +63,7 @@ function loadCssProperties(
     );
 
     let superModule = elementModule;
+
     do {
         if (superModule.declarations.find((sd: any) => sd.superclass)) {
             superModule = customElements.modules.find((module) =>

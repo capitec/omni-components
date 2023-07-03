@@ -260,7 +260,7 @@ export class StoryRenderer extends LitElement {
         );
 
         this.story = this.controller.story[this.key as string];
-        this.story!.originalArgs = this.story?.originalArgs ?? JSON.parse(JSON.stringify(this.story?.args));
+        this.story!.originalArgs = this.story?.originalArgs ?? JSON.parse(JSON.stringify(this.story?.args ?? {}));
         Object.keys(this.story?.args ?? {}).forEach((o) => {
             if (this.story!.args![o] === undefined) {
                 this.story!.originalArgs[o] = undefined;
@@ -451,7 +451,7 @@ export class StoryRenderer extends LitElement {
                                         .replaceAll('\\n', '')
                                         .replaceAll('\t', '')
                                         .replaceAll(' ', '') !==
-                                        JSON.stringify(this.story?.args)
+                                        JSON.stringify(this.story?.args ?? {})
                                             .replaceAll('\n', '')
                                             .replaceAll('\\n', '')
                                             .replaceAll('\t', '')

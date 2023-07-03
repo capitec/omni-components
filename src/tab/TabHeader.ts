@@ -18,7 +18,7 @@ import { OmniElement } from '../core/OmniElement.js';
  *
  * @element omni-tab-header
  *
- * @slot - Content to render inside the component body.
+ * @slot - Content to render inside the tab header.
  *
  * @cssprop --omni-tab-header-font-color - Tab header font color.
  * @cssprop --omni-tab-header-font-family - Tab header font family.
