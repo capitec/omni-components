@@ -5,11 +5,11 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import expect from '../utils/ExpectDOM.js';
 import { ComponentStoryFormat, querySelectorAsync, raw } from '../utils/StoryUtils.js';
 
-import { Tabs } from './Tabs.js';
+import { TabGroup } from './TabGroup.js';
 import '../label/Label.js';
 import './TabHeader.js';
 import './Tab.js';
-import './Tabs.js';
+import './TabGroup.js';
 import '../icon/Icon.js';
 
 interface Args {
@@ -18,18 +18,18 @@ interface Args {
 
 export const Advanced: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
-    <omni-tabs data-testid='test-tabs'>
+    <omni-tab-group data-testid='test-tabs'>
         ${args['[Default Slot]'] ? html`${'\r\n'}${unsafeHTML(args['[Default Slot]'])}` : nothing}
-    </omni-tabs>
+    </omni-tab-group>
 `,
     frameworkSources: [
         {
             framework: 'React',
-            load: () => `import { OmniTabs, OmniTab, OmniTabHeader } from "@capitec/omni-components-react/tab";
+            load: () => `import { OmniTabGroup, OmniTab, OmniTabHeader } from "@capitec/omni-components-react/tab";
 import { OmniIcon } from "@capitec/omni-components-react/icon";
 
 const App = () =>
-<OmniTabs>
+<OmniTabGroup>
  <OmniTabHeader slot="header" for="up">
   <OmniIcon size="default">
    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" width="100%" height="100%" fill="orange"><path d="M5.47 8.47a.75.75 0 0 0 1.06 1.06l4.72-4.72V21c0 .38.282.693.648.743l.102.007a.75.75 0 0 0 .75-.75V4.81l4.72 4.72a.75.75 0 0 0 .976.073l.084-.073a.75.75 0 0 0 0-1.06l-6-6a.75.75 0 0 0-1.06 0Z"/></svg>
@@ -62,7 +62,7 @@ const App = () =>
 <OmniTab id="right">
  <div>Right</div>
 </OmniTab>
-</OmniTabs>;`
+</OmniTabGroup>;`
         }
     ],
     name: 'Advanced',
@@ -104,11 +104,11 @@ const App = () =>
     },
     description: () => html`
     <div>
-        For slotting custom content into the header use the <code class="language-html">&lt;omni-tab-header&gt;</code> component that targets the header slot of the <code class="language-html">&lt;omni-tabs&gt;</code> component and ensure you have a <code class="language-html">&lt;omni-tab&gt;</code> component which has an <code>id</code> attribute that matches the <code class="language-html">&lt;omni-tab-header&gt;</code> <code>for</code> attribute to display slotted content.
+        For slotting custom content into the header use the <code class="language-html">&lt;omni-tab-header&gt;</code> component that targets the header slot of the <code class="language-html">&lt;omni-tab-group&gt;</code> component and ensure you have a <code class="language-html">&lt;omni-tab&gt;</code> component which has an <code>id</code> attribute that matches the <code class="language-html">&lt;omni-tab-header&gt;</code> <code>for</code> attribute to display slotted content.
     <div>
     `,
     play: async (context) => {
-        const tabs = within(context.canvasElement).getByTestId<Tabs>('test-tabs');
+        const tabs = within(context.canvasElement).getByTestId<TabGroup>('test-tabs');
         // Get the tab bar element
         const tabBar = (await querySelectorAsync(tabs.shadowRoot as ShadowRoot, '.tab-bar')) as HTMLElement;
         await expect(tabBar).toBeTruthy();

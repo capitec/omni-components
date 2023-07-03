@@ -3,14 +3,14 @@ import userEvent from '@testing-library/user-event';
 import * as jest from 'jest-mock';
 import { html } from 'lit';
 import expect from '../utils/ExpectDOM.js';
-import { ComponentStoryFormat, querySelectorAsync, raw, getSourceFromLit } from '../utils/StoryUtils.js';
+import { ComponentStoryFormat, querySelectorAsync, getSourceFromLit } from '../utils/StoryUtils.js';
 
 import { Tab } from './Tab.js';
+import { TabGroup } from './TabGroup.js';
 import { TabHeader } from './TabHeader.js';
-import { Tabs } from './Tabs.js';
 import '../label/Label.js';
 import './Tab.js';
-import './Tabs.js';
+import './TabGroup.js';
 
 interface Args {
     header: string;
@@ -20,7 +20,7 @@ interface Args {
 
 export const Basic = {
     render: () => html`
-    <omni-tabs data-testid="test-tabs">
+    <omni-tab-group data-testid="test-tabs">
         <omni-tab header="Tab 1">
             <div>Tab 1 Content</div>
         </omni-tab>
@@ -30,16 +30,16 @@ export const Basic = {
     <omni-tab header="Tab 3">
         <div>Tab 3 Content</div>
     </omni-tab>
-    </omni-tabs>
+    </omni-tab-group>
 `,
     frameworkSources: [
         {
             framework: 'React',
-            load: () => `import { OmniTabs, OmniTab } from "@capitec/omni-components-react/tab";
+            load: () => `import { OmniTabGroup, OmniTab } from "@capitec/omni-components-react/tab";
 import { OmniLabel } from "@capitec/omni-components-react/label";
 
 const App = () =>
-<OmniTabs>
+<OmniTabGroup>
     <OmniTab header="Tab 1">
         <OmniLabel label="Label of Tab 1"/>
     </OmniTab>
@@ -49,17 +49,17 @@ const App = () =>
     <OmniTab header="Tab 3">
         <OmniLabel label="Label of Tab 3"/>
     </OmniTab>
-</OmniTabs>;`
+</OmniTabGroup>;`
         }
     ],
     name: 'Basic',
     description: () => html`
     <div>
-        This is the recommended use of the <code class="language-html">&lt;omni-tabs&gt;</code> with slotted <code class="language-html">&lt;omni-tab&gt;</code> component(s), headers for each tab are set by setting the <code>header</code> attribute of the <code class="language-html">&lt;omni-tab&gt;</code>(s).
+        This is the recommended use of the <code class="language-html">&lt;omni-tab-group&gt;</code> with slotted <code class="language-html">&lt;omni-tab&gt;</code> component(s), headers for each tab are set by setting the <code>header</code> attribute of the <code class="language-html">&lt;omni-tab&gt;</code>(s).
     <div>
     `,
     play: async (context) => {
-        const tabsElement = within(context.canvasElement).getByTestId<Tabs>('test-tabs');
+        const tabsElement = within(context.canvasElement).getByTestId<TabGroup>('test-tabs');
 
         // Get the tab bar element
         const tabBar = (await querySelectorAsync(tabsElement.shadowRoot as ShadowRoot, '.tab-bar')) as HTMLElement;
@@ -82,7 +82,7 @@ const App = () =>
 
 export const Active = {
     render: () => html`
-    <omni-tabs data-testid='test-tabs'>
+    <omni-tab-group data-testid='test-tabs'>
         <omni-tab header="Tab 1">
             <omni-label label="Label of Tab 1"></omni-label>
         </omni-tab>
@@ -92,7 +92,7 @@ export const Active = {
         <omni-tab header="Tab 3">
             <omni-label label="Label of Tab 3"></omni-label>
         </omni-tab>
-    </omni-tabs>
+    </omni-tab-group>
 
 `,
 
@@ -103,11 +103,11 @@ export const Active = {
         },
         {
             framework: 'React',
-            load: () => `import { OmniTabs, OmniTab } from "@capitec/omni-components-react/tab";
+            load: () => `import { OmniTabGroup, OmniTab } from "@capitec/omni-components-react/tab";
 import { OmniLabel } from "@capitec/omni-components-react/label";
 
 const App = () =>
-<OmniTabs>
+<OmniTabGroup>
     <OmniTab header="Tab 1">
         <OmniLabel label='Label of Tab 1'/>
     </OmniTab>
@@ -117,18 +117,18 @@ const App = () =>
     <OmniTab header="Tab 3">
         <OmniLabel label='Label of Tab 3'/>
     </OmniTab>
-</OmniTabs>;`
+</OmniTabGroup>;`
         }
     ],
     args: {},
     name: 'Active',
     description: () => html`
     <div>
-        Set which <code class="language-html">&lt;omni-tab&gt;</code> slotted in the <code class="language-html">&lt;omni-tabs&gt;</code> should be active by default. By setting the <code>active</code> attribute of one of the slotted <code class="language-html">&lt;omni-tab&gt;</code> component.
+        Set which <code class="language-html">&lt;omni-tab&gt;</code> slotted in the <code class="language-html">&lt;omni-tab-group&gt;</code> should be active by default. By setting the <code>active</code> attribute of one of the slotted <code class="language-html">&lt;omni-tab&gt;</code> component.
     <div>
     `,
     play: async (context) => {
-        const tabsElement = within(context.canvasElement).getByTestId<Tabs>('test-tabs');
+        const tabsElement = within(context.canvasElement).getByTestId<TabGroup>('test-tabs');
 
         // Get the tab bar element
         const tabBar = (await querySelectorAsync(tabsElement.shadowRoot as ShadowRoot, '.tab-bar')) as HTMLElement;
@@ -160,7 +160,7 @@ const App = () =>
 
 export const Disabled = {
     render: () => html`
-    <omni-tabs data-testid="test-tabs">
+    <omni-tab-group data-testid="test-tabs">
         <omni-tab header="Tab 1">
             <omni-label label="Label of Tab 1"></omni-label>
         </omni-tab>
@@ -170,7 +170,7 @@ export const Disabled = {
         <omni-tab header="Tab 3" disabled>
             <omni-label label="Label of Tab 3"></omni-label>
         </omni-tab>
-    </omni-tabs>
+    </omni-tab-group>
 
 `,
     frameworkSources: [
@@ -200,12 +200,12 @@ const App = () =>
     name: 'Disabled',
     description: () => html`
     <div>
-        Set a <code class="language-html">&lt;omni-tab&gt;</code> slotted in the <code class="language-html">&lt;omni-tabs&gt;</code> component to be disabled by setting <code>disabled</code> attribute.
+        Set a <code class="language-html">&lt;omni-tab&gt;</code> slotted in the <code class="language-html">&lt;omni-tab-group&gt;</code> component to be disabled by setting <code>disabled</code> attribute.
     <div>
     `,
     args: {},
     play: async (context) => {
-        const tabsElement = within(context.canvasElement).getByTestId<Tabs>('test-tabs');
+        const tabsElement = within(context.canvasElement).getByTestId<TabGroup>('test-tabs');
         const tabSelect = jest.fn();
         tabsElement.addEventListener('tab-select', tabSelect);
 

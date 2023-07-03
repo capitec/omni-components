@@ -14,7 +14,7 @@ import { TabHeader } from './TabHeader.js';
  *
  * @example
  * ```html
- * <omni-tabs>
+ * <omni-tab-group>
  *  <omni-tab header='Tab 1'>
  *   <omni-label>Tab 1</omni-label>
  *  </omni-tab>
@@ -24,7 +24,7 @@ import { TabHeader } from './TabHeader.js';
  *  <omni-tab header="Tab 3">
  *   <omni-label>Tab 3</omni-label>
  *  </omni-tab>
- * </omni-tabs>
+ * </omni-tab-group>
  *```
  *
  * @element omni-tabs
@@ -44,8 +44,8 @@ import { TabHeader } from './TabHeader.js';
  * @cssinherit omni-tab-header
  * @cssinherit omni-tab
  */
-@customElement('omni-tabs')
-export class Tabs extends OmniElement {
+@customElement('omni-tab-group')
+export class TabGroup extends OmniElement {
     @state() private _observer: MutationObserver | undefined;
 
     override connectedCallback(): void {
@@ -226,7 +226,7 @@ export class Tabs extends OmniElement {
 
 declare global {
     interface HTMLElementTagNameMap {
-        'omni-tabs': Tabs;
+        'omni-tab-group': TabGroup;
     }
 }
 

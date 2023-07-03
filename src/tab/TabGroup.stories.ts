@@ -7,11 +7,11 @@ import expect from '../utils/ExpectDOM.js';
 import { assignToSlot, ComponentStoryFormat, querySelectorAsync, raw, getSourceFromLit } from '../utils/StoryUtils.js';
 
 import { Tab } from './Tab.js';
-import { Tabs } from './Tabs.js';
+import { TabGroup } from './TabGroup.js';
 import '../label/Label.js';
 import './TabHeader.js';
 import './Tab.js';
-import './Tabs.js';
+import './TabGroup.js';
 import '../icon/Icon.js';
 
 interface Args {
@@ -21,10 +21,10 @@ interface Args {
 
 export const Interactive: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
-    <omni-tabs data-testid="test-tabs">
+    <omni-tab-group data-testid="test-tabs">
         ${args.header ? html`${'\r\n'}${unsafeHTML(assignToSlot('header', args.header))}` : nothing}
         ${args['[Default Slot]'] ? html`${'\r\n'}${unsafeHTML(args['[Default Slot]'])}` : nothing}
-    </omni-tabs>
+    </omni-tab-group>
 `,
     frameworkSources: [
         {
@@ -38,10 +38,10 @@ export const Interactive: ComponentStoryFormat<Args> = {
     name: 'Interactive',
     description: () => html`
         <p>
-        The <code class="language-html">&lt;omni-tabs&gt;</code> component will display content based on the nested <code class="language-html">&lt;omni-tab&gt;</code> component(s). 
+        The <code class="language-html">&lt;omni-tab-group&gt;</code> component will display content based on the nested <code class="language-html">&lt;omni-tab&gt;</code> component(s). 
         </p>
         <p>
-        Tab headers are rendered by either setting the <code>header</code> attribute of the <code class="language-html">&lt;omni-tab&gt;</code> component or via slotted <code class="language-html">&lt;omni-tab-header&gt;</code> component(s) that targets the <code class="language-html">&lt;omni-tabs&gt;</code> header slot. 
+        Tab headers are rendered by either setting the <code>header</code> attribute of the <code class="language-html">&lt;omni-tab&gt;</code> component or via slotted <code class="language-html">&lt;omni-tab-header&gt;</code> component(s) that targets the <code class="language-html">&lt;omni-tab-group&gt;</code> header slot. 
         </p>
     `,
     args: {
@@ -57,7 +57,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
 </omni-tab>`
     },
     play: async (context) => {
-        const tabsElement = within(context.canvasElement).getByTestId<Tabs>('test-tabs');
+        const tabsElement = within(context.canvasElement).getByTestId<TabGroup>('test-tabs');
         const tabSelect = jest.fn();
         tabsElement.addEventListener('tab-select', tabSelect);
 
