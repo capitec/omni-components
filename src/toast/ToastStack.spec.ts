@@ -1,5 +1,5 @@
 import * as jestMock from 'jest-mock';
-import { test, expect, withCoverage, expectJest } from '../utils/JestPlaywright.js';
+import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
 import type { Toast } from './Toast.js';
 import type { ToastStack, ShowToastInit, ToastStackInit, toastDurationAttribute } from './ToastStack.js';
 
@@ -54,8 +54,8 @@ test(`Toast Stack - Visual and Behaviour`, async ({ page }) => {
         // Wait for toast removals
         await new Promise((resolve) => setTimeout(resolve, 6000));
 
-        await expectJest(toastRemove).toBeCalledTimes(5);
-        await expectJest(toastStackRemove).toBeCalled();
+        await expect(toastRemove).toBeCalledTimes(5);
+        await expect(toastStackRemove).toBeCalled();
 
         await expect(await toastStack.evaluate((t) => t.childElementCount)).toBe(2);
         await expect(toastStack).toHaveScreenshot('toast-stack-final.png');

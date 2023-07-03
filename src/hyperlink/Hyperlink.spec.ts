@@ -1,5 +1,5 @@
 import * as jestMock from 'jest-mock';
-import { test, expect, expectJest, withCoverage } from '../utils/JestPlaywright.js';
+import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
 
 test(`Hyperlink - Visual and Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
@@ -22,7 +22,7 @@ test(`Hyperlink - Visual and Behaviour`, async ({ page }) => {
             force: true
         });
 
-        await expectJest(click).toBeCalledTimes(2);
+        await expect(click).toBeCalledTimes(2);
     });
 });
 
@@ -94,7 +94,7 @@ test(`Hyperlink - Disabled Behaviour`, async ({ page }) => {
             force: true
         });
 
-        await expectJest(click).toBeCalledTimes(0);
+        await expect(click).toBeCalledTimes(0);
     });
 });
 

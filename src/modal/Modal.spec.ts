@@ -1,5 +1,5 @@
 import * as jestMock from 'jest-mock';
-import { test, expect, expectJest, withCoverage } from '../utils/JestPlaywright.js';
+import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
 import type { Modal } from './Modal.js';
 
 test(`Modal - Visual and Behaviour`, async ({ page }) => {
@@ -37,7 +37,7 @@ test(`Modal - Visual and Behaviour`, async ({ page }) => {
             }
         });
 
-        await expectJest(clickOutside).toHaveBeenCalled();
+        await expect(clickOutside).toHaveBeenCalled();
 
         await expect(dialog).not.toBeVisible();
         await expect(modal).toHaveAttribute('hide', '');

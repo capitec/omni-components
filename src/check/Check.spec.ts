@@ -1,5 +1,5 @@
 import * as jestMock from 'jest-mock';
-import { test, expect, expectJest, withCoverage } from '../utils/JestPlaywright.js';
+import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
 import { Args } from './Check.stories.js';
 
 test(`Check - Label Behaviour`, async ({ page }) => {
@@ -94,7 +94,7 @@ test(`Check - Disabled Behaviour`, async ({ page }) => {
             force: true
         });
 
-        await expectJest(click).toBeCalledTimes(0);
+        await expect(click).toBeCalledTimes(0);
 
         await expect(check).toHaveScreenshot('check-disabled-click.png');
     });

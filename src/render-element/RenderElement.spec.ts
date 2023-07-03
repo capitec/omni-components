@@ -1,5 +1,5 @@
 import * as jestMock from 'jest-mock';
-import { test, expect, expectJest, withCoverage, type Page } from '../utils/JestPlaywright.js';
+import { test, expect, withCoverage, type Page } from '../utils/JestPlaywright.js';
 import type { RenderElement } from './RenderElement.js';
 
 test(`Render Element - Lit Template Visual and Behaviour`, async ({ page }) => {
@@ -65,7 +65,7 @@ test(`Render Element - HTML Element Instance Visual and Behaviour`, async ({ pag
             force: true
         });
 
-        await expectJest(clickDialog).toBeCalledTimes(1);
+        await expect(clickDialog).toBeCalledTimes(1);
     });
 });
 

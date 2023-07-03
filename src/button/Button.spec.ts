@@ -1,5 +1,5 @@
 import * as jestMock from 'jest-mock';
-import { test, expect, expectJest, withCoverage, type Page } from '../utils/JestPlaywright.js';
+import { test, expect, withCoverage, type Page } from '../utils/JestPlaywright.js';
 
 test(`Button - Visual Secondary`, async ({ page }) => {
     await withCoverage(page, async () => {
@@ -80,7 +80,7 @@ test(`Button - Interactive Behaviour`, async ({ page }) => {
         await button.click();
         await button.click();
 
-        await expectJest(click).toBeCalledTimes(2);
+        await expect(click).toBeCalledTimes(2);
     });
 });
 
@@ -148,6 +148,6 @@ test(`Button - Disabled Behaviour`, async ({ page }) => {
             force: true
         });
 
-        await expectJest(click).toBeCalledTimes(0);
+        await expect(click).toBeCalledTimes(0);
     });
 });

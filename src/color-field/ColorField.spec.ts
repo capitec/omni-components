@@ -9,7 +9,7 @@ import {
     testPrefixBehaviour,
     testSuffixBehaviour
 } from '../core/OmniInputPlaywright.js';
-import { test, expect, expectJest, withCoverage, type Page } from '../utils/JestPlaywright.js';
+import { test, expect, withCoverage, type Page } from '../utils/JestPlaywright.js';
 import type { ColorField } from './ColorField.js';
 
 test(`Color Field - Interactive`, async ({ page, browserName }) => {
@@ -70,6 +70,6 @@ test(`Color Field - Disabled Behaviour`, async ({ page, isMobile }) => {
             force: true
         });
 
-        await expectJest(click).toBeCalledTimes(0);
+        await expect(click).toBeCalledTimes(0);
     });
 });

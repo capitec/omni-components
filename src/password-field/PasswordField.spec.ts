@@ -10,7 +10,7 @@ import {
     testSuffixBehaviour,
     testDisabledBehaviour
 } from '../core/OmniInputPlaywright.js';
-import { test, expect, expectJest, withCoverage, type Page } from '../utils/JestPlaywright.js';
+import { test, expect, withCoverage, type Page } from '../utils/JestPlaywright.js';
 import type { PasswordField } from './PasswordField.js';
 
 test(`Password Field - Interactive`, async ({ page, browserName }) => {
@@ -51,7 +51,7 @@ test(`Password Field - Interactive`, async ({ page, browserName }) => {
 
         await expect(inputField).toHaveValue(value);
 
-        await expectJest(interactions).toBeCalledTimes(value.length);
+        await expect(interactions).toBeCalledTimes(value.length);
         await expect(passwordField).toHaveScreenshot('password-field-value.png');
     });
 });

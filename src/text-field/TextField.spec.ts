@@ -10,7 +10,7 @@ import {
     testSuffixBehaviour,
     testDisabledBehaviour
 } from '../core/OmniInputPlaywright.js';
-import { test, expect, expectJest, withCoverage, type Page } from '../utils/JestPlaywright.js';
+import { test, expect, withCoverage, type Page } from '../utils/JestPlaywright.js';
 import type { TextField } from './TextField.js';
 
 test(`Text Field - Interactive`, async ({ page, browserName }) => {
@@ -40,7 +40,7 @@ test(`Text Field - Interactive`, async ({ page, browserName }) => {
 
         await expect(inputField).toHaveValue(value);
 
-        await expectJest(inputFn).toBeCalledTimes(value.length);
+        await expect(inputFn).toBeCalledTimes(value.length);
         await expect(textField).toHaveScreenshot('text-field-value.png');
     });
 });

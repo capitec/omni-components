@@ -1,17 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import fs from 'fs';
-import { platform } from 'os';
-import {
-    expect as expectPatched,
-    test,
-    type Expect,
-    type Locator,
-    type Page,
-    type PageScreenshotOptions,
-    type LocatorScreenshotOptions
-} from '@playwright/test';
+// import { platform } from 'os';
+import { expect as expectPatched, test, type Locator, type Page, type PageScreenshotOptions, type LocatorScreenshotOptions } from '@playwright/test';
 export * from '@playwright/test';
-import * as matchers from '@testing-library/jest-dom/matchers.js';
 //@ts-ignore
 import jsdom from 'jsdom';
 //@ts-ignore
@@ -19,10 +10,6 @@ import fetch from 'node-fetch';
 import { v4 } from 'uuid';
 //@ts-ignore
 import XMLHttpRequest from 'xhr2';
-//@ts-ignore
-import playwrightExportedMatchers from '../../node_modules/@playwright/test/lib/matchers/matchers.js';
-//@ts-ignore
-import playwrightSnapshotMatchers from '../../node_modules/@playwright/test/lib/matchers/toMatchSnapshot.js';
 
 global.window = global.window || new jsdom.JSDOM().window;
 global.document = global.document || window.document;
@@ -48,119 +35,55 @@ Object.keys(window).forEach((key) => {
     }
 });
 
-// const playwrightMatchers = [
-//     'toBeAttached',
-//     'toBeChecked',
-//     'toBeDisabled',
-//     'toBeEditable',
-//     'toBeEmpty',
-//     'toBeEnabled',
-//     'toBeFocused',
-//     'toBeHidden',
-//     'toBeInViewport',
-//     'toBeOK',
-//     'toBeVisible',
-//     'toContainText',
-//     'toHaveAttribute',
-//     'toHaveClass',
-//     'toHaveCount',
-//     'toHaveCSS',
-//     'toHaveId',
-//     'toHaveJSProperty',
-//     'toHaveText',
-//     'toHaveTitle',
-//     'toHaveURL',
-//     'toHaveValue',
-//     'toHaveValues',
-//     'toHaveScreenshot',
-//     'toPass'
-// ];
+const expect = expectPatched;
 
-const playwrightMatchers = {
-    ...playwrightExportedMatchers,
-    ...playwrightSnapshotMatchers
-};
+if (!process.env.CI && !process.env.PW_SCREENSHOT_TESTING) {
+    expect.extend({
+        toHaveScreenshot: async function (
+            received: Locator | Page,
+            name: string | Array<string>,
+            options?: PageScreenshotOptions | LocatorScreenshotOptions
+        ) {
+            const testInfo = test.info();
 
-function extendExpect<T, U = jest.Expect>(initialExpect: T): U {
-    const expect = ((initialExpect as any).default || initialExpect) as T & jest.Expect;
+            if (Array.isArray(name)) {
+                name = name.join('/');
+            }
 
-    const validMatchers: any = { ...(matchers.default || matchers) };
-    Object.keys(validMatchers).forEach((matcherName) => {
-        const matcher = validMatchers[matcherName];
-        if (typeof matcher === 'undefined' || typeof matcher === 'boolean') {
-            delete validMatchers[matcherName];
-        }
+            if (testInfo && received) {
+                testInfo.annotations.push({ type: 'warning', description: `Screenshot assertion was skipped! (${name})` });
 
-        if (playwrightMatchers[matcherName]) {
-            validMatchers[matcherName] = async function (...args: any[]) {
-                if (args.length > 0) {
-                    const received = args[0];
-                    if (received instanceof HTMLElement || received instanceof SVGElement) {
-                        return await matcher.apply(this, args);
-                    } else {
-                        return await playwrightMatchers[matcherName].apply(this, args);
-                    }
+                if (received.screenshot) {
+                    const screenshot = await received.screenshot(options);
+                    await testInfo.attach(name, { body: screenshot, contentType: 'image/png' });
                 }
-                return await playwrightMatchers[matcherName].apply(this, args);
+            }
+            return {
+                pass: true,
+                message: () => 'No "CI" or "PW_SCREENSHOT_TESTING" environment variables set. Skipping screenshot assertion!'
+            };
+        },
+        toMatchSnapshot: async function (received: string | Buffer, name: string | Array<string>) {
+            const testInfo = test.info();
+
+            if (Array.isArray(name)) {
+                name = name.join('/');
+            }
+
+            if (testInfo && received) {
+                testInfo.annotations.push({ type: 'warning', description: `Snapshot assertion was skipped! (${name})` });
+
+                if (typeof received !== 'string') {
+                    await testInfo.attach(name, { body: received, contentType: 'image/png' });
+                }
+            }
+            return {
+                pass: true,
+                message: () => 'No "CI" or "PW_SCREENSHOT_TESTING" environment variables set. Skipping snapshot assertion!'
             };
         }
     });
-
-    expect.extend(validMatchers);
-
-    if (!process.env.CI && !process.env.PW_SCREENSHOT_TESTING) {
-        expect.extend({
-            toHaveScreenshot: async function (
-                received: Locator | Page,
-                name: string | Array<string>,
-                options?: PageScreenshotOptions | LocatorScreenshotOptions
-            ) {
-                const testInfo = test.info();
-
-                if (Array.isArray(name)) {
-                    name = name.join('/');
-                }
-
-                if (testInfo && received) {
-                    testInfo.annotations.push({ type: 'warning', description: `Screenshot assertion was skipped! (${name})` });
-
-                    if (received.screenshot) {
-                        const screenshot = await received.screenshot(options);
-                        await testInfo.attach(name, { body: screenshot, contentType: 'image/png' });
-                    }
-                }
-                return {
-                    pass: true,
-                    message: () => 'No "CI" or "PW_SCREENSHOT_TESTING" environment variables set. Skipping screenshot assertion!'
-                };
-            },
-            toMatchSnapshot: async function (received: string | Buffer, name: string | Array<string>) {
-                const testInfo = test.info();
-
-                if (Array.isArray(name)) {
-                    name = name.join('/');
-                }
-
-                if (testInfo && received) {
-                    testInfo.annotations.push({ type: 'warning', description: `Snapshot assertion was skipped! (${name})` });
-
-                    if (typeof received !== 'string') {
-                        await testInfo.attach(name, { body: received, contentType: 'image/png' });
-                    }
-                }
-                return {
-                    pass: true,
-                    message: () => 'No "CI" or "PW_SCREENSHOT_TESTING" environment variables set. Skipping snapshot assertion!'
-                };
-            }
-        });
-    }
-
-    return expect as any as U;
 }
-
-const expect = extendExpect<Expect, Expect>(expectPatched);
-const expectJest = expect as any as jest.Expect;
 
 async function withCoverage<T>(this: any, page: Page, testAction: () => T | Promise<T>) {
     const browserName = page.context()?.browser()?.browserType()?.name();
@@ -247,4 +170,12 @@ async function withCoverage<T>(this: any, page: Page, testAction: () => T | Prom
 //     await page.keyboard.press(`${modifier}+KeyV`);
 // }
 
-export { expect, expectJest, withCoverage /*keyboardCopy, keyboardPaste, clipboardCopy*/ };
+declare global {
+    // eslint-disable-next-line @typescript-eslint/no-namespace
+    export namespace PlaywrightTest {
+        // eslint-disable-next-line @typescript-eslint/no-empty-interface
+        export interface Matchers<R, T = unknown> extends jest.Matchers {}
+    }
+}
+
+export { expect, withCoverage /*keyboardCopy, keyboardPaste, clipboardCopy*/ };

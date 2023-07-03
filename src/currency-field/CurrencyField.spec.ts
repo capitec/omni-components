@@ -10,7 +10,7 @@ import {
     testSuffixBehaviour,
     testDisabledBehaviour
 } from '../core/OmniInputPlaywright.js';
-import { test, expect, expectJest, withCoverage /*keyboardPaste, clipboardCopy*/ } from '../utils/JestPlaywright.js';
+import { test, expect, withCoverage /*keyboardPaste, clipboardCopy*/ } from '../utils/JestPlaywright.js';
 import type { CurrencyField } from './CurrencyField.js';
 
 test(`Currency Field - Visual and Behaviour`, async ({ page, isMobile }) => {
@@ -50,7 +50,7 @@ test(`Currency Field - Visual and Behaviour`, async ({ page, isMobile }) => {
 
         // Check the following value as input value is formatted to currency value;
         await expect(inputField).toHaveValue('1,200,000.15');
-        await expectJest(beforeinput).toBeCalledTimes(value.length);
+        await expect(beforeinput).toBeCalledTimes(value.length);
 
         // Backspacing to cover the removal of cents and cents separator
 

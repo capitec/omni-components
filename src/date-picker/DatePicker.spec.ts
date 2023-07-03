@@ -10,7 +10,7 @@ import {
     testPrefixBehaviour,
     testSuffixBehaviour
 } from '../core/OmniInputPlaywright.js';
-import { test, expect, expectJest, withCoverage, type Page } from '../utils/JestPlaywright.js';
+import { test, expect, withCoverage, type Page } from '../utils/JestPlaywright.js';
 import type { DatePicker } from './DatePicker.js';
 
 test(`Date Picker - Visual and Behaviour`, async ({ page, isMobile }) => {
@@ -283,7 +283,7 @@ test(`Date Picker - Disabled Behaviour`, async ({ page, isMobile }) => {
             force: true
         });
 
-        await expectJest(click).toBeCalledTimes(0);
+        await expect(click).toBeCalledTimes(0);
 
         const calendar = datePicker.locator('omni-calendar#calendar');
 
@@ -299,7 +299,7 @@ test(`Date Picker - Disabled Behaviour`, async ({ page, isMobile }) => {
             force: true
         });
 
-        await expectJest(click).toBeCalledTimes(1);
+        await expect(click).toBeCalledTimes(1);
 
         await expect(calendar).toHaveCount(1);
         await expect(calendar).toBeVisible();

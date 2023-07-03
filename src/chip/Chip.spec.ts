@@ -1,5 +1,5 @@
 import * as jestMock from 'jest-mock';
-import { test, expect, expectJest, withCoverage } from '../utils/JestPlaywright.js';
+import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
 
 test(`Chip - Visual and Behaviour`, async ({ page, isMobile }) => {
     await withCoverage(page, async () => {
@@ -22,7 +22,7 @@ test(`Chip - Visual and Behaviour`, async ({ page, isMobile }) => {
             force: true
         });
 
-        await expectJest(click).toBeCalledTimes(2);
+        await expect(click).toBeCalledTimes(2);
     });
 });
 
@@ -67,7 +67,7 @@ test(`Chip - Closable Behaviour`, async ({ page, isMobile }) => {
         await chip.click({
             force: true
         });
-        await expectJest(remove).toBeCalledTimes(2);
+        await expect(remove).toBeCalledTimes(2);
     });
 });
 
@@ -95,7 +95,7 @@ test(`Chip - Disabled Behaviour`, async ({ page, isMobile }) => {
             force: true
         });
 
-        await expectJest(click).toBeCalledTimes(0);
+        await expect(click).toBeCalledTimes(0);
     });
 });
 

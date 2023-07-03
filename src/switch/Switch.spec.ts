@@ -1,5 +1,5 @@
 import * as jestMock from 'jest-mock';
-import { test, expect, expectJest, withCoverage } from '../utils/JestPlaywright.js';
+import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
 import { Args } from './Switch.stories.js';
 
 test(`Switch - Event Behaviour`, async ({ page }) => {
@@ -20,7 +20,7 @@ test(`Switch - Event Behaviour`, async ({ page }) => {
             force: true
         });
 
-        await expectJest(valueChange).toBeCalledTimes(1);
+        await expect(valueChange).toBeCalledTimes(1);
     });
 });
 
@@ -105,7 +105,7 @@ test(`Switch - Disabled Behaviour`, async ({ page }) => {
         const content = switchElement.locator('#content');
         await content.press('Space');
 
-        await expectJest(click).toBeCalledTimes(0);
+        await expect(click).toBeCalledTimes(0);
 
         await expect(switchElement).toHaveScreenshot('switch-disabled-click.png');
     });

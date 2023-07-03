@@ -1,5 +1,5 @@
 import * as jestMock from 'jest-mock';
-import { test, expect, expectJest, withCoverage, type Page } from '../utils/JestPlaywright.js';
+import { test, expect, withCoverage, type Page } from '../utils/JestPlaywright.js';
 import type { OmniFormElement } from './OmniFormElement.js';
 import type { BaseArgs } from './OmniInputStories.js';
 
@@ -206,7 +206,7 @@ export const testDisabledBehaviour = (tagName: string, storyExport = 'Disabled')
 
             await inputField.type('Value Update 3');
 
-            await expectJest(inputTest).toBeCalledTimes(0);
+            await expect(inputTest).toBeCalledTimes(0);
         });
     });
 };

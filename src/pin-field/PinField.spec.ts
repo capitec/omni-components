@@ -10,7 +10,7 @@ import {
     testSuffixBehaviour,
     testDisabledBehaviour
 } from '../core/OmniInputPlaywright.js';
-import { test, expect, expectJest, withCoverage, type Page } from '../utils/JestPlaywright.js';
+import { test, expect, withCoverage, type Page } from '../utils/JestPlaywright.js';
 import type { PinField } from './PinField.js';
 
 test(`Pin Field - Interactive`, async ({ page, browserName }) => {
@@ -49,7 +49,7 @@ test(`Pin Field - Interactive`, async ({ page, browserName }) => {
 
         await expect(inputField).toHaveValue(value);
 
-        await expectJest(interactions).toBeCalledTimes(value.length);
+        await expect(interactions).toBeCalledTimes(value.length);
         await expect(pinField).toHaveScreenshot('pin-field-value.png');
     });
 });
@@ -84,7 +84,7 @@ test(`Pin Field - Max Length`, async ({ page, browserName }) => {
         await expect(pinField).toHaveScreenshot('pin-field-value.png');
         await expect(inputField).toHaveValue(value);
 
-        await expectJest(interactions).toBeCalledTimes(typedValue.length);
+        await expect(interactions).toBeCalledTimes(typedValue.length);
 
         const showSlotElement = pinField.locator('slot[name=show]');
         await expect(showSlotElement).toHaveCount(1);
