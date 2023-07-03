@@ -1,6 +1,6 @@
 # omni-tab
 
-Control that can be used to display slotted content, for use within an omni-tabs component.
+Control that can be used to display slotted content, for use within an omni-tab-group component.
 
 ## Example
 
