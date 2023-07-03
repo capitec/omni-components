@@ -7,6 +7,7 @@ on:
       - '**/*.spec.ts'
       - '**/*.spec.js'
       - '**/OmniInputPlaywright.ts'
+      - '**/JestPlaywright.ts'
       - 'playwright.config.js'
       - '.github/workflows/add-screenshots.yml'
   
