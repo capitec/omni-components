@@ -1,6 +1,7 @@
 import { html, css, TemplateResult, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { OmniElement } from '../core/OmniElement.js';
+import { type ShowToastInit, ToastStack } from './ToastStack.js';
 
 import '../icons/Close.icon.js';
 
@@ -108,6 +109,65 @@ export class Toast extends OmniElement {
      * @attr
      */
     @property({ type: Boolean, reflect: true }) closeable?: boolean;
+
+    private static stack?: ToastStack;
+
+    /**
+     * Global singleton {@link ToastStack} used for showing a toast, either by adding to, or replacing.
+     * Use `Toast.show` function to add or replace toasts to this instance.
+     */
+    public static get current() {
+        if (!Toast.stack) {
+            Toast.stack = ToastStack.create({});
+        }
+        return Toast.stack as ToastStack;
+    }
+
+    /**
+     * Configure the global singleton {@link ToastStack} used for showing a toast, either by adding to, or replacing.
+     * Use `Toast.show` function to add or replace toasts to this instance.
+     * @returns The global singleton {@link ToastStack} instance. It can also be accessed via `Toast.current` static property.
+     */
+    public static configure(options: {
+        /**
+         * The position to stack toasts
+         */
+        position?: 'top' | 'bottom' | 'left' | 'right' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+        /**
+         * Reverse the order of toast with newest toasts showed on top of the stack. By default newest toasts are showed at the bottom of the stack.
+         */
+        reverse?: boolean;
+    }) {
+        const current = Toast.current;
+        if (options) {
+            if (options.position) {
+                current.position = options.position;
+            }
+            if (typeof options.reverse !== 'undefined') {
+                current.reverse = options.reverse;
+            }
+        }
+        return current;
+    }
+
+    /**
+     * Show a toast message.
+     * @returns The {@link Toast} instance that was created.
+     */
+    public static show(
+        options: {
+            /**
+             * When true, will append toast to the toast stack. Otherwise by default will replace any toast(s).
+             */
+            stack?: boolean;
+        } & ShowToastInit
+    ) {
+        const current = Toast.current;
+        if (!options.stack) {
+            current.innerHTML = '';
+        }
+        return current.showToast(options);
+    }
 
     private _raiseCloseClick(event: MouseEvent) {
         // Notify any subscribers that the close button was clicked.

@@ -81,7 +81,8 @@ export class ToastStack extends OmniElement {
      * @param init Initialisation context for the element.
      * @returns The {@link ToastStack} instance that was created.
      */
-    public static create(init: ToastStackInit) {
+    public static create(init?: ToastStackInit) {
+        init = init ?? {};
         if (!init.parent) {
             // If no parent element is specified, the ToastStack will be appended directly on the document body.
             init.parent = document.createElement('div');
@@ -147,17 +148,31 @@ export class ToastStack extends OmniElement {
             toast.appendChild(renderElement);
         }
 
+        return this.showInstance(toast);
+    }
+
+    /**
+     * Push a toast instance onto the toast stack.
+     */
+    public showInstance(instance: Toast, options?: ShowToastOptions) {
+        if (options?.duration) {
+            instance.setAttribute(toastDurationAttribute, options.duration.toString());
+        }
+        if (typeof options?.closeable !== 'undefined') {
+            instance.closeable = options.closeable;
+        }
+
         const { matches: motionOK } = window.matchMedia(animationAllowedMedia);
 
         if (motionOK && document.timeline) {
             // Animate in the toast if the user allows motion.
-            this.slideIn(toast);
+            this.slideIn(instance);
         } else {
             // Add the toast to the stack without animation.
-            this.appendChild(toast);
+            this.appendChild(instance);
         }
 
-        return toast;
+        return instance;
     }
 
     private onSlotChange() {
@@ -473,6 +488,21 @@ export type ShowToastInit = {
      * Content to render as the close button when `closeable`.
      */
     close?: RenderFunction | RenderResult;
+};
+
+/**
+ * Context for `showToast` function to programmatically add an existing `<omni-toast>` instance to an existing `<omni-toast-stack>`.
+ */
+export type ShowToastOptions = {
+    /**
+     * If provided will be the time in millisecond the toast is displayed before being automatically removed from the stack.
+     */
+    duration?: number;
+
+    /**
+     * If true, will display a close button that fires a `close-click` event when clicked and removes the toast from the stack.
+     */
+    closeable?: boolean;
 };
 
 declare global {
