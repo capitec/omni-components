@@ -20,7 +20,7 @@ interface Args {
 
 export const Basic = {
     render: () => html`
-    <omni-tab-group data-testid="test-tabs">
+    <omni-tab-group data-testid="test-tab-group">
         <omni-tab header="Tab 1">
             <div>Tab 1 Content</div>
         </omni-tab>
@@ -40,29 +40,29 @@ import { OmniLabel } from "@capitec/omni-components-react/label";
 
 const App = () =>
 <OmniTabGroup>
-    <OmniTab header="Tab 1">
-        <OmniLabel label="Label of Tab 1"/>
-    </OmniTab>
-    <OmniTab header="Tab 2">
-        <OmniLabel label="Label of Tab 2"/>
-    </OmniTab>
-    <OmniTab header="Tab 3">
-        <OmniLabel label="Label of Tab 3"/>
-    </OmniTab>
+ <OmniTab header="Tab 1">
+    <OmniLabel label="Label of Tab 1"/>
+ </OmniTab>
+ <OmniTab header="Tab 2">
+    <OmniLabel label="Label of Tab 2"/>
+ </OmniTab>
+ <OmniTab header="Tab 3">
+    <OmniLabel label="Label of Tab 3"/>
+ </OmniTab>
 </OmniTabGroup>;`
         }
     ],
     name: 'Basic',
     description: () => html`
     <div>
-        This is the recommended use of the <code class="language-html">&lt;omni-tab-group&gt;</code> with slotted <code class="language-html">&lt;omni-tab&gt;</code> component(s), headers for each tab are set by setting the <code>header</code> attribute of the <code class="language-html">&lt;omni-tab&gt;</code>(s).
+        This is the recommended use of the <code class="language-html">&lt;omni-tab-group&gt;</code> with slotted <code class="language-html">&lt;omni-tab&gt;</code> component(s), headers for each tab are set by setting the <code>header</code> attribute of the <code class="language-html">&lt;omni-tab&gt;</code>.
     <div>
     `,
     play: async (context) => {
-        const tabsElement = within(context.canvasElement).getByTestId<TabGroup>('test-tabs');
+        const tabGroupElement = within(context.canvasElement).getByTestId<TabGroup>('test-tab-group');
 
         // Get the tab bar element
-        const tabBar = (await querySelectorAsync(tabsElement.shadowRoot as ShadowRoot, '.tab-bar')) as HTMLElement;
+        const tabBar = (await querySelectorAsync(tabGroupElement.shadowRoot as ShadowRoot, '.tab-bar')) as HTMLElement;
         await expect(tabBar).toBeTruthy();
 
         // Get all the tab headers in the tab bar
@@ -72,7 +72,7 @@ const App = () =>
         await expect(tabHeadersArray.length).toBe(3);
 
         // Get the default slot of the Tab element.
-        const tabsSlotElement = (await querySelectorAsync(tabsElement.shadowRoot as ShadowRoot, 'slot:not([name])')) as HTMLSlotElement;
+        const tabsSlotElement = (await querySelectorAsync(tabGroupElement.shadowRoot as ShadowRoot, 'slot:not([name])')) as HTMLSlotElement;
         // Get the all the Tab elements in the default slot.
         const tabElements = tabsSlotElement.assignedElements();
         // Confirm that there is 3 tab elements in the default slot.
@@ -82,7 +82,7 @@ const App = () =>
 
 export const Active = {
     render: () => html`
-    <omni-tab-group data-testid='test-tabs'>
+    <omni-tab-group data-testid='test-tab-group'>
         <omni-tab header="Tab 1">
             <omni-label label="Label of Tab 1"></omni-label>
         </omni-tab>
@@ -93,7 +93,6 @@ export const Active = {
             <omni-label label="Label of Tab 3"></omni-label>
         </omni-tab>
     </omni-tab-group>
-
 `,
 
     frameworkSources: [
@@ -108,15 +107,15 @@ import { OmniLabel } from "@capitec/omni-components-react/label";
 
 const App = () =>
 <OmniTabGroup>
-    <OmniTab header="Tab 1">
-        <OmniLabel label='Label of Tab 1'/>
-    </OmniTab>
-    <OmniTab header="Tab 2" active>
-        <OmniLabel label='Label of Tab 2'/>
-    </OmniTab>
-    <OmniTab header="Tab 3">
-        <OmniLabel label='Label of Tab 3'/>
-    </OmniTab>
+ <OmniTab header="Tab 1">
+     <OmniLabel label='Label of Tab 1'/>
+ </OmniTab>
+ <OmniTab header="Tab 2" active>
+     <OmniLabel label='Label of Tab 2'/>
+ </OmniTab>
+ <OmniTab header="Tab 3">
+     <OmniLabel label='Label of Tab 3'/>
+ </OmniTab>
 </OmniTabGroup>;`
         }
     ],
@@ -128,10 +127,10 @@ const App = () =>
     <div>
     `,
     play: async (context) => {
-        const tabsElement = within(context.canvasElement).getByTestId<TabGroup>('test-tabs');
+        const tabGroupElement = within(context.canvasElement).getByTestId<TabGroup>('test-tab-group');
 
         // Get the tab bar element
-        const tabBar = (await querySelectorAsync(tabsElement.shadowRoot as ShadowRoot, '.tab-bar')) as HTMLElement;
+        const tabBar = (await querySelectorAsync(tabGroupElement.shadowRoot as ShadowRoot, '.tab-bar')) as HTMLElement;
         await expect(tabBar).toBeTruthy();
 
         // Get all the tab headers in the tab bar
@@ -147,7 +146,7 @@ const App = () =>
         await userEvent.click(tabHeadersArray[0]);
 
         // Get the default slot for all the Tabs
-        const tabsSlotElement = (await querySelectorAsync(tabsElement.shadowRoot as ShadowRoot, 'slot:not([name])')) as HTMLSlotElement;
+        const tabsSlotElement = (await querySelectorAsync(tabGroupElement.shadowRoot as ShadowRoot, 'slot:not([name])')) as HTMLSlotElement;
         // Get the active tab
         const tabElement = tabsSlotElement.assignedElements().find((e) => e.hasAttribute('active')) as Tab;
         // Get the active tab component slot
@@ -160,7 +159,7 @@ const App = () =>
 
 export const Disabled = {
     render: () => html`
-    <omni-tab-group data-testid="test-tabs">
+    <omni-tab-group data-testid="test-tab-group">
         <omni-tab header="Tab 1">
             <omni-label label="Label of Tab 1"></omni-label>
         </omni-tab>
@@ -171,7 +170,6 @@ export const Disabled = {
             <omni-label label="Label of Tab 3"></omni-label>
         </omni-tab>
     </omni-tab-group>
-
 `,
     frameworkSources: [
         {
@@ -180,21 +178,21 @@ export const Disabled = {
         },
         {
             framework: 'React',
-            load: () => `import { OmniTabs, OmniTab } from "@capitec/omni-components-react/tab";
+            load: () => `import { OmniTabGroup, OmniTab } from "@capitec/omni-components-react/tab";
 import { OmniLabel } from "@capitec/omni-components-react/label";
 
 const App = () =>
-<OmniTabs>
-    <OmniTab header="Tab 1">
-        <OmniLabel label="Label of Tab 1"/>
-    </OmniTab>
-    <OmniTab header="Tab 2">
-        <OmniLabel label="Label of Tab 2"/>
-    </OmniTab>
-    <OmniTab header="Tab 3" disabled>
-        <OmniLabel label="Label of Tab 3"/>
-    </OmniTab>
-</OmniTabs>;`
+<OmniTabGroup>
+ <OmniTab header="Tab 1">
+    <OmniLabel label="Label of Tab 1"/>
+ </OmniTab>
+ <OmniTab header="Tab 2">
+    <OmniLabel label="Label of Tab 2"/>
+ </OmniTab>
+ <OmniTab header="Tab 3" disabled>
+    <OmniLabel label="Label of Tab 3"/>
+ </OmniTab>
+</OmniTabGroup>;`
         }
     ],
     name: 'Disabled',
@@ -205,12 +203,12 @@ const App = () =>
     `,
     args: {},
     play: async (context) => {
-        const tabsElement = within(context.canvasElement).getByTestId<TabGroup>('test-tabs');
+        const tabGroupElement = within(context.canvasElement).getByTestId<TabGroup>('test-tab-group');
         const tabSelect = jest.fn();
-        tabsElement.addEventListener('tab-select', tabSelect);
+        tabGroupElement.addEventListener('tab-select', tabSelect);
 
         // Get the tab bar element
-        const tabBar = (await querySelectorAsync(tabsElement.shadowRoot as ShadowRoot, '.tab-bar')) as HTMLElement;
+        const tabBar = (await querySelectorAsync(tabGroupElement.shadowRoot as ShadowRoot, '.tab-bar')) as HTMLElement;
 
         // Get all the tabs in the tab bar
         const tabHeaders = tabBar.querySelectorAll('omni-tab-header');
