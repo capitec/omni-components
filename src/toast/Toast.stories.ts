@@ -178,7 +178,7 @@ export const Configure_Toast: ComponentStoryFormat<Args> = {
                 Toast.show({
                     type: 'success',
                     header: 'Success!',
-                    detail: 'It was successful.',
+                    detail: 'It was successful.'
                 });
             }}"
             >
