@@ -103,6 +103,7 @@ test(`Button - Label Behaviour`, async ({ page }) => {
         const button = page.locator('.Label').locator('[data-testid=test-button]');
         const labelElement = button.locator('#label');
         await expect(labelElement).toHaveText(args.label);
+        await expect(button).toHaveScreenshot('button-label.png');
     });
 });
 
