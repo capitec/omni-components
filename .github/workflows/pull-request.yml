@@ -55,10 +55,13 @@ jobs:
     steps:
       - name: Configure OS
         run: |
+          echo "Setting CGFontDisableAntialiasing"
           defaults write CoreGraphics CGFontDisableAntialiasing YES
-          defaults delete -g AppleFontSmoothing
-          defaults -currentHost delete -g AppleFontSmoothing
+#         defaults delete -g AppleFontSmoothing
+#         defaults -currentHost delete -g AppleFontSmoothing
+          echo "Disabling AppleFontSmoothing"
           defaults write -g AppleFontSmoothing -int 0
+          echo "Completed OS configure"
           
       - name: Checkout 🛎️
         uses: actions/checkout@v3
