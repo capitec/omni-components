@@ -74,14 +74,15 @@ export const Showing_Toasts: ComponentStoryFormat<Args> = {
             @click="${() => {
                 Toast.configure({
                     position: 'bottom',
-                    reverse: false
+                    reverse: false,
+                    stack: true,
+                    closeable: undefined,
+                    duration: undefined
                 });
                 Toast.show({
                     type: 'success',
                     header: 'Success!',
-                    detail: 'It was successful.',
-                    closeable: true,
-                    duration: 3000
+                    detail: 'It was successful.'
                 });
             }}"
             >
@@ -98,9 +99,7 @@ document.querySelector('omni-button').addEventListener('click', () => {
     Toast.show({
         type: 'success',
         header: 'Success!',
-        detail: 'It was successful.',
-        closeable: true,
-        duration: 3000
+        detail: 'It was successful.'
     });
 });`
             }
@@ -116,9 +115,7 @@ window.vueData = {
         Toast.show({
             type: 'success',
             header: 'Success!',
-            detail: 'It was successful.',
-            closeable: true,
-            duration: 3000
+            detail: 'It was successful.'
         });
     }
 };`
@@ -134,9 +131,7 @@ const showToast = () => {
     Toast.show({
         type: 'success',
         header: 'Success!',
-        detail: 'It was successful.',
-        closeable: true,
-        duration: 3000
+        detail: 'It was successful.'
     });
 }`
             }
@@ -150,9 +145,7 @@ const showToast = () => {
     Toast.show({
         type: 'success',
         header: 'Success!',
-        detail: 'It was successful.',
-        closeable: true,
-        duration: 3000
+        detail: 'It was successful.'
     });
 };
 
@@ -175,15 +168,17 @@ export const Configure_Toast: ComponentStoryFormat<Args> = {
             label="Show Toast"
             @click="${() => {
                 Toast.configure({
-                    position: 'top',
-                    reverse: false
+                    position: 'left',
+                    reverse: true,
+                    stack: true,
+                    closeable: undefined,
+                    // Defaults to 3000ms when not specified. If set to 0 will be infinite (or until close clicked)
+                    duration: undefined
                 });
                 Toast.show({
                     type: 'success',
                     header: 'Success!',
                     detail: 'It was successful.',
-                    closeable: true,
-                    duration: 3000
                 });
             }}"
             >
@@ -197,16 +192,19 @@ export const Configure_Toast: ComponentStoryFormat<Args> = {
                 jsFragment: `import { Toast } from '@capitec/omni-components/toast';
 
 Toast.configure({
-    position: 'top'
+    position: 'left',
+    reverse: true,
+    stack: true,
+    closeable: undefined,
+    // Defaults to 3000ms when not specified. If set to 0 will be infinite (or until close clicked)
+    duration: undefined
 });
 
 document.querySelector('omni-button').addEventListener('click', () => {
     Toast.show({
         type: 'success',
         header: 'Success!',
-        detail: 'It was successful.',
-        closeable: true,
-        duration: 3000
+        detail: 'It was successful.'
     });
 });`
             }
@@ -218,7 +216,12 @@ document.querySelector('omni-button').addEventListener('click', () => {
                 jsFragment: `import { Toast } from '@capitec/omni-components/toast';
 
 Toast.configure({
-    position: 'top'
+    position: 'left',
+    reverse: true,
+    stack: true,
+    closeable: undefined,
+    // Defaults to 3000ms when not specified. If set to 0 will be infinite (or until close clicked)
+    duration: undefined
 });
 
 window.vueData = {
@@ -226,9 +229,7 @@ window.vueData = {
         Toast.show({
             type: 'success',
             header: 'Success!',
-            detail: 'It was successful.',
-            closeable: true,
-            duration: 3000
+            detail: 'It was successful.'
         });
     }
 };`
@@ -241,16 +242,19 @@ window.vueData = {
                 jsFragment: `import { Toast } from '@capitec/omni-components/toast';
 
 Toast.configure({
-    position: 'top'
+    position: 'left',
+    reverse: true,
+    stack: true,
+    closeable: undefined,
+    // Defaults to 3000ms when not specified. If set to 0 will be infinite (or until close clicked)
+    duration: undefined
 });
 
 const showToast = () => {
     Toast.show({
         type: 'success',
         header: 'Success!',
-        detail: 'It was successful.',
-        closeable: true,
-        duration: 3000
+        detail: 'It was successful.'
     });
 }`
             }
@@ -261,16 +265,19 @@ const showToast = () => {
 import { Toast } from '@capitec/omni-components-react/toast';
 
 Toast.configure({
-    position: 'top'
+    position: 'left',
+    reverse: true,
+    stack: true,
+    closeable: undefined,
+    // Defaults to 3000ms when not specified. If set to 0 will be infinite (or until close clicked)
+    duration: undefined
 });
 
 const showToast = () => {
     Toast.show({
         type: 'success',
         header: 'Success!',
-        detail: 'It was successful.',
-        closeable: true,
-        duration: 3000
+        detail: 'It was successful.'
     });
 };
 
@@ -281,28 +288,31 @@ const App = () => <OmniButton label="Show Toast" onclick={showToast}/>;`
     args: {}
 };
 
-export const Stacking_Toasts: ComponentStoryFormat<Args> = {
+export const Replacing_Toasts: ComponentStoryFormat<Args> = {
     description: () => html`
     <div>
-        Toasts can be stacked instead of replaced when shown programmatically via the static <code class="language-js">Toast.show()</code> function by setting <code>stack</code> to <code class="language-js">true</code>. 
+        Toasts can be replaced instead of stacked when shown programmatically via the static <code class="language-js">Toast.show()</code> function by using the static <code class="language-js">Toast.configure()</code> function to set <code>stack</code> to <code class="language-js">false</code>. 
     <div>
     `,
     render: (args: Args) => html`
         <omni-button
             data-testid="test-toast-show"
-            label="Stack Toast"
+            label="Show Toast"
             @click="${() => {
                 Toast.configure({
                     position: 'bottom',
-                    reverse: false
+                    reverse: false,
+                    stack: false,
+                    closeable: undefined,
+                    duration: undefined
                 });
                 Toast.show({
-                    stack: true,
                     type: 'success',
                     header: 'Success!',
                     detail: 'It was successful.',
                     closeable: true,
-                    duration: 3000
+                    // Defaults to 3000ms (or configured duration via Toast.configure function) when not specified. If set to 0 will be infinite (or until close clicked)
+                    duration: 0
                 });
             }}"
             >
@@ -312,17 +322,19 @@ export const Stacking_Toasts: ComponentStoryFormat<Args> = {
         {
             framework: 'HTML',
             sourceParts: {
-                htmlFragment: raw`<omni-button label="Stack Toast"></omni-button>`,
+                htmlFragment: raw`<omni-button label="Show Toast"></omni-button>`,
                 jsFragment: `import { Toast } from '@capitec/omni-components/toast';
+
+Toast.configure({ stack: false });
 
 document.querySelector('omni-button').addEventListener('click', () => {
     Toast.show({
-        stack: true,
         type: 'success',
         header: 'Success!',
         detail: 'It was successful.',
         closeable: true,
-        duration: 3000
+        // Defaults to 3000ms (or configured duration via Toast.configure function) when not specified. If set to 0 will be infinite (or until close clicked)
+        duration: 0
     });
 });`
             }
@@ -333,6 +345,8 @@ document.querySelector('omni-button').addEventListener('click', () => {
                 htmlFragment: raw`<omni-button label="Show Toast" @click="showToast"></omni-button>`,
                 jsFragment: `import { Toast } from '@capitec/omni-components/toast';
 
+Toast.configure({ stack: false });
+
 window.vueData = {
     showToast: () => {
         Toast.show({
@@ -341,7 +355,8 @@ window.vueData = {
             header: 'Success!',
             detail: 'It was successful.',
             closeable: true,
-            duration: 3000
+            // Defaults to 3000ms (or configured duration via Toast.configure function) when not specified. If set to 0 will be infinite (or until close clicked)
+            duration: 0
         });
     }
 };`
@@ -353,14 +368,16 @@ window.vueData = {
                 htmlFragment: raw`<omni-button label="Show Toast" @click="\${showToast}"></omni-button>`,
                 jsFragment: `import { Toast } from '@capitec/omni-components/toast';
 
+Toast.configure({ stack: false });
+
 const showToast = () => {
     Toast.show({
-        stack: true,
         type: 'success',
         header: 'Success!',
         detail: 'It was successful.',
         closeable: true,
-        duration: 3000
+        // Defaults to 3000ms (or configured duration via Toast.configure function) when not specified. If set to 0 will be infinite (or until close clicked)
+        duration: 0
     });
 }`
             }
@@ -370,21 +387,23 @@ const showToast = () => {
             load: (args) => `import { OmniButton } from "@capitec/omni-components-react/button";
 import { Toast } from '@capitec/omni-components-react/toast';
 
+Toast.configure({ stack: false });
+
 const showToast = () => {
     Toast.show({
-        stack: true,
         type: 'success',
         header: 'Success!',
         detail: 'It was successful.',
         closeable: true,
-        duration: 3000
+        // Defaults to 3000ms (or configured duration via Toast.configure function) when not specified. If set to 0 will be infinite (or until close clicked)
+        duration: 0
     });
 };
 
-const App = () => <OmniButton label="Stack Toast" onclick={showToast}/>;`
+const App = () => <OmniButton label="Show Toast" onclick={showToast}/>;`
         }
     ],
-    name: 'Stacking Toast Programmatically',
+    name: 'Replacing Toast Programmatically',
     args: {}
 };
 
