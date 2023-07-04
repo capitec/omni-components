@@ -495,7 +495,7 @@ export type ShowToastInit = {
  */
 export type ShowToastOptions = {
     /**
-     * If provided will be the time in millisecond the toast is displayed before being automatically removed from the stack.
+     * If provided will be the time in milliseconds the toast is displayed before being automatically removed from the stack.
      */
     duration?: number;
 
