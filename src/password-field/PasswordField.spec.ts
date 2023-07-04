@@ -18,8 +18,6 @@ test(`Password Field - Interactive`, async ({ page, browserName }) => {
         await page.goto('/components/password-field/');
         await page.evaluate(() => document.fonts.ready);
 
-        await page.waitForSelector('[data-testid]', {});
-
         const passwordField = page.locator('[data-testid]').first();
         passwordField.evaluate(async (t: PasswordField) => {
             t.value = '';

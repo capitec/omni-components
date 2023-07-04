@@ -119,7 +119,7 @@ jobs:
             } else {
                 list = execSync(`git diff-tree --no-commit-id --name-only -r ${ghCtx.event.before} ${ghCtx.event.after}`).toString();
             }
-            if (!list.includes('src/core')) {
+            if (list.includes('src/core')) {
                 return '';
             } else {
                 list.split(/(\r\n|\n|\r)/gm).forEach(f => {
