@@ -13,11 +13,10 @@ import {
 import { test, expect, withCoverage /*keyboardPaste, clipboardCopy*/ } from '../utils/JestPlaywright.js';
 import type { CurrencyField } from './CurrencyField.js';
 
-test(`Currency Field - Visual and Behaviour`, async ({ page, isMobile }) => {
+test(`Currency Field - Visual and Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/currency-field/');
 
-        const args = await page.locator('story-renderer[key=Interactive]').evaluate((storyRenderer) => (storyRenderer as any).story.args);
         const currencyField = page.locator('.Interactive').getByTestId('test-currency-field');
 
         await currencyField.evaluate(async (c: CurrencyField) => {

@@ -12,7 +12,7 @@ import {
 import { test, expect, withCoverage, type Page } from '../utils/JestPlaywright.js';
 import type { ColorField } from './ColorField.js';
 
-test(`Color Field - Interactive`, async ({ page, browserName }) => {
+test(`Color Field - Interactive`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/color-field/');
         await page.evaluate(() => document.fonts.ready);
@@ -43,7 +43,7 @@ testCustomClearableSlotBehaviour('omni-color-field');
 testPrefixBehaviour('omni-color-field');
 testSuffixBehaviour('omni-color-field');
 
-test(`Color Field - Disabled Behaviour`, async ({ page, isMobile }) => {
+test(`Color Field - Disabled Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/color-field/');
 
