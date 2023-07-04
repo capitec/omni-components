@@ -13,7 +13,7 @@ import {
 import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
 import type { EmailField } from './EmailField.js';
 
-test(`Email Field - Interactive`, async ({ page, browserName }) => {
+test(`Email Field - Interactive`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/email-field/');
         await page.evaluate(() => document.fonts.ready);

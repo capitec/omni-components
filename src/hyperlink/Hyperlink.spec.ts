@@ -57,7 +57,7 @@ test(`Hyperlink - Href Behaviour`, async ({ page }) => {
 
         await expect(hyperlink).toHaveScreenshot('hyperlink-initial.png');
 
-        // Start waiting for popup before clicking. Note no await.
+        // Start waiting for popup before clicking. Note there is no await, rather the promise is kept as a reference
         const popupPromise = page.waitForEvent('popup');
 
         await hyperlink.click();
