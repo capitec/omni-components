@@ -13,13 +13,12 @@ import {
 import { test, expect, withCoverage, type Page } from '../utils/JestPlaywright.js';
 import type { DatePicker } from './DatePicker.js';
 
-test(`Date Picker - Visual and Behaviour`, async ({ page, isMobile }) => {
+test(`Date Picker - Visual and Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/date-picker/');
 
         await page.waitForSelector('[data-testid]', {});
 
-        const args = await page.locator('story-renderer[key=Value]').evaluate((storyRenderer) => (storyRenderer as any).story.args);
         const datePicker = page.locator('.Value').getByTestId('test-date-picker');
 
         // Prepare test data
@@ -90,13 +89,12 @@ test(`Date Picker - Visual and Behaviour`, async ({ page, isMobile }) => {
     });
 });
 
-test(`Date Picker - Value Behaviour`, async ({ page, isMobile }) => {
+test(`Date Picker - Value Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/date-picker/');
 
         await page.waitForSelector('[data-testid]', {});
 
-        const args = await page.locator('story-renderer[key=Value]').evaluate((storyRenderer) => (storyRenderer as any).story.args);
         const datePicker = page.locator('.Value').getByTestId('test-date-picker');
         await datePicker.evaluate(async (d: DatePicker) => {
             d.value = '2023-01-01';
@@ -114,7 +112,7 @@ test(`Date Picker - Value Behaviour`, async ({ page, isMobile }) => {
     });
 });
 
-test(`Date Picker - Locale Behaviour`, async ({ page, isMobile }) => {
+test(`Date Picker - Locale Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         const localDate = DateTime.fromISO('2022-06-21');
         const isoDate = localDate.toISODate() as string;
@@ -124,7 +122,6 @@ test(`Date Picker - Locale Behaviour`, async ({ page, isMobile }) => {
 
         await page.waitForSelector('[data-testid]', {});
 
-        const args = await page.locator('story-renderer[key=Locale]').evaluate((storyRenderer) => (storyRenderer as any).story.args);
         const datePicker = page.locator('.Locale').getByTestId('test-date-picker');
 
         // Prepare test data
