@@ -5,7 +5,6 @@ test(`Hyperlink - Visual and Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/hyperlink/');
 
-        const args = await page.locator('story-renderer[key=Interactive]').evaluate((storyRenderer) => (storyRenderer as any).story.args);
         const hyperlink = page.locator('.Interactive').getByTestId('test-hyperlink');
 
         await expect(hyperlink).toHaveScreenshot('hyperlink-initial.png');

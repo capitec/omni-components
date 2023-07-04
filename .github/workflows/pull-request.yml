@@ -1,4 +1,7 @@
 name: Pull Request
+
+env:
+  PW_COMPONENT_FILTER:
 on:
   pull_request:
     branches: [ main, develop]
@@ -92,6 +95,52 @@ jobs:
       - name: Install Package Dependencies
         run: |
           npm ci --force
+
+      - uses: actions/github-script@v6
+        id: get-component-filter
+        with:
+          script: |
+            const path = require('path');
+            const { execSync } = require('child_process');
+
+            const ghCtx = ${{ toJson(github) }};
+            const files = [];
+            
+            let list = '';
+            if (ghCtx.event_name === 'workflow_dispatch') {
+                try {
+                    const response = await github.request(`GET /repos/${ghCtx.repository}/actions/runs`);
+                    const before = response.data.workflow_runs.find(wr => wr.name === ghCtx.workflow && wr.id !== ghCtx.run_id && wr.head_sha && wr.head_sha !== ghCtx.sha)?.head_sha;
+                    if (before) {
+                        list = execSync(`git diff-tree --no-commit-id --name-only -r ${before} ${ghCtx.sha}`).toString();
+                    }
+                } catch (error) {
+                }
+            } else {
+                list = execSync(`git diff-tree --no-commit-id --name-only -r ${ghCtx.event.before} ${ghCtx.event.after}`).toString();
+            }
+            if (!list.includes('src/core')) {
+                return '';
+            } else {
+                list.split(/(\r\n|\n|\r)/gm).forEach(f => {
+                    if (f.startsWith('src') && !f.startsWith('src/utils') && !f.endsWith('index.ts') && f.endsWith('.ts')) {
+                        const filter = path.basename(f).replace('.stories', '').replace('.spec', '').replace('.ts', '');
+                        if (!files.includes(filter)) {
+                            files.push(filter);
+                        }
+                    }
+                });
+
+                const testFilter = files.join(' ');
+                return testFilter;
+            }
+            return '';
+          result-encoding: string
+          
+      - name: Update PW_COMPONENT_FILTER
+        run: |
+          PW_COMPONENT_FILTER="${{steps.get-component-filter.outputs.result}}"
+          echo PW_COMPONENT_FILTER=${PW_COMPONENT_FILTER} >> $GITHUB_ENV
 
       - name: Install Playwright Chrome Dependencies
         run: npx playwright install --with-deps
