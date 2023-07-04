@@ -122,7 +122,7 @@ export class Toast extends OmniElement {
         closeable?: boolean;
 
         /**
-         * If provided will be the time in millisecond the toast is displayed before being automatically removed from the stack.
+         * If provided will be the time in milliseconds the toast is displayed before being automatically removed from the stack.
          * Defaults to 3000ms when not provided.
          * When set to 0 will amount to no timeout.
          */
