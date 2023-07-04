@@ -105,9 +105,8 @@ test(`Check - Slot Behaviour`, async ({ page }) => {
         await page.goto('/components/check/');
 
         const check = page.locator('.Slot').getByTestId('test-check');
-        const slottedContent = await check.innerHTML();
 
-        await expect(slottedContent).toEqual('Slotted');
+        await expect(await check.innerHTML()).toEqual('Slotted');
         await expect(check).toHaveScreenshot('check-slot.png');
     });
 });
