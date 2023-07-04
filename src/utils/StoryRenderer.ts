@@ -256,7 +256,7 @@ export class StoryRenderer extends LitElement {
         );
 
         this.story = this.controller.story[this.key as string];
-        this.story!.originalArgs = this.story?.originalArgs ?? JSON.parse(JSON.stringify(this.story?.args));
+        this.story!.originalArgs = this.story?.originalArgs ?? JSON.parse(JSON.stringify(this.story?.args ?? {}));
         Object.keys(this.story?.args ?? {}).forEach((o) => {
             if (this.story!.args![o] === undefined) {
                 this.story!.originalArgs[o] = undefined;
