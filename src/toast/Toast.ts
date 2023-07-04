@@ -110,7 +110,24 @@ export class Toast extends OmniElement {
      */
     @property({ type: Boolean, reflect: true }) closeable?: boolean;
 
-    private static stack?: ToastStack;
+    private static stack?: ToastStack & {
+        /**
+         * When true, will append toast to the toast stack. Otherwise when false will replace any toast(s). Defaults to true.
+         */
+        stack?: boolean;
+
+        /**
+         * If true, will display a close button that fires a `close-click` event when clicked and removes the toast from the stack.
+         */
+        closeable?: boolean;
+
+        /**
+         * If provided will be the time in millisecond the toast is displayed before being automatically removed from the stack.
+         * Defaults to 3000ms when not provided.
+         * When set to 0 will amount to no timeout.
+         */
+        duration?: number;
+    };
 
     /**
      * Global singleton {@link ToastStack} used for showing a toast, either by adding to, or replacing.
@@ -119,8 +136,14 @@ export class Toast extends OmniElement {
     public static get current() {
         if (!Toast.stack) {
             Toast.stack = ToastStack.create({});
+            if (Toast.stack) {
+                Toast.stack.closeable = false;
+                Toast.stack.duration = 3000;
+                Toast.stack.stack = true;
+            }
         }
-        return Toast.stack as ToastStack;
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        return Toast.stack!;
     }
 
     /**
@@ -133,10 +156,28 @@ export class Toast extends OmniElement {
          * The position to stack toasts
          */
         position?: 'top' | 'bottom' | 'left' | 'right' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+
         /**
          * Reverse the order of toast with newest toasts showed on top of the stack. By default newest toasts are showed at the bottom of the stack.
          */
         reverse?: boolean;
+
+        /**
+         * When true, will append toast to the toast stack. Otherwise when false will replace any toast(s). Defaults to true.
+         */
+        stack?: boolean;
+
+        /**
+         * If true, will display a close button that fires a `close-click` event when clicked and removes the toast from the stack.
+         */
+        closeable?: boolean;
+
+        /**
+         * If provided will be the time in millisecond the toast is displayed before being automatically removed from the stack.
+         * Defaults to 3000ms when not provided.
+         * When set to 0 it will never be auto removed.
+         */
+        duration?: number;
     }) {
         const current = Toast.current;
         if (options) {
@@ -146,6 +187,15 @@ export class Toast extends OmniElement {
             if (typeof options.reverse !== 'undefined') {
                 current.reverse = options.reverse;
             }
+            if (typeof options.stack !== 'undefined') {
+                current.stack = options.stack;
+            }
+            if (typeof options.closeable !== 'undefined') {
+                current.closeable = options.closeable;
+            }
+            if (typeof options.duration !== 'undefined') {
+                current.duration = options.duration === 0 ? undefined : options.duration;
+            }
         }
         return current;
     }
@@ -154,18 +204,20 @@ export class Toast extends OmniElement {
      * Show a toast message.
      * @returns The {@link Toast} instance that was created.
      */
-    public static show(
-        options: {
-            /**
-             * When true, will append toast to the toast stack. Otherwise by default will replace any toast(s).
-             */
-            stack?: boolean;
-        } & ShowToastInit
-    ) {
+    public static show(options: ShowToastInit) {
         const current = Toast.current;
-        if (!options.stack) {
+        if (!current.stack) {
             current.innerHTML = '';
         }
+
+        // Apply default config if not specified
+        if (typeof options.closeable === 'undefined') {
+            options.closeable = current.closeable;
+        }
+        if (typeof options.duration === 'undefined') {
+            options.duration = current.duration;
+        }
+
         return current.showToast(options);
     }
 
