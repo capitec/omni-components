@@ -21,6 +21,14 @@ jobs:
     timeout-minutes: 60 
     runs-on: macos-latest
     steps:
+      - name: Configure OS
+        run: |
+          defaults write CoreGraphics CGFontDisableAntialiasing YES
+          defaults delete -g AppleFontSmoothing
+          defaults -currentHost delete -g AppleFontSmoothing
+          defaults write -g AppleFontSmoothing -int 0
+      
+
       - name: Checkout 🛎️
         uses: actions/checkout@v3
         with:
