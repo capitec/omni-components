@@ -25,7 +25,7 @@ export default {
     }
 } as CSFIdentifier;
 
-interface Args {
+export interface Args {
     label: string;
     type: (typeof labelOptions)[number];
     '[Default Slot]': string;

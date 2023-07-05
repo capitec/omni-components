@@ -1,10 +1,11 @@
 import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
+import type { Args } from './Label.stories.js';
 
 test(`Label - Visual and Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/label/');
 
-        const args = await page.locator('story-renderer[key=Interactive]').evaluate((storyRenderer) => (storyRenderer as any).story.args);
+        const args = await page.locator('story-renderer[key=Interactive]').evaluate((storyRenderer) => (storyRenderer as any).story.args as Args);
         const label = page.locator('.Interactive').getByTestId('test-label');
 
         await expect(label).toHaveScreenshot('label-initial.png');
