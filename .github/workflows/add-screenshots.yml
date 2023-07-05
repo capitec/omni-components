@@ -23,13 +23,13 @@ jobs:
     timeout-minutes: 60 
     runs-on: ubuntu-latest
     steps:
-      - name: Configure OS
-        run: |
-          echo "Setting CGFontDisableAntialiasing"
-          defaults write CoreGraphics CGFontDisableAntialiasing YES
-          echo "Disabling AppleFontSmoothing"
-          defaults write -g AppleFontSmoothing -int 0
-          echo "Completed OS configure"
+    #   - name: Configure OS
+    #     run: |
+    #       echo "Setting CGFontDisableAntialiasing"
+    #       defaults write CoreGraphics CGFontDisableAntialiasing YES
+    #       echo "Disabling AppleFontSmoothing"
+    #       defaults write -g AppleFontSmoothing -int 0
+    #       echo "Completed OS configure"
 
       - name: Dump env 💩
         run: env | sort
