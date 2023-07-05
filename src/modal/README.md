@@ -45,6 +45,7 @@ Control to display modal content with optional header and footer content.
 
 | Part        | Description                                      |
 |-------------|--------------------------------------------------|
+| `backdrop`  | Internal `HTMLDivElement` instance for backdrop. |
 | `body`      | Internal `HTMLDivElement` instance for body.     |
 | `container` | Internal `HTMLDivElement` instance for container. |
 | `dialog`    | Internal `HTMLDialogElement` instance.           |

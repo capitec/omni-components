@@ -1,6 +1,9 @@
 import { readFile } from 'fs/promises';
 import { globbySync } from 'globby';
 import { loadCustomElementsModuleByFileFor } from '../../../dist/utils/StoryUtils.js';
+import markdownIt from 'markdown-it';
+import { slug } from 'github-slugger';
+import { splitPascalCase } from './filters.js';
 
 export async function components() {
     const stories = globbySync('./dist/**/*.stories.js');
@@ -32,4 +35,94 @@ export async function components() {
 export async function customElements() {
     const ce = await readFile('./custom-elements.json', 'utf-8');
     return JSON.parse(ce);
+}
+
+export async function search() {
+
+    async function createMarkdownIndex(fileName, prefix, title) {
+
+        // Read and parse the file.
+        const text = await readFile(fileName, 'utf-8');
+        const instance = new markdownIt();
+        const md = instance.parse(text, {});
+
+        // Create and return MD index.
+        const result = [];
+        let matches = [];
+
+        // Create single index entry for entire file.
+        md.forEach((token, index, arr) => {
+            if (token.content) {
+                matches.push(token.content);
+            }
+        });
+
+        result.push({
+            path: prefix,
+            type: 'md',
+            title: title,
+            data: matches
+        });
+
+        // Create index entry per line in the file.
+        // md.forEach((token, index, arr) => {
+        //     if (token.type === 'heading_open') {
+        //         const link = slug(arr[index + 1].content);
+        //         matches = [];
+        //         result.push({
+        //             path: prefix + link,
+        //             data: matches,
+        //             type: 'md',
+        //             title: title
+        //         })
+        //     } else if (token.type === 'inline') {
+        //         matches.push(token.content);
+        //     }
+        // });
+
+        return result;
+    }
+
+    async function createComponentIndex() {
+
+        const components = globbySync('./dist/**/*.stories.js');
+        const customElementDefinitions = await customElements();
+        const result = [];
+
+        for (const component of components) {
+            const name = component.match(/([A-Z])\w+/g)[0];
+            const moduleForStories = loadCustomElementsModuleByFileFor(`${name}.stories`, customElementDefinitions);
+            const moduleForComponent = loadCustomElementsModuleByFileFor(`${name}`, customElementDefinitions);
+            const moduleDescription = moduleForComponent.declarations.find(d => d.name === name).description;
+            const moduleStories = moduleForStories.declarations.filter(s => s.name !== 'Interactive');
+
+            // Add component itself to the index.
+            result.push({
+                path: `./components/${name.toLowerCase()}/`,
+                data: [slug(splitPascalCase(name)).toLowerCase(), moduleDescription],
+                type: 'component',
+                title: splitPascalCase(name)
+            });
+
+            // Add component stories to the index.
+            for (const story of moduleStories) {
+                result.push({
+                    path: `./components/${slug(splitPascalCase(name)).toLowerCase()}/#story-${story.name.toLowerCase().replaceAll('_', '-')}`,
+                    data: [story.name.replaceAll('_', ' '), story.description ?? ''],
+                    type: 'story',
+                    title: splitPascalCase(name)
+                });
+            }
+        }
+
+        return result;
+    }
+
+    const response = [
+        ... await createComponentIndex(),
+        ... await createMarkdownIndex('./INSTALLATION.md', './getting-started', 'Getting Started'),
+        ... await createMarkdownIndex('./CONTRIBUTING.md', './contributing', 'Contributing')
+    ];
+
+    return response;
 }

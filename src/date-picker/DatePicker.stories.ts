@@ -18,7 +18,7 @@ import {
 } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
-import { assignToSlot, ComponentStoryFormat, CSFIdentifier, querySelectorAsync } from '../utils/StoryUtils.js';
+import { assignToSlot, ComponentStoryFormat, CSFIdentifier, getSourceFromLit, querySelectorAsync } from '../utils/StoryUtils.js';
 import { DatePicker } from './DatePicker';
 
 import './DatePicker.js';
@@ -34,7 +34,7 @@ interface Args extends BaseArgs {
     maxDate?: string;
 }
 const localDate = DateTime.local();
-const isoDate = localDate.toISODate();
+const isoDate = localDate.toISODate() as string;
 const testLocale = localDate.locale;
 
 export const Interactive: ComponentStoryFormat<Args> = {
@@ -56,6 +56,15 @@ export const Interactive: ComponentStoryFormat<Args> = {
     }${args.prefix || args.suffix || args.clear ? '\r\n' : nothing}</omni-date-picker
         >
     `,
+    frameworkSources: [
+        {
+            framework: 'Vue',
+            load: (args) =>
+                getSourceFromLit(Interactive!.render!(args), undefined, (s) =>
+                    s.replace(' disabled', ' :disabled="true"').replace(' clearable', ' :clearable="true"')
+                )
+        }
+    ],
     name: 'Interactive',
     args: {
         label: 'Select a Date',

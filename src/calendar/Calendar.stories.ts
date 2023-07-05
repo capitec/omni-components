@@ -22,7 +22,7 @@ interface Args {
 }
 
 const localDate = DateTime.local().plus({ days: 1 });
-const isoDate = localDate.toISODate();
+const isoDate = localDate.toISODate() as string;
 
 export const Interactive: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`

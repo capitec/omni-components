@@ -5,7 +5,7 @@ pagination:
     data: components
     size: 1
     alias: component
-permalink: "components/{{ component.name | splitPascalCase()  | slugify }}/"
+permalink: "components/{{ component.name | splitPascalCase() | slugify }}/"
 eleventyComputed:
   title: "{{ component.name | splitPascalCase() }} - Omni Components"
 ---
@@ -16,7 +16,7 @@ eleventyComputed:
 
 <article class="component">
     <div class="component-meta">
-        <div class="component-name">{{ component.name | splitPascalCase() }}</div>
+        <div class="component-name">{{ component.name | splitPascalCase() }} {% set status = customElements | getStatus(component.name) %} {% if status %} <span class="badge-{{ status }}">{{ status }}</span> {% endif %}</div>
         <div class="component-desc">{{ customElements | getDescription(component.name) | safe }}</div> 
         <div class="component-info">
             <div class="component-info-item">
@@ -86,7 +86,7 @@ eleventyComputed:
                         <div class="component-toc-wrapper">
                             <div class="component-toc">
                                 {% for story in component.stories %}
-                                    <a href="components/{{ component.name | splitPascalCase()  | slugify }}/#story-{{ story | replace("_", "-") | lower }}" id="story-{{ story | replace("_", "-") | lower }}-a" class="item">
+                                    <a href="components/{{ component.name | splitPascalCase() | slugify }}/#story-{{ story | replace("_", "-") | lower }}" id="story-{{ story | replace("_", "-") | lower }}-a" class="item">
                                         {{ story | replace("_", " ") }}
                                     </a>
                                 {%- endfor %}

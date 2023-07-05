@@ -68,6 +68,62 @@ const plugins = {
                 },
             };
         }(),
+        function cssInheritPlugin() {
+            return {
+                // Runs for each module
+                analyzePhase({ ts, node, moduleDoc }) {
+                    switch (node.kind) {
+                        case ts.SyntaxKind.ClassDeclaration:
+                            const className = node.name.getText();
+
+                            node.jsDoc?.forEach(jsDoc => {
+                                jsDoc.tags?.forEach(tag => {
+                                    const tagName = tag.tagName.getText();
+                                    if (tagName && (tagName.toLowerCase() === 'cssinherit')) {
+                                        const description = tag.comment;
+
+                                        const classDeclaration = moduleDoc.declarations.find(declaration => declaration.name === className);
+                                        if (!classDeclaration.cssInherit) {
+                                            classDeclaration.cssInherit = [];
+                                        }
+                                        classDeclaration.cssInherit.push(description);
+                                    }
+                                });
+                            });
+
+                            break;
+                    }
+                },
+                // Runs for each module, after analyzing, all information about your module should now be available
+                moduleLinkPhase({ moduleDoc }) {
+                    // console.log(moduleDoc);
+                },
+                // Runs after all modules have been parsed, and after post processing
+                packageLinkPhase(linkedPackage) {
+                    linkedPackage.customElementsManifest.modules.forEach((m) => {
+                        m.declarations.forEach((d) => {
+                            if (d.cssInherit) {
+                                d.cssInherit.forEach(elementName => {
+                                    const module = linkedPackage.customElementsManifest.modules.find((module) =>
+                                        module.declarations.find((d) => (d.tagName === elementName && d.customElement) || d.name === elementName));
+                                    if (!module) {
+                                        return;
+                                    }
+                                    const declaration = module.declarations.find((d) => (d.tagName === elementName && d.customElement) || d.name === elementName);
+                                    if (declaration && declaration.cssProperties) {
+                                        if (!d.cssProperties) {
+                                            d.cssProperties = [];
+                                        }
+                                        d.cssProperties = [...d.cssProperties, ...JSON.parse(JSON.stringify(declaration.cssProperties))];
+                                    }
+                                })
+                            }
+                        })
+                    })
+                    // console.log(customElementsManifest);
+                },
+            };
+        }(),
         function globalAttributesPlugin() {
             return {
                 // Runs for each module
@@ -80,12 +136,12 @@ const plugins = {
                                 jsDoc.tags?.forEach(tag => {
                                     const tagName = tag.tagName.getText();
                                     if (tagName && (tagName.toLowerCase() === 'globalattr' || tagName.toLowerCase() === 'global_attribute')) {
-                                        let attribute = tag.comment.substring(0,tag.comment.indexOf(' - '));
+                                        let attribute = tag.comment.substring(0, tag.comment.indexOf(' - '));
                                         let type = '';
                                         if (attribute.includes('}')) {
                                             const split = attribute.split('}');
                                             attribute = split[split.length - 1];
-                                            type = split[0].replace('{','');
+                                            type = split[0].replace('{', '');
                                         }
                                         const description = tag.comment.substring(tag.comment.indexOf(' - ') + 3);
 
@@ -99,6 +155,38 @@ const plugins = {
                                             description,
                                             type
                                         });
+                                    }
+                                });
+                            });
+
+                            break;
+                    }
+                },
+                // Runs for each module, after analyzing, all information about your module should now be available
+                moduleLinkPhase({ moduleDoc }) {
+                    // console.log(moduleDoc);
+                },
+                // Runs after all modules have been parsed, and after post processing
+                packageLinkPhase(customElementsManifest) {
+                    // console.log(customElementsManifest);
+                },
+            };
+        }(),
+        function statusPlugin() {
+            return {
+                // Runs for each module
+                analyzePhase({ ts, node, moduleDoc }) {
+                    switch (node.kind) {
+                        case ts.SyntaxKind.ClassDeclaration:
+                            const className = node.name.getText();
+
+                            node.jsDoc?.forEach(jsDoc => {
+                                jsDoc.tags?.forEach(tag => {
+                                    const tagName = tag.tagName.getText();
+                                    if (tagName && (tagName.toLowerCase() === 'status')) {
+                                        const value = tag.comment;
+                                        const classDeclaration = moduleDoc.declarations.find(declaration => declaration.name === className);
+                                        classDeclaration.status = value;
                                     }
                                 });
                             });
@@ -243,16 +331,16 @@ const plugins = {
                         case ts.SyntaxKind.PropertyDeclaration:
                             const propertyName = node.name.getText();
                             const classNode = findParentClass(ts, node);
-                            if (classNode){
+                            if (classNode) {
                                 const className = classNode.name.getText();
-    
+
                                 node.jsDoc?.forEach(jsDoc => {
                                     jsDoc.tags?.forEach(tag => {
                                         const tagName = tag.tagName.getText();
                                         if (tagName && (tagName.toLowerCase() === 'no_attribute')) {
                                             const value = tag.comment;
                                             const classDeclaration = moduleDoc.declarations.find(declaration => declaration.name === className);
-                                            
+
                                             const attributes = classDeclaration.attributes.filter(a => a.name !== propertyName && a.fieldName !== propertyName);
                                             classDeclaration.attributes = attributes;
 
@@ -273,7 +361,37 @@ const plugins = {
                     // console.log(customElementsManifest);
                 }
             };
-        }()
+        }(),
+        function storyDescriptionPlugin() {
+            return {
+                // Runs for each module
+                analyzePhase({ ts, node, moduleDoc }) {
+
+                    // if (node?.getText()?.includes('type of button') && node?.name?.getText() === 'description') {
+                    //     const x = 1;
+                    // }
+
+                    switch (node.kind) {
+                        case ts.SyntaxKind.PropertyAssignment:
+                            if (node?.name?.getText() === 'description' &&
+                                moduleDoc?.path?.endsWith('stories.ts')) {
+                                const declaration = moduleDoc.declarations[moduleDoc.declarations.length - 1];
+                                declaration.description = node?.initializer?.text || node?.initializer?.getText();
+                                declaration.description = declaration.description?.replace('() => html', '')?.replaceAll('`', '')
+                            }
+                            break;
+                    }
+                },
+                // Runs for each module, after analyzing, all information about your module should now be available
+                moduleLinkPhase({ moduleDoc }) {
+                    // console.log(moduleDoc);
+                },
+                // Runs after all modules have been parsed, and after post processing
+                packageLinkPhase(customElementsManifest) {
+                    // console.log(customElementsManifest);
+                },
+            };
+        }(),
     ]
 };
 

@@ -19,7 +19,7 @@ import {
 } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
-import { assignToSlot, ComponentStoryFormat, CSFIdentifier } from '../utils/StoryUtils.js';
+import { assignToSlot, ComponentStoryFormat, CSFIdentifier, getSourceFromLit } from '../utils/StoryUtils.js';
 import { PinField } from './PinField.js';
 
 import './PinField.js';
@@ -55,6 +55,15 @@ export const Interactive: ComponentStoryFormat<Args> = {
         args.show ? html`${'\r\n'}${unsafeHTML(assignToSlot('show', args.show))}` : nothing
     }</omni-pin-field>
   `,
+    frameworkSources: [
+        {
+            framework: 'Vue',
+            load: (args) =>
+                getSourceFromLit(Interactive!.render!(args), undefined, (s) =>
+                    s.replace(' disabled', ' :disabled="true"').replace(' clearable', ' :clearable="true"')
+                )
+        }
+    ],
     name: 'Interactive',
     args: {
         label: 'Label',
@@ -96,7 +105,8 @@ export const Interactive: ComponentStoryFormat<Args> = {
         await userEvent.type(inputField, '1234', {
             pointerEventsCheck: 0
         });
-        const value = 1234;
+
+        const value = '1234';
 
         // Required to clear userEvent Symbol that keeps hidden state of previously typed values via userEvent. If not cleared this cannot be run multiple times with the same results
         setUIValueClean(inputField);
@@ -148,7 +158,7 @@ const App = () => <OmniPinField${args.label ? ` label='${args.label}'` : ''}${ar
         await userEvent.type(inputField, '12345678910', {
             pointerEventsCheck: 0
         });
-        const value = 12345;
+        const value = '12345';
 
         await waitFor(() => expect(inputField).toHaveValue(value), {
             timeout: 3000
@@ -166,14 +176,14 @@ export const Hint = HintStory<PinField, BaseArgs>('omni-pin-field');
 
 export const Error_Label = ErrorStory<PinField, BaseArgs>('omni-pin-field');
 
-export const Value = ValueStory<PinField, BaseArgs>('omni-pin-field', 1234);
+export const Value = ValueStory<PinField, BaseArgs>('omni-pin-field', '1234');
 
-export const Clearable = ClearableStory<PinField, BaseArgs>('omni-pin-field', 1234);
+export const Clearable = ClearableStory<PinField, BaseArgs>('omni-pin-field', '1234');
 
-export const Custom_Clear_Slot = CustomClearableSlot<PinField, BaseArgs>('omni-pin-field', 1234);
+export const Custom_Clear_Slot = CustomClearableSlot<PinField, BaseArgs>('omni-pin-field', '1234');
 
 export const Prefix = PrefixStory<PinField, BaseArgs>('omni-pin-field');
 
 export const Suffix = SuffixStory<PinField, BaseArgs>('omni-pin-field');
 
-export const Disabled = DisabledStory<PinField, BaseArgs>('omni-pin-field', 1234);
+export const Disabled = DisabledStory<PinField, BaseArgs>('omni-pin-field', '1234');

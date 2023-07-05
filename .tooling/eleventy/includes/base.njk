@@ -10,28 +10,20 @@
     <title>{{ title }}</title>
     {% baseHref %}
     <link rel='shortcut icon' type='image/x-icon' href='./favicon.ico' />
-    <!-- Preload material fonts to lessen chance of icons as text on slower networks -->
-    <link rel="preload" href="https://fonts.gstatic.com/s/materialicons/v139/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2" as="font" type="font/woff2" crossorigin>
-    <!-- Preload Hind Vadodara fonts to lessen chance of system default from initially applying -->
-    <link rel="preload" href="https://fonts.gstatic.com/s/hindvadodara/v12/neINzCKvrIcn5pbuuuriV9tTQInVrEsf.woff2" as="font" type="font/woff2" crossorigin>
-    <style>
-        @font-face {
-            font-family: 'Material Icons';
-            font-style: normal;
-            font-weight: 400;
-            font-display: block;
-            src: url(https://fonts.gstatic.com/s/materialicons/v139/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
-        }
-        @font-face {
-            font-family: 'Hind Vadodara';
-            font-style: normal;
-            font-weight: 400;
-            src: url(https://fonts.gstatic.com/s/hindvadodara/v12/neINzCKvrIcn5pbuuuriV9tTQInVrEsf.woff2) format('woff2');
-            unicode-range: U+0964-0965, U+0A80-0AFF, U+200C-200D, U+20B9, U+25CC, U+A830-A839;
-        }
-    </style>
-    <link rel="stylesheet preload" href="https://fonts.googleapis.com/icon?family=Material+Icons"  as="style"/>
-    <link rel="stylesheet preload" href="https://fonts.googleapis.com/css?family=Hind Vadodara"  as="style">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Hind Vadodara -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Vadodara&display=block" rel="preload" as="style" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Vadodara&display=block" rel="stylesheet" crossorigin />
+    {# <link href="https://fonts.gstatic.com/s/hindvadodara/v13/neINzCKvrIcn5pbuuuriV9tTQJLVrFkcrSs.woff2" rel="preload" as="font" type="font/woff2" crossorigin /> #}
+
+    <!-- Material Icons --> 
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons&display=block" rel="preload" as="style" crossorigin />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons&display=block" rel="stylesheet" crossorigin />
+    {# <link href="https://fonts.gstatic.com/s/materialicons/v140/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2" rel="preload" as="font" type="font/woff2" crossorigin /> #}
+
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-jsx.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
@@ -99,23 +91,24 @@
                 </div>
                 <div class="header-actions">
                     <span class="header-action-section">
-                        <div class="docs-omni-component action hidden-until-760 action" style="height: 37px; width: 37px;" id="header-framework-select-btn">
-                            
-                        </div>
-                        <select class="docs-select theme-select transparent hidden-until-760" id="header-framework-native-select"></select>
-                        <omni-select class="shrink-omni-select docs-omni-component hidden-after-760" id="header-framework-select"></omni-select>
-                    </span>
-                    <span class="header-action-section material-icons docs-omni-component action" style="display: none;" id="header-theme-edit-btn">
-                        edit
+                        <omni-button class="docs-omni-component" id="header-search-button">
+                            <omni-icon icon="@material/search"></omni-icon>
+                        </omni-button>
                     </span>
                     <span class="header-action-section">
-                        <span class="material-icons docs-omni-component action hidden-until-760 action" style="height: 37px; width: 37px;" id="header-theme-select-btn">
-                            format_color_fill
-                        </span>
-                        <select class="docs-select theme-select transparent hidden-until-760" id="header-theme-native-select"></select>
-                        <omni-select class="docs-omni-component hidden-after-760" id="header-theme-select"></omni-select>
+                        <omni-select class="shrink-omni-select docs-omni-component" id="header-framework-select">
+                            <div slot="more"></div>
+                        </omni-select>
                     </span>
-                    <a href="https://github.com/capitec/omni-components" target="_blank" class="docs-omni-component action">                        
+                    {# <span class="header-action-section material-icons docs-omni-component action" style="display: none;" id="header-theme-edit-btn">
+                        edit
+                    </span> #}
+                    <span class="header-action-section">
+                        <omni-select class="shrink-omni-select docs-omni-component" id="header-theme-select" >
+                            <div slot="more"></div>
+                        </omni-select>
+                    </span>
+                    <a href="https://github.com/capitec/omni-components" target="_blank" class="docs-omni-component action hidden-after-760">                        
                         <svg style="cursor: pointer;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="24" height="24" fill="currentColor">
                             <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
                         </svg>

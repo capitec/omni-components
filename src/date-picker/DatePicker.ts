@@ -223,7 +223,7 @@ export class DatePicker extends OmniFormElement {
     _dateSelected(e: Event) {
         this.date = DateTime.fromJSDate((<CustomEvent>e).detail.date);
 
-        this.value = this.date.toISODate();
+        this.value = this.date.toISODate() as string;
 
         this.dispatchEvent(
             new CustomEvent('change', {
@@ -422,6 +422,8 @@ export class DatePicker extends OmniFormElement {
                     id="calendar" 
                     locale=${this.locale} 
                     .value=${this.value as string} 
+                    .minDate=${this.minDate}
+                    .maxDate=${this.maxDate} 
                     @change=${(e: Event) => this._dateSelected(e)}>
                 </omni-calendar>
             </dialog>`;

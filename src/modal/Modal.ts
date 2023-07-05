@@ -38,6 +38,7 @@ import '../render-element/RenderElement.js';
  * @slot footer - Content to render inside the component footer.
  *
  * @csspart dialog - Internal `HTMLDialogElement` instance.
+ * @csspart backdrop - Internal `HTMLDivElement` instance for backdrop.
  * @csspart container - Internal `HTMLDivElement` instance for container.
  * @csspart header - Internal `HTMLDivElement` instance for header.
  * @csspart body - Internal `HTMLDivElement` instance for body.
@@ -234,8 +235,12 @@ export class Modal extends OmniElement {
                     bottom: var(--omni-modal-dialog-bottom, 0px);
                 }
 
-                .modal::backdrop {                    
-                    background: var(--omni-modal-dialog-background, rgba(0, 0, 0, 0.1));
+                ::backdrop {                    
+                    background: transparent;
+                }
+
+                .backdrop {
+                    background: var(--omni-modal-dialog-background, rgba(0, 0, 0, 0.3));
                 }
 
                 .container {
@@ -278,7 +283,7 @@ export class Modal extends OmniElement {
 
                 .body {
                     margin-top:0px;
-                    padding: var(--omni-modal-body-padding, 24px 24px 40px 24px);
+                    padding: var(--omni-modal-body-padding, 24px 24px 24px 24px);
                     color: var(--omni-modal-body-font-color, var(--omni-font-color));
                     font-size: var(--omni-modal-body-font-size, var(--omni-font-size));
                     font-family: var(--omni-modal-body-font-family, var(--omni-font-family));
@@ -309,6 +314,10 @@ export class Modal extends OmniElement {
                     background: var(--omni-modal-footer-background, var(--omni-background-active-color));
                 }
 
+                ::slotted(omni-render-element) {
+                    width: 100%;
+                }
+
                 @media screen and (min-width: 767px) {
                     
                     .header {
@@ -335,6 +344,7 @@ export class Modal extends OmniElement {
         return html`
             <dialog part="dialog" class="modal" role="dialog" aria-modal="true"
                     @click="${(e: Event) => this.notifyClickOutside(e)}" @touch="${(e: Event) => this.notifyClickOutside(e)}">
+                <div class="modal backdrop" part="backdrop">
                     <div class="container" ?no-fullscreen="${this.noFullscreen}" part="container">
                         ${this._renderHeader()}
                         <div class="body" ?no-header="${this.noHeader}" ?no-footer="${this.noFooter}" ?no-fullscreen="${
@@ -344,6 +354,7 @@ export class Modal extends OmniElement {
                         </div>
                         ${this._renderFooter()}
                     </div>
+                </div>
             </dialog>
         `;
     }

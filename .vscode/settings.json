@@ -42,6 +42,8 @@
 		"pin-field": true,
 		"calendar": true,
 		"keyboard": true,
-		"modal": true
+		"modal": true,
+		"tab": true,
+		"toast": true
 	}
 }

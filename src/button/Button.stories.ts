@@ -5,7 +5,7 @@ import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
-import { raw, CSFIdentifier, ComponentStoryFormat } from '../utils/StoryUtils.js';
+import { raw, CSFIdentifier, ComponentStoryFormat, getSourceFromLit } from '../utils/StoryUtils.js';
 import { Button } from './Button.js';
 
 import './Button.js';
@@ -54,6 +54,12 @@ export const Interactive = {
       ${unsafeHTML(args['[Default Slot]'])}
     </omni-button>
   `,
+    frameworkSources: [
+        {
+            framework: 'Vue',
+            load: (args) => getSourceFromLit(Interactive?.render?.(args), undefined, (s) => s.replace(' disabled', ' :disabled="true"'))
+        }
+    ],
     name: 'Interactive',
     args: {
         type: 'secondary',
@@ -132,7 +138,7 @@ export const Slot = {
     frameworkSources: [
         {
             framework: 'React',
-            load: (args) => `import { OmniButton } from "@capitec/omni-components-react/button";
+            load: () => `import { OmniButton } from "@capitec/omni-components-react/button";
 import { OmniIcon } from "@capitec/omni-components-react/icon";
 
 const App = () => <OmniButton>
@@ -159,10 +165,15 @@ export const Disabled = {
             load: (args) => `import { OmniButton } from "@capitec/omni-components-react/button";
 
 const App = () => <OmniButton${args.label ? ` label='${args.label}'` : ''}${args.disabled ? ` disabled` : ''}/>;`
+        },
+        {
+            framework: 'Vue',
+            load: (args) => getSourceFromLit(Disabled?.render?.(args), undefined, (s) => s.replace(' disabled', ' :disabled="true"'))
         }
     ],
     name: 'Disabled',
-    description: 'Prevent interaction (pointer events).',
+    description: () =>
+        html`<span>Set this in order to prevent interaction. Done internally via <code class="language-css">pointer-events: none</code></span>.`,
     args: {
         label: 'Disabled',
         disabled: true
