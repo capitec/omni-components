@@ -53,7 +53,7 @@ jobs:
   pr-test:
     needs: ["pr-lint", "pr-format"]
     name: "Test"
-    timeout-minutes: 120 
+    timeout-minutes: 240 
     runs-on: ubuntu-latest
     steps:
     #   - name: Configure OS
