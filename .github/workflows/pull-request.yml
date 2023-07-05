@@ -54,7 +54,7 @@ jobs:
     needs: ["pr-lint", "pr-format"]
     name: "Test"
     timeout-minutes: 60 
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Configure OS
         run: |

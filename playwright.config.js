@@ -33,13 +33,13 @@ const config = {
         }
     },
     /* Run tests in files in parallel */
-    fullyParallel: true,
+    fullyParallel: process.env.CI ? false : true,
     /* Fail the build on CI if you accidentally left test.only in the source code. */
     forbidOnly: !!process.env.CI,
     /* Retry on CI only */
     retries: process.env.CI && !process.env.PW_NO_RETRIES ? 2 : 0,
     /* Limit parallel tests on CI. */
-    workers: process.env.CI ? 4 : undefined,
+    workers: process.env.CI ? 1 : undefined,
     /* Reporter to use. See https://playwright.dev/docs/test-reporters */
     reporter: [
         [
