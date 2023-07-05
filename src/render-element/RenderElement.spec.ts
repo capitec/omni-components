@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as jestMock from 'jest-mock';
-import { test, expect, withCoverage, type Page } from '../utils/JestPlaywright.js';
+import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
 import type { RenderElement } from './RenderElement.js';
 
 test(`Render Element - Lit Template Visual and Behaviour`, async ({ page }) => {
