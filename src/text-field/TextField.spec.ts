@@ -10,10 +10,10 @@ import {
     testSuffixBehaviour,
     testDisabledBehaviour
 } from '../core/OmniInputPlaywright.js';
-import { test, expect, withCoverage, type Page } from '../utils/JestPlaywright.js';
+import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
 import type { TextField } from './TextField.js';
 
-test(`Text Field - Interactive`, async ({ page, browserName }) => {
+test(`Text Field - Interactive`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/text-field/');
         await page.evaluate(() => document.fonts.ready);

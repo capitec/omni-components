@@ -9,7 +9,6 @@ test(`Switch - Event Behaviour`, async ({ page }) => {
         const switchElement = page.locator('.Interactive').getByTestId('test-switch');
 
         const valueChange = jestMock.fn();
-
         await page.exposeFunction('jestValueChange', () => valueChange());
         await switchElement.evaluate((node) => {
             node.addEventListener('value-change', () => window.jestValueChange());
