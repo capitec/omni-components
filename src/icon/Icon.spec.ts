@@ -64,8 +64,8 @@ test(`Icon - Symmetrical Visual and Behaviour`, async ({ page }) => {
         const svg = icon.locator('svg');
         const svgWidth = await svg.evaluate((s) => s.clientWidth);
         const svgHeight = await svg.evaluate((s) => s.clientHeight);
-        await expect(svgWidth).toEqual(svgHeight);
 
+        await expect(svgWidth).toEqual(svgHeight);
         await expect(icon).toHaveScreenshot('icon-initial.png');
     });
 });

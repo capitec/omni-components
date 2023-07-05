@@ -1,28 +1,9 @@
-import * as jestMock from 'jest-mock';
 import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
-/*import {
-    type Keyboard,
-    type EnterKeyHint,
-    type InputEventInitWithType,
-    type InputEventTypes,
-    type InputMode,
-    type KeyboardInit,
-    type KeyboardMode,
-    attachAttribute,
-    explicitKeyboardMode,
-    hiddenAttribute,
-    maskAttribute,
-    multiLineAttribute,
-    noDisplayValueAttribute
-} from './Keyboard.js';*/
-
-// keyboard-script-generated
 
 test(`Keyboard - Visual and Behaviour`, async ({ page, isMobile }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/keyboard/');
 
-        const args = await page.locator('story-renderer[key=Interactive]').evaluate((storyRenderer) => (storyRenderer as any).story.args);
         const container = page.locator('.Interactive');
         const keyboard = container.locator('#keyboard-interactive');
         const keyboardArea = keyboard.locator('.footer').first();
@@ -114,13 +95,10 @@ test(`Keyboard - Visual and Behaviour`, async ({ page, isMobile }) => {
 /*
     'enter' | 'go' | 'done' | 'next' | 'previous' | 'search' | 'send' 
 */
-test(`Keyboard - Enter Key Hint Variations`, async ({ page, isMobile }) => {
+test(`Keyboard - Enter Key Hint Variations`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/keyboard/');
 
-        const args = await page
-            .locator('story-renderer[key=Enter_Key_Hint_Variations]')
-            .evaluate((storyRenderer) => (storyRenderer as any).story.args);
         const container = page.locator('.Enter_Key_Hint_Variations');
         const keyboard = page.locator('#keyboard-interactive');
         const keyboardArea = keyboard.locator('.footer').first();
