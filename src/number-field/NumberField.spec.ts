@@ -10,10 +10,10 @@ import {
     testSuffixBehaviour,
     testDisabledBehaviour
 } from '../core/OmniInputPlaywright.js';
-import { test, expect, withCoverage, type Page } from '../utils/JestPlaywright.js';
+import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
 import type { NumberField } from './NumberField.js';
 
-test(`Number Field - Interactive`, async ({ page, browserName }) => {
+test(`Number Field - Interactive`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/number-field/');
         await page.evaluate(() => document.fonts.ready);

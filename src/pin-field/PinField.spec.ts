@@ -10,10 +10,10 @@ import {
     testSuffixBehaviour,
     testDisabledBehaviour
 } from '../core/OmniInputPlaywright.js';
-import { test, expect, withCoverage, type Page } from '../utils/JestPlaywright.js';
+import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
 import type { PinField } from './PinField.js';
 
-test(`Pin Field - Interactive`, async ({ page, browserName }) => {
+test(`Pin Field - Interactive`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/pin-field/');
         await page.evaluate(() => document.fonts.ready);
@@ -54,12 +54,11 @@ test(`Pin Field - Interactive`, async ({ page, browserName }) => {
     });
 });
 
-test(`Pin Field - Max Length`, async ({ page, browserName }) => {
+test(`Pin Field - Max Length`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/pin-field/');
         await page.evaluate(() => document.fonts.ready);
 
-        const args = await page.locator('story-renderer[key=Max_Length]').evaluate((storyRenderer) => (storyRenderer as any).story.args);
         const container = page.locator('.Max_Length');
         const pinField = container.locator('[data-testid]').first();
         pinField.evaluate(async (t: PinField) => {

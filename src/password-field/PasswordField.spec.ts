@@ -10,10 +10,10 @@ import {
     testSuffixBehaviour,
     testDisabledBehaviour
 } from '../core/OmniInputPlaywright.js';
-import { test, expect, withCoverage, type Page } from '../utils/JestPlaywright.js';
+import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
 import type { PasswordField } from './PasswordField.js';
 
-test(`Password Field - Interactive`, async ({ page, browserName }) => {
+test(`Password Field - Interactive`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/password-field/');
         await page.evaluate(() => document.fonts.ready);
@@ -64,12 +64,11 @@ testPrefixBehaviour('omni-password-field');
 testSuffixBehaviour('omni-password-field');
 testDisabledBehaviour('omni-password-field');
 
-test(`Password Field - Custom Icon Slot`, async ({ page, browserName }) => {
+test(`Password Field - Custom Icon Slot`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/password-field/');
         await page.evaluate(() => document.fonts.ready);
 
-        const args = await page.locator('story-renderer[key=Custom_Icon_Slot]').evaluate((storyRenderer) => (storyRenderer as any).story.args);
         const container = page.locator('.Custom_Icon_Slot');
         const passwordField = container.locator('[data-testid]').first();
         passwordField.evaluate(async (t: PasswordField) => {
