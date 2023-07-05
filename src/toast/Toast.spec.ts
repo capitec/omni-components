@@ -51,7 +51,6 @@ test(`Toast - Custom Slotted Close`, async ({ page }) => {
     });
 });
 
-/* 'success' | 'warning' | 'error' | 'info' | 'none' */
 test(`Toast - Success Type`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/toast/');

@@ -1,7 +1,6 @@
 import * as jestMock from 'jest-mock';
 import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
-import type { Toast } from './Toast.js';
-import type { ToastStack, ShowToastInit, ToastStackInit, toastDurationAttribute } from './ToastStack.js';
+import type { ToastStack } from './ToastStack.js';
 
 test(`Toast Stack - Visual and Behaviour`, async ({ page }) => {
     // Mark test as slow due to 6 second wait for toasts to close
@@ -110,9 +109,6 @@ test(`Toast Stack - Reverse Visual and Behaviour`, async ({ page }) => {
             });
         });
 
-        // Wait for fade in
-        await page.waitForTimeout(1000);
-
         await expect(toastStack).toHaveScreenshot('toast-stack-reversed.png');
 
         await toastStack.evaluate(async (ts: ToastStack) => {
@@ -173,9 +169,6 @@ test(`Toast Stack - Bottom Right Position Visual and Behaviour`, async ({ page }
             });
         });
 
-        // Wait for fade in
-        await page.waitForTimeout(1000);
-
         await expect(toastStack).toHaveScreenshot('toast-stack-top.png');
         await expect(page).toHaveScreenshot('toast-stack-page-top.png');
     });
@@ -228,9 +221,6 @@ test(`Toast Stack - Bottom Left Position Visual and Behaviour`, async ({ page })
                 type: 'none'
             });
         });
-
-        // Wait for fade in
-        await page.waitForTimeout(1000);
 
         await expect(toastStack).toHaveScreenshot('toast-stack-top.png');
         await expect(page).toHaveScreenshot('toast-stack-page-top.png');
@@ -285,9 +275,6 @@ test(`Toast Stack - Top Right Position Visual and Behaviour`, async ({ page }) =
             });
         });
 
-        // Wait for fade in
-        await page.waitForTimeout(1000);
-
         await expect(toastStack).toHaveScreenshot('toast-stack-top.png');
         await expect(page).toHaveScreenshot('toast-stack-page-top.png');
     });
@@ -340,9 +327,6 @@ test(`Toast Stack - Top Left Position Visual and Behaviour`, async ({ page }) =>
                 type: 'none'
             });
         });
-
-        // Wait for fade in
-        await page.waitForTimeout(1000);
 
         await expect(toastStack).toHaveScreenshot('toast-stack-top.png');
         await expect(page).toHaveScreenshot('toast-stack-page-top.png');
@@ -397,9 +381,6 @@ test(`Toast Stack - Right Position Visual and Behaviour`, async ({ page }) => {
             });
         });
 
-        // Wait for fade in
-        await page.waitForTimeout(1000);
-
         await expect(toastStack).toHaveScreenshot('toast-stack-top.png');
         await expect(page).toHaveScreenshot('toast-stack-page-top.png');
     });
@@ -452,9 +433,6 @@ test(`Toast Stack - Left Position Visual and Behaviour`, async ({ page }) => {
                 type: 'none'
             });
         });
-
-        // Wait for fade in
-        await page.waitForTimeout(1000);
 
         await expect(toastStack).toHaveScreenshot('toast-stack-top.png');
         await expect(page).toHaveScreenshot('toast-stack-page-top.png');
@@ -509,9 +487,6 @@ test(`Toast Stack - Bottom Position Visual and Behaviour`, async ({ page }) => {
             });
         });
 
-        // Wait for fade in
-        await page.waitForTimeout(1000);
-
         await expect(toastStack).toHaveScreenshot('toast-stack-top.png');
         await expect(page).toHaveScreenshot('toast-stack-page-top.png');
     });
@@ -564,9 +539,6 @@ test(`Toast Stack - Top Position Visual and Behaviour`, async ({ page }) => {
                 type: 'none'
             });
         });
-
-        // Wait for fade in
-        await page.waitForTimeout(1000);
 
         await expect(toastStack).toHaveScreenshot('toast-stack-top.png');
         await expect(page).toHaveScreenshot('toast-stack-page-top.png');
