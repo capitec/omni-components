@@ -54,15 +54,15 @@ test(`Password Field - Interactive`, async ({ page }) => {
     });
 });
 
-testLabelBehaviour('omni-password-field');
-testHintBehaviour('omni-password-field');
-testErrorBehaviour('omni-password-field');
-testValueBehaviour('omni-password-field');
-testClearableBehaviour('omni-password-field');
-testCustomClearableSlotBehaviour('omni-password-field');
-testPrefixBehaviour('omni-password-field');
-testSuffixBehaviour('omni-password-field');
-testDisabledBehaviour('omni-password-field');
+test('Password Field - Label Behaviour', testLabelBehaviour('omni-password-field'));
+test('Password Field - Hint Behaviour', testHintBehaviour('omni-password-field'));
+test('Password Field - Error Behaviour', testErrorBehaviour('omni-password-field'));
+test('Password Field - Value Behaviour', testValueBehaviour('omni-password-field'));
+test('Password Field - Clearable Behaviour', testClearableBehaviour('omni-password-field'));
+test('Password Field - Custom Clear Slot Behaviour', testCustomClearableSlotBehaviour('omni-password-field'));
+test('Password Field - Prefix Behaviour', testPrefixBehaviour('omni-password-field'));
+test('Password Field - Suffix Behaviour', testSuffixBehaviour('omni-password-field'));
+test('Password Field - Disabled Behaviour', testDisabledBehaviour('omni-password-field'));
 
 test(`Password Field - Custom Icon Slot`, async ({ page }) => {
     await withCoverage(page, async () => {

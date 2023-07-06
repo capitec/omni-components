@@ -245,13 +245,13 @@ test(`Date Picker - Max Date Behaviour`, async ({ page }) => {
     });
 });
 
-testLabelBehaviour('omni-date-picker');
-testHintBehaviour('omni-date-picker');
-testErrorBehaviour('omni-date-picker');
-testClearableBehaviour('omni-date-picker');
-testCustomClearableSlotBehaviour('omni-date-picker');
-testPrefixBehaviour('omni-date-picker');
-testSuffixBehaviour('omni-date-picker');
+test('Date Picker - Label Behaviour', testLabelBehaviour('omni-date-picker'));
+test('Date Picker - Hint Behaviour', testHintBehaviour('omni-date-picker'));
+test('Date Picker - Error Behaviour', testErrorBehaviour('omni-date-picker'));
+test('Date Picker - Clearable Behaviour', testClearableBehaviour('omni-date-picker'));
+test('Date Picker - Custom Clear Slot Behaviour', testCustomClearableSlotBehaviour('omni-date-picker'));
+test('Date Picker - Prefix Behaviour', testPrefixBehaviour('omni-date-picker'));
+test('Date Picker - Suffix Behaviour', testSuffixBehaviour('omni-date-picker'));
 
 test(`Date Picker - Disabled Behaviour`, async ({ page, isMobile }) => {
     await withCoverage(page, async () => {

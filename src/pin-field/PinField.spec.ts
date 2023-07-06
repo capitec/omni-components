@@ -92,12 +92,12 @@ test(`Pin Field - Max Length`, async ({ page }) => {
     });
 });
 
-testLabelBehaviour('omni-pin-field');
-testHintBehaviour('omni-pin-field');
-testErrorBehaviour('omni-pin-field');
-testValueBehaviour('omni-pin-field');
-testClearableBehaviour('omni-pin-field');
-testCustomClearableSlotBehaviour('omni-pin-field');
-testPrefixBehaviour('omni-pin-field');
-testSuffixBehaviour('omni-pin-field');
-testDisabledBehaviour('omni-pin-field');
+test('Pin Field - Label Behaviour', testLabelBehaviour('omni-pin-field'));
+test('Pin Field - Hint Behaviour', testHintBehaviour('omni-pin-field'));
+test('Pin Field - Error Behaviour', testErrorBehaviour('omni-pin-field'));
+test('Pin Field - Value Behaviour', testValueBehaviour('omni-pin-field'));
+test('Pin Field - Clearable Behaviour', testClearableBehaviour('omni-pin-field'));
+test('Pin Field - Custom Clear Slot Behaviour', testCustomClearableSlotBehaviour('omni-pin-field'));
+test('Pin Field - Prefix Behaviour', testPrefixBehaviour('omni-pin-field'));
+test('Pin Field - Suffix Behaviour', testSuffixBehaviour('omni-pin-field'));
+test('Pin Field - Disabled Behaviour', testDisabledBehaviour('omni-pin-field'));

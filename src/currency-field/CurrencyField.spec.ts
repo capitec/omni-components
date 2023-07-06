@@ -106,12 +106,12 @@ test(`Currency Field - Visual and Behaviour`, async ({ page }) => {
     });
 });
 
-testLabelBehaviour('omni-currency-field');
-testHintBehaviour('omni-currency-field');
-testErrorBehaviour('omni-currency-field');
-testValueBehaviour('omni-currency-field');
-testClearableBehaviour('omni-currency-field');
-testCustomClearableSlotBehaviour('omni-currency-field');
-testPrefixBehaviour('omni-currency-field');
-testSuffixBehaviour('omni-currency-field');
-testDisabledBehaviour('omni-currency-field');
+test('Currency Field - Label Behaviour', testLabelBehaviour('omni-currency-field'));
+test('Currency Field - Hint Behaviour', testHintBehaviour('omni-currency-field'));
+test('Currency Field - Error Behaviour', testErrorBehaviour('omni-currency-field'));
+test('Currency Field - Value Behaviour', testValueBehaviour('omni-currency-field'));
+test('Currency Field - Clearable Behaviour', testClearableBehaviour('omni-currency-field'));
+test('Currency Field - Custom Clear Slot Behaviour', testCustomClearableSlotBehaviour('omni-currency-field'));
+test('Currency Field - Prefix Behaviour', testPrefixBehaviour('omni-currency-field'));
+test('Currency Field - Suffix Behaviour', testSuffixBehaviour('omni-currency-field'));
+test('Currency Field - Disabled Behaviour', testDisabledBehaviour('omni-currency-field'));

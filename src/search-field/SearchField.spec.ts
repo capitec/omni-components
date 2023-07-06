@@ -43,12 +43,12 @@ test(`Search Field - Interactive`, async ({ page }) => {
     });
 });
 
-testLabelBehaviour('omni-search-field');
-testHintBehaviour('omni-search-field');
-testErrorBehaviour('omni-search-field');
-testValueBehaviour('omni-search-field');
-testClearableBehaviour('omni-search-field');
-testCustomClearableSlotBehaviour('omni-search-field');
-testPrefixBehaviour('omni-search-field');
-testSuffixBehaviour('omni-search-field');
-testDisabledBehaviour('omni-search-field');
+test('Search Field - Label Behaviour', testLabelBehaviour('omni-search-field'));
+test('Search Field - Hint Behaviour', testHintBehaviour('omni-search-field'));
+test('Search Field - Error Behaviour', testErrorBehaviour('omni-search-field'));
+test('Search Field - Value Behaviour', testValueBehaviour('omni-search-field'));
+test('Search Field - Clearable Behaviour', testClearableBehaviour('omni-search-field'));
+test('Search Field - Custom Clear Slot Behaviour', testCustomClearableSlotBehaviour('omni-search-field'));
+test('Search Field - Prefix Behaviour', testPrefixBehaviour('omni-search-field'));
+test('Search Field - Suffix Behaviour', testSuffixBehaviour('omni-search-field'));
+test('Search Field - Disabled Behaviour', testDisabledBehaviour('omni-search-field'));

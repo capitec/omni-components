@@ -7,17 +7,16 @@ import {
     testClearableBehaviour,
     testCustomClearableSlotBehaviour,
     testPrefixBehaviour,
-    testSuffixBehaviour
+    testSuffixBehaviour,
+    getStoryArgs
 } from '../core/OmniInputPlaywright.js';
-import { test, expect, withCoverage, type Page } from '../utils/JestPlaywright.js';
+import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
 import type { ColorField } from './ColorField.js';
 
 test(`Color Field - Interactive`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/color-field/');
         await page.evaluate(() => document.fonts.ready);
-
-        await page.waitForSelector('[data-testid]', {});
 
         const field = page.locator('[data-testid]').first();
 
@@ -34,22 +33,20 @@ test(`Color Field - Interactive`, async ({ page }) => {
     });
 });
 
-testLabelBehaviour('omni-color-field');
-testHintBehaviour('omni-color-field');
-testErrorBehaviour('omni-color-field');
-testValueBehaviour('omni-color-field');
-testClearableBehaviour('omni-color-field');
-testCustomClearableSlotBehaviour('omni-color-field');
-testPrefixBehaviour('omni-color-field');
-testSuffixBehaviour('omni-color-field');
+test('Color Field - Label Behaviour', testLabelBehaviour('omni-color-field'));
+test('Color Field - Hint Behaviour', testHintBehaviour('omni-color-field'));
+test('Color Field - Error Behaviour', testErrorBehaviour('omni-color-field'));
+test('Color Field - Value Behaviour', testValueBehaviour('omni-color-field'));
+test('Color Field - Clearable Behaviour', testClearableBehaviour('omni-color-field'));
+test('Color Field - Custom Clearable Slot Behaviour', testCustomClearableSlotBehaviour('omni-color-field'));
+test('Color Field - Prefix Behaviour', testPrefixBehaviour('omni-color-field'));
+test('Color Field - Suffix Behaviour', testSuffixBehaviour('omni-color-field'));
 
 test(`Color Field - Disabled Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/color-field/');
 
-        await page.waitForSelector('[data-testid]', {});
-
-        const args = await page.locator('story-renderer[key=Disabled]').evaluate((storyRenderer) => (storyRenderer as any).story.args);
+        const args = await getStoryArgs(page, 'Disabled');
         const colorField = page.locator('.Disabled').getByTestId('test-field');
         await colorField.evaluate(async (d: ColorField, args) => {
             d.value = args.value;

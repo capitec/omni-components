@@ -1,22 +1,23 @@
 import * as jestMock from 'jest-mock';
-import { test, expect, withCoverage, type Page } from '../utils/JestPlaywright.js';
+import {
+    expect,
+    withCoverage,
+    type Page,
+    type PlaywrightTestArgs,
+    type PlaywrightTestOptions,
+    type PlaywrightWorkerArgs,
+    type PlaywrightWorkerOptions,
+    type TestInfo
+} from '../utils/JestPlaywright.js';
 import type { OmniFormElement } from './OmniFormElement.js';
 import type { BaseArgs } from './OmniInputStories.js';
-
-function toComponentName(text: string) {
-    return asDirectoryName(text).replace(/(^\w|-\w)/g, spaceAndUpper);
-}
-
-function spaceAndUpper(text: string) {
-    return text.replace(/-/, ' ').toUpperCase();
-}
 
 function asDirectoryName(omniElementTag: string) {
     return omniElementTag.replace('omni-', '');
 }
 
-export const testLabelBehaviour = (tagName: string, storyExport = 'Label') => {
-    test(`${toComponentName(tagName)} - ${storyExport} Behaviour`, async ({ page }) => {
+export const testLabelBehaviour = (tagName: string, storyExport = 'Label'): TestFunction => {
+    return async ({ page }) => {
         await withCoverage(page, async () => {
             await page.goto(`/components/${asDirectoryName(tagName)}/`);
 
@@ -27,11 +28,11 @@ export const testLabelBehaviour = (tagName: string, storyExport = 'Label') => {
 
             await expect(input.locator(`.label > div`)).toHaveText(args?.label);
         });
-    });
+    };
 };
 
-export const testHintBehaviour = (tagName: string, storyExport = 'Hint') => {
-    test(`${toComponentName(tagName)} - ${storyExport} Behaviour`, async ({ page }) => {
+export const testHintBehaviour = (tagName: string, storyExport = 'Hint'): TestFunction => {
+    return async ({ page }) => {
         await withCoverage(page, async () => {
             await page.goto(`/components/${asDirectoryName(tagName)}/`);
 
@@ -44,11 +45,11 @@ export const testHintBehaviour = (tagName: string, storyExport = 'Hint') => {
             await expect(hintElement).toHaveCount(1);
             await expect(hintElement).toHaveText(args?.hint as string);
         });
-    });
+    };
 };
 
-export const testErrorBehaviour = (tagName: string, storyExport = 'Error_Label') => {
-    test(`${toComponentName(tagName)} - ${storyExport} Behaviour`, async ({ page }) => {
+export const testErrorBehaviour = (tagName: string, storyExport = 'Error_Label'): TestFunction => {
+    return async ({ page }) => {
         await withCoverage(page, async () => {
             await page.goto(`/components/${asDirectoryName(tagName)}/`);
 
@@ -61,11 +62,11 @@ export const testErrorBehaviour = (tagName: string, storyExport = 'Error_Label')
             await expect(errorElement).toHaveCount(1);
             await expect(errorElement).toHaveText(args?.error as string);
         });
-    });
+    };
 };
 
-export const testValueBehaviour = (tagName: string, storyExport = 'Value') => {
-    test(`${toComponentName(tagName)} - ${storyExport} Behaviour`, async ({ page }) => {
+export const testValueBehaviour = (tagName: string, storyExport = 'Value'): TestFunction => {
+    return async ({ page }) => {
         await withCoverage(page, async () => {
             await page.goto(`/components/${asDirectoryName(tagName)}/`);
 
@@ -77,11 +78,11 @@ export const testValueBehaviour = (tagName: string, storyExport = 'Value') => {
             const inputField = input.locator('input#inputField');
             await expect(inputField).toHaveValue(args?.value?.toString() as string);
         });
-    });
+    };
 };
 
-export const testPrefixBehaviour = (tagName: string, storyExport = 'Prefix') => {
-    test(`${toComponentName(tagName)} - ${storyExport} Behaviour`, async ({ page }) => {
+export const testPrefixBehaviour = (tagName: string, storyExport = 'Prefix'): TestFunction => {
+    return async ({ page }) => {
         await withCoverage(page, async () => {
             await page.goto(`/components/${asDirectoryName(tagName)}/`);
 
@@ -97,11 +98,11 @@ export const testPrefixBehaviour = (tagName: string, storyExport = 'Prefix') => 
             ).asElement();
             await expect(foundSlottedSvgElement).toBeTruthy();
         });
-    });
+    };
 };
 
-export const testSuffixBehaviour = (tagName: string, storyExport = 'Suffix') => {
-    test(`${toComponentName(tagName)} - ${storyExport} Behaviour`, async ({ page }) => {
+export const testSuffixBehaviour = (tagName: string, storyExport = 'Suffix'): TestFunction => {
+    return async ({ page }) => {
         await withCoverage(page, async () => {
             await page.goto(`/components/${asDirectoryName(tagName)}/`);
 
@@ -117,11 +118,11 @@ export const testSuffixBehaviour = (tagName: string, storyExport = 'Suffix') => 
             ).asElement();
             await expect(foundSlottedSvgElement).toBeTruthy();
         });
-    });
+    };
 };
 
-export const testClearableBehaviour = (tagName: string, storyExport = 'Clearable') => {
-    test(`${toComponentName(tagName)} - ${storyExport} Behaviour`, async ({ page }) => {
+export const testClearableBehaviour = (tagName: string, storyExport = 'Clearable'): TestFunction => {
+    return async ({ page }) => {
         await withCoverage(page, async () => {
             await page.goto(`/components/${asDirectoryName(tagName)}/`);
 
@@ -137,11 +138,11 @@ export const testClearableBehaviour = (tagName: string, storyExport = 'Clearable
 
             await expect(await input.evaluate((i: OmniFormElement) => !i.value || i.value === '0.00')).toBeTruthy();
         });
-    });
+    };
 };
 
-export const testCustomClearableSlotBehaviour = (tagName: string, storyExport = 'Custom_Clear_Slot') => {
-    test(`${toComponentName(tagName)} - ${storyExport} Behaviour`, async ({ page }) => {
+export const testCustomClearableSlotBehaviour = (tagName: string, storyExport = 'Custom_Clear_Slot'): TestFunction => {
+    return async ({ page }) => {
         await withCoverage(page, async () => {
             await page.goto(`/components/${asDirectoryName(tagName)}/`);
 
@@ -157,11 +158,11 @@ export const testCustomClearableSlotBehaviour = (tagName: string, storyExport = 
 
             await expect(await input.evaluate((i: OmniFormElement) => !i.value || i.value === '0.00')).toBeTruthy();
         });
-    });
+    };
 };
 
-export const testDisabledBehaviour = (tagName: string, storyExport = 'Disabled') => {
-    test(`${toComponentName(tagName)} - ${storyExport} Behaviour`, async ({ page }) => {
+export const testDisabledBehaviour = (tagName: string, storyExport = 'Disabled'): TestFunction => {
+    return async ({ page }) => {
         await withCoverage(page, async () => {
             await page.goto(`/components/${asDirectoryName(tagName)}/`);
 
@@ -185,7 +186,7 @@ export const testDisabledBehaviour = (tagName: string, storyExport = 'Disabled')
 
             await expect(inputTest).toBeCalledTimes(0);
         });
-    });
+    };
 };
 
 /**
@@ -197,3 +198,6 @@ export async function getStoryArgs<T = any>(page: Page, key: string, readySelect
     const args = await page.locator(`story-renderer[key=${key}]`).evaluate((storyRenderer: any) => storyRenderer?.story?.args as T);
     return args;
 }
+
+export type TestArgs = PlaywrightTestArgs & PlaywrightTestOptions & PlaywrightWorkerArgs & PlaywrightWorkerOptions;
+export type TestFunction = (args: TestArgs, testInfo: TestInfo) => Promise<void>;

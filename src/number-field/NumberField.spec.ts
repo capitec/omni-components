@@ -43,12 +43,12 @@ test(`Number Field - Interactive`, async ({ page }) => {
     });
 });
 
-testLabelBehaviour('omni-number-field');
-testHintBehaviour('omni-number-field');
-testErrorBehaviour('omni-number-field');
-testValueBehaviour('omni-number-field');
-testClearableBehaviour('omni-number-field');
-testCustomClearableSlotBehaviour('omni-number-field');
-testPrefixBehaviour('omni-number-field');
-testSuffixBehaviour('omni-number-field');
-testDisabledBehaviour('omni-number-field');
+test('Number Field - Label Behaviour', testLabelBehaviour('omni-number-field'));
+test('Number Field - Hint Behaviour', testHintBehaviour('omni-number-field'));
+test('Number Field - Error Behaviour', testErrorBehaviour('omni-number-field'));
+test('Number Field - Value Behaviour', testValueBehaviour('omni-number-field'));
+test('Number Field - Clearable Behaviour', testClearableBehaviour('omni-number-field'));
+test('Number Field - Custom Clear Slot Behaviour', testCustomClearableSlotBehaviour('omni-number-field'));
+test('Number Field - Prefix Behaviour', testPrefixBehaviour('omni-number-field'));
+test('Number Field - Suffix Behaviour', testSuffixBehaviour('omni-number-field'));
+test('Number Field - Disabled Behaviour', testDisabledBehaviour('omni-number-field'));

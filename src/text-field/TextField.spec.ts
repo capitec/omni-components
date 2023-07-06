@@ -45,12 +45,12 @@ test(`Text Field - Interactive`, async ({ page }) => {
     });
 });
 
-testLabelBehaviour('omni-text-field');
-testHintBehaviour('omni-text-field');
-testErrorBehaviour('omni-text-field');
-testValueBehaviour('omni-text-field');
-testClearableBehaviour('omni-text-field');
-testCustomClearableSlotBehaviour('omni-text-field');
-testPrefixBehaviour('omni-text-field');
-testSuffixBehaviour('omni-text-field');
-testDisabledBehaviour('omni-text-field');
+test('Text Field - Label Behaviour', testLabelBehaviour('omni-text-field'));
+test('Text Field - Hint Behaviour', testHintBehaviour('omni-text-field'));
+test('Text Field - Error Behaviour', testErrorBehaviour('omni-text-field'));
+test('Text Field - Value Behaviour', testValueBehaviour('omni-text-field'));
+test('Text Field - Clearable Behaviour', testClearableBehaviour('omni-text-field'));
+test('Text Field - Custom Clear Slot Behaviour', testCustomClearableSlotBehaviour('omni-text-field'));
+test('Text Field - Prefix Behaviour', testPrefixBehaviour('omni-text-field'));
+test('Text Field - Suffix Behaviour', testSuffixBehaviour('omni-text-field'));
+test('Text Field - Disabled Behaviour', testDisabledBehaviour('omni-text-field'));

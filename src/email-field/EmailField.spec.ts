@@ -43,12 +43,12 @@ test(`Email Field - Interactive`, async ({ page }) => {
     });
 });
 
-testLabelBehaviour('omni-email-field');
-testHintBehaviour('omni-email-field');
-testErrorBehaviour('omni-email-field');
-testValueBehaviour('omni-email-field');
-testClearableBehaviour('omni-email-field');
-testCustomClearableSlotBehaviour('omni-email-field');
-testPrefixBehaviour('omni-email-field');
-testSuffixBehaviour('omni-email-field');
-testDisabledBehaviour('omni-email-field');
+test('Email Field - Label Behaviour', testLabelBehaviour('omni-email-field'));
+test('Email Field - Hint Behaviour', testHintBehaviour('omni-email-field'));
+test('Email Field - Error Behaviour', testErrorBehaviour('omni-email-field'));
+test('Email Field - Value Behaviour', testValueBehaviour('omni-email-field'));
+test('Email Field - Clearable Behaviour', testClearableBehaviour('omni-email-field'));
+test('Email Field - Custom Clear Slot Behaviour', testCustomClearableSlotBehaviour('omni-email-field'));
+test('Email Field - Prefix Behaviour', testPrefixBehaviour('omni-email-field'));
+test('Email Field - Suffix Behaviour', testSuffixBehaviour('omni-email-field'));
+test('Email Field - Disabled Behaviour', testDisabledBehaviour('omni-email-field'));
