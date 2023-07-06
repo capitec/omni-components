@@ -240,130 +240,130 @@ export class DatePicker extends OmniFormElement {
         return [
             super.styles,
             css`
-            /* Added to ensure that component has pointer cursor applied */
-            :host {
-                cursor: pointer;
-            }
-
-            .field {
-                flex: 1 1 auto;
-
-                border: none;
-                background: none;
-                box-shadow: none;
-                outline: 0;
-                padding: 0;
-                margin: 0;
-
-                text-align: var(--omni-date-picker-text-align, left);
-
-                color: var(--omni-date-picker-font-color, var(--omni-font-color));
-                font-family: var(--omni-date-picker-font-family, var(--omni-font-family));
-                font-size: var(--omni-date-picker-font-size, var(--omni-font-size));
-                font-weight: var(--omni-date-picker-font-weight, var(--omni-font-weight));
-                height: var(--omni-date-picker-height, 100%);
-                padding: var(--omni-date-picker-padding, 10px);
-                width: var(--omni-date-picker-width);
-                min-width: var(--omni-date-picker-min-width, 242px);
-
-                cursor: pointer;
-            }
-
-            .field.disabled {
-                color: var(--omni-date-picker-disabled-font-color, #7C7C7C);
-            }
-    
-            .field.error {
-                color: var(--omni-date-picker-error-font-color);
-            }
-
-            /* Styles for the control and control icon */
-
-            .control {
-                display: inline-flex;
-                flex: 0 0 auto;
-                align-items: center;
-                cursor: pointer;
-                padding: var(--omni-date-picker-control-padding, 10px 10px);
-            }
-
-            .control:hover  {
-                background-color: var(--omni-date-picker-control-hover-color, var(--omni-accent-hover-color));
-            }
-
-
-            .control-icon,
-            ::slotted([slot='calendar']){
-                width: var(--omni-date-picker-control-icon-width, 20px);
-                height: var(--omni-date-picker-control-icon-height, 20px);
-                fill: var(--omni-date-picker-control-icon-color,  var(--omni-primary-color));
-                cursor: pointer;
-            }
-
-            .control-icon.error {
-                fill: var(--omni-date-picker-control-icon-error-color, var(--omni-error-font-color));
-            }
-
-            .left-border {
-                width: var(--omni-date-picker-control-left-border-width, 1px);
-                background-color: var(--omni-date-picker-control-left-border-color,var(--omni-form-border-color));
-            }
-
-            .layout:focus-within > .left-border {
-                width: var(--omni-date-picker-control-left-focused-border-width, 2px);
-                background-color: var(--omni-date-picker-control-left-focused-color, var(--omni-primary-color));
-            }
-
-            .left-border.error {
-                background-color: var(--omni-date-picker-control-left-border-error-color, var(--omni-error-font-color));
-            }
-
-            /* Styles related to the picker container*/
-            .picker-container {
-                z-index: var(--omni-date-picker-container-z-index, 420);
-            }
-
-            /* Picker dialog mobile*/
-            @media screen and (max-width: 766px) {
-
-                .picker-dialog {
-                    position: fixed;
-                    top: inherit;
-                    width: 100%;
-                    margin: unset;
-                    border-style: none;
-                    padding: unset;
-                    left: var(--omni-date-picker-mobile-picker-dialog-left, 0px);
-                    right: var(--omni-date-picker-mobile-picker-dialog-right, 0px);
-                    bottom: var(--omni-date-picker-mobile-picker-dialog-bottom, 0px);
-                }
-                
-                .picker-dialog:modal{
-                    max-width: 100%;
-                    overflow: none;
+                /* Added to ensure that component has pointer cursor applied */
+                :host {
+                    cursor: pointer;
                 }
 
-                .picker-dialog::backdrop {
-                    background: var(--omni-date-picker-mobile-picker-dialog-background-color, rgba(0, 0, 0, 0.1));
-                }
-            }
+                .field {
+                    flex: 1 1 auto;
 
-            /* Desktop and landscape tablet device styling, if element is at the bottom of the screen make items render above the input */
-            @media screen and (min-width: 767px) {
+                    border: none;
+                    background: none;
+                    box-shadow: none;
+                    outline: 0;
+                    padding: 0;
+                    margin: 0;
+
+                    text-align: var(--omni-date-picker-text-align, left);
+
+                    color: var(--omni-date-picker-font-color, var(--omni-font-color));
+                    font-family: var(--omni-date-picker-font-family, var(--omni-font-family));
+                    font-size: var(--omni-date-picker-font-size, var(--omni-font-size));
+                    font-weight: var(--omni-date-picker-font-weight, var(--omni-font-weight));
+                    height: var(--omni-date-picker-height, 100%);
+                    padding: var(--omni-date-picker-padding, 10px);
+                    width: var(--omni-date-picker-width);
+                    min-width: var(--omni-date-picker-min-width, 242px);
+
+                    cursor: pointer;
+                }
+
+                .field.disabled {
+                    color: var(--omni-date-picker-disabled-font-color, #7C7C7C);
+                }
+        
+                .field.error {
+                    color: var(--omni-date-picker-error-font-color, var(--omni-font-color));
+                }
+
+                /* Styles for the control and control icon */
+
+                .control {
+                    display: inline-flex;
+                    flex: 0 0 auto;
+                    align-items: center;
+                    cursor: pointer;
+                    padding: var(--omni-date-picker-control-padding, 10px 10px);
+                }
+
+                .control:hover  {
+                    background-color: var(--omni-date-picker-control-hover-color, var(--omni-accent-hover-color));
+                }
+
+
+                .control-icon,
+                ::slotted([slot='calendar']){
+                    width: var(--omni-date-picker-control-icon-width, 20px);
+                    height: var(--omni-date-picker-control-icon-height, 20px);
+                    fill: var(--omni-date-picker-control-icon-color,  var(--omni-primary-color));
+                    cursor: pointer;
+                }
+
+                .control-icon.error {
+                    fill: var(--omni-date-picker-control-icon-error-color, var(--omni-error-font-color));
+                }
+
+                .left-border {
+                    width: var(--omni-date-picker-control-left-border-width, 1px);
+                    background-color: var(--omni-date-picker-control-left-border-color,var(--omni-form-border-color));
+                }
+
+                .layout:focus-within > .left-border {
+                    width: var(--omni-date-picker-control-left-focused-border-width, 2px);
+                    background-color: var(--omni-date-picker-control-left-focused-color, var(--omni-primary-color));
+                }
+
+                .left-border.error {
+                    background-color: var(--omni-date-picker-control-left-border-error-color, var(--omni-error-font-color));
+                }
+
+                /* Styles related to the picker container*/
                 .picker-container {
-                    position: absolute;
-                    cursor: default;
-                    transition: 1s;
-                    width: var(--omni-date-picker-container-width, 100%);
-                    top: var(--omni-date-picker-container-top, 102%);
+                    z-index: var(--omni-date-picker-container-z-index, 420);
                 }
 
-               /* Styles if the element is at the bottom of the screen then render the picker on top of the element */
-               .picker-container.bottom {
-                   top: var(--omni-date-picker-container-render-bottom-top, -2%);
-                   transform: translateY(-100%);
-               }
-            }
+                /* Picker dialog mobile*/
+                @media screen and (max-width: 766px) {
+
+                    .picker-dialog {
+                        position: fixed;
+                        top: inherit;
+                        width: 100%;
+                        margin: unset;
+                        border-style: none;
+                        padding: unset;
+                        left: var(--omni-date-picker-mobile-picker-dialog-left, 0px);
+                        right: var(--omni-date-picker-mobile-picker-dialog-right, 0px);
+                        bottom: var(--omni-date-picker-mobile-picker-dialog-bottom, 0px);
+                    }
+                    
+                    .picker-dialog:modal{
+                        max-width: 100%;
+                        overflow: none;
+                    }
+
+                    .picker-dialog::backdrop {
+                        background: var(--omni-date-picker-mobile-picker-dialog-background-color, rgba(0, 0, 0, 0.1));
+                    }
+                }
+
+                /* Desktop and landscape tablet device styling, if element is at the bottom of the screen make items render above the input */
+                @media screen and (min-width: 767px) {
+                    .picker-container {
+                        position: absolute;
+                        cursor: default;
+                        transition: 1s;
+                        width: var(--omni-date-picker-container-width, 100%);
+                        top: var(--omni-date-picker-container-top, 102%);
+                    }
+
+                /* Styles if the element is at the bottom of the screen then render the picker on top of the element */
+                .picker-container.bottom {
+                    top: var(--omni-date-picker-container-render-bottom-top, -2%);
+                    transform: translateY(-100%);
+                }
+                }
         `
         ];
     }

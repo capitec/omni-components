@@ -555,7 +555,7 @@ export class CurrencyField extends OmniFormElement {
                 }
 
                 .field.error {
-                    color: var(--omni-currency-field-error-font-color);
+                    color: var(--omni-currency-field-error-font-color, var(--omni-font-color));
                 }
 
                 .label {
