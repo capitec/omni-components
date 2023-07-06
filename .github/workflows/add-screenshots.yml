@@ -65,7 +65,8 @@ jobs:
         run: |
           npm ci --force
 
-      - uses: actions/github-script@v6
+      - name: 
+        uses: actions/github-script@v6
         id: get-component-filter
         with:
           script: |
@@ -108,6 +109,10 @@ jobs:
                 list = await getAllComponents();
             }
 
+            if (!list) {
+                list = await getAllComponents();
+            }
+
             console.log(list);
             list.split(/(\r\n|\n|\r)/gm).forEach(f => {
                 if (f.startsWith('src') && !f.startsWith('src/utils') && !f.endsWith('index.ts') && f.endsWith('.ts')) {
@@ -123,7 +128,7 @@ jobs:
           result-encoding: json
           
   screenshot-add:
-    if: github.event_name != 'workflow_dispatch' || (github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' && github.ref != 'refs/heads/alpha')
+    if: ${{ needs.screenshot-prepare.outputs.matrix != '[]' && needs.screenshot-prepare.outputs.matrix != '' && needs.screenshot-prepare.outputs.matrix && (github.event_name != 'workflow_dispatch' || (github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' && github.ref != 'refs/heads/alpha')) }}
     name: "Add Missing Screenshots"
     timeout-minutes: 240 
     runs-on: macos-latest
