@@ -152,7 +152,7 @@ export class ToastStack extends OmniElement {
     }
 
     /**
-     * Push a toast instance onto the toast stack.
+     * Push an existing toast instance onto the toast stack.
      */
     public showInstance(instance: Toast, options?: ShowToastOptions) {
         if (options?.duration) {
