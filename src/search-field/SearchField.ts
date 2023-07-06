@@ -115,7 +115,7 @@ export class SearchField extends OmniFormElement {
                 }
 
                 .field.error {
-                    color: var(--omni-search-field-error-font-color);
+                    color: var(--omni-search-field-error-font-color, var(--omni-font-color));
                 }
 
                 .search-icon {

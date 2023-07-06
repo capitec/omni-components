@@ -74,35 +74,35 @@ export class TextField extends OmniFormElement {
         return [
             super.styles,
             css`
-        .field {
-          flex: 1 1 auto;
+                .field {
+                    flex: 1 1 auto;
 
-          border: none;
-          background: none;
-          box-shadow: none;
-          outline: 0;
-          padding: 0;
-          margin: 0;
+                    border: none;
+                    background: none;
+                    box-shadow: none;
+                    outline: 0;
+                    padding: 0;
+                    margin: 0;
 
-          text-align: var(--omni-text-field-text-align, left);
+                    text-align: var(--omni-text-field-text-align, left);
 
-          color: var(--omni-text-field-font-color, var(--omni-font-color));
-          font-family: var(--omni-text-field-font-family, var(--omni-font-family));
-          font-size: var(--omni-text-field-font-size, var(--omni-font-size));
-          font-weight: var(--omni-text-field-font-weight, var(--omni-font-weight));
-          padding: var(--omni-text-field-padding, 10px);
-          height: var(--omni-text-field-height, 100%);
-          width: var(--omni-text-field-width, 100%);
-        }
+                    color: var(--omni-text-field-font-color, var(--omni-font-color));
+                    font-family: var(--omni-text-field-font-family, var(--omni-font-family));
+                    font-size: var(--omni-text-field-font-size, var(--omni-font-size));
+                    font-weight: var(--omni-text-field-font-weight, var(--omni-font-weight));
+                    padding: var(--omni-text-field-padding, 10px);
+                    height: var(--omni-text-field-height, 100%);
+                    width: var(--omni-text-field-width, 100%);
+                }
 
-        .field.disabled {
-            color: var(--omni-text-field-disabled-font-color, #7C7C7C);
-        }
+                .field.disabled {
+                    color: var(--omni-text-field-disabled-font-color, #7C7C7C);
+                }
 
-        .field.error {
-            color: var(--omni-text-field-error-font-color);
-        }
-      `
+                .field.error {
+                    color: var(--omni-text-field-error-font-color, var(--omni-font-color));
+                }
+            `
         ];
     }
 
