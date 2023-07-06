@@ -2,12 +2,12 @@ import * as jestMock from 'jest-mock';
 import {
     expect,
     withCoverage,
-    type Page,
     type PlaywrightTestArgs,
     type PlaywrightTestOptions,
     type PlaywrightWorkerArgs,
     type PlaywrightWorkerOptions,
-    type TestInfo
+    type TestInfo,
+    getStoryArgs
 } from '../utils/JestPlaywright.js';
 import type { OmniFormElement } from './OmniFormElement.js';
 import type { BaseArgs } from './OmniInputStories.js';
@@ -188,16 +188,6 @@ export const testDisabledBehaviour = (tagName: string, storyExport = 'Disabled')
         });
     };
 };
-
-/**
- * Read story args from story renderer with provided key
- */
-export async function getStoryArgs<T = any>(page: Page, key: string, readySelector = '[data-testid]') {
-    await page.waitForSelector(readySelector);
-
-    const args = await page.locator(`story-renderer[key=${key}]`).evaluate((storyRenderer: any) => storyRenderer?.story?.args as T);
-    return args;
-}
 
 export type TestArgs = PlaywrightTestArgs & PlaywrightTestOptions & PlaywrightWorkerArgs & PlaywrightWorkerOptions;
 export type TestFunction = (args: TestArgs, testInfo: TestInfo) => Promise<void>;

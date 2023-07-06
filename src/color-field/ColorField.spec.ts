@@ -7,10 +7,9 @@ import {
     testClearableBehaviour,
     testCustomClearableSlotBehaviour,
     testPrefixBehaviour,
-    testSuffixBehaviour,
-    getStoryArgs
+    testSuffixBehaviour
 } from '../core/OmniInputPlaywright.js';
-import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
+import { test, expect, withCoverage, getStoryArgs } from '../utils/JestPlaywright.js';
 import type { ColorField } from './ColorField.js';
 
 test(`Color Field - Interactive`, async ({ page }) => {

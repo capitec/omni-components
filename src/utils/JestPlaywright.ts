@@ -144,6 +144,16 @@ async function withCoverage<T>(this: any, page: Page, testAction: () => T | Prom
     return result;
 }
 
+/**
+ * Read story args from story renderer with provided key
+ */
+async function getStoryArgs<T = any>(page: Page, key: string, readySelector = '[data-testid]') {
+    await page.waitForSelector(readySelector);
+
+    const args = await page.locator(`story-renderer[key=${key}]`).evaluate((storyRenderer: any) => storyRenderer?.story?.args as T);
+    return args;
+}
+
 // TODO: Revisit once playwright clipboard support is completed
 /*
     clipboard isolation: [feature] clipboard isolation: https://github.com/microsoft/playwright/issues/13097
@@ -178,4 +188,4 @@ declare global {
     }
 }
 
-export { expect, withCoverage /*keyboardCopy, keyboardPaste, clipboardCopy*/ };
+export { expect, withCoverage, getStoryArgs /*keyboardCopy, keyboardPaste, clipboardCopy*/ };
