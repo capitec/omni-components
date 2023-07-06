@@ -124,10 +124,7 @@ jobs:
             });
 
             console.log(JSON.stringify(files));
-            if (Array.isEmpty(files)) {
-                files.push('Button');
-            }
-            return files;
+            return JSON.stringify(files);
           result-encoding: json
           debug: true
           
