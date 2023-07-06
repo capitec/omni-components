@@ -188,6 +188,9 @@ export const testDisabledBehaviour = (tagName: string, storyExport = 'Disabled')
     });
 };
 
+/**
+ * Read story args from story renderer with provided key 
+ */
 export async function getStoryArgs<T = any>(page: Page, key: string, readySelector = '[data-testid]') {
     await page.waitForSelector(readySelector);
 
