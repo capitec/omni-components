@@ -72,7 +72,7 @@ jobs:
             const path = require('path');
             const { execSync } = require('child_process');
 
-            const { globby } = await import('globby');
+            const { globby } = await import('${{ github.workspace }}/node_modules/globby/index.js');
 
             const ghCtx = ${{ toJson(github) }};
             const files = [];
