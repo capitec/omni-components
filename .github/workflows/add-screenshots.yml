@@ -120,7 +120,7 @@ jobs:
 
             console.log(list);
             list.split(/(\r\n|\n|\r)/gm).forEach(f => {
-                if (f.startsWith('src') && !f.startsWith('src/utils') && !f.endsWith('index.ts') && f.endsWith('.ts')) {
+                if (f.startsWith('src') && !f.startsWith('src/utils') && !f.startsWith('src/core') && !f.startsWith('src/icons') && !f.endsWith('index.ts') && f.endsWith('.ts')) {
                     const filter = path.basename(f).replace('.stories', '').replace('.spec', '').replace('.ts', '.spec.ts');
                     if (!files.includes(filter)) {
                         files.push(filter);
