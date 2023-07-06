@@ -231,14 +231,14 @@ jobs:
         uses: actions/upload-artifact@v3
         if: always()
         with:
-          name: playwright-report
+          name: "playwright-report-${{matrix.value}}"
           path: playwright-report/
           retention-days: 30
       - name: Upload Test Coverage
         uses: actions/upload-artifact@v3
         if: always()
         with:
-          name: coverage
+          name: "coverage-report-${{matrix.value}}"
           path: coverage/
           retention-days: 30
 
