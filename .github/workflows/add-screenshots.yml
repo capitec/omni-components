@@ -124,8 +124,12 @@ jobs:
             });
 
             console.log(JSON.stringify(files));
+            if (Array.isEmpty(files)) {
+                files.push('Button');
+            }
             return files;
           result-encoding: json
+          debug: true
           
   screenshot-add:
     if: ${{ needs.screenshot-prepare.outputs.matrix != '[]' && needs.screenshot-prepare.outputs.matrix != '' && needs.screenshot-prepare.outputs.matrix && (github.event_name != 'workflow_dispatch' || (github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' && github.ref != 'refs/heads/alpha')) }}
