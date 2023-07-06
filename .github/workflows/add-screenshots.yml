@@ -70,6 +70,8 @@ jobs:
         id: get-component-filter
         with:
           script: |
+            console.log('Checking required components');
+
             const path = require('path');
             const { execSync } = require('child_process');
 
@@ -90,6 +92,7 @@ jobs:
             
             let list = '';
             if (ghCtx.event_name === 'workflow_dispatch') {
+                console.log('Manual Dispatch');
                 try {
                     const response = await github.request(`GET /repos/${ghCtx.repository}/actions/runs`);
                     const before = response.data.workflow_runs.find(wr => wr.name === ghCtx.workflow && wr.id !== ghCtx.run_id && wr.head_sha && wr.head_sha !== ghCtx.sha && wr.head_branch === ghCtx.ref_name && wr.status === 'completed' && wr.conclusion !== 'failure')?.head_sha;
@@ -103,13 +106,16 @@ jobs:
                     list = await getAllComponents();
                 }
             } else {
+                console.log('Automated Workflow');
                 list = execSync(`git diff-tree --no-commit-id --name-only -r ${ghCtx.event.pull_request?.base?.sha ?? ghCtx.event.before} ${ghCtx.sha}`).toString();
             }
             if (list.includes('src/core')) {
+                console.log('Core was changed. Testing all components');
                 list = await getAllComponents();
             }
 
             if (!list) {
+                console.log('No specific component modified. Testing all components');
                 list = await getAllComponents();
             }
 
@@ -124,7 +130,11 @@ jobs:
             });
 
             console.log(JSON.stringify(files));
-            return JSON.stringify(files);
+            if (files.length === 0) {
+                files.push('Button');
+                files.push(await getAllComponents());
+            }
+            return files;
           result-encoding: json
           debug: true
           
