@@ -1,6 +1,7 @@
 import { html, css, TemplateResult, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { OmniElement } from '../core/OmniElement.js';
+import { type ShowToastInit, ToastStack } from './ToastStack.js';
 
 import '../icons/Close.icon.js';
 
@@ -108,6 +109,117 @@ export class Toast extends OmniElement {
      * @attr
      */
     @property({ type: Boolean, reflect: true }) closeable?: boolean;
+
+    private static stack?: ToastStack & {
+        /**
+         * When true, will append toast to the toast stack. Otherwise when false will replace any toast(s). Defaults to true.
+         */
+        stack?: boolean;
+
+        /**
+         * If true, will display a close button that fires a `close-click` event when clicked and removes the toast from the stack.
+         */
+        closeable?: boolean;
+
+        /**
+         * If provided will be the time in milliseconds the toast is displayed before being automatically removed from the stack.
+         * Defaults to 3000ms when not provided.
+         * When set to 0 will amount to no timeout.
+         */
+        duration?: number;
+    };
+
+    /**
+     * Global singleton {@link ToastStack} used for showing a toast, either by adding to, or replacing.
+     * Use `Toast.show` function to add or replace toasts to this instance.
+     */
+    public static get current() {
+        if (!Toast.stack) {
+            Toast.stack = ToastStack.create({});
+            if (Toast.stack) {
+                Toast.stack.closeable = false;
+                Toast.stack.duration = 3000;
+                Toast.stack.stack = true;
+            }
+        }
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        return Toast.stack!;
+    }
+
+    /**
+     * Configure the global singleton {@link ToastStack} used for showing a toast, either by adding to, or replacing.
+     * Use `Toast.show` function to add or replace toasts to this instance.
+     * @returns The global singleton {@link ToastStack} instance. It can also be accessed via `Toast.current` static property.
+     */
+    public static configure(options: {
+        /**
+         * The position to stack toasts
+         */
+        position?: 'top' | 'bottom' | 'left' | 'right' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+
+        /**
+         * Reverse the order of toast with newest toasts showed on top of the stack. By default newest toasts are showed at the bottom of the stack.
+         */
+        reverse?: boolean;
+
+        /**
+         * When true, will append toast to the toast stack. Otherwise when false will replace any toast(s). Defaults to true.
+         */
+        stack?: boolean;
+
+        /**
+         * If true, will display a close button that fires a `close-click` event when clicked and removes the toast from the stack.
+         */
+        closeable?: boolean;
+
+        /**
+         * If provided will be the time in millisecond the toast is displayed before being automatically removed from the stack.
+         * Defaults to 3000ms when not provided.
+         * When set to 0 it will never be auto removed.
+         */
+        duration?: number;
+    }) {
+        const current = Toast.current;
+        if (options) {
+            if (options.position) {
+                current.position = options.position;
+            }
+            if (typeof options.reverse !== 'undefined') {
+                current.reverse = options.reverse;
+            }
+            if (typeof options.stack !== 'undefined') {
+                current.stack = options.stack;
+            }
+            if (typeof options.closeable !== 'undefined') {
+                current.closeable = options.closeable;
+            }
+            if (typeof options.duration !== 'undefined') {
+                current.duration = options.duration === 0 ? undefined : options.duration;
+            }
+        }
+        return current;
+    }
+
+    /**
+     * Show a toast message.
+     * @returns The {@link Toast} instance that was created.
+     */
+    public static show(options: ShowToastInit) {
+        const current = Toast.current;
+        if (!current.stack) {
+            current.innerHTML = '';
+        }
+
+        // Apply default config if not specified
+        if (typeof options.closeable === 'undefined') {
+            options.closeable = current.closeable;
+        }
+        if (typeof options.duration === 'undefined') {
+            options.duration = current.duration;
+        }
+
+        return current.showToast(options);
+    }
 
     private _raiseCloseClick(event: MouseEvent) {
         // Notify any subscribers that the close button was clicked.
