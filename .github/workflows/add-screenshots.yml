@@ -122,7 +122,7 @@ jobs:
             console.log(list);
             list.split(/(\r\n|\n|\r)/gm).forEach(f => {
                 if (f.startsWith('src') && !f.startsWith('src/utils') && !f.endsWith('index.ts') && f.endsWith('.ts')) {
-                    const filter = path.basename(f).replace('.stories', '').replace('.spec', '').replace('.ts', '');
+                    const filter = path.basename(f).replace('.stories', '').replace('.spec', '').replace('.ts', '.spec.ts');
                     if (!files.includes(filter)) {
                         files.push(filter);
                     }
@@ -141,6 +141,7 @@ jobs:
     runs-on: macos-latest
     needs: [ screenshot-prepare ]
     strategy:
+      fail-fast: false
       matrix:
         value: ${{fromJson(needs.screenshot-prepare.outputs.matrix)}}
     steps:
@@ -200,8 +201,8 @@ jobs:
           PW_NO_RETRIES: true
 
       - name: Ensure branch up to date (again) 🌿 
-        # Only on branches
-        if: ${{ startsWith(github.ref, 'refs/heads/') }}
+        # Only on branches even when failed
+        if: ${{ always() && startsWith(github.ref, 'refs/heads/') }}
         run: |
           git pull || true
 

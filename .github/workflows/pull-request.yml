@@ -50,19 +50,138 @@ jobs:
         run: |
           npm run format:check
 
+  pr-prepare:
+    name: "Detect required tests"
+    runs-on: macos-latest
+    outputs:
+      matrix: ${{ steps.get-component-filter.outputs.result }}
+    steps:
+      - name: Configure OS
+        run: |
+          echo "Setting CGFontDisableAntialiasing"
+          defaults write CoreGraphics CGFontDisableAntialiasing YES
+          echo "Disabling AppleFontSmoothing"
+          defaults write -g AppleFontSmoothing -int 0
+          echo "Completed OS configure"
+
+      - name: Dump env 💩
+        run: env | sort
+
+      - name: Dump GitHub context 💩
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"      
+
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+          token: ${{ secrets.PROTECTED_TOKEN }}
+
+      - name: Ensure branch up to date 🌿 
+        # Only on branches
+        if: ${{ startsWith(github.ref, 'refs/heads/') }}
+        run: |
+          git pull
+
+      - name: Use Node.js 16.x ✔
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          registry-url: 'https://registry.npmjs.org'
+          always-auth: true
+
+      - name: Install Package Dependencies
+        run: |
+          npm ci --force
+
+      - name: Detect necessary components to test
+        uses: actions/github-script@v6
+        id: get-component-filter
+        with:
+          script: |
+            console.log('Checking required components');
+
+            const path = require('path');
+            const { execSync } = require('child_process');
+
+            const { globby } = await import('${{ github.workspace }}/node_modules/globby/index.js');
+
+            const ghCtx = ${{ toJson(github) }};
+            const files = [];
+
+            async function getAllComponents() {
+
+                const entryPoints = (await globby('${{ github.workspace }}/src/**/!(*.(style|test|stories|spec)).(ts|js)'))
+                    .filter(value =>
+                        !value.startsWith('./src/utils') &&
+                        !value.includes('OmniInputPlaywright') &&
+                        !value.includes('OmniInputStories'));
+                return entryPoints.map(e => e.replace('./', '').replace('${{ github.workspace }}/', '')).join('\n');
+            }
+            
+            let list = '';
+            if (ghCtx.event_name === 'workflow_dispatch') {
+                console.log('Manual Dispatch');
+                try {
+                    const response = await github.request(`GET /repos/${ghCtx.repository}/actions/runs`);
+                    const before = response.data.workflow_runs.find(wr => wr.name === ghCtx.workflow && wr.id !== ghCtx.run_id && wr.head_sha && wr.head_sha !== ghCtx.sha && wr.head_branch === ghCtx.ref_name && wr.status === 'completed' && wr.conclusion !== 'failure')?.head_sha;
+                    if (before) {
+                        list = execSync(`git diff-tree --no-commit-id --name-only -r ${before} ${ghCtx.sha}`).toString();
+                    } else {
+                        list = await getAllComponents();
+                    }
+                } catch (error) {
+                    console.warn(error);
+                    list = await getAllComponents();
+                }
+            } else {
+                console.log('Automated Workflow');
+                list = execSync(`git diff-tree --no-commit-id --name-only -r ${ghCtx.event.pull_request?.base?.sha ?? ghCtx.event.before} ${ghCtx.sha}`).toString();
+            }
+            if (list.includes('src/core')) {
+                console.log('Core was changed. Testing all components');
+                list = await getAllComponents();
+            }
+
+            if (!list) {
+                console.log('No specific component modified. Testing all components');
+                list = await getAllComponents();
+            }
+
+            console.log(list);
+            list.split(/(\r\n|\n|\r)/gm).forEach(f => {
+                if (f.startsWith('src') && !f.startsWith('src/utils') && !f.endsWith('index.ts') && f.endsWith('.ts')) {
+                    const filter = path.basename(f).replace('.stories', '').replace('.spec', '').replace('.ts', '.spec.ts');
+                    if (!files.includes(filter)) {
+                        files.push(filter);
+                    }
+                }
+            });
+
+            console.log(JSON.stringify(files));
+            return files;
+          result-encoding: json
+          debug: true
+
   pr-test:
-    needs: ["pr-lint", "pr-format"]
+    needs: [ pr-lint, pr-format, pr-prepare ]
     name: "Test"
     timeout-minutes: 300 
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        value: ${{fromJson(needs.pr-prepare.outputs.matrix)}}
     steps:
-    #   - name: Configure OS
-    #     run: |
-    #       echo "Setting CGFontDisableAntialiasing"
-    #       defaults write CoreGraphics CGFontDisableAntialiasing YES
-    #       echo "Disabling AppleFontSmoothing"
-    #       defaults write -g AppleFontSmoothing -int 0
-    #       echo "Completed OS configure"
+      - name: Configure OS
+        run: |
+          echo "Setting CGFontDisableAntialiasing"
+          defaults write CoreGraphics CGFontDisableAntialiasing YES
+          echo "Disabling AppleFontSmoothing"
+          defaults write -g AppleFontSmoothing -int 0
+          echo "Completed OS configure"
 
       - name: Dump env 💩
         run: env | sort
@@ -95,51 +214,10 @@ jobs:
       - name: Install Package Dependencies
         run: |
           npm ci --force
-
-      - uses: actions/github-script@v6
-        id: get-component-filter
-        with:
-          script: |
-            const path = require('path');
-            const { execSync } = require('child_process');
-
-            const ghCtx = ${{ toJson(github) }};
-            const files = [];
-            
-            let list = '';
-            if (ghCtx.event_name === 'workflow_dispatch') {
-                try {
-                    const response = await github.request(`GET /repos/${ghCtx.repository}/actions/runs`);
-                    const before = response.data.workflow_runs.find(wr => wr.name === ghCtx.workflow && wr.id !== ghCtx.run_id && wr.head_sha && wr.head_sha !== ghCtx.sha && wr.head_branch === ghCtx.ref_name && wr.status === 'completed' && wr.conclusion !== 'failure')?.head_sha;
-                    if (before) {
-                        list = execSync(`git diff-tree --no-commit-id --name-only -r ${before} ${ghCtx.sha}`).toString();
-                    }
-                } catch (error) {
-                }
-            } else {
-                list = execSync(`git diff-tree --no-commit-id --name-only -r ${ghCtx.event.pull_request?.base?.sha ?? ghCtx.event.before} ${ghCtx.sha}`).toString();
-            }
-            if (list.includes('src/core')) {
-                return '';
-            } else {
-                list.split(/(\r\n|\n|\r)/gm).forEach(f => {
-                    if (f.startsWith('src') && !f.startsWith('src/utils') && !f.endsWith('index.ts') && f.endsWith('.ts')) {
-                        const filter = path.basename(f).replace('.stories', '').replace('.spec', '').replace('.ts', '');
-                        if (!files.includes(filter)) {
-                            files.push(filter);
-                        }
-                    }
-                });
-
-                const testFilter = files.join(' ');
-                return testFilter;
-            }
-            return '';
-          result-encoding: string
           
       - name: Update PW_COMPONENT_FILTER
         run: |
-          PW_COMPONENT_FILTER="${{steps.get-component-filter.outputs.result}}"
+          PW_COMPONENT_FILTER="${{matrix.value}}"
           echo PW_COMPONENT_FILTER=${PW_COMPONENT_FILTER} >> $GITHUB_ENV
 
       - name: Install Playwright Chrome Dependencies
@@ -163,6 +241,12 @@ jobs:
           name: coverage
           path: coverage/
           retention-days: 30
+
+      - name: Ensure branch up to date (again) 🌿 
+        # Only on branches with failures (in case the failure was caused by missing screenshots) or cancelled (usually caused by timeouts of too many missing screenshots)
+        if: ${{ (failure() || cancelled()) && startsWith(github.ref, 'refs/heads/') }}
+        run: |
+          git pull || true
 
       - name: Auto Commit Changes 👩‍💻
         uses: stefanzweifel/git-auto-commit-action@v4

@@ -10,11 +10,6 @@ import { Toast } from './Toast.js';
 
 import './Toast.js';
 
-export default {
-    title: 'UI Components/Toast',
-    component: 'omni-toast'
-} as CSFIdentifier;
-
 interface Args {
     type: 'success' | 'warning' | 'error' | 'info' | 'none';
     header?: string;

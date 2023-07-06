@@ -14,11 +14,6 @@ import './Toast.js';
 import './ToastStack.js';
 import '../button/Button.js';
 
-export default {
-    title: 'UI Components/Toast Stack',
-    component: 'omni-toast-stack'
-} as CSFIdentifier;
-
 interface Args {
     '[Default Slot]': string;
     reverse: boolean;
