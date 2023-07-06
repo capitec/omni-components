@@ -1,5 +1,5 @@
 import * as jestMock from 'jest-mock';
-import { test, expect, withCoverage, type Page } from '../utils/JestPlaywright.js';
+import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
 import type { OmniFormElement } from './OmniFormElement.js';
 import type { BaseArgs } from './OmniInputStories.js';
 
