@@ -65,7 +65,7 @@ jobs:
         run: |
           npm ci --force
 
-      - name: 
+      - name: Detect necessary components to test
         uses: actions/github-script@v6
         id: get-component-filter
         with:
@@ -80,12 +80,12 @@ jobs:
 
             async function getAllComponents() {
 
-                const entryPoints = (await globby('./src/**/!(*.(style|test|stories|spec)).(ts|js)'))
+                const entryPoints = (await globby('${{ github.workspace }}/src/**/!(*.(style|test|stories|spec)).(ts|js)'))
                     .filter(value =>
                         !value.startsWith('./src/utils') &&
                         !value.includes('OmniInputPlaywright') &&
                         !value.includes('OmniInputStories'));
-                return entryPoints.map(e => e.replace('./', '')).join('\n');
+                return entryPoints.map(e => e.replace('./', '').replace('${{ github.workspace }}/', '')).join('\n');
             }
             
             let list = '';
