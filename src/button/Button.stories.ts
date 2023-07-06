@@ -14,27 +14,6 @@ import '../icon/Icon.js';
 const buttonOptions = ['primary', 'secondary', 'clear', 'white'] as const;
 const slotPositionOptions = ['left', 'top', 'right', 'bottom'] as const;
 
-export default {
-    title: 'UI Components/Button',
-    component: 'omni-button',
-    argTypes: {
-        type: {
-            control: 'radio',
-            options: buttonOptions
-        },
-        slotPosition: {
-            control: 'radio',
-            options: slotPositionOptions
-        },
-        'slot-position': {
-            control: false
-        },
-        '[Default Slot]': {
-            control: 'text'
-        }
-    }
-} as CSFIdentifier;
-
 interface Args {
     type: (typeof buttonOptions)[number];
     label: string;

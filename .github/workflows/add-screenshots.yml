@@ -130,10 +130,6 @@ jobs:
             });
 
             console.log(JSON.stringify(files));
-            if (files.length === 0) {
-                files.push('Button');
-                files.push(await getAllComponents());
-            }
             return files;
           result-encoding: json
           debug: true
@@ -217,4 +213,3 @@ jobs:
           commit_message: Added Missing Screenshots
           branch: ${{ env.GITHUB_REF_NAME }}
           file_pattern: '*.png'
-          skip_dirty_check: true

@@ -9,11 +9,6 @@ import { Calendar } from './Calendar';
 
 import './Calendar.js';
 
-export default {
-    title: 'UI Components/Calendar',
-    component: 'omni-calendar'
-} as CSFIdentifier;
-
 interface Args {
     locale: string;
     value: string;
