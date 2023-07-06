@@ -1,5 +1,5 @@
 import * as jestMock from 'jest-mock';
-import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
+import { test, expect, withCoverage, type Page } from '../utils/JestPlaywright.js';
 import type { OmniFormElement } from './OmniFormElement.js';
 import type { BaseArgs } from './OmniInputStories.js';
 
@@ -22,12 +22,10 @@ export const testLabelBehaviour = (tagName: string, storyExport = 'Label') => {
 
             await page.waitForSelector('[data-testid]', {});
 
-            const args = (await page
-                .locator(`story-renderer[key=${storyExport}]`)
-                .evaluate((storyRenderer) => (storyRenderer as any).story.args)) as BaseArgs;
+            const args = await getStoryArgs<BaseArgs>(page, storyExport);
             const input = page.locator(`.${storyExport}`).getByTestId('test-field');
 
-            await expect(input.locator(`.label > div`)).toHaveText(args?.label as string);
+            await expect(input.locator(`.label > div`)).toHaveText(args?.label);
         });
     });
 };
@@ -39,9 +37,7 @@ export const testHintBehaviour = (tagName: string, storyExport = 'Hint') => {
 
             await page.waitForSelector('[data-testid]', {});
 
-            const args = (await page
-                .locator(`story-renderer[key=${storyExport}]`)
-                .evaluate((storyRenderer) => (storyRenderer as any).story.args)) as BaseArgs;
+            const args = await getStoryArgs<BaseArgs>(page, storyExport);
             const input = page.locator(`.${storyExport}`).getByTestId('test-field');
 
             const hintElement = input.locator('.hint-label');
@@ -58,9 +54,7 @@ export const testErrorBehaviour = (tagName: string, storyExport = 'Error_Label')
 
             await page.waitForSelector('[data-testid]', {});
 
-            const args = (await page
-                .locator(`story-renderer[key=${storyExport}]`)
-                .evaluate((storyRenderer) => (storyRenderer as any).story.args)) as BaseArgs;
+            const args = await getStoryArgs<BaseArgs>(page, storyExport);
             const input = page.locator(`.${storyExport}`).getByTestId('test-field');
 
             const errorElement = input.locator('.error-label');
@@ -77,9 +71,7 @@ export const testValueBehaviour = (tagName: string, storyExport = 'Value') => {
 
             await page.waitForSelector('[data-testid]', {});
 
-            const args = (await page
-                .locator(`story-renderer[key=${storyExport}]`)
-                .evaluate((storyRenderer) => (storyRenderer as any).story.args)) as BaseArgs;
+            const args = await getStoryArgs<BaseArgs>(page, storyExport);
             const input = page.locator(`.${storyExport}`).getByTestId('test-field');
 
             const inputField = input.locator('input#inputField');
@@ -95,9 +87,6 @@ export const testPrefixBehaviour = (tagName: string, storyExport = 'Prefix') => 
 
             await page.waitForSelector('[data-testid]', {});
 
-            const args = (await page
-                .locator(`story-renderer[key=${storyExport}]`)
-                .evaluate((storyRenderer) => (storyRenderer as any).story.args)) as BaseArgs;
             const input = page.locator(`.${storyExport}`).getByTestId('test-field');
 
             const slotElement = input.locator('slot[name=prefix]');
@@ -118,9 +107,6 @@ export const testSuffixBehaviour = (tagName: string, storyExport = 'Suffix') => 
 
             await page.waitForSelector('[data-testid]', {});
 
-            const args = (await page
-                .locator(`story-renderer[key=${storyExport}]`)
-                .evaluate((storyRenderer) => (storyRenderer as any).story.args)) as BaseArgs;
             const input = page.locator(`.${storyExport}`).getByTestId('test-field');
 
             const slotElement = input.locator('slot[name=suffix]');
@@ -141,9 +127,6 @@ export const testClearableBehaviour = (tagName: string, storyExport = 'Clearable
 
             await page.waitForSelector('[data-testid]', {});
 
-            const args = (await page
-                .locator(`story-renderer[key=${storyExport}]`)
-                .evaluate((storyRenderer) => (storyRenderer as any).story.args)) as BaseArgs;
             const input = page.locator(`.${storyExport}`).getByTestId('test-field');
 
             //Clearable attribute test.
@@ -164,9 +147,6 @@ export const testCustomClearableSlotBehaviour = (tagName: string, storyExport = 
 
             await page.waitForSelector('[data-testid]', {});
 
-            const args = (await page
-                .locator(`story-renderer[key=${storyExport}]`)
-                .evaluate((storyRenderer) => (storyRenderer as any).story.args)) as BaseArgs;
             const input = page.locator(`.${storyExport}`).getByTestId('test-field');
 
             //Clearable attribute test.
@@ -187,9 +167,6 @@ export const testDisabledBehaviour = (tagName: string, storyExport = 'Disabled')
 
             await page.waitForSelector('[data-testid]', {});
 
-            const args = (await page
-                .locator(`story-renderer[key=${storyExport}]`)
-                .evaluate((storyRenderer) => (storyRenderer as any).story.args)) as BaseArgs;
             const input = page.locator(`.${storyExport}`).getByTestId('test-field');
 
             //Disabled class test.
@@ -210,3 +187,10 @@ export const testDisabledBehaviour = (tagName: string, storyExport = 'Disabled')
         });
     });
 };
+
+export async function getStoryArgs<T = any>(page: Page, key: string, readySelector = '[data-testid]') {
+    await page.waitForSelector(readySelector);
+
+    const args = await page.locator(`story-renderer[key=${key}]`).evaluate((storyRenderer: any) => storyRenderer?.story?.args as T);
+    return args;
+}

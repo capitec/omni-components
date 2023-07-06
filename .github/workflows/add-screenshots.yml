@@ -8,8 +8,7 @@ on:
     paths: 
       - '**/*.spec.ts'
       - '**/*.spec.js'
-      - '**/OmniInputPlaywright.ts'
-      - '**/JestPlaywright.ts'
+      - '**/*Playwright.ts'
       - 'playwright.config.js'
       - '.github/workflows/add-screenshots.yml'
   
@@ -199,17 +198,31 @@ jobs:
         env:
           CI: true
           PW_NO_RETRIES: true
+          
+  screenshot-commit:
+    # Only on branches even when failed
+    if: ${{ always() && startsWith(github.ref, 'refs/heads/') }}
+    runs-on: macos-latest
+    needs: [ screenshot-add ]
+    steps:     
+
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+          token: ${{ secrets.PROTECTED_TOKEN }}
+
+      - name: Ensure branch up to date 🌿 
+        run: |
+          git pull
 
       - name: Ensure branch up to date (again) 🌿 
-        # Only on branches even when failed
-        if: ${{ always() && startsWith(github.ref, 'refs/heads/') }}
         run: |
           git pull || true
 
       - name: Auto Commit Changes 👩‍💻
         uses: stefanzweifel/git-auto-commit-action@v4
-        # Only on branches even when failed
-        if: ${{ always() && startsWith(github.ref, 'refs/heads/') }}
         with:
           commit_message: Added Missing Screenshots
           branch: ${{ env.GITHUB_REF_NAME }}
