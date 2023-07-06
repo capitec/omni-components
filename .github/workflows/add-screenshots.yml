@@ -17,19 +17,20 @@ on:
   workflow_dispatch:
 
 jobs:
-  screenshot-add:
+  screenshot-prepare:
     if: github.event_name != 'workflow_dispatch' || (github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' && github.ref != 'refs/heads/alpha')
-    name: "Add Missing Screenshots"
-    timeout-minutes: 240 
-    runs-on: ubuntu-latest
+    name: "Detect required tests"
+    runs-on: macos-latest
+    outputs:
+      matrix: ${{ steps.get-component-filter.outputs.result }}
     steps:
-    #   - name: Configure OS
-    #     run: |
-    #       echo "Setting CGFontDisableAntialiasing"
-    #       defaults write CoreGraphics CGFontDisableAntialiasing YES
-    #       echo "Disabling AppleFontSmoothing"
-    #       defaults write -g AppleFontSmoothing -int 0
-    #       echo "Completed OS configure"
+      - name: Configure OS
+        run: |
+          echo "Setting CGFontDisableAntialiasing"
+          defaults write CoreGraphics CGFontDisableAntialiasing YES
+          echo "Disabling AppleFontSmoothing"
+          defaults write -g AppleFontSmoothing -int 0
+          echo "Completed OS configure"
 
       - name: Dump env 💩
         run: env | sort
@@ -71,8 +72,20 @@ jobs:
             const path = require('path');
             const { execSync } = require('child_process');
 
+            const { globby } = await import('globby');
+
             const ghCtx = ${{ toJson(github) }};
             const files = [];
+
+            async function getAllComponents() {
+
+                const entryPoints = (await globby('./src/**/!(*.(style|test|stories|spec)).(ts|js)'))
+                    .filter(value =>
+                        !value.startsWith('./src/utils') &&
+                        !value.includes('OmniInputPlaywright') &&
+                        !value.includes('OmniInputStories'));
+                return entryPoints.map(e => e.replace('./', '')).join('\n');
+            }
             
             let list = '';
             if (ghCtx.event_name === 'workflow_dispatch') {
@@ -81,33 +94,88 @@ jobs:
                     const before = response.data.workflow_runs.find(wr => wr.name === ghCtx.workflow && wr.id !== ghCtx.run_id && wr.head_sha && wr.head_sha !== ghCtx.sha && wr.head_branch === ghCtx.ref_name && wr.status === 'completed' && wr.conclusion !== 'failure')?.head_sha;
                     if (before) {
                         list = execSync(`git diff-tree --no-commit-id --name-only -r ${before} ${ghCtx.sha}`).toString();
+                    } else {
+                        list = await getAllComponents();
                     }
                 } catch (error) {
+                    console.warn(error);
+                    list = await getAllComponents();
                 }
             } else {
-                list = execSync(`git diff-tree --no-commit-id --name-only -r ${ghCtx.event.before} ${ghCtx.event.after}`).toString();
+                list = execSync(`git diff-tree --no-commit-id --name-only -r ${ghCtx.event.pull_request?.base?.sha ?? ghCtx.event.before} ${ghCtx.sha}`).toString();
             }
             if (list.includes('src/core')) {
-                return '';
-            } else {
-                list.split(/(\r\n|\n|\r)/gm).forEach(f => {
-                    if (f.startsWith('src') && !f.startsWith('src/utils') && !f.endsWith('index.ts') && f.endsWith('.ts')) {
-                        const filter = path.basename(f).replace('.stories', '').replace('.spec', '').replace('.ts', '');
-                        if (!files.includes(filter)) {
-                            files.push(filter);
-                        }
-                    }
-                });
-
-                const testFilter = files.join(' ');
-                return testFilter;
+                list = await getAllComponents();
             }
-            return '';
-          result-encoding: string
+
+            console.log(list);
+            list.split(/(\r\n|\n|\r)/gm).forEach(f => {
+                if (f.startsWith('src') && !f.startsWith('src/utils') && !f.endsWith('index.ts') && f.endsWith('.ts')) {
+                    const filter = path.basename(f).replace('.stories', '').replace('.spec', '').replace('.ts', '');
+                    if (!files.includes(filter)) {
+                        files.push(filter);
+                    }
+                }
+            });
+
+            console.log(JSON.stringify(files));
+            return files;
+          result-encoding: json
+          
+  screenshot-add:
+    if: github.event_name != 'workflow_dispatch' || (github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' && github.ref != 'refs/heads/alpha')
+    name: "Add Missing Screenshots"
+    timeout-minutes: 240 
+    runs-on: macos-latest
+    needs: [ screenshot-prepare ]
+    strategy:
+      matrix:
+        value: ${{fromJson(needs.screenshot-prepare.outputs.matrix)}}
+    steps:
+      - name: Configure OS
+        run: |
+          echo "Setting CGFontDisableAntialiasing"
+          defaults write CoreGraphics CGFontDisableAntialiasing YES
+          echo "Disabling AppleFontSmoothing"
+          defaults write -g AppleFontSmoothing -int 0
+          echo "Completed OS configure"
+
+      - name: Dump env 💩
+        run: env | sort
+
+      - name: Dump GitHub context 💩
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      
+
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+          token: ${{ secrets.PROTECTED_TOKEN }}
+
+      - name: Ensure branch up to date 🌿 
+        # Only on branches
+        if: ${{ startsWith(github.ref, 'refs/heads/') }}
+        run: |
+          git pull
+
+      - name: Use Node.js 16.x ✔
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          registry-url: 'https://registry.npmjs.org'
+          always-auth: true
+
+      - name: Install Package Dependencies
+        run: |
+          npm ci --force
           
       - name: Update PW_COMPONENT_FILTER
         run: |
-          PW_COMPONENT_FILTER="${{steps.get-component-filter.outputs.result}}"
+          PW_COMPONENT_FILTER="${{matrix.value}}"
           echo PW_COMPONENT_FILTER=${PW_COMPONENT_FILTER} >> $GITHUB_ENV
 
       - name: Install Playwright Chrome Dependencies
@@ -119,6 +187,12 @@ jobs:
           CI: true
           PW_NO_RETRIES: true
 
+      - name: Ensure branch up to date (again) 🌿 
+        # Only on branches
+        if: ${{ startsWith(github.ref, 'refs/heads/') }}
+        run: |
+          git pull || true
+
       - name: Auto Commit Changes 👩‍💻
         uses: stefanzweifel/git-auto-commit-action@v4
         # Only on branches even when failed
@@ -127,3 +201,4 @@ jobs:
           commit_message: Added Missing Screenshots
           branch: ${{ env.GITHUB_REF_NAME }}
           file_pattern: '*.png'
+          skip_dirty_check: true
