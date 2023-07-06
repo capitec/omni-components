@@ -81,36 +81,36 @@ export class EmailField extends OmniFormElement {
         return [
             super.styles,
             css`
-        .field {
-          flex: 1 1 auto;
+                .field {
+                flex: 1 1 auto;
 
-          border: none;
-          background: none;
-          box-shadow: none;
-          outline: 0;
-          padding: 0;
-          margin: 0;
+                border: none;
+                background: none;
+                box-shadow: none;
+                outline: 0;
+                padding: 0;
+                margin: 0;
 
-          text-align: var(--omni-email-field-text-align, left);
+                text-align: var(--omni-email-field-text-align, left);
 
-          color: var(--omni-email-field-font-color, var(--omni-font-color));
-          font-family: var(--omni-email-field-font-family, var(--omni-font-family));
-          font-size: var(--omni-email-field-font-size, var(--omni-font-size));
-          font-weight: var(--omni-email-field-font-weight, var(--omni-font-weight));
-          padding: var(--omni-email-field-padding, 10px);
+                color: var(--omni-email-field-font-color, var(--omni-font-color));
+                font-family: var(--omni-email-field-font-family, var(--omni-font-family));
+                font-size: var(--omni-email-field-font-size, var(--omni-font-size));
+                font-weight: var(--omni-email-field-font-weight, var(--omni-font-weight));
+                padding: var(--omni-email-field-padding, 10px);
 
-          height: var(--omni-email-field-height, 100%);
-          width: var(--omni-email-field-width, 100%);
-        }
-        
-        .field.disabled {
-            color: var(--omni-email-field-disabled-font-color, #7C7C7C);
-        }
+                height: var(--omni-email-field-height, 100%);
+                width: var(--omni-email-field-width, 100%);
+                }
+                
+                .field.disabled {
+                    color: var(--omni-email-field-disabled-font-color, #7C7C7C);
+                }
 
-        .field.error {
-            color: var(--omni-email-field-error-font-color);
-        }   
-      `
+                .field.error {
+                    color: var(--omni-email-field-error-font-color, var(--omni-font-color));
+                }   
+            `
         ];
     }
 

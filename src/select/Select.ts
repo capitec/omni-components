@@ -406,7 +406,7 @@ export class Select extends OmniFormElement {
                 }
 
                 .field.error {
-                    color: var(--omni-select-field-error-font-color);
+                    color: var(--omni-select-field-error-font-color, var(--omni-font-color));
                 }
 
                 .control {
