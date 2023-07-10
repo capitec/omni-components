@@ -43,7 +43,6 @@ jobs:
         with:
           persist-credentials: true
           fetch-depth: 0
-          token: ${{ secrets.PROTECTED_TOKEN }}
 
       - name: Ensure branch up to date 🌿 
         # Only on branches
@@ -170,12 +169,12 @@ jobs:
             console.log(JSON.stringify(files));
             return files;
           result-encoding: json
-          github-token: ${{ secrets.PROTECTED_TOKEN }}
           
   screenshot-add:
     if: ${{ needs.screenshot-prepare.outputs.matrix != '[]' && needs.screenshot-prepare.outputs.matrix != '' && needs.screenshot-prepare.outputs.matrix && (github.event_name != 'workflow_dispatch' || (github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' && github.ref != 'refs/heads/alpha')) }}
     name: "Add Missing Screenshots"
     timeout-minutes: 240 
+    permissions: write-all
     runs-on: macos-latest
     needs: [ screenshot-prepare ]
     strategy:
@@ -205,7 +204,6 @@ jobs:
         with:
           persist-credentials: true
           fetch-depth: 0
-          token: ${{ secrets.PROTECTED_TOKEN }}
 
       - name: Ensure branch up to date 🌿 
         # Only on branches

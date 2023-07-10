@@ -301,7 +301,7 @@ jobs:
       - name: Auto Commit Changes 👩‍💻
         uses: stefanzweifel/git-auto-commit-action@v4
         # Only on branches with failures (in case the failure was caused by missing screenshots) or cancelled (usually caused by timeouts of too many missing screenshots)
-        if: ${{ (failure() || cancelled()) && startsWith(github.ref, 'refs/heads/') }}
+        if: ${{ (failure() || cancelled()) && startsWith(github.ref, 'refs/heads/') && (github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' && github.ref != 'refs/heads/alpha') }}
         with:
           commit_message: Added Missing Screenshots
           branch: ${{ env.GITHUB_REF_NAME }}
@@ -310,7 +310,7 @@ jobs:
       - name: Auto Commit Changes 👩‍💻
         uses: stefanzweifel/git-auto-commit-action@v4
         # Only on PR branches with failures (in case the failure was caused by missing screenshots) or cancelled (usually caused by timeouts of too many missing screenshots)
-        if: ${{ (failure() || cancelled()) && !startsWith(github.ref, 'refs/heads/') && github.head_ref }}
+        if: ${{ (failure() || cancelled()) && !startsWith(github.ref, 'refs/heads/') && github.head_ref && (github.head_ref != 'main' && github.head_ref != 'develop' && github.head_ref != 'alpha') }}
         with:
           commit_message: Added Missing Screenshots
           branch: ${{ env.GITHUB_HEAD_REF }}
