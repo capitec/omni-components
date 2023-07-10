@@ -3,7 +3,7 @@ name: Pull Request
 env:
   PW_COMPONENT_FILTER:
 on:
-  pull_request:
+  pull_request_target:
     branches: [ main, develop, playwright-visual-tests ]
   
   # Allows you to run this workflow manually from the Actions tab
@@ -318,7 +318,7 @@ jobs:
           file_pattern: '*.png'
 
   pr-pass:
-    needs: [ pr-test ]
+    needs: [ pr-prepare, pr-test ]
     if: ${{ always() }}
     name: "Ensure All Tests Pass"
     runs-on: macos-latest
@@ -326,4 +326,4 @@ jobs:
       - name: Fail on Error or Cancelation
         run: exit 1
         # see https://github.com/orgs/community/discussions/26822#discussioncomment-5122101
-        if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}
+        if: ${{ contains(needs.*.result, 'failure') }}
