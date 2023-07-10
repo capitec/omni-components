@@ -95,7 +95,7 @@ jobs:
                 console.log('Manual Dispatch');
                 try {
                     const response = await github.request(`GET /repos/${ghCtx.repository}/actions/runs`);
-                    const before = response.data.workflow_runs.find(wr => wr.name === ghCtx.workflow && wr.id !== ghCtx.run_id && wr.head_sha && wr.head_sha !== ghCtx.sha && wr.head_branch === ghCtx.ref_name && wr.status === 'completed' && wr.conclusion !== 'failure')?.head_sha;
+                    const before = response.data.workflow_runs.find(wr => wr.name === ghCtx.workflow && wr.id?.toString() !== ghCtx.run_id?.toString() && wr.head_sha && wr.head_sha !== ghCtx.sha && wr.head_branch === ghCtx.ref_name && wr.status === 'completed' && wr.conclusion !== 'failure')?.head_sha;
                     if (before) {
                         list = execSync(`git diff-tree --no-commit-id --name-only -r ${before} ${ghCtx.sha}`).toString();
                     } else {
@@ -109,9 +109,9 @@ jobs:
                 console.log('Pull Request Automated Workflow');
                 try {
                     const response = await github.request(`GET /repos/${ghCtx.repository}/actions/runs`);
-                    const beforeWorkflow = response.data.workflow_runs.find(wr => wr.name === ghCtx.workflow && wr.id !== ghCtx.run_id && wr.head_sha && wr.head_sha !== ghCtx.sha && wr.head_branch === ghCtx.head_ref && wr.status === 'completed' && wr.pull_requests && wr.pull_requests.length > 0 && wr.pull_requests.find(p => p.id === ghCtx.event.pull_request?.id));
+                    const beforeWorkflow = response.data.workflow_runs.find(wr => wr.name === ghCtx.workflow && wr.id?.toString() !== ghCtx.run_id?.toString() && wr.head_sha && wr.head_sha !== ghCtx.sha && wr.head_branch === ghCtx.head_ref && wr.status === 'completed' && wr.pull_requests && wr.pull_requests.length > 0 && wr.pull_requests.find(p => p.id === ghCtx.event.pull_request?.id));
                     if (beforeWorkflow?.head_sha) {
-                        const jobsResponse = await github.request(`GET /repos/${ghCtx.repository}/actions/runs/${ghCtx.run_id}/attempts/${ghCtx.run_attempt}/jobs`);
+                        const jobsResponse = await github.request(`GET /repos/${ghCtx.repository}/actions/runs/${beforeWorkflow.id}/attempts/${beforeWorkflow.run_attempt}/jobs`);
                         if (jobsResponse?.data) {
                             const passedBefore = jobsResponse.data.jobs.filter(j => j.name.startsWith('Test (') && j.status === 'completed' && j.conclusion === 'success').map(j => j.name.match(/\(([^)]+)\)/)[1]);
                             if (passedBefore && passedBefore.length > 0) {
