@@ -28,6 +28,7 @@ test(`Button - Visual Secondary`, async ({ page }) => {
         await expect(button).toHaveScreenshot('button-secondary-after4.png');
         await expect(button).toHaveScreenshot('button-secondary-after5.png');
         await expect(button).toHaveScreenshot('button-secondary-after6.png');
+        await expect(button).toHaveScreenshot('button-secondary-after7.png');
     });
 });
 
