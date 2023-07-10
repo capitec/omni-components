@@ -4,7 +4,7 @@ env:
   PW_COMPONENT_FILTER:
 on:
   pull_request:
-    branches: [ main, develop]
+    branches: [ main, develop, playwright-visual-tests ]
   
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
