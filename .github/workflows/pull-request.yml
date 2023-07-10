@@ -109,7 +109,8 @@ jobs:
             const { globby } = await import('${{ github.workspace }}/node_modules/globby/index.js');
 
             const ghCtx = ${{ toJson(github) }};
-            const files = [];
+            let files = [];
+            let excludeFiles = [];
 
             async function getAllComponents() {
 
@@ -136,9 +137,38 @@ jobs:
                     console.warn(error);
                     list = await getAllComponents();
                 }
+            } else if (ghCtx.event_name === 'pull_request') {
+                console.log('Pull Request Automated Workflow');
+                try {
+                    const response = await github.request(`GET /repos/${ghCtx.repository}/actions/runs`);
+                    const beforeWorkflow = response.data.workflow_runs.find(wr => wr.name === ghCtx.workflow && wr.id !== ghCtx.run_id && wr.head_sha && wr.head_sha !== ghCtx.sha && wr.head_branch === ghCtx.head_ref && wr.status === 'completed' && wr.pull_requests && wr.pull_requests.length > 0 && wr.pull_requests.find(p => p.id === ghCtx.event.pull_request?.id));
+                    if (beforeWorkflow?.head_sha) {
+                        const jobsResponse = await github.request(`GET /repos/${ghCtx.repository}/actions/runs/${ghCtx.run_id}/attempts/${ghCtx.run_attempt}/jobs`);
+                        if (jobsResponse?.data) {
+                            const passedBefore = jobsResponse.data.jobs.filter(j => j.name.startsWith('Test (') && j.status === 'completed' && j.conclusion === 'success').map(j => j.name.match(/\(([^)]+)\)/)[1]);
+                            if (passedBefore && passedBefore.length > 0) {
+                                const diffList = execSync(`git diff-tree --no-commit-id --name-only -r ${beforeWorkflow?.head_sha} ${ghCtx.event.pull_request?.head?.sha ?? ghCtx.sha}`).toString();
+                                const changedFiles = [];
+                                diffList.split(/(\r\n|\n|\r)/gm).forEach(f => {
+                                    if (f.startsWith('src') && !f.startsWith('src/utils') && !f.startsWith('src/core') && !f.startsWith('src/icons') && !f.endsWith('index.ts') && f.endsWith('.ts')) {
+                                        const filter = path.basename(f).replace('.stories', '').replace('.spec', '').replace('.ts', '.spec.ts');
+                                        if (!changedFiles.includes(filter)) {
+                                            changedFiles.push(filter);
+                                        }
+                                    }
+                                });
+                                excludeFiles = passedBefore.filter(p => !changedFiles.includes(p));
+                            }
+                        }
+                    }
+                    list = execSync(`git diff-tree --no-commit-id --name-only -r ${ghCtx.event.pull_request?.base?.sha ?? ghCtx.event.before} ${ghCtx.event.pull_request?.head?.sha ?? ghCtx.sha}`).toString();
+                } catch (error) {
+                    list = execSync(`git diff-tree --no-commit-id --name-only -r ${ghCtx.event.pull_request?.base?.sha ?? ghCtx.event.before} ${ghCtx.event.pull_request?.head?.sha ?? ghCtx.sha}`).toString();
+                }
+
             } else {
                 console.log('Automated Workflow');
-                list = execSync(`git diff-tree --no-commit-id --name-only -r ${ghCtx.event.pull_request?.base?.sha ?? ghCtx.event.before} ${ghCtx.sha}`).toString();
+                list = execSync(`git diff-tree --no-commit-id --name-only -r ${ghCtx.event.pull_request?.base?.sha ?? ghCtx.event.before} ${ghCtx.event.pull_request?.head?.sha ?? ghCtx.sha}`).toString();
             }
             if (list.includes('src/core')) {
                 console.log('Core was changed. Testing all components');
@@ -159,6 +189,10 @@ jobs:
                     }
                 }
             });
+            if (excludeFiles.length > 0) {
+                console.log('Excluding files: ', JSON.stringify(excludeFiles));
+            }
+            files = files.filter(p => !excludeFiles.includes(p));
 
             console.log(JSON.stringify(files));
             return files;
