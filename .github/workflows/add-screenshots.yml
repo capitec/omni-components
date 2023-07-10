@@ -109,23 +109,30 @@ jobs:
                 console.log('Pull Request Automated Workflow');
                 try {
                     const response = await github.request(`GET /repos/${ghCtx.repository}/actions/runs`);
-                    const beforeWorkflow = response.data.workflow_runs.find(wr => wr.name === ghCtx.workflow && wr.id?.toString() !== ghCtx.run_id?.toString() && wr.head_sha && wr.head_sha !== ghCtx.sha && wr.head_branch === ghCtx.head_ref && wr.status === 'completed' && wr.pull_requests && wr.pull_requests.length > 0 && wr.pull_requests.find(p => p.id === ghCtx.event.pull_request?.id));
-                    if (beforeWorkflow?.head_sha) {
-                        const jobsResponse = await github.request(`GET /repos/${ghCtx.repository}/actions/runs/${beforeWorkflow.id}/attempts/${beforeWorkflow.run_attempt}/jobs`);
-                        if (jobsResponse?.data) {
-                            const passedBefore = jobsResponse.data.jobs.filter(j => j.name.startsWith('Test (') && j.status === 'completed' && j.conclusion === 'success').map(j => j.name.match(/\(([^)]+)\)/)[1]);
-                            if (passedBefore && passedBefore.length > 0) {
-                                const diffList = execSync(`git diff-tree --no-commit-id --name-only -r ${beforeWorkflow?.head_sha} ${ghCtx.event.pull_request?.head?.sha ?? ghCtx.sha}`).toString();
-                                const changedFiles = [];
-                                diffList.split(/(\r\n|\n|\r)/gm).forEach(f => {
-                                    if (f.startsWith('src') && !f.startsWith('src/utils') && !f.startsWith('src/core') && !f.startsWith('src/icons') && !f.endsWith('index.ts') && f.endsWith('.ts')) {
-                                        const filter = path.basename(f).replace('.stories', '').replace('.spec', '').replace('.ts', '.spec.ts');
-                                        if (!changedFiles.includes(filter)) {
-                                            changedFiles.push(filter);
-                                        }
+                    const beforeWorkflows = response.data.workflow_runs.filter(wr => wr.name === ghCtx.workflow && wr.id?.toString() !== ghCtx.run_id?.toString() && wr.head_sha && wr.head_sha !== ghCtx.sha && wr.head_branch === ghCtx.head_ref && wr.status === 'completed' && wr.pull_requests && wr.pull_requests.length > 0 && wr.pull_requests.find(p => p.id === ghCtx.event.pull_request?.id));
+                    let currentSha = ghCtx.event.pull_request?.head?.sha ?? ghCtx.sha;
+                    if (beforeWorkflows && beforeWorkflows.length > 0) {
+                        for (let index = 0; index < beforeWorkflows.length; index++) {
+                            const beforeWorkflow = beforeWorkflows[index];
+            
+                            if (beforeWorkflow?.head_sha) {
+                                const jobsResponse = await github.request(`GET /repos/${ghCtx.repository}/actions/runs/${beforeWorkflow.id}/attempts/${beforeWorkflow.run_attempt}/jobs`);
+                                if (jobsResponse?.data) {
+                                    const passedBefore = jobsResponse.data.jobs.filter(j => j.name.startsWith('Test (') && j.status === 'completed' && j.conclusion === 'success').map(j => j.name.match(/\(([^)]+)\)/)[1]);
+                                    if (passedBefore && passedBefore.length > 0) {
+                                        const diffList = execSync(`git diff-tree --no-commit-id --name-only -r ${beforeWorkflow?.head_sha} ${currentSha}`).toString();
+                                        const changedFiles = [];
+                                        diffList.split(/(\r\n|\n|\r)/gm).forEach(f => {
+                                            if (f.startsWith('src') && !f.startsWith('src/utils') && !f.startsWith('src/core') && !f.startsWith('src/icons') && !f.endsWith('index.ts') && f.endsWith('.ts')) {
+                                                const filter = path.basename(f).replace('.stories', '').replace('.spec', '').replace('.ts', '.spec.ts');
+                                                if (!changedFiles.includes(filter)) {
+                                                    changedFiles.push(filter);
+                                                }
+                                            }
+                                        });
+                                        excludeFiles = [...excludeFiles, ...passedBefore.filter(p => !changedFiles.includes(p) && !excludeFiles.includes(p))];
                                     }
-                                });
-                                excludeFiles = passedBefore.filter(p => !changedFiles.includes(p));
+                                }
                             }
                         }
                     }
@@ -166,6 +173,7 @@ jobs:
             return files;
           result-encoding: json
           debug: true
+          github-token: ${{ secrets.PROTECTED_TOKEN }}
           
   screenshot-add:
     if: ${{ needs.screenshot-prepare.outputs.matrix != '[]' && needs.screenshot-prepare.outputs.matrix != '' && needs.screenshot-prepare.outputs.matrix && (github.event_name != 'workflow_dispatch' || (github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' && github.ref != 'refs/heads/alpha')) }}
