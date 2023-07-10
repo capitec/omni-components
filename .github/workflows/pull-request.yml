@@ -291,3 +291,28 @@ jobs:
           branch: ${{ env.GITHUB_REF_NAME }}
           file_pattern: '*.png'
 
+      - name: Ensure branch up to date (again) 🌿 
+        # Only on PR branches with failures (in case the failure was caused by missing screenshots) or cancelled (usually caused by timeouts of too many missing screenshots)
+        if: ${{ (failure() || cancelled()) && github.head_ref }}
+        run: |
+          git pull || true
+
+      - name: Auto Commit Changes 👩‍💻
+        uses: stefanzweifel/git-auto-commit-action@v4
+        # Only on PR branches with failures (in case the failure was caused by missing screenshots) or cancelled (usually caused by timeouts of too many missing screenshots)
+        if: ${{ (failure() || cancelled()) && github.head_ref }}
+        with:
+          commit_message: Added Missing Screenshots
+          branch: ${{ env.GITHUB_HEAD_REF }}
+          file_pattern: '*.png'
+
+  pr-pass:
+    needs: [ pr-test ]
+    if: ${{ always() }}
+    name: "Ensure All Jobs Pass"
+    runs-on: macos-latest
+    steps:
+      - name: Fail on Error or Cancelation
+        run: exit 1
+        # see https://github.com/orgs/community/discussions/26822#discussioncomment-5122101
+        if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}
