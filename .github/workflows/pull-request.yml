@@ -9,6 +9,7 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+permissions: write-all
 jobs:
   pr-lint:
     name: Lint
@@ -207,6 +208,7 @@ jobs:
   pr-test:
     if: ${{ needs.pr-prepare.outputs.matrix != '[]' && needs.pr-prepare.outputs.matrix != '' && needs.pr-prepare.outputs.matrix }}
     needs: [ pr-lint, pr-format, pr-prepare ]
+    permissions: write-all
     name: "Test"
     timeout-minutes: 300 
     runs-on: macos-latest
