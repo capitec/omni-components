@@ -140,7 +140,7 @@ jobs:
             } else if (ghCtx.event_name === 'pull_request') {
                 console.log('Pull Request Automated Workflow');
                 try {
-                    const response = await github.request(`GET /repos/${ghCtx.repository}/actions/runs`);
+                    const response = await github.request(`GET /repos/${ghCtx.repository}/actions/runs?branch=${ghCtx.head_ref}&event=pull_request&per_page=100`);
                     const beforeWorkflows = response.data.workflow_runs.filter(wr => wr.name === ghCtx.workflow && wr.id?.toString() !== ghCtx.run_id?.toString() && wr.head_sha && wr.head_sha !== ghCtx.sha && wr.head_branch === ghCtx.head_ref && wr.status === 'completed' && wr.pull_requests && wr.pull_requests.length > 0 && wr.pull_requests.find(p => p.id === ghCtx.event.pull_request?.id));
                     let currentSha = ghCtx.event.pull_request?.head?.sha ?? ghCtx.sha;
                     if (beforeWorkflows && beforeWorkflows.length > 0) {

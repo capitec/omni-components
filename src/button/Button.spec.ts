@@ -115,6 +115,8 @@ test(`Button - Slot Behaviour`, async ({ page }) => {
         const button = page.locator('.Slot').locator('[data-testid=test-button]');
 
         const slotElement = button.locator('slot');
+
+        // Check for element in default slot
         const foundSlottedOmniIconElement = await slotElement.evaluateHandle((s: HTMLSlotElement) =>
             s.assignedElements().find((e) => e.tagName.toLowerCase() === 'omni-icon')
         );
