@@ -20,6 +20,15 @@ test(`Button - Visual Secondary`, async ({ page }) => {
 
         await button.blur();
         await expect(button).toHaveScreenshot('button-secondary-after.png');
+        await expect(button).toHaveScreenshot('button-secondary-after1.png');
+        await expect(button).toHaveScreenshot('button-secondary-after2.png');
+        await expect(button).toHaveScreenshot('button-secondary-after3.png');
+        await expect(button).toHaveScreenshot('button-secondary-after4.png');
+        await expect(button).toHaveScreenshot('button-secondary-after5.png');
+        await expect(button).toHaveScreenshot('button-secondary-after6.png');
+        await expect(button).toHaveScreenshot('button-secondary-after7.png');
+        await expect(button).toHaveScreenshot('button-secondary-after8.png');
+        await expect(button).toHaveScreenshot('button-secondary-after9.png');
     });
 });
 
