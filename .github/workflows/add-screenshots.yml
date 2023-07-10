@@ -91,7 +91,7 @@ jobs:
             if (ghCtx.event_name === 'workflow_dispatch') {
                 console.log('Manual Dispatch');
                 try {
-                    const response = await github.request(`GET /repos/${ghCtx.repository}/actions/runs`);
+                    const response = await github.request(`GET /repos/${ghCtx.repository}/actions/runs?branch=${ghCtx.ref_name}&event=workflow_dispatch&per_page=100`);
                     const before = response.data.workflow_runs.find(wr => wr.name === ghCtx.workflow && wr.id?.toString() !== ghCtx.run_id?.toString() && wr.head_sha && wr.head_sha !== ghCtx.sha && wr.head_branch === ghCtx.ref_name && wr.status === 'completed' && wr.conclusion !== 'failure')?.head_sha;
                     if (before) {
                         list = execSync(`git diff-tree --no-commit-id --name-only -r ${before} ${ghCtx.sha}`).toString();
