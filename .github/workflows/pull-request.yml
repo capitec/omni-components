@@ -15,7 +15,26 @@ jobs:
     timeout-minutes: 15 
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v3
+          
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+        # Only on branches
+        if: ${{ startsWith(github.ref, 'refs/heads/') }}
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+          token: ${{ secrets.PROTECTED_TOKEN }}
+          
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+        # Only on PR
+        if: ${{ !startsWith(github.ref, 'refs/heads/') && startsWith(github.event_name,'pull_request') }}
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
+          repository: ${{ github.head.repo.full_name }}
+
       - uses: actions/setup-node@v3
         with:
           node-version: 16.x
@@ -35,7 +54,26 @@ jobs:
     timeout-minutes: 15 
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v3
+          
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+        # Only on branches
+        if: ${{ startsWith(github.ref, 'refs/heads/') }}
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+          token: ${{ secrets.PROTECTED_TOKEN }}
+          
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+        # Only on PR
+        if: ${{ !startsWith(github.ref, 'refs/heads/') && startsWith(github.event_name,'pull_request') }}
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
+          repository: ${{ github.head.repo.full_name }}
+
       - uses: actions/setup-node@v3
         with:
           node-version: 16.x
