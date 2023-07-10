@@ -205,6 +205,7 @@ jobs:
           result-encoding: json
 
   pr-test:
+    if: ${{ needs.pr-prepare.outputs.matrix != '[]' && needs.pr-prepare.outputs.matrix != '' && needs.pr-prepare.outputs.matrix }}
     needs: [ pr-lint, pr-format, pr-prepare ]
     name: "Test"
     timeout-minutes: 300 
@@ -324,4 +325,4 @@ jobs:
             echo "${{ toJson(needs) }}"
             exit 1
         # see https://github.com/orgs/community/discussions/26822#discussioncomment-5122101
-        if: ${{ contains(needs.pr-prepare.result, 'failure') || (needs.pr-prepare.outputs.matrix != '[]' && needs.pr-prepare.outputs.matrix != '' && needs.pr-prepare.outputs.matrix && contains(needs.*.result, 'failure')) }}
+        if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}
