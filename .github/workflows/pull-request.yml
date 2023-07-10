@@ -204,7 +204,6 @@ jobs:
             console.log(JSON.stringify(files));
             return files;
           result-encoding: json
-          debug: true
           github-token: ${{ secrets.PROTECTED_TOKEN }}
 
   pr-test:
