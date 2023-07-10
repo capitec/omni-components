@@ -3,7 +3,7 @@ name: Pull Request
 env:
   PW_COMPONENT_FILTER:
 on:
-  pull_request_target:
+  pull_request:
     branches: [ main, develop, playwright-visual-tests ]
   
   # Allows you to run this workflow manually from the Actions tab
@@ -15,26 +15,7 @@ jobs:
     timeout-minutes: 15 
     runs-on: macos-latest
     steps:
-          
-      - name: Checkout 🛎️
-        uses: actions/checkout@v3
-        # Only on branches
-        if: ${{ startsWith(github.ref, 'refs/heads/') }}
-        with:
-          persist-credentials: true
-          fetch-depth: 0
-          token: ${{ secrets.PROTECTED_TOKEN }}
-          
-      - name: Checkout 🛎️
-        uses: actions/checkout@v3
-        # Only on PR
-        if: ${{ !startsWith(github.ref, 'refs/heads/') && startsWith(github.event_name,'pull_request') }}
-        with:
-          persist-credentials: true
-          fetch-depth: 0
-          ref: ${{ github.head_ref }}
-          repository: ${{ github.head.repo.full_name }}
-
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: 16.x
@@ -54,26 +35,7 @@ jobs:
     timeout-minutes: 15 
     runs-on: macos-latest
     steps:
-          
-      - name: Checkout 🛎️
-        uses: actions/checkout@v3
-        # Only on branches
-        if: ${{ startsWith(github.ref, 'refs/heads/') }}
-        with:
-          persist-credentials: true
-          fetch-depth: 0
-          token: ${{ secrets.PROTECTED_TOKEN }}
-          
-      - name: Checkout 🛎️
-        uses: actions/checkout@v3
-        # Only on PR
-        if: ${{ !startsWith(github.ref, 'refs/heads/') && startsWith(github.event_name,'pull_request') }}
-        with:
-          persist-credentials: true
-          fetch-depth: 0
-          ref: ${{ github.head_ref }}
-          repository: ${{ github.head.repo.full_name }}
-
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: 16.x
@@ -108,27 +70,13 @@ jobs:
       - name: Dump GitHub context 💩
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"     
-          
+        run: echo "$GITHUB_CONTEXT"      
+
       - name: Checkout 🛎️
         uses: actions/checkout@v3
-        # Only on branches
-        if: ${{ startsWith(github.ref, 'refs/heads/') }}
         with:
           persist-credentials: true
           fetch-depth: 0
-          token: ${{ secrets.PROTECTED_TOKEN }}
-          
-      - name: Checkout 🛎️
-        uses: actions/checkout@v3
-        # Only on PR
-        if: ${{ !startsWith(github.ref, 'refs/heads/') && startsWith(github.event_name,'pull_request') }}
-        with:
-          persist-credentials: true
-          fetch-depth: 0
-          token: ${{ secrets.PROTECTED_TOKEN }}
-          ref: ${{ github.head_ref }}
-          repository: ${{ github.head.repo.full_name }}
 
       - name: Ensure branch up to date 🌿 
         # Only on branches
@@ -188,7 +136,7 @@ jobs:
                     console.warn(error);
                     list = await getAllComponents();
                 }
-            } else if (ghCtx.event_name.startsWith('pull_request')) {
+            } else if (ghCtx.event_name === 'pull_request') {
                 console.log('Pull Request Automated Workflow');
                 try {
                     const response = await github.request(`GET /repos/${ghCtx.repository}/actions/runs`);
@@ -255,7 +203,6 @@ jobs:
             console.log(JSON.stringify(files));
             return files;
           result-encoding: json
-          github-token: ${{ secrets.PROTECTED_TOKEN }}
 
   pr-test:
     needs: [ pr-lint, pr-format, pr-prepare ]
@@ -290,18 +237,15 @@ jobs:
         with:
           persist-credentials: true
           fetch-depth: 0
-          token: ${{ secrets.PROTECTED_TOKEN }}
           
       - name: Checkout 🛎️
         uses: actions/checkout@v3
         # Only on PR
-        if: ${{ !startsWith(github.ref, 'refs/heads/') && startsWith(github.event_name,'pull_request') }}
+        if: ${{ !startsWith(github.ref, 'refs/heads/') && github.event_name == 'pull_request' }}
         with:
           persist-credentials: true
           fetch-depth: 0
-          token: ${{ secrets.PROTECTED_TOKEN }}
           ref: ${{ github.head_ref }}
-          repository: ${{ github.head.repo.full_name }}
 
       - name: Ensure branch up to date 🌿 
         run: |
