@@ -20,6 +20,8 @@ test(`Button - Visual Secondary`, async ({ page }) => {
 
         await button.blur();
         await expect(button).toHaveScreenshot('button-secondary-after.png');
+
+        // Take additional screenshots
         await expect(button).toHaveScreenshot('button-secondary-after1.png');
         await expect(button).toHaveScreenshot('button-secondary-after2.png');
         await expect(button).toHaveScreenshot('button-secondary-after3.png');
