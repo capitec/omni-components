@@ -320,6 +320,8 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Fail on Error or Cancelation
-        run: exit 1
+        run: |
+            echo "${{ toJson(needs) }}"
+            exit 1
         # see https://github.com/orgs/community/discussions/26822#discussioncomment-5122101
         if: ${{ contains(needs.*.result, 'failure') }}
