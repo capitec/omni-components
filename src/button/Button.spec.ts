@@ -92,6 +92,7 @@ test(`Button - Type Behaviour`, async ({ page }) => {
         const button = page.locator('.Type').locator('[data-testid=test-button]');
         const buttonElement = button.locator('#button');
         const foundPrimaryClass = await buttonElement.evaluate((btn) => btn?.classList.contains('primary'));
+
         await expect(foundPrimaryClass).toBeTruthy();
     });
 });

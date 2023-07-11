@@ -204,6 +204,7 @@ jobs:
         with:
           persist-credentials: true
           fetch-depth: 0
+          token: ${{ secrets.PROTECTED_TOKEN || secrets.GITHUB_TOKEN }}
 
       - name: Ensure branch up to date 🌿 
         # Only on branches
