@@ -8,6 +8,8 @@ test(`Check - Label Behaviour`, async ({ page }) => {
 
         const args = await page.locator('story-renderer[key=Label]').evaluate(getStoryArgs());
         const check = page.locator('.Label').getByTestId('test-check');
+        await expect(check).toHaveScreenshot('check-initial.png');
+        
         const labelElement = check.locator('label');
 
         await expect(labelElement).toHaveText(args.label);
