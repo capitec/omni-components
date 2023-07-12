@@ -555,7 +555,7 @@ Search input control.
 
 </td><td>
 
-Control to get / set a value within a list of options.
+Control to get or set a value within a list of options.
 
 </td></tr><tr><td>
 
