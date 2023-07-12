@@ -587,7 +587,7 @@ Component that displays content in tabs.
 
 </td><td>
 
-Control that can be used to display custom slotted content, for use within Tab Group component with associated Tab component.
+Control that can be used to display custom slotted content for use within Tab Group component with associated Tab component.
 
 </td></tr><tr><td>
 
