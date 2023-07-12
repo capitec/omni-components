@@ -118,9 +118,17 @@ test(`Select - Loading Slot`, async ({ page, isMobile }) => {
         // Take screen shot of input element once it is clicked.
         await expect(selectComponent).toHaveScreenshot('select-open.png');
 
+        if (isMobile) {
+            const dialog = selectComponent.locator('dialog');
+            await expect(dialog).toHaveScreenshot('select-items.png');
+        } else {
+            await expect(selectComponent).toHaveScreenshot('select-initial.png');
+            const container = selectComponent.locator('#items-container');
+            await expect(container).toHaveScreenshot('select-items.png');
+        }
+
         // Confirm that the content slotted in the loading_indicator has custom slotted content by taking a screenshot of the item container
-        const itemContainer = selectComponent.locator('#items-container');
-        const items = itemContainer.locator('.items');
+        const items = selectComponent.locator('.items');
         const loadingIndicator = items.locator('div');
         await expect(loadingIndicator).toHaveCount(1);
         // Count should only be one at this moment as the loading indicator is being displayed at this moment.
@@ -161,13 +169,21 @@ test(`Select - String Array`, async ({ page, isMobile }) => {
         // Take screen shot of input element once it is clicked.
         await expect(selectComponent).toHaveScreenshot('select-open.png');
 
+        if (isMobile) {
+            const dialog = selectComponent.locator('dialog');
+            await expect(dialog).toHaveScreenshot('select-items.png');
+        } else {
+            await expect(selectComponent).toHaveScreenshot('select-initial.png');
+            const container = selectComponent.locator('#items-container');
+            await expect(container).toHaveScreenshot('select-items.png');
+        }
+
         //Take snapshot of items container open
-        const itemContainer = selectComponent.locator('#items-container');
-        const items = itemContainer.locator('.item');
+        const items = selectComponent.locator('.item');
         await expect(items).toHaveCount(5);
 
         //Find the first item in the items container
-        const item = itemContainer.locator('.item').first();
+        const item = selectComponent.locator('.item').first();
         await expect(item).toHaveCount(1);
         await item.click();
 
@@ -198,15 +214,23 @@ test(`Select - Selection Render`, async ({ page, isMobile }) => {
         await expect(selectComponent).toHaveScreenshot('select-renderer-before.png');
         // Click on the Select component this should open the items container.
         await selectComponent.click();
-        //Take snapshot of items container open
-        const itemContainer = selectComponent.locator('#items-container');
+
+        if (isMobile) {
+            const dialog = selectComponent.locator('dialog');
+            await expect(dialog).toHaveScreenshot('select-items.png');
+        } else {
+            await expect(selectComponent).toHaveScreenshot('select-initial.png');
+            const container = selectComponent.locator('#items-container');
+            await expect(container).toHaveScreenshot('select-items.png');
+        }
+
         // Take screen shot of input element once it is clicked.
         await expect(selectComponent).toHaveScreenshot('select-open.png');
-        const items = itemContainer.locator('.item');
+        const items = selectComponent.locator('.item');
         await expect(items).toHaveCount(5);
 
         // Find the first item in the items container
-        const item = itemContainer.locator('.item').nth(0);
+        const item = selectComponent.locator('.item').first();
         await expect(item).toHaveCount(1);
         await item.click();
 
@@ -236,8 +260,16 @@ test(`Select - Empty Message`, async ({ page, isMobile }) => {
 
         await selectComponent.click();
 
-        const itemContainer = selectComponent.locator('#items-container');
-        const items = itemContainer.locator('.items');
+        if (isMobile) {
+            const dialog = selectComponent.locator('dialog');
+            await expect(dialog).toHaveScreenshot('select-items.png');
+        } else {
+            await expect(selectComponent).toHaveScreenshot('select-initial.png');
+            const container = selectComponent.locator('#items-container');
+            await expect(container).toHaveScreenshot('select-items.png');
+        }
+
+        const items = selectComponent.locator('.items');
         await expect(items).toHaveCount(1);
 
         // Find the first item in the items container
@@ -257,7 +289,6 @@ test(`Select - Disabled`, async ({ page, isMobile }) => {
 
         await page.waitForSelector('[data-testid]', {});
 
-        const args = await page.locator('story-renderer[key=Disabled]').evaluate(getStoryArgs());
         const select = page.locator('.Disabled').getByTestId('test-select');
 
         //Click event test.
@@ -273,12 +304,13 @@ test(`Select - Disabled`, async ({ page, isMobile }) => {
 
         await expect(click).toBeCalledTimes(0);
 
-        const itemContainer = select.locator('#items-container');
-
         if (!isMobile) {
+            const itemContainer = select.locator('#items-container');
             await expect(itemContainer).toHaveCount(0);
         } else {
-            await expect(itemContainer).not.toBeVisible();
+            const dialog = select.locator('dialog');
+            await expect(dialog).toHaveCount(1);
+            await expect(dialog).not.toBeVisible();
         }
 
         await select.evaluate((d: Select) => (d.disabled = false));
@@ -289,8 +321,13 @@ test(`Select - Disabled`, async ({ page, isMobile }) => {
 
         await expect(click).toBeCalledTimes(1);
 
-        await expect(itemContainer).toHaveCount(1);
-        await expect(itemContainer).toBeVisible();
+        if (!isMobile) {
+            const itemContainer = select.locator('#items-container');
+            await expect(itemContainer).toHaveCount(1);
+        } else {
+            const dialog = select.locator('dialog');
+            await expect(dialog).toHaveCount(1);
+        }
     });
 });
 
@@ -348,13 +385,20 @@ test(`Select - Searchable`, async ({ page, isMobile }) => {
 
         await selectComponent.click();
 
-        // Locate the items container
-        const itemContainer = selectComponent.locator('#items-container');
-        const items = itemContainer.locator('.item');
+        if (isMobile) {
+            const dialog = selectComponent.locator('dialog');
+            await expect(dialog).toHaveScreenshot('select-items.png');
+        } else {
+            await expect(selectComponent).toHaveScreenshot('select-initial.png');
+            const container = selectComponent.locator('#items-container');
+            await expect(container).toHaveScreenshot('select-items.png');
+        }
+
+        const items = selectComponent.locator('.item');
         await expect(items).toHaveCount(10);
 
         // Locate the search control div and take a screenshot of it
-        const searchField = itemContainer.locator('#searchField');
+        const searchField = selectComponent.locator('#searchField');
         await expect(searchField).toHaveCount(1);
         await expect(searchField).toHaveScreenshot('search-field.png');
 
@@ -363,7 +407,7 @@ test(`Select - Searchable`, async ({ page, isMobile }) => {
         await searchField.type(searchValue);
 
         //Confirm that the items container only has one record rendering now.
-        const searchedItems = itemContainer.locator('.item');
+        const searchedItems = selectComponent.locator('.item');
         await expect(searchedItems).toHaveCount(1);
 
         await searchedItems.click();
@@ -393,13 +437,20 @@ test(`Select - Custom Search`, async ({ page, isMobile }) => {
 
         await selectComponent.click();
 
-        // Locate the items container
-        const itemContainer = selectComponent.locator('#items-container');
-        const items = itemContainer.locator('.item');
+        if (isMobile) {
+            const dialog = selectComponent.locator('dialog');
+            await expect(dialog).toHaveScreenshot('select-items.png');
+        } else {
+            await expect(selectComponent).toHaveScreenshot('select-initial.png');
+            const container = selectComponent.locator('#items-container');
+            await expect(container).toHaveScreenshot('select-items.png');
+        }
+
+        const items = selectComponent.locator('.item');
         await expect(items).toHaveCount(5);
 
         // Locate the search control div and take a screenshot of it
-        const searchField = itemContainer.locator('#searchField');
+        const searchField = selectComponent.locator('#searchField');
         await expect(searchField).toHaveCount(1);
         await expect(searchField).toHaveScreenshot('search-field.png');
 
@@ -408,7 +459,7 @@ test(`Select - Custom Search`, async ({ page, isMobile }) => {
         await searchField.type(searchValue);
 
         //Confirm that the items container only has one record rendering now.
-        const searchedItems = itemContainer.locator('.item');
+        const searchedItems = selectComponent.locator('.item');
         await expect(searchedItems).toHaveCount(1);
 
         await searchedItems.click();
@@ -425,7 +476,6 @@ test(`Select - Server Side Filtering`, async ({ page, isMobile }) => {
 
         await page.waitForSelector('[data-testid]', {});
 
-        const args = await page.locator('story-renderer[key=Server_Side_Filtering]').evaluate(getStoryArgs());
         const selectComponent = page.locator('.Server_Side_Filtering').getByTestId('test-select');
 
         // Mock change event.
@@ -437,13 +487,21 @@ test(`Select - Server Side Filtering`, async ({ page, isMobile }) => {
 
         await selectComponent.click();
 
+        if (isMobile) {
+            const dialog = selectComponent.locator('dialog');
+            await expect(dialog).toHaveScreenshot('select-items.png');
+        } else {
+            await expect(selectComponent).toHaveScreenshot('select-initial.png');
+            const container = selectComponent.locator('#items-container');
+            await expect(container).toHaveScreenshot('select-items.png');
+        }
+
         // Locate the items container
-        const itemContainer = selectComponent.locator('#items-container');
-        const items = itemContainer.locator('.item');
+        const items = selectComponent.locator('.item');
         await expect(items).toHaveCount(5);
 
         // Locate the search control div and take a screenshot of it
-        const searchField = itemContainer.locator('#searchField');
+        const searchField = selectComponent.locator('#searchField');
         await expect(searchField).toHaveCount(1);
         await expect(searchField).toHaveScreenshot('search-field.png');
 
@@ -452,7 +510,7 @@ test(`Select - Server Side Filtering`, async ({ page, isMobile }) => {
         await searchField.type(searchValue);
 
         //Confirm that the items container only has one record rendering now.
-        const searchedItems = itemContainer.locator('.item');
+        const searchedItems = selectComponent.locator('.item');
         await expect(searchedItems).toHaveCount(1);
 
         await searchedItems.click();
@@ -481,15 +539,23 @@ test(`Select - Custom Search Slot`, async ({ page, isMobile }) => {
 
         await selectComponent.click();
 
+        if (isMobile) {
+            const dialog = selectComponent.locator('dialog');
+            await expect(dialog).toHaveScreenshot('select-items.png');
+        } else {
+            await expect(selectComponent).toHaveScreenshot('select-initial.png');
+            const container = selectComponent.locator('#items-container');
+            await expect(container).toHaveScreenshot('select-items.png');
+        }
+
         // Locate the items container
-        const itemContainer = selectComponent.locator('#items-container');
-        const items = itemContainer.locator('.item');
+        const items = selectComponent.locator('.item');
         await expect(items).toHaveCount(10);
 
         //Locate the div that has the search input nested this will be used later to locate the clear button div.
 
         // Locate the search control div and take a screenshot of it
-        const searchField = itemContainer.locator('#searchField');
+        const searchField = selectComponent.locator('#searchField');
         await expect(searchField).toHaveCount(1);
         await expect(searchField).toHaveScreenshot('search-field.png');
 

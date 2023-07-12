@@ -33,7 +33,7 @@ test(`Radio - Label Behaviour`, async ({ page }) => {
 
         await page.waitForSelector('[data-testid]', {});
         const args = await page.locator('story-renderer[key=Label]').evaluate(getStoryArgs());
-        const radio = page.locator('.Label').getByTestId('test-radio');
+        const radio = page.locator('story-renderer[key=Label]').locator('.Label').getByTestId('test-radio');
         const label = radio.locator('label');
         await expect(label).toHaveText(args.label);
         await expect(radio).toHaveScreenshot('radio-label.png');

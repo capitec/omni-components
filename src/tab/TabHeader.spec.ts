@@ -6,6 +6,7 @@ test(`Tab Header - Advanced`, async ({ page }) => {
         await page.goto('/components/tab-header/');
 
         const tabGroup = page.locator('.Advanced').getByTestId('test-tab-group');
+        await expect(tabGroup).toHaveScreenshot('tab-group-initial.png');
 
         // Mock tab-select event.
         const tabSelect = jestMock.fn();
@@ -46,5 +47,6 @@ test(`Tab Header - Advanced`, async ({ page }) => {
         await expect(tabs.nth(2)).toHaveAttribute('active', '');
         // Confirm that the first tab header has the data-active attribute.
         await expect(thirdTabHeader).toHaveAttribute('data-active', '');
+        await expect(tabGroup).toHaveScreenshot('tab-header-clicked.png');
     });
 });

@@ -8,6 +8,7 @@ test(`Tab - Basic`, async ({ page }) => {
 
         //For the purposes of the demo the Tabs are slotted in a Tab Group
         const tabGroup = page.locator('.Basic').getByTestId('test-tab-group');
+        await expect(tabGroup).toHaveScreenshot('tab-group-initial.png');
         //Get the Tab bar which will contain the tab headers.
         const tabBar = tabGroup.locator('.tab-bar').first();
 

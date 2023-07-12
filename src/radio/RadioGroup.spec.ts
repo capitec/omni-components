@@ -9,6 +9,7 @@ test(`Radio Group - Check / Unchecked Behaviour`, async ({ page }) => {
         // Get Radio group and radio components.
         const radioGroup = page.locator('.Interactive').getByTestId('test-radio-group');
         const radio = radioGroup.locator('omni-radio').first();
+        await expect(radioGroup).toHaveScreenshot('radio-group-initial.png');
         await radioGroup.focus();
 
         const radioChange = jestMock.fn();
@@ -24,6 +25,7 @@ test(`Radio Group - Check / Unchecked Behaviour`, async ({ page }) => {
 
         await expect(radioChange).toBeCalledTimes(1);
         await expect(radio).toHaveAttribute('checked', 'true');
+        await expect(radioGroup).toHaveScreenshot('radio-group-radio-checked.png');
     });
 });
 
@@ -61,6 +63,7 @@ test(`Radio Group - Deselect allowed`, async ({ page }) => {
         await page.goto('/components/radio-group/');
 
         const radioGroup = page.locator('.Allow_Deselect').getByTestId('test-radio-group');
+        await expect(radioGroup).toHaveScreenshot('radio-group-initial.png');
         //Get the second radio button as it is expected to be checked already
         const radio = page.locator('.Allow_Deselect').getByTestId('test-radio');
 
@@ -80,6 +83,7 @@ test(`Radio Group - Deselect allowed`, async ({ page }) => {
         await expect(radioChange).toBeCalledTimes(1);
         // Check the selected attribute of the Radio group and confirm it matches the value cause de selecting a radio button is allowed
         await expect(radioGroup).toHaveAttribute('selected', '-1');
+        await expect(radioGroup).toHaveScreenshot('radio-group-deselect.png');
     });
 });
 
