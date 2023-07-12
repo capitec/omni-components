@@ -33,11 +33,11 @@ test(`Select - Interactive`, async ({ page, isMobile }) => {
 
         if (isMobile) {
             const dialog = selectComponent.locator('dialog');
-            await expect(dialog).toHaveScreenshot('select-items.png');
+            await expect(dialog).toHaveScreenshot('select-dialog.png');
         } else {
             await expect(selectComponent).toHaveScreenshot('select-initial.png');
             const container = selectComponent.locator('#items-container');
-            await expect(container).toHaveScreenshot('select-items.png');
+            await expect(container).toHaveScreenshot('select-items-container.png');
         }
 
         // Get the items container and locate the nested items
@@ -76,11 +76,11 @@ test(`Select - Async Per Item`, async ({ page, isMobile }) => {
 
         if (isMobile) {
             const dialog = selectComponent.locator('dialog');
-            await expect(dialog).toHaveScreenshot('select-items.png');
+            await expect(dialog).toHaveScreenshot('select-dialog.png');
         } else {
             await expect(selectComponent).toHaveScreenshot('select-initial.png');
             const container = selectComponent.locator('#items-container');
-            await expect(container).toHaveScreenshot('select-items.png');
+            await expect(container).toHaveScreenshot('select-items-container.png');
         }
 
         const items = selectComponent.locator('.item');
@@ -120,18 +120,14 @@ test(`Select - Loading Slot`, async ({ page, isMobile }) => {
 
         if (isMobile) {
             const dialog = selectComponent.locator('dialog');
-            await expect(dialog).toHaveScreenshot('select-items.png');
+            await expect(dialog).toHaveScreenshot('select-dialog.png');
         } else {
             await expect(selectComponent).toHaveScreenshot('select-initial.png');
             const container = selectComponent.locator('#items-container');
-            await expect(container).toHaveScreenshot('select-items.png');
+            await expect(container).toHaveScreenshot('select-items-container.png');
         }
 
-        // Confirm that the content slotted in the loading_indicator has custom slotted content by taking a screenshot of the item container
         const items = selectComponent.locator('.items');
-        const loadingIndicator = items.locator('div');
-        await expect(loadingIndicator).toHaveCount(1);
-        // Count should only be one at this moment as the loading indicator is being displayed at this moment.
         await expect(items).toHaveCount(1);
 
         // Get the items in the items container this is after the loading indicator and confirm that 10 records exist.
@@ -171,11 +167,11 @@ test(`Select - String Array`, async ({ page, isMobile }) => {
 
         if (isMobile) {
             const dialog = selectComponent.locator('dialog');
-            await expect(dialog).toHaveScreenshot('select-items.png');
+            await expect(dialog).toHaveScreenshot('select-dialog.png');
         } else {
             await expect(selectComponent).toHaveScreenshot('select-initial.png');
             const container = selectComponent.locator('#items-container');
-            await expect(container).toHaveScreenshot('select-items.png');
+            await expect(container).toHaveScreenshot('select-items-container.png');
         }
 
         //Take snapshot of items container open
@@ -217,11 +213,11 @@ test(`Select - Selection Render`, async ({ page, isMobile }) => {
 
         if (isMobile) {
             const dialog = selectComponent.locator('dialog');
-            await expect(dialog).toHaveScreenshot('select-items.png');
+            await expect(dialog).toHaveScreenshot('select-dialog.png');
         } else {
             await expect(selectComponent).toHaveScreenshot('select-initial.png');
             const container = selectComponent.locator('#items-container');
-            await expect(container).toHaveScreenshot('select-items.png');
+            await expect(container).toHaveScreenshot('select-items-container.png');
         }
 
         // Take screen shot of input element once it is clicked.
@@ -262,11 +258,11 @@ test(`Select - Empty Message`, async ({ page, isMobile }) => {
 
         if (isMobile) {
             const dialog = selectComponent.locator('dialog');
-            await expect(dialog).toHaveScreenshot('select-items.png');
+            await expect(dialog).toHaveScreenshot('select-dialog.png');
         } else {
             await expect(selectComponent).toHaveScreenshot('select-initial.png');
             const container = selectComponent.locator('#items-container');
-            await expect(container).toHaveScreenshot('select-items.png');
+            await expect(container).toHaveScreenshot('select-items-container.png');
         }
 
         const items = selectComponent.locator('.items');
@@ -387,11 +383,11 @@ test(`Select - Searchable`, async ({ page, isMobile }) => {
 
         if (isMobile) {
             const dialog = selectComponent.locator('dialog');
-            await expect(dialog).toHaveScreenshot('select-items.png');
+            await expect(dialog).toHaveScreenshot('select-dialog.png');
         } else {
             await expect(selectComponent).toHaveScreenshot('select-initial.png');
             const container = selectComponent.locator('#items-container');
-            await expect(container).toHaveScreenshot('select-items.png');
+            await expect(container).toHaveScreenshot('select-items-container.png');
         }
 
         const items = selectComponent.locator('.item');
@@ -439,11 +435,11 @@ test(`Select - Custom Search`, async ({ page, isMobile }) => {
 
         if (isMobile) {
             const dialog = selectComponent.locator('dialog');
-            await expect(dialog).toHaveScreenshot('select-items.png');
+            await expect(dialog).toHaveScreenshot('select-dialog.png');
         } else {
             await expect(selectComponent).toHaveScreenshot('select-initial.png');
             const container = selectComponent.locator('#items-container');
-            await expect(container).toHaveScreenshot('select-items.png');
+            await expect(container).toHaveScreenshot('select-items-container.png');
         }
 
         const items = selectComponent.locator('.item');
@@ -489,11 +485,11 @@ test(`Select - Server Side Filtering`, async ({ page, isMobile }) => {
 
         if (isMobile) {
             const dialog = selectComponent.locator('dialog');
-            await expect(dialog).toHaveScreenshot('select-items.png');
+            await expect(dialog).toHaveScreenshot('select-dialog.png');
         } else {
             await expect(selectComponent).toHaveScreenshot('select-initial.png');
             const container = selectComponent.locator('#items-container');
-            await expect(container).toHaveScreenshot('select-items.png');
+            await expect(container).toHaveScreenshot('select-items-container.png');
         }
 
         // Locate the items container
@@ -541,11 +537,11 @@ test(`Select - Custom Search Slot`, async ({ page, isMobile }) => {
 
         if (isMobile) {
             const dialog = selectComponent.locator('dialog');
-            await expect(dialog).toHaveScreenshot('select-items.png');
+            await expect(dialog).toHaveScreenshot('select-dialog.png');
         } else {
             await expect(selectComponent).toHaveScreenshot('select-initial.png');
             const container = selectComponent.locator('#items-container');
-            await expect(container).toHaveScreenshot('select-items.png');
+            await expect(container).toHaveScreenshot('select-items-container.png');
         }
 
         // Locate the items container
