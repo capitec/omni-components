@@ -571,7 +571,7 @@ Control to switch a value on or off.
 
 </td><td>
 
-Control that can be used to display slotted content, for use within an Tab Group component.
+Control that can be used to display slotted content for use within an Tab Group component.
 
 </td></tr><tr><td>
 
