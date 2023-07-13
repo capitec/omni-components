@@ -473,7 +473,7 @@ test(`Select - Server Side Filtering`, async ({ page, isMobile }) => {
 
         await selectComponent.evaluate(async (s: Select, stringItems) => {
             async function promiseSearchFilter(filterValue: string) {
-                await new Promise<void>((r) => setTimeout(() => r(), 2000));
+                await new Promise<void>((r) => setTimeout(() => r(), 10));
                 return customSearch(filterValue, stringItems);
             }
 
@@ -501,6 +501,8 @@ test(`Select - Server Side Filtering`, async ({ page, isMobile }) => {
         });
 
         await selectComponent.click();
+
+        await page.waitForTimeout(30);
 
         if (isMobile) {
             const dialog = selectComponent.locator('dialog');
