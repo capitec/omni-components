@@ -9,8 +9,23 @@ import {
     testSuffixBehaviour
 } from '../core/OmniInputPlaywright.js';
 import { test, expect, withCoverage, type Page } from '../utils/JestPlaywright.js';
-import type { Select } from './Select.js';
+import type { Select, SelectItems, SelectTypes } from './Select.js';
 import { Args } from './Select.stories.js';
+
+const displayItems = [
+    { id: '1', label: 'Peter Parker' },
+    { id: '2', label: 'James Howlett' },
+    { id: '3', label: 'Tony Stark' },
+    { id: '4', label: 'Steve Rodgers' },
+    { id: '5', label: 'Bruce Banner' },
+    { id: '6', label: 'Wanda Maximoff' },
+    { id: '7', label: 'TChalla' },
+    { id: '8', label: 'Henry P. McCoy' },
+    { id: '9', label: 'Carl Lucas' },
+    { id: '10', label: 'Frank Castle' }
+];
+
+const stringItems = ['Bruce Wayne', 'Clark Kent', 'Barry Allen', 'Arthur Curry', 'Hal Jordan'];
 
 test(`Select - Interactive`, async ({ page, isMobile }) => {
     await withCoverage(page, async () => {
@@ -18,9 +33,7 @@ test(`Select - Interactive`, async ({ page, isMobile }) => {
 
         await page.waitForSelector('[data-testid]', {});
 
-        const args = await page.locator('story-renderer[key=Interactive]').evaluate(getStoryArgs());
         const selectComponent = page.locator('.Interactive').getByTestId('test-select');
-        const argItems = args.items as Record<string, unknown>[];
 
         // Mock change event.
         const valueChange = jestMock.fn();
@@ -28,6 +41,11 @@ test(`Select - Interactive`, async ({ page, isMobile }) => {
         await selectComponent.evaluate((node) => {
             node.addEventListener('change', () => window.jestChange());
         });
+
+        await selectComponent.evaluate(async (s: Select, displayItems) => {
+            s.items = displayItems;
+            await s.updateComplete;
+        }, displayItems);
 
         await selectComponent.click();
 
@@ -51,7 +69,7 @@ test(`Select - Interactive`, async ({ page, isMobile }) => {
 
         await expect(valueChange).toBeCalledTimes(1);
         // Assert that the first record of the bound items was selected.
-        await expect(selectComponent).toHaveAttribute('value', JSON.stringify(argItems[0]));
+        await expect(selectComponent).toHaveAttribute('value', JSON.stringify(displayItems[0]));
     });
 });
 
@@ -70,7 +88,17 @@ test(`Select - Async Per Item`, async ({ page, isMobile }) => {
             node.addEventListener('change', () => window.jestChange());
         });
 
+        await selectComponent.evaluate(async (s: Select, displayItems) => {
+            async function promiseDisplayItems(data: Record<string, unknown>[]) {
+                await new Promise<void>((r) => setTimeout(() => r(), 5));
+                return data as SelectTypes;
+            }
+            s.items = promiseDisplayItems(displayItems);
+            await s.updateComplete;
+        }, displayItems);
+
         await selectComponent.click();
+        await page.waitForTimeout(11);
         // Take screen shot of input element once it is clicked.
         await expect(selectComponent).toHaveScreenshot('select-open.png');
 
@@ -93,54 +121,7 @@ test(`Select - Async Per Item`, async ({ page, isMobile }) => {
 
         // Assert that the first record of the bound items was selected.
         await expect(valueChange).toBeCalledTimes(1);
-        await expect(selectComponent).toHaveAttribute('value', '{"id":"1","label":"Peter Parker"}');
-    });
-});
-
-/**
- * Covers the Async per item test also
- */
-test(`Select - Loading Slot`, async ({ page, isMobile }) => {
-    await withCoverage(page, async () => {
-        await page.goto('/components/select/');
-
-        await page.waitForSelector('[data-testid]', {});
-        const selectComponent = page.locator('.Loading_Slot').getByTestId('test-select');
-
-        // Mock change event.
-        const valueChange = jestMock.fn();
-        await page.exposeFunction('jestChange', () => valueChange());
-        await selectComponent.evaluate((node) => {
-            node.addEventListener('change', () => window.jestChange());
-        });
-
-        await selectComponent.click();
-        // Take screen shot of input element once it is clicked.
-        await expect(selectComponent).toHaveScreenshot('select-open.png');
-
-        if (isMobile) {
-            const dialog = selectComponent.locator('dialog');
-            await expect(dialog).toHaveScreenshot('select-dialog.png');
-        } else {
-            await expect(selectComponent).toHaveScreenshot('select-initial.png');
-            const container = selectComponent.locator('#items-container');
-            await expect(container).toHaveScreenshot('select-items-container.png');
-        }
-
-        const items = selectComponent.locator('.items');
-        await expect(items).toHaveCount(1);
-
-        // Get the items in the items container this is after the loading indicator and confirm that 10 records exist.
-        const item = items.locator('.item');
-        await expect(item).toHaveCount(10);
-
-        //Find the first item in the items container
-        const firstItem = items.locator('.item').first();
-        await expect(firstItem).toHaveCount(1);
-        await firstItem.click();
-
-        await expect(valueChange).toBeCalledTimes(1);
-        await expect(selectComponent).toHaveAttribute('value', '{"id":"1","label":"Peter Parker"}');
+        await expect(selectComponent).toHaveAttribute('value', JSON.stringify(displayItems[0]));
     });
 });
 
@@ -206,10 +187,25 @@ test(`Select - Selection Render`, async ({ page, isMobile }) => {
             node.addEventListener('change', () => window.jestChange());
         });
 
+        await selectComponent.evaluate(async (s: Select) => {
+            s.renderSelection = async (item: any) => {
+                await new Promise((resolve, reject) => {
+                    setTimeout(resolve, 10);
+                });
+                const i = document.createElement('i');
+                i.innerText = item;
+                i.style.color = 'blue';
+                return i;
+            };
+            await s.updateComplete;
+        });
+
         // Get screenshot of component before any interaction.
         await expect(selectComponent).toHaveScreenshot('select-renderer-before.png');
         // Click on the Select component this should open the items container.
         await selectComponent.click();
+
+        await page.waitForTimeout(11);
 
         if (isMobile) {
             const dialog = selectComponent.locator('dialog');
@@ -244,7 +240,6 @@ test(`Select - Empty Message`, async ({ page, isMobile }) => {
 
         await page.waitForSelector('[data-testid]', {});
 
-        const args = await page.locator('story-renderer[key=Empty_Message]').evaluate(getStoryArgs());
         const selectComponent = page.locator('.Empty_Message').getByTestId('test-select');
 
         // Mock change event.
@@ -333,7 +328,6 @@ test(`Select - Custom Control Slot`, async ({ page, isMobile }) => {
 
         await page.waitForSelector('[data-testid]', {});
 
-        const args = await page.locator('story-renderer[key=Custom_Control_Slot]').evaluate(getStoryArgs());
         const selectComponent = page.locator('.Custom_Control_Slot').getByTestId('test-select');
 
         // Mock change event.
@@ -368,8 +362,6 @@ test(`Select - Searchable`, async ({ page, isMobile }) => {
 
         await page.waitForSelector('[data-testid]', {});
 
-        const args = await page.locator('story-renderer[key=Searchable]').evaluate(getStoryArgs());
-        const argItems = args.items as Record<string, unknown>[];
         const selectComponent = page.locator('.Searchable').getByTestId('test-select');
 
         // Mock change event.
@@ -378,6 +370,11 @@ test(`Select - Searchable`, async ({ page, isMobile }) => {
         await selectComponent.evaluate((node) => {
             node.addEventListener('change', () => window.jestChange());
         });
+
+        await selectComponent.evaluate(async (s: Select, displayItems) => {
+            s.items = displayItems;
+            await s.updateComplete;
+        }, displayItems);
 
         await selectComponent.click();
 
@@ -410,7 +407,7 @@ test(`Select - Searchable`, async ({ page, isMobile }) => {
         await expect(valueChange).toBeCalledTimes(1);
 
         // Assert that the third record of the bound items was selected.
-        await expect(selectComponent).toHaveAttribute('value', JSON.stringify(argItems[2]));
+        await expect(selectComponent).toHaveAttribute('value', JSON.stringify(displayItems[2]));
     });
 });
 
@@ -474,6 +471,28 @@ test(`Select - Server Side Filtering`, async ({ page, isMobile }) => {
 
         const selectComponent = page.locator('.Server_Side_Filtering').getByTestId('test-select');
 
+        await selectComponent.evaluate(async (s: Select, stringItems) => {
+            async function promiseSearchFilter(filterValue: string) {
+                await new Promise<void>((r) => setTimeout(() => r(), 2000));
+                return customSearch(filterValue, stringItems);
+            }
+
+            function customSearch(filterValue: string, items: SelectTypes) {
+                if (Array.isArray(items) && filterValue) {
+                    return (items = (items as (string | Record<string, unknown>)[]).filter((i) => itemFilter(filterValue, i)) as SelectTypes);
+                } else {
+                    return items;
+                }
+            }
+
+            function itemFilter(filterValue: string, item: string | Record<string, unknown>) {
+                return item.toString().toLowerCase().includes(filterValue.toLowerCase());
+            }
+
+            s.items = promiseSearchFilter as (filterValue?: string | undefined) => SelectItems;
+            await s.updateComplete;
+        }, stringItems);
+
         // Mock change event.
         const valueChange = jestMock.fn();
         await page.exposeFunction('jestChange', () => valueChange());
@@ -523,7 +542,6 @@ test(`Select - Custom Search Slot`, async ({ page, isMobile }) => {
 
         await page.waitForSelector('[data-testid]', {});
 
-        const args = await page.locator('story-renderer[key=Searchable]').evaluate(getStoryArgs());
         const selectComponent = page.locator('.Searchable').getByTestId('test-select');
 
         // Mock change event.
@@ -558,11 +576,7 @@ test(`Select - Custom Search Slot`, async ({ page, isMobile }) => {
         // Type some text in the select field this should reduce the amount of items rendered in the items container.
         const searchValue = 'Steve';
         await searchField.type(searchValue);
-
-        // Get the div that surrounds the slotted clear button
-        const clearButtonDiv = searchField.locator('#search-clear-click');
-
-        // Find the slot after a value has been typed in the search field.
+        await expect(searchField).toHaveScreenshot('search-field-after.png');
     });
 });
 
