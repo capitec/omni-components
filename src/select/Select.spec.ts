@@ -196,8 +196,7 @@ test(`Select - Selection Render`, async ({ page, isMobile }) => {
 
         await expect(selectComponent).toHaveScreenshot('select-renderer-before.png');
         await selectComponent.click();
-
-        await page.waitForTimeout(11);
+        await page.waitForTimeout(100);
 
         if (isMobile) {
             const dialog = selectComponent.locator('dialog');
@@ -214,6 +213,7 @@ test(`Select - Selection Render`, async ({ page, isMobile }) => {
         const item = selectComponent.locator('.item').first();
         await expect(item).toHaveCount(1);
         await item.click();
+        await page.waitForTimeout(100);
 
         const selectionRender = selectComponent.locator('omni-render-element');
         await expect(selectComponent).toHaveAttribute('value', argItems[0]);
