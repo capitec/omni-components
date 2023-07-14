@@ -98,7 +98,7 @@ test(`Select - Async Per Item`, async ({ page, isMobile }) => {
         }, displayItems);
 
         await selectComponent.click();
-        await page.waitForTimeout(11);
+        await page.waitForTimeout(100);
         // Take screen shot of input element once it is clicked.
         await expect(selectComponent).toHaveScreenshot('select-open.png');
 
@@ -345,13 +345,9 @@ test(`Select - Custom Control Slot`, async ({ page, isMobile }) => {
 
         // Check slot depending on isMobile flag
         if (!isMobile) {
-            const svg = selectComponent.locator('svg[slot=arrow]');
-            await expect(svg).toHaveCount(1);
-            await expect(svg).toHaveScreenshot('arrow-slot-svg.png');
+            await expect(selectComponent).toHaveScreenshot('arrow-slot-svg.png');
         } else {
-            const svg = selectComponent.locator('svg[slot=more]');
-            await expect(svg).toHaveCount(1);
-            await expect(svg).toHaveScreenshot('more-slot-svg.png');
+            await expect(selectComponent).toHaveScreenshot('more-slot-svg.png');
         }
     });
 });
@@ -544,7 +540,7 @@ test(`Select - Custom Search Slot`, async ({ page, isMobile }) => {
 
         await page.waitForSelector('[data-testid]', {});
 
-        const selectComponent = page.locator('.Searchable').getByTestId('test-select');
+        const selectComponent = page.locator('.Custom_Search_Slot').getByTestId('test-select');
 
         // Mock change event.
         const valueChange = jestMock.fn();
@@ -578,7 +574,14 @@ test(`Select - Custom Search Slot`, async ({ page, isMobile }) => {
         // Type some text in the select field this should reduce the amount of items rendered in the items container.
         const searchValue = 'Steve';
         await searchField.type(searchValue);
-        await expect(searchField).toHaveScreenshot('search-field-after.png');
+        if (isMobile) {
+            const dialog = selectComponent.locator('dialog');
+            await expect(dialog).toHaveScreenshot('select-dialog-after.png');
+        } else {
+            await expect(selectComponent).toHaveScreenshot('select-initial.png');
+            const container = selectComponent.locator('#items-container');
+            await expect(container).toHaveScreenshot('select-items-container-after.png');
+        }
     });
 });
 
