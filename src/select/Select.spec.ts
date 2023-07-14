@@ -97,9 +97,8 @@ test(`Select - Async Per Item`, async ({ page, isMobile }) => {
         }, displayItems);
 
         await selectComponent.click();
-        await page.waitForTimeout(100);
+        await page.waitForTimeout(200);
 
-        // Take screen shot of input element once it is clicked.
         await expect(selectComponent).toHaveScreenshot('select-open.png');
 
         if (isMobile) {
@@ -173,6 +172,7 @@ test(`Select - Selection Render`, async ({ page, isMobile }) => {
         const args = await page.locator('story-renderer[key=Selection_Renderer]').evaluate(getStoryArgs());
         const argItems = args.items as Record<string, unknown>[];
         const selectComponent = page.locator('.Selection_Renderer').getByTestId('test-select');
+        await page.waitForTimeout(100);
         await expect(selectComponent).toHaveScreenshot('select-initial.png');
 
         const valueChange = jestMock.fn();
