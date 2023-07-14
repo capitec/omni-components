@@ -562,7 +562,7 @@ test(`Select - Custom Search Slot`, async ({ page, isMobile }) => {
 
         // Locate the items container
         const items = selectComponent.locator('.item');
-        await expect(items).toHaveCount(10);
+        await expect(items).toHaveCount(5);
 
         //Locate the div that has the search input nested this will be used later to locate the clear button div.
 
