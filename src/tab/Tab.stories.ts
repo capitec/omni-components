@@ -55,7 +55,7 @@ const App = () =>
     name: 'Basic',
     description: () => html`
     <div>
-        This is the recommended use of the <code class="language-html">&lt;omni-tab-group&gt;</code> with slotted <code class="language-html">&lt;omni-tab&gt;</code> component(s), headers for each tab are set by setting the <code>header</code> attribute of the <code class="language-html">&lt;omni-tab&gt;</code>.
+        This is the recommended use. Headers for each tab is set by the <code>header</code> attribute.
     <div>
     `,
     play: async (context) => {
@@ -123,7 +123,7 @@ const App = () =>
     name: 'Active',
     description: () => html`
     <div>
-        Set which <code class="language-html">&lt;omni-tab&gt;</code> slotted in the <code class="language-html">&lt;omni-tab-group&gt;</code> should be active by default. By setting the <code>active</code> attribute of one of the slotted <code class="language-html">&lt;omni-tab&gt;</code> components.
+     Set the <code>active</code> attribute on an <code class="language-html">&lt;omni-tab&gt;</code> to indicate its active. By default, the first slotted one is active.
     <div>
     `,
     play: async (context) => {
@@ -198,7 +198,7 @@ const App = () =>
     name: 'Disabled',
     description: () => html`
     <div>
-        Set a <code class="language-html">&lt;omni-tab&gt;</code> slotted in the <code class="language-html">&lt;omni-tab-group&gt;</code> component to be disabled by setting <code>disabled</code> attribute.
+     Set the <code>disabled</code> attribute on an <code class="language-html">&lt;omni-tab&gt;</code> to indicate its disabled.
     <div>
     `,
     args: {},

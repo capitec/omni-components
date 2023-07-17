@@ -193,80 +193,79 @@ export class PinField extends OmniFormElement {
         return [
             super.styles,
             css`
-        .control-box {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
+                .control-box {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
 
-          padding-right: var(--omni-pin-field-control-padding-right, 10px);
-          padding-left: var(--omni-pin-field-control-padding-left, 10px);
-          padding-top: var(--omni-pin-field-control-padding-top, 0px);
-          padding-bottom: var(--omni-pin-field-control-padding-bottom, 0px);
-        }
+                    padding-right: var(--omni-pin-field-control-padding-right, 10px);
+                    padding-left: var(--omni-pin-field-control-padding-left, 10px);
+                    padding-top: var(--omni-pin-field-control-padding-top, 0px);
+                    padding-bottom: var(--omni-pin-field-control-padding-bottom, 0px);
+                }
 
-        .hide-icon,
-        .show-icon {
-          fill: var(--omni-pin-field-icon-color, var(--omni-primary-color));
-        }
+                .hide-icon,
+                .show-icon {
+                    fill: var(--omni-pin-field-icon-color, var(--omni-primary-color));
+                }
 
-        .hide-icon,
-        .show-icon,
-        ::slotted([slot='show']),
-        ::slotted([slot='hide']) {
-          width: var(--omni-pin-field-icon-width, 24px);
-          height: var(--omni-pin-field-icon-height, 24px);
-        }
+                .hide-icon,
+                .show-icon,
+                ::slotted([slot='show']),
+                ::slotted([slot='hide']) {
+                    width: var(--omni-pin-field-icon-width, 24px);
+                    height: var(--omni-pin-field-icon-height, 24px);
+                }
 
-        .field {
-          flex: 1 1 auto;
+                .field {
+                    flex: 1 1 auto;
 
-          border: none;
-          background: none;
-          box-shadow: none;
-          outline: 0;
-          padding: 0;
-          margin: 0;
+                    border: none;
+                    background: none;
+                    box-shadow: none;
+                    outline: 0;
+                    padding: 0;
+                    margin: 0;
 
-          text-align: var(--omni-pin-field-text-align, left);
+                    text-align: var(--omni-pin-field-text-align, left);
 
-          color: var(--omni-pin-field-font-color, var(--omni-font-color));
-          font-family: var(--omni-pin-field-font-family, var(--omni-font-family));
-          font-size: var(--omni-pin-field-font-size, var(--omni-font-size));
-          font-weight: var(--omni-pin-field-font-weight, var(--omni-font-weight));
-          padding: var(--omni-pin-field-padding, 10px);
+                    color: var(--omni-pin-field-font-color, var(--omni-font-color));
+                    font-family: var(--omni-pin-field-font-family, var(--omni-font-family));
+                    font-size: var(--omni-pin-field-font-size, var(--omni-font-size));
+                    font-weight: var(--omni-pin-field-font-weight, var(--omni-font-weight));
+                    padding: var(--omni-pin-field-padding, 10px);
 
-          height: var(--omni-pin-field-height, 100%);
-          width: var(--omni-pin-field-width, 100%);
+                    height: var(--omni-pin-field-height, 100%);
+                    width: var(--omni-pin-field-width, 100%);
 
-          -webkit-text-security:disc;
-      
-        }
+                    -webkit-text-security:disc;          
+                }
 
-        .field.disabled {
-            color: var(--omni-pin-field-disabled-font-color, #7C7C7C);
-        }
+                .field.disabled {
+                    color: var(--omni-pin-field-disabled-font-color, #7C7C7C);
+                }
 
-        .field.error {
-            color: var(--omni-pin-field-error-font-color);
-        }
+                .field.error {
+                    color: var(--omni-pin-field-error-font-color, var(--omni-font-color));
+                }
 
-        .show {
-            -webkit-text-security:none;
-        }
+                .show {
+                    -webkit-text-security:none;
+                }
 
-        /* Used to not display default stepper */
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-          /* display: none; <- Crashes Chrome on hover */
-          -webkit-appearance: none;
-          margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
-        }   
-        
-        input[type='number'] {
-            -moz-appearance: textfield; /* Firefox */
-          }
-      `
+                /* Used to not display default stepper */
+                input::-webkit-outer-spin-button,
+                input::-webkit-inner-spin-button {
+                    /* display: none; <- Crashes Chrome on hover */
+                    -webkit-appearance: none;
+                    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+                }   
+                
+                input[type='number'] {
+                    -moz-appearance: textfield; /* Firefox */
+                }
+            `
         ];
     }
 

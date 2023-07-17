@@ -104,7 +104,7 @@ const App = () =>
     },
     description: () => html`
     <div>
-        For slotting custom content into the header use the <code class="language-html">&lt;omni-tab-header&gt;</code> component that targets the header slot of the <code class="language-html">&lt;omni-tab-group&gt;</code> component and ensure you have a <code class="language-html">&lt;omni-tab&gt;</code> component which has an <code>id</code> attribute that matches the <code class="language-html">&lt;omni-tab-header&gt;</code> <code>for</code> attribute to display slotted content.
+        For slotting custom content into the header use the <code class="language-html">&lt;omni-tab-header&gt;</code> component that targets the header slot of the <omni-hyperlink href='./components/tab-group'><code class="language-html">&lt;omni-tab-group&gt;</code></omni-hyperlink> component by setting <code class="language-js">slot="header"</code> and ensure you have a <omni-hyperlink href='./components/tab'><code class="language-html">&lt;omni-tab&gt;</code></omni-hyperlink> component which has an <code>id</code> attribute that matches the <code class="language-html">&lt;omni-tab-header&gt;</code> <code>for</code> attribute to display slotted content.
     <div>
     `,
     play: async (context) => {
