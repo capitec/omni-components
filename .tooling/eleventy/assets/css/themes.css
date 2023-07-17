@@ -177,6 +177,18 @@ header {
     --omni-theme-box-shadow: 0 0 4px 4px var(--omni-box-shadow-color);
 
     /* COMPONENT SPECIFIC STYLES */
+    --omni-button-primary-disabled-background: #777777;
+    --omni-button-primary-disabled-border-color: #777777;
+    --omni-button-clear-disabled-background: #777777;
+    --omni-button-clear-disabled-border-color: #777777;
+    --omni-button-white-color: #24292e;
+    --omni-button-white-hover-background: #E0E0E0;
+    --omni-button-white-hover-border-color: #E0E0E0;
+    --omni-button-white-active-background: #C2C2C2;
+    --omni-button-white-active-color: #24292e;
+    --omni-button-white-disabled-background: #777777;
+    --omni-button-white-disabled-border-color: #777777;
+    
     --omni-switch-knob-box-shadow: 0 2px 4px 0 rgb(255, 255, 255), 0 1px 3px rgb(255, 255, 255), 0 -1px 2px rgb(255, 255, 255);
     --omni-select-item-header-font-color: var(--omni-theme-background-color);
     --omni-hyperlink-color-active: white;
