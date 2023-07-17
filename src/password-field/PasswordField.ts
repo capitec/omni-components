@@ -61,6 +61,11 @@ export class PasswordField extends OmniFormElement {
     @state() protected type: 'password' | 'text' = 'password';
 
     /**
+     * 
+     */
+    @property({type: String, reflect: false}) override value?: string;
+
+    /**
      * Disables native on screen keyboards for the component.
      * @attr [no-native-keyboard]
      */
@@ -99,6 +104,13 @@ export class PasswordField extends OmniFormElement {
     _keyInput() {
         const input = this._inputElement;
         this.value = input?.value;
+
+        // Added check for value of input and either set the labelTransform property or remove the label-transform attribute.
+        if(input?.value !== ''){
+            this.transform = true;
+        }else {
+            this.removeAttribute('transform');
+        }
     }
 
     _iconClicked(e: MouseEvent) {

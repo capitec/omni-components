@@ -131,6 +131,12 @@ export class OmniFormElement extends OmniElement {
      */
     @property({ type: Boolean, reflect: true }) clearable = false;
 
+    /**
+     * Toggles if the element label should transform (Used for components that do not reflect the value property).
+     * @attr
+     */
+    @property({ type: Boolean, reflect: true }) transform = false;
+
     protected _clearValue(e: MouseEvent) {
         if (this.disabled) {
             return e.stopImmediatePropagation();
@@ -241,8 +247,7 @@ export class OmniFormElement extends OmniElement {
                     border-color: var(--omni-form-focussed-border-color, var(--omni-primary-active-color));
                 }
 
-                :host([value]:not([value=''])) .layout  > .label,
-                .layout:focus-within > .label:not(.focused-static)
+                :host([value]:not([value=''])) .layout  > .label
                 {
                     top: 0px;
                     margin-left: var(--omni-form-focussed-label-margin-left, 10px);
@@ -257,8 +262,7 @@ export class OmniFormElement extends OmniElement {
                     color: var(--omni-form-focussed-error-label-color, var(--omni-error-font-color));
                 }
             
-                :host([value]:not([value=''])) .layout  > .label > div::before,
-                .layout:focus-within > .label:not(.focused-static) > div::before
+                :host([value]:not([value=''])) .layout  > .label > div::before
                 {
                     content: "";
 					display: block;           
@@ -278,7 +282,36 @@ export class OmniFormElement extends OmniElement {
                     background-color: var(--omni-form-focussed-label-disabled-background-color, var(--omni-disabled-background-color));
                 }
 
-                :host([value]:not([value=''])) .layout  > .label > div,
+                :host([value]:not([value=''])) .layout  > .label > div
+                {
+                    transform: scale(var(--omni-form-focussed-label-transform-scale), 0.9);
+                    transform-origin: center left;
+                }
+
+                /* Focussed styles for password and pin field*/
+
+                :host([transform]) .layout  > .label,
+                .layout:focus-within > .label:not(.focused-static) {
+                    top: 0px;
+                    margin-left: var(--omni-form-focussed-label-margin-left, 10px);
+                }
+
+                :host([transform]) .layout  > .label > div::before,
+                .layout:focus-within > .label:not(.focused-static) > div::before
+                {
+                    content: "";
+                    display: block;           
+                    background-color: var(--omni-form-focussed-label-background-color, var(--omni-background-color));
+                    position: absolute;
+                    left: calc(var(--omni-form-focussed-label-padding-left, 3px) * -1);
+                    right: calc(var(--omni-form-focussed-label-padding-right, 3px) * -1);
+                    height: 50%;
+                    z-index: -1;
+                    top:50%;
+                    width: calc(100% + var(--omni-form-focussed-label-padding-left, 3px) + var(--omni-form-focussed-label-padding-right, 3px));
+                }
+
+                :host([transform]) .layout > .label > div,
                 .layout:focus-within > .label > div {
                     transform: scale(var(--omni-form-focussed-label-transform-scale), 0.9);
                     transform-origin: center left;

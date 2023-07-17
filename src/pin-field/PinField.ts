@@ -66,6 +66,11 @@ export class PinField extends OmniFormElement {
     @property({ type: Boolean, reflect: true, attribute: 'no-native-keyboard' }) noNativeKeyboard?: boolean;
 
     /**
+     * 
+     */
+    @property({type: String, reflect: false}) override value?: string;
+
+    /**
      * Maximum character input length.
      * @attr [max-length]
      */
@@ -112,6 +117,7 @@ export class PinField extends OmniFormElement {
     override focus(options?: FocusOptions | undefined): void {
         if (this._inputElement) {
             this._inputElement.focus(options);
+            // this.focussed = true;
         } else {
             super.focus(options);
         }
@@ -160,8 +166,16 @@ export class PinField extends OmniFormElement {
                 // Restrict the input characters to the length of specified in the args.
                 input.value = String(input?.value).slice(0, this.maxLength);
             }
-        }
+        } 
         this.value = input?.value;
+
+        // Added check for value of input and either set the focussed property or remove the attribute.
+        if(input?.value !== ''){
+            this.transform = true;
+        }else {
+            this.removeAttribute('transform');
+        }
+
     }
 
     _iconClicked(e: MouseEvent) {
@@ -266,6 +280,7 @@ export class PinField extends OmniFormElement {
                 input[type='number'] {
                     -moz-appearance: textfield; /* Firefox */
                 }
+
             `
         ];
     }
