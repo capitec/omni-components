@@ -183,6 +183,14 @@ This example shows how to import and use a few common components. Omni Component
 
 <table style="max-width: 800px;"><thead><tr><th style="width: 100px;">Tag Name</th><th style="width: 600px;">Description</th></tr></thead><tbody><tr><td>
 
+[omni-alert](src/alert/README.md)
+
+</td><td>
+
+Component that displays an alert.
+
+</td></tr><tr><td>
+
 [omni-button](src/button/README.md)
 
 </td><td>
