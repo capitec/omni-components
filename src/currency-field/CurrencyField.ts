@@ -242,6 +242,12 @@ export class CurrencyField extends OmniFormElement {
             return '';
         }
 
+        /* Check if the value provided is a valid number */
+        if(isNaN(preFormattedValue as number)) {
+            this.value = this._formatToCurrencyValue('0');
+            return '';
+        }
+
         const formattedValue = preFormattedValue.toString().replace(new RegExp(this.formatter, 'g'), this.thousandsSeparator || '');
         await this.updateComplete;
 
