@@ -11,28 +11,29 @@ Component that displays an alert.
 
 ## Properties
 
-| Property          | Attribute          | Modifiers | Type                                             | Default | Description                                      |
-|-------------------|--------------------|-----------|--------------------------------------------------|---------|--------------------------------------------------|
-| `actionAlign`     | `action-align`     |           | `"left" \| "center" \| "right" \| "stretch" \| undefined` |         | Action button(s) horizontal alignment:<br />  - `left` Align action button(s) to the left.<br />  - `center` Align action button(s) to the center.<br />  - `right` Align action button(s) to the right. |
-| `description`     | `description`      |           | `string \| undefined`                            |         | The alert detail message.                        |
-| `dir`             |                    |           | `string`                                         |         |                                                  |
-| `enableSecondary` | `enable-secondary` |           | `boolean \| undefined`                           |         | If true, will provide a secondary action button. |
-| `headerAlign`     | `header-align`     |           | `"left" \| "center" \| "right" \| undefined`     |         | Header content horizontal alignment:<br />  - `left` Align header to the left.<br />  - `center` Align header to the center.<br />  - `right` Align header to the right. |
-| `lang`            |                    |           | `string`                                         |         |                                                  |
-| `message`         | `message`          |           | `string \| undefined`                            |         | The alert header message.                        |
-| `override`        | `override`         |           |                                                  |         | The element style template.                      |
-| `primaryAction`   | `primary-action`   |           | `string \| undefined`                            |         | The primary action button label.                 |
-| `secondaryAction` | `secondary-action` |           | `string \| undefined`                            |         | The secondary action button label.               |
-| `status`          | `status`           |           | `"success" \| "warning" \| "error" \| "info" \| "none"` | "none"  | The alert status.                                |
-| `styles`          |                    | readonly  | `CSSResultGroup[]`                               |         |                                                  |
+| Property           | Attribute           | Modifiers | Type                                             | Default | Description                                      |
+|--------------------|---------------------|-----------|--------------------------------------------------|---------|--------------------------------------------------|
+| `actionAlign`      | `action-align`      |           | `"left" \| "center" \| "right" \| "stretch" \| undefined` |         | Action button(s) horizontal alignment:<br />  - `left` Align action button(s) to the left.<br />  - `center` Align action button(s) to the center.<br />  - `right` Align action button(s) to the right. (Default)<br />  - `stretch` Align action button(s) stretched to fill the horizontal space. |
+| `description`      | `description`       |           | `string \| undefined`                            |         | The alert detail message.                        |
+| `descriptionAlign` | `description-align` |           | `"left" \| "center" \| "right" \| undefined`     |         | Description content horizontal alignment:<br />  - `left` Align description content to the left.<br />  - `center` Align description content to the center. (Default)<br />  - `right` Align description content to the right. |
+| `dir`              |                     |           | `string`                                         |         |                                                  |
+| `enableSecondary`  | `enable-secondary`  |           | `boolean \| undefined`                           |         | If true, will provide a secondary action button. |
+| `headerAlign`      | `header-align`      |           | `"left" \| "center" \| "right" \| undefined`     |         | Header content horizontal alignment:<br />  - `left` Align header to the left.<br />  - `center` Align header to the center. (Default)<br />  - `right` Align header to the right. |
+| `lang`             |                     |           | `string`                                         |         |                                                  |
+| `message`          | `message`           |           | `string \| undefined`                            |         | The alert header message.                        |
+| `override`         | `override`          |           |                                                  |         | The element style template.                      |
+| `primaryAction`    | `primary-action`    |           | `string \| undefined`                            |         | The primary action button label (Defaults to 'Ok'). |
+| `secondaryAction`  | `secondary-action`  |           | `string \| undefined`                            |         | The secondary action button label (Defaults to 'Cancel'). |
+| `status`           | `status`            |           | `"success" \| "warning" \| "error" \| "info" \| "none"` | "none"  | The alert status (Defaults to 'none').           |
+| `styles`           |                     | readonly  | `CSSResultGroup[]`                               |         |                                                  |
 
 ## Methods
 
 | Method      | Type                                             | Description                                      |
 |-------------|--------------------------------------------------|--------------------------------------------------|
-| `hide`      | `(): void`                                       | Hide the notification and remove the component from the DOM |
-| `show`      | `(): Alert`                                      | Show the notification.                           |
-| `showAsync` | `(): Promise<"auto" \| "primary" \| "secondary">` | Show the notification asynchronously, waits for it to close and returns the reason for close. |
+| `hide`      | `(): void`                                       | Hide the `omni-alert` and remove the component from the DOM |
+| `show`      | `(): Alert`                                      | Show the `omni-alert`.                           |
+| `showAsync` | `(): Promise<"auto" \| "primary" \| "secondary">` | Show the `omni-alert` asynchronously, waits for it to close and returns the reason for close. |
 
 ## Events
 
