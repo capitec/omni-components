@@ -8,6 +8,7 @@ test(`Chip - Visual and Behaviour`, async ({ page }) => {
 
         await expect(chip).toHaveScreenshot('chip-initial.png');
 
+        // mock the click event.
         const click = await mockEventListener(chip, 'click');
 
         await chip.click({

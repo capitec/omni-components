@@ -1,4 +1,3 @@
-import * as jestMock from 'jest-mock';
 import {
     expect,
     withCoverage,
@@ -7,7 +6,8 @@ import {
     type PlaywrightWorkerArgs,
     type PlaywrightWorkerOptions,
     type TestInfo,
-    getStoryArgs
+    getStoryArgs,
+    mockEventListener
 } from '../utils/JestPlaywright.js';
 import type { OmniFormElement } from './OmniFormElement.js';
 import type { BaseArgs } from './OmniInputStories.js';
@@ -174,11 +174,7 @@ export const testDisabledBehaviour = (tagName: string, storyExport = 'Disabled')
             await expect(input).toHaveAttribute('disabled', '');
 
             //Input event test.
-            const inputTest = jestMock.fn();
-            await page.exposeFunction('jestInput', () => inputTest());
-            await input.evaluate((node) => {
-                node.addEventListener('input', () => (window as any).jestInput());
-            });
+            const inputTest = await mockEventListener(input, 'input');
 
             const inputField = input.locator('input#inputField');
 
