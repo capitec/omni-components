@@ -3,17 +3,11 @@ import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import expect from '../utils/ExpectDOM.js';
-import { ComponentStoryFormat, CSFIdentifier, getSourceFromLit, raw } from '../utils/StoryUtils.js';
+import { ComponentStoryFormat, getSourceFromLit, raw } from '../utils/StoryUtils.js';
 import { Icon } from './Icon.js';
 import './Icon.js';
 
 const sizeOptions = ['default', 'extra-small', 'small', 'medium', 'large'] as const;
-
-export default {
-    title: 'UI Components/Icon',
-    component: 'omni-icon'
-} as CSFIdentifier;
-
 interface Args {
     size: (typeof sizeOptions)[number];
     icon: string;

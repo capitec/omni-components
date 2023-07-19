@@ -1,4 +1,3 @@
-import * as jestMock from 'jest-mock';
 import {
     testLabelBehaviour,
     testHintBehaviour,
@@ -10,10 +9,10 @@ import {
     testSuffixBehaviour,
     testDisabledBehaviour
 } from '../core/OmniInputPlaywright.js';
-import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
+import { test, expect, mockEventListener, withCoverage } from '../utils/JestPlaywright.js';
 import type { TextField } from './TextField.js';
 
-test(`Text Field - Interactive`, async ({ page }) => {
+test(`Text Field - Visual and Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/text-field/');
         await page.evaluate(() => document.fonts.ready);
@@ -26,12 +25,7 @@ test(`Text Field - Interactive`, async ({ page }) => {
             await t.updateComplete;
         });
         await expect(textField).toHaveScreenshot('text-field.png');
-
-        const inputFn = jestMock.fn();
-        await page.exposeFunction('jestInput', () => inputFn());
-        await textField.evaluate((node) => {
-            node.addEventListener('input', () => (window as any).jestInput());
-        });
+        const inputFn = await mockEventListener(textField, 'input');
 
         const inputField = textField.locator('#inputField');
 

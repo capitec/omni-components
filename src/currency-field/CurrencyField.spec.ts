@@ -1,4 +1,3 @@
-import * as jestMock from 'jest-mock';
 import {
     testLabelBehaviour,
     testHintBehaviour,
@@ -10,7 +9,7 @@ import {
     testSuffixBehaviour,
     testDisabledBehaviour
 } from '../core/OmniInputPlaywright.js';
-import { test, expect, withCoverage /*keyboardPaste, clipboardCopy*/ } from '../utils/JestPlaywright.js';
+import { test, expect, mockEventListener, withCoverage /*keyboardPaste, clipboardCopy*/ } from '../utils/JestPlaywright.js';
 import type { CurrencyField } from './CurrencyField.js';
 
 test(`Currency Field - Visual and Behaviour`, async ({ page }) => {
@@ -38,11 +37,7 @@ test(`Currency Field - Visual and Behaviour`, async ({ page }) => {
         await inputField.blur();
         await expect(currencyField).toHaveScreenshot('currency-field-blurred.png');
 
-        const beforeinput = jestMock.fn();
-        await page.exposeFunction('jestbeforeinput', () => beforeinput());
-        await currencyField.evaluate((node) => {
-            node.addEventListener('beforeinput', () => (window as any).jestbeforeinput());
-        });
+        const beforeinput = await mockEventListener(currencyField, 'beforeinput');
 
         const value = '120000015';
         await inputField.type(value);

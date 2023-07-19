@@ -1,18 +1,13 @@
-import * as jestMock from 'jest-mock';
-import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
+import { test, expect, mockEventListener, withCoverage } from '../utils/JestPlaywright.js';
 
-test(`Tab Group - Interactive`, async ({ page }) => {
+test(`Tab Group - Visual and Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/tab-group/');
 
         const tabGroup = page.locator('.Interactive').getByTestId('test-tab-group');
         await expect(tabGroup).toHaveScreenshot('tab-group-initial.png');
         // Mock tab-select event.
-        const tabSelect = jestMock.fn();
-        await page.exposeFunction('jestTabSelect', () => tabSelect());
-        await tabGroup.evaluate((node) => {
-            node.addEventListener('tab-select', () => window.jestTabSelect());
-        });
+        const tabSelect = await mockEventListener(tabGroup, 'tab-select');
 
         const tabBar = tabGroup.locator('.tab-bar');
         await expect(tabBar).toHaveCount(1);
@@ -30,9 +25,3 @@ test(`Tab Group - Interactive`, async ({ page }) => {
         await expect(tabSelect).toBeCalledTimes(1);
     });
 });
-
-declare global {
-    interface Window {
-        jestTabSelect: () => void;
-    }
-}

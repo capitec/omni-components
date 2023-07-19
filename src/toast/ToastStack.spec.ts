@@ -1,5 +1,5 @@
 import * as jestMock from 'jest-mock';
-import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
+import { test, expect, mockEventListener, withCoverage } from '../utils/JestPlaywright.js';
 import type { ToastStack } from './ToastStack.js';
 
 test(`Toast Stack - Visual and Behaviour`, async ({ page }) => {
@@ -13,12 +13,7 @@ test(`Toast Stack - Visual and Behaviour`, async ({ page }) => {
         btn.click();
 
         const toastStack = page.getByTestId('test-toast-stack');
-
-        const toastRemove = jestMock.fn();
-        await page.exposeFunction('jestToastRemove', () => toastRemove());
-        await toastStack.evaluate((node) => {
-            node.addEventListener('toast-remove', () => window.jestToastRemove());
-        });
+        const toastRemove = await mockEventListener(toastStack, 'toast-remove');
 
         await toastStack.focus();
         await expect(toastStack).toHaveScreenshot('toast-stack-initial.png');
@@ -547,7 +542,6 @@ test(`Toast Stack - Top Position Visual and Behaviour`, async ({ page }) => {
 
 declare global {
     interface Window {
-        jestToastRemove: () => void;
         jestToastStackRemove: () => void;
     }
 }

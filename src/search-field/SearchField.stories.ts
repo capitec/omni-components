@@ -1,7 +1,3 @@
-import { waitFor, within } from '@testing-library/dom';
-import userEvent from '@testing-library/user-event';
-import { setUIValueClean } from '@testing-library/user-event/dist/esm/document/UI.js';
-import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import {
@@ -17,15 +13,9 @@ import {
     SuffixStory
 } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import expect from '../utils/ExpectDOM.js';
-import { assignToSlot, ComponentStoryFormat, CSFIdentifier, getSourceFromLit } from '../utils/StoryUtils.js';
+import { assignToSlot, ComponentStoryFormat, getSourceFromLit } from '../utils/StoryUtils.js';
 import './SearchField.js';
 import { SearchField } from './SearchField.js';
-
-export default {
-    title: 'UI Components/Search Field',
-    component: 'omni-search-field'
-} as CSFIdentifier;
 
 export const Interactive: ComponentStoryFormat<BaseArgs> = {
     render: (args: BaseArgs) => html`

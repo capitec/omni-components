@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as jestMock from 'jest-mock';
-import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
+import { test, expect, getStoryArgs, withCoverage } from '../utils/JestPlaywright.js';
 import type { RenderElement } from './RenderElement.js';
 
 test(`Render Element - Lit Template Visual and Behaviour`, async ({ page }) => {
@@ -9,8 +9,7 @@ test(`Render Element - Lit Template Visual and Behaviour`, async ({ page }) => {
 
         await page.waitForSelector('[data-testid]', {});
 
-        const args = await page.locator('story-renderer[key=Lit_Template]').evaluate((storyRenderer) => (storyRenderer as any).story.args);
-
+        const args = await getStoryArgs(page, 'Lit_Template');
         const renderElement = page.locator('.Lit_Template').getByTestId('test-render');
         const data = args.data;
 
@@ -43,8 +42,7 @@ test(`Render Element - HTML Element Instance Visual and Behaviour`, async ({ pag
             d.accept();
         });
 
-        const args = await page.locator('story-renderer[key=HTML_Element_Instance]').evaluate((storyRenderer) => (storyRenderer as any).story.args);
-
+        const args = await getStoryArgs(page, 'HTML_Element_Instance');
         const renderElement = page.locator('.HTML_Element_Instance').getByTestId('test-render');
         const data = args.data;
 
@@ -76,8 +74,7 @@ test(`Render Element - HTML String Visual and Behaviour`, async ({ page }) => {
 
         await page.waitForSelector('[data-testid]', {});
 
-        const args = await page.locator('story-renderer[key=HTML_String]').evaluate((storyRenderer) => (storyRenderer as any).story.args);
-
+        const args = await getStoryArgs(page, 'HTML_String');
         const renderElement = page.locator('.HTML_String').getByTestId('test-render');
         const data = args.data;
 

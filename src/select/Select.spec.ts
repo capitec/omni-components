@@ -1,4 +1,3 @@
-import * as jestMock from 'jest-mock';
 import {
     testLabelBehaviour,
     testHintBehaviour,
@@ -8,9 +7,8 @@ import {
     testPrefixBehaviour,
     testSuffixBehaviour
 } from '../core/OmniInputPlaywright.js';
-import { test, expect, withCoverage, type Page } from '../utils/JestPlaywright.js';
+import { test, expect, getStoryArgs, mockEventListener, withCoverage, type Page } from '../utils/JestPlaywright.js';
 import type { Select, SelectItems, SelectTypes } from './Select.js';
-import { Args } from './Select.stories.js';
 
 const displayItems = [
     { id: '1', label: 'Peter Parker' },
@@ -27,7 +25,7 @@ const displayItems = [
 
 const stringItems = ['Bruce Wayne', 'Clark Kent', 'Barry Allen', 'Arthur Curry', 'Hal Jordan'];
 
-test(`Select - Interactive`, async ({ page, isMobile }) => {
+test(`Select - Visual and Behaviour`, async ({ page, isMobile }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/select/');
 
@@ -36,11 +34,7 @@ test(`Select - Interactive`, async ({ page, isMobile }) => {
         const selectComponent = page.locator('.Interactive').getByTestId('test-select');
         await expect(selectComponent).toHaveScreenshot('select-initial.png');
 
-        const valueChange = jestMock.fn();
-        await page.exposeFunction('jestChange', () => valueChange());
-        await selectComponent.evaluate((node) => {
-            node.addEventListener('change', () => window.jestChange());
-        });
+        const valueChange = await mockEventListener(selectComponent, 'change');
 
         await selectComponent.evaluate(async (s: Select, displayItems) => {
             s.items = displayItems;
@@ -72,7 +66,7 @@ test(`Select - Interactive`, async ({ page, isMobile }) => {
     });
 });
 
-test(`Select - Async Per Item`, async ({ page, isMobile }) => {
+test(`Select - Async Per Item Behaviour`, async ({ page, isMobile }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/select/');
 
@@ -81,11 +75,7 @@ test(`Select - Async Per Item`, async ({ page, isMobile }) => {
         const selectComponent = page.locator('.Async_Per_Item').getByTestId('test-select');
         await expect(selectComponent).toHaveScreenshot('select-initial.png');
 
-        const valueChange = jestMock.fn();
-        await page.exposeFunction('jestChange', () => valueChange());
-        await selectComponent.evaluate((node) => {
-            node.addEventListener('change', () => window.jestChange());
-        });
+        const valueChange = await mockEventListener(selectComponent, 'change');
 
         await selectComponent.evaluate(async (s: Select, displayItems) => {
             async function promiseDisplayItems(data: Record<string, unknown>[]) {
@@ -122,22 +112,18 @@ test(`Select - Async Per Item`, async ({ page, isMobile }) => {
     });
 });
 
-test(`Select - String Array`, async ({ page, isMobile }) => {
+test(`Select - String Array Behaviour`, async ({ page, isMobile }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/select/');
 
         await page.waitForSelector('[data-testid]', {});
 
-        const args = await page.locator('story-renderer[key=String_Array]').evaluate(getStoryArgs());
+        const args = await getStoryArgs(page, 'String_Array');
         const argItems = args.items as Record<string, unknown>[];
         const selectComponent = page.locator('.String_Array').getByTestId('test-select');
         await expect(selectComponent).toHaveScreenshot('select-initial.png');
 
-        const valueChange = jestMock.fn();
-        await page.exposeFunction('jestChange', () => valueChange());
-        await selectComponent.evaluate((node) => {
-            node.addEventListener('change', () => window.jestChange());
-        });
+        const valueChange = await mockEventListener(selectComponent, 'change');
 
         await selectComponent.click();
         await expect(selectComponent).toHaveScreenshot('select-open.png');
@@ -163,23 +149,19 @@ test(`Select - String Array`, async ({ page, isMobile }) => {
     });
 });
 
-test(`Select - Selection Render`, async ({ page, isMobile }) => {
+test(`Select - Selection Render Behaviour`, async ({ page, isMobile }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/select/');
 
         await page.waitForSelector('[data-testid]', {});
 
-        const args = await page.locator('story-renderer[key=Selection_Renderer]').evaluate(getStoryArgs());
+        const args = await getStoryArgs(page, 'Selection_Renderer');
         const argItems = args.items as Record<string, unknown>[];
         const selectComponent = page.locator('.Selection_Renderer').getByTestId('test-select');
         await page.waitForTimeout(100);
         await expect(selectComponent).toHaveScreenshot('select-initial.png');
 
-        const valueChange = jestMock.fn();
-        await page.exposeFunction('jestChange', () => valueChange());
-        await selectComponent.evaluate((node) => {
-            node.addEventListener('change', () => window.jestChange());
-        });
+        const valueChange = await mockEventListener(selectComponent, 'change');
 
         await selectComponent.evaluate(async (s: Select) => {
             s.renderSelection = async (item: any) => {
@@ -222,7 +204,7 @@ test(`Select - Selection Render`, async ({ page, isMobile }) => {
     });
 });
 
-test(`Select - Empty Message`, async ({ page, isMobile }) => {
+test(`Select - Empty Message Behaviour`, async ({ page, isMobile }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/select/');
 
@@ -231,11 +213,7 @@ test(`Select - Empty Message`, async ({ page, isMobile }) => {
         const selectComponent = page.locator('.Empty_Message').getByTestId('test-select');
         await expect(selectComponent).toHaveScreenshot('select-initial.png');
 
-        const valueChange = jestMock.fn();
-        await page.exposeFunction('jestChange', () => valueChange());
-        await selectComponent.evaluate((node) => {
-            node.addEventListener('change', () => window.jestChange());
-        });
+        const valueChange = await mockEventListener(selectComponent, 'change');
 
         await selectComponent.click();
 
@@ -258,7 +236,7 @@ test(`Select - Empty Message`, async ({ page, isMobile }) => {
     });
 });
 
-test(`Select - Disabled`, async ({ page, isMobile }) => {
+test(`Select - Disabled Behaviour`, async ({ page, isMobile }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/select/');
 
@@ -267,11 +245,7 @@ test(`Select - Disabled`, async ({ page, isMobile }) => {
         const selectComponent = page.locator('.Disabled').getByTestId('test-select');
         await expect(selectComponent).toHaveScreenshot('select-initial.png');
 
-        const click = jestMock.fn();
-        await page.exposeFunction('jestClick', () => click());
-        await selectComponent.evaluate((node) => {
-            node.addEventListener('click', () => (window as any).jestClick());
-        });
+        const click = await mockEventListener(selectComponent, 'click');
 
         await selectComponent.click({
             force: true
@@ -306,19 +280,13 @@ test(`Select - Disabled`, async ({ page, isMobile }) => {
     });
 });
 
-test(`Select - Custom Control Slot`, async ({ page, isMobile }) => {
+test(`Select - Custom Control Slot Visual`, async ({ page, isMobile }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/select/');
 
         await page.waitForSelector('[data-testid]', {});
 
         const selectComponent = page.locator('.Custom_Control_Slot').getByTestId('test-select');
-
-        const valueChange = jestMock.fn();
-        await page.exposeFunction('jestChange', () => valueChange());
-        await selectComponent.evaluate((node) => {
-            node.addEventListener('change', () => window.jestChange());
-        });
 
         const control = selectComponent.locator('#control');
         await expect(control).toHaveCount(1);
@@ -333,7 +301,7 @@ test(`Select - Custom Control Slot`, async ({ page, isMobile }) => {
     });
 });
 
-test(`Select - Searchable`, async ({ page, isMobile }) => {
+test(`Select - Searchable Behaviour`, async ({ page, isMobile }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/select/');
 
@@ -342,11 +310,7 @@ test(`Select - Searchable`, async ({ page, isMobile }) => {
         const selectComponent = page.locator('.Searchable').getByTestId('test-select');
         await expect(selectComponent).toHaveScreenshot('select-initial.png');
 
-        const valueChange = jestMock.fn();
-        await page.exposeFunction('jestChange', () => valueChange());
-        await selectComponent.evaluate((node) => {
-            node.addEventListener('change', () => window.jestChange());
-        });
+        const valueChange = await mockEventListener(selectComponent, 'change');
 
         await selectComponent.evaluate(async (s: Select, displayItems) => {
             s.items = displayItems;
@@ -384,22 +348,18 @@ test(`Select - Searchable`, async ({ page, isMobile }) => {
     });
 });
 
-test(`Select - Custom Search`, async ({ page, isMobile }) => {
+test(`Select - Custom Search Behaviour`, async ({ page, isMobile }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/select/');
 
         await page.waitForSelector('[data-testid]', {});
 
-        const args = await page.locator('story-renderer[key=Custom_Search]').evaluate(getStoryArgs());
+        const args = await getStoryArgs(page, 'Custom_Search');
         const argItems = args.items as Record<string, unknown>[];
         const selectComponent = page.locator('.Custom_Search').getByTestId('test-select');
         await expect(selectComponent).toHaveScreenshot('select-initial.png');
 
-        const valueChange = jestMock.fn();
-        await page.exposeFunction('jestChange', () => valueChange());
-        await selectComponent.evaluate((node) => {
-            node.addEventListener('change', () => window.jestChange());
-        });
+        const valueChange = await mockEventListener(selectComponent, 'change');
 
         await selectComponent.click();
 
@@ -432,7 +392,7 @@ test(`Select - Custom Search`, async ({ page, isMobile }) => {
     });
 });
 
-test(`Select - Server Side Filtering`, async ({ page, isMobile }) => {
+test(`Select - Server Side Filtering Behaviour`, async ({ page, isMobile }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/select/');
 
@@ -463,11 +423,7 @@ test(`Select - Server Side Filtering`, async ({ page, isMobile }) => {
             await s.updateComplete;
         }, stringItems);
 
-        const valueChange = jestMock.fn();
-        await page.exposeFunction('jestChange', () => valueChange());
-        await selectComponent.evaluate((node) => {
-            node.addEventListener('change', () => window.jestChange());
-        });
+        const valueChange = await mockEventListener(selectComponent, 'change');
 
         await selectComponent.click();
 
@@ -502,7 +458,7 @@ test(`Select - Server Side Filtering`, async ({ page, isMobile }) => {
     });
 });
 
-test(`Select - Custom Search Slot`, async ({ page, isMobile }) => {
+test(`Select - Custom Search Slot Behaviour`, async ({ page, isMobile }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/select/');
 
@@ -510,12 +466,6 @@ test(`Select - Custom Search Slot`, async ({ page, isMobile }) => {
 
         const selectComponent = page.locator('.Custom_Search_Slot').getByTestId('test-select');
         await expect(selectComponent).toHaveScreenshot('select-initial.png');
-
-        const valueChange = jestMock.fn();
-        await page.exposeFunction('jestChange', () => valueChange());
-        await selectComponent.evaluate((node) => {
-            node.addEventListener('change', () => window.jestChange());
-        });
 
         await selectComponent.click();
 
@@ -554,15 +504,3 @@ test('Select - Clearable Behaviour', testClearableBehaviour('omni-select'));
 test('Select - Custom Clear Slot Behaviour', testCustomClearableSlotBehaviour('omni-select'));
 test('Select - Prefix Behaviour', testPrefixBehaviour('omni-select'));
 test('Select - Suffix Behaviour', testSuffixBehaviour('omni-select'));
-
-function getStoryArgs() {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return (storyRenderer: any) => storyRenderer?.story?.args as Args;
-}
-
-declare global {
-    interface Window {
-        jestChange: () => void;
-        jestClick: () => void;
-    }
-}

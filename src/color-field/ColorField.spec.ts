@@ -1,4 +1,3 @@
-import * as jestMock from 'jest-mock';
 import {
     testLabelBehaviour,
     testHintBehaviour,
@@ -9,10 +8,10 @@ import {
     testPrefixBehaviour,
     testSuffixBehaviour
 } from '../core/OmniInputPlaywright.js';
-import { test, expect, withCoverage, getStoryArgs } from '../utils/JestPlaywright.js';
+import { test, expect, getStoryArgs, mockEventListener, withCoverage } from '../utils/JestPlaywright.js';
 import type { ColorField } from './ColorField.js';
 
-test(`Color Field - Interactive`, async ({ page }) => {
+test(`Color Field - Visual and Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/color-field/');
         await page.evaluate(() => document.fonts.ready);
@@ -55,12 +54,7 @@ test(`Color Field - Disabled Behaviour`, async ({ page }) => {
 
         await expect(colorField).toHaveScreenshot('color-field-initial.png');
 
-        //Click event test.
-        const click = jestMock.fn();
-        await page.exposeFunction('jestClick', () => click());
-        await colorField.evaluate((node) => {
-            node.addEventListener('click', () => (window as any).jestClick());
-        });
+        const click = await mockEventListener(colorField, 'click');
 
         await colorField.click({
             force: true

@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon';
-import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
+import { test, expect, getStoryArgs, withCoverage } from '../utils/JestPlaywright.js';
 import type { Calendar } from './Calendar.js';
 
 test(`Calendar - Visual and Behaviour`, async ({ page }) => {
@@ -77,7 +77,7 @@ test(`Calendar - Locale Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/calendar/');
 
-        const args = await page.locator('story-renderer[key=Locale]').evaluate((storyRenderer) => (storyRenderer as any).story.args);
+        const args = await getStoryArgs(page, 'Locale');
         const calendar = page.locator('.Locale').getByTestId('test-calendar');
 
         const localDate = DateTime.fromISO('2022-06-21', {
@@ -109,7 +109,7 @@ test(`Calendar - Min Date Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/calendar/');
 
-        const args = await page.locator('story-renderer[key=Min_Date]').evaluate((storyRenderer) => (storyRenderer as any).story.args);
+        const args = await getStoryArgs(page, 'Min_Date');
         const calendar = page.locator('.Min_Date').getByTestId('test-calendar');
 
         await expect(calendar).toHaveScreenshot('calendar-initial.png');
@@ -147,7 +147,7 @@ test(`Calendar - Max Date Behaviour`, async ({ page }) => {
 
         await page.waitForSelector('[data-testid]', {});
 
-        const args = await page.locator('story-renderer[key=Max_Date]').evaluate((storyRenderer) => (storyRenderer as any).story.args);
+        const args = await getStoryArgs(page, 'Max_Date');
         const calendar = page.locator('.Max_Date').getByTestId('test-calendar');
 
         await expect(calendar).toHaveScreenshot('calendar-initial.png');

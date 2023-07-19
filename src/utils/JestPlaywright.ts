@@ -3,6 +3,7 @@ import fs from 'fs';
 // import { platform } from 'os';
 import { expect as expectPatched, test, type Locator, type Page, type PageScreenshotOptions, type LocatorScreenshotOptions } from '@playwright/test';
 export * from '@playwright/test';
+import { fn } from 'jest-mock';
 //@ts-ignore
 import jsdom from 'jsdom';
 //@ts-ignore
@@ -154,6 +155,28 @@ async function getStoryArgs<T = any>(page: Page, key: string, readySelector = '[
     return args;
 }
 
+async function mockEventListener(locator: Locator, eventName: string) {
+    const tempFunction = `mock_${v4()}`;
+    const eventFunction = fn();
+    await locator.page().exposeFunction(tempFunction, () => eventFunction());
+    await locator.evaluate(
+        (node, { tempFunction, eventName }) => {
+            //@ts-ignore
+            node.addEventListener(eventName, () => window[tempFunction]());
+        },
+        { tempFunction, eventName }
+    );
+    return eventFunction;
+}
+
+/*
+    const valueChange = jestMock.fn();
+    await page.exposeFunction('jestChange', () => valueChange());
+    await selectComponent.evaluate((node) => {
+        node.addEventListener('change', () => window.jestChange());
+    });
+
+*/
 // TODO: Revisit once playwright clipboard support is completed
 /*
     clipboard isolation: [feature] clipboard isolation: https://github.com/microsoft/playwright/issues/13097
@@ -188,4 +211,4 @@ declare global {
     }
 }
 
-export { expect, withCoverage, getStoryArgs /*keyboardCopy, keyboardPaste, clipboardCopy*/ };
+export { expect, withCoverage, getStoryArgs, mockEventListener /*keyboardCopy, keyboardPaste, clipboardCopy*/ };

@@ -1,7 +1,3 @@
-import { waitFor, within } from '@testing-library/dom';
-import userEvent from '@testing-library/user-event';
-import { setUIValueClean } from '@testing-library/user-event/dist/esm/document/UI.js';
-import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import {
@@ -17,16 +13,10 @@ import {
     SuffixStory
 } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import expect from '../utils/ExpectDOM.js';
-import { assignToSlot, ComponentStoryFormat, CSFIdentifier, getSourceFromLit } from '../utils/StoryUtils.js';
+import { assignToSlot, ComponentStoryFormat, getSourceFromLit } from '../utils/StoryUtils.js';
 import { EmailField } from './EmailField.js';
 
 import './EmailField.js';
-
-export default {
-    title: 'UI Components/Email Field',
-    component: 'omni-email-field'
-} as CSFIdentifier;
 
 export const Interactive: ComponentStoryFormat<BaseArgs> = {
     render: (args: BaseArgs) => html`
@@ -67,19 +57,11 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
 };
 
 export const Label = LabelStory<EmailField, BaseArgs>('omni-email-field');
-
 export const Hint = HintStory<EmailField, BaseArgs>('omni-email-field');
-
 export const Error_Label = ErrorStory<EmailField, BaseArgs>('omni-email-field');
-
 export const Value = ValueStory<EmailField, BaseArgs>('omni-email-field', 'johndoe@gmail.com');
-
 export const Clearable = ClearableStory<EmailField, BaseArgs>('omni-email-field', 'johndoe@gmail.com');
-
 export const Custom_Clear_Slot = CustomClearableSlot<EmailField, BaseArgs>('omni-email-field', 'johndoe@gmail.com');
-
 export const Prefix = PrefixStory<EmailField, BaseArgs>('omni-email-field');
-
 export const Suffix = SuffixStory<EmailField, BaseArgs>('omni-email-field');
-
 export const Disabled = DisabledStory<EmailField, BaseArgs>('omni-email-field', 'johndoe@gmail.com');

@@ -1,4 +1,3 @@
-import * as jestMock from 'jest-mock';
 import {
     testLabelBehaviour,
     testHintBehaviour,
@@ -10,10 +9,10 @@ import {
     testSuffixBehaviour,
     testDisabledBehaviour
 } from '../core/OmniInputPlaywright.js';
-import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
+import { test, expect, mockEventListener, withCoverage } from '../utils/JestPlaywright.js';
 import type { EmailField } from './EmailField.js';
 
-test(`Email Field - Interactive`, async ({ page }) => {
+test(`Email Field - Visual and Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/email-field/');
         await page.evaluate(() => document.fonts.ready);
@@ -25,11 +24,7 @@ test(`Email Field - Interactive`, async ({ page }) => {
         });
         await expect(emailField).toHaveScreenshot('email-field.png');
 
-        const inputFn = jestMock.fn();
-        await page.exposeFunction('jestInput', () => inputFn());
-        await emailField.evaluate((node) => {
-            node.addEventListener('input', () => (window as any).jestInput());
-        });
+        const inputFn = await mockEventListener(emailField, 'input');
 
         const inputField = emailField.locator('#inputField');
 

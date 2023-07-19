@@ -1,5 +1,4 @@
-import * as jestMock from 'jest-mock';
-import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
+import { test, expect, getStoryArgs, mockEventListener, withCoverage } from '../utils/JestPlaywright.js';
 
 test(`Chip - Visual and Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
@@ -9,11 +8,8 @@ test(`Chip - Visual and Behaviour`, async ({ page }) => {
 
         await expect(chip).toHaveScreenshot('chip-initial.png');
 
-        const click = jestMock.fn();
-        await page.exposeFunction('jestClick', () => click());
-        await chip.evaluate((node) => {
-            node.addEventListener('click', () => (window as any).jestClick());
-        });
+        const click = await mockEventListener(chip, 'click');
+
         await chip.click({
             force: true
         });
@@ -25,11 +21,11 @@ test(`Chip - Visual and Behaviour`, async ({ page }) => {
     });
 });
 
-test(`Chip - Label`, async ({ page }) => {
+test(`Chip - Label Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/chip/');
 
-        const args = await page.locator('story-renderer[key=Label]').evaluate((storyRenderer) => (storyRenderer as any).story.args);
+        const args = await getStoryArgs(page, 'Label');
         const chip = page.locator('.Label').getByTestId('test-chip');
 
         await expect(chip).toHaveScreenshot('chip-initial.png');
@@ -45,11 +41,7 @@ test(`Chip - Closable Behaviour`, async ({ page }) => {
 
         await expect(chip).toHaveScreenshot('chip-initial.png');
 
-        const remove = jestMock.fn();
-        await page.exposeFunction('jestRemove', () => remove());
-        await chip.evaluate((node) => {
-            node.addEventListener('remove', () => (window as any).jestRemove());
-        });
+        const remove = await mockEventListener(chip, 'remove');
 
         const closeButton = chip.locator('#closeButton');
 
@@ -80,11 +72,8 @@ test(`Chip - Disabled Behaviour`, async ({ page }) => {
         const chipElement = chip.locator('#chip');
         await expect(chipElement).toHaveClass(/disabled/);
 
-        const click = jestMock.fn();
-        await page.exposeFunction('jestClick', () => click());
-        await chip.evaluate((node) => {
-            node.addEventListener('click', () => (window as any).jestClick());
-        });
+        const click = await mockEventListener(chip, 'click');
+
         await chip.click({
             force: true
         });
@@ -96,7 +85,7 @@ test(`Chip - Disabled Behaviour`, async ({ page }) => {
     });
 });
 
-test(`Chip - Icon Slot`, async ({ page }) => {
+test(`Chip - Icon Slot Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/chip/');
 
@@ -114,7 +103,7 @@ test(`Chip - Icon Slot`, async ({ page }) => {
     });
 });
 
-test(`Chip - Close Icon Slot`, async ({ page }) => {
+test(`Chip - Close Icon Slot Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/chip/');
 

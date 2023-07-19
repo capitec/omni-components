@@ -1,4 +1,3 @@
-import * as jestMock from 'jest-mock';
 import {
     testLabelBehaviour,
     testHintBehaviour,
@@ -10,10 +9,10 @@ import {
     testSuffixBehaviour,
     testDisabledBehaviour
 } from '../core/OmniInputPlaywright.js';
-import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
+import { test, expect, mockEventListener, withCoverage } from '../utils/JestPlaywright.js';
 import type { SearchField } from './SearchField.js';
 
-test(`Search Field - Interactive`, async ({ page }) => {
+test(`Search Field - Visual and Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/search-field/');
         await page.evaluate(() => document.fonts.ready);
@@ -25,11 +24,7 @@ test(`Search Field - Interactive`, async ({ page }) => {
         });
         await expect(searchField).toHaveScreenshot('search-field.png');
 
-        const interactions = jestMock.fn();
-        await page.exposeFunction('jestInteract', () => interactions());
-        await searchField.evaluate((node) => {
-            node.addEventListener('input', () => (window as any).jestInteract());
-        });
+        const inputFn = await mockEventListener(searchField, 'input');
 
         const inputField = searchField.locator('#inputField');
 
@@ -38,7 +33,7 @@ test(`Search Field - Interactive`, async ({ page }) => {
 
         await expect(inputField).toHaveValue(value);
 
-        await expect(interactions).toBeCalledTimes(value.length);
+        await expect(inputFn).toBeCalledTimes(value.length);
         await expect(searchField).toHaveScreenshot('search-field-value.png');
     });
 });

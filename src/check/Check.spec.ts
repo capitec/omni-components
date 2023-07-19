@@ -1,12 +1,10 @@
-import * as jestMock from 'jest-mock';
-import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
-import { Args } from './Check.stories.js';
+import { test, expect, getStoryArgs, mockEventListener, withCoverage } from '../utils/JestPlaywright.js';
 
 test(`Check - Label Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/check/');
 
-        const args = await page.locator('story-renderer[key=Label]').evaluate(getStoryArgs());
+        const args = await getStoryArgs(page, 'Label');
         const check = page.locator('.Label').getByTestId('test-check');
         const labelElement = check.locator('label');
 
@@ -19,7 +17,7 @@ test(`Check - Hint Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/check/');
 
-        const args = await page.locator('story-renderer[key=Hint]').evaluate(getStoryArgs());
+        const args = await getStoryArgs(page, 'Hint');
         const check = page.locator('.Hint').getByTestId('test-check');
         const hintElement = check.locator('.hint');
 
@@ -32,7 +30,7 @@ test(`Check - Error Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/check/');
 
-        const args = await page.locator('story-renderer[key=Error_Label]').evaluate(getStoryArgs());
+        const args = await getStoryArgs(page, 'Error_Label');
         const check = page.locator('.Error_Label').getByTestId('test-check');
         const errorElement = check.locator('.error');
 
@@ -85,10 +83,7 @@ test(`Check - Disabled Behaviour`, async ({ page }) => {
         await expect(disabledElement).toBeVisible();
         await expect(check).toHaveScreenshot('check-disabled.png');
 
-        // Test not clickable when disabled.
-        const click = jestMock.fn();
-        await page.exposeFunction('setCheckClicked', () => click());
-        await check.evaluate((n) => n.addEventListener('click', () => window.setCheckClicked()));
+        const click = await mockEventListener(check, 'click');
 
         await check.click({
             force: true
@@ -134,13 +129,3 @@ test(`Check - Custom Indeterminate Icon Behaviour`, async ({ page }) => {
         await expect(check).toHaveScreenshot('check-custom-indeterminate-icon.png');
     });
 });
-
-declare global {
-    interface Window {
-        setCheckClicked: () => void;
-    }
-}
-function getStoryArgs() {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return (storyRenderer: any) => storyRenderer?.story?.args as Args;
-}

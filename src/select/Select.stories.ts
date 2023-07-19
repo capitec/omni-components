@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import {
@@ -15,15 +12,10 @@ import {
 } from '../core/OmniInputStories.js';
 import { RenderFunction } from '../render-element/RenderElement.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import { assignToSlot, ComponentStoryFormat, CSFIdentifier, getSourceFromLit, querySelectorAsync, raw } from '../utils/StoryUtils.js';
+import { assignToSlot, ComponentStoryFormat, getSourceFromLit, raw } from '../utils/StoryUtils.js';
 import { Select, SelectItems, SelectTypes } from './Select.js';
 
 import './Select.js';
-
-export default {
-    title: 'UI Components/Select',
-    component: 'omni-select'
-} as CSFIdentifier;
 
 export interface Args extends BaseArgs {
     items: SelectItems | (() => SelectItems);

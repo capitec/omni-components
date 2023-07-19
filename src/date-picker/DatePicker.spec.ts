@@ -1,6 +1,4 @@
-import * as jestMock from 'jest-mock';
 import { DateTime } from 'luxon';
-import type { Calendar } from '../calendar/Calendar.js';
 import {
     testLabelBehaviour,
     testHintBehaviour,
@@ -10,7 +8,7 @@ import {
     testPrefixBehaviour,
     testSuffixBehaviour
 } from '../core/OmniInputPlaywright.js';
-import { test, expect, withCoverage, type Page } from '../utils/JestPlaywright.js';
+import { test, expect, getStoryArgs, mockEventListener, withCoverage, type Page } from '../utils/JestPlaywright.js';
 import type { DatePicker } from './DatePicker.js';
 
 test(`Date Picker - Visual and Behaviour`, async ({ page }) => {
@@ -155,7 +153,7 @@ test(`Date Picker - Min Date Behaviour`, async ({ page }) => {
 
         await page.waitForSelector('[data-testid]', {});
 
-        const args = await page.locator('story-renderer[key=Min_Date]').evaluate((storyRenderer) => (storyRenderer as any).story.args);
+        const args = await getStoryArgs(page, 'Min_Date');
         const datePicker = page.locator('.Min_Date').getByTestId('test-date-picker');
         await datePicker.evaluate(async (d: DatePicker, args) => {
             d.value = args.value;
@@ -203,7 +201,7 @@ test(`Date Picker - Max Date Behaviour`, async ({ page }) => {
 
         await page.waitForSelector('[data-testid]', {});
 
-        const args = await page.locator('story-renderer[key=Max_Date]').evaluate((storyRenderer) => (storyRenderer as any).story.args);
+        const args = await getStoryArgs(page, 'Max_Date');
         const datePicker = page.locator('.Max_Date').getByTestId('test-date-picker');
         await datePicker.evaluate(async (d: DatePicker, args) => {
             d.value = args.value;
@@ -259,7 +257,7 @@ test(`Date Picker - Disabled Behaviour`, async ({ page, isMobile }) => {
 
         await page.waitForSelector('[data-testid]', {});
 
-        const args = await page.locator('story-renderer[key=Disabled]').evaluate((storyRenderer) => (storyRenderer as any).story.args);
+        const args = await getStoryArgs(page, 'Disabled');
         const datePicker = page.locator('.Disabled').getByTestId('test-date-picker');
         await datePicker.evaluate(async (d: DatePicker, args) => {
             d.value = args.value;
@@ -269,12 +267,7 @@ test(`Date Picker - Disabled Behaviour`, async ({ page, isMobile }) => {
 
         await expect(datePicker).toHaveScreenshot('date-picker-initial.png');
 
-        //Click event test.
-        const click = jestMock.fn();
-        await page.exposeFunction('jestClick', () => click());
-        await datePicker.evaluate((node) => {
-            node.addEventListener('click', () => (window as any).jestClick());
-        });
+        const click = await mockEventListener(datePicker, 'click');
 
         await datePicker.click({
             force: true

@@ -1,5 +1,4 @@
-import * as jestMock from 'jest-mock';
-import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
+import { test, expect, mockEventListener, withCoverage } from '../utils/JestPlaywright.js';
 import type { Modal } from './Modal.js';
 
 test(`Modal - Visual and Behaviour`, async ({ page }) => {
@@ -22,11 +21,7 @@ test(`Modal - Visual and Behaviour`, async ({ page }) => {
         await expect(dialog).toHaveScreenshot('modal-dialog-open.png');
         await expect(modal).not.toHaveAttribute('hide', '');
 
-        const clickOutside = jestMock.fn();
-        await page.exposeFunction('jestClickOutside', () => clickOutside());
-        await modal.evaluate((node) => {
-            node.addEventListener('click-outside', () => (window as any).jestClickOutside());
-        });
+        const clickOutside = await mockEventListener(modal, 'click-outside');
 
         await dialog.click({
             force: true,

@@ -1,7 +1,6 @@
-import * as jestMock from 'jest-mock';
-import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
+import { test, expect, mockEventListener, withCoverage } from '../utils/JestPlaywright.js';
 
-test(`Tab - Basic`, async ({ page }) => {
+test(`Tab - Basic Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/tab/');
         await page.waitForSelector('[data-testid]', {});
@@ -22,7 +21,7 @@ test(`Tab - Basic`, async ({ page }) => {
     });
 });
 
-test(`Tab - Active`, async ({ page }) => {
+test(`Tab - Active Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/tab/');
         await page.waitForSelector('[data-testid]', {});
@@ -34,12 +33,7 @@ test(`Tab - Active`, async ({ page }) => {
         const tabBar = tabGroup.locator('.tab-bar').first();
 
         // Mock tab-select event.
-        const tabSelect = jestMock.fn();
-        await page.exposeFunction('jestTabSelect', () => tabSelect());
-        await tabGroup.evaluate((node) => {
-            node.addEventListener('tab-select', () => window.jestTabSelect());
-        });
-
+        const tabSelect = await mockEventListener(tabGroup, 'tab-select');
         //Get all the tab headers
         const nestedTabHeaders = tabBar.locator('omni-tab-header');
         await expect(nestedTabHeaders).toHaveCount(3);
@@ -68,18 +62,14 @@ test(`Tab - Active`, async ({ page }) => {
     });
 });
 
-test(`Tab - Disabled`, async ({ page }) => {
+test(`Tab - Disabled Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/tab/');
         await page.waitForSelector('[data-testid]', {});
         const tabGroup = page.locator('.Disabled').getByTestId('test-tab-group');
         await expect(tabGroup).toHaveScreenshot('tab-group-initial.png');
         // Mock tab-select event.
-        const tabSelect = jestMock.fn();
-        await page.exposeFunction('jestTabSelect', () => tabSelect());
-        await tabGroup.evaluate((node) => {
-            node.addEventListener('tab-select', () => window.jestTabSelect());
-        });
+        const tabSelect = await mockEventListener(tabGroup, 'tab-select');
 
         const tabBar = tabGroup.locator('.tab-bar');
         await expect(tabBar).toHaveCount(1);

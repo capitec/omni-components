@@ -1,16 +1,11 @@
 import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import { ComponentStoryFormat, CSFIdentifier, raw, getSourceFromLit } from '../utils/StoryUtils.js';
+import { ComponentStoryFormat, raw, getSourceFromLit } from '../utils/StoryUtils.js';
 
 import './Radio.js';
 import './RadioGroup.js';
 import '../switch';
-
-export default {
-    title: 'UI Components/Radio Group',
-    component: 'omni-radio-group'
-} as CSFIdentifier;
 
 export interface Args {
     label: string;

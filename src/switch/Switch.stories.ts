@@ -1,19 +1,9 @@
-import { within, fireEvent } from '@testing-library/dom';
-import userEvent from '@testing-library/user-event';
-import * as jest from 'jest-mock';
 import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import expect from '../utils/ExpectDOM.js';
-import { ComponentStoryFormat, CSFIdentifier, getSourceFromLit } from '../utils/StoryUtils.js';
-import { Switch } from './Switch.js';
+import { ComponentStoryFormat, getSourceFromLit } from '../utils/StoryUtils.js';
 
 import './Switch.js';
-
-export default {
-    title: 'UI Components/Switch',
-    component: 'omni-switch'
-} as CSFIdentifier;
 
 export interface Args {
     label: string;

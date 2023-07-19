@@ -1,5 +1,4 @@
-import * as jestMock from 'jest-mock';
-import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
+import { test, expect, mockEventListener, withCoverage } from '../utils/JestPlaywright.js';
 
 test(`Button - Visual Secondary`, async ({ page }) => {
     await withCoverage(page, async () => {
@@ -71,12 +70,7 @@ test(`Button - Interactive Behaviour`, async ({ page }) => {
 
         const button = page.locator('.Interactive').locator('[data-testid=test-button]');
 
-        // Add click mock function to page and list for 'click' event on button
-        const click = jestMock.fn();
-        await page.exposeFunction('jestClick', () => click());
-        await button.evaluate((node) => {
-            node.addEventListener('click', () => (window as any).jestClick());
-        });
+        const click = await mockEventListener(button, 'click');
 
         await button.click();
         await button.click();
@@ -140,11 +134,7 @@ test(`Button - Disabled Behaviour`, async ({ page }) => {
         await expect(foundDisabledClass).toBeTruthy();
         await expect(buttonElement).toHaveClass(/disabled/);
 
-        const click = jestMock.fn();
-        await page.exposeFunction('jestClick', () => click());
-        await button.evaluate((node) => {
-            node.addEventListener('click', () => (window as any).jestClick());
-        });
+        const click = await mockEventListener(button, 'click');
 
         await button.click({
             force: true

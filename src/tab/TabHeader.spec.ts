@@ -1,7 +1,6 @@
-import * as jestMock from 'jest-mock';
-import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
+import { test, expect, mockEventListener, withCoverage } from '../utils/JestPlaywright.js';
 
-test(`Tab Header - Advanced`, async ({ page }) => {
+test(`Tab Header - Advanced Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/tab-header/');
 
@@ -9,11 +8,7 @@ test(`Tab Header - Advanced`, async ({ page }) => {
         await expect(tabGroup).toHaveScreenshot('tab-group-initial.png');
 
         // Mock tab-select event.
-        const tabSelect = jestMock.fn();
-        await page.exposeFunction('jestTabSelect', () => tabSelect());
-        await tabGroup.evaluate((node) => {
-            node.addEventListener('tab-select', () => window.jestTabSelect());
-        });
+        const tabSelect = await mockEventListener(tabGroup, 'tab-select');
 
         //Get all the tab headers
         const nestedTabHeaders = tabGroup.locator('omni-tab-header');

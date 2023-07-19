@@ -1,7 +1,4 @@
-import * as jestMock from 'jest-mock';
-import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
-import { Args } from './Radio.stories.js';
-//import {getStoryArgs} from '../utils/JestPlaywright.js';
+import { test, expect, getStoryArgs, mockEventListener, withCoverage } from '../utils/JestPlaywright.js';
 
 test(`Radio - Check / Unchecked Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
@@ -13,11 +10,7 @@ test(`Radio - Check / Unchecked Behaviour`, async ({ page }) => {
         // Take screen shot of radio before it is clicked and changed to a checked state.
         await expect(radio).toHaveScreenshot('radio-initial.png');
         const content = radio.locator('#content');
-        const valueChange = jestMock.fn();
-        await page.exposeFunction('jestValueChange', () => valueChange());
-        await radio.evaluate((node) => {
-            node.addEventListener('value-change', () => window.jestValueChange());
-        });
+        const valueChange = await mockEventListener(radio, 'value-change');
 
         await content.click();
         await expect(radio).toHaveScreenshot('radio-checked.png');
@@ -32,7 +25,7 @@ test(`Radio - Label Behaviour`, async ({ page }) => {
         await page.goto('/components/radio/');
 
         await page.waitForSelector('[data-testid]', {});
-        const args = await page.locator('story-renderer[key=Label]').evaluate(getStoryArgs());
+        const args = await getStoryArgs(page, 'Label');
         const radio = page.locator('story-renderer[key=Label]').locator('.Label').getByTestId('test-radio');
         const label = radio.locator('label');
         await expect(label).toHaveText(args.label);
@@ -45,7 +38,7 @@ test(`Radio - Hint Behaviour`, async ({ page }) => {
         await page.goto('/components/radio/');
 
         await page.waitForSelector('[data-testid]', {});
-        const args = await page.locator('story-renderer[key=Hint]').evaluate(getStoryArgs());
+        const args = await getStoryArgs(page, 'Hint');
         const radio = page.locator('.Hint').getByTestId('test-radio');
         const hint = radio.locator('.hint');
         await expect(hint).toHaveText(args.hint);
@@ -58,7 +51,7 @@ test(`Radio - Error Behaviour`, async ({ page }) => {
         await page.goto('/components/radio/');
         await page.waitForSelector('[data-testid]', {});
 
-        const args = await page.locator('story-renderer[key=Error_Label]').evaluate(getStoryArgs());
+        const args = await getStoryArgs(page, 'Error_Label');
         const radio = page.locator('.Error_Label').getByTestId('test-radio');
         const element = radio.locator('.error');
         await expect(element).toHaveText(args.error);
@@ -76,10 +69,7 @@ test(`Radio - Disabled Behaviour`, async ({ page }) => {
         await expect(disabledElement).toBeVisible();
         await expect(radio).toHaveScreenshot('radio-disabled.png');
 
-        // Test not clickable when disabled.
-        const click = jestMock.fn();
-        await page.exposeFunction('setRadioClicked', () => click());
-        await radio.evaluate((n) => n.addEventListener('click', () => window.setRadioClicked()));
+        const click = await mockEventListener(radio, 'click');
 
         await radio.click({
             force: true
@@ -102,15 +92,3 @@ test(`Radio - Slot Behaviour`, async ({ page }) => {
         await expect(radio).toHaveScreenshot('radio-slot.png');
     });
 });
-
-declare global {
-    interface Window {
-        jestValueChange: () => void;
-        setRadioClicked: () => void;
-    }
-}
-
-function getStoryArgs() {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return (storyRenderer: any) => storyRenderer?.story?.args as Args;
-}

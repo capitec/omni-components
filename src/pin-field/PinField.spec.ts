@@ -1,4 +1,3 @@
-import * as jestMock from 'jest-mock';
 import {
     testLabelBehaviour,
     testHintBehaviour,
@@ -10,10 +9,10 @@ import {
     testSuffixBehaviour,
     testDisabledBehaviour
 } from '../core/OmniInputPlaywright.js';
-import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
+import { test, expect, mockEventListener, withCoverage } from '../utils/JestPlaywright.js';
 import type { PinField } from './PinField.js';
 
-test(`Pin Field - Interactive`, async ({ page }) => {
+test(`Pin Field - Visual and Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/pin-field/');
         await page.evaluate(() => document.fonts.ready);
@@ -25,12 +24,7 @@ test(`Pin Field - Interactive`, async ({ page }) => {
         });
         await expect(pinField).toHaveScreenshot('pin-field.png');
 
-        const interactions = jestMock.fn();
-        await page.exposeFunction('jestInteract', () => interactions());
-        await pinField.evaluate((node) => {
-            node.addEventListener('input', () => (window as any).jestInteract());
-            node.addEventListener('click', () => (window as any).jestInteract());
-        });
+        const inputFn = await mockEventListener(pinField, 'input');
 
         const showSlotElement = pinField.locator('slot[name=show]');
         await expect(showSlotElement).toHaveCount(1);
@@ -49,12 +43,12 @@ test(`Pin Field - Interactive`, async ({ page }) => {
 
         await expect(inputField).toHaveValue(value);
 
-        await expect(interactions).toBeCalledTimes(value.length);
+        await expect(inputFn).toBeCalledTimes(value.length);
         await expect(pinField).toHaveScreenshot('pin-field-value.png');
     });
 });
 
-test(`Pin Field - Max Length`, async ({ page }) => {
+test(`Pin Field - Max Length Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/pin-field/');
         await page.evaluate(() => document.fonts.ready);
@@ -68,11 +62,7 @@ test(`Pin Field - Max Length`, async ({ page }) => {
         });
         await expect(pinField).toHaveScreenshot('pin-field.png');
 
-        const interactions = jestMock.fn();
-        await page.exposeFunction('jestInteract', () => interactions());
-        await pinField.evaluate((node) => {
-            node.addEventListener('input', () => (window as any).jestInteract());
-        });
+        const inputFn = await mockEventListener(pinField, 'input');
 
         const inputField = pinField.locator('#inputField');
 
@@ -83,7 +73,7 @@ test(`Pin Field - Max Length`, async ({ page }) => {
         await expect(pinField).toHaveScreenshot('pin-field-value.png');
         await expect(inputField).toHaveValue(value);
 
-        await expect(interactions).toBeCalledTimes(typedValue.length);
+        await expect(inputFn).toBeCalledTimes(typedValue.length);
 
         const showSlotElement = pinField.locator('slot[name=show]');
         await expect(showSlotElement).toHaveCount(1);

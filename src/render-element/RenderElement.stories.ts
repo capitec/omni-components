@@ -1,22 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { within } from '@testing-library/dom';
-import userEvent from '@testing-library/user-event';
-import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import expect from '../utils/ExpectDOM.js';
-import { assignToSlot, ComponentStoryFormat, CSFIdentifier, querySelectorAsync } from '../utils/StoryUtils.js';
+import { assignToSlot, ComponentStoryFormat } from '../utils/StoryUtils.js';
 import { RenderElement, RenderFunction } from './RenderElement.js';
 
 import './RenderElement';
 
-export default {
-    title: 'UI Components/RenderElement',
-    component: 'omni-render-element'
-} as CSFIdentifier;
-
-interface Args {
+export interface Args {
     renderer: RenderFunction;
     data: object;
     loading_indicator: string;

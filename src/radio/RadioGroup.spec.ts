@@ -1,6 +1,4 @@
-import * as jestMock from 'jest-mock';
-import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
-import { Args } from './RadioGroup.stories.js';
+import { test, expect, getStoryArgs, mockEventListener, withCoverage } from '../utils/JestPlaywright.js';
 
 test(`Radio Group - Check / Unchecked Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
@@ -12,15 +10,8 @@ test(`Radio Group - Check / Unchecked Behaviour`, async ({ page }) => {
         await expect(radioGroup).toHaveScreenshot('radio-group-initial.png');
         await radioGroup.focus();
 
-        const radioChange = jestMock.fn();
-        await page.exposeFunction('jestRadioChange', () => radioChange());
-        await radioGroup.evaluate((node) => {
-            console.log(node);
-            node.addEventListener('radio-change', (e) => {
-                console.log(e);
-                window.jestRadioChange();
-            });
-        });
+        const radioChange = await mockEventListener(radioGroup, 'radio-change');
+
         await radio.locator('#content').click();
 
         await expect(radioChange).toBeCalledTimes(1);
@@ -29,12 +20,12 @@ test(`Radio Group - Check / Unchecked Behaviour`, async ({ page }) => {
     });
 });
 
-test(`Radio Group - Label`, async ({ page }) => {
+test(`Radio Group - Label Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/radio-group/');
 
         await page.waitForSelector('[data-testid]', {});
-        const args = await page.locator('story-renderer[key=Label]').evaluate(getStoryArgs());
+        const args = await getStoryArgs(page, 'Label');
         const radioGroup = page.locator('.Label').getByTestId('test-radio-group');
         const label = radioGroup.locator('omni-label');
 
@@ -43,7 +34,7 @@ test(`Radio Group - Label`, async ({ page }) => {
     });
 });
 
-test(`Radio Group - Horizontal`, async ({ page }) => {
+test(`Radio Group - Horizontal Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/radio-group/');
 
@@ -58,7 +49,7 @@ test(`Radio Group - Horizontal`, async ({ page }) => {
     });
 });
 
-test(`Radio Group - Deselect allowed`, async ({ page }) => {
+test(`Radio Group - Deselect allowed Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/radio-group/');
 
@@ -69,11 +60,7 @@ test(`Radio Group - Deselect allowed`, async ({ page }) => {
 
         radioGroup.focus();
 
-        const radioChange = jestMock.fn();
-        await page.exposeFunction('jestRadioChange', () => radioChange());
-        await radioGroup.evaluate((node) => {
-            node.addEventListener('radio-change', () => window.jestRadioChange());
-        });
+        const radioChange = await mockEventListener(radioGroup, 'radio-change');
 
         //Check if the radio button is already checked
         await expect(radio).toHaveAttribute('aria-checked', 'true');
@@ -86,14 +73,3 @@ test(`Radio Group - Deselect allowed`, async ({ page }) => {
         await expect(radioGroup).toHaveScreenshot('radio-group-deselect.png');
     });
 });
-
-declare global {
-    interface Window {
-        jestRadioChange: () => void;
-    }
-}
-
-function getStoryArgs() {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return (storyRenderer: any) => storyRenderer?.story?.args as Args;
-}
