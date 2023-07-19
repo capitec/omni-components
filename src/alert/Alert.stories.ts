@@ -18,6 +18,7 @@ interface Args {
     message?: string;
     headerAlign?: 'left' | 'center' | 'right';
     description?: string;
+    descriptionAlign?: 'left' | 'center' | 'right';
     primaryAction?: string;
     secondaryAction?: string;
     enableSecondary?: boolean;
@@ -34,9 +35,14 @@ interface Args {
     hide?: boolean;
 }
 
-const alertHtml = (args: Args) => html`
+const alertHtml = (args: Args, onElement?: (a?: Alert) => void) => html`
         <omni-alert
-            ${ref((a) => (a as Alert)?.show())}
+            ${ref((a) => {
+                if (onElement) {
+                    onElement(a as Alert | undefined);
+                }
+                (a as Alert)?.show();
+            })}
             @alert-close="${() => {
                 args.hide = true;
                 document.dispatchEvent(
@@ -51,6 +57,7 @@ const alertHtml = (args: Args) => html`
             message="${ifNotEmpty(args.message)}"
             header-align="${ifNotEmpty(args.headerAlign)}"
             description="${ifNotEmpty(args.description)}"
+            description-align="${ifNotEmpty(args.descriptionAlign)}"
             primary-action="${ifNotEmpty(args.primaryAction)}"
             secondary-action="${ifNotEmpty(args.secondaryAction)}"
             ?enable-secondary=${args.enableSecondary}
@@ -104,6 +111,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
 
         status: undefined,
         headerAlign: undefined,
+        descriptionAlign: undefined,
         primaryAction: undefined,
         secondaryAction: undefined,
         actionAlign: undefined
@@ -382,6 +390,7 @@ export const Status: ComponentStoryFormat<Args> = {
 
         status: 'success',
         headerAlign: undefined,
+        descriptionAlign: undefined,
         primaryAction: undefined,
         secondaryAction: undefined,
         actionAlign: undefined
@@ -389,7 +398,7 @@ export const Status: ComponentStoryFormat<Args> = {
 };
 
 export const Header_Align: ComponentStoryFormat<Args> = {
-    description: 'Align header content horizontally.',
+    description: () => html`Align header content horizontally (Defaults to <code class="language-js">'center'</code>).`,
     render: (args: Args) => html`
         <omni-button data-testid="test-alert-btn" @click="${() => {
             args.hide = false;
@@ -430,6 +439,69 @@ export const Header_Align: ComponentStoryFormat<Args> = {
 
         status: undefined,
         headerAlign: 'left',
+        descriptionAlign: undefined,
+        primaryAction: undefined,
+        secondaryAction: undefined,
+        actionAlign: undefined
+    }
+};
+
+export const Description_Align: ComponentStoryFormat<Args> = {
+    description: () => html`Align description content horizontally (Defaults to <code class="language-js">'center'</code>).`,
+    render: (args: Args) => html`
+        <omni-button data-testid="test-alert-btn" @click="${() => {
+            args.hide = false;
+            document.dispatchEvent(
+                new CustomEvent('story-renderer-interactive-update', {
+                    bubbles: true,
+                    composed: true
+                })
+            );
+        }}" label="Show Alert" ></omni-button>
+        ${
+            args.hide
+                ? nothing
+                : alertHtml(args, (a) => {
+                      if (a) {
+                          a.description = `Additional context for the alert. 
+Aligned to the ${args.descriptionAlign}.`;
+                      }
+                  })
+        }
+    `,
+    frameworkSources: [
+        {
+            framework: 'HTML',
+            sourceParts: {
+                htmlFragment: (args) => raw`
+                ${getSourceFromLit(alertHtml(args))}            
+                `,
+                jsFragment: (args) => `const alert = document.querySelector('omni-alert');
+alert.description = \`Additional context for the alert. 
+Aligned to the ${args.descriptionAlign}.\`;
+
+alert.show();`
+            }
+        }
+    ],
+    name: 'Header Align',
+    args: {
+        'status-indicator': '',
+        header: '',
+        '[Default Slot]': '',
+        primary: '',
+        secondary: '',
+
+        hide: true,
+
+        message: 'Message Alert',
+        description: undefined,
+
+        enableSecondary: undefined,
+
+        status: undefined,
+        headerAlign: undefined,
+        descriptionAlign: 'right',
         primaryAction: undefined,
         secondaryAction: undefined,
         actionAlign: undefined
@@ -437,7 +509,7 @@ export const Header_Align: ComponentStoryFormat<Args> = {
 };
 
 export const Primary_Action: ComponentStoryFormat<Args> = {
-    description: 'Set the label for the primary action button.',
+    description: () => html`Set the label for the primary action button (Defaults to <code class="language-js">'Ok'</code>).`,
     render: (args: Args) => html`
         <omni-button data-testid="test-alert-btn" @click="${() => {
             args.hide = false;
@@ -478,6 +550,7 @@ export const Primary_Action: ComponentStoryFormat<Args> = {
 
         status: undefined,
         headerAlign: undefined,
+        descriptionAlign: undefined,
         primaryAction: 'Acknowledge',
         secondaryAction: undefined,
         actionAlign: undefined
@@ -488,7 +561,7 @@ export const Secondary_Action: ComponentStoryFormat<Args> = {
     description: () => html`
         <span>
             <ul>
-                <li>Set the label for the secondary action button with the <code>secondary-action</code> attribute.</li>
+                <li>Set the label for the secondary action button with the <code>secondary-action</code> attribute (Defaults to <code class="language-js">'Cancel'</code>).</li>
                 <li>Enable the secondary action button with the <code>enable-secondary</code> attribute.</li>
             </ul>
         </span>
@@ -534,6 +607,7 @@ export const Secondary_Action: ComponentStoryFormat<Args> = {
 
         status: undefined,
         headerAlign: undefined,
+        descriptionAlign: undefined,
         primaryAction: undefined,
         secondaryAction: 'Back',
         actionAlign: undefined
@@ -541,7 +615,7 @@ export const Secondary_Action: ComponentStoryFormat<Args> = {
 };
 
 export const Action_Align: ComponentStoryFormat<Args> = {
-    description: 'Align the action button(s) horizontally.',
+    description: () => html`Align the action button(s) horizontally (Defaults to <code class="language-js">'right'</code>).`,
     render: (args: Args) => html`
         <omni-button data-testid="test-alert-btn" @click="${() => {
             args.hide = false;
@@ -582,6 +656,7 @@ export const Action_Align: ComponentStoryFormat<Args> = {
 
         status: undefined,
         headerAlign: undefined,
+        descriptionAlign: undefined,
         primaryAction: 'Accept',
         secondaryAction: 'Decline',
         actionAlign: 'center'
@@ -630,6 +705,7 @@ export const Custom_Status_Indicator: ComponentStoryFormat<Args> = {
 
         status: undefined,
         headerAlign: undefined,
+        descriptionAlign: undefined,
         primaryAction: undefined,
         secondaryAction: undefined,
         actionAlign: undefined
@@ -678,6 +754,7 @@ export const Custom_Header: ComponentStoryFormat<Args> = {
 
         status: undefined,
         headerAlign: undefined,
+        descriptionAlign: undefined,
         primaryAction: undefined,
         secondaryAction: undefined,
         actionAlign: undefined
@@ -726,6 +803,7 @@ export const Custom_Body: ComponentStoryFormat<Args> = {
 
         status: undefined,
         headerAlign: undefined,
+        descriptionAlign: undefined,
         primaryAction: undefined,
         secondaryAction: undefined,
         actionAlign: undefined
@@ -775,6 +853,7 @@ export const Custom_Primary_Action: ComponentStoryFormat<Args> = {
 
         status: undefined,
         headerAlign: undefined,
+        descriptionAlign: undefined,
         primaryAction: undefined,
         secondaryAction: undefined,
         actionAlign: undefined
@@ -824,6 +903,7 @@ export const Custom_Secondary_Action: ComponentStoryFormat<Args> = {
 
         status: undefined,
         headerAlign: undefined,
+        descriptionAlign: undefined,
         primaryAction: undefined,
         secondaryAction: undefined,
         actionAlign: undefined
