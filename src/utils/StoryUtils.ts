@@ -482,11 +482,15 @@ function filterJsDocLinks(jsdoc: string) {
 function transformFromJsdoc(jsdoc: string) {
     if (!jsdoc) return jsdoc;
 
-    const newline = '\r\n';
-
     jsdoc = filterJsDocLinks(jsdoc);
-    jsdoc = jsdoc.replace(new RegExp(newline, 'g'), raw`<br/>`);
+
+    jsdoc = jsdoc.replace(new RegExp(/</, 'g'), raw`&lt;`);
+    jsdoc = jsdoc.replace(new RegExp(/>/, 'g'), raw`&gt;`);
+
+    jsdoc = jsdoc.replace(/(\r\n|\n|\r)/gm, raw`<br/>`);
     jsdoc = jsdoc.replace(new RegExp(/\*/, 'g'), '•');
+
+    jsdoc = jsdoc.replace(/(`(.*?)`)/gi, raw`<code>$2</code>`);
 
     return jsdoc;
 }

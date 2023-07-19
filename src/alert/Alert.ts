@@ -38,6 +38,7 @@ import '../modal/Modal.js';
  *
  * @csspart modal - Internal `omni-modal` element instance.
  * @csspart content - Internal `HTMLDivElement` instance for container of header and description content.
+ * @csspart content - Internal `HTMLDivElement` instance for each line of description (does not include slotted description content).
  * @csspart header - Internal `HTMLDivElement` instance for header.
  * @csspart actions - Internal `HTMLDivElement` instance for container of action button(s).
  *
@@ -100,7 +101,7 @@ export class Alert extends OmniElement {
     @query('omni-modal') modal!: Modal;
 
     /**
-     * The alert status.
+     * The alert status (Defaults to 'none').
      * @attr
      */
     @property({ type: String, reflect: true }) status: 'success' | 'warning' | 'error' | 'info' | 'none' = 'none';
@@ -114,7 +115,7 @@ export class Alert extends OmniElement {
     /**
      * Header content horizontal alignment:
      *  - `left` Align header to the left.
-     *  - `center` Align header to the center.
+     *  - `center` Align header to the center. (Default)
      *  - `right` Align header to the right.
      * @attr [header-align]
      */
@@ -127,13 +128,22 @@ export class Alert extends OmniElement {
     @property({ type: String, reflect: true }) description?: string;
 
     /**
-     * The primary action button label.
+     * Description content horizontal alignment:
+     *  - `left` Align description content to the left.
+     *  - `center` Align description content to the center. (Default)
+     *  - `right` Align description content to the right.
+     * @attr [description-align]
+     */
+    @property({ type: String, attribute: 'description-align', reflect: true }) descriptionAlign?: 'left' | 'center' | 'right';
+
+    /**
+     * The primary action button label (Defaults to 'Ok').
      * @attr [primary-action]
      */
     @property({ type: String, reflect: true, attribute: 'primary-action' }) primaryAction?: string;
 
     /**
-     * The secondary action button label.
+     * The secondary action button label (Defaults to 'Cancel').
      * @attr [secondary-action]
      */
     @property({ type: String, reflect: true, attribute: 'secondary-action' }) secondaryAction?: string;
@@ -148,13 +158,14 @@ export class Alert extends OmniElement {
      * Action button(s) horizontal alignment:
      *  - `left` Align action button(s) to the left.
      *  - `center` Align action button(s) to the center.
-     *  - `right` Align action button(s) to the right.
+     *  - `right` Align action button(s) to the right. (Default)
+     *  - `stretch` Align action button(s) stretched to fill the horizontal space.
      * @attr [action-align]
      */
     @property({ type: String, attribute: 'action-align', reflect: true }) actionAlign?: 'left' | 'center' | 'right' | 'stretch';
 
     /**
-     * Create a global notification element without showing it.
+     * Create a global `omni-alert` element without showing it.
      *
      * @returns The alert instance.
      */
@@ -164,10 +175,11 @@ export class Alert extends OmniElement {
             init = {};
         }
 
-        // Set the notification component values.
+        // Set the `omni-alert` component values.
         element.status = init.status ?? 'none';
         element.message = init.message;
         element.headerAlign = init.headerAlign;
+        element.descriptionAlign = init.descriptionAlign;
         element.description = init.description;
         element.primaryAction = init.primaryAction;
         element.secondaryAction = init.secondaryAction;
@@ -208,11 +220,11 @@ export class Alert extends OmniElement {
             element.appendChild(renderElement);
         }
 
-        return element;
+        return element as Alert;
     }
 
     /**
-     * Show a global notification element.
+     * Show a global `omni-alert` element.
      *
      * @returns The alert instance.
      */
@@ -235,21 +247,21 @@ export class Alert extends OmniElement {
         }
 
         // Show the component as a modal dialog.
-        return element.show();
+        return element.show() as Alert;
     }
 
     /**
-     * Show a global notification element asynchronously, waits for it to close and returns the reason for close.
+     * Show a global `omni-alert` element asynchronously, waits for it to close and returns the reason for close.
      *
      * @returns The reason for the alert close.
      */
     static showAsync(init: AlertInit) {
         const element = Alert.create(init);
-        return element.showAsync();
+        return element.showAsync() as Promise<'auto' | 'primary' | 'secondary'>;
     }
 
     /**
-     * Show the notification asynchronously, waits for it to close and returns the reason for close.
+     * Show the `omni-alert` asynchronously, waits for it to close and returns the reason for close.
      *
      * @returns The reason for the alert close.
      */
@@ -272,7 +284,7 @@ export class Alert extends OmniElement {
     }
 
     /**
-     * Show the notification.
+     * Show the `omni-alert`.
      *
      * @returns The alert instance.
      */
@@ -285,7 +297,7 @@ export class Alert extends OmniElement {
     }
 
     /**
-     * Hide the notification and remove the component from the DOM
+     * Hide the `omni-alert` and remove the component from the DOM
      */
     hide(): void {
         this.updateComplete.then(async () => {
@@ -348,7 +360,7 @@ export class Alert extends OmniElement {
 
             omni-modal::part(container) {               
 
-				min-width: var(--omni-alert-min-width, 20%);
+				min-width: var(--omni-alert-min-width, 10%);
 				max-width: var(--omni-alert-max-width, 80%);
             }
 
@@ -449,6 +461,16 @@ export class Alert extends OmniElement {
 				margin-right: var(--omni-alert-description-padding-right, 0px);
 			}
 
+            .description.left {
+                justify-content: left;
+				text-align: left;
+            }
+
+            .description.right {
+                justify-content: right;
+                text-align: right;
+            }
+
 			.actions {
 				display: flex;
 				flex-direction: row;
@@ -491,8 +513,9 @@ export class Alert extends OmniElement {
 			}
 
 			.clear-btn {
+                line-height: normal;
 				padding-top: var(--omni-alert-action-button-padding-top, 4px);
-				padding-bottom: var(--omni-alert-action-button-padding-bottom, 4px);
+				padding-bottom: var(--omni-alert-action-button-padding-bottom);
 				padding-left: var(--omni-alert-action-button-padding-left);
 				padding-right: var(--omni-alert-action-button-padding-right);
                 
@@ -594,7 +617,11 @@ export class Alert extends OmniElement {
                         </div>
                         ${
                             this.description
-                                ? this.description.split('\n').map((paragraph) => html`<div class="description">${paragraph}</div>`)
+                                ? this.description
+                                      .split('\n')
+                                      .map(
+                                          (paragraph) => html`<div part="description" class="description ${this.descriptionAlign}">${paragraph}</div>`
+                                      )
                                 : nothing
                         }
                         <slot>
@@ -662,7 +689,7 @@ export type AlertInit = {
     secondary?: RenderFunction | RenderResult;
 
     /**
-     * The alert status.
+     * The alert status (Defaults to 'none').
      */
     status?: 'success' | 'warning' | 'error' | 'info' | 'none';
 
@@ -674,7 +701,7 @@ export type AlertInit = {
     /**
      * Header content horizontal alignment:
      *  - `left` Align header to the left.
-     *  - `center` Align header to the center.
+     *  - `center` Align header to the center. (Default)
      *  - `right` Align header to the right.
      */
     headerAlign?: 'left' | 'center' | 'right';
@@ -685,12 +712,20 @@ export type AlertInit = {
     description?: string;
 
     /**
-     * The primary action button label.
+     * Description content horizontal alignment:
+     *  - `left` Align description content to the left.
+     *  - `center` Align description content to the center. (Default)
+     *  - `right` Align description content to the right.
+     */
+    descriptionAlign?: 'left' | 'center' | 'right';
+
+    /**
+     * The primary action button label (Defaults to 'Ok').
      */
     primaryAction?: string;
 
     /**
-     * The secondary action button label.
+     * The secondary action button label (Defaults to 'Cancel').
      */
     secondaryAction?: string;
 
@@ -703,7 +738,8 @@ export type AlertInit = {
      * Action button(s) horizontal alignment:
      *  - `left` Align action button(s) to the left.
      *  - `center` Align action button(s) to the center.
-     *  - `right` Align action button(s) to the right.
+     *  - `right` Align action button(s) to the right. (Default)
+     *  - `stretch` Align action button(s) stretched to fill the horizontal space.
      */
     actionAlign?: 'left' | 'center' | 'right' | 'stretch';
 };
