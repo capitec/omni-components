@@ -92,6 +92,44 @@ export const Interactive: ComponentStoryFormat<Args> = {
                 `,
                 jsFragment: `document.querySelector('omni-alert').show();`
             }
+        },
+        {
+            framework: 'Lit',
+            sourceParts: {
+                htmlFragment: (args) =>
+                    raw`${getSourceFromLit(
+                        alertHtml(args),
+                        (container) => container.firstElementChild?.setAttribute('data-replace-token', ''),
+                        (s) => s.replace(' data-replace-token=""', ' ${ref(onRef)}')
+                    )} `,
+                jsFragment: `import { ref } from 'https://unpkg.com/lit-html/directives/ref.js?module';
+                
+const onRef = e => {
+    const omniAlert = e;
+    if (omniAlert) {
+        omniAlert.show();
+    }
+};`
+            }
+        },
+        {
+            framework: 'Vue',
+            sourceParts: {
+                htmlFragment: (args) =>
+                    getSourceFromLit(alertHtml(args)).replaceAll(' enable-secondary', ' :enable-secondary="true"') +
+                    `
+<!-- Execute function on Vue load -->
+<div style="display: none;">
+{{ (() =>  { run() })() }}
+</div>
+`,
+                jsFragment: `window.vueData = {
+    run: async () => {
+        await customElements.whenDefined('omni-alert');
+        document.querySelector('omni-alert').show();        
+    }
+};`
+            }
         }
     ],
     name: 'Interactive',
@@ -371,6 +409,57 @@ export const Status: ComponentStoryFormat<Args> = {
                 `,
                 jsFragment: `document.querySelector('omni-alert').show();`
             }
+        },
+        {
+            framework: 'Lit',
+            sourceParts: {
+                htmlFragment: (args) =>
+                    raw`${getSourceFromLit(
+                        alertHtml(args),
+                        (container) => container.firstElementChild?.setAttribute('data-replace-token', ''),
+                        (s) => s.replace(' data-replace-token=""', ' ${ref(onRef)}')
+                    )} `,
+                jsFragment: `import { ref } from 'https://unpkg.com/lit-html/directives/ref.js?module';
+                
+const onRef = e => {
+    const omniAlert = e;
+    if (omniAlert) {
+        omniAlert.show();
+    }
+};`
+            }
+        },
+        {
+            framework: 'React',
+            load: (args) => `import { OmniAlert } from "@capitec/omni-components-react/alert";
+
+const onRef = e => {
+    const omniAlert = e;
+    if (omniAlert) {
+        omniAlert.show();
+    }
+};
+
+const App = () => <OmniAlert ref={onRef} message="${args.message}" description="${args.description}" status="${args.status}"/>;`
+        },
+        {
+            framework: 'Vue',
+            sourceParts: {
+                htmlFragment: (args) =>
+                    getSourceFromLit(alertHtml(args)).replaceAll(' enable-secondary', ' :enable-secondary="true"') +
+                    `
+<!-- Execute function on Vue load -->
+<div style="display: none;">
+{{ (() =>  { run() })() }}
+</div>
+`,
+                jsFragment: `window.vueData = {
+    run: async () => {
+        await customElements.whenDefined('omni-alert');
+        document.querySelector('omni-alert').show();        
+    }
+};`
+            }
         }
     ],
     name: 'Status',
@@ -419,6 +508,57 @@ export const Header_Align: ComponentStoryFormat<Args> = {
                 ${getSourceFromLit(alertHtml(args))}            
                 `,
                 jsFragment: `document.querySelector('omni-alert').show();`
+            }
+        },
+        {
+            framework: 'Lit',
+            sourceParts: {
+                htmlFragment: (args) =>
+                    raw`${getSourceFromLit(
+                        alertHtml(args),
+                        (container) => container.firstElementChild?.setAttribute('data-replace-token', ''),
+                        (s) => s.replace(' data-replace-token=""', ' ${ref(onRef)}')
+                    )} `,
+                jsFragment: `import { ref } from 'https://unpkg.com/lit-html/directives/ref.js?module';
+                
+const onRef = e => {
+    const omniAlert = e;
+    if (omniAlert) {
+        omniAlert.show();
+    }
+};`
+            }
+        },
+        {
+            framework: 'React',
+            load: (args) => `import { OmniAlert } from "@capitec/omni-components-react/alert";
+
+const onRef = e => {
+    const omniAlert = e;
+    if (omniAlert) {
+        omniAlert.show();
+    }
+};
+
+const App = () => <OmniAlert ref={onRef} message="${args.message}" description="${args.description}" header-align="${args.headerAlign}"/>;`
+        },
+        {
+            framework: 'Vue',
+            sourceParts: {
+                htmlFragment: (args) =>
+                    getSourceFromLit(alertHtml(args)).replaceAll(' enable-secondary', ' :enable-secondary="true"') +
+                    `
+<!-- Execute function on Vue load -->
+<div style="display: none;">
+{{ (() =>  { run() })() }}
+</div>
+`,
+                jsFragment: `window.vueData = {
+    run: async () => {
+        await customElements.whenDefined('omni-alert');
+        document.querySelector('omni-alert').show();        
+    }
+};`
             }
         }
     ],
@@ -482,6 +622,68 @@ Aligned to the ${args.descriptionAlign}.\`;
 
 alert.show();`
             }
+        },
+        {
+            framework: 'Lit',
+            sourceParts: {
+                htmlFragment: (args) =>
+                    raw`${getSourceFromLit(
+                        alertHtml(args),
+                        (container) => container.firstElementChild?.setAttribute('data-replace-token', ''),
+                        (s) => s.replace(' data-replace-token=""', ' ${ref(onRef)}')
+                    )} `,
+                jsFragment: (args) => `import { ref } from 'https://unpkg.com/lit-html/directives/ref.js?module';
+                
+const onRef = e => {
+    const omniAlert = e;
+    if (omniAlert) {
+        omniAlert.description = \`Additional context for the alert. 
+Aligned to the ${args.descriptionAlign}.\`;
+
+        omniAlert.show();
+    }
+};`
+            }
+        },
+        {
+            framework: 'React',
+            load: (args) => `import { OmniAlert } from "@capitec/omni-components-react/alert";
+
+const onRef = e => {
+    const omniAlert = e;
+    if (omniAlert) {
+        omniAlert.description = \`Additional context for the alert. 
+Aligned to the ${args.descriptionAlign}.\`;
+
+        omniAlert.show();
+    }
+};
+
+const App = () => <OmniAlert ref={onRef} message="${args.message}" description-align="${args.descriptionAlign}"/>;`
+        },
+        {
+            framework: 'Vue',
+            sourceParts: {
+                htmlFragment: (args) =>
+                    getSourceFromLit(alertHtml(args)).replaceAll(' enable-secondary', ' :enable-secondary="true"') +
+                    `
+<!-- Execute function on Vue load -->
+<div style="display: none;">
+{{ (() =>  { run() })() }}
+</div>
+`,
+                jsFragment: (args) => `window.vueData = {
+    run: async () => {
+        await customElements.whenDefined('omni-alert');
+        
+        const alert = document.querySelector('omni-alert');
+        alert.description = \`Additional context for the alert. 
+Aligned to the ${args.descriptionAlign}.\`;
+        
+        alert.show();        
+    }
+};`
+            }
         }
     ],
     name: 'Header Align',
@@ -530,6 +732,57 @@ export const Primary_Action: ComponentStoryFormat<Args> = {
                 ${getSourceFromLit(alertHtml(args))}            
                 `,
                 jsFragment: `document.querySelector('omni-alert').show();`
+            }
+        },
+        {
+            framework: 'Lit',
+            sourceParts: {
+                htmlFragment: (args) =>
+                    raw`${getSourceFromLit(
+                        alertHtml(args),
+                        (container) => container.firstElementChild?.setAttribute('data-replace-token', ''),
+                        (s) => s.replace(' data-replace-token=""', ' ${ref(onRef)}')
+                    )} `,
+                jsFragment: `import { ref } from 'https://unpkg.com/lit-html/directives/ref.js?module';
+                
+const onRef = e => {
+    const omniAlert = e;
+    if (omniAlert) {
+        omniAlert.show();
+    }
+};`
+            }
+        },
+        {
+            framework: 'React',
+            load: (args) => `import { OmniAlert } from "@capitec/omni-components-react/alert";
+
+const onRef = e => {
+    const omniAlert = e;
+    if (omniAlert) {
+        omniAlert.show();
+    }
+};
+
+const App = () => <OmniAlert ref={onRef} message="${args.message}" description="${args.description}" primary-action="${args.primaryAction}"/>;`
+        },
+        {
+            framework: 'Vue',
+            sourceParts: {
+                htmlFragment: (args) =>
+                    getSourceFromLit(alertHtml(args)).replaceAll(' enable-secondary', ' :enable-secondary="true"') +
+                    `
+<!-- Execute function on Vue load -->
+<div style="display: none;">
+{{ (() =>  { run() })() }}
+</div>
+`,
+                jsFragment: `window.vueData = {
+    run: async () => {
+        await customElements.whenDefined('omni-alert');
+        document.querySelector('omni-alert').show();        
+    }
+};`
             }
         }
     ],
@@ -588,6 +841,57 @@ export const Secondary_Action: ComponentStoryFormat<Args> = {
                 `,
                 jsFragment: `document.querySelector('omni-alert').show();`
             }
+        },
+        {
+            framework: 'Lit',
+            sourceParts: {
+                htmlFragment: (args) =>
+                    raw`${getSourceFromLit(
+                        alertHtml(args),
+                        (container) => container.firstElementChild?.setAttribute('data-replace-token', ''),
+                        (s) => s.replace(' data-replace-token=""', ' ${ref(onRef)}')
+                    )} `,
+                jsFragment: `import { ref } from 'https://unpkg.com/lit-html/directives/ref.js?module';
+                
+const onRef = e => {
+    const omniAlert = e;
+    if (omniAlert) {
+        omniAlert.show();
+    }
+};`
+            }
+        },
+        {
+            framework: 'React',
+            load: (args) => `import { OmniAlert } from "@capitec/omni-components-react/alert";
+
+const onRef = e => {
+    const omniAlert = e;
+    if (omniAlert) {
+        omniAlert.show();
+    }
+};
+
+const App = () => <OmniAlert ref={onRef} message="${args.message}" description="${args.description}" secondary-action="${args.secondaryAction}" enable-secondary/>;`
+        },
+        {
+            framework: 'Vue',
+            sourceParts: {
+                htmlFragment: (args) =>
+                    getSourceFromLit(alertHtml(args)).replaceAll(' enable-secondary', ' :enable-secondary="true"') +
+                    `
+<!-- Execute function on Vue load -->
+<div style="display: none;">
+{{ (() =>  { run() })() }}
+</div>
+`,
+                jsFragment: `window.vueData = {
+    run: async () => {
+        await customElements.whenDefined('omni-alert');
+        document.querySelector('omni-alert').show();        
+    }
+};`
+            }
         }
     ],
     name: 'Secondary Action',
@@ -636,6 +940,57 @@ export const Action_Align: ComponentStoryFormat<Args> = {
                 ${getSourceFromLit(alertHtml(args))}            
                 `,
                 jsFragment: `document.querySelector('omni-alert').show();`
+            }
+        },
+        {
+            framework: 'Lit',
+            sourceParts: {
+                htmlFragment: (args) =>
+                    raw`${getSourceFromLit(
+                        alertHtml(args),
+                        (container) => container.firstElementChild?.setAttribute('data-replace-token', ''),
+                        (s) => s.replace(' data-replace-token=""', ' ${ref(onRef)}')
+                    )} `,
+                jsFragment: `import { ref } from 'https://unpkg.com/lit-html/directives/ref.js?module';
+                
+const onRef = e => {
+    const omniAlert = e;
+    if (omniAlert) {
+        omniAlert.show();
+    }
+};`
+            }
+        },
+        {
+            framework: 'React',
+            load: (args) => `import { OmniAlert } from "@capitec/omni-components-react/alert";
+
+const onRef = e => {
+    const omniAlert = e;
+    if (omniAlert) {
+        omniAlert.show();
+    }
+};
+
+const App = () => <OmniAlert ref={onRef} message="${args.message}" description="${args.description}" enable-secondary primary-action="${args.primaryAction}" secondary-action="${args.secondaryAction}" action-align="${args.actionAlign}"/>;`
+        },
+        {
+            framework: 'Vue',
+            sourceParts: {
+                htmlFragment: (args) =>
+                    getSourceFromLit(alertHtml(args)).replaceAll(' enable-secondary', ' :enable-secondary="true"') +
+                    `
+<!-- Execute function on Vue load -->
+<div style="display: none;">
+{{ (() =>  { run() })() }}
+</div>
+`,
+                jsFragment: `window.vueData = {
+    run: async () => {
+        await customElements.whenDefined('omni-alert');
+        document.querySelector('omni-alert').show();        
+    }
+};`
             }
         }
     ],
@@ -686,6 +1041,59 @@ export const Custom_Status_Indicator: ComponentStoryFormat<Args> = {
                 `,
                 jsFragment: `document.querySelector('omni-alert').show();`
             }
+        },
+        {
+            framework: 'Lit',
+            sourceParts: {
+                htmlFragment: (args) =>
+                    raw`${getSourceFromLit(
+                        alertHtml(args),
+                        (container) => container.firstElementChild?.setAttribute('data-replace-token', ''),
+                        (s) => s.replace(' data-replace-token=""', ' ${ref(onRef)}')
+                    )} `,
+                jsFragment: `import { ref } from 'https://unpkg.com/lit-html/directives/ref.js?module';
+                
+const onRef = e => {
+    const omniAlert = e;
+    if (omniAlert) {
+        omniAlert.show();
+    }
+};`
+            }
+        },
+        {
+            framework: 'React',
+            load: (args) => `import { OmniAlert } from "@capitec/omni-components-react/alert";
+
+const onRef = e => {
+    const omniAlert = e;
+    if (omniAlert) {
+        omniAlert.show();
+    }
+};
+
+const App = () => <OmniAlert ref={onRef} message="${args.message}" description="${args.description}">
+                    <span slot="status-indicator" style={{ paddingRight: "4px" }}>🔓</span>
+                  </OmniAlert>;`
+        },
+        {
+            framework: 'Vue',
+            sourceParts: {
+                htmlFragment: (args) =>
+                    getSourceFromLit(alertHtml(args)).replaceAll(' enable-secondary', ' :enable-secondary="true"') +
+                    `
+<!-- Execute function on Vue load -->
+<div style="display: none;">
+{{ (() =>  { run() })() }}
+</div>
+`,
+                jsFragment: `window.vueData = {
+    run: async () => {
+        await customElements.whenDefined('omni-alert');
+        document.querySelector('omni-alert').show();        
+    }
+};`
+            }
         }
     ],
     name: 'Custom Status Indicator',
@@ -735,6 +1143,59 @@ export const Custom_Header: ComponentStoryFormat<Args> = {
                 `,
                 jsFragment: `document.querySelector('omni-alert').show();`
             }
+        },
+        {
+            framework: 'Lit',
+            sourceParts: {
+                htmlFragment: (args) =>
+                    raw`${getSourceFromLit(
+                        alertHtml(args),
+                        (container) => container.firstElementChild?.setAttribute('data-replace-token', ''),
+                        (s) => s.replace(' data-replace-token=""', ' ${ref(onRef)}')
+                    )} `,
+                jsFragment: `import { ref } from 'https://unpkg.com/lit-html/directives/ref.js?module';
+                
+const onRef = e => {
+    const omniAlert = e;
+    if (omniAlert) {
+        omniAlert.show();
+    }
+};`
+            }
+        },
+        {
+            framework: 'React',
+            load: (args) => `import { OmniAlert } from "@capitec/omni-components-react/alert";
+
+const onRef = e => {
+    const omniAlert = e;
+    if (omniAlert) {
+        omniAlert.show();
+    }
+};
+
+const App = () => <OmniAlert ref={onRef} message="${args.message}" description="${args.description}">
+                    <span slot="header">Alert using the <code>header</code> slot</span>
+                  </OmniAlert>;`
+        },
+        {
+            framework: 'Vue',
+            sourceParts: {
+                htmlFragment: (args) =>
+                    getSourceFromLit(alertHtml(args)).replaceAll(' enable-secondary', ' :enable-secondary="true"') +
+                    `
+<!-- Execute function on Vue load -->
+<div style="display: none;">
+{{ (() =>  { run() })() }}
+</div>
+`,
+                jsFragment: `window.vueData = {
+    run: async () => {
+        await customElements.whenDefined('omni-alert');
+        document.querySelector('omni-alert').show();        
+    }
+};`
+            }
         }
     ],
     name: 'Custom Header',
@@ -783,6 +1244,59 @@ export const Custom_Body: ComponentStoryFormat<Args> = {
                 ${getSourceFromLit(alertHtml(args))}            
                 `,
                 jsFragment: `document.querySelector('omni-alert').show();`
+            }
+        },
+        {
+            framework: 'Lit',
+            sourceParts: {
+                htmlFragment: (args) =>
+                    raw`${getSourceFromLit(
+                        alertHtml(args),
+                        (container) => container.firstElementChild?.setAttribute('data-replace-token', ''),
+                        (s) => s.replace(' data-replace-token=""', ' ${ref(onRef)}')
+                    )} `,
+                jsFragment: `import { ref } from 'https://unpkg.com/lit-html/directives/ref.js?module';
+                
+const onRef = e => {
+    const omniAlert = e;
+    if (omniAlert) {
+        omniAlert.show();
+    }
+};`
+            }
+        },
+        {
+            framework: 'React',
+            load: (args) => `import { OmniAlert } from "@capitec/omni-components-react/alert";
+
+const onRef = e => {
+    const omniAlert = e;
+    if (omniAlert) {
+        omniAlert.show();
+    }
+};
+
+const App = () => <OmniAlert ref={onRef} message="${args.message}" description="${args.description}">
+                    <span>Alert using the default slot and the <code>description</code> attribute.</span>
+                  </OmniAlert>;`
+        },
+        {
+            framework: 'Vue',
+            sourceParts: {
+                htmlFragment: (args) =>
+                    getSourceFromLit(alertHtml(args)).replaceAll(' enable-secondary', ' :enable-secondary="true"') +
+                    `
+<!-- Execute function on Vue load -->
+<div style="display: none;">
+{{ (() =>  { run() })() }}
+</div>
+`,
+                jsFragment: `window.vueData = {
+    run: async () => {
+        await customElements.whenDefined('omni-alert');
+        document.querySelector('omni-alert').show();        
+    }
+};`
             }
         }
     ],
@@ -834,6 +1348,59 @@ export const Custom_Primary_Action: ComponentStoryFormat<Args> = {
                 `,
                 jsFragment: `document.querySelector('omni-alert').show();`
             }
+        },
+        {
+            framework: 'Lit',
+            sourceParts: {
+                htmlFragment: (args) =>
+                    raw`${getSourceFromLit(
+                        alertHtml(args),
+                        (container) => container.firstElementChild?.setAttribute('data-replace-token', ''),
+                        (s) => s.replace(' data-replace-token=""', ' ${ref(onRef)}')
+                    )} `,
+                jsFragment: `import { ref } from 'https://unpkg.com/lit-html/directives/ref.js?module';
+                
+const onRef = e => {
+    const omniAlert = e;
+    if (omniAlert) {
+        omniAlert.show();
+    }
+};`
+            }
+        },
+        {
+            framework: 'React',
+            load: (args) => `import { OmniAlert } from "@capitec/omni-components-react/alert";
+
+const onRef = e => {
+    const omniAlert = e;
+    if (omniAlert) {
+        omniAlert.show();
+    }
+};
+
+const App = () => <OmniAlert ref={onRef} message="${args.message}" description="${args.description}">
+                    <button slot="primary" style={{ margin: "6px" }}>My Button</button>
+                  </OmniAlert>;`
+        },
+        {
+            framework: 'Vue',
+            sourceParts: {
+                htmlFragment: (args) =>
+                    getSourceFromLit(alertHtml(args)).replaceAll(' enable-secondary', ' :enable-secondary="true"') +
+                    `
+<!-- Execute function on Vue load -->
+<div style="display: none;">
+{{ (() =>  { run() })() }}
+</div>
+`,
+                jsFragment: `window.vueData = {
+    run: async () => {
+        await customElements.whenDefined('omni-alert');
+        document.querySelector('omni-alert').show();        
+    }
+};`
+            }
         }
     ],
     name: 'Custom Primary Action',
@@ -883,6 +1450,59 @@ export const Custom_Secondary_Action: ComponentStoryFormat<Args> = {
                 ${getSourceFromLit(alertHtml(args))}            
                 `,
                 jsFragment: `document.querySelector('omni-alert').show();`
+            }
+        },
+        {
+            framework: 'Lit',
+            sourceParts: {
+                htmlFragment: (args) =>
+                    raw`${getSourceFromLit(
+                        alertHtml(args),
+                        (container) => container.firstElementChild?.setAttribute('data-replace-token', ''),
+                        (s) => s.replace(' data-replace-token=""', ' ${ref(onRef)}')
+                    )} `,
+                jsFragment: `import { ref } from 'https://unpkg.com/lit-html/directives/ref.js?module';
+                
+const onRef = e => {
+    const omniAlert = e;
+    if (omniAlert) {
+        omniAlert.show();
+    }
+};`
+            }
+        },
+        {
+            framework: 'React',
+            load: (args) => `import { OmniAlert } from "@capitec/omni-components-react/alert";
+
+const onRef = e => {
+    const omniAlert = e;
+    if (omniAlert) {
+        omniAlert.show();
+    }
+};
+
+const App = () => <OmniAlert ref={onRef} message="${args.message}" description="${args.description}" enable-secondary>
+                    <span slot="secondary" style={{ padding: "6px" }}>↩</span>
+                  </OmniAlert>;`
+        },
+        {
+            framework: 'Vue',
+            sourceParts: {
+                htmlFragment: (args) =>
+                    getSourceFromLit(alertHtml(args)).replaceAll(' enable-secondary', ' :enable-secondary="true"') +
+                    `
+<!-- Execute function on Vue load -->
+<div style="display: none;">
+{{ (() =>  { run() })() }}
+</div>
+`,
+                jsFragment: `window.vueData = {
+    run: async () => {
+        await customElements.whenDefined('omni-alert');
+        document.querySelector('omni-alert').show();        
+    }
+};`
             }
         }
     ],

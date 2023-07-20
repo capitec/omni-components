@@ -381,7 +381,7 @@ export class Alert extends OmniElement {
 			}
 			
 			omni-modal:not([hide]) {
-				animation: fadein var(--omni-alert-animation-duration, 0.5s) ease-in-out;
+				animation: fadein var(--omni-alert-animation-duration, 0.2s) ease-in-out;
 				animation-fill-mode: forwards;
 			}
 
