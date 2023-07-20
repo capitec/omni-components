@@ -358,7 +358,9 @@ const onRef = e => {
                     getSourceFromLit(renderStack(args)).replaceAll(' closeable', ' :closeable="true"').replaceAll(' reverse', ' :reverse="true"') +
                     `
 <!-- Execute function on Vue load -->
+<div style="display: none;">
 {{ (() =>  { run() })() }}
+</div>
 `,
                 jsFragment: `window.vueData = {
     run: async () => {
@@ -633,7 +635,9 @@ const onRef = e => {
                     getSourceFromLit(renderStack(args)).replaceAll(' closeable', ' :closeable="true"').replaceAll(' reverse', ' :reverse="true"') +
                     `
 <!-- Execute function on Vue load -->
+<div style="display: none;">
 {{ (() =>  { run() })() }}
+</div>
 `,
                 jsFragment: `window.vueData = {
     run: async () => {
@@ -784,7 +788,9 @@ const onRef = e => {
                     getSourceFromLit(renderStack(args)).replaceAll(' closeable', ' :closeable="true"').replaceAll(' reverse', ' :reverse="true"') +
                     `
 <!-- Execute function on Vue load -->
+<div style="display: none;">
 {{ (() =>  { run() })() }}
+</div>
 `,
                 jsFragment: `window.vueData = {
     run: async () => {
