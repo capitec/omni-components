@@ -179,7 +179,7 @@ export const testDisabledBehaviour = (tagName: string, storyExport = 'Disabled')
             const inputField = input.locator('input#inputField');
 
             await inputField.type('Value Update 3');
-
+            // Confirm that mock input event is called zero times
             await expect(inputTest).toBeCalledTimes(0);
         });
     };
