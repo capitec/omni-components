@@ -1,7 +1,16 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import fs from 'fs';
 // import { platform } from 'os';
-import { expect as expectPatched, test, type Locator, type Page, type PageScreenshotOptions, type LocatorScreenshotOptions } from '@playwright/test';
+import {
+    expect as expectPatched,
+    test,
+    type Locator,
+    type Page,
+    type PageScreenshotOptions,
+    type LocatorScreenshotOptions,
+    JSHandle,
+    ElementHandle
+} from '@playwright/test';
 export * from '@playwright/test';
 import { fn } from 'jest-mock';
 //@ts-ignore
@@ -155,17 +164,36 @@ async function getStoryArgs<T = any>(page: Page, key: string, readySelector = '[
     return args;
 }
 
-async function mockEventListener(locator: Locator, eventName: string) {
+async function mockEventListener(locatorOrHandle: Locator | ElementHandle | null | undefined, eventName: string) {
     const tempFunction = `mock_${v4()}`;
     const eventFunction = fn();
-    await locator.page().exposeFunction(tempFunction, () => eventFunction());
-    await locator.evaluate(
-        (node, { tempFunction, eventName }) => {
-            //@ts-ignore
-            node.addEventListener(eventName, () => window[tempFunction]());
-        },
-        { tempFunction, eventName }
-    );
+
+    if (!locatorOrHandle) {
+        return eventFunction;
+    }
+
+    let page: Page;
+    const evalFunc = (node: HTMLElement, { tempFunction, eventName }: { tempFunction: string; eventName: string }) => {
+        //@ts-ignore
+        node.addEventListener(eventName, () => window[tempFunction]());
+    };
+
+    if ((locatorOrHandle as ElementHandle).ownerFrame) {
+        const handle = locatorOrHandle as ElementHandle;
+
+        page = (await handle.ownerFrame())?.page() as Page;
+        await page.exposeFunction(tempFunction, () => eventFunction());
+
+        await handle.evaluate(evalFunc, { tempFunction, eventName });
+    } else {
+        const locator = locatorOrHandle as Locator;
+
+        page = locator.page() as Page;
+        await page.exposeFunction(tempFunction, () => eventFunction());
+
+        await locator.evaluate(evalFunc, { tempFunction, eventName });
+    }
+
     return eventFunction;
 }
 

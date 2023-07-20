@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as jestMock from 'jest-mock';
+import { fn } from 'jest-mock';
 import { test, expect, getStoryArgs, withCoverage } from '../utils/JestPlaywright.js';
 import type { RenderElement } from './RenderElement.js';
 
@@ -36,7 +36,7 @@ test(`Render Element - HTML Element Instance Visual and Behaviour`, async ({ pag
 
         await page.waitForSelector('[data-testid]', {});
 
-        const clickDialog = jestMock.fn();
+        const clickDialog = fn();
         page.on('dialog', (d) => {
             clickDialog();
             d.accept();

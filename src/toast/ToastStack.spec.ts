@@ -1,4 +1,3 @@
-import * as jestMock from 'jest-mock';
 import { test, expect, mockEventListener, withCoverage } from '../utils/JestPlaywright.js';
 import type { ToastStack } from './ToastStack.js';
 
@@ -25,11 +24,7 @@ test(`Toast Stack - Visual and Behaviour`, async ({ page }) => {
         await expect(shown).toBeTruthy();
         await expect(await shown?.screenshot()).toMatchSnapshot('toast-shown.png');
 
-        const toastStackRemove = jestMock.fn();
-        await page.exposeFunction('jestToastStackRemove', () => toastStackRemove());
-        await shown?.evaluate((node) => {
-            node.addEventListener('toast-stack-remove', () => window.jestToastStackRemove());
-        });
+        const toastStackRemove = await mockEventListener(shown, 'toast-stack-remove');
 
         await toastStack.evaluate((ts: ToastStack) => {
             ts.showToast({
@@ -46,7 +41,7 @@ test(`Toast Stack - Visual and Behaviour`, async ({ page }) => {
         await expect(toastStack).toHaveScreenshot('toast-stack-more.png');
 
         // Wait for toast removals
-        await new Promise((resolve) => setTimeout(resolve, 6000));
+        await page.waitForTimeout(6000);
 
         await expect(toastRemove).toBeCalledTimes(5);
         await expect(toastStackRemove).toBeCalled();
@@ -539,9 +534,3 @@ test(`Toast Stack - Top Position Visual and Behaviour`, async ({ page }) => {
         await expect(page).toHaveScreenshot('toast-stack-page-top.png');
     });
 });
-
-declare global {
-    interface Window {
-        jestToastStackRemove: () => void;
-    }
-}
