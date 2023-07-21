@@ -69,7 +69,7 @@ export class ToastStack extends OmniElement {
      * Reverse the order of toast with newest toasts showed on top of the stack. By default newest toasts are showed at the bottom of the stack.
      * @attr
      */
-    @property({ type: String, reflect: true }) reverse?: boolean;
+    @property({ type: Boolean, reflect: true }) reverse?: boolean;
 
     @query('.toast-box') private toastContainer!: HTMLDivElement;
     @query('slot') private slotElement!: HTMLSlotElement;
@@ -152,7 +152,7 @@ export class ToastStack extends OmniElement {
     }
 
     /**
-     * Push a toast instance onto the toast stack.
+     * Push an existing toast instance onto the toast stack.
      */
     public showInstance(instance: Toast, options?: ShowToastOptions) {
         if (options?.duration) {

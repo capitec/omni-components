@@ -5,6 +5,7 @@
         "runem.lit-plugin",
         "streetsidesoftware.code-spell-checker",
         "github.vscode-pull-request-github",
-        "ronnidc.nunjucks"
+        "ronnidc.nunjucks",
+        "ms-playwright.playwright"
     ]
 }

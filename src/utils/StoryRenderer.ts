@@ -4,14 +4,12 @@ import { html as langHtml } from '@codemirror/lang-html';
 import { javascript as langJs } from '@codemirror/lang-javascript';
 import { githubDark as codeThemeDark } from '@ddietr/codemirror-themes/github-dark.js';
 import { githubLight as codeTheme } from '@ddietr/codemirror-themes/github-light.js';
-import { html, LitElement, nothing, PropertyValueMap, render, TemplateResult } from 'lit';
+import { html, LitElement, nothing, PropertyValueMap, render } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { live } from 'lit/directives/live.js';
-import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ColorField } from '../color-field/ColorField.js';
 import { SearchField } from '../search-field/SearchField.js';
 import { TextField } from '../text-field/TextField.js';
-import { CodeMirrorSourceUpdateEvent, CodeMirrorEditorEvent } from './CodeEditor.js';
 import { CodeEditor } from './CodeEditor.js';
 import { LivePropertyEditor, PropertyChangeEvent } from './LivePropertyEditor.js';
 import { StoryController } from './StoryController.js';
@@ -47,8 +45,6 @@ export class StoryRenderer extends LitElement {
     @property({ type: Boolean, reflect: true }) interactive?: boolean;
 
     @state() _interactiveSrc?: string;
-    @state() _isBusyPlaying?: boolean;
-    @state() _playError?: string;
     @state() _showStylesDialog?: boolean;
 
     @query('.primary-source-code') codeEditor?: CodeEditor;
@@ -433,41 +429,7 @@ export class StoryRenderer extends LitElement {
                 </code-editor>
             </div>
 
-            <div class="two-part ${
-                !this.story?.play && this.story!.frameworkSources?.find((fs) => fs.framework === sourceTab)?.disableCodePen ? 'no-display' : ''
-            }">
-            
-                <div class="play-tests">
-                    ${
-                        this.story?.play
-                            ? html`
-                            <div style="display: flex;flex-direction: row;align-items: center;">
-                            <omni-button
-                                class="docs-omni-component"
-                                ?disabled=${
-                                    this._isBusyPlaying ||
-                                    JSON.stringify(this.story?.originalArgs)
-                                        .replaceAll('\n', '')
-                                        .replaceAll('\\n', '')
-                                        .replaceAll('\t', '')
-                                        .replaceAll(' ', '') !==
-                                        JSON.stringify(this.story?.args ?? {})
-                                            .replaceAll('\n', '')
-                                            .replaceAll('\\n', '')
-                                            .replaceAll('\t', '')
-                                            .replaceAll(' ', '')
-                                }
-                                @click="${() => this._play(this.story, `.${this.key}`)}">
-                                <omni-icon class="docs-omni-component" icon="@material/play_arrow"></omni-icon>
-                            </omni-button>
-                            <div class="${this.key + '-result'} success">
-                                <span class="material-icons" style="color: #155724;">check</span>
-                            </div>
-                            </div>       
-                    `
-                            : nothing
-                    }
-                </div>     
+            <div class="two-part ${this.story!.frameworkSources?.find((fs) => fs.framework === sourceTab)?.disableCodePen ? 'no-display' : ''}">   
                 <omni-button 
                     class="code-pen-gen-btn docs-omni-component ${
                         this.story!.frameworkSources?.find((fs) => fs.framework === sourceTab)?.disableCodePen ||
@@ -491,18 +453,6 @@ export class StoryRenderer extends LitElement {
                     </omni-icon>
                 </omni-button>
             </div>
-            ${
-                this.story?.play
-                    ? html`
-                <div class="${this.key + '-result'} failure">
-                    <div class="play-tests-out">
-                    <span class="material-icons" style="color: #721c24;">close</span>
-                    <span style="margin-left: 8px;"><pre>${this._playError}</pre></span>
-                    </div>
-                </div>
-                `
-                    : nothing
-            }
         </div>
     `;
     }
@@ -986,53 +936,6 @@ ${
         codeSubmit.click();
 
         document.body.removeChild(tempDiv);
-
-        // const body = new URLSearchParams();
-        // body.append('data', JSONstring);
-
-        // const response = await fetch('https://codepen.io/pen/define', {
-        //     method: 'post',
-        //     body: body,
-        // })
-
-        // console.log(response);
-    }
-
-    private async _play(story: any, canvasElementQuery: string) {
-        try {
-            if (!story.play) {
-                return;
-            }
-
-            this._isBusyPlaying = true;
-
-            const context = this._createStoryContext(story, canvasElementQuery);
-            await story.play(context);
-            this.querySelector<HTMLDivElement>(canvasElementQuery + '-result.success')!.style.display = 'flex';
-            this.querySelector<HTMLDivElement>(canvasElementQuery + '-result.failure')!.style.display = 'none';
-        } catch (error: any) {
-            this.querySelector<HTMLDivElement>(canvasElementQuery + '-result.failure')!.style.display = 'flex';
-            this.querySelector<HTMLDivElement>(canvasElementQuery + '-result.success')!.style.display = 'none';
-
-            //Try to strip chalk colours from jest expect error outputs
-            this._playError = (error?.matcherResult?.message ?? error?.message)
-                ?.toString()
-                .replace(/\u001b[^m]*?m/g, '')
-                // eslint-disable-next-line no-regex-spaces
-                .replace(/\n \u001b[^m]*?m/g, '')
-                .replace(/\u001b[^m]*?m\n/g, '')
-                .replace(/\n\u001b[^m]*?m/g, '');
-        } finally {
-            this._isBusyPlaying = false;
-        }
-    }
-
-    private _createStoryContext(story: any, canvasElementQuery: string): any {
-        return {
-            story: story,
-            args: story.args,
-            canvasElement: this.querySelector(canvasElementQuery)
-        };
     }
 
     private _currentCodeTheme() {

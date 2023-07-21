@@ -1,9 +1,5 @@
-import { waitFor, within } from '@testing-library/dom';
-import userEvent from '@testing-library/user-event';
-import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { OmniFormElement } from '../core/OmniFormElement.js';
 import {
     LabelStory,
     BaseArgs,
@@ -16,16 +12,10 @@ import {
     SuffixStory
 } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import expect from '../utils/ExpectDOM.js';
-import { assignToSlot, ComponentStoryFormat, CSFIdentifier, getSourceFromLit } from '../utils/StoryUtils.js';
+import { assignToSlot, ComponentStoryFormat, getSourceFromLit } from '../utils/StoryUtils.js';
 import { ColorField } from './ColorField.js';
 
 import './ColorField.js';
-
-export default {
-    title: 'UI Components/Color Field',
-    component: 'omni-color-field'
-} as CSFIdentifier;
 
 export const Interactive: ComponentStoryFormat<BaseArgs> = {
     render: (args: BaseArgs) => html`
@@ -64,13 +54,6 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
         prefix: '',
         suffix: '',
         clear: ''
-    },
-    play: async (context) => {
-        const field = within(context.canvasElement).getByTestId<ColorField>('test-color-field');
-
-        const inputField = field.shadowRoot?.getElementById('inputField') as HTMLInputElement;
-
-        await expect(inputField.type).toBe('color');
     }
 };
 
@@ -112,29 +95,5 @@ const App = () => <OmniColorField${args.label ? ` label='${args.label}'` : ''}${
     args: {
         label: 'Disabled',
         disabled: true
-    },
-    play: async (context) => {
-        const input = within(context.canvasElement).getByTestId<ColorField>('test-field');
-
-        //Disabled class test.
-        const disabledAttribute = input.attributes.getNamedItem('disabled');
-        await expect(disabledAttribute).toBeTruthy();
-
-        //Input event test.
-        const inputTest = jest.fn();
-        input.addEventListener('input', inputTest);
-
-        const inputField = input.shadowRoot?.getElementById('inputField') as OmniFormElement;
-
-        await userEvent.type(inputField, 'Value Update 3', {
-            pointerEventsCheck: 0
-        });
-
-        await waitFor(() => expect(input.value).toBeFalsy(), {
-            timeout: 3000
-        });
-        await waitFor(() => expect(inputTest).toBeCalledTimes(0), {
-            timeout: 3000
-        });
     }
 };
