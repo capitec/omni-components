@@ -555,7 +555,7 @@ Search input control.
 
 </td><td>
 
-Control to get or set a value within a list of options.
+Control to get / set a value within a list of options.
 
 </td></tr><tr><td>
 
@@ -571,7 +571,7 @@ Control to switch a value on or off.
 
 </td><td>
 
-Control that can be used to display slotted content for use within an Tab Group component.
+Control that can be used to display slotted content, for use within an Tab Group component.
 
 </td></tr><tr><td>
 
@@ -587,7 +587,7 @@ Component that displays content in tabs.
 
 </td><td>
 
-Control that can be used to display custom slotted content for use within Tab Group component with associated Tab component.
+Control that can be used to display custom slotted content, for use within Tab Group component with associated Tab component.
 
 </td></tr><tr><td>
 
@@ -616,6 +616,7 @@ A toast container that animates in and stacks toast elements.
 </td></tr></tbody></table>
 
 
+
 <br>
 
 
@@ -632,17 +633,17 @@ See the [`CONTRIBUTING.md`](./CONTRIBUTING.md) guide to get involved.
 <table>
 <tr>
     <td align="center">
-        <a href="https://github.com/chromaticWaster">
-            <img src="https://avatars.githubusercontent.com/u/22874454?v=4" width="100;" alt="chromaticWaster"/>
-            <br />
-            <sub><b>chromaticWaster</b></sub>
-        </a>
-    </td>
-    <td align="center">
         <a href="https://github.com/BOTLANNER">
             <img src="https://avatars.githubusercontent.com/u/16349308?v=4" width="100;" alt="BOTLANNER"/>
             <br />
             <sub><b>BOTLANNER</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/chromaticWaster">
+            <img src="https://avatars.githubusercontent.com/u/22874454?v=4" width="100;" alt="chromaticWaster"/>
+            <br />
+            <sub><b>chromaticWaster</b></sub>
         </a>
     </td>
     <td align="center">
@@ -660,17 +661,17 @@ See the [`CONTRIBUTING.md`](./CONTRIBUTING.md) guide to get involved.
         </a>
     </td>
     <td align="center">
-        <a href="https://github.com/Makhubedu">
-            <img src="https://avatars.githubusercontent.com/u/43409770?v=4" width="100;" alt="Makhubedu"/>
-            <br />
-            <sub><b>Makhubedu</b></sub>
-        </a>
-    </td>
-    <td align="center">
         <a href="https://github.com/capitec-oss">
             <img src="https://avatars.githubusercontent.com/u/109588738?v=4" width="100;" alt="capitec-oss"/>
             <br />
             <sub><b>capitec-oss</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/Makhubedu">
+            <img src="https://avatars.githubusercontent.com/u/43409770?v=4" width="100;" alt="Makhubedu"/>
+            <br />
+            <sub><b>Makhubedu</b></sub>
         </a>
     </td></tr>
 </table>
