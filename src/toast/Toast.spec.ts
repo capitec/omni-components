@@ -51,7 +51,6 @@ test(`Toast - Custom Slotted Close`, async ({ page }) => {
     });
 });
 
-/* 'success' | 'warning' | 'error' | 'info' | 'none' */
 test(`Toast - Success Type`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/toast/');
@@ -119,5 +118,59 @@ test(`Toast - No Type`, async ({ page }) => {
         });
 
         await expect(toast).toHaveScreenshot('toast-type.png');
+    });
+});
+
+test(`Toast - Show Behaviour`, async ({ page }) => {
+    await withCoverage(page, async () => {
+        await page.goto('/components/toast/');
+
+        const toast = await page.evaluateHandle(async () => {
+            await customElements.whenDefined('omni-toast');
+
+            const toastClass = customElements.get('omni-toast') as typeof Toast;
+            return toastClass.show({
+                type: 'info',
+                header: 'Test Header',
+                detail: 'Test Detail.'
+            });
+        });
+
+        await expect(await toast.screenshot()).toMatchSnapshot('toast-shown.png');
+    });
+});
+
+test(`Toast - Configure Behaviour`, async ({ page }) => {
+    await withCoverage(page, async () => {
+        await page.goto('/components/toast/');
+
+        const toastStack = await page.evaluateHandle(async () => {
+            await customElements.whenDefined('omni-toast');
+
+            const toastClass = customElements.get('omni-toast') as typeof Toast;
+
+            toastClass.configure({
+                closeable: true,
+                duration: 0,
+                position: 'top',
+                reverse: true,
+                stack: true
+            });
+
+            toastClass.show({
+                type: 'info',
+                header: 'Test Header 1',
+                detail: 'Test First Detail.'
+            });
+            toastClass.show({
+                type: 'success',
+                header: 'Test Header 2',
+                detail: 'Test Second Detail.'
+            });
+
+            return toastClass.current;
+        });
+
+        await expect(await toastStack.screenshot()).toMatchSnapshot('toasts-configured-shown.png');
     });
 });

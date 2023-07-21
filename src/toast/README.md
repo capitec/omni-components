@@ -140,10 +140,10 @@ A toast container that animates in and stacks toast elements.
 
 ## Methods
 
-| Method         | Type                                             | Description                                 |
-|----------------|--------------------------------------------------|---------------------------------------------|
-| `showInstance` | `(instance: Toast, options?: ShowToastOptions \| undefined): Toast` | Push a toast instance onto the toast stack. |
-| `showToast`    | `(init: ShowToastInit): Toast`                   | Push a toast message onto the toast stack.  |
+| Method         | Type                                             | Description                                      |
+|----------------|--------------------------------------------------|--------------------------------------------------|
+| `showInstance` | `(instance: Toast, options?: ShowToastOptions \| undefined): Toast` | Push an existing toast instance onto the toast stack. |
+| `showToast`    | `(init: ShowToastInit): Toast`                   | Push a toast message onto the toast stack.       |
 
 ## Events
 

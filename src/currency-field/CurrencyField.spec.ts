@@ -1,4 +1,3 @@
-import * as jestMock from 'jest-mock';
 import {
     testLabelBehaviour,
     testHintBehaviour,
@@ -10,14 +9,13 @@ import {
     testSuffixBehaviour,
     testDisabledBehaviour
 } from '../core/OmniInputPlaywright.js';
-import { test, expect, withCoverage /*keyboardPaste, clipboardCopy*/ } from '../utils/JestPlaywright.js';
+import { test, expect, mockEventListener, withCoverage /*keyboardPaste, clipboardCopy*/ } from '../utils/JestPlaywright.js';
 import type { CurrencyField } from './CurrencyField.js';
 
-test(`Currency Field - Visual and Behaviour`, async ({ page, isMobile }) => {
+test(`Currency Field - Visual and Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/currency-field/');
 
-        const args = await page.locator('story-renderer[key=Interactive]').evaluate((storyRenderer) => (storyRenderer as any).story.args);
         const currencyField = page.locator('.Interactive').getByTestId('test-currency-field');
 
         await currencyField.evaluate(async (c: CurrencyField) => {
@@ -39,11 +37,7 @@ test(`Currency Field - Visual and Behaviour`, async ({ page, isMobile }) => {
         await inputField.blur();
         await expect(currencyField).toHaveScreenshot('currency-field-blurred.png');
 
-        const beforeinput = jestMock.fn();
-        await page.exposeFunction('jestbeforeinput', () => beforeinput());
-        await currencyField.evaluate((node) => {
-            node.addEventListener('beforeinput', () => (window as any).jestbeforeinput());
-        });
+        const beforeinput = await mockEventListener(currencyField, 'beforeinput');
 
         const value = '120000015';
         await inputField.type(value);
@@ -107,12 +101,12 @@ test(`Currency Field - Visual and Behaviour`, async ({ page, isMobile }) => {
     });
 });
 
-testLabelBehaviour('omni-currency-field');
-testHintBehaviour('omni-currency-field');
-testErrorBehaviour('omni-currency-field');
-testValueBehaviour('omni-currency-field');
-testClearableBehaviour('omni-currency-field');
-testCustomClearableSlotBehaviour('omni-currency-field');
-testPrefixBehaviour('omni-currency-field');
-testSuffixBehaviour('omni-currency-field');
-testDisabledBehaviour('omni-currency-field');
+test('Currency Field - Label Behaviour', testLabelBehaviour('omni-currency-field'));
+test('Currency Field - Hint Behaviour', testHintBehaviour('omni-currency-field'));
+test('Currency Field - Error Behaviour', testErrorBehaviour('omni-currency-field'));
+test('Currency Field - Value Behaviour', testValueBehaviour('omni-currency-field'));
+test('Currency Field - Clearable Behaviour', testClearableBehaviour('omni-currency-field'));
+test('Currency Field - Custom Clear Slot Behaviour', testCustomClearableSlotBehaviour('omni-currency-field'));
+test('Currency Field - Prefix Behaviour', testPrefixBehaviour('omni-currency-field'));
+test('Currency Field - Suffix Behaviour', testSuffixBehaviour('omni-currency-field'));
+test('Currency Field - Disabled Behaviour', testDisabledBehaviour('omni-currency-field'));

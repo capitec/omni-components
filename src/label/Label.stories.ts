@@ -1,31 +1,12 @@
-import { within } from '@testing-library/dom';
 import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import expect from '../utils/ExpectDOM.js';
-import { ComponentStoryFormat, CSFIdentifier } from '../utils/StoryUtils.js';
-import { Label } from './Label.js';
+import { ComponentStoryFormat } from '../utils/StoryUtils.js';
 import './Label.js';
 
 const labelOptions = ['default', 'title', 'subtitle', 'strong'] as const;
 
-export default {
-    title: 'UI Components/Label',
-    component: 'omni-label',
-    argTypes: {
-        type: {
-            control: {
-                type: 'radio',
-                options: labelOptions
-            },
-            '[Default Slot]': {
-                control: 'text'
-            }
-        }
-    }
-} as CSFIdentifier;
-
-interface Args {
+export interface Args {
     label: string;
     type: (typeof labelOptions)[number];
     '[Default Slot]': string;

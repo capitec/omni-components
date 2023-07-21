@@ -1,11 +1,7 @@
-import { within } from '@testing-library/dom';
-import userEvent from '@testing-library/user-event';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import expect from '../utils/ExpectDOM.js';
-import { ComponentStoryFormat, querySelectorAsync, raw } from '../utils/StoryUtils.js';
+import { ComponentStoryFormat, raw } from '../utils/StoryUtils.js';
 
-import { TabGroup } from './TabGroup.js';
 import '../label/Label.js';
 import './TabHeader.js';
 import './Tab.js';
@@ -106,36 +102,5 @@ const App = () =>
     <div>
         For slotting custom content into the header use the <code class="language-html">&lt;omni-tab-header&gt;</code> component that targets the header slot of the <omni-hyperlink href='./components/tab-group'><code class="language-html">&lt;omni-tab-group&gt;</code></omni-hyperlink> component by setting <code class="language-js">slot="header"</code> and ensure you have a <omni-hyperlink href='./components/tab'><code class="language-html">&lt;omni-tab&gt;</code></omni-hyperlink> component which has an <code>id</code> attribute that matches the <code class="language-html">&lt;omni-tab-header&gt;</code> <code>for</code> attribute to display slotted content.
     <div>
-    `,
-    play: async (context) => {
-        const tabGroupElement = within(context.canvasElement).getByTestId<TabGroup>('test-tab-group');
-        // Get the tab bar element
-        const tabBar = (await querySelectorAsync(tabGroupElement.shadowRoot as ShadowRoot, '.tab-bar')) as HTMLElement;
-        await expect(tabBar).toBeTruthy();
-
-        // Check for the slot then check the content of the slot
-        const slotElement = tabBar.querySelector<HTMLSlotElement>('slot[name="header"]');
-        await expect(slotElement).toBeTruthy();
-
-        //Get all the tab headers in the header slot.
-        const tabHeaders = slotElement?.assignedElements().filter((e) => e.tagName.toLowerCase() === 'omni-tab-header') as HTMLElement[];
-        await expect(tabHeaders).toBeTruthy();
-
-        //Get the active tab header.
-        const activeTabHeader = tabHeaders?.find((c) => c.hasAttribute('data-active'));
-        await expect(activeTabHeader).toBeTruthy();
-
-        //Get nested omni-icon.
-        const omniIcon = activeTabHeader?.querySelector<HTMLElement>('omni-icon');
-        await expect(omniIcon).toBeTruthy();
-
-        //Get nested svg
-        const svgElement = activeTabHeader?.querySelector<HTMLElement>('svg');
-        await expect(svgElement).toBeTruthy();
-
-        //Click the second tab.
-        await userEvent.click(tabHeaders[1]);
-        const nextActiveTab = tabHeaders.find((c) => c.hasAttribute('data-active'));
-        await expect(nextActiveTab).toBeTruthy();
-    }
+    `
 };

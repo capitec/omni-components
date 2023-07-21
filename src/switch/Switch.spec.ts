@@ -1,6 +1,4 @@
-import * as jestMock from 'jest-mock';
-import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
-import { Args } from './Switch.stories.js';
+import { test, expect, getStoryArgs, mockEventListener, withCoverage } from '../utils/JestPlaywright.js';
 
 test(`Switch - Event Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
@@ -8,12 +6,7 @@ test(`Switch - Event Behaviour`, async ({ page }) => {
 
         const switchElement = page.locator('.Interactive').getByTestId('test-switch');
 
-        const valueChange = jestMock.fn();
-
-        await page.exposeFunction('jestValueChange', () => valueChange());
-        await switchElement.evaluate((node) => {
-            node.addEventListener('value-change', () => window.jestValueChange());
-        });
+        const valueChange = await mockEventListener(switchElement, 'value-change');
 
         const content = switchElement.locator('#content');
         await content.click({
@@ -28,7 +21,7 @@ test(`Switch - Label Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/switch/');
 
-        const args = await page.locator('story-renderer[key=Label]').evaluate(getStoryArgs());
+        const args = await getStoryArgs(page, 'Label');
         const switchElement = page.locator('.Label').getByTestId('test-switch');
         const labelElement = switchElement.locator('label');
 
@@ -41,7 +34,7 @@ test(`Switch - Hint Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/switch/');
 
-        const args = await page.locator('story-renderer[key=Hint]').evaluate(getStoryArgs());
+        const args = await getStoryArgs(page, 'Hint');
         const switchElement = page.locator('.Hint').getByTestId('test-switch');
         const hintElement = switchElement.locator('.hint');
 
@@ -54,7 +47,7 @@ test(`Switch - Error Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/switch/');
 
-        const args = await page.locator('story-renderer[key=Error_Label]').evaluate(getStoryArgs());
+        const args = await getStoryArgs(page, 'Error_Label');
         const switchElement = page.locator('.Error_Label').getByTestId('test-switch');
         const errorElement = switchElement.locator('.error');
 
@@ -95,9 +88,7 @@ test(`Switch - Disabled Behaviour`, async ({ page }) => {
         await expect(switchElement).toHaveScreenshot('switch-disabled.png');
 
         // Test not clickable when disabled.
-        const click = jestMock.fn();
-        await page.exposeFunction('setSwitchClicked', () => click());
-        await switchElement.evaluate((n) => n.addEventListener('click', () => window.setSwitchClicked()));
+        const click = await mockEventListener(switchElement, 'click');
 
         await switchElement.click({
             force: true
@@ -122,13 +113,3 @@ test(`Switch - Slot Behaviour`, async ({ page }) => {
         await expect(switchElement).toHaveScreenshot('switch-slot.png');
     });
 });
-declare global {
-    interface Window {
-        setSwitchClicked: () => void;
-        jestValueChange: () => void;
-    }
-}
-function getStoryArgs() {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return (storyRenderer: any) => storyRenderer?.story?.args as Args;
-}

@@ -1,39 +1,13 @@
-import { within } from '@testing-library/dom';
-import userEvent from '@testing-library/user-event';
-import * as jest from 'jest-mock';
 import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import expect from '../utils/ExpectDOM.js';
-import { raw, CSFIdentifier, ComponentStoryFormat, getSourceFromLit } from '../utils/StoryUtils.js';
-import { Button } from './Button.js';
+import { raw, ComponentStoryFormat, getSourceFromLit } from '../utils/StoryUtils.js';
 
 import './Button.js';
 import '../icon/Icon.js';
 
 const buttonOptions = ['primary', 'secondary', 'clear', 'white'] as const;
 const slotPositionOptions = ['left', 'top', 'right', 'bottom'] as const;
-
-export default {
-    title: 'UI Components/Button',
-    component: 'omni-button',
-    argTypes: {
-        type: {
-            control: 'radio',
-            options: buttonOptions
-        },
-        slotPosition: {
-            control: 'radio',
-            options: slotPositionOptions
-        },
-        'slot-position': {
-            control: false
-        },
-        '[Default Slot]': {
-            control: 'text'
-        }
-    }
-} as CSFIdentifier;
 
 interface Args {
     type: (typeof buttonOptions)[number];

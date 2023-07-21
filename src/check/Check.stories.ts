@@ -1,26 +1,8 @@
-import { within, fireEvent } from '@testing-library/dom';
-import userEvent from '@testing-library/user-event';
-import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import expect from '../utils/ExpectDOM.js';
-import { assignToSlot, ComponentStoryFormat, CSFIdentifier, getSourceFromLit, raw } from '../utils/StoryUtils.js';
-import { Check } from './Check.js';
+import { assignToSlot, ComponentStoryFormat, getSourceFromLit, raw } from '../utils/StoryUtils.js';
 import './Check.js';
-
-export default {
-    title: 'UI Components/Check',
-    component: 'omni-check',
-    argTypes: {
-        indeterminate_icon: {
-            control: 'text'
-        },
-        check_icon: {
-            control: 'text'
-        }
-    }
-} as CSFIdentifier;
 
 export interface Args {
     label: string;
@@ -76,22 +58,6 @@ export const Interactive: ComponentStoryFormat<Args> = {
         check_icon: '',
         indeterminate_icon: '',
         '[Default Slot]': undefined
-    },
-    play: async (context) => {
-        const check = within(context.canvasElement).getByTestId<Check>('test-check');
-        const valueChange = jest.fn();
-        check.addEventListener('value-change', valueChange);
-        await userEvent.click(check, {
-            pointerEventsCheck: 0
-        });
-
-        const content = check.shadowRoot?.getElementById('content') as HTMLElement;
-
-        await fireEvent.keyDown(content, {
-            key: ' ',
-            code: 'Space'
-        });
-        await expect(valueChange).toBeCalledTimes(2);
     }
 };
 
@@ -108,12 +74,6 @@ const App = () => <OmniCheck${args.label ? ` label='${args.label}'` : ''}/>;`
     description: 'Set text value to display next to the check box.',
     args: {
         label: 'Label'
-    },
-    play: async (context) => {
-        const check = within(context.canvasElement).getByTestId<Check>('test-check');
-        const labelElement = check.shadowRoot?.querySelector('label');
-        await expect(labelElement).toBeTruthy();
-        await expect(labelElement).toHaveTextContent(Label.args?.label as string);
     }
 };
 
@@ -131,12 +91,6 @@ const App = () => <OmniCheck${args.label ? ` label='${args.label}'` : ''}${args.
     args: {
         label: 'Hint',
         hint: 'This is a hint'
-    },
-    play: async (context) => {
-        const check = within(context.canvasElement).getByTestId<Check>('test-check');
-        const hintElement = check.shadowRoot?.querySelector<HTMLElement>('.hint');
-        await expect(hintElement).toBeTruthy();
-        await expect(hintElement).toHaveTextContent(Hint.args?.hint as string);
     }
 };
 
@@ -155,12 +109,6 @@ const App = () => <OmniCheck${args.label ? ` label='${args.label}'` : ''}${args.
     args: {
         label: 'Error',
         error: 'This is an error state'
-    },
-    play: async (context) => {
-        const check = within(context.canvasElement).getByTestId<Check>('test-check');
-        const errorElement = check.shadowRoot?.querySelector<HTMLElement>('.error');
-        await expect(errorElement).toBeTruthy();
-        await expect(errorElement).toHaveTextContent(Error_Label.args?.error as string);
     }
 };
 
@@ -188,11 +136,6 @@ const App = () => <OmniCheck${args.label ? ` label='${args.label}'` : ''}${args.
     args: {
         label: 'Checked',
         checked: true
-    },
-    play: async (context) => {
-        const check = within(context.canvasElement).getByTestId<Check>('test-check');
-        const checkedElement = check.shadowRoot?.querySelector<HTMLElement>('.checked');
-        await expect(checkedElement).toBeTruthy();
     }
 };
 
@@ -220,11 +163,6 @@ const App = () => <OmniCheck${args.label ? ` label='${args.label}'` : ''}${args.
     args: {
         label: 'Indeterminate',
         indeterminate: true
-    },
-    play: async (context) => {
-        const check = within(context.canvasElement).getByTestId<Check>('test-check');
-        const indeterminateElement = check.shadowRoot?.querySelector<HTMLElement>('.indeterminate');
-        await expect(indeterminateElement).toBeTruthy();
     }
 };
 
@@ -252,24 +190,6 @@ const App = () => <OmniCheck${args.label ? ` label='${args.label}'` : ''}${args.
     args: {
         label: 'Disabled',
         disabled: true
-    },
-    play: async (context) => {
-        const check = within(context.canvasElement).getByTestId<Check>('test-check');
-        const valueChange = jest.fn();
-        check.addEventListener('value-change', valueChange);
-
-        const disabledElement = check.shadowRoot?.querySelector<HTMLElement>('.disabled');
-        await expect(disabledElement).toBeTruthy();
-
-        const content = check.shadowRoot?.getElementById('content') as HTMLElement;
-        await userEvent.click(content, {
-            pointerEventsCheck: 0
-        });
-        await fireEvent.keyDown(content, {
-            key: ' ',
-            code: 'Space'
-        });
-        await expect(valueChange).toBeCalledTimes(0);
     }
 };
 
@@ -289,12 +209,7 @@ const App = () => <OmniCheck>
     ],
     name: 'Slot',
     description: 'Set content to display within.',
-    args: {},
-    play: async (context) => {
-        const checkElement = within(context.canvasElement).getByTestId<Check>('test-check');
-        const slottedText = checkElement.innerHTML;
-        await expect(slottedText).toEqual('Slotted');
-    }
+    args: {}
 } as ComponentStoryFormat<Args>;
 
 export const Custom_Check_Icon: ComponentStoryFormat<Args> = {
@@ -337,14 +252,6 @@ const App = () => <OmniCheck${args.label ? ` label='${args.label}'` : ''}${args.
                 transform="translate(843.77 509.04) scale(.48018)" />
             </svg>
         `
-    },
-    play: async (context) => {
-        const check = within(context.canvasElement).getByTestId<Check>('test-check');
-        const slotElement = check.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=check_icon]');
-        await expect(slotElement).toBeTruthy();
-
-        const foundSlottedSvgElement = slotElement?.assignedElements().find((e) => e.tagName.toLowerCase() === 'svg');
-        await expect(foundSlottedSvgElement).toBeTruthy();
     }
 };
 
@@ -409,13 +316,5 @@ const App = () => <OmniCheck${args.label ? ` label='${args.label}'` : ''}${args.
 				d="M2.875 13.938c-1.067 0-1.938.884-1.938 2.062s.87 2.062 1.938 2.062h26.25c1.067 0 1.937-.884 1.937-2.062s-.87-2.062-1.937-2.062H2.875z" />
 			</svg>
 		`
-    },
-    play: async (context) => {
-        const check = within(context.canvasElement).getByTestId<Check>('test-check');
-        const slotElement = check.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=indeterminate_icon]');
-        await expect(slotElement).toBeTruthy();
-
-        const foundSlottedSvgElement = slotElement?.assignedElements().find((e) => e.tagName.toLowerCase() === 'svg');
-        await expect(foundSlottedSvgElement).toBeTruthy();
     }
 };

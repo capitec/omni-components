@@ -1,6 +1,4 @@
-import * as jestMock from 'jest-mock';
 import { DateTime } from 'luxon';
-import type { Calendar } from '../calendar/Calendar.js';
 import {
     testLabelBehaviour,
     testHintBehaviour,
@@ -10,16 +8,15 @@ import {
     testPrefixBehaviour,
     testSuffixBehaviour
 } from '../core/OmniInputPlaywright.js';
-import { test, expect, withCoverage, type Page } from '../utils/JestPlaywright.js';
+import { test, expect, getStoryArgs, mockEventListener, withCoverage, type Page } from '../utils/JestPlaywright.js';
 import type { DatePicker } from './DatePicker.js';
 
-test(`Date Picker - Visual and Behaviour`, async ({ page, isMobile }) => {
+test(`Date Picker - Visual and Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/date-picker/');
 
         await page.waitForSelector('[data-testid]', {});
 
-        const args = await page.locator('story-renderer[key=Value]').evaluate((storyRenderer) => (storyRenderer as any).story.args);
         const datePicker = page.locator('.Value').getByTestId('test-date-picker');
 
         // Prepare test data
@@ -90,13 +87,12 @@ test(`Date Picker - Visual and Behaviour`, async ({ page, isMobile }) => {
     });
 });
 
-test(`Date Picker - Value Behaviour`, async ({ page, isMobile }) => {
+test(`Date Picker - Value Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/date-picker/');
 
         await page.waitForSelector('[data-testid]', {});
 
-        const args = await page.locator('story-renderer[key=Value]').evaluate((storyRenderer) => (storyRenderer as any).story.args);
         const datePicker = page.locator('.Value').getByTestId('test-date-picker');
         await datePicker.evaluate(async (d: DatePicker) => {
             d.value = '2023-01-01';
@@ -114,7 +110,7 @@ test(`Date Picker - Value Behaviour`, async ({ page, isMobile }) => {
     });
 });
 
-test(`Date Picker - Locale Behaviour`, async ({ page, isMobile }) => {
+test(`Date Picker - Locale Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         const localDate = DateTime.fromISO('2022-06-21');
         const isoDate = localDate.toISODate() as string;
@@ -124,7 +120,6 @@ test(`Date Picker - Locale Behaviour`, async ({ page, isMobile }) => {
 
         await page.waitForSelector('[data-testid]', {});
 
-        const args = await page.locator('story-renderer[key=Locale]').evaluate((storyRenderer) => (storyRenderer as any).story.args);
         const datePicker = page.locator('.Locale').getByTestId('test-date-picker');
 
         // Prepare test data
@@ -158,7 +153,7 @@ test(`Date Picker - Min Date Behaviour`, async ({ page }) => {
 
         await page.waitForSelector('[data-testid]', {});
 
-        const args = await page.locator('story-renderer[key=Min_Date]').evaluate((storyRenderer) => (storyRenderer as any).story.args);
+        const args = await getStoryArgs(page, 'Min_Date');
         const datePicker = page.locator('.Min_Date').getByTestId('test-date-picker');
         await datePicker.evaluate(async (d: DatePicker, args) => {
             d.value = args.value;
@@ -206,7 +201,7 @@ test(`Date Picker - Max Date Behaviour`, async ({ page }) => {
 
         await page.waitForSelector('[data-testid]', {});
 
-        const args = await page.locator('story-renderer[key=Max_Date]').evaluate((storyRenderer) => (storyRenderer as any).story.args);
+        const args = await getStoryArgs(page, 'Max_Date');
         const datePicker = page.locator('.Max_Date').getByTestId('test-date-picker');
         await datePicker.evaluate(async (d: DatePicker, args) => {
             d.value = args.value;
@@ -248,13 +243,13 @@ test(`Date Picker - Max Date Behaviour`, async ({ page }) => {
     });
 });
 
-testLabelBehaviour('omni-date-picker');
-testHintBehaviour('omni-date-picker');
-testErrorBehaviour('omni-date-picker');
-testClearableBehaviour('omni-date-picker');
-testCustomClearableSlotBehaviour('omni-date-picker');
-testPrefixBehaviour('omni-date-picker');
-testSuffixBehaviour('omni-date-picker');
+test('Date Picker - Label Behaviour', testLabelBehaviour('omni-date-picker'));
+test('Date Picker - Hint Behaviour', testHintBehaviour('omni-date-picker'));
+test('Date Picker - Error Behaviour', testErrorBehaviour('omni-date-picker'));
+test('Date Picker - Clearable Behaviour', testClearableBehaviour('omni-date-picker'));
+test('Date Picker - Custom Clear Slot Behaviour', testCustomClearableSlotBehaviour('omni-date-picker'));
+test('Date Picker - Prefix Behaviour', testPrefixBehaviour('omni-date-picker'));
+test('Date Picker - Suffix Behaviour', testSuffixBehaviour('omni-date-picker'));
 
 test(`Date Picker - Disabled Behaviour`, async ({ page, isMobile }) => {
     await withCoverage(page, async () => {
@@ -262,7 +257,7 @@ test(`Date Picker - Disabled Behaviour`, async ({ page, isMobile }) => {
 
         await page.waitForSelector('[data-testid]', {});
 
-        const args = await page.locator('story-renderer[key=Disabled]').evaluate((storyRenderer) => (storyRenderer as any).story.args);
+        const args = await getStoryArgs(page, 'Disabled');
         const datePicker = page.locator('.Disabled').getByTestId('test-date-picker');
         await datePicker.evaluate(async (d: DatePicker, args) => {
             d.value = args.value;
@@ -272,12 +267,7 @@ test(`Date Picker - Disabled Behaviour`, async ({ page, isMobile }) => {
 
         await expect(datePicker).toHaveScreenshot('date-picker-initial.png');
 
-        //Click event test.
-        const click = jestMock.fn();
-        await page.exposeFunction('jestClick', () => click());
-        await datePicker.evaluate((node) => {
-            node.addEventListener('click', () => (window as any).jestClick());
-        });
+        const click = await mockEventListener(datePicker, 'click');
 
         await datePicker.click({
             force: true

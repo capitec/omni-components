@@ -1,8 +1,18 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import fs from 'fs';
 // import { platform } from 'os';
-import { expect as expectPatched, test, type Locator, type Page, type PageScreenshotOptions, type LocatorScreenshotOptions } from '@playwright/test';
+import {
+    expect as expectPatched,
+    test,
+    type Locator,
+    type Page,
+    type PageScreenshotOptions,
+    type LocatorScreenshotOptions,
+    JSHandle,
+    ElementHandle
+} from '@playwright/test';
 export * from '@playwright/test';
+import { fn } from 'jest-mock';
 //@ts-ignore
 import jsdom from 'jsdom';
 //@ts-ignore
@@ -144,6 +154,57 @@ async function withCoverage<T>(this: any, page: Page, testAction: () => T | Prom
     return result;
 }
 
+/**
+ * Read story args from story renderer with provided key
+ */
+async function getStoryArgs<T = any>(page: Page, key: string, readySelector = '[data-testid]') {
+    await page.waitForSelector(readySelector);
+
+    const args = await page.locator(`story-renderer[key=${key}]`).evaluate((storyRenderer: any) => storyRenderer?.story?.args as T);
+    return args;
+}
+
+async function mockEventListener(locatorOrHandle: Locator | ElementHandle | null | undefined, eventName: string) {
+    const tempFunction = `mock_${v4()}`;
+    const eventFunction = fn();
+
+    if (!locatorOrHandle) {
+        return eventFunction;
+    }
+
+    let page: Page;
+    const evalFunc = (node: HTMLElement, { tempFunction, eventName }: { tempFunction: string; eventName: string }) => {
+        //@ts-ignore
+        node.addEventListener(eventName, () => window[tempFunction]());
+    };
+
+    if ((locatorOrHandle as ElementHandle).ownerFrame) {
+        const handle = locatorOrHandle as ElementHandle;
+
+        page = (await handle.ownerFrame())?.page() as Page;
+        await page.exposeFunction(tempFunction, () => eventFunction());
+
+        await handle.evaluate(evalFunc, { tempFunction, eventName });
+    } else {
+        const locator = locatorOrHandle as Locator;
+
+        page = locator.page() as Page;
+        await page.exposeFunction(tempFunction, () => eventFunction());
+
+        await locator.evaluate(evalFunc, { tempFunction, eventName });
+    }
+
+    return eventFunction;
+}
+
+/*
+    const valueChange = jestMock.fn();
+    await page.exposeFunction('jestChange', () => valueChange());
+    await selectComponent.evaluate((node) => {
+        node.addEventListener('change', () => window.jestChange());
+    });
+
+*/
 // TODO: Revisit once playwright clipboard support is completed
 /*
     clipboard isolation: [feature] clipboard isolation: https://github.com/microsoft/playwright/issues/13097
@@ -178,4 +239,4 @@ declare global {
     }
 }
 
-export { expect, withCoverage /*keyboardCopy, keyboardPaste, clipboardCopy*/ };
+export { expect, withCoverage, getStoryArgs, mockEventListener /*keyboardCopy, keyboardPaste, clipboardCopy*/ };

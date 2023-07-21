@@ -1,32 +1,48 @@
 name: Generate Playwright Screenshots
 
+env:
+  PW_COMPONENT_FILTER:
 on: 
   push:
     branches-ignore: [ main,develop,alpha ]
     paths: 
       - '**/*.spec.ts'
       - '**/*.spec.js'
-      - '**/OmniInputPlaywright.ts'
-      - '**/JestPlaywright.ts'
-      - 'playwright.config.js'
-      - '.github/workflows/add-screenshots.yml'
+      - '**/*Playwright.ts'
   
   # Allows you to run this workflow manually from the Actions tab.
   workflow_dispatch:
 
 jobs:
-  screenshot-add:
+  screenshot-prepare:
     if: github.event_name != 'workflow_dispatch' || (github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' && github.ref != 'refs/heads/alpha')
-    name: "Add Missing Screenshots"
-    timeout-minutes: 60 
+    name: "Detect required tests"
     runs-on: macos-latest
+    outputs:
+      matrix: ${{ steps.get-component-filter.outputs.result }}
     steps:
+      - name: Configure OS
+        run: |
+          echo "Setting CGFontDisableAntialiasing"
+          defaults write CoreGraphics CGFontDisableAntialiasing YES
+          echo "Disabling AppleFontSmoothing"
+          defaults write -g AppleFontSmoothing -int 0
+          echo "Completed OS configure"
+
+      - name: Dump env 💩
+        run: env | sort
+
+      - name: Dump GitHub context 💩
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      
+
       - name: Checkout 🛎️
         uses: actions/checkout@v3
         with:
           persist-credentials: true
           fetch-depth: 0
-          token: ${{ secrets.PROTECTED_TOKEN }}
 
       - name: Ensure branch up to date 🌿 
         # Only on branches
@@ -45,6 +61,173 @@ jobs:
         run: |
           npm ci --force
 
+      - name: Detect necessary components to test
+        uses: actions/github-script@v6
+        id: get-component-filter
+        with:
+          script: |
+            console.log('Checking required components');
+
+            const path = require('path');
+            const { execSync } = require('child_process');
+
+            const { globby } = await import('${{ github.workspace }}/node_modules/globby/index.js');
+
+            const ghCtx = ${{ toJson(github) }};
+            let files = [];
+            let excludeFiles = [];
+
+            async function getAllComponents() {
+
+                const entryPoints = (await globby('${{ github.workspace }}/src/**/!(*.(style|test|stories|spec)).(ts|js)'))
+                    .filter(value =>
+                        !value.startsWith('./src/utils') &&
+                        !value.includes('OmniInputPlaywright') &&
+                        !value.includes('OmniInputStories'));
+                return entryPoints.map(e => e.replace('./', '').replace('${{ github.workspace }}/', '')).join('\n');
+            }
+            
+            let list = '';
+            if (ghCtx.event_name === 'workflow_dispatch') {
+                console.log('Manual Dispatch');
+                try {
+                    const response = await github.request(`GET /repos/${ghCtx.repository}/actions/runs?branch=${ghCtx.ref_name}&event=workflow_dispatch&per_page=100`);
+                    const before = response.data.workflow_runs.find(wr => wr.name === ghCtx.workflow && wr.id?.toString() !== ghCtx.run_id?.toString() && wr.head_sha && wr.head_sha !== ghCtx.sha && wr.head_branch === ghCtx.ref_name && wr.status === 'completed' && wr.conclusion !== 'failure')?.head_sha;
+                    if (before) {
+                        list = execSync(`git diff-tree --no-commit-id --name-only -r ${before} ${ghCtx.sha}`).toString();
+                    } else {
+                        list = await getAllComponents();
+                    }
+                } catch (error) {
+                    console.warn(error);
+                    list = await getAllComponents();
+                }
+            } else if (ghCtx.event_name === 'pull_request') {
+                console.log('Pull Request Automated Workflow');
+                try {
+                    const response = await github.request(`GET /repos/${ghCtx.repository}/actions/runs?branch=${ghCtx.head_ref}&event=pull_request&per_page=100`);
+                    const beforeWorkflows = response.data.workflow_runs.filter(wr => wr.name === ghCtx.workflow && wr.id?.toString() !== ghCtx.run_id?.toString() && wr.head_sha && wr.head_sha !== ghCtx.sha && wr.head_branch === ghCtx.head_ref && wr.status === 'completed' && wr.pull_requests && wr.pull_requests.length > 0 && wr.pull_requests.find(p => p.id === ghCtx.event.pull_request?.id));
+                    let currentSha = ghCtx.event.pull_request?.head?.sha ?? ghCtx.sha;
+                    if (beforeWorkflows && beforeWorkflows.length > 0) {
+                        for (let index = 0; index < beforeWorkflows.length; index++) {
+                            const beforeWorkflow = beforeWorkflows[index];
+            
+                            if (beforeWorkflow?.head_sha) {
+                                const jobsResponse = await github.request(`GET /repos/${ghCtx.repository}/actions/runs/${beforeWorkflow.id}/attempts/${beforeWorkflow.run_attempt}/jobs`);
+                                if (jobsResponse?.data) {
+                                    const passedBefore = jobsResponse.data.jobs.filter(j => j.name.startsWith('Test (') && j.status === 'completed' && j.conclusion === 'success').map(j => j.name.match(/\(([^)]+)\)/)[1]);
+                                    if (passedBefore && passedBefore.length > 0) {
+                                        const diffList = execSync(`git diff-tree --no-commit-id --name-only -r ${beforeWorkflow?.head_sha} ${currentSha}`).toString();
+                                        const changedFiles = [];
+                                        diffList.split(/(\r\n|\n|\r)/gm).forEach(f => {
+                                            if (f.startsWith('src') && !f.startsWith('src/utils') && !f.startsWith('src/core') && !f.startsWith('src/icons') && !f.endsWith('index.ts') && f.endsWith('.ts')) {
+                                                const filter = path.basename(f).replace('.stories', '').replace('.spec', '').replace('.ts', '.spec.ts');
+                                                if (!changedFiles.includes(filter)) {
+                                                    changedFiles.push(filter);
+                                                }
+                                            }
+                                        });
+                                        excludeFiles = [...excludeFiles, ...passedBefore.filter(p => !changedFiles.includes(p) && !excludeFiles.includes(p))];
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    list = execSync(`git diff-tree --no-commit-id --name-only -r ${ghCtx.event.pull_request?.base?.sha ?? ghCtx.event.before} ${ghCtx.event.pull_request?.head?.sha ?? ghCtx.sha}`).toString();
+                } catch (error) {
+                    list = execSync(`git diff-tree --no-commit-id --name-only -r ${ghCtx.event.pull_request?.base?.sha ?? ghCtx.event.before} ${ghCtx.event.pull_request?.head?.sha ?? ghCtx.sha}`).toString();
+                }
+
+            } else {
+                console.log('Automated Workflow');
+                list = execSync(`git diff-tree --no-commit-id --name-only -r ${ghCtx.event.pull_request?.base?.sha ?? ghCtx.event.before} ${ghCtx.event.pull_request?.head?.sha ?? ghCtx.sha}`).toString();
+            }
+            if (list.includes('src/core')) {
+                console.log('Core was changed. Testing all components');
+                list = await getAllComponents();
+            }
+
+            if (!list) {
+                console.log('No specific component modified. Testing all components');
+                list = await getAllComponents();
+            }
+
+            console.log(list);
+            list.split(/(\r\n|\n|\r)/gm).forEach(f => {
+                if (f.startsWith('src') && !f.startsWith('src/utils') && !f.startsWith('src/core') && !f.startsWith('src/icons') && !f.endsWith('index.ts') && f.endsWith('.ts')) {
+                    const filter = path.basename(f).replace('.stories', '').replace('.spec', '').replace('.ts', '.spec.ts');
+                    if (!files.includes(filter)) {
+                        files.push(filter);
+                    }
+                }
+            });
+            if (excludeFiles.length > 0) {
+                console.log('Excluding files: ', JSON.stringify(excludeFiles));
+            }
+            files = files.filter(p => !excludeFiles.includes(p));
+
+            console.log(JSON.stringify(files));
+            return files;
+          result-encoding: json
+          
+  screenshot-add:
+    if: ${{ needs.screenshot-prepare.outputs.matrix != '[]' && needs.screenshot-prepare.outputs.matrix != '' && needs.screenshot-prepare.outputs.matrix && (github.event_name != 'workflow_dispatch' || (github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' && github.ref != 'refs/heads/alpha')) }}
+    name: "Add Missing Screenshots"
+    timeout-minutes: 240 
+    permissions: write-all
+    runs-on: macos-latest
+    needs: [ screenshot-prepare ]
+    strategy:
+      fail-fast: false
+      matrix:
+        value: ${{fromJson(needs.screenshot-prepare.outputs.matrix)}}
+    steps:
+      - name: Configure OS
+        run: |
+          echo "Setting CGFontDisableAntialiasing"
+          defaults write CoreGraphics CGFontDisableAntialiasing YES
+          echo "Disabling AppleFontSmoothing"
+          defaults write -g AppleFontSmoothing -int 0
+          echo "Completed OS configure"
+
+      - name: Dump env 💩
+        run: env | sort
+
+      - name: Dump GitHub context 💩
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      
+
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+          token: ${{ secrets.PROTECTED_TOKEN || secrets.GITHUB_TOKEN }}
+
+      - name: Ensure branch up to date 🌿 
+        # Only on branches
+        if: ${{ startsWith(github.ref, 'refs/heads/') }}
+        run: |
+          git pull
+
+      - name: Use Node.js 16.x ✔
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          registry-url: 'https://registry.npmjs.org'
+          always-auth: true
+
+      - name: Install Package Dependencies
+        run: |
+          npm ci --force
+          
+      - name: Update PW_COMPONENT_FILTER
+        run: |
+          PW_COMPONENT_FILTER="${{matrix.value}}"
+          echo PW_COMPONENT_FILTER=${PW_COMPONENT_FILTER} >> $GITHUB_ENV
+
       - name: Install Playwright Chrome Dependencies
         run: npx playwright install --with-deps
 
@@ -53,6 +236,12 @@ jobs:
         env:
           CI: true
           PW_NO_RETRIES: true
+
+      - name: Ensure branch up to date (again) 🌿 
+        # Only on branches even when failed
+        if: ${{ always() && startsWith(github.ref, 'refs/heads/') }}
+        run: |
+          git pull || true
 
       - name: Auto Commit Changes 👩‍💻
         uses: stefanzweifel/git-auto-commit-action@v4

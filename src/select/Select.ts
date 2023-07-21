@@ -158,6 +158,42 @@ export class Select extends OmniFormElement {
     private _itemsContainer?: HTMLDivElement;
 
     /**
+     * Value entered into the form component.
+     * @attr
+     */
+    @property({
+        reflect: true,
+        converter: {
+            toAttribute(value) {
+                try {
+                    if (!value) {
+                        return value;
+                    }
+                    if (typeof value === 'string') {
+                        return value;
+                    } else {
+                        return JSON.stringify(value) ?? null;
+                    }
+                } catch (err) {
+                    return value;
+                }
+            },
+            fromAttribute(value) {
+                try {
+                    if (value && typeof value === 'string' && (value.includes('{') || value.includes('['))) {
+                        return JSON.parse(value);
+                    }
+                    return value;
+                } catch (err) {
+                    // Value cannot be used as defined type, default to using value as is.
+                    return value;
+                }
+            }
+        }
+    })
+    override value?: string | Record<string, unknown> = null as unknown as string;
+
+    /**
      * Selectable items of the select component.
      * @attr
      */
@@ -225,6 +261,11 @@ export class Select extends OmniFormElement {
     }
 
     _inputClick(e: Event) {
+        if (this.disabled) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            return;
+        }
         const composedPath = e.composedPath();
         const searchControl = this.renderRoot.querySelector<HTMLDivElement>('#search-control') as HTMLDivElement;
 

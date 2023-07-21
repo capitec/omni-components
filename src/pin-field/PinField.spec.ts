@@ -1,4 +1,3 @@
-import * as jestMock from 'jest-mock';
 import {
     testLabelBehaviour,
     testHintBehaviour,
@@ -10,10 +9,10 @@ import {
     testSuffixBehaviour,
     testDisabledBehaviour
 } from '../core/OmniInputPlaywright.js';
-import { test, expect, withCoverage, type Page } from '../utils/JestPlaywright.js';
+import { test, expect, mockEventListener, withCoverage } from '../utils/JestPlaywright.js';
 import type { PinField } from './PinField.js';
 
-test(`Pin Field - Interactive`, async ({ page, browserName }) => {
+test(`Pin Field - Visual and Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/pin-field/');
         await page.evaluate(() => document.fonts.ready);
@@ -25,12 +24,7 @@ test(`Pin Field - Interactive`, async ({ page, browserName }) => {
         });
         await expect(pinField).toHaveScreenshot('pin-field.png');
 
-        const interactions = jestMock.fn();
-        await page.exposeFunction('jestInteract', () => interactions());
-        await pinField.evaluate((node) => {
-            node.addEventListener('input', () => (window as any).jestInteract());
-            node.addEventListener('click', () => (window as any).jestInteract());
-        });
+        const inputFn = await mockEventListener(pinField, 'input');
 
         const showSlotElement = pinField.locator('slot[name=show]');
         await expect(showSlotElement).toHaveCount(1);
@@ -49,17 +43,16 @@ test(`Pin Field - Interactive`, async ({ page, browserName }) => {
 
         await expect(inputField).toHaveValue(value);
 
-        await expect(interactions).toBeCalledTimes(value.length);
+        await expect(inputFn).toBeCalledTimes(value.length);
         await expect(pinField).toHaveScreenshot('pin-field-value.png');
     });
 });
 
-test(`Pin Field - Max Length`, async ({ page, browserName }) => {
+test(`Pin Field - Max Length Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/pin-field/');
         await page.evaluate(() => document.fonts.ready);
 
-        const args = await page.locator('story-renderer[key=Max_Length]').evaluate((storyRenderer) => (storyRenderer as any).story.args);
         const container = page.locator('.Max_Length');
         const pinField = container.locator('[data-testid]').first();
         pinField.evaluate(async (t: PinField) => {
@@ -69,11 +62,7 @@ test(`Pin Field - Max Length`, async ({ page, browserName }) => {
         });
         await expect(pinField).toHaveScreenshot('pin-field.png');
 
-        const interactions = jestMock.fn();
-        await page.exposeFunction('jestInteract', () => interactions());
-        await pinField.evaluate((node) => {
-            node.addEventListener('input', () => (window as any).jestInteract());
-        });
+        const inputFn = await mockEventListener(pinField, 'input');
 
         const inputField = pinField.locator('#inputField');
 
@@ -84,7 +73,7 @@ test(`Pin Field - Max Length`, async ({ page, browserName }) => {
         await expect(pinField).toHaveScreenshot('pin-field-value.png');
         await expect(inputField).toHaveValue(value);
 
-        await expect(interactions).toBeCalledTimes(typedValue.length);
+        await expect(inputFn).toBeCalledTimes(typedValue.length);
 
         const showSlotElement = pinField.locator('slot[name=show]');
         await expect(showSlotElement).toHaveCount(1);
@@ -93,12 +82,12 @@ test(`Pin Field - Max Length`, async ({ page, browserName }) => {
     });
 });
 
-testLabelBehaviour('omni-pin-field');
-testHintBehaviour('omni-pin-field');
-testErrorBehaviour('omni-pin-field');
-testValueBehaviour('omni-pin-field');
-testClearableBehaviour('omni-pin-field');
-testCustomClearableSlotBehaviour('omni-pin-field');
-testPrefixBehaviour('omni-pin-field');
-testSuffixBehaviour('omni-pin-field');
-testDisabledBehaviour('omni-pin-field');
+test('Pin Field - Label Behaviour', testLabelBehaviour('omni-pin-field'));
+test('Pin Field - Hint Behaviour', testHintBehaviour('omni-pin-field'));
+test('Pin Field - Error Behaviour', testErrorBehaviour('omni-pin-field'));
+test('Pin Field - Value Behaviour', testValueBehaviour('omni-pin-field'));
+test('Pin Field - Clearable Behaviour', testClearableBehaviour('omni-pin-field'));
+test('Pin Field - Custom Clear Slot Behaviour', testCustomClearableSlotBehaviour('omni-pin-field'));
+test('Pin Field - Prefix Behaviour', testPrefixBehaviour('omni-pin-field'));
+test('Pin Field - Suffix Behaviour', testSuffixBehaviour('omni-pin-field'));
+test('Pin Field - Disabled Behaviour', testDisabledBehaviour('omni-pin-field'));

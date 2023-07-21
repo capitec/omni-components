@@ -1,30 +1,12 @@
-import { within } from '@testing-library/dom';
-import userEvent from '@testing-library/user-event';
-import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import expect from '../utils/ExpectDOM.js';
-import { assignToSlot, ComponentStoryFormat, CSFIdentifier, getSourceFromLit, raw } from '../utils/StoryUtils.js';
-import { Chip } from './Chip.js';
+import { assignToSlot, ComponentStoryFormat, getSourceFromLit, raw } from '../utils/StoryUtils.js';
 
 import './Chip.js';
 import '../icon/Icon.js';
 
-export default {
-    title: 'UI Components/Chip',
-    component: 'omni-chip',
-    argTypes: {
-        chip_icon: {
-            control: 'text'
-        },
-        close_icon: {
-            control: 'text'
-        }
-    }
-} as CSFIdentifier;
-
-interface Args {
+export interface Args {
     label: string;
     closable: boolean;
     slot: string;

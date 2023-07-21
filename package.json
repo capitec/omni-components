@@ -22,9 +22,9 @@
         "docs:elements": "node .tooling/scripts/elements-list.mjs",
         "serve": "npm run clean && tsc -p tsconfig.utils.json && eleventy --serve --config=.eleventy.cjs --port 6006",
         "test": "concurrently -k -r -s first \"npm run serve\" \"npm run test:only\"",
-        "test:only": "npx wait-on tcp:6006 && cross-env PW_EXPERIMENTAL_TS_ESM=1 npx playwright test",
+        "test:only": "npx wait-on tcp:6006 && cross-env PW_EXPERIMENTAL_TS_ESM=1 cross-env-shell npx playwright test $PW_COMPONENT_FILTER --pass-with-no-tests",
         "test:add-screenshots": "concurrently -k -r -s first \"npm run serve\" \"npm run test:add-screenshots-only\"",
-        "test:add-screenshots-only": "npx wait-on tcp:6006 && (cross-env PW_EXPERIMENTAL_TS_ESM=1 PWTEST_SKIP_TEST_OUTPUT=1 npx playwright test || echo \"Generated missing screenshots\")",
+        "test:add-screenshots-only": "npx wait-on tcp:6006 && (cross-env PW_EXPERIMENTAL_TS_ESM=1 PWTEST_SKIP_TEST_OUTPUT=1 cross-env-shell npx playwright test $PW_COMPONENT_FILTER --pass-with-no-tests || echo \"Generated missing screenshots\")",
         "test-results": "npx playwright show-report",
         "format": "prettier --config .prettierrc \"src/**/*.ts\" --write",
         "format:check": "prettier --config .prettierrc \"src/**/*.ts\" --check"

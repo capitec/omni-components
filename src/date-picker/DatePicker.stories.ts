@@ -1,10 +1,6 @@
-import { waitFor, within } from '@testing-library/dom';
-import userEvent from '@testing-library/user-event';
-import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { DateTime } from 'luxon';
-import { Calendar } from '../calendar/Calendar.js';
 import {
     LabelStory,
     BaseArgs,
@@ -13,22 +9,14 @@ import {
     HintStory,
     ErrorStory,
     PrefixStory,
-    SuffixStory,
-    DisabledStory
+    SuffixStory
 } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import expect from '../utils/ExpectDOM.js';
-import { assignToSlot, ComponentStoryFormat, CSFIdentifier, getSourceFromLit, querySelectorAsync } from '../utils/StoryUtils.js';
+import { assignToSlot, ComponentStoryFormat, getSourceFromLit } from '../utils/StoryUtils.js';
 import { DatePicker } from './DatePicker';
 
 import './DatePicker.js';
-
-export default {
-    title: 'UI Components/DatePicker',
-    component: 'omni-date-picker'
-} as CSFIdentifier;
-
-interface Args extends BaseArgs {
+export interface Args extends BaseArgs {
     locale: string;
     minDate?: string;
     maxDate?: string;

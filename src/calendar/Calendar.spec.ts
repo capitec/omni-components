@@ -1,15 +1,14 @@
 import { DateTime } from 'luxon';
-import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
+import { test, expect, getStoryArgs, withCoverage } from '../utils/JestPlaywright.js';
 import type { Calendar } from './Calendar.js';
 
-test(`Calendar - Visual and Behaviour`, async ({ page, isMobile }) => {
+test(`Calendar - Visual and Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/calendar/');
 
         // Use LivePropertyEditor to set Calendar initial date (Use LPE to ensure code snippet is also updated in case it gets picked up in the screenshot)
         await page.locator('#examples #inputField').nth(3).fill('2021-10-05');
 
-        const args = await page.locator('story-renderer[key=Interactive]').evaluate((storyRenderer) => (storyRenderer as any).story.args);
         const calendar = page.locator('.Interactive').getByTestId('test-calendar');
 
         await expect(calendar).toHaveScreenshot('calendar-initial.png');
@@ -57,11 +56,10 @@ test(`Calendar - Visual and Behaviour`, async ({ page, isMobile }) => {
     });
 });
 
-test(`Calendar - Value Behaviour`, async ({ page, isMobile }) => {
+test(`Calendar - Value Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/calendar/');
 
-        const args = await page.locator('story-renderer[key=Value]').evaluate((storyRenderer) => (storyRenderer as any).story.args);
         const calendar = page.locator('.Value').getByTestId('test-calendar');
         await calendar.evaluate(async (c: Calendar) => {
             c.value = '2023-01-01';
@@ -75,11 +73,11 @@ test(`Calendar - Value Behaviour`, async ({ page, isMobile }) => {
     });
 });
 
-test(`Calendar - Locale Behaviour`, async ({ page, isMobile }) => {
+test(`Calendar - Locale Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/calendar/');
 
-        const args = await page.locator('story-renderer[key=Locale]').evaluate((storyRenderer) => (storyRenderer as any).story.args);
+        const args = await getStoryArgs(page, 'Locale');
         const calendar = page.locator('.Locale').getByTestId('test-calendar');
 
         const localDate = DateTime.fromISO('2022-06-21', {
@@ -111,7 +109,7 @@ test(`Calendar - Min Date Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/calendar/');
 
-        const args = await page.locator('story-renderer[key=Min_Date]').evaluate((storyRenderer) => (storyRenderer as any).story.args);
+        const args = await getStoryArgs(page, 'Min_Date');
         const calendar = page.locator('.Min_Date').getByTestId('test-calendar');
 
         await expect(calendar).toHaveScreenshot('calendar-initial.png');
@@ -149,7 +147,7 @@ test(`Calendar - Max Date Behaviour`, async ({ page }) => {
 
         await page.waitForSelector('[data-testid]', {});
 
-        const args = await page.locator('story-renderer[key=Max_Date]').evaluate((storyRenderer) => (storyRenderer as any).story.args);
+        const args = await getStoryArgs(page, 'Max_Date');
         const calendar = page.locator('.Max_Date').getByTestId('test-calendar');
 
         await expect(calendar).toHaveScreenshot('calendar-initial.png');

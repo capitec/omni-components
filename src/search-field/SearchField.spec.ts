@@ -1,4 +1,3 @@
-import * as jestMock from 'jest-mock';
 import {
     testLabelBehaviour,
     testHintBehaviour,
@@ -10,10 +9,10 @@ import {
     testSuffixBehaviour,
     testDisabledBehaviour
 } from '../core/OmniInputPlaywright.js';
-import { test, expect, withCoverage, type Page } from '../utils/JestPlaywright.js';
+import { test, expect, mockEventListener, withCoverage } from '../utils/JestPlaywright.js';
 import type { SearchField } from './SearchField.js';
 
-test(`Search Field - Interactive`, async ({ page, browserName }) => {
+test(`Search Field - Visual and Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/search-field/');
         await page.evaluate(() => document.fonts.ready);
@@ -25,11 +24,7 @@ test(`Search Field - Interactive`, async ({ page, browserName }) => {
         });
         await expect(searchField).toHaveScreenshot('search-field.png');
 
-        const interactions = jestMock.fn();
-        await page.exposeFunction('jestInteract', () => interactions());
-        await searchField.evaluate((node) => {
-            node.addEventListener('input', () => (window as any).jestInteract());
-        });
+        const inputFn = await mockEventListener(searchField, 'input');
 
         const inputField = searchField.locator('#inputField');
 
@@ -38,17 +33,17 @@ test(`Search Field - Interactive`, async ({ page, browserName }) => {
 
         await expect(inputField).toHaveValue(value);
 
-        await expect(interactions).toBeCalledTimes(value.length);
+        await expect(inputFn).toBeCalledTimes(value.length);
         await expect(searchField).toHaveScreenshot('search-field-value.png');
     });
 });
 
-testLabelBehaviour('omni-search-field');
-testHintBehaviour('omni-search-field');
-testErrorBehaviour('omni-search-field');
-testValueBehaviour('omni-search-field');
-testClearableBehaviour('omni-search-field');
-testCustomClearableSlotBehaviour('omni-search-field');
-testPrefixBehaviour('omni-search-field');
-testSuffixBehaviour('omni-search-field');
-testDisabledBehaviour('omni-search-field');
+test('Search Field - Label Behaviour', testLabelBehaviour('omni-search-field'));
+test('Search Field - Hint Behaviour', testHintBehaviour('omni-search-field'));
+test('Search Field - Error Behaviour', testErrorBehaviour('omni-search-field'));
+test('Search Field - Value Behaviour', testValueBehaviour('omni-search-field'));
+test('Search Field - Clearable Behaviour', testClearableBehaviour('omni-search-field'));
+test('Search Field - Custom Clear Slot Behaviour', testCustomClearableSlotBehaviour('omni-search-field'));
+test('Search Field - Prefix Behaviour', testPrefixBehaviour('omni-search-field'));
+test('Search Field - Suffix Behaviour', testSuffixBehaviour('omni-search-field'));
+test('Search Field - Disabled Behaviour', testDisabledBehaviour('omni-search-field'));

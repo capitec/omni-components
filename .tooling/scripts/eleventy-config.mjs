@@ -55,6 +55,8 @@ export default async config => {
         config.addGlobalData(key, globalData[key]);
     }
 
+    config.addPassthroughCopy('./.github/assets/');
+
     config.addPassthroughCopy('./.tooling/eleventy/assets/');
     config.addPassthroughCopy('./.tooling/eleventy/favicon.ico');
     config.addPassthroughCopy('./custom-elements.json');
