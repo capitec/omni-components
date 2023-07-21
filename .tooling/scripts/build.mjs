@@ -39,9 +39,10 @@ fs.mkdirSync(tsdir, { recursive: true });
     }
 
     console.log(`Building for ${format.toUpperCase()} ${target.toUpperCase()}...`);
-    const entryPoints = (await globby('./src/**/!(*.(style|test|stories)).(ts|js)'))
+    const entryPoints = (await globby('./src/**/!(*.(style|test|stories|spec)).(ts|js)'))
         .filter(value =>
             !value.startsWith('./src/utils') &&
+            !value.includes('OmniInputPlaywright') &&
             !value.includes('OmniInputStories'));
     if (verbose) {
         console.log(chalk.bgYellow('Targeting the following entrypoints: \n'));

@@ -1,7 +1,3 @@
-import { waitFor, within } from '@testing-library/dom';
-import userEvent from '@testing-library/user-event';
-import { setUIValueClean } from '@testing-library/user-event/dist/esm/document/UI.js';
-import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import {
@@ -17,16 +13,10 @@ import {
     SuffixStory
 } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import expect from '../utils/ExpectDOM.js';
-import { assignToSlot, ComponentStoryFormat, CSFIdentifier, getSourceFromLit } from '../utils/StoryUtils.js';
+import { assignToSlot, ComponentStoryFormat, getSourceFromLit } from '../utils/StoryUtils.js';
 import { NumberField } from './NumberField.js';
 
 import './NumberField.js';
-
-export default {
-    title: 'UI Components/Number Field',
-    component: 'omni-number-field'
-} as CSFIdentifier;
 
 export const Interactive: ComponentStoryFormat<BaseArgs> = {
     render: (args: BaseArgs) => html`
@@ -62,46 +52,15 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
         prefix: '',
         suffix: '',
         clear: ''
-    },
-    play: async (context) => {
-        const numberField = within(context.canvasElement).getByTestId<NumberField>('test-number-field');
-        numberField.value = '';
-
-        const input = jest.fn();
-        numberField.addEventListener('input', input);
-
-        const inputField = numberField.shadowRoot!.getElementById('inputField') as HTMLInputElement;
-        // Required to clear userEvent Symbol that keeps hidden state of previously typed values via userEvent. If not cleared this cannot be run multiple times with the same results
-        setUIValueClean(inputField);
-
-        const value = '12345';
-        await userEvent.type(inputField, value, {
-            pointerEventsCheck: 0
-        });
-
-        await waitFor(() => expect(inputField).toHaveValue(parseInt(value)), {
-            timeout: 3000
-        });
-        await waitFor(() => expect(input).toBeCalledTimes(value.length), {
-            timeout: 3000
-        });
     }
 };
 
 export const Label = LabelStory<NumberField, BaseArgs>('omni-number-field');
-
 export const Hint = HintStory<NumberField, BaseArgs>('omni-number-field');
-
 export const Error_Label = ErrorStory<NumberField, BaseArgs>('omni-number-field');
-
 export const Value = ValueStory<NumberField, BaseArgs>('omni-number-field', 123);
-
 export const Clearable = ClearableStory<NumberField, BaseArgs>('omni-number-field', 123);
-
 export const Custom_Clear_Slot = CustomClearableSlot<NumberField, BaseArgs>('omni-number-field', 123);
-
 export const Prefix = PrefixStory<NumberField, BaseArgs>('omni-number-field');
-
 export const Suffix = SuffixStory<NumberField, BaseArgs>('omni-number-field');
-
 export const Disabled = DisabledStory<NumberField, BaseArgs>('omni-number-field', 123);

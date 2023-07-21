@@ -555,7 +555,7 @@ Search input control.
 
 </td><td>
 
-Control to get / set a value within a list of options.
+Control to get or set a value within a list of options.
 
 </td></tr><tr><td>
 
@@ -571,7 +571,7 @@ Control to switch a value on or off.
 
 </td><td>
 
-Control that can be used to display slotted content, for use within an Tab Group component.
+Control that can be used to display slotted content for use within an Tab Group component.
 
 </td></tr><tr><td>
 
@@ -587,7 +587,7 @@ Component that displays content in tabs.
 
 </td><td>
 
-Control that can be used to display custom slotted content, for use within Tab Group component with associated Tab component.
+Control that can be used to display custom slotted content for use within Tab Group component with associated Tab component.
 
 </td></tr><tr><td>
 
@@ -614,7 +614,6 @@ Component to visually notify a user of a message.
 A toast container that animates in and stacks toast elements.
 
 </td></tr></tbody></table>
-
 
 
 <br>
