@@ -9,7 +9,7 @@ const plugins = {
         const tsconfig = JSON.parse(readFileSync('./tsconfig.json'));
         const program = ts.createProgram(globs, {
             ...tsconfig.compilerOptions,
-            moduleResolution: undefined,
+            moduleResolution: tsconfig.compilerOptions.moduleResolution === 'classic' ? ts.ModuleResolutionKind.Classic : ts.ModuleResolutionKind.NodeJs,
         });
 
         typeChecker = program.getTypeChecker();
@@ -381,6 +381,34 @@ const plugins = {
             return {
                 analyzePhase({ ts, node, moduleDoc }) {
                     switch (node.kind) {
+                        // case ts.SyntaxKind.PropertyDeclaration:
+                        //     {
+                        //         if (node.initializer && node.initializer.kind === ts.SyntaxKind.ArrowFunction) {
+                        //             const funcName = node.name.getText();
+                        //             const isStatic = Boolean(node.initializer.modifiers?.find(m => m.kind === ts.SyntaxKind.StaticKeyword));
+                        //             const classNode = findParentClass(ts, node);
+                        //             if (classNode) {
+                        //                 const className = classNode.name.getText();
+                        //                 const classDeclaration = moduleDoc.declarations.find(declaration => declaration.name === className);
+
+                        //                 const method = classDeclaration.members.find(m => m.name === funcName && m.kind === 'field' && ((m.static && isStatic) || (!m.static && !isStatic)));
+                        //                 if (method && !method.return?.type?.text) {
+                        //                     const ret = {
+                        //                         ...(method.return || {}),
+                        //                         type: {
+                        //                             ...(method.return?.type || {}),
+                        //                             // Use Typescript type checker to read inferred type as text. 
+                        //                             // https://stackoverflow.com/questions/75865839/extract-inferred-return-type-with-typescript-api
+                        //                             // https://github.com/microsoft/TypeScript/wiki/Using-the-Compiler-API#using-the-type-checker
+                        //                             text: typeChecker.typeToString(typeChecker.getSignatureFromDeclaration(node.initializer).getReturnType())
+                        //                         }
+                        //                     };
+                        //                     method.return = ret;
+                        //                 }
+                        //             }
+                        //         }
+                        //     }
+                        //     break;
                         case ts.SyntaxKind.MethodDeclaration:
                             {
                                 const funcName = node.name.getText();
@@ -404,6 +432,63 @@ const plugins = {
                                         };
                                         method.return = ret;
                                     }
+                                }
+                            }
+
+                            break;
+                    }
+                },
+                moduleLinkPhase({ moduleDoc }) {
+                    // console.log(moduleDoc);
+                },
+                packageLinkPhase({ customElementsManifest }) {
+                    // console.log(customElementsManifest);
+                }
+            };
+        }(),
+        function inferFunctionReturnTypesPlugin() {
+            return {
+                analyzePhase({ ts, node, moduleDoc }) {
+                    switch (node.kind) {
+                        case ts.SyntaxKind.VariableDeclaration:
+                            {
+                                if (node.initializer && node.initializer.kind === ts.SyntaxKind.ArrowFunction) {
+                                    const funcName = node.name.getText();
+                                    const isStatic = Boolean(node.initializer.modifiers?.find(m => m.kind === ts.SyntaxKind.StaticKeyword));
+                                    const functionDeclaration = moduleDoc.declarations.find(m => m.name === funcName && m.kind === 'function' && ((m.static && isStatic) || (!m.static && !isStatic)));
+                                    if (functionDeclaration && !functionDeclaration.return?.type?.text) {
+                                        const ret = {
+                                            ...(functionDeclaration.return || {}),
+                                            type: {
+                                                ...(functionDeclaration.return?.type || {}),
+                                                // Use Typescript type checker to read inferred type as text. 
+                                                // https://stackoverflow.com/questions/75865839/extract-inferred-return-type-with-typescript-api
+                                                // https://github.com/microsoft/TypeScript/wiki/Using-the-Compiler-API#using-the-type-checker
+                                                text: typeChecker.typeToString(typeChecker.getSignatureFromDeclaration(node.initializer).getReturnType())
+                                            }
+                                        };
+                                        functionDeclaration.return = ret;
+                                    }
+                                }
+                            }
+                            break;
+                        case ts.SyntaxKind.FunctionDeclaration:
+                            {
+                                const funcName = node.name.getText();
+                                const isStatic = Boolean(node.modifiers?.find(m => m.kind === ts.SyntaxKind.StaticKeyword));
+                                const functionDeclaration = moduleDoc.declarations.find(m => m.name === funcName && m.kind === 'function' && ((m.static && isStatic) || (!m.static && !isStatic)));
+                                if (functionDeclaration && !functionDeclaration.return?.type?.text) {
+                                    const ret = {
+                                        ...(functionDeclaration.return || {}),
+                                        type: {
+                                            ...(functionDeclaration.return?.type || {}),
+                                            // Use Typescript type checker to read inferred type as text. 
+                                            // https://stackoverflow.com/questions/75865839/extract-inferred-return-type-with-typescript-api
+                                            // https://github.com/microsoft/TypeScript/wiki/Using-the-Compiler-API#using-the-type-checker
+                                            text: typeChecker.typeToString(typeChecker.getSignatureFromDeclaration(node).getReturnType())
+                                        }
+                                    };
+                                    functionDeclaration.return = ret;
                                 }
                             }
 

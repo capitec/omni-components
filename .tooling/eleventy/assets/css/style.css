@@ -425,6 +425,7 @@ header .header-version-select {
     --omni-select-control-padding: 0px 4px 0px 0px;
     --omni-form-clear-control-width: 0px;
     --omni-select-items-container-width: auto;
+    --omni-select-field-height: 100%;
 }
 
 .docs-select {

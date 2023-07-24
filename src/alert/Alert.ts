@@ -28,7 +28,8 @@ import '../modal/Modal.js';
  *
  * Registry of all properties defined by the component.
  *
- * @fires close-click - Dispatched when the close button is clicked.
+ * @fires alert-action-click - Dispatched when an alert action button is clicked.
+ * @fires alert-close - Dispatched when the alert is closed.
  *
  * @slot status-indicator - Content to render as the status indicator instead of default status icons.
  * @slot header - Content to render inside the component message area.
@@ -87,9 +88,9 @@ import '../modal/Modal.js';
  * @cssprop --omni-alert-action-button-internal-padding-left - Alert action button(s) internal left padding.
  * @cssprop --omni-alert-action-button-internal-padding-right - Alert action button(s) internal right padding.
  *
- * @cssprop --omni-header-horizontal-gap - Alert header horizontal space between status indicator and header content.
+ * @cssprop --omni-alert-header-horizontal-gap - Alert header horizontal space between status indicator and header content.
  *
- * @cssprop --omni-header-status-size - Alert header status indicator symmetrical size.
+ * @cssprop --omni-alert-header-status-size - Alert header status indicator symmetrical size.
  */
 @customElement('omni-alert')
 export class Alert extends OmniElement {
@@ -527,16 +528,16 @@ export class Alert extends OmniElement {
 
 			.status-icon {
 
-				margin-right: var(--omni-header-horizontal-gap, 10px);
+				margin-right: var(--omni-alert-header-horizontal-gap, 10px);
 
-				width: var(--omni-header-status-size, 24px);
-				height: var(--omni-header-status-size, 24px);
+				width: var(--omni-alert-header-status-size, 24px);
+				height: var(--omni-alert-header-status-size, 24px);
 
-				min-width: var(--omni-header-status-size, 24px);
-				min-height: var(--omni-header-status-size, 24px);
+				min-width: var(--omni-alert-header-status-size, 24px);
+				min-height: var(--omni-alert-header-status-size, 24px);
 
-				max-width: var(--omni-header-status-size, 24px);
-				max-height: var(--omni-header-status-size, 24px);
+				max-width: var(--omni-alert-header-status-size, 24px);
+				max-height: var(--omni-alert-header-status-size, 24px);
 			}
 		`
         ];
