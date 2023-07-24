@@ -28,7 +28,8 @@ import '../modal/Modal.js';
  *
  * Registry of all properties defined by the component.
  *
- * @fires close-click - Dispatched when the close button is clicked.
+ * @fires alert-action-click - Dispatched when an alert action button is clicked.
+ * @fires alert-close - Dispatched when the alert is closed.
  *
  * @slot status-indicator - Content to render as the status indicator instead of default status icons.
  * @slot header - Content to render inside the component message area.

@@ -13,7 +13,7 @@ export default {
     component: 'omni-alert'
 } as CSFIdentifier;
 
-interface Args {
+export interface Args {
     status?: 'success' | 'warning' | 'error' | 'info' | 'none';
     message?: string;
     headerAlign?: 'left' | 'center' | 'right';
