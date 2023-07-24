@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { assignToSlot, ComponentStoryFormat, CSFIdentifier, raw, getSourceFromLit } from '../utils/StoryUtils.js';
+import { assignToSlot, ComponentStoryFormat, raw, getSourceFromLit } from '../utils/StoryUtils.js';
 import { Keyboard } from './Keyboard.js';
 
 import './Keyboard.js';
@@ -15,11 +15,6 @@ import '../text-field';
 import '../label';
 import '../button';
 import '../switch';
-
-export default {
-    title: 'UI Components/Keyboard',
-    component: 'omni-keyboard'
-} as CSFIdentifier;
 
 interface Args {
     clearLabel: string;

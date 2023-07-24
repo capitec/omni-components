@@ -1,7 +1,3 @@
-import { waitFor, within } from '@testing-library/dom';
-import userEvent from '@testing-library/user-event';
-import { setUIValueClean } from '@testing-library/user-event/dist/esm/document/UI.js';
-import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
@@ -18,19 +14,13 @@ import {
     SuffixStory
 } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import expect from '../utils/ExpectDOM.js';
-import { assignToSlot, ComponentStoryFormat, CSFIdentifier, getSourceFromLit } from '../utils/StoryUtils.js';
+import { assignToSlot, ComponentStoryFormat, getSourceFromLit } from '../utils/StoryUtils.js';
 import { PinField } from './PinField.js';
 
 import './PinField.js';
 import '../icons/Check.icon.js';
 import '../icons/LockOpen.icon.js';
 import '../icons/LockClosed.icon.js';
-
-export default {
-    title: 'UI Components/Pin Field',
-    component: 'omni-pin-field'
-} as CSFIdentifier;
 
 interface Args extends BaseArgs {
     hide: string;
@@ -78,46 +68,6 @@ export const Interactive: ComponentStoryFormat<Args> = {
         hide: '',
         show: '',
         maxLength: undefined
-    },
-    play: async (context) => {
-        const pinField = within(context.canvasElement).getByTestId<PinField>('test-pin-field');
-        pinField.value = '';
-
-        const interactions = jest.fn();
-        pinField.addEventListener('input', interactions);
-        pinField.addEventListener('click', interactions);
-
-        const inputField = pinField.shadowRoot?.getElementById('inputField') as HTMLInputElement;
-        // Required to clear userEvent Symbol that keeps hidden state of previously typed values via userEvent. If not cleared this cannot be run multiple times with the same results
-        setUIValueClean(inputField);
-
-        const showSlotElement = pinField.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=show]');
-        await expect(showSlotElement).toBeTruthy();
-        await userEvent.click(showSlotElement as HTMLSlotElement, {
-            pointerEventsCheck: 0
-        });
-        const hideSlotElement = pinField.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=hide]');
-        await expect(hideSlotElement).toBeTruthy();
-        await userEvent.click(hideSlotElement as HTMLSlotElement, {
-            pointerEventsCheck: 0
-        });
-
-        await userEvent.type(inputField, '1234', {
-            pointerEventsCheck: 0
-        });
-
-        const value = '1234';
-
-        // Required to clear userEvent Symbol that keeps hidden state of previously typed values via userEvent. If not cleared this cannot be run multiple times with the same results
-        setUIValueClean(inputField);
-
-        await waitFor(() => expect(inputField).toHaveValue(value), {
-            timeout: 3000
-        });
-
-        await waitFor(() => expect(interactions).toBeCalledTimes(value.toString().length + 1), {
-            timeout: 3000
-        });
     }
 };
 
@@ -145,28 +95,6 @@ const App = () => <OmniPinField${args.label ? ` label='${args.label}'` : ''}${ar
     args: {
         label: 'Max Length',
         maxLength: 5
-    },
-    play: async (context) => {
-        const pinField = within(context.canvasElement).getByTestId<PinField>('test-pin-field');
-        pinField.value = '';
-
-        const interactions = jest.fn();
-        pinField.addEventListener('input', interactions);
-
-        const inputField = pinField.shadowRoot?.getElementById('inputField') as HTMLInputElement;
-
-        await userEvent.type(inputField, '12345678910', {
-            pointerEventsCheck: 0
-        });
-        const value = '12345';
-
-        await waitFor(() => expect(inputField).toHaveValue(value), {
-            timeout: 3000
-        });
-
-        await waitFor(() => expect(inputField.value).toBe(String(value)), {
-            timeout: 3000
-        });
     }
 };
 

@@ -55,6 +55,8 @@ export default async config => {
         config.addGlobalData(key, globalData[key]);
     }
 
+    config.addPassthroughCopy('./.github/assets/');
+
     config.addPassthroughCopy('./.tooling/eleventy/assets/');
     config.addPassthroughCopy('./.tooling/eleventy/favicon.ico');
     config.addPassthroughCopy('./custom-elements.json');
@@ -72,7 +74,7 @@ export default async config => {
         linkify: true
     };
 
-    const md = markdownIt(mdOptions).use(markdownItHeadings,mdOptions);
+    const md = markdownIt(mdOptions).use(markdownItHeadings, mdOptions);
     config.setLibrary('md', md);
 
     // filters
@@ -87,7 +89,8 @@ export default async config => {
 
     config.on('eleventy.beforeWatch', async (files) => {
         const isSrc = files.some(f => f.startsWith('./src'));
-        if (isSrc) {
+        const testOnly = files.every(f => f.includes('.spec.'));
+        if (isSrc && !testOnly) {
             await build();
         }
     });
@@ -119,7 +122,7 @@ async function build() {
     execSync('npm run docs:custom-elements', { stdio: 'inherit' });
 
     console.log(chalk.yellow('Reading entry points...'));
-    const entryPoints = await globby('./src/**/*.ts');
+    const entryPoints = (await globby('./src/**/*.ts')).filter(f => !f.toLowerCase().includes('playwright') && !f.toLowerCase().includes('.spec.'));
 
     console.log(chalk.yellow('Running esbuild...'));
 

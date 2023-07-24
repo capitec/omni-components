@@ -1,22 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { within } from '@testing-library/dom';
-import userEvent from '@testing-library/user-event';
-import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import expect from '../utils/ExpectDOM.js';
-import { assignToSlot, ComponentStoryFormat, CSFIdentifier, querySelectorAsync } from '../utils/StoryUtils.js';
+import { assignToSlot, ComponentStoryFormat } from '../utils/StoryUtils.js';
 import { RenderElement, RenderFunction } from './RenderElement.js';
 
 import './RenderElement';
 
-export default {
-    title: 'UI Components/RenderElement',
-    component: 'omni-render-element'
-} as CSFIdentifier;
-
-interface Args {
+export interface Args {
     renderer: RenderFunction;
     data: object;
     loading_indicator: string;
@@ -31,7 +20,7 @@ async function renderAsElement(data: object) {
     await new Promise<void>((r) => setTimeout(() => r(), 3000));
     const span = document.createElement('span');
     span.appendChild(document.createTextNode(JSON.stringify(data)));
-    span.addEventListener('click', (ev: MouseEvent) => (clicked ? clicked() : alert('Clicked')));
+    span.addEventListener('click', (ev: MouseEvent) => alert('Clicked'));
     return span;
 }
 
@@ -142,39 +131,9 @@ const App = () => <OmniRenderElement renderer={renderAsLit} data={{
         },
         renderer: renderAsLit,
         loading_indicator: ''
-    } as Args,
-    play: async (context) => {
-        const renderElement = within(context.canvasElement).getByTestId<RenderElement>('test-render');
-        const data = JSON.parse(JSON.stringify(context.args.data));
-
-        // await expect(renderElement.renderRoot.querySelector('omni-loading-icon')).toBeTruthy();
-
-        console.log(`Running as '${navigator.userAgent}'`);
-        if (navigator.userAgent === 'Test Runner') {
-            console.log('CICD Test - Not Visual');
-            await new Promise<void>((r) => setTimeout(() => r(), 3000));
-        } else {
-            await new Promise<void>((r) => setTimeout(() => r(), 10000));
-        }
-
-        const span1 = await querySelectorAsync(renderElement.renderRoot, 'span');
-        await expect(span1).toHaveTextContent(JSON.stringify(data));
-
-        data.hello = 'everyone';
-        renderElement.data = { ...data };
-
-        const loading = await querySelectorAsync(renderElement.renderRoot, 'omni-loading-icon');
-        await expect(loading).toBeTruthy();
-
-        const span2 = await querySelectorAsync(renderElement.renderRoot, 'span');
-        await expect(span2).toHaveTextContent(JSON.stringify(data));
-
-        // Cleanup
-        renderElement.data = context.args.data;
-    }
+    } as Args
 };
 
-let clicked = () => alert('Clicked');
 export const HTML_Element_Instance: ComponentStoryFormat<Args> = {
     render: (args: Args) => {
         const addValues = async () => {
@@ -275,46 +234,7 @@ const App = () => <OmniRenderElement renderer={renderAsElement} data={{
             'other-data': false
         },
         renderer: renderAsElement
-    } as Args,
-    play: async (context) => {
-        const renderElement = within(context.canvasElement).getByTestId<RenderElement>('test-render');
-        const data = JSON.parse(JSON.stringify(context.args.data));
-        clicked = jest.fn();
-
-        // await expect(renderElement.renderRoot.querySelector('omni-loading-icon')).toBeTruthy();
-
-        console.log(`Running as '${navigator.userAgent}'`);
-        if (navigator.userAgent === 'Test Runner') {
-            console.log('CICD Test - Not Visual');
-            await new Promise<void>((r) => setTimeout(() => r(), 3000));
-        } else {
-            await new Promise<void>((r) => setTimeout(() => r(), 10000));
-        }
-
-        const span1 = (await querySelectorAsync(renderElement.renderRoot, 'span')) as HTMLSpanElement;
-        await expect(span1).toHaveTextContent(JSON.stringify(data));
-
-        data.hello = 'everyone';
-        renderElement.data = { ...data };
-
-        const load = await querySelectorAsync(renderElement.renderRoot, 'omni-loading-icon');
-        await expect(load).toBeTruthy();
-
-        const span2 = (await querySelectorAsync(renderElement.renderRoot, 'span')) as HTMLSpanElement;
-        await expect(span2).toHaveTextContent(JSON.stringify(data));
-        await userEvent.click(span2, {
-            pointerEventsCheck: 0
-        });
-        await userEvent.click(span2, {
-            pointerEventsCheck: 0
-        });
-        await expect(clicked).toBeCalledTimes(2);
-
-        clicked = () => alert('Clicked');
-
-        // Cleanup
-        renderElement.data = context.args.data;
-    }
+    } as Args
 };
 
 export const HTML_String: ComponentStoryFormat<Args> = {
@@ -405,34 +325,5 @@ const App = () => <OmniRenderElement renderer={renderAsString} data={{
             'other-data': false
         },
         renderer: renderAsString
-    } as Args,
-    play: async (context) => {
-        const renderElement = within(context.canvasElement).getByTestId<RenderElement>('test-render');
-        const data = JSON.parse(JSON.stringify(context.args.data));
-
-        // await expect(renderElement.renderRoot.querySelector('omni-loading-icon')).toBeTruthy();
-
-        console.log(`Running as '${navigator.userAgent}'`);
-        if (navigator.userAgent === 'Test Runner') {
-            console.log('CICD Test - Not Visual');
-            await new Promise<void>((r) => setTimeout(() => r(), 3000));
-        } else {
-            await new Promise<void>((r) => setTimeout(() => r(), 10000));
-        }
-
-        const span1 = await querySelectorAsync(renderElement.renderRoot, 'span');
-        await expect(span1).toHaveTextContent(JSON.stringify(data));
-
-        data.hello = 'everyone';
-        renderElement.data = { ...data };
-
-        const loading = await querySelectorAsync(renderElement.renderRoot, 'omni-loading-icon');
-        await expect(loading).toBeTruthy();
-
-        const span2 = await querySelectorAsync(renderElement.renderRoot, 'span');
-        await expect(span2).toHaveTextContent(JSON.stringify(data));
-
-        // Cleanup
-        renderElement.data = context.args.data;
-    }
+    } as Args
 };

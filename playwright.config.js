@@ -12,26 +12,41 @@ import { devices } from '@playwright/test';
  * @type {import('@playwright/test').PlaywrightTestConfig}
  */
 const config = {
-    testDir: './.tooling/tests',
+    globalSetup: './.tooling/playwright/globalSetup.js',
+    globalTeardown: './.tooling/playwright/globalTeardown.js',
+    snapshotDir: './.tooling/tests/screenshots',
+    snapshotPathTemplate: '{snapshotDir}/{testName}/{platform}/{projectName}/{arg}{ext}',
     /* Maximum time one test can run for. */
-    timeout: 30 * 1000,
+    timeout: 60 * 1000,
     expect: {
         /**
          * Maximum time expect() should wait for the condition to be met.
          * For example in `await expect(locator).toHaveText();`
          */
-        timeout: 5000
+        timeout: 5000,
+        toHaveScreenshot: {
+            maxDiffPixelRatio: 0.3,
+            scale: 'css',
+        },
+        toMatchSnapshot: {
+            maxDiffPixelRatio: 0.3
+        }
     },
     /* Run tests in files in parallel */
-    fullyParallel: true,
+    fullyParallel: process.env.CI ? false : true,
     /* Fail the build on CI if you accidentally left test.only in the source code. */
     forbidOnly: !!process.env.CI,
     /* Retry on CI only */
-    retries: process.env.CI ? 2 : 0,
+    retries: process.env.CI && !process.env.PW_NO_RETRIES ? 2 : 0,
     /* Limit parallel tests on CI. */
-    workers: process.env.CI ? 4 : undefined,
+    workers: process.env.CI ? 1 : undefined,
     /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-    reporter: 'html',
+    reporter: [
+        [
+            'html',
+            { open: process.env.PWTEST_SKIP_TEST_OUTPUT ? 'never' : 'on-failure' }
+        ]
+    ],
     /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
     use: {
         /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
@@ -42,7 +57,14 @@ const config = {
         /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
         trace: 'on-first-retry',
 
-        userAgent: 'Test Runner'
+        userAgent: 'Test Runner',
+        baseURL: `http://${process.env.PLAYWRIGHT_HOST_ORIGIN ?? 'localhost'}:6006`,
+
+        colorScheme: 'light',
+        contextOptions: {
+            reducedMotion: 'reduce',
+            colorScheme: 'light'
+        }
     },
 
     /* Configure projects for major browsers */
@@ -55,36 +77,45 @@ const config = {
             },
         },
 
-        // {
-        //     name: 'firefox',
-        //     use: {
-        //         ...devices['Desktop Firefox'],
-        //         userAgent: 'Test Runner'
-        //     },
-        // },
+        {
+            name: 'firefox',
+            use: {
+                ...devices['Desktop Firefox'],
+                userAgent: 'Test Runner'
+            },
+        },
 
-        // {
-        //     name: 'webkit',
-        //     use: {
-        //         ...devices['Desktop Safari'],
-        //         userAgent: 'Test Runner'
-        //     },
-        // },
+        {
+            name: 'webkit',
+            use: {
+                ...devices['Desktop Safari'],
+                userAgent: 'Test Runner'
+            },
+        },
 
         /* Test against mobile viewports. */
+        {
+            name: 'Mobile Chrome',
+            use: {
+                ...devices['Pixel 5'],
+                userAgent: 'Test Runner'
+            },
+        },
+
+        {
+            name: 'Mobile Safari',
+            use: {
+                ...devices['iPhone 12'],
+                userAgent: 'Test Runner'
+            },
+        },
+
         // {
-        //   name: 'Mobile Chrome',
-        //   use: {
-        //     ...devices['Pixel 5'],
+        //     name: 'iPhone 13 Pro Max',
+        //     use: {
+        //         ...devices['iPhone 13 Pro Max'],
         //         userAgent: 'Test Runner'
-        //   },
-        // },
-        // {
-        //   name: 'Mobile Safari',
-        //   use: {
-        //     ...devices['iPhone 12'],
-        //         userAgent: 'Test Runner'
-        //   },
+        //     },
         // },
 
         /* Test against branded browsers. */
