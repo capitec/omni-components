@@ -66,9 +66,26 @@ export class PinField extends OmniFormElement {
     @property({ type: Boolean, reflect: true, attribute: 'no-native-keyboard' }) noNativeKeyboard?: boolean;
 
     /**
-     * Override for the value property inherited from the OmniFormElement component with reflect set to false.
+     * Override for the value property inherited from the OmniFormElement component with custom converter.
      */
-    @property({ type: String, reflect: false }) override value?: string;
+    @property({
+        type: String,
+        reflect: true,
+        converter: {
+            toAttribute() {
+                return null;
+            },
+            fromAttribute(value) {
+                try {
+                    return value;
+                } catch (err) {
+                    // Value cannot be used as defined type, default to using value as is.
+                    return value;
+                }
+            }
+        }
+    })
+    override value?: string;
 
     /**
      * Maximum character input length.
@@ -78,8 +95,6 @@ export class PinField extends OmniFormElement {
 
     @query('#inputField')
     private _inputElement?: HTMLInputElement;
-    @query('.container')
-    private container?: HTMLDivElement;
     private showPin?: boolean = false;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private isWebkit?: boolean;
@@ -109,26 +124,11 @@ export class PinField extends OmniFormElement {
         this._sanitiseValue(this.value as string);
     }
 
-    protected override _clearValue(e: MouseEvent) {
-        const input = this._inputElement;
-        if (this.disabled) {
-            return e.stopImmediatePropagation();
+    override async attributeChangedCallback(name: string, _old: string | null, value: string | null): Promise<void> {
+        super.attributeChangedCallback(name, _old, value);
+        if (name === 'value') {
+            this._sanitiseValue(value as string);
         }
-
-        this.value = '';
-        input!.value = '';
-        //this.removeAttribute('transform');
-        this.container?.classList?.remove('float-label');
-        // Dispatch standard DOM event to cater for single clear.
-        this.dispatchEvent(
-            new Event('change', {
-                bubbles: true,
-                composed: true
-            })
-        );
-
-        // Prevent the event from bubbling up. for mobile use cases that will bring the component into focus and render the items.
-        e.stopPropagation();
     }
 
     override focus(options?: FocusOptions | undefined): void {
@@ -139,7 +139,7 @@ export class PinField extends OmniFormElement {
         }
     }
 
-    // Checks if the value provided is numeric, if valid set the value property and input element value if not value remove the value attribute
+    // Checks if the value provided is numeric, if valid set the value property and input element value if not value remove the value attribute.
     _sanitiseValue(value: string) {
         if (value) {
             if (!this._isNumber(value as string)) {
@@ -151,17 +151,13 @@ export class PinField extends OmniFormElement {
 
         if (this._inputElement) {
             this._inputElement.value = this.value as string;
-            // Added check for value of input and either set the focussed property or remove the attribute.
+            //Check for value of the input and add or remove the float-label class accordingly.
             if (this._inputElement.value !== '') {
-                //this.transform = true;
-                this.container?.classList?.add('float-label');
+                this.classList.add('float-label');
             } else {
-                //this.removeAttribute('transform');
-                this.container?.classList?.remove('float-label');
+                this.classList.remove('float-label');
             }
         }
-
-        this.removeAttribute('value');
     }
 
     _blurOnEnter(e: KeyboardEvent) {
@@ -195,13 +191,11 @@ export class PinField extends OmniFormElement {
         }
         this.value = input?.value;
 
-        // Added check for value of input and either set the focussed property or remove the attribute.
+        // Added check for value of the input and add or remove the float-label class accordingly.
         if (input?.value !== '') {
-            //this.transform = true;
-            this.container?.classList?.add('float-label');
+            this.classList.add('float-label');
         } else {
-            //this.removeAttribute('transform');
-            this.container?.classList?.remove('float-label');
+            this.classList.remove('float-label');
         }
     }
 

@@ -60,9 +60,26 @@ export class PasswordField extends OmniFormElement {
     @state() protected type: 'password' | 'text' = 'password';
 
     /**
-     * Override for the value property inherited from the OmniFormElement component with reflect set to false.
+     * Override for the value property inherited from the OmniFormElement component with custom converter.
      */
-    @property({ type: String, reflect: false }) override value?: string;
+    @property({
+        type: String,
+        reflect: true,
+        converter: {
+            toAttribute() {
+                return null;
+            },
+            fromAttribute(value) {
+                try {
+                    return value;
+                } catch (err) {
+                    // Value cannot be used as defined type, default to using value as is.
+                    return value;
+                }
+            }
+        }
+    })
+    override value?: string;
 
     /**
      * Disables native on screen keyboards for the component.
@@ -72,8 +89,6 @@ export class PasswordField extends OmniFormElement {
 
     @query('#inputField')
     private _inputElement?: HTMLInputElement;
-    @query('.container')
-    private container?: HTMLDivElement;
 
     override connectedCallback() {
         super.connectedCallback();
@@ -85,48 +100,28 @@ export class PasswordField extends OmniFormElement {
         });
     }
 
-    // Added for non webkit supporting browsers and to stop the component from having a non-valid value (non-numeric) value bound.
     protected override async firstUpdated(): Promise<void> {
-        this._sanitiseValue();
+        this._checkValue();
     }
 
-    // Checks if the value provided is numeric, if valid set the value property and input element value if not value remove the value attribute
-    _sanitiseValue() {
+    override async attributeChangedCallback(name: string, _old: string | null, value: string | null): Promise<void> {
+        super.attributeChangedCallback(name, _old, value);
+        if (name === 'value') {
+            this._checkValue();
+        }
+    }
+
+    // Checks if the value provided is valid, if valid set add the float-label class to the component if the value is a empty string then remove the class.
+    _checkValue() {
         if (this._inputElement) {
             this._inputElement.value = this.value as string;
-            // Added check for value of input and either set the focussed property or remove the attribute.
+            // Added check for value of input and add the float-label class to the component.
             if (this._inputElement.value !== '') {
-                //this.transform = true;
-                this.container?.classList?.add('float-label');
+                this.classList.add('float-label');
             } else {
-                //this.removeAttribute('transform');
-                this.container?.classList?.remove('float-label');
+                this.classList.remove('float-label');
             }
         }
-
-        this.removeAttribute('value');
-    }
-
-    protected override _clearValue(e: MouseEvent) {
-        const input = this._inputElement;
-        if (this.disabled) {
-            return e.stopImmediatePropagation();
-        }
-
-        this.value = '';
-        input!.value = '';
-        //this.removeAttribute('transform');
-        this.container?.classList?.remove('float-label');
-        // Dispatch standard DOM event to cater for single clear.
-        this.dispatchEvent(
-            new Event('change', {
-                bubbles: true,
-                composed: true
-            })
-        );
-
-        // Prevent the event from bubbling up. for mobile use cases that will bring the component into focus and render the items.
-        e.stopPropagation();
     }
 
     _focusInput() {
@@ -150,13 +145,11 @@ export class PasswordField extends OmniFormElement {
         const input = this._inputElement;
         this.value = input?.value;
 
-        // Added check for value of input and either set the labelTransform property or remove the label-transform attribute.
+        // Check the value of the input and either add float-label class or remove it accordingly.
         if (input?.value !== '') {
-            //this.transform = true;
-            this.container?.classList?.add('float-label');
+            this.classList.add('float-label');
         } else {
-            //this.removeAttribute('transform');
-            this.container?.classList?.remove('float-label');
+            this.classList.remove('float-label');
         }
     }
 
