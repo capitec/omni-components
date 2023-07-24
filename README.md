@@ -207,6 +207,22 @@ Control to display modal content with optional header and footer content.
 
 </td></tr><tr><td>
 
+[omni-button](/Users/runner/work/omni-components/omni-components/src/button/README.md)
+
+</td><td>
+
+Control that allows an action to be executed.
+
+</td></tr><tr><td>
+
+[omni-alert](/Users/runner/work/omni-components/omni-components/src/alert/README.md)
+
+</td><td>
+
+Component that displays an alert.
+
+</td></tr><tr><td>
+
 [omni-clear-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
 
 </td><td>
@@ -292,22 +308,6 @@ Label component that renders styled text.
 </td><td>
 
 Control to switch a value on or off.
-
-</td></tr><tr><td>
-
-[omni-button](/Users/runner/work/omni-components/omni-components/src/button/README.md)
-
-</td><td>
-
-Control that allows an action to be executed.
-
-</td></tr><tr><td>
-
-[omni-alert](/Users/runner/work/omni-components/omni-components/src/alert/README.md)
-
-</td><td>
-
-Component that displays an alert.
 
 </td></tr><tr><td>
 

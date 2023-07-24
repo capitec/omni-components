@@ -37,11 +37,10 @@ Component that displays an alert.
 
 ## Events
 
-| Event                | Type                                   | Description                                  |
-|----------------------|----------------------------------------|----------------------------------------------|
-| `alert-action-click` | `CustomEvent<{ secondary: boolean; }>` |                                              |
-| `alert-close`        |                                        |                                              |
-| `close-click`        |                                        | Dispatched when the close button is clicked. |
+| Event                | Type                                   | Description                                      |
+|----------------------|----------------------------------------|--------------------------------------------------|
+| `alert-action-click` | `CustomEvent<{ secondary: boolean; }>` | Dispatched when an alert action button is clicked. |
+| `alert-close`        |                                        | Dispatched when the alert is closed.             |
 
 ## Slots
 
@@ -93,19 +92,19 @@ Component that displays an alert.
 | `--omni-alert-header-font-family`                | Alert header font family.                        |
 | `--omni-alert-header-font-size`                  | Alert header font size.                          |
 | `--omni-alert-header-font-weight`                | Alert header font weight.                        |
+| `--omni-alert-header-horizontal-gap`             | Alert header horizontal space between status indicator and header content. |
 | `--omni-alert-header-line-height`                | Alert header line height.                        |
 | `--omni-alert-header-padding-bottom`             | Alert header bottom padding.                     |
 | `--omni-alert-header-padding-left`               | Alert header left padding.                       |
 | `--omni-alert-header-padding-right`              | Alert header right padding.                      |
 | `--omni-alert-header-padding-top`                | Alert header top padding.                        |
+| `--omni-alert-header-status-size`                | Alert header status indicator symmetrical size.  |
 | `--omni-alert-max-width`                         | Maximum width for alert.                         |
 | `--omni-alert-min-width`                         | Minimum width for alert.                         |
 | `--omni-alert-padding-bottom`                    | Alert content bottom padding.                    |
 | `--omni-alert-padding-left`                      | Alert content left padding.                      |
 | `--omni-alert-padding-right`                     | Alert content right padding.                     |
 | `--omni-alert-padding-top`                       | Alert content top padding.                       |
-| `--omni-header-horizontal-gap`                   | Alert header horizontal space between status indicator and header content. |
-| `--omni-header-status-size`                      | Alert header status indicator symmetrical size.  |
 | `--omni-theme-accent-active-color`               | Theme accent active color.                       |
 | `--omni-theme-accent-color`                      | Theme accent color.                              |
 | `--omni-theme-accent-hover-color`                | Theme accent hover color.                        |
