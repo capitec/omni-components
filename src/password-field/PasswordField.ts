@@ -1,7 +1,6 @@
 import { css, html } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { ClassInfo, classMap } from 'lit/directives/class-map.js';
-import { live } from 'lit/directives/live.js';
 import { ifDefined, OmniFormElement } from '../core/OmniFormElement.js';
 
 import '../icons/EyeHidden.icon.js';
@@ -61,9 +60,9 @@ export class PasswordField extends OmniFormElement {
     @state() protected type: 'password' | 'text' = 'password';
 
     /**
-     * 
+     * Override for the value property inherited from the OmniFormElement component with reflect set to false.
      */
-    @property({type: String, reflect: false}) override value?: string;
+    @property({ type: String, reflect: false }) override value?: string;
 
     /**
      * Disables native on screen keyboards for the component.
@@ -73,6 +72,8 @@ export class PasswordField extends OmniFormElement {
 
     @query('#inputField')
     private _inputElement?: HTMLInputElement;
+    @query('.container')
+    private container?: HTMLDivElement;
 
     override connectedCallback() {
         super.connectedCallback();
@@ -82,6 +83,50 @@ export class PasswordField extends OmniFormElement {
         this.addEventListener('focus', this._focusInput.bind(this), {
             capture: true
         });
+    }
+
+    // Added for non webkit supporting browsers and to stop the component from having a non-valid value (non-numeric) value bound.
+    protected override async firstUpdated(): Promise<void> {
+        this._sanitiseValue();
+    }
+
+    // Checks if the value provided is numeric, if valid set the value property and input element value if not value remove the value attribute
+    _sanitiseValue() {
+        if (this._inputElement) {
+            this._inputElement.value = this.value as string;
+            // Added check for value of input and either set the focussed property or remove the attribute.
+            if (this._inputElement.value !== '') {
+                //this.transform = true;
+                this.container?.classList?.add('float-label');
+            } else {
+                //this.removeAttribute('transform');
+                this.container?.classList?.remove('float-label');
+            }
+        }
+
+        this.removeAttribute('value');
+    }
+
+    protected override _clearValue(e: MouseEvent) {
+        const input = this._inputElement;
+        if (this.disabled) {
+            return e.stopImmediatePropagation();
+        }
+
+        this.value = '';
+        input!.value = '';
+        //this.removeAttribute('transform');
+        this.container?.classList?.remove('float-label');
+        // Dispatch standard DOM event to cater for single clear.
+        this.dispatchEvent(
+            new Event('change', {
+                bubbles: true,
+                composed: true
+            })
+        );
+
+        // Prevent the event from bubbling up. for mobile use cases that will bring the component into focus and render the items.
+        e.stopPropagation();
     }
 
     _focusInput() {
@@ -106,10 +151,12 @@ export class PasswordField extends OmniFormElement {
         this.value = input?.value;
 
         // Added check for value of input and either set the labelTransform property or remove the label-transform attribute.
-        if(input?.value !== ''){
-            this.transform = true;
-        }else {
-            this.removeAttribute('transform');
+        if (input?.value !== '') {
+            //this.transform = true;
+            this.container?.classList?.add('float-label');
+        } else {
+            //this.removeAttribute('transform');
+            this.container?.classList?.remove('float-label');
         }
     }
 
@@ -219,7 +266,6 @@ export class PasswordField extends OmniFormElement {
         id="inputField"
         .type="${this.type}"
         inputmode="${ifDefined(this.noNativeKeyboard ? 'none' : undefined)}"
-        .value=${live(this.value as string)}
         ?readOnly=${this.disabled}
         tabindex="${this.disabled ? -1 : 0}" />
     `;

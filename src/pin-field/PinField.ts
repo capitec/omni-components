@@ -66,9 +66,9 @@ export class PinField extends OmniFormElement {
     @property({ type: Boolean, reflect: true, attribute: 'no-native-keyboard' }) noNativeKeyboard?: boolean;
 
     /**
-     * 
+     * Override for the value property inherited from the OmniFormElement component with reflect set to false.
      */
-    @property({type: String, reflect: false}) override value?: string;
+    @property({ type: String, reflect: false }) override value?: string;
 
     /**
      * Maximum character input length.
@@ -78,6 +78,8 @@ export class PinField extends OmniFormElement {
 
     @query('#inputField')
     private _inputElement?: HTMLInputElement;
+    @query('.container')
+    private container?: HTMLDivElement;
     private showPin?: boolean = false;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private isWebkit?: boolean;
@@ -107,17 +109,31 @@ export class PinField extends OmniFormElement {
         this._sanitiseValue(this.value as string);
     }
 
-    override async attributeChangedCallback(name: string, _old: string | null, value: string | null): Promise<void> {
-        super.attributeChangedCallback(name, _old, value);
-        if (name === 'value') {
-            this._sanitiseValue(value as string);
+    protected override _clearValue(e: MouseEvent) {
+        const input = this._inputElement;
+        if (this.disabled) {
+            return e.stopImmediatePropagation();
         }
+
+        this.value = '';
+        input!.value = '';
+        //this.removeAttribute('transform');
+        this.container?.classList?.remove('float-label');
+        // Dispatch standard DOM event to cater for single clear.
+        this.dispatchEvent(
+            new Event('change', {
+                bubbles: true,
+                composed: true
+            })
+        );
+
+        // Prevent the event from bubbling up. for mobile use cases that will bring the component into focus and render the items.
+        e.stopPropagation();
     }
 
     override focus(options?: FocusOptions | undefined): void {
         if (this._inputElement) {
             this._inputElement.focus(options);
-            // this.focussed = true;
         } else {
             super.focus(options);
         }
@@ -135,7 +151,17 @@ export class PinField extends OmniFormElement {
 
         if (this._inputElement) {
             this._inputElement.value = this.value as string;
+            // Added check for value of input and either set the focussed property or remove the attribute.
+            if (this._inputElement.value !== '') {
+                //this.transform = true;
+                this.container?.classList?.add('float-label');
+            } else {
+                //this.removeAttribute('transform');
+                this.container?.classList?.remove('float-label');
+            }
         }
+
+        this.removeAttribute('value');
     }
 
     _blurOnEnter(e: KeyboardEvent) {
@@ -166,16 +192,17 @@ export class PinField extends OmniFormElement {
                 // Restrict the input characters to the length of specified in the args.
                 input.value = String(input?.value).slice(0, this.maxLength);
             }
-        } 
+        }
         this.value = input?.value;
 
         // Added check for value of input and either set the focussed property or remove the attribute.
-        if(input?.value !== ''){
-            this.transform = true;
-        }else {
-            this.removeAttribute('transform');
+        if (input?.value !== '') {
+            //this.transform = true;
+            this.container?.classList?.add('float-label');
+        } else {
+            //this.removeAttribute('transform');
+            this.container?.classList?.remove('float-label');
         }
-
     }
 
     _iconClicked(e: MouseEvent) {
