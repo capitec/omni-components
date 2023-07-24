@@ -8,8 +8,7 @@ import {
     type Page,
     type PageScreenshotOptions,
     type LocatorScreenshotOptions,
-    JSHandle,
-    ElementHandle
+    type ElementHandle
 } from '@playwright/test';
 export * from '@playwright/test';
 import { fn } from 'jest-mock';
@@ -252,14 +251,6 @@ function createWaitHandle<T = unknown>() {
     };
 }
 
-/*
-    const valueChange = jestMock.fn();
-    await page.exposeFunction('jestChange', () => valueChange());
-    await selectComponent.evaluate((node) => {
-        node.addEventListener('change', () => window.jestChange());
-    });
-
-*/
 // TODO: Revisit once playwright clipboard support is completed
 /*
     clipboard isolation: [feature] clipboard isolation: https://github.com/microsoft/playwright/issues/13097
