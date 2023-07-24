@@ -173,7 +173,7 @@ async function mockEventListener(locatorOrHandle: Locator | ElementHandle | null
     }
 
     let page: Page;
-    const evalFunc = (node: HTMLElement, { tempFunction, eventName }: { tempFunction: string; eventName: string }) => {
+    const evalFunc = (node: HTMLElement, { tempFunction, eventName, fullEvent }: { tempFunction: string; eventName: string; fullEvent: boolean }) => {
         // Stringify Event https://stackoverflow.com/a/58416333
         function stringifyObject(object: any, maxDepth = 4, currentDepth = 0) {
             if (currentDepth > maxDepth) return object?.toString();
@@ -204,7 +204,7 @@ async function mockEventListener(locatorOrHandle: Locator | ElementHandle | null
         }
 
         node.addEventListener(eventName, (e) => {
-            const eData = stringifyObject(e);
+            const eData = fullEvent ? stringifyObject(e) : '';
             // console.log(e);
             // console.log(eData);
             //@ts-ignore
@@ -224,14 +224,14 @@ async function mockEventListener(locatorOrHandle: Locator | ElementHandle | null
         page = (await handle.ownerFrame())?.page() as Page;
         await page.exposeFunction(tempFunction, pageFunction);
 
-        await handle.evaluate(evalFunc, { tempFunction, eventName });
+        await handle.evaluate(evalFunc, { tempFunction, eventName, fullEvent: Boolean(callback) });
     } else {
         const locator = locatorOrHandle as Locator;
 
         page = locator.page() as Page;
         await page.exposeFunction(tempFunction, pageFunction);
 
-        await locator.evaluate(evalFunc, { tempFunction, eventName });
+        await locator.evaluate(evalFunc, { tempFunction, eventName, fullEvent: Boolean(callback) });
     }
 
     return eventFunction;
