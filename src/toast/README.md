@@ -24,7 +24,7 @@ Component to visually notify a user of a message.
 | `lang`      |             |           | `string`                                         |         |                                                  |
 | `override`  | `override`  |           |                                                  |         | Used to set the base direction of text for display |
 | `styles`    |             | readonly  | `CSSResultGroup[]`                               |         |                                                  |
-| `type`      | `type`      |           | `"none" \| "success" \| "warning" \| "error" \| "info"` | "none"  | The type of toast to display.                    |
+| `type`      | `type`      |           | `"success" \| "warning" \| "error" \| "info" \| "none"` | "none"  | The type of toast to display.                    |
 
 ## Events
 
@@ -134,7 +134,7 @@ A toast container that animates in and stacks toast elements.
 | `dir`      |            |           | `string`                                         |          |                                                  |
 | `lang`     |            |           | `string`                                         |          |                                                  |
 | `override` | `override` |           |                                                  |          | Used to set the base direction of text for display |
-| `position` | `position` |           | `"left" \| "top" \| "right" \| "bottom" \| "top-left" \| "top-right" \| "bottom-left" \| "bottom-right"` | "bottom" | The position to stack toasts                     |
+| `position` | `position` |           | `"left" \| "right" \| "top" \| "bottom" \| "top-left" \| "top-right" \| "bottom-left" \| "bottom-right"` | "bottom" | The position to stack toasts                     |
 | `reverse`  | `reverse`  |           | `boolean \| undefined`                           |          | Reverse the order of toast with newest toasts showed on top of the stack. By default newest toasts are showed at the bottom of the stack. |
 | `styles`   |            | readonly  | `CSSResult[]`                                    |          |                                                  |
 
