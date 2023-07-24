@@ -1,10 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { within } from '@testing-library/dom';
-import userEvent from '@testing-library/user-event';
-import { setUIValueClean } from '@testing-library/user-event/dist/esm/document/UI.js';
-import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import {
@@ -19,18 +12,12 @@ import {
 } from '../core/OmniInputStories.js';
 import { RenderFunction } from '../render-element/RenderElement.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import expect from '../utils/ExpectDOM.js';
-import { assignToSlot, ComponentStoryFormat, CSFIdentifier, getSourceFromLit, querySelectorAsync, raw } from '../utils/StoryUtils.js';
+import { assignToSlot, ComponentStoryFormat, getSourceFromLit, raw } from '../utils/StoryUtils.js';
 import { Select, SelectItems, SelectTypes } from './Select.js';
 
 import './Select.js';
 
-export default {
-    title: 'UI Components/Select',
-    component: 'omni-select'
-} as CSFIdentifier;
-
-interface Args extends BaseArgs {
+export interface Args extends BaseArgs {
     items: SelectItems | (() => SelectItems);
     displayField: string;
     emptyMessage: string;
@@ -172,41 +159,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
         idField: 'id',
         loading_indicator: '',
         emptyMessage: 'No items provided'
-    } as Args,
-    play: async (context) => {
-        const select = within(context.canvasElement).getByTestId<Select>('test-select');
-        const click = jest.fn();
-        const change = jest.fn();
-        select.addEventListener('click', click);
-        select.addEventListener('change', change);
-
-        await userEvent.click(select);
-        await userEvent.click(select);
-
-        await expect(click).toBeCalledTimes(2);
-
-        const controlButton = select.shadowRoot?.getElementById('control');
-
-        await expect(controlButton).toBeTruthy();
-
-        await userEvent.click(select);
-
-        const itemContainer = await querySelectorAsync(select!.shadowRoot!, '#items-container');
-        await expect(itemContainer).toBeTruthy();
-
-        const items = select.shadowRoot?.getElementById('items');
-        await expect(items).toBeTruthy();
-
-        const item = await querySelectorAsync(select!.shadowRoot!, '.item');
-
-        await expect(item).toBeTruthy();
-        await userEvent.click(item as HTMLDivElement);
-
-        const selectField = select.shadowRoot?.getElementById('select');
-        await expect(selectField).toHaveValue(displayItems[0].label);
-
-        await expect(change).toBeCalledTimes(1);
-    }
+    } as Args
 };
 
 export const Async_Per_Item: ComponentStoryFormat<Args> = {
@@ -408,28 +361,7 @@ const App = () => <OmniSelect label="${args.label}" display-field="${args.displa
 
             return i;
         }
-    } as Args,
-    play: async (context) => {
-        const select = within(context.canvasElement).getByTestId<Select>('test-select');
-        const click = jest.fn();
-        const change = jest.fn();
-        select.addEventListener('click', click);
-        select.addEventListener('change', change);
-
-        await userEvent.click(select);
-
-        let item;
-        // TODO: Fix race conditions in tests
-        if (navigator.userAgent === 'Test Runner') {
-            item = await querySelectorAsync(select.shadowRoot!, '.item', undefined, 3000);
-        } else {
-            item = await querySelectorAsync(select.shadowRoot!, '.item', undefined, 5000);
-        }
-        await userEvent.click(item as HTMLDivElement);
-
-        const selectField = select.shadowRoot?.getElementById('select');
-        await expect(selectField).toHaveValue(displayItems[0].label);
-    }
+    } as Args
 };
 
 export const Loading_Slot: ComponentStoryFormat<Args> = {
@@ -638,28 +570,7 @@ const App = () => <OmniSelect label="${args.label}" display-field="${args.displa
             return i;
         },
         loading_indicator: raw`<span>...</span>`
-    } as Args,
-    play: async (context) => {
-        const select = within(context.canvasElement).getByTestId<Select>('test-select');
-        const click = jest.fn();
-        const change = jest.fn();
-        select.addEventListener('click', click);
-        select.addEventListener('change', change);
-
-        await userEvent.click(select);
-
-        let item;
-        // TODO: Fix race conditions in tests
-        if (navigator.userAgent === 'Test Runner') {
-            item = await querySelectorAsync(select.shadowRoot!, '.item', undefined, 3000);
-        } else {
-            item = await querySelectorAsync(select.shadowRoot!, '.item', undefined, 5000);
-        }
-        await userEvent.click(item as HTMLDivElement);
-
-        const selectField = select.shadowRoot?.getElementById('select');
-        await expect(selectField).toHaveValue(displayItems[0].label);
-    }
+    } as Args
 };
 
 export const String_Array: ComponentStoryFormat<Args> = {
@@ -726,22 +637,7 @@ const App = () => <OmniSelect label="${args.label}" display-field="${args.displa
         items: stringItems,
         displayField: 'label',
         idField: 'id'
-    } as Args,
-    play: async (context) => {
-        const select = within(context.canvasElement).getByTestId<Select>('test-select');
-        const click = jest.fn();
-        const change = jest.fn();
-        select.addEventListener('click', click);
-        select.addEventListener('change', change);
-
-        await userEvent.click(select);
-
-        const item = await querySelectorAsync(select.shadowRoot!, '.item');
-        await userEvent.click(item as HTMLDivElement);
-
-        const selectField = select.shadowRoot?.getElementById('select');
-        await expect(selectField).toHaveValue(stringItems[0]);
-    }
+    } as Args
 };
 
 export const Selection_Renderer: ComponentStoryFormat<Args> = {
@@ -862,22 +758,7 @@ const App = () => <OmniSelect label="${args.label}" value="${args.value}" items=
             return i;
         },
         value: 'Clark Kent'
-    } as Args,
-    play: async (context) => {
-        const select = within(context.canvasElement).getByTestId<Select>('test-select');
-        const click = jest.fn();
-        const change = jest.fn();
-        select.addEventListener('click', click);
-        select.addEventListener('change', change);
-
-        await userEvent.click(select);
-
-        const item = await querySelectorAsync(select.shadowRoot!, '.item');
-        await userEvent.click(item as HTMLDivElement);
-
-        const selectField = select.shadowRoot?.getElementById('select');
-        await expect(selectField).toHaveValue(stringItems[0]);
-    }
+    } as Args
 };
 
 export const Empty_Message: ComponentStoryFormat<Args> = {
@@ -907,16 +788,7 @@ const App = () => <OmniSelect label="${args.label}" display-field="${args.displa
         emptyMessage: 'No items provided',
         displayField: 'label',
         idField: 'id'
-    } as Partial<Args>,
-    play: async (context) => {
-        const select = within(context.canvasElement).getByTestId<Select>('test-select');
-        const click = jest.fn();
-        select.addEventListener('click', click);
-        await userEvent.click(select);
-
-        const item = await querySelectorAsync(select.shadowRoot!, '.none');
-        await expect(item).toHaveTextContent(context.args.emptyMessage);
-    }
+    } as Partial<Args>
 };
 
 export const Disabled: ComponentStoryFormat<Args> = {
@@ -948,14 +820,7 @@ const App = () => <OmniSelect label="${args.label}" disabled/>;`
         label: 'Disabled',
         disabled: true,
         items: displayItems as Record<string, unknown>[]
-    } as Args,
-    play: async (context) => {
-        const select = within(context.canvasElement).getByTestId<Select>('test-select');
-        const click = jest.fn();
-        select.addEventListener('click', click);
-        await expect(() => userEvent.click(select)).rejects.toThrow(/pointer-events: none/);
-        await expect(click).toBeCalledTimes(0);
-    }
+    } as Args
 };
 
 export const Custom_Control_Slot: ComponentStoryFormat<Args> = {
@@ -1030,24 +895,7 @@ const App = () => <OmniSelect label="${args.label}" items={stringItems}>
     args: {
         label: 'Custom slots',
         items: stringItems
-    } as Args,
-    play: async (context) => {
-        const select = within(context.canvasElement).getByTestId<Select>('test-select');
-
-        if (!window.matchMedia ? window.innerWidth >= 767 : window.matchMedia('screen and (min-width: 767px)').matches) {
-            const slotElement = select.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=arrow]');
-            await expect(slotElement).toBeTruthy();
-
-            const foundSlottedSvgElement = slotElement?.assignedElements().find((e) => e.tagName.toLocaleLowerCase() === 'svg');
-            await expect(foundSlottedSvgElement).toBeTruthy();
-        } else {
-            const slotElement = select.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=more]');
-            await expect(slotElement).toBeTruthy();
-
-            const foundSlottedSvgElement = slotElement?.assignedElements().find((e) => e.tagName.toLocaleLowerCase() === 'svg');
-            await expect(foundSlottedSvgElement).toBeTruthy();
-        }
-    }
+    } as Args
 };
 
 export const Searchable: ComponentStoryFormat<Args> = {
@@ -1156,39 +1004,7 @@ const App = () => <OmniSelect label="${args.label}" display-field="${args.displa
         idField: 'id',
         searchable: true,
         items: displayItems as Record<string, unknown>[]
-    } as Args,
-    play: async (context) => {
-        const select = within(context.canvasElement).getByTestId<Select>('test-select');
-        const click = jest.fn();
-        select.addEventListener('click', click);
-
-        await userEvent.click(select);
-
-        const searchField = (await querySelectorAsync(select!.shadowRoot!, '#searchField')) as HTMLInputElement;
-        await expect(searchField).toBeTruthy();
-
-        // Required to clear userEvent Symbol that keeps hidden state of previously typed values via userEvent. If not cleared this cannot be run multiple times with the same results
-        setUIValueClean(searchField);
-        await userEvent.click(searchField);
-
-        const value = 'Peter';
-        await userEvent.type(searchField, value);
-
-        //Add check to find the items-container once the component is opened.
-        const itemContainer = await querySelectorAsync(select!.shadowRoot!, '#items-container');
-        await expect(itemContainer).toBeTruthy();
-
-        const items = select.shadowRoot?.getElementById('items');
-        await expect(items).toBeTruthy();
-
-        const item = await querySelectorAsync(select!.shadowRoot!, '.item');
-
-        await expect(item).toBeTruthy();
-        await userEvent.click(item as HTMLDivElement);
-
-        const selectField = select.shadowRoot?.getElementById('select');
-        await expect(selectField).toHaveValue(displayItems[0].label);
-    }
+    } as Args
 };
 
 export const Custom_Search: ComponentStoryFormat<Args> = {
@@ -1319,39 +1135,7 @@ const App = () => <OmniSelect label="${args.label}" items={stringItems} filterIt
         searchable: true,
         items: stringItems,
         filterItems: customSearch
-    } as Args,
-    play: async (context) => {
-        const select = within(context.canvasElement).getByTestId<Select>('test-select');
-        const click = jest.fn();
-        select.addEventListener('click', click);
-
-        await userEvent.click(select);
-
-        const searchField = (await querySelectorAsync(select!.shadowRoot!, '#searchField')) as HTMLInputElement;
-        await expect(searchField).toBeTruthy();
-
-        // Required to clear userEvent Symbol that keeps hidden state of previously typed values via userEvent. If not cleared this cannot be run multiple times with the same results
-        setUIValueClean(searchField);
-        await userEvent.click(searchField);
-
-        const value = 'Bruce';
-        await userEvent.type(searchField, value);
-
-        //Add check to find the items-container once the component is opened.
-        const itemContainer = await querySelectorAsync(select!.shadowRoot!, '#items-container');
-        await expect(itemContainer).toBeTruthy();
-
-        const items = select.shadowRoot?.getElementById('items');
-        await expect(items).toBeTruthy();
-
-        const item = await querySelectorAsync(select!.shadowRoot!, '.item');
-
-        await expect(item).toBeTruthy();
-        await userEvent.click(item as HTMLDivElement);
-
-        const selectField = select.shadowRoot?.getElementById('select');
-        await expect(selectField).toHaveValue(stringItems[0]);
-    }
+    } as Args
 };
 
 export const Server_Side_Filtering: ComponentStoryFormat<Args> = {
@@ -1498,45 +1282,7 @@ const App = () => <OmniSelect label="${args.label}" items={searchFilter} searcha
         label: 'Server Side Filtering',
         searchable: true,
         items: promiseSearchFilter
-    } as Args,
-    play: async (context) => {
-        const select = within(context.canvasElement).getByTestId<Select>('test-select');
-        const click = jest.fn();
-        select.addEventListener('click', click);
-
-        await userEvent.click(select);
-
-        const searchField = (await querySelectorAsync(select!.shadowRoot!, '#searchField')) as HTMLInputElement;
-        await expect(searchField).toBeTruthy();
-
-        // Required to clear userEvent Symbol that keeps hidden state of previously typed values via userEvent. If not cleared this cannot be run multiple times with the same results
-        setUIValueClean(searchField);
-        await userEvent.click(searchField);
-
-        const value = 'Bruce';
-        await userEvent.type(searchField, value);
-
-        //Add check to find the items-container once the component is opened.
-        const itemContainer = await querySelectorAsync(select!.shadowRoot!, '#items-container');
-        await expect(itemContainer).toBeTruthy();
-
-        const items = select.shadowRoot?.getElementById('items');
-        await expect(items).toBeTruthy();
-
-        let item;
-        // TODO: Fix race conditions in tests
-        if (navigator.userAgent === 'Test Runner') {
-            item = await querySelectorAsync(select.shadowRoot!, '.item', undefined, 3000);
-        } else {
-            item = await querySelectorAsync(select.shadowRoot!, '.item', undefined, 5000);
-        }
-
-        await expect(item).toBeTruthy();
-        await userEvent.click(item as HTMLDivElement);
-
-        const selectField = select.shadowRoot?.getElementById('select');
-        await expect(selectField).toHaveValue(stringItems[0]);
-    }
+    } as Args
 };
 
 export const Custom_Search_Slot: ComponentStoryFormat<Args> = {
@@ -1628,45 +1374,7 @@ const App = () => <OmniSelect label="${args.label}" items={stringItems} searchab
         label: 'Custom Search Slot',
         searchable: true,
         items: stringItems
-    } as Args,
-    play: async (context) => {
-        const select = within(context.canvasElement).getByTestId<Select>('test-select');
-        const click = jest.fn();
-        select.addEventListener('click', click);
-
-        await userEvent.click(select);
-
-        const searchField = (await querySelectorAsync(select!.shadowRoot!, '#searchField')) as HTMLInputElement;
-        await expect(searchField).toBeTruthy();
-
-        // Required to clear userEvent Symbol that keeps hidden state of previously typed values via userEvent. If not cleared this cannot be run multiple times with the same results
-        setUIValueClean(searchField);
-        await userEvent.click(searchField);
-
-        const value = 'Bruce';
-        await userEvent.type(searchField, value);
-
-        const slotElement = select.shadowRoot?.querySelector<HTMLSlotElement>('slot[name=search-clear]');
-        await expect(slotElement).toBeTruthy();
-
-        const foundSlottedSvgElement = slotElement?.assignedElements().find((e) => e.tagName.toLocaleLowerCase() === 'svg');
-        await expect(foundSlottedSvgElement).toBeTruthy();
-
-        //Add check to find the items-container once the component is opened.
-        const itemContainer = await querySelectorAsync(select!.shadowRoot!, '#items-container');
-        await expect(itemContainer).toBeTruthy();
-
-        const items = select.shadowRoot?.getElementById('items');
-        await expect(items).toBeTruthy();
-
-        const item = await querySelectorAsync(select!.shadowRoot!, '.item');
-
-        await expect(item).toBeTruthy();
-        await userEvent.click(item as HTMLDivElement);
-
-        const selectField = select.shadowRoot?.getElementById('select');
-        await expect(selectField).toHaveValue(stringItems[0]);
-    }
+    } as Args
 };
 
 export const Label = LabelStory<Select, BaseArgs>('omni-select');

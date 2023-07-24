@@ -1,28 +1,12 @@
-import { within } from '@testing-library/dom';
-import userEvent from '@testing-library/user-event';
-import * as jest from 'jest-mock';
 import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import expect from '../utils/ExpectDOM.js';
-import { ComponentStoryFormat, CSFIdentifier, getSourceFromLit } from '../utils/StoryUtils.js';
+import { ComponentStoryFormat, getSourceFromLit } from '../utils/StoryUtils.js';
 import './Hyperlink.js';
 
 const linkTarget = ['_self', '_blank', '_parent', '_top'] as const;
 
-export default {
-    title: 'UI Components/Hyperlink',
-    component: 'omni-hyperlink',
-    argTypes: {
-        size: { control: 'radio', options: ['default', 'small'] },
-        target: { control: 'radio', options: linkTarget },
-        '[Default Slot]': {
-            control: 'text'
-        }
-    }
-} as CSFIdentifier;
-
-interface Args {
+export interface Args {
     label: string;
     href: string;
     target: (typeof linkTarget)[number];
@@ -62,19 +46,6 @@ export const Interactive: ComponentStoryFormat<Args> = {
         inline: false,
         size: '',
         '[Default Slot]': undefined
-    },
-    play: async (context) => {
-        const canvas = within(context.canvasElement);
-        const Hyperlink = canvas.getByTestId('test-hyperlink');
-        const click = jest.fn();
-        Hyperlink.addEventListener('click', () => click());
-        await userEvent.click(Hyperlink, {
-            pointerEventsCheck: 0
-        });
-        await userEvent.click(Hyperlink, {
-            pointerEventsCheck: 0
-        });
-        await expect(click).toBeCalledTimes(2);
     }
 };
 
@@ -92,11 +63,6 @@ const App = () => <OmniHyperlink${args.label ? ` label='${args.label}'` : ''}/>;
     description: 'Set the text content of the component.',
     args: {
         label: 'Click'
-    },
-    play: async (context) => {
-        const canvas = within(context.canvasElement);
-        const Hyperlink = canvas.getByTestId('test-hyperlink');
-        await expect(Hyperlink.shadowRoot?.querySelector('a')).toHaveTextContent(Label.args?.label as string);
     }
 };
 
@@ -115,11 +81,6 @@ const App = () => <OmniHyperlink${args.label ? ` label='${args.label}'` : ''}${a
     args: {
         label: 'Click',
         size: 'small'
-    },
-    play: async (context) => {
-        const canvas = within(context.canvasElement);
-        const Hyperlink = canvas.getByTestId('test-hyperlink');
-        await expect(Hyperlink).toHaveAttribute('size', Size.args?.size as string);
     }
 };
 
@@ -139,11 +100,6 @@ const App = () => <OmniHyperlink${args.label ? ` label='${args.label}'` : ''}${a
     args: {
         label: 'Click',
         href: 'https://example.com'
-    },
-    play: async (context) => {
-        const canvas = within(context.canvasElement);
-        const Hyperlink = canvas.getByTestId('test-hyperlink');
-        await expect(Hyperlink).toHaveAttribute('href', Href.args?.href as string);
     }
 };
 
@@ -174,22 +130,6 @@ const App = () => <OmniHyperlink href="https://example.com"${args.label ? ` labe
     args: {
         label: 'Click',
         disabled: true
-    },
-    play: async (context) => {
-        const canvas = within(context.canvasElement);
-
-        const Hyperlink = canvas.getByTestId('test-hyperlink');
-
-        const click = jest.fn();
-        Hyperlink.addEventListener('click', () => click());
-
-        await userEvent.click(Hyperlink, {
-            pointerEventsCheck: 0
-        });
-        await userEvent.click(Hyperlink, {
-            pointerEventsCheck: 0
-        });
-        await expect(click).toBeCalledTimes(0);
     }
 };
 
@@ -216,13 +156,5 @@ const App = () => <p> Inline <OmniHyperlink${args.label ? ` label='${args.label}
     args: {
         label: 'click',
         inline: true
-    },
-    play: async (context) => {
-        const canvas = within(context.canvasElement);
-
-        const paragraph = canvas.getByTestId('test-paragraph');
-        const hyperlinkElement = paragraph.querySelector<HTMLElement>('omni-hyperlink');
-
-        await expect(paragraph).toContainElement(hyperlinkElement);
     }
 };

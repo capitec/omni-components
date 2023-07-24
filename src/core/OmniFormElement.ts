@@ -391,6 +391,7 @@ export class OmniFormElement extends OmniElement {
                     height: var(--omni-form-clear-slot-height,20px);
                     width: var(--omni-form-clear-slot-width, 20px);
                     cursor: pointer;
+                    pointer-events: none;
                 }
 
                 slot[name='prefix'],

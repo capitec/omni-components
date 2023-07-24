@@ -1,7 +1,3 @@
-import { within } from '@testing-library/dom';
-import userEvent from '@testing-library/user-event';
-import { setUIValueClean } from '@testing-library/user-event/dist/esm/document/UI.js';
-import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import {
@@ -17,16 +13,10 @@ import {
     SuffixStory
 } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import expect from '../utils/ExpectDOM.js';
-import { assignToSlot, ComponentStoryFormat, CSFIdentifier, getSourceFromLit } from '../utils/StoryUtils.js';
+import { assignToSlot, ComponentStoryFormat, getSourceFromLit } from '../utils/StoryUtils.js';
 import { TextField } from './TextField.js';
 
 import './TextField.js';
-
-export default {
-    title: 'UI Components/Text Field',
-    component: 'omni-text-field'
-} as CSFIdentifier;
 
 export const Interactive: ComponentStoryFormat<BaseArgs> = {
     render: (args: BaseArgs) => html`
@@ -63,25 +53,6 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
         prefix: '',
         suffix: '',
         clear: ''
-    },
-    play: async (context) => {
-        const textField = within(context.canvasElement).getByTestId<TextField>('test-text-field');
-        textField.value = '';
-
-        const input = jest.fn();
-        textField.addEventListener('input', input);
-
-        const inputField = textField.shadowRoot?.getElementById('inputField') as HTMLInputElement;
-        // Required to clear userEvent Symbol that keeps hidden state of previously typed values via userEvent. If not cleared this cannot be run multiple times with the same results
-        setUIValueClean(inputField);
-
-        await userEvent.type(inputField, 'Value Update', {
-            pointerEventsCheck: 0
-        });
-        const value = 'Value Update';
-        await expect(inputField).toHaveValue(value);
-
-        await expect(input).toBeCalledTimes(value.length);
     }
 };
 

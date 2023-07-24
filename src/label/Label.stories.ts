@@ -1,31 +1,12 @@
-import { within } from '@testing-library/dom';
 import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import expect from '../utils/ExpectDOM.js';
-import { ComponentStoryFormat, CSFIdentifier } from '../utils/StoryUtils.js';
-import { Label } from './Label.js';
+import { ComponentStoryFormat } from '../utils/StoryUtils.js';
 import './Label.js';
 
 const labelOptions = ['default', 'title', 'subtitle', 'strong'] as const;
 
-export default {
-    title: 'UI Components/Label',
-    component: 'omni-label',
-    argTypes: {
-        type: {
-            control: {
-                type: 'radio',
-                options: labelOptions
-            },
-            '[Default Slot]': {
-                control: 'text'
-            }
-        }
-    }
-} as CSFIdentifier;
-
-interface Args {
+export interface Args {
     label: string;
     type: (typeof labelOptions)[number];
     '[Default Slot]': string;
@@ -41,10 +22,6 @@ export const Interactive: ComponentStoryFormat<Args> = {
         label: 'Label',
         type: 'default',
         '[Default Slot]': undefined
-    },
-    play: async (context) => {
-        const label = within(context.canvasElement).getByTestId<Label>('test-label');
-        await expect(label.shadowRoot).toHaveTextContent(Interactive.args?.label as string);
     },
     frameworkSources: [
         {
@@ -68,10 +45,6 @@ export const Title: ComponentStoryFormat<Args> = {
     args: {
         label: 'Title',
         type: 'title'
-    },
-    play: async (context) => {
-        const label = within(context.canvasElement).getByTestId<Label>('test-label');
-        await expect(label.shadowRoot).toHaveTextContent(Title.args?.label as string);
     },
     frameworkSources: [
         {
@@ -103,10 +76,6 @@ const App = () => <OmniLabel${args.label ? ` label='${args.label}'` : ''}${args.
     args: {
         label: 'Subtitle',
         type: 'subtitle'
-    },
-    play: async (context) => {
-        const label = within(context.canvasElement).getByTestId<Label>('test-label');
-        await expect(label.shadowRoot).toHaveTextContent(Subtitle.args?.label as string);
     }
 };
 
@@ -130,10 +99,6 @@ const App = () => <OmniLabel${args.label ? ` label='${args.label}'` : ''}${args.
     args: {
         label: 'Strong',
         type: 'strong'
-    },
-    play: async (context) => {
-        const label = within(context.canvasElement).getByTestId<Label>('test-label');
-        await expect(label.shadowRoot).toHaveTextContent(Strong.args?.label as string);
     }
 };
 
@@ -157,11 +122,5 @@ const App = () => <OmniLabel${args.label ? ` label='${args.label}'` : ''}${args.
     args: {
         label: 'Slot',
         type: 'strong'
-    },
-    play: async (context) => {
-        const label = within(context.canvasElement).getByTestId<Label>('test-label');
-        const slotElement = label.shadowRoot?.querySelector('slot');
-        const foundSlottedSpan = slotElement?.assignedElements().find((e) => e.innerHTML.includes('text inside a paragraph.'));
-        await expect(foundSlottedSpan).toBeTruthy();
     }
 };

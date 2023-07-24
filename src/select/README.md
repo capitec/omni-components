@@ -36,12 +36,12 @@ Control to get / set a value within a list of options.
 | `items`           | `items`           |           | `string[] \| Record<string, unknown>[] \| Promise<SelectTypes> \| ((filterValue?: string \| undefined) => SelectItems) \| undefined` |                     | Selectable items of the select component.        |
 | `label`           | `label`           |           | `string \| undefined`                            |                     | Text label.                                      |
 | `lang`            |                   |           | `string`                                         |                     |                                                  |
-| `override`        | `override`        |           |                                                  |                     | Used to set the base direction of text for display |
+| `override`        | `override`        |           |                                                  |                     | Value entered into the form component.           |
 | `renderItem`      | `renderItem`      |           | `RenderFunction \| undefined`                    |                     | Render function for each item.                   |
 | `renderSelection` | `renderSelection` |           | `RenderFunction \| undefined`                    |                     | Render function for selected item.               |
 | `searchable`      | `searchable`      |           | `boolean`                                        | false               | Toggles the ability to search the items of the select of the component. |
 | `styles`          |                   | readonly  | `CSSResultGroup[]`                               |                     |                                                  |
-| `value`           | `value`           |           | `string \| number \| Record<string, unknown> \| undefined` | null                | Value entered into the form component.           |
+| `value`           | `value`           |           | `string \| Record<string, unknown> \| undefined` | null                | Value entered into the form component.           |
 
 ## Methods
 
