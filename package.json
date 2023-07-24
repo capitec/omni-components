@@ -72,7 +72,8 @@
         "keyboard",
         "modal",
         "toast",
-        "tab"
+        "tab",
+        "alert"
     ],
     "exports": {
         "./*": "./dist/*/index.js"

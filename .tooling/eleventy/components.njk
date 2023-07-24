@@ -127,6 +127,66 @@ eleventyComputed:
                     </div>
                 {% endif %}
 
+                {% set instanceFuncs = customElements | getInstanceFunctions(component.name) %}
+                {% if instanceFuncs.length > 0 %}
+                    <h2 class="component-props-table-header">Instance Functions</h2>
+                    {# <div class="docs-search-area">
+                        <omni-search-field id="instance-function-search"></omni-search-field>
+                    </div> #}
+                    <div class="component-props-table-wrapper">
+                        <table class="component-props-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Parameters</th>
+                                    <th scope="col">Returns</th>
+                                    <th scope="col">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody id="component-attributes">
+                                {% for f in instanceFuncs %}
+                                <tr>
+                                    <td data-label="Name" scope="row">{{f.name}}</td>
+                                    <td data-label="Parameters"><pre><code class="language-js">{{ f.parameters }}</code></pre></td>
+                                    <td data-label="Returns"><pre><code class="language-js">{{ f.returnType }}</code></pre></td>
+                                    <td data-label="Description">{{ f.description | safe }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+
+                {% set staticFuncs = customElements | getStaticFunctions(component.name) %}
+                {% if staticFuncs.length > 0 %}
+                    <h2 class="component-props-table-header">Static Functions</h2>
+                    {# <div class="docs-search-area">
+                        <omni-search-field id="static-function-search"></omni-search-field>
+                    </div> #}
+                    <div class="component-props-table-wrapper">
+                        <table class="component-props-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Parameters</th>
+                                    <th scope="col">Returns</th>
+                                    <th scope="col">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody id="component-attributes">
+                                {% for f in staticFuncs %}
+                                <tr>
+                                    <td data-label="Name" scope="row">{{f.name}}</td>
+                                    <td data-label="Parameters"><pre><code class="language-js">{{ f.parameters }}</code></pre></td>
+                                    <td data-label="Returns"><pre><code class="language-js">{{ f.returnType }}</code></pre></td>
+                                    <td data-label="Description">{{ f.description | safe }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+
                 {% set globalAttributes = customElements | getGlobalAttributes(component.name) %}
                 {% if globalAttributes.length > 0 %}
                     <h2 class="component-props-table-header">Supported Global Attributes</h2>
