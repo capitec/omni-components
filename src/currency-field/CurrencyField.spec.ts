@@ -92,12 +92,26 @@ test(`Currency Field - Visual and Behaviour`, async ({ page }) => {
         // await clipboardCopy(page, invalidNumber);
         // await keyboardPaste(page);
         await currencyField.evaluate((c: CurrencyField, invalidNumber) => (c.value = invalidNumber), invalidNumber);
-
-        // TODO: Enable test after fixing currency-field bug
-        test.fixme(true, 'Currency Field currently allows setting non-numeric content via javascript!');
         await expect(inputField).toHaveValue('124.15');
+        await expect(currencyField).toHaveScreenshot('currency-field-invalid-evaluate.png');
 
         //TODO add tests for before input scenarios
+        await currencyField.evaluate(async (c: CurrencyField) => {
+            c.value = '';
+            await c.updateComplete;
+        });
+
+        //Reset the mock count.
+        await beforeinput.mockReset();
+        // Ensure the mock reset worked as expected.
+        await expect(beforeinput).toBeCalledTimes(0);
+
+        const invalidTypedValue = '12345abc55';
+        await inputField.type(invalidTypedValue);
+        await page.waitForTimeout(500);
+        await expect(inputField).toHaveValue('12,345.55');
+        await expect(currencyField).toHaveScreenshot('currency-field-invalid-typed.png');
+        await expect(beforeinput).toBeCalledTimes(invalidTypedValue.length);
     });
 });
 
