@@ -140,7 +140,7 @@ export class PinField extends OmniFormElement {
         });
     }
 
-    // Checks if the value provided is numeric, if valid set the value property and input element value if not value remove the value attribute.
+    // Check if the value provided is valid and shorten according to the max length if provided, if there is invalid alpha characters they are removed.
     _sanitiseValue() {
         if (this.value) {
             if (this.maxLength && (this.value as string).length > this.maxLength) {

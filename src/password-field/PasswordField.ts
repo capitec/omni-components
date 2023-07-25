@@ -112,7 +112,7 @@ export class PasswordField extends OmniFormElement {
         });
     }
 
-    // Checks if the value provided is valid, if valid set add the float-label class to the component if the value is a empty string then remove the class.
+    // Set the value of the input component.
     _setInputValue() {
         if (this._inputElement) {
             this._inputElement.value = this.value as string;
