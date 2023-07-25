@@ -277,10 +277,13 @@ export class LivePropertyEditor extends OmniElement {
                             !attribute.type?.text?.replace('| undefined', '')?.trim().includes('Promise') &&
                             attribute.type?.text?.replace('| undefined', '')?.trim().includes("'")
                         ) {
-                            const typesRaw = attribute.type?.text.split(' | ');
+                            const typesRaw = attribute.type?.text?.replace('| undefined', '').split(' | ');
                             const types = [];
                             for (const type in typesRaw) {
-                                const typeValue = typesRaw[type].replaceAll('| ', '').replaceAll('\r\n', '').replaceAll(' ', '');
+                                const typeValue = typesRaw[type]
+                                    .replaceAll('| ', '')
+                                    .replace(/(\r\n|\n|\r)/gm, '')
+                                    .replaceAll(' ', '');
                                 types.push(typeValue.substring(1, typeValue.length - 1));
                             }
                             const startValue = this.data

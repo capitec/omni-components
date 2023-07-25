@@ -20,7 +20,7 @@ Control that allows an action to be executed.
 | `label`        | `label`         |           | `string \| undefined`                            |             | Text label.                                      |
 | `lang`         |                 |           | `string`                                         |             |                                                  |
 | `override`     | `override`      |           |                                                  |             | Used to set the base direction of text for display |
-| `slotPosition` | `slot-position` |           | `"left" \| "top" \| "right" \| "bottom"`         | "left"      | Position of slotted content.                     |
+| `slotPosition` | `slot-position` |           | `"left" \| "right" \| "top" \| "bottom"`         | "left"      | Position of slotted content.                     |
 | `styles`       |                 | readonly  | `CSSResultGroup[]`                               |             |                                                  |
 | `type`         | `type`          |           | `"primary" \| "secondary" \| "clear" \| "white"` | "secondary" | Display type.                                    |
 
