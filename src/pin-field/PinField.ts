@@ -66,26 +66,9 @@ export class PinField extends OmniFormElement {
     @property({ type: Boolean, reflect: true, attribute: 'no-native-keyboard' }) noNativeKeyboard?: boolean;
 
     /**
-     * Override for the value property inherited from the OmniFormElement component with custom converter.
+     * Override for the value property inherited from the OmniFormElement component with reflect set to false.
      */
-    @property({
-        type: String,
-        reflect: true,
-        converter: {
-            toAttribute() {
-                return null;
-            },
-            fromAttribute(value) {
-                try {
-                    return value;
-                } catch (err) {
-                    // Value cannot be used as defined type, default to using value as is.
-                    return value;
-                }
-            }
-        }
-    })
-    override value?: string;
+    @property({ type: String, reflect: false }) override value?: string;
 
     /**
      * Maximum character input length.
@@ -95,9 +78,12 @@ export class PinField extends OmniFormElement {
 
     @query('#inputField')
     private _inputElement?: HTMLInputElement;
+    @query('.container')
+    private container?: HTMLDivElement;
     private showPin?: boolean = false;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private isWebkit?: boolean;
+    private _value? = '';
 
     override connectedCallback() {
         super.connectedCallback();
@@ -121,14 +107,7 @@ export class PinField extends OmniFormElement {
             this.type = 'password';
         }
 
-        this._sanitiseValue(this.value as string);
-    }
-
-    override async attributeChangedCallback(name: string, _old: string | null, value: string | null): Promise<void> {
-        super.attributeChangedCallback(name, _old, value);
-        if (name === 'value') {
-            this._sanitiseValue(value as string);
-        }
+        this._sanitiseValue();
     }
 
     override focus(options?: FocusOptions | undefined): void {
@@ -139,24 +118,40 @@ export class PinField extends OmniFormElement {
         }
     }
 
+    constructor() {
+        super();
+        this._value = this.value ?? '';
+        Object.defineProperty(this, 'value', {
+            get: () => {
+                return this._value;
+            },
+            set: (v) => {
+                this._value = v ?? '';
+                this._sanitiseValue();
+                if (this._value) {
+                    this.container?.classList?.add('float-label');
+                    this.container?.classList?.remove('no-float-label');
+                } else {
+                    this.container?.classList?.remove('float-label');
+                    this.container?.classList?.add('no-float-label');
+                }
+                this.requestUpdate();
+            }
+        });
+    }
+
     // Checks if the value provided is numeric, if valid set the value property and input element value if not value remove the value attribute.
-    _sanitiseValue(value: string) {
-        if (value) {
-            if (!this._isNumber(value as string)) {
-                this.removeAttribute('value');
-            } else if (this.maxLength && (value as string).length > this.maxLength) {
-                this.value = value?.slice(0, this.maxLength) as string;
+    _sanitiseValue() {
+        if (this.value) {
+            if (this.maxLength && (this.value as string).length > this.maxLength) {
+                this._value = this.value?.slice(0, this.maxLength) as string;
             }
         }
 
+        this._value = this.value?.toString()?.replace(/[^\d]/gi, '');
+
         if (this._inputElement) {
             this._inputElement.value = this.value as string;
-            //Check for value of the input and add or remove the float-label class accordingly.
-            if (this._inputElement.value !== '') {
-                this.classList.add('float-label');
-            } else {
-                this.classList.remove('float-label');
-            }
         }
     }
 
@@ -190,13 +185,6 @@ export class PinField extends OmniFormElement {
             }
         }
         this.value = input?.value;
-
-        // Added check for value of the input and add or remove the float-label class accordingly.
-        if (input?.value !== '') {
-            this.classList.add('float-label');
-        } else {
-            this.classList.remove('float-label');
-        }
     }
 
     _iconClicked(e: MouseEvent) {
