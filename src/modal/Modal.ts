@@ -233,6 +233,8 @@ export class Modal extends OmniElement {
                     left: var(--omni-modal-dialog-left, 0px);
                     right: var(--omni-modal-dialog-right, 0px);
                     bottom: var(--omni-modal-dialog-bottom, 0px);
+
+                    opacity: inherit;
                 }
 
                 ::backdrop {                    

@@ -425,6 +425,7 @@ header .header-version-select {
     --omni-select-control-padding: 0px 4px 0px 0px;
     --omni-form-clear-control-width: 0px;
     --omni-select-items-container-width: auto;
+    --omni-select-field-height: 100%;
 }
 
 .docs-select {
@@ -598,6 +599,7 @@ h2 {
 
 .static-article code:not([class]),
 .story-description code:not([class]),
+.component-tab#docs code:not([class]),
 .keyboard-showcase code:not([class]) {
     font-family: ui-monospace, monospace;
     font-size: 14px;
@@ -605,6 +607,7 @@ h2 {
 
 .static-article code:not([class]),
 .story-description code:not([class]),
+.component-tab#docs code:not([class]),
 .keyboard-showcase code:not([class]) {
     padding: 2px 6px;
     margin: 0;

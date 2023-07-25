@@ -55,7 +55,7 @@ const config = {
         // baseURL: 'http://localhost:3000',
 
         /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-        trace: 'on-first-retry',
+        trace: process.env.PW_TEST_FORCE_TRACE ? 'on' : 'on-first-retry',
 
         userAgent: 'Test Runner',
         baseURL: `http://${process.env.PLAYWRIGHT_HOST_ORIGIN ?? 'localhost'}:6006`,
