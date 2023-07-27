@@ -125,6 +125,7 @@ test(`Currency Field - Visual and Behaviour`, async ({ page }) => {
         const numericValue = 88.88;
         await currencyField.evaluate((c: CurrencyField, numericValue) => (c.value = numericValue), numericValue);
         await expect(inputField).toHaveValue(numericValue.toString());
+        await expect(currencyField).toHaveScreenshot('currency-field-numeric-evaluate.png');
     });
 });
 
