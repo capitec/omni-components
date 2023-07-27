@@ -87,6 +87,7 @@ test(`Select - Async Per Item Behaviour`, async ({ page, isMobile }) => {
         }, displayItems);
 
         await selectComponent.click();
+        // Added for cases where the items do not load in time before taking a screenshot.
         await page.waitForTimeout(200);
 
         await expect(selectComponent).toHaveScreenshot('select-open.png');
