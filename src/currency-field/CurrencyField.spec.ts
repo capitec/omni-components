@@ -106,10 +106,14 @@ test(`Currency Field - Visual and Behaviour`, async ({ page }) => {
         // Ensure the mock reset worked as expected.
         await expect(beforeinput).toBeCalledTimes(0);
 
-        const invalidTypedValue = '12345abc55';
-        await inputField.type(invalidTypedValue);
-        await page.waitForTimeout(500);
-        await expect(inputField).toHaveValue('12,345.55');
+        const invalidTypedValue = '1234a55';
+        /**
+         * Added delay when typing, initially a timeout was used as the value of the input element would have a flaky value eg: expect the value of 1,234.55 and instead would get 12.34.
+         * delay is the time to wait between keydown and keyup in milliseconds.
+         */
+        await inputField.type(invalidTypedValue, { delay: 100 });
+        //await page.waitForTimeout(1000);
+        await expect(inputField).toHaveValue('1,234.55');
         await expect(currencyField).toHaveScreenshot('currency-field-invalid-typed.png');
         await expect(beforeinput).toBeCalledTimes(invalidTypedValue.length);
     });
