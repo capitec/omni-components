@@ -196,6 +196,7 @@ test(`Select - Selection Render Behaviour`, async ({ page, isMobile }) => {
         const item = selectComponent.locator('.item').first();
         await expect(item).toHaveCount(1);
         await item.click();
+        // Added timeout to wait for items to render.
         await page.waitForTimeout(100);
 
         const selectionRender = selectComponent.locator('omni-render-element');
