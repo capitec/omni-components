@@ -66,6 +66,11 @@ export class PinField extends OmniFormElement {
     @property({ type: Boolean, reflect: true, attribute: 'no-native-keyboard' }) noNativeKeyboard?: boolean;
 
     /**
+     * Override for the value property inherited from the OmniFormElement component with reflect set to false.
+     */
+    @property({ type: String, reflect: false }) override value?: string;
+
+    /**
      * Maximum character input length.
      * @attr [max-length]
      */
@@ -73,9 +78,12 @@ export class PinField extends OmniFormElement {
 
     @query('#inputField')
     private _inputElement?: HTMLInputElement;
+    @query('.container')
+    private container?: HTMLDivElement;
     private showPin?: boolean = false;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private isWebkit?: boolean;
+    private _value? = '';
 
     override connectedCallback() {
         super.connectedCallback();
@@ -99,14 +107,7 @@ export class PinField extends OmniFormElement {
             this.type = 'password';
         }
 
-        this._sanitiseValue(this.value as string);
-    }
-
-    override async attributeChangedCallback(name: string, _old: string | null, value: string | null): Promise<void> {
-        super.attributeChangedCallback(name, _old, value);
-        if (name === 'value') {
-            this._sanitiseValue(value as string);
-        }
+        this._sanitiseValue();
     }
 
     override focus(options?: FocusOptions | undefined): void {
@@ -117,15 +118,37 @@ export class PinField extends OmniFormElement {
         }
     }
 
-    // Checks if the value provided is numeric, if valid set the value property and input element value if not value remove the value attribute
-    _sanitiseValue(value: string) {
-        if (value) {
-            if (!this._isNumber(value as string)) {
-                this.removeAttribute('value');
-            } else if (this.maxLength && (value as string).length > this.maxLength) {
-                this.value = value?.slice(0, this.maxLength) as string;
+    constructor() {
+        super();
+        this._value = this.value ?? '';
+        Object.defineProperty(this, 'value', {
+            get: () => {
+                return this._value;
+            },
+            set: (v) => {
+                this._value = v ?? '';
+                this._sanitiseValue();
+                if (this._value) {
+                    this.container?.classList?.add('float-label');
+                    this.container?.classList?.remove('no-float-label');
+                } else {
+                    this.container?.classList?.remove('float-label');
+                    this.container?.classList?.add('no-float-label');
+                }
+                this.requestUpdate();
+            }
+        });
+    }
+
+    // Check if the value provided is valid and shorten according to the max length if provided, if there is invalid alpha characters they are removed.
+    _sanitiseValue() {
+        if (this.value) {
+            if (this.maxLength && (this.value as string).length > this.maxLength) {
+                this._value = this.value?.slice(0, this.maxLength) as string;
             }
         }
+
+        this._value = this.value?.toString()?.replace(/[^\d]/gi, '');
 
         if (this._inputElement) {
             this._inputElement.value = this.value as string;
@@ -265,6 +288,7 @@ export class PinField extends OmniFormElement {
                 input[type='number'] {
                     -moz-appearance: textfield; /* Firefox */
                 }
+
             `
         ];
     }
