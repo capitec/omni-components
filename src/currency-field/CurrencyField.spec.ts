@@ -112,10 +112,19 @@ test(`Currency Field - Visual and Behaviour`, async ({ page }) => {
          * delay is the time to wait between keydown and keyup in milliseconds.
          */
         await inputField.type(invalidTypedValue, { delay: 100 });
-        //await page.waitForTimeout(1000);
+
         await expect(inputField).toHaveValue('1,234.55');
         await expect(currencyField).toHaveScreenshot('currency-field-invalid-typed.png');
         await expect(beforeinput).toBeCalledTimes(invalidTypedValue.length);
+
+        await currencyField.evaluate(async (c: CurrencyField) => {
+            c.value = '';
+            await c.updateComplete;
+        });
+
+        const numericValue = 88.88;
+        await currencyField.evaluate((c: CurrencyField, numericValue) => (c.value = numericValue), numericValue);
+        await expect(inputField).toHaveValue(numericValue.toString());
     });
 });
 
