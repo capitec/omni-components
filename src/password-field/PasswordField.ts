@@ -1,7 +1,6 @@
 import { css, html } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { ClassInfo, classMap } from 'lit/directives/class-map.js';
-import { live } from 'lit/directives/live.js';
 import { ifDefined, OmniFormElement } from '../core/OmniFormElement.js';
 
 import '../icons/EyeHidden.icon.js';
@@ -61,6 +60,11 @@ export class PasswordField extends OmniFormElement {
     @state() protected type: 'password' | 'text' = 'password';
 
     /**
+     * Override for the value property inherited from the OmniFormElement component with reflect set to false.
+     */
+    @property({ type: String, reflect: false }) override value?: string;
+
+    /**
      * Disables native on screen keyboards for the component.
      * @attr [no-native-keyboard]
      */
@@ -68,6 +72,9 @@ export class PasswordField extends OmniFormElement {
 
     @query('#inputField')
     private _inputElement?: HTMLInputElement;
+    @query('.container')
+    private container?: HTMLDivElement;
+    private _value? = '';
 
     override connectedCallback() {
         super.connectedCallback();
@@ -77,6 +84,39 @@ export class PasswordField extends OmniFormElement {
         this.addEventListener('focus', this._focusInput.bind(this), {
             capture: true
         });
+    }
+
+    protected override async firstUpdated(): Promise<void> {
+        this._setInputValue();
+    }
+
+    constructor() {
+        super();
+        this._value = this.value ?? '';
+        Object.defineProperty(this, 'value', {
+            get: () => {
+                return this._value;
+            },
+            set: (v) => {
+                this._value = v ?? '';
+                this._setInputValue();
+                if (this._value) {
+                    this.container?.classList?.add('float-label');
+                    this.container?.classList?.remove('no-float-label');
+                } else {
+                    this.container?.classList?.remove('float-label');
+                    this.container?.classList?.add('no-float-label');
+                }
+                this.requestUpdate();
+            }
+        });
+    }
+
+    // Set the value of the input component.
+    _setInputValue() {
+        if (this._inputElement) {
+            this._inputElement.value = this.value as string;
+        }
     }
 
     _focusInput() {
@@ -207,7 +247,6 @@ export class PasswordField extends OmniFormElement {
         id="inputField"
         .type="${this.type}"
         inputmode="${ifDefined(this.noNativeKeyboard ? 'none' : undefined)}"
-        .value=${live(this.value as string)}
         ?readOnly=${this.disabled}
         tabindex="${this.disabled ? -1 : 0}" />
     `;
