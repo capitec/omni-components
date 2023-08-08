@@ -73,7 +73,8 @@
         "modal",
         "toast",
         "tab",
-        "alert"
+        "alert",
+        "expander"
     ],
     "exports": {
         "./*": "./dist/*/index.js"
