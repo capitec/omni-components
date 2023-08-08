@@ -1,5 +1,5 @@
 import { css, html, TemplateResult } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import { OmniElement } from '../core/OmniElement.js';
 
 /**
@@ -32,9 +32,63 @@ import { OmniElement } from '../core/OmniElement.js';
 export class ExpanderGroup extends OmniElement {
     /**
      * Expander component label.
-     * @attr
+     * @attr [expand-mode]
      */
-    @property({ type: String, reflect: true }) expandMode?: 'multiple' | 'single'  = 'single';
+    @property({ type: String, reflect: true, attribute: 'expand-mode' }) expandMode?: 'multiple' | 'single' = 'single';
+
+    @state() private _observer: MutationObserver | undefined;
+
+    override connectedCallback(): void {
+        super.connectedCallback();
+
+        this._observer = new MutationObserver((mutations) => {
+            for (const mutation of mutations) {
+                const targetElement = mutation.target as Element;
+                if (
+                    mutation.type === `attributes` &&
+                    ((mutation.attributeName === `expanding` && targetElement.hasAttribute(`expanding`)) ||
+                        (mutation.attributeName === `expanded` && targetElement.hasAttribute(`expanded`)))
+                ) {
+                    this._expanderExpanded(targetElement);
+                }
+            }
+        });
+
+        this._observer.observe(this, {
+            attributes: true,
+            attributeFilter: [`expanded`, `expanding`],
+            subtree: true
+        });
+    }
+
+    override disconnectedCallback() {
+        // Stop observing child attribute changes.
+        if (this._observer) {
+            this._observer.disconnect();
+        }
+
+        // Ensure the component is cleaned up correctly.
+        super.disconnectedCallback();
+    }
+
+    _collapseAllExpanders() {
+        const expanders = Array.from(this.children);
+        expanders.forEach((expander: any) => {
+            expander.collapse();
+        });
+    }
+
+    _expanderExpanded(targetExpander: Node) {
+        console.log('expander expanded hit');
+        if (this.expandMode === 'single') {
+            const expanders = Array.from(this.children);
+            expanders.forEach((expander: any) => {
+                if (expander !== targetExpander) {
+                    expander._collapse();
+                }
+            });
+        }
+    }
 
     static override get styles() {
         return [

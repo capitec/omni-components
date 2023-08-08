@@ -1,7 +1,6 @@
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { ifNotEmpty } from '../utils/Directives.js';
-import { ComponentStoryFormat, getSourceFromLit, raw } from '../utils/StoryUtils.js';
+import { ComponentStoryFormat, raw } from '../utils/StoryUtils.js';
 
 import '../label/Label.js';
 import './Expander.js';
@@ -15,7 +14,8 @@ interface Args {
 export const Interactive: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
     <omni-expander-group
-        expandMode="${args.expandMode}"
+        data-testid="test-expander-group"
+        expand-mode="${args.expandMode}"
     >
         ${args['[Default Slot]'] ? html`${'\r\n'}${unsafeHTML(args['[Default Slot]'])}` : nothing}
     </omni-expander-group>
@@ -23,31 +23,35 @@ export const Interactive: ComponentStoryFormat<Args> = {
     name: 'Interactive',
     description: 'This is the Expander group component with a nest Expander component',
     args: {
-        '[Default Slot]': raw`<omni-expander>
-            <omni-label></omni-label>
+        expandMode: 'single',
+        '[Default Slot]': raw`<omni-expander label="First Expander">
+            <omni-label label="First expander content"></omni-label>
         </omni-expander>
-        <omni-expander>
-            <omni-label></omni-label>
+        <omni-expander label="Second Expander">
+            <omni-label label="Second expander content"></omni-label>
         </omni-expander>`
     }
 };
 
-export const Expand_Mode : ComponentStoryFormat<Args> = {
+export const Expand_Mode: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
     <omni-expander-group
-    expandMode="${args.expandMode}"
+    data-testid="test-expander-group"
+    expand-mode="${args.expandMode}"
     >
         ${args['[Default Slot]'] ? html`${'\r\n'}${unsafeHTML(args['[Default Slot]'])}` : nothing}
     </omni-expander-group>
     `,
     name: 'Expand Mode',
-    description: 'The expand mode of the Expand',
+    description:
+        'The expand mode of the Expander Group components give you the ability to toggle if you can have multiple expanders opened or only a single one at a time',
     args: {
-        '[Default Slot]': raw`<omni-expander>
-            <omni-label></omni-label>
+        expandMode: 'multiple',
+        '[Default Slot]': raw`<omni-expander label="First Expander">
+            <omni-label label="First expander content"></omni-label>
         </omni-expander>
-        <omni-expander>
-            <omni-label></omni-label>
+        <omni-expander label="Second Expander">
+            <omni-label label="Second expander content"></omni-label>
         </omni-expander>`
     }
 };
