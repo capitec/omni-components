@@ -7,7 +7,7 @@ Layout component that groups together content in an expanded box.
 html
 
 ```
-<omni-expander>
+<omni-expander label="My Expander">
  <omni-label label="Expanded"></omni-label>
 </omni-expander>
 ```
@@ -88,18 +88,24 @@ html
 
 ```
 <omni-expander-group>
+ <omni-expander>
+     <omni-label label=></omni-label>
+ </omni-expander>
+ <omni-expander>
+     <omni-label></omni-label>
+ </omni-expander>
 </omni-expander-group>
 ```
 
 ## Properties
 
-| Property     | Attribute    | Modifiers | Type                                  | Default  | Description                                      |
-|--------------|--------------|-----------|---------------------------------------|----------|--------------------------------------------------|
-| `dir`        |              |           | `string`                              |          |                                                  |
-| `expandMode` | `expandMode` |           | `"multiple" \| "single" \| undefined` | "single" | Expander component label.                        |
-| `lang`       |              |           | `string`                              |          |                                                  |
-| `override`   | `override`   |           |                                       |          | Used to set the base direction of text for display |
-| `styles`     |              | readonly  | `CSSResultGroup[]`                    |          |                                                  |
+| Property     | Attribute     | Modifiers | Type                                  | Default  | Description                                      |
+|--------------|---------------|-----------|---------------------------------------|----------|--------------------------------------------------|
+| `dir`        |               |           | `string`                              |          |                                                  |
+| `expandMode` | `expand-mode` |           | `"multiple" \| "single" \| undefined` | "single" | Expander component label.                        |
+| `lang`       |               |           | `string`                              |          |                                                  |
+| `override`   | `override`    |           |                                       |          | Used to set the base direction of text for display |
+| `styles`     |               | readonly  | `CSSResultGroup[]`                    |          |                                                  |
 
 ## Slots
 
