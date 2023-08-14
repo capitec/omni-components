@@ -3,7 +3,7 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { OmniElement } from '../core/OmniElement.js';
 
 /**
- * Layout container that groups expanders, allowing for automatic expanding and collapsing of sibling expander controls.
+ * Layout container that groups expanders, allowing for automatic expanding and collapsing of sibling expander components.
  *
  * @import
  * ```js
@@ -79,7 +79,6 @@ export class ExpanderGroup extends OmniElement {
     }
 
     _expanderExpanded(targetExpander: Node) {
-        console.log('expander expanded hit');
         if (this.expandMode === 'single') {
             const expanders = Array.from(this.children);
             expanders.forEach((expander: any) => {
