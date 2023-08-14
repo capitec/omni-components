@@ -23,17 +23,45 @@ import '../label/Label.js';
  * @slot expand-icon - Replaces the expand icon by default this will be the omni-chevron-down-icon.
  * @slot header-icon - Replaces the icon in the header which is usually placed on the opposite end of the expand icon.
  *
+ *
+ * @cssprop --omni-expander-header-min-height - Expander component minimum height.
+ * @cssprop --omni-expander-header-max-height - Expander component maximum height.
+ *
  * @cssprop --omni-expander-width - Expander component width.
- * @cssprop --omni-expander-background-color - Expander component background color.
+ * @cssprop --omni-expander-background - Expander component background.
+ *
+ * @cssprop --omni-expander-expanded-height - Expander component expanded height.
  *
  * @cssprop --omni-expander-header-width - Expander header width.
  * @cssprop --omni-expander-header-height - Expander header height.
  * @cssprop --omni-expander-header-padding - Expander header padding.
- * @cssprop --omni-expander-border-top - Expander header border top.
+ * @cssprop --omni-expander-header-border-top - Expander header border top.
  *
- * @cssprop --omni-expander-content-border - Expander content border.
+ * @cssprop --omni-expander-header-hover-background - Expander header hover background.
+ *
+ * @cssprop --omni-expander-header-disabled-background - Expander header disabled background.
+ *
+ * @cssprop --omni-expander-content-width - Expander content width.
+ * @cssprop --omni-expander-content-height - Expander content height.
+ * @cssprop --omni-expander-content-border -  Expander content border.
+ * @cssprop --omni-expander-content-padding - Expander content padding.
+ *
+ * @cssprop --omni-expander-content-closed-padding-top -  Expander content closed top padding.
+ * @cssprop --omni-expander-content-closed-padding-bottom - Expander content closed bottom padding.
  *
  * @cssprop --omni-expander-header-icon-container-padding - Expander header icon container padding.
+ *
+ * @cssprop --omni-expander-header-icon-slot-width - Expander header icon slot width.
+ * @cssprop --omni-expander-header-icon-slot-height - Expander header icon slot height.
+ *
+ * @cssprop --omni-expander-expand-icon-container-padding - Expander expand icon container padding.
+ *
+ * @cssprop --omni-expander-expand-icon-width - Expander expand icon width.
+ * @cssprop --omni-expander-expand-icon-height - Expander expand icon height.
+ * @cssprop --omni-expander-expand-icon-color - Expander expand icon color.
+ *
+ * @cssprop --omni-expander-expanding-container-padding-top - Expander expanding content top padding.
+ * @cssprop --omni-expander-expanding-container-padding-bottom - Expander expanding content bottom padding.
  *
  */
 @customElement('omni-expander')
@@ -78,7 +106,6 @@ export class Expander extends OmniElement {
     }
 
     _headerClick(e: MouseEvent) {
-        console.log('header clicked');
         // Prevent the event from bubbling up.
         e.stopPropagation();
 
@@ -110,7 +137,6 @@ export class Expander extends OmniElement {
     }
 
     _expand() {
-        console.log('expander called');
         // Ignore the request to expand if the component is already expanded.
         if (this.expanded === true || this.hasAttribute(`expanding`)) {
             return;
@@ -131,7 +157,6 @@ export class Expander extends OmniElement {
     }
 
     _collapse() {
-        console.log('collapse called');
         // Ignore the request to collapse if the component is already collapsed.
         if (this.expanded === false || this.hasAttribute(`collapsing`)) {
             return;
@@ -157,8 +182,8 @@ export class Expander extends OmniElement {
 
             css`
 				:host {
-					min-height: var(--theme-expander-header-height, 50px);
-					max-height: var(--theme-expander-header-height, 50px);
+					min-height: var(--omni-expander-header-min-height, 50px);
+					max-height: var(--omni-expander-header-max-height, 50px);
 				}
 			`,
             css`
@@ -170,12 +195,12 @@ export class Expander extends OmniElement {
 					justify-content: flex-start;
 					align-items: stretch;
 					width: var(--omni-expander-width, 100%);
-					background: var(--omni-expander-background-color, var(--omni-background-color));
+					background: var(--omni-expander-background, var(--omni-background-color));
                 }
 
                 :host([expanded]) {
 					max-height: unset;
-					height: var(--omni-expander-height, 200px);
+					height: var(--omni-expander-expanded-height, 200px);
 				}
 
                 /* HEADER STYLES */
@@ -188,20 +213,16 @@ export class Expander extends OmniElement {
 					width: var(--omni-expander-header-width, 100%);
 					height: var(--omni-expander-header-height, 50px);
 					padding: var(--omni-expander-header-padding, 10px);
-					border-top: var(--omni-expander-border-top, 1px solid var(--omni-primary-color));
+					border-top: var(--omni-expander-header-border-top, 1px solid var(--omni-primary-color));
 					cursor: pointer;
 				}
 
                 :host > .header:hover {
-					background: var(--omni-expander-header-hover-color, var(--omni-background-hover-color));
+					background: var(--omni-expander-header-hover-background, var(--omni-background-hover-color));
 				}
 
                 
                 :host > .header > omni-label {
-                    /*
-                    color: var(--omni-expander-header-font-color, black);
-					font-size: var(--omni-expander-header-font-size, 14px);
-					font-weight: var(--omni-expander-header-font-weight, bold);*/
 					margin-right: auto;
 					cursor: pointer;
                 }
@@ -211,23 +232,40 @@ export class Expander extends OmniElement {
 					border-bottom-right-radius: 0px;
                 }
 
+                :host([expanded]) > .header > .expand-icon-container {
+					transform: rotate(180deg);
+				}
+
+				:host(:not([expanded])) > .header > .expand-icon-container {
+					transform: none;
+				}
+
                 :host([disabled]) > .header {
                     background: var(--omni-expander-header-disabled-background ,var(--omni-disabled-background-color));
                 }
 
                 /* EXPANDER CONTENT STYLES */
                 :host > .expander-content {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    align-items: stretch;
+                    width: var(--omni-expander-content-width, 100%);
+                    height: var(--omni-expander-content-height, 100%);
+
+                    flex: 1 1 auto;
+
                     border-left: var(--omni-expander-content-border, 1px solid var(--omni-primary-color));
                     border-right: var(--omni-expander-content-border, 1px solid var(--omni-primary-color));
                     border-top: var(--omni-expander-content-border, 1px solid var(--omni-primary-color));
-                    align-content: flex-start;
+
                     padding: var(--omni-expander-content-padding, 10px);
                 }
 
                 :host(:not([expanded])) > .expander-content {
 					overflow: hidden;
-					padding-top: var(--omni-expander-content-padding-top, 0px);
-					padding-bottom: var(--omni-expander-content-padding-bottom, 0px);
+					padding-top: var(--omni-expander-content-closed-padding-top, 0px);
+					padding-bottom: var(--omni-expander-content-closed-padding-bottom, 0px);
 				}
 
 
@@ -243,8 +281,8 @@ export class Expander extends OmniElement {
                 }
 
                 ::slotted([slot='header_icon']) {
-                    width: 20px;
-                    height: 20px;
+                    width: var(--omni-expander-header-icon-slot-width, 20px);
+                    height: var(--omni-expander-header-icon-slot-height, 20px);
                 }
 
 
@@ -254,17 +292,18 @@ export class Expander extends OmniElement {
                     flex: 0 0 auto;
                     align-items: center;
                     cursor: pointer;
-                    padding: var(--omni-expander-header-icon-container-padding, 10px 10px);
+                    padding: var(--omni-expander-expand-icon-container-padding, 10px 10px);
                 }
 
                 .expand-icon {
-                    width: var(--omni-expander-header-icon-width, 20px);
-                    height: var(--omni-expander-header-icon-height, 20px);
-                    fill: var(--omni-expander-header-icon-color, var(--omni-primary-color));
+                    width: var(--omni-expander-expand-icon-width, 20px);
+                    height: var(--omni-expander-expand-icon-height, 20px);
+                    fill: var(--omni-expander-expand-icon-color, var(--omni-primary-color));
                 }
 
-                ::slotted([slot='chip_icon']) {
-                    width: var(--omni-chip-icon-width, 24px);
+                ::slotted([slot='expand-icon']) {
+                    height: var(--omni-expander-expand-icon-height, 20px);
+                    width: var(--omni-expander-expand-icon-width, 20px);
                   }
 
                 /* ANIMATIONS */
@@ -275,10 +314,20 @@ export class Expander extends OmniElement {
 					animation-fill-mode: forwards;
 				}
 
+                :host([expanding]) > .header > .expand-icon-container {
+					transition: all 0.15s linear 0s;
+					transform: rotate(180deg);
+				}
+                
+				:host([collapsing]) > .header > .expand-icon-container {
+					transition: all 0.15s linear 0s;
+					transform: none;
+				}
+
                 :host([expanding]) > .expander-content {
 					transition: padding linear 0.2s;
-					padding-top: var(--theme-container-padding-top, 10px);
-					padding-bottom: var(--theme-container-padding-bottom, 10px);
+					padding-top: var(--omni-expander-expanding-container-padding-top, 10px);
+					padding-bottom: var(--omni-expander-expanding-container-padding-bottom 10px);
 				}
                 
 				:host([collapsing]) > .expander-content {

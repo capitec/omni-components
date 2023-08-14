@@ -21,7 +21,9 @@ export const Interactive: ComponentStoryFormat<Args> = {
     </omni-expander-group>
     `,
     name: 'Interactive',
-    description: 'This is the Expander group component with a nest Expander component',
+    description: () => html`<p>
+    The <code class="language-html">&lt;omni-expander-group&gt;</code> should be used if grouping multiple <code class="language-html">&lt;omni-expander&gt;</code> components together. 
+    </p>`,
     args: {
         expandMode: 'single',
         '[Default Slot]': raw`<omni-expander label="First Expander">
@@ -43,8 +45,25 @@ export const Expand_Mode: ComponentStoryFormat<Args> = {
     </omni-expander-group>
     `,
     name: 'Expand Mode',
-    description:
-        'The expand mode of the Expander Group components give you the ability to toggle if you can have multiple expanders opened or only a single one at a time',
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniExpanderGroup, OmniExpander } from "@capitec/omni-components-react/expander";
+            import { OmniLabel } from "@capitec/omni-components-react/label";
+        
+            const App = () => <OmniExpanderGroup ${args.expandMode ? ` expand-mode='${args.expandMode}'` : ''}>
+            <OmniExpander label="First Expander">
+             <OmniLabel label="First expander content"></OmniLabel>
+            </OmniExpander>
+            <OmniExpander label="Second Expander">
+             <OmniLabel label="Second expander content"></OmniLabel>
+            </OmniExpander>
+            </OmniExpanderGroup>;`
+        }
+    ],
+    description: () => html`<p>
+    The <code class="language-html">&lt;omni-expander-group&gt;</code> opens one <code class="language-html">&lt;omni-expander&gt;</code> by default, to expand mutiple set the attribute <code class="language-js">expand-mode="multiple"</code>. 
+    </p>`,
     args: {
         expandMode: 'multiple',
         '[Default Slot]': raw`<omni-expander label="First Expander">
