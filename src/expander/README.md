@@ -43,44 +43,62 @@ html
 
 ## CSS Custom Properties
 
-| Property                                        | Description                             |
-|-------------------------------------------------|-----------------------------------------|
-| `--omni-expander-background-color`              | Expander component background color.    |
-| `--omni-expander-border-top`                    | Expander header border top.             |
-| `--omni-expander-content-border`                | Expander content border.                |
-| `--omni-expander-header-height`                 | Expander header height.                 |
-| `--omni-expander-header-icon-container-padding` | Expander header icon container padding. |
-| `--omni-expander-header-padding`                | Expander header padding.                |
-| `--omni-expander-header-width`                  | Expander header width.                  |
-| `--omni-expander-width`                         | Expander component width.               |
-| `--omni-theme-accent-active-color`              | Theme accent active color.              |
-| `--omni-theme-accent-color`                     | Theme accent color.                     |
-| `--omni-theme-accent-hover-color`               | Theme accent hover color.               |
-| `--omni-theme-background-active-color`          | Theme background active color.          |
-| `--omni-theme-background-color`                 | Theme background color.                 |
-| `--omni-theme-background-hover-color`           | Theme background hover color.           |
-| `--omni-theme-border-radius`                    | Theme border radius.                    |
-| `--omni-theme-border-width`                     | Theme border width.                     |
-| `--omni-theme-box-shadow`                       | Theme box shadow.                       |
-| `--omni-theme-box-shadow-color`                 | Theme inactive color.                   |
-| `--omni-theme-disabled-background-color`        | Theme disabled background color.        |
-| `--omni-theme-disabled-border-color`            | Theme disabled border color.            |
-| `--omni-theme-error-border-color`               | Theme error border color.               |
-| `--omni-theme-error-font-color`                 | Theme disabled background color.        |
-| `--omni-theme-font-color`                       | Theme font color.                       |
-| `--omni-theme-font-family`                      | Theme font family.                      |
-| `--omni-theme-font-size`                        | Theme font size.                        |
-| `--omni-theme-font-weight`                      | Theme font weight.                      |
-| `--omni-theme-hint-font-color`                  | Theme hint font color.                  |
-| `--omni-theme-inactive-color`                   | Theme inactive color.                   |
-| `--omni-theme-primary-active-color`             | Theme primary active color.             |
-| `--omni-theme-primary-color`                    | Theme primary color.                    |
-| `--omni-theme-primary-hover-color`              | Theme primary hover color.              |
+| Property                                         | Description                                |
+|--------------------------------------------------|--------------------------------------------|
+| `--omni-expander-background`                     | Expander component background.             |
+| `--omni-expander-content-border`                 | Expander content border.                   |
+| `--omni-expander-content-closed-padding-bottom`  | Expander content closed bottom padding.    |
+| `--omni-expander-content-closed-padding-top`     | Expander content closed top padding.       |
+| `--omni-expander-content-height`                 | Expander content height.                   |
+| `--omni-expander-content-padding`                | Expander content padding.                  |
+| `--omni-expander-content-width`                  | Expander content width.                    |
+| `--omni-expander-expand-icon-color`              | Expander expand icon color.                |
+| `--omni-expander-expand-icon-container-padding`  | Expander expand icon container padding.    |
+| `--omni-expander-expand-icon-height`             | Expander expand icon height.               |
+| `--omni-expander-expand-icon-width`              | Expander expand icon width.                |
+| `--omni-expander-expanded-height`                | Expander component expanded height.        |
+| `--omni-expander-expanding-container-padding-bottom` | Expander expanding content bottom padding. |
+| `--omni-expander-expanding-container-padding-top` | Expander expanding content top padding.    |
+| `--omni-expander-header-border-top`              | Expander header border top.                |
+| `--omni-expander-header-disabled-background`     | Expander header disabled background.       |
+| `--omni-expander-header-height`                  | Expander header height.                    |
+| `--omni-expander-header-hover-background`        | Expander header hover background.          |
+| `--omni-expander-header-icon-container-padding`  | Expander header icon container padding.    |
+| `--omni-expander-header-icon-slot-height`        | Expander header icon slot height.          |
+| `--omni-expander-header-icon-slot-width`         | Expander header icon slot width.           |
+| `--omni-expander-header-max-height`              | Expander component maximum height.         |
+| `--omni-expander-header-min-height`              | Expander component minimum height.         |
+| `--omni-expander-header-padding`                 | Expander header padding.                   |
+| `--omni-expander-header-width`                   | Expander header width.                     |
+| `--omni-expander-width`                          | Expander component width.                  |
+| `--omni-theme-accent-active-color`               | Theme accent active color.                 |
+| `--omni-theme-accent-color`                      | Theme accent color.                        |
+| `--omni-theme-accent-hover-color`                | Theme accent hover color.                  |
+| `--omni-theme-background-active-color`           | Theme background active color.             |
+| `--omni-theme-background-color`                  | Theme background color.                    |
+| `--omni-theme-background-hover-color`            | Theme background hover color.              |
+| `--omni-theme-border-radius`                     | Theme border radius.                       |
+| `--omni-theme-border-width`                      | Theme border width.                        |
+| `--omni-theme-box-shadow`                        | Theme box shadow.                          |
+| `--omni-theme-box-shadow-color`                  | Theme inactive color.                      |
+| `--omni-theme-disabled-background-color`         | Theme disabled background color.           |
+| `--omni-theme-disabled-border-color`             | Theme disabled border color.               |
+| `--omni-theme-error-border-color`                | Theme error border color.                  |
+| `--omni-theme-error-font-color`                  | Theme disabled background color.           |
+| `--omni-theme-font-color`                        | Theme font color.                          |
+| `--omni-theme-font-family`                       | Theme font family.                         |
+| `--omni-theme-font-size`                         | Theme font size.                           |
+| `--omni-theme-font-weight`                       | Theme font weight.                         |
+| `--omni-theme-hint-font-color`                   | Theme hint font color.                     |
+| `--omni-theme-inactive-color`                    | Theme inactive color.                      |
+| `--omni-theme-primary-active-color`              | Theme primary active color.                |
+| `--omni-theme-primary-color`                     | Theme primary color.                       |
+| `--omni-theme-primary-hover-color`               | Theme primary hover color.                 |
 
 
 # omni-expander-group
 
-Layout container that groups expanders, allowing for automatic expanding and collapsing of sibling expander controls.
+Layout container that groups expanders, allowing for automatic expanding and collapsing of sibling expander components.
 
 ## Example
 

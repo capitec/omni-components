@@ -499,7 +499,7 @@ Layout component that groups together content in an expanded box.
 
 </td><td>
 
-Layout container that groups expanders, allowing for automatic expanding and collapsing of sibling expander controls.
+Layout container that groups expanders, allowing for automatic expanding and collapsing of sibling expander components.
 
 </td></tr><tr><td>
 
