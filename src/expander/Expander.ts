@@ -1,7 +1,7 @@
 import { css, html, nothing, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { OmniElement } from '../core/OmniElement.js';
-
+import '../icons/ChevronDown.icon.js';
 import '../label/Label.js';
 
 /**
@@ -223,6 +223,9 @@ export class Expander extends OmniElement {
 
                 
                 :host > .header > omni-label {
+                    --omni-label-font-color: var(--omni-expander-header-label-font-color, var(--omni-font-color));
+					--omni-label-font-size: var(--omni-expander-header-label-font-size, var(--omni-font-size));
+					--omni-label-font-weight: var(--omni-expander-header-label-font-weight, var(--omni-font-weight));
 					margin-right: auto;
 					cursor: pointer;
                 }
