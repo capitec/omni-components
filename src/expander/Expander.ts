@@ -137,14 +137,19 @@ export class Expander extends OmniElement {
     }
 
     _expand() {
-        // Ignore the request to expand if the component is already expanded.
-        if (this.expanded === true || this.hasAttribute(`expanding`)) {
-            return;
-        }
+        const { matches: motionOK } = window.matchMedia('(prefers-reduced-motion: no-preference)');
+        if (motionOK) {
+            // Ignore the request to expand if the component is already expanded.
+            if (this.expanded === true || this.hasAttribute(`expanding`)) {
+                return;
+            }
 
-        // Trigger the expanding animation.
-        this.removeAttribute(`collapsing`);
-        this.setAttribute(`expanding`, ``);
+            // Trigger the expanding animation.
+            this.removeAttribute(`collapsing`);
+            this.setAttribute(`expanding`, ``);
+        } else {
+            this.expanded = true;
+        }
 
         // Notify any direct subscribers that the component was expanded.
         this.dispatchEvent(
@@ -157,14 +162,20 @@ export class Expander extends OmniElement {
     }
 
     _collapse() {
-        // Ignore the request to collapse if the component is already collapsed.
-        if (this.expanded === false || this.hasAttribute(`collapsing`)) {
-            return;
-        }
+        const { matches: motionOK } = window.matchMedia('(prefers-reduced-motion: no-preference)');
 
-        // Trigger the collapsing animation.
-        this.removeAttribute(`expanding`);
-        this.setAttribute(`collapsing`, ``);
+        if (motionOK) {
+            // Ignore the request to collapse if the component is already collapsed.
+            if (this.expanded === false || this.hasAttribute(`collapsing`)) {
+                return;
+            }
+
+            // Trigger the collapsing animation.
+            this.removeAttribute(`expanding`);
+            this.setAttribute(`collapsing`, ``);
+        } else {
+            this.expanded = false;
+        }
 
         // Notify any direct subscribers that the component was collapsed.
         this.dispatchEvent(
@@ -352,6 +363,16 @@ export class Expander extends OmniElement {
 					animation-timing-function: cubic-bezier(0.2, 0.8, 0.5, 1);
 					animation-fill-mode: forwards;
 				}
+
+                @media (prefers-reduced-motion) {
+                    :host([expanding]) {
+                        animation: unset;
+                    }
+
+                    :host([collapsing]) {
+                        animation: unset;
+                    }
+                }
 
                 @keyframes expand {
 					0% {
