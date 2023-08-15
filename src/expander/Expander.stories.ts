@@ -106,9 +106,7 @@ export const Button_Alignment: ComponentStoryFormat<Args> = {
 import { OmniLabel } from "@capitec/omni-components-react/label";
 
 const App = () => 
-<OmniExpander ${args.label ? ` label='${args.label}'` : ''} ${
-        args.buttonAlignment ? ` button-alignment='${args.buttonAlignment}'` : ''
-    }>
+<OmniExpander ${args.label ? ` label='${args.label}'` : ''} ${args.buttonAlignment ? ` button-alignment='${args.buttonAlignment}'` : ''}>
     <OmniLabel label="The content of the expander"></OmniLabel>
 </OmniExpander>;`
         }
