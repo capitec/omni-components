@@ -6,11 +6,12 @@ test(`Expander - Visual and Behaviour`, async ({ page }) => {
         const expander = page.locator('.Interactive').getByTestId('test-expander');
 
         await expect(expander).toHaveScreenshot('expander-initial.png');
+        // The expanded attribute should be not set by default
         await expect(expander).not.toHaveAttribute('expanded', '');
 
         const expanderHeader = expander.locator('.header');
         await expanderHeader.click();
-
+        // The expanded attribute should be set once the expander is expanded
         await expect(expander).toHaveAttribute('expanded', '');
 
         await expect(expander).toHaveScreenshot('expander-expanded.png');
@@ -49,6 +50,7 @@ test(`Expander - Button Alignment Behaviour`, async ({ page }) => {
 
         const header = expander.locator('.header');
 
+        // Confirm that there is 3 elements in the header
         await expect(await header.evaluate((h) => h.childElementCount)).toBe(3);
 
         await expect(expander).toHaveAttribute('button-alignment', 'left');

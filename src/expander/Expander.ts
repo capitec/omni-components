@@ -38,7 +38,7 @@ import '../label/Label.js';
  * @cssprop --omni-expander-header-border-top - Expander header border top.
  *
  * @cssprop --omni-expander-header-hover-background - Expander header hover background.
- * 
+ *
  * @cssprop --omni-expander-header-label-font-color - Expander header label font color.
  * @cssprop --omni-expander-header-label-font-size - Expander header label font size.
  * @cssprop --omni-expander-header-label-font-weight - Expander header label font weight.
