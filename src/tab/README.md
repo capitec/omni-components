@@ -35,6 +35,7 @@ html
 
 | Property                                 | Description                      |
 |------------------------------------------|----------------------------------|
+| `--omni-tab-background-color`            | Tab background.                  |
 | `--omni-theme-accent-active-color`       | Theme accent active color.       |
 | `--omni-theme-accent-color`              | Theme accent color.              |
 | `--omni-theme-accent-hover-color`        | Theme accent hover color.        |
