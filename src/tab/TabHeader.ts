@@ -24,6 +24,8 @@ import { OmniElement } from '../core/OmniElement.js';
  * @cssprop --omni-tab-header-font-family - Tab header font family.
  * @cssprop --omni-tab-header-font-size - Tab header font size.
  * @cssprop --omni-tab-header-font-weight - Tab header font weight.
+ * @cssprop --omni-tab-header-height - Tab header height.
+ * @cssprop --omni-tab-header-width - Tab header width.
  *
  * @cssprop --omni-tab-header-disabled-cursor - Tab header disabled cursor.
  * @cssprop --omni-tab-header-disabled-background-color - Tab header disabled background color.
@@ -70,6 +72,8 @@ export class TabHeader extends OmniElement {
                     font-family: var(--omni-tab-header-font-family, var(--omni-font-family));
                     font-size: var(--omni-tab-header-font-size, var(--omni-font-size));
                     font-weight: var(--omni-tab-header-font-weight, var(--omni-font-weight));
+                    width: var(--omni-tab-header-width, 100%);
+                    height: var(--omni-tab-header-height, 100%);
                     cursor: pointer;
 
                 }
