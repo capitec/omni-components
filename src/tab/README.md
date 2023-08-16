@@ -185,7 +185,7 @@ html
 | `--omni-tab-header-font-family`                 | Tab header font family.                 |
 | `--omni-tab-header-font-size`                   | Tab header font size.                   |
 | `--omni-tab-header-font-weight`                 | Tab header font weight.                 |
-| `--omni-tab-header-height`                      | Tab header tab height.                  |
+| `--omni-tab-header-height`                      | Tab header height.                      |
 | `--omni-tab-header-hover-background-color`      | Tab header tab hover background.        |
 | `--omni-tab-header-indicator-bar-border-radius` | Tab header indicator bar border radius. |
 | `--omni-tab-header-indicator-bar-height`        | Tab header indicator bar height.        |
@@ -197,6 +197,7 @@ html
 | `--omni-tab-header-margin`                      | Tab header tab margin.                  |
 | `--omni-tab-header-max-width`                   | Tab header tab max width.               |
 | `--omni-tab-header-min-width`                   | Tab header tab min width.               |
+| `--omni-tab-header-width`                       | Tab header width.                       |
 | `--omni-theme-accent-active-color`              | Theme accent active color.              |
 | `--omni-theme-accent-color`                     | Theme accent color.                     |
 | `--omni-theme-accent-hover-color`               | Theme accent hover color.               |
