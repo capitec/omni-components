@@ -6,8 +6,7 @@ test(`Expander - Visual and Behaviour`, async ({ page }) => {
         const expander = page.locator('.Interactive').getByTestId('test-expander');
 
         await expect(expander).toHaveScreenshot('expander-initial.png');
-
-        const animantionEnd = await mockEventListener(expander, 'animationend');
+        await expect(expander).not.toHaveAttribute('expanded', '');
 
         const expanderHeader = expander.locator('.header');
         await expanderHeader.click();
@@ -17,8 +16,8 @@ test(`Expander - Visual and Behaviour`, async ({ page }) => {
         await expect(expander).toHaveScreenshot('expander-expanded.png');
 
         await expanderHeader.click();
-        await page.waitForTimeout(600);
-        await expect(animantionEnd).toBeCalledTimes(2);
+
+        await expect(expander).not.toHaveAttribute('expanded', '');
     });
 });
 
