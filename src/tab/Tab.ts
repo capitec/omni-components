@@ -20,6 +20,8 @@ import { OmniElement } from '../core/OmniElement.js';
  *
  * @slot - Content to render inside the component body.
  *
+ * @cssprop --omni-tab-background-color - Tab background.
+ *
  */
 @customElement('omni-tab')
 export class Tab extends OmniElement {
@@ -49,6 +51,7 @@ export class Tab extends OmniElement {
                     width: 100%;
                     height: 100%;
                     overflow: auto;
+                    background: var(--omni-tab-background, var(--omni-background-color));
                 }
             
                 :host(*:not([active])) {
