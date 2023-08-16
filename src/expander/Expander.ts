@@ -294,7 +294,7 @@ export class Expander extends OmniElement {
                     padding: var(--omni-expander-header-icon-container-padding, 10px 10px);
                 }
 
-                ::slotted([slot='header_icon']) {
+                ::slotted([slot='header-icon']) {
                     width: var(--omni-expander-header-icon-slot-width, 20px);
                     height: var(--omni-expander-header-icon-slot-height, 20px);
                 }
