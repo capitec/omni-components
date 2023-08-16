@@ -75,7 +75,6 @@ export class TabHeader extends OmniElement {
                     width: var(--omni-tab-header-width, 100%);
                     height: var(--omni-tab-header-height, 100%);
                     cursor: pointer;
-
                 }
 
                 :host([data-disabled]){
@@ -117,7 +116,7 @@ export class TabHeader extends OmniElement {
                 :host > .indicator-bar {
                     height: var(--omni-tab-header-indicator-bar-height, 4px);
                     border-radius: var(--omni-tab-header-indicator-bar-border-radius, 100px 100px 0 0);
-                    width: var(--omni-tab-header-indicator-bar-width, auto);
+                    width: var(--omni-tab-header-indicator-bar-width, 100%);
                 }
 
 
