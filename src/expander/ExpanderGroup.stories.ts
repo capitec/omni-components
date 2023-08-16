@@ -51,14 +51,15 @@ export const Expand_Mode: ComponentStoryFormat<Args> = {
             load: (args) => `import { OmniExpanderGroup, OmniExpander } from "@capitec/omni-components-react/expander";
             import { OmniLabel } from "@capitec/omni-components-react/label";
         
-            const App = () => <OmniExpanderGroup ${args.expandMode ? ` expand-mode='${args.expandMode}'` : ''}>
-            <OmniExpander label="First Expander">
-             <OmniLabel label="First expander content"></OmniLabel>
-            </OmniExpander>
-            <OmniExpander label="Second Expander">
-             <OmniLabel label="Second expander content"></OmniLabel>
-            </OmniExpander>
-            </OmniExpanderGroup>;`
+const App = () => 
+<OmniExpanderGroup ${args.expandMode ? ` expand-mode='${args.expandMode}'` : ''}>
+    <OmniExpander label="First Expander">
+        <OmniLabel label="First expander content"></OmniLabel>
+    </OmniExpander>
+    <OmniExpander label="Second Expander">
+        <OmniLabel label="Second expander content"></OmniLabel>
+    </OmniExpander>
+</OmniExpanderGroup>;`
         }
     ],
     description: () => html`<p>
