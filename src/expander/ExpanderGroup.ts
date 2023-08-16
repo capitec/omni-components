@@ -22,6 +22,8 @@ import { OmniElement } from '../core/OmniElement.js';
  * ```
  *
  * @element omni-expander-group
+ * 
+ * @slot - Default slot to slot multiple expanders.
  *
  * @cssprop --omni-expander-group-container-min-width - Expander group min width.
  * @cssprop --omni-expander-group-container-min-height - Expander group min height.
