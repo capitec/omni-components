@@ -66,6 +66,9 @@ html
 | `--omni-expander-header-icon-container-padding`  | Expander header icon container padding.    |
 | `--omni-expander-header-icon-slot-height`        | Expander header icon slot height.          |
 | `--omni-expander-header-icon-slot-width`         | Expander header icon slot width.           |
+| `--omni-expander-header-label-font-color`        | Expander header label font color.          |
+| `--omni-expander-header-label-font-size`         | Expander header label font size.           |
+| `--omni-expander-header-label-font-weight`       | Expander header label font weight.         |
 | `--omni-expander-header-max-height`              | Expander component maximum height.         |
 | `--omni-expander-header-min-height`              | Expander component minimum height.         |
 | `--omni-expander-header-padding`                 | Expander header padding.                   |
