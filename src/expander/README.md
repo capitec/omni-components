@@ -129,6 +129,7 @@ html
 
 | Name                | Description                                      |
 |---------------------|--------------------------------------------------|
+|                     | Default slot to slot multiple expanders.         |
 | `loading_indicator` | Used to define content that is displayed while async rendering is awaiting, or when renderLoading() is implicitly called |
 
 ## CSS Custom Properties
