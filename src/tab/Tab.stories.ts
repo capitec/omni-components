@@ -13,7 +13,7 @@ interface Args {
 
 export const Basic = {
     render: () => html`
-    <omni-tab-group data-testid="test-tab-group">
+    <omni-tab-group class="tab-group-story-component" data-testid="test-tab-group">
         <omni-tab header="Tab 1">
             <div>Tab 1 Content</div>
         </omni-tab>
@@ -55,7 +55,7 @@ const App = () =>
 
 export const Active = {
     render: () => html`
-    <omni-tab-group data-testid='test-tab-group'>
+    <omni-tab-group class="tab-group-story-component" data-testid='test-tab-group'>
         <omni-tab header="Tab 1">
             <omni-label label="Label of Tab 1"></omni-label>
         </omni-tab>
@@ -103,7 +103,7 @@ const App = () =>
 
 export const Disabled = {
     render: () => html`
-    <omni-tab-group data-testid="test-tab-group">
+    <omni-tab-group class="tab-group-story-component" data-testid="test-tab-group">
         <omni-tab header="Tab 1">
             <omni-label label="Label of Tab 1"></omni-label>
         </omni-tab>
