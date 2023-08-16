@@ -22,7 +22,7 @@ test(`Expander Group - Visual and Behaviour`, async ({ page }) => {
         const secondExpander = nestedExpanders.nth(1);
         await secondExpander.click();
 
-        //Take a screenshot of the expected behaviour of the second expander expanding and the first one closing
+        // Take a screenshot of the expected behaviour of the second expander expanding and the first one closing
         await expect(expanderGroup).toHaveScreenshot('expander-group-second-expanded.png');
     });
 });
@@ -48,7 +48,7 @@ test(`Expander Group - Expand Mode Behaviour`, async ({ page }) => {
         const secondExpander = nestedExpanders.nth(1);
         await secondExpander.click();
 
-        //Take a screenshot of the expected behaviour of both expanders being open due to the expander-groups expand-mode attribute being set to multiple.
+        // Take a screenshot of the expected behaviour of both expanders being open due to the expander-groups expand-mode attribute being set to multiple.
         await expect(expanderGroup).toHaveScreenshot('expander-group-both-expanded.png');
     });
 });
