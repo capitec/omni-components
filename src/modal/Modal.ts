@@ -77,6 +77,7 @@ import '../render-element/RenderElement.js';
  * @cssprop --omni-modal-no-header-body-border-top-radius - Top border radius for modal body when there is no header.
  * @cssprop --omni-modal-no-footer-body-border-bottom-radius - Bottom border radius for modal body when there is no footer.
  *
+ * @cssprop --omni-modal-footer-border-bottom-radius - Bottom border radius for modal footer.
  * @cssprop --omni-modal-footer-text-align - Text align for modal footer.
  * @cssprop --omni-modal-footer-padding - Padding for modal footer.
  * @cssprop --omni-modal-footer-font-color - Font color for modal footer.
@@ -306,6 +307,8 @@ export class Modal extends OmniElement {
                 }
 
                 .footer {
+                    border-bottom-left-radius: var(--omni-modal-footer-border-bottom-radius, 4px);
+                    border-bottom-right-radius: var(--omni-modal-footer-border-bottom-radius, 4px);
                     align-self: stretch;
                     text-align: var(--omni-modal-footer-text-align, right);
                     padding: var(--omni-modal-footer-padding, 12px 12px 12px 0px);
