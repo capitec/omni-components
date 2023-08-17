@@ -1694,9 +1694,3 @@ pre[class*='language-'] {
         opacity: 0;
     }
 }
-
-/* Width override for Tab examples*/
-
-.tab-group-story-component {
-    width: 150px;
-}
