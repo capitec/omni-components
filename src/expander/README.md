@@ -49,6 +49,7 @@ html
 | `--omni-expander-content-border`                 | Expander content border.                   |
 | `--omni-expander-content-closed-padding-bottom`  | Expander content closed bottom padding.    |
 | `--omni-expander-content-closed-padding-top`     | Expander content closed top padding.       |
+| `--omni-expander-content-expanded-border-bottom` | Bottom border of the expander content.     |
 | `--omni-expander-content-height`                 | Expander content height.                   |
 | `--omni-expander-content-padding`                | Expander content padding.                  |
 | `--omni-expander-content-width`                  | Expander content width.                    |
@@ -110,10 +111,10 @@ html
 ```
 <omni-expander-group>
  <omni-expander>
-     <omni-label label=></omni-label>
+   <omni-label label=""></omni-label>
  </omni-expander>
  <omni-expander>
-     <omni-label></omni-label>
+   <omni-label label=""></omni-label>
  </omni-expander>
 </omni-expander-group>
 ```
