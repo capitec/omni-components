@@ -32,10 +32,10 @@ test(`Expander Group - Expand Mode Behaviour`, async ({ page }) => {
         await page.goto('/components/expander-group/');
         const expanderGroup = page.locator('.Expand_Mode').getByTestId('test-expander-group');
         await expect(expanderGroup).toHaveCount(1);
-
+        // Check that the expander group has the expand-mode attribute set to multiple.
         await expect(expanderGroup).toHaveAttribute('expand-mode', 'multiple');
 
-        // Get all the omni-expanders
+        // Get all the omni-expanders.
         const nestedExpanders = expanderGroup.locator('omni-expander');
         await expect(nestedExpanders).toHaveCount(2);
 
