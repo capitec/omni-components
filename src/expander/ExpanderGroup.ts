@@ -3,7 +3,7 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { OmniElement } from '../core/OmniElement.js';
 
 /**
- * Layout container that groups expanders, allowing for automatic expanding and collapsing of sibling expander components.
+ * Layout container that groups expanders.
  *
  * @import
  * ```js
@@ -12,11 +12,11 @@ import { OmniElement } from '../core/OmniElement.js';
  * @example
  * html```
  * <omni-expander-group>
- *  <omni-expander>
- *    <omni-label label=""></omni-label>
+ *  <omni-expander label="Expander-1">
+ *    <omni-label label="Content"></omni-label>
  *  </omni-expander>
- *  <omni-expander>
- *    <omni-label label=""></omni-label>
+ *  <omni-expander label="Expander-2">
+ *    <omni-label label="Content"></omni-label>
  *  </omni-expander>
  * </omni-expander-group>
  * ```

@@ -5,7 +5,7 @@ import '../icons/ChevronDown.icon.js';
 import '../label/Label.js';
 
 /**
- * Layout component that groups together content in an expanded box.
+ * Component that groups together content in an expanded box.
  *
  * @import
  * ```js
