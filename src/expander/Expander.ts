@@ -38,7 +38,7 @@ import '../label/Label.js';
  * @cssprop --omni-expander-header-border-top - Expander header border top.
  *
  * @cssprop --omni-expander-header-hover-background - Expander header hover background.
- * 
+ *
  * @cssprop --omni-expander-header-label-font-color - Expander header label font color.
  * @cssprop --omni-expander-header-label-font-size - Expander header label font size.
  * @cssprop --omni-expander-header-label-font-weight - Expander header label font weight.
@@ -52,6 +52,8 @@ import '../label/Label.js';
  *
  * @cssprop --omni-expander-content-closed-padding-top -  Expander content closed top padding.
  * @cssprop --omni-expander-content-closed-padding-bottom - Expander content closed bottom padding.
+ *
+ * @cssprop --omni-expander-content-expanded-border-bottom - Bottom border of the expander content.
  *
  * @cssprop --omni-expander-header-icon-container-padding - Expander header icon container padding.
  *
@@ -284,6 +286,11 @@ export class Expander extends OmniElement {
 					overflow: hidden;
 					padding-top: var(--omni-expander-content-closed-padding-top, 0px);
 					padding-bottom: var(--omni-expander-content-closed-padding-bottom, 0px);
+				}
+
+                :host([expanding]) > .expander-content,
+                :host([expanded]) > .expander-content {
+                    border-bottom: var(--omni-expander-content-expanded-border-bottom, 1px solid var(--omni-primary-color));
 				}
 
 

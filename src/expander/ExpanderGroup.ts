@@ -13,10 +13,10 @@ import { OmniElement } from '../core/OmniElement.js';
  * html```
  * <omni-expander-group>
  *  <omni-expander>
- *      <omni-label label=></omni-label>
+ *    <omni-label label=""></omni-label>
  *  </omni-expander>
  *  <omni-expander>
- *      <omni-label></omni-label>
+ *    <omni-label label=""></omni-label>
  *  </omni-expander>
  * </omni-expander-group>
  * ```
@@ -118,6 +118,10 @@ export class ExpanderGroup extends OmniElement {
 				::slotted(*[expanded]) {
 					flex: 1 1 auto;
 				}
+                
+                ::slotted(omni-expander:not(:last-of-type)) {                  
+                    --omni-expander-content-expanded-border-bottom : none;
+                }
             `
         ];
     }
