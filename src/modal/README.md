@@ -71,6 +71,7 @@ Control to display modal content with optional header and footer content.
 | `--omni-modal-dialog-right`                      | Right position for wrapping `HTMLDialogElement`. |
 | `--omni-modal-dialog-top`                        | Top position for wrapping `HTMLDialogElement`.   |
 | `--omni-modal-footer-background`                 | Background for modal footer.                     |
+| `--omni-modal-footer-border-bottom-radius`       | Bottom border radius for modal footer.           |
 | `--omni-modal-footer-font-color`                 | Font color for modal footer.                     |
 | `--omni-modal-footer-font-family`                | Font family for modal footer.                    |
 | `--omni-modal-footer-font-size`                  | Font size for modal footer.                      |
