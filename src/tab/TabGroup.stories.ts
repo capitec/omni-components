@@ -15,7 +15,7 @@ interface Args {
 
 export const Interactive: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`
-    <omni-tab-group class="tab-group-story-component" data-testid="test-tab-group">
+    <omni-tab-group data-testid="test-tab-group">
         ${args.header ? html`${'\r\n'}${unsafeHTML(assignToSlot('header', args.header))}` : nothing}
         ${args['[Default Slot]'] ? html`${'\r\n'}${unsafeHTML(args['[Default Slot]'])}` : nothing}
     </omni-tab-group>
