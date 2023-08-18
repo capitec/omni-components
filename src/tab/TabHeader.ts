@@ -34,8 +34,8 @@ import { OmniElement } from '../core/OmniElement.js';
  *
  * @cssprop --omni-tab-header-tab-height - Tab header tab height.
  * @cssprop --omni-tab-header-tab-min-width - Tab header tab min width.
- * @cssprop --omni-tab-header--tab-max-width - Tab header tab max width.
- * @cssprop --omni-tab-header--tab-margin - Tab header tab margin.
+ * @cssprop --omni-tab-header-tab-max-width - Tab header tab max width.
+ * @cssprop --omni-tab-header-tab-margin - Tab header tab margin.
  *
  * @cssprop --omni-tab-header-hover-background-color - Tab header tab hover background.
  *
