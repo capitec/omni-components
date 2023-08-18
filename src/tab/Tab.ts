@@ -20,7 +20,7 @@ import { OmniElement } from '../core/OmniElement.js';
  *
  * @slot - Content to render inside the component body.
  *
- * @cssprop --omni-tab-background-color - Tab background.
+ * @cssprop --omni-tab-background - Tab background.
  *
  */
 @customElement('omni-tab')

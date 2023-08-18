@@ -27,6 +27,7 @@ import { OmniElement } from '../core/OmniElement.js';
  * @cssprop --omni-tab-header-min-width -  Tab header tab min width.
  * @cssprop --omni-tab-header-height - Tab header height.
  * @cssprop --omni-tab-header-width - Tab header width.
+ * @cssprop --omni-tab-header-padding - Tab header padding.
  *
  * @cssprop --omni-tab-header-disabled-cursor - Tab header disabled cursor.
  * @cssprop --omni-tab-header-disabled-background-color - Tab header disabled background color.
@@ -76,6 +77,7 @@ export class TabHeader extends OmniElement {
                     min-width: var(--omni-tab-header-min-width, 50px);
                     width: var(--omni-tab-header-width, 100%);
                     height: var(--omni-tab-header-height, 100%);
+                    padding: var(--omni-tab-header-padding);
                     cursor: pointer;
                 }
 
