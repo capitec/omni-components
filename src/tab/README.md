@@ -195,9 +195,11 @@ html
 | `--omni-tab-header-indicator-color`             | Tab header indicator color.             |
 | `--omni-tab-header-indicator-height`            | Tab header indicator height.            |
 | `--omni-tab-header-indicator-width`             | Tab header indicator width.             |
-| `--omni-tab-header-margin`                      | Tab header tab margin.                  |
-| `--omni-tab-header-max-width`                   | Tab header tab max width.               |
 | `--omni-tab-header-min-width`                   | Tab header tab min width.               |
+| `--omni-tab-header-tab-height`                  | Tab header tab height.                  |
+| `--omni-tab-header-tab-margin`                  | Tab header tab margin.                  |
+| `--omni-tab-header-tab-max-width`               | Tab header tab max width.               |
+| `--omni-tab-header-tab-min-width`               | Tab header tab min width.               |
 | `--omni-tab-header-width`                       | Tab header width.                       |
 | `--omni-theme-accent-active-color`              | Theme accent active color.              |
 | `--omni-theme-accent-color`                     | Theme accent color.                     |
