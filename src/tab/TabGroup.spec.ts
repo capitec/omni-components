@@ -22,6 +22,7 @@ test(`Tab Group - Visual and Behaviour`, async ({ page }) => {
 
         await nestedTabHeaders.nth(1).click();
         await expect(tabGroup).toHaveScreenshot('tab-group-tab-selected.png');
+        // Confirm that tabselect event was called.
         await expect(tabSelect).toBeCalledTimes(1);
     });
 });
