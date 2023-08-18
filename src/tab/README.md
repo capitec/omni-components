@@ -35,7 +35,7 @@ html
 
 | Property                                 | Description                      |
 |------------------------------------------|----------------------------------|
-| `--omni-tab-background-color`            | Tab background.                  |
+| `--omni-tab-background`                  | Tab background.                  |
 | `--omni-theme-accent-active-color`       | Theme accent active color.       |
 | `--omni-theme-accent-color`              | Theme accent color.              |
 | `--omni-theme-accent-hover-color`        | Theme accent hover color.        |
@@ -196,6 +196,7 @@ html
 | `--omni-tab-header-indicator-height`            | Tab header indicator height.            |
 | `--omni-tab-header-indicator-width`             | Tab header indicator width.             |
 | `--omni-tab-header-min-width`                   | Tab header tab min width.               |
+| `--omni-tab-header-padding`                     | Tab header padding.                     |
 | `--omni-tab-header-tab-height`                  | Tab header tab height.                  |
 | `--omni-tab-header-tab-margin`                  | Tab header tab margin.                  |
 | `--omni-tab-header-tab-max-width`               | Tab header tab max width.               |
