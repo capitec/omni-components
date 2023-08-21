@@ -3,7 +3,7 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { OmniElement } from '../core/OmniElement.js';
 
 /**
- * Layout container that groups expanders, allowing for automatic expanding and collapsing of sibling expander components.
+ * Layout container that groups expanders.
  *
  * @import
  * ```js
@@ -12,11 +12,11 @@ import { OmniElement } from '../core/OmniElement.js';
  * @example
  * html```
  * <omni-expander-group>
- *  <omni-expander>
- *    <omni-label label=""></omni-label>
+ *  <omni-expander label="Expander-1">
+ *    <omni-label label="Content"></omni-label>
  *  </omni-expander>
- *  <omni-expander>
- *    <omni-label label=""></omni-label>
+ *  <omni-expander label="Expander-2">
+ *    <omni-label label="Content"></omni-label>
  *  </omni-expander>
  * </omni-expander-group>
  * ```
@@ -38,53 +38,23 @@ export class ExpanderGroup extends OmniElement {
      */
     @property({ type: String, reflect: true, attribute: 'expand-mode' }) expandMode?: 'multiple' | 'single' = 'single';
 
-    @state() private _observer: MutationObserver | undefined;
-
     override connectedCallback(): void {
         super.connectedCallback();
-
-        this._observer = new MutationObserver((mutations) => {
-            for (const mutation of mutations) {
-                const targetElement = mutation.target as Element;
-                if (
-                    mutation.type === `attributes` &&
-                    ((mutation.attributeName === `expanding` && targetElement.hasAttribute(`expanding`)) ||
-                        (mutation.attributeName === `expanded` && targetElement.hasAttribute(`expanded`)))
-                ) {
-                    this._expanderExpanded(targetElement);
-                }
-            }
-        });
-
-        this._observer.observe(this, {
-            attributes: true,
-            attributeFilter: [`expanded`, `expanding`],
-            subtree: true
+        this.addEventListener('expand', this._expanderExpanded.bind(this), {
+            capture: true
         });
     }
 
     override disconnectedCallback() {
-        // Stop observing child attribute changes.
-        if (this._observer) {
-            this._observer.disconnect();
-        }
-
         // Ensure the component is cleaned up correctly.
         super.disconnectedCallback();
     }
 
-    _collapseAllExpanders() {
-        const expanders = Array.from(this.children);
-        expanders.forEach((expander: any) => {
-            expander.collapse();
-        });
-    }
-
-    _expanderExpanded(targetExpander: Node) {
+    _expanderExpanded(e: Event) {
         if (this.expandMode === 'single') {
             const expanders = Array.from(this.children);
             expanders.forEach((expander: any) => {
-                if (expander !== targetExpander) {
+                if (expander !== e.target) {
                     expander._collapse();
                 }
             });
