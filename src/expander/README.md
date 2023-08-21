@@ -1,6 +1,6 @@
 # omni-expander
 
-Layout component that groups together content in an expanded box.
+Component that groups together content in an expanded box.
 
 ## Example
 
@@ -27,10 +27,10 @@ html
 
 ## Events
 
-| Event      | Type                                           |
-|------------|------------------------------------------------|
-| `collapse` | `CustomEvent<{ label: string \| undefined; }>` |
-| `expand`   | `CustomEvent<{ label: string \| undefined; }>` |
+| Event      | Type              | Description                                |
+|------------|-------------------|--------------------------------------------|
+| `collapse` | `CustomEvent<{}>` | Dispatched when the expander is collapsed. |
+| `expand`   | `CustomEvent<{}>` | Dispatched when the expander is expanded.  |
 
 ## Slots
 
@@ -102,7 +102,7 @@ html
 
 # omni-expander-group
 
-Layout container that groups expanders, allowing for automatic expanding and collapsing of sibling expander components.
+Layout container that groups expanders.
 
 ## Example
 
@@ -110,11 +110,11 @@ html
 
 ```
 <omni-expander-group>
- <omni-expander>
-   <omni-label label=""></omni-label>
+ <omni-expander label="Expander-1">
+   <omni-label label="Content"></omni-label>
  </omni-expander>
- <omni-expander>
-   <omni-label label=""></omni-label>
+ <omni-expander label="Expander-2">
+   <omni-label label="Content"></omni-label>
  </omni-expander>
 </omni-expander-group>
 ```

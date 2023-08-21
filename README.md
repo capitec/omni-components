@@ -491,7 +491,7 @@ Email input control, used in forms for input validation and to display correct v
 
 </td><td>
 
-Layout component that groups together content in an expanded box.
+Component that groups together content in an expanded box.
 
 </td></tr><tr><td>
 
@@ -499,7 +499,7 @@ Layout component that groups together content in an expanded box.
 
 </td><td>
 
-Layout container that groups expanders, allowing for automatic expanding and collapsing of sibling expander components.
+Layout container that groups expanders.
 
 </td></tr><tr><td>
 
