@@ -183,7 +183,7 @@ This example shows how to import and use a few common components. Omni Component
 
 <table style="max-width: 800px;"><thead><tr><th style="width: 100px;">Tag Name</th><th style="width: 600px;">Description</th></tr></thead><tbody><tr><td>
 
-[omni-loading-icon](/Users/cp340150/code/omni-components/omni-components/src/icons/README.md)
+[omni-loading-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
 
 </td><td>
 
@@ -191,7 +191,7 @@ Loading icon component.
 
 </td></tr><tr><td>
 
-[omni-render-element](/Users/cp340150/code/omni-components/omni-components/src/render-element/README.md)
+[omni-render-element](/Users/runner/work/omni-components/omni-components/src/render-element/README.md)
 
 </td><td>
 
@@ -199,7 +199,7 @@ Element that defers content rendering to a provided function / promise.
 
 </td></tr><tr><td>
 
-[omni-modal](/Users/cp340150/code/omni-components/omni-components/src/modal/README.md)
+[omni-modal](/Users/runner/work/omni-components/omni-components/src/modal/README.md)
 
 </td><td>
 
@@ -207,7 +207,7 @@ Control to display modal content with optional header and footer content.
 
 </td></tr><tr><td>
 
-[omni-button](/Users/cp340150/code/omni-components/omni-components/src/button/README.md)
+[omni-button](/Users/runner/work/omni-components/omni-components/src/button/README.md)
 
 </td><td>
 
@@ -215,7 +215,7 @@ Control that allows an action to be executed.
 
 </td></tr><tr><td>
 
-[omni-alert](/Users/cp340150/code/omni-components/omni-components/src/alert/README.md)
+[omni-alert](/Users/runner/work/omni-components/omni-components/src/alert/README.md)
 
 </td><td>
 
@@ -223,7 +223,7 @@ Component that displays an alert.
 
 </td></tr><tr><td>
 
-[omni-clear-icon](/Users/cp340150/code/omni-components/omni-components/src/icons/README.md)
+[omni-clear-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
 
 </td><td>
 
@@ -231,7 +231,7 @@ Clear icon component.
 
 </td></tr><tr><td>
 
-[omni-search-icon](/Users/cp340150/code/omni-components/omni-components/src/icons/README.md)
+[omni-search-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
 
 </td><td>
 
@@ -239,7 +239,7 @@ Search icon component.
 
 </td></tr><tr><td>
 
-[omni-search-field](/Users/cp340150/code/omni-components/omni-components/src/search-field/README.md)
+[omni-search-field](/Users/runner/work/omni-components/omni-components/src/search-field/README.md)
 
 </td><td>
 
@@ -247,7 +247,7 @@ Search input control.
 
 </td></tr><tr><td>
 
-[omni-chevron-down-icon](/Users/cp340150/code/omni-components/omni-components/src/icons/README.md)
+[omni-chevron-down-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
 
 </td><td>
 
@@ -255,7 +255,7 @@ Chevron down icon component.
 
 </td></tr><tr><td>
 
-[omni-more-icon](/Users/cp340150/code/omni-components/omni-components/src/icons/README.md)
+[omni-more-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
 
 </td><td>
 
@@ -263,7 +263,7 @@ More icon component.
 
 </td></tr><tr><td>
 
-[omni-select](/Users/cp340150/code/omni-components/omni-components/src/select/README.md)
+[omni-select](/Users/runner/work/omni-components/omni-components/src/select/README.md)
 
 </td><td>
 
@@ -271,7 +271,7 @@ Control to get / set a value within a list of options.
 
 </td></tr><tr><td>
 
-[omni-icon](/Users/cp340150/code/omni-components/omni-components/src/icon/README.md)
+[omni-icon](/Users/runner/work/omni-components/omni-components/src/icon/README.md)
 
 </td><td>
 
@@ -279,7 +279,7 @@ Component that displays an icon.
 
 </td></tr><tr><td>
 
-[omni-color-field](/Users/cp340150/code/omni-components/omni-components/src/color-field/README.md)
+[omni-color-field](/Users/runner/work/omni-components/omni-components/src/color-field/README.md)
 
 </td><td>
 
@@ -287,7 +287,7 @@ Color input control.
 
 </td></tr><tr><td>
 
-[omni-text-field](/Users/cp340150/code/omni-components/omni-components/src/text-field/README.md)
+[omni-text-field](/Users/runner/work/omni-components/omni-components/src/text-field/README.md)
 
 </td><td>
 
@@ -295,7 +295,7 @@ Control to input text.
 
 </td></tr><tr><td>
 
-[omni-label](/Users/cp340150/code/omni-components/omni-components/src/label/README.md)
+[omni-label](/Users/runner/work/omni-components/omni-components/src/label/README.md)
 
 </td><td>
 
@@ -303,7 +303,7 @@ Label component that renders styled text.
 
 </td></tr><tr><td>
 
-[omni-switch](/Users/cp340150/code/omni-components/omni-components/src/switch/README.md)
+[omni-switch](/Users/runner/work/omni-components/omni-components/src/switch/README.md)
 
 </td><td>
 
@@ -311,7 +311,7 @@ Control to switch a value on or off.
 
 </td></tr><tr><td>
 
-[omni-chevron-left-icon](/Users/cp340150/code/omni-components/omni-components/src/icons/README.md)
+[omni-chevron-left-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
 
 </td><td>
 
@@ -319,7 +319,7 @@ Chevron left icon component.
 
 </td></tr><tr><td>
 
-[omni-chevron-right-icon](/Users/cp340150/code/omni-components/omni-components/src/icons/README.md)
+[omni-chevron-right-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
 
 </td><td>
 
@@ -327,7 +327,7 @@ Chevron right icon component.
 
 </td></tr><tr><td>
 
-[omni-calendar](/Users/cp340150/code/omni-components/omni-components/src/calendar/README.md)
+[omni-calendar](/Users/runner/work/omni-components/omni-components/src/calendar/README.md)
 
 </td><td>
 
@@ -335,7 +335,7 @@ Calendar component to set specific date.
 
 </td></tr><tr><td>
 
-[omni-indeterminate-icon](/Users/cp340150/code/omni-components/omni-components/src/icons/README.md)
+[omni-indeterminate-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
 
 </td><td>
 
@@ -343,7 +343,7 @@ Indeterminate icon component.
 
 </td></tr><tr><td>
 
-[omni-check-icon](/Users/cp340150/code/omni-components/omni-components/src/icons/README.md)
+[omni-check-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
 
 </td><td>
 
@@ -351,7 +351,7 @@ Check icon component.
 
 </td></tr><tr><td>
 
-[omni-check](/Users/cp340150/code/omni-components/omni-components/src/check/README.md)
+[omni-check](/Users/runner/work/omni-components/omni-components/src/check/README.md)
 
 </td><td>
 
@@ -359,7 +359,7 @@ Control that allows a selection to be made.
 
 </td></tr><tr><td>
 
-[omni-close-icon](/Users/cp340150/code/omni-components/omni-components/src/icons/README.md)
+[omni-close-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
 
 </td><td>
 
@@ -367,7 +367,7 @@ Close icon component.
 
 </td></tr><tr><td>
 
-[omni-chip](/Users/cp340150/code/omni-components/omni-components/src/chip/README.md)
+[omni-chip](/Users/runner/work/omni-components/omni-components/src/chip/README.md)
 
 </td><td>
 
@@ -375,7 +375,7 @@ Control that can be used for input, setting attributes, or performing actions.
 
 </td></tr><tr><td>
 
-[omni-arrow-right-icon](/Users/cp340150/code/omni-components/omni-components/src/icons/README.md)
+[omni-arrow-right-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
 
 </td><td>
 
@@ -383,7 +383,7 @@ Arrow right icon component.
 
 </td></tr><tr><td>
 
-[omni-backspace-icon](/Users/cp340150/code/omni-components/omni-components/src/icons/README.md)
+[omni-backspace-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
 
 </td><td>
 
@@ -391,7 +391,7 @@ Backspace icon component.
 
 </td></tr><tr><td>
 
-[omni-caps-off-icon](/Users/cp340150/code/omni-components/omni-components/src/icons/README.md)
+[omni-caps-off-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
 
 </td><td>
 
@@ -399,7 +399,7 @@ Caps off icon component.
 
 </td></tr><tr><td>
 
-[omni-caps-on-icon](/Users/cp340150/code/omni-components/omni-components/src/icons/README.md)
+[omni-caps-on-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
 
 </td><td>
 
@@ -407,7 +407,7 @@ Caps on icon component.
 
 </td></tr><tr><td>
 
-[omni-caps-lock-icon](/Users/cp340150/code/omni-components/omni-components/src/icons/README.md)
+[omni-caps-lock-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
 
 </td><td>
 
@@ -415,7 +415,7 @@ Caps lock icon component.
 
 </td></tr><tr><td>
 
-[omni-next-icon](/Users/cp340150/code/omni-components/omni-components/src/icons/README.md)
+[omni-next-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
 
 </td><td>
 
@@ -423,7 +423,7 @@ Next icon component.
 
 </td></tr><tr><td>
 
-[omni-previous-icon](/Users/cp340150/code/omni-components/omni-components/src/icons/README.md)
+[omni-previous-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
 
 </td><td>
 
@@ -431,7 +431,7 @@ Previous icon component.
 
 </td></tr><tr><td>
 
-[omni-send-icon](/Users/cp340150/code/omni-components/omni-components/src/icons/README.md)
+[omni-send-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
 
 </td><td>
 
@@ -439,7 +439,7 @@ Send icon component.
 
 </td></tr><tr><td>
 
-[omni-keyboard-button](/Users/cp340150/code/omni-components/omni-components/src/keyboard/README.md)
+[omni-keyboard-button](/Users/runner/work/omni-components/omni-components/src/keyboard/README.md)
 
 </td><td>
 
@@ -447,7 +447,7 @@ An internal keyboard button control used in the keyboard component.
 
 </td></tr><tr><td>
 
-[omni-keyboard](/Users/cp340150/code/omni-components/omni-components/src/keyboard/README.md)
+[omni-keyboard](/Users/runner/work/omni-components/omni-components/src/keyboard/README.md)
 
 </td><td>
 
@@ -455,7 +455,7 @@ A responsive on-screen keyboard control component.
 
 </td></tr><tr><td>
 
-[omni-currency-field](/Users/cp340150/code/omni-components/omni-components/src/currency-field/README.md)
+[omni-currency-field](/Users/runner/work/omni-components/omni-components/src/currency-field/README.md)
 
 </td><td>
 
@@ -463,7 +463,7 @@ Control to enter a formatted currency value.
 
 </td></tr><tr><td>
 
-[omni-calendar-icon](/Users/cp340150/code/omni-components/omni-components/src/icons/README.md)
+[omni-calendar-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
 
 </td><td>
 
@@ -471,7 +471,7 @@ A calendar icon component.
 
 </td></tr><tr><td>
 
-[omni-date-picker](/Users/cp340150/code/omni-components/omni-components/src/date-picker/README.md)
+[omni-date-picker](/Users/runner/work/omni-components/omni-components/src/date-picker/README.md)
 
 </td><td>
 
@@ -479,7 +479,7 @@ Control to get / set a specific date using a calendar.
 
 </td></tr><tr><td>
 
-[omni-email-field](/Users/cp340150/code/omni-components/omni-components/src/email-field/README.md)
+[omni-email-field](/Users/runner/work/omni-components/omni-components/src/email-field/README.md)
 
 </td><td>
 
@@ -487,23 +487,23 @@ Email input control, used in forms for input validation and to display correct v
 
 </td></tr><tr><td>
 
-[omni-expander](/Users/cp340150/code/omni-components/omni-components/src/expander/README.md)
+[omni-expander](/Users/runner/work/omni-components/omni-components/src/expander/README.md)
 
 </td><td>
 
-Layout component that groups together content in an expanded box.
+Component that groups together content in an expanded box.
 
 </td></tr><tr><td>
 
-[omni-expander-group](/Users/cp340150/code/omni-components/omni-components/src/expander/README.md)
+[omni-expander-group](/Users/runner/work/omni-components/omni-components/src/expander/README.md)
 
 </td><td>
 
-Layout container that groups expanders, allowing for automatic expanding and collapsing of sibling expander controls.
+Layout container that groups expanders.
 
 </td></tr><tr><td>
 
-[omni-hyperlink](/Users/cp340150/code/omni-components/omni-components/src/hyperlink/README.md)
+[omni-hyperlink](/Users/runner/work/omni-components/omni-components/src/hyperlink/README.md)
 
 </td><td>
 
@@ -559,7 +559,7 @@ Plus icon component.
 
 </td></tr><tr><td>
 
-[omni-number-field](/Users/cp340150/code/omni-components/omni-components/src/number-field/README.md)
+[omni-number-field](/Users/runner/work/omni-components/omni-components/src/number-field/README.md)
 
 </td><td>
 
@@ -567,7 +567,7 @@ Input control to enter a single line of numbers.
 
 </td></tr><tr><td>
 
-[omni-password-field](/Users/cp340150/code/omni-components/omni-components/src/password-field/README.md)
+[omni-password-field](/Users/runner/work/omni-components/omni-components/src/password-field/README.md)
 
 </td><td>
 
@@ -575,7 +575,7 @@ Password input control.
 
 </td></tr><tr><td>
 
-[omni-pin-field](/Users/cp340150/code/omni-components/omni-components/src/pin-field/README.md)
+[omni-pin-field](/Users/runner/work/omni-components/omni-components/src/pin-field/README.md)
 
 </td><td>
 
@@ -583,7 +583,7 @@ Input control to enter a masked numeric value.
 
 </td></tr><tr><td>
 
-[omni-radio](/Users/cp340150/code/omni-components/omni-components/src/radio/README.md)
+[omni-radio](/Users/runner/work/omni-components/omni-components/src/radio/README.md)
 
 </td><td>
 
@@ -591,7 +591,7 @@ Control to select a single value from a group of values.
 
 </td></tr><tr><td>
 
-[omni-radio-group](/Users/cp340150/code/omni-components/omni-components/src/radio/README.md)
+[omni-radio-group](/Users/runner/work/omni-components/omni-components/src/radio/README.md)
 
 </td><td>
 
@@ -599,7 +599,7 @@ Control to group radio components for single selection
 
 </td></tr><tr><td>
 
-[omni-tab](/Users/cp340150/code/omni-components/omni-components/src/tab/README.md)
+[omni-tab](/Users/runner/work/omni-components/omni-components/src/tab/README.md)
 
 </td><td>
 
@@ -607,7 +607,7 @@ Control that can be used to display slotted content, for use within an Tab Group
 
 </td></tr><tr><td>
 
-[omni-tab-header](/Users/cp340150/code/omni-components/omni-components/src/tab/README.md)
+[omni-tab-header](/Users/runner/work/omni-components/omni-components/src/tab/README.md)
 
 </td><td>
 
@@ -615,7 +615,7 @@ Control that can be used to display custom slotted content, for use within Tab G
 
 </td></tr><tr><td>
 
-[omni-tab-group](/Users/cp340150/code/omni-components/omni-components/src/tab/README.md)
+[omni-tab-group](/Users/runner/work/omni-components/omni-components/src/tab/README.md)
 
 </td><td>
 
@@ -623,7 +623,7 @@ Component that displays content in tabs.
 
 </td></tr><tr><td>
 
-[omni-toast-stack](/Users/cp340150/code/omni-components/omni-components/src/toast/README.md)
+[omni-toast-stack](/Users/runner/work/omni-components/omni-components/src/toast/README.md)
 
 </td><td>
 
@@ -631,7 +631,7 @@ A toast container that animates in and stacks toast elements.
 
 </td></tr><tr><td>
 
-[omni-toast](/Users/cp340150/code/omni-components/omni-components/src/toast/README.md)
+[omni-toast](/Users/runner/work/omni-components/omni-components/src/toast/README.md)
 
 </td><td>
 
