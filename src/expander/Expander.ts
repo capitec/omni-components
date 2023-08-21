@@ -243,8 +243,8 @@ export class Expander extends OmniElement {
                 
                 :host > .header > omni-label {
                     --omni-label-font-color: var(--omni-expander-header-label-font-color, var(--omni-font-color));
-					--omni-label-font-size: var(--omni-expander-header-label-font-size, var(--omni-font-size));
-					--omni-label-font-weight: var(--omni-expander-header-label-font-weight, var(--omni-font-weight));
+					--omni-label-default-font-size: var(--omni-expander-header-label-font-size, var(--omni-font-size));
+					--omni-label-default-font-weight: var(--omni-expander-header-label-font-weight, var(--omni-font-weight));
 					margin-right: auto;
 					cursor: pointer;
                 }
