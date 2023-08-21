@@ -23,8 +23,8 @@ import '../label/Label.js';
  * @slot expand-icon - Replaces the expand icon by default this will be the omni-chevron-down-icon.
  * @slot header-icon - Replaces the icon in the header which is usually placed on the opposite end of the expand icon.
  *
- * @fires {CustomEvent<{ label: string; }>} expand - Dispatched when the expander is expanded.
- * @fires {CustomEvent<{ label: string; }>} collapse - Dispatched when the expander is collapsed.
+ * @fires {CustomEvent<{}>} expand - Dispatched when the expander is expanded.
+ * @fires {CustomEvent<{}>} collapse - Dispatched when the expander is collapsed.
  *
  * @cssprop --omni-expander-header-min-height - Expander component minimum height.
  * @cssprop --omni-expander-header-max-height - Expander component maximum height.
@@ -162,9 +162,7 @@ export class Expander extends OmniElement {
         // Notify any direct subscribers that the component was expanded.
         this.dispatchEvent(
             new CustomEvent(`expand`, {
-                detail: {
-                    label: this.label
-                }
+                detail: {}
             })
         );
     }
@@ -188,9 +186,7 @@ export class Expander extends OmniElement {
         // Notify any direct subscribers that the component was collapsed.
         this.dispatchEvent(
             new CustomEvent(`collapse`, {
-                detail: {
-                    label: this.label
-                }
+                detail: {}
             })
         );
     }
