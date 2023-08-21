@@ -137,7 +137,6 @@ export class OmniFormElement extends OmniElement {
         }
 
         this.value = '';
-
         // Dispatch standard DOM event to cater for single clear.
         this.dispatchEvent(
             new Event('change', {
@@ -241,44 +240,49 @@ export class OmniFormElement extends OmniElement {
                     border-color: var(--omni-form-focussed-border-color, var(--omni-primary-active-color));
                 }
 
-                :host([value]:not([value=''])) .layout  > .label,
+                :host([value]:not([value=''])) .container:not(.no-float-label) .layout  > .label,
+                .container.float-label .layout  > .label,
                 .layout:focus-within > .label:not(.focused-static)
                 {
                     top: 0px;
                     margin-left: var(--omni-form-focussed-label-margin-left, 10px);
                 }
-
+                
                 .layout:focus-within > .label {
                     color: var(--omni-form-focussed-label-color, var(--omni-primary-color));
                 }
-
-                :host([value]:not([value=''])) .layout  > .label.error,
+                
+                :host([value]:not([value=''])) .container:not(.no-float-label) .layout  > .label.error,
+                .container.float-label .layout  > .label.error,
                 .layout:focus-within > .label.error {
                     color: var(--omni-form-focussed-error-label-color, var(--omni-error-font-color));
                 }
-            
-                :host([value]:not([value=''])) .layout  > .label > div::before,
+                
+                :host([value]:not([value=''])) .container:not(.no-float-label) .layout  > .label > div::before,
+                .container.float-label .layout  > .label > div::before,
                 .layout:focus-within > .label:not(.focused-static) > div::before
                 {
                     content: "";
-					display: block;           
-					background-color: var(--omni-form-focussed-label-background-color, var(--omni-background-color));
-					position: absolute;
-					left: calc(var(--omni-form-focussed-label-padding-left, 3px) * -1);
-					right: calc(var(--omni-form-focussed-label-padding-right, 3px) * -1);
-    				height: 50%;
-					z-index: -1;
+                    display: block;           
+                    background-color: var(--omni-form-focussed-label-background-color, var(--omni-background-color));
+                    position: absolute;
+                    left: calc(var(--omni-form-focussed-label-padding-left, 3px) * -1);
+                    right: calc(var(--omni-form-focussed-label-padding-right, 3px) * -1);
+                    height: 50%;
+                    z-index: -1;
                     top:50%;
                     width: calc(100% + var(--omni-form-focussed-label-padding-left, 3px) + var(--omni-form-focussed-label-padding-right, 3px));
                 }
-
-                :host([value]:not([value=''])) .layout.disabled  > .label > div::before,
+                
+                :host([value]:not([value=''])) .container:not(.no-float-label) .layout.disabled  > .label > div::before,
+                .container.float-label .layout.disabled  > .label > div::before,
                 .layout.disabled:focus-within > .label > div::before 
                 {
                     background-color: var(--omni-form-focussed-label-disabled-background-color, var(--omni-disabled-background-color));
                 }
-
-                :host([value]:not([value=''])) .layout  > .label > div,
+                
+                :host([value]:not([value=''])) .container:not(.no-float-label) .layout  > .label > div,
+                .container.float-label .layout  > .label > div,
                 .layout:focus-within > .label > div {
                     transform: scale(var(--omni-form-focussed-label-transform-scale), 0.9);
                     transform-origin: center left;

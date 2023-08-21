@@ -48,6 +48,41 @@ test(`Pin Field - Visual and Behaviour`, async ({ page }) => {
     });
 });
 
+test(`Pin Field - Behaviour`, async ({ page }) => {
+    await withCoverage(page, async () => {
+        await page.goto('/components/pin-field/');
+        await page.evaluate(() => document.fonts.ready);
+
+        const pinField = page.locator('[data-testid]').first();
+        await expect(pinField).toHaveScreenshot('pin-field-initial.png');
+
+        const showSlotElement = pinField.locator('slot[name=show]');
+        await expect(showSlotElement).toHaveCount(1);
+        await showSlotElement.click();
+        await expect(pinField).toHaveScreenshot('pin-field-show.png');
+
+        const hideSlotElement = pinField.locator('slot[name=hide]');
+        await expect(hideSlotElement).toHaveCount(1);
+        await hideSlotElement.click();
+        await expect(pinField).toHaveScreenshot('pin-field-hide.png');
+
+        const inputField = pinField.locator('#inputField');
+
+        const number = '1234';
+        await pinField.evaluate((p: PinField, number) => (p.value = number), number);
+        await expect(inputField).toHaveValue(number);
+        await showSlotElement.click();
+        await expect(pinField).toHaveScreenshot('pin-field-evaluate.png');
+
+        const invalidNumber = '56abc78';
+        await pinField.evaluate((p: PinField, invalidNumber) => (p.value = invalidNumber), invalidNumber);
+        await expect(pinField).toHaveScreenshot('pin-field-evaluate-invalid.png');
+
+        await expect(inputField).toHaveValue('5678');
+        await expect(pinField).toHaveScreenshot('pin-field-invalid-value.png');
+    });
+});
+
 test(`Pin Field - Max Length Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/pin-field/');

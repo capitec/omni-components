@@ -24,15 +24,19 @@ import { OmniElement } from '../core/OmniElement.js';
  * @cssprop --omni-tab-header-font-family - Tab header font family.
  * @cssprop --omni-tab-header-font-size - Tab header font size.
  * @cssprop --omni-tab-header-font-weight - Tab header font weight.
+ * @cssprop --omni-tab-header-min-width -  Tab header tab min width.
+ * @cssprop --omni-tab-header-height - Tab header height.
+ * @cssprop --omni-tab-header-width - Tab header width.
+ * @cssprop --omni-tab-header-padding - Tab header padding.
  *
  * @cssprop --omni-tab-header-disabled-cursor - Tab header disabled cursor.
  * @cssprop --omni-tab-header-disabled-background-color - Tab header disabled background color.
  * @cssprop --omni-tab-header-active-font-color - Tab header active font color.
  *
- * @cssprop --omni-tab-header-height - Tab header tab height.
- * @cssprop --omni-tab-header-min-width - Tab header tab min width.
- * @cssprop --omni-tab-header-max-width - Tab header tab max width.
- * @cssprop --omni-tab-header-margin - Tab header tab margin.
+ * @cssprop --omni-tab-header-tab-height - Tab header tab height.
+ * @cssprop --omni-tab-header-tab-min-width - Tab header tab min width.
+ * @cssprop --omni-tab-header-tab-max-width - Tab header tab max width.
+ * @cssprop --omni-tab-header-tab-margin - Tab header tab margin.
  *
  * @cssprop --omni-tab-header-hover-background-color - Tab header tab hover background.
  *
@@ -70,8 +74,11 @@ export class TabHeader extends OmniElement {
                     font-family: var(--omni-tab-header-font-family, var(--omni-font-family));
                     font-size: var(--omni-tab-header-font-size, var(--omni-font-size));
                     font-weight: var(--omni-tab-header-font-weight, var(--omni-font-weight));
+                    min-width: var(--omni-tab-header-min-width, 50px);
+                    width: var(--omni-tab-header-width, 100%);
+                    height: var(--omni-tab-header-height, 100%);
+                    padding: var(--omni-tab-header-padding);
                     cursor: pointer;
-
                 }
 
                 :host([data-disabled]){
@@ -93,10 +100,10 @@ export class TabHeader extends OmniElement {
             
                 /* Tab */
                 :host > .tab {
-                    height: var(--omni-tab-header-height, 100%);
-                    min-width: var(--omni-tab-header-min-width, auto);
-                    max-width: var(--omni-tab-header-max-width, auto);
-                    margin: var(--omni-tab-header-margin, 6px);
+                    height: var(--omni-tab-header-tab-height, 100%);
+                    min-width: var(--omni-tab-header-tab-min-width, auto);
+                    max-width: var(--omni-tab-header-tab-max-width, auto);
+                    margin: var(--omni-tab-header-tab-margin, 6px);
                     display: flex;
                     justify-content: center;
                     align-items: center;
@@ -113,7 +120,7 @@ export class TabHeader extends OmniElement {
                 :host > .indicator-bar {
                     height: var(--omni-tab-header-indicator-bar-height, 4px);
                     border-radius: var(--omni-tab-header-indicator-bar-border-radius, 100px 100px 0 0);
-                    width: var(--omni-tab-header-indicator-bar-width, auto);
+                    width: var(--omni-tab-header-indicator-bar-width, 100%);
                 }
 
 

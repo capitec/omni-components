@@ -16,20 +16,20 @@ Password input control.
 
 ## Properties
 
-| Property           | Attribute            | Modifiers | Type                                             | Default | Description                                      |
-|--------------------|----------------------|-----------|--------------------------------------------------|---------|--------------------------------------------------|
-| `clearable`        | `clearable`          |           | `boolean`                                        | false   | Toggles the ability to clear the value of the component. |
-| `data`             | `data`               |           | `object \| undefined`                            |         | Data associated with the component.              |
-| `dir`              |                      |           | `string`                                         |         |                                                  |
-| `disabled`         | `disabled`           |           | `boolean`                                        | false   | Indicator if the component should be disabled.   |
-| `error`            | `error`              |           | `string \| undefined`                            |         | Error message guiding a user to correct a mistake. |
-| `hint`             | `hint`               |           | `string \| undefined`                            |         | Hint message to assist the user.                 |
-| `label`            | `label`              |           | `string \| undefined`                            |         | Text label.                                      |
-| `lang`             |                      |           | `string`                                         |         |                                                  |
-| `noNativeKeyboard` | `no-native-keyboard` |           | `boolean \| undefined`                           |         | Disables native on screen keyboards for the component. |
-| `override`         | `override`           |           |                                                  |         | Used to set the base direction of text for display |
-| `styles`           |                      | readonly  | `CSSResultGroup[]`                               |         |                                                  |
-| `value`            | `value`              |           | `string \| number \| Record<string, unknown> \| undefined` | null    | Value entered into the form component.           |
+| Property           | Attribute            | Modifiers | Type                   | Default | Description                                      |
+|--------------------|----------------------|-----------|------------------------|---------|--------------------------------------------------|
+| `clearable`        | `clearable`          |           | `boolean`              | false   | Toggles the ability to clear the value of the component. |
+| `data`             | `data`               |           | `object \| undefined`  |         | Data associated with the component.              |
+| `dir`              |                      |           | `string`               |         |                                                  |
+| `disabled`         | `disabled`           |           | `boolean`              | false   | Indicator if the component should be disabled.   |
+| `error`            | `error`              |           | `string \| undefined`  |         | Error message guiding a user to correct a mistake. |
+| `hint`             | `hint`               |           | `string \| undefined`  |         | Hint message to assist the user.                 |
+| `label`            | `label`              |           | `string \| undefined`  |         | Text label.                                      |
+| `lang`             |                      |           | `string`               |         |                                                  |
+| `noNativeKeyboard` | `no-native-keyboard` |           | `boolean \| undefined` |         | Disables native on screen keyboards for the component. |
+| `override`         | `override`           |           |                        |         | Override for the value property inherited from the OmniFormElement component with reflect set to false. |
+| `styles`           |                      | readonly  | `CSSResultGroup[]`     |         |                                                  |
+| `value`            | `value`              |           | `string \| undefined`  | null    | Value entered into the form component.           |
 
 ## Methods
 

@@ -92,12 +92,40 @@ test(`Currency Field - Visual and Behaviour`, async ({ page }) => {
         // await clipboardCopy(page, invalidNumber);
         // await keyboardPaste(page);
         await currencyField.evaluate((c: CurrencyField, invalidNumber) => (c.value = invalidNumber), invalidNumber);
-
-        // TODO: Enable test after fixing currency-field bug
-        test.fixme(true, 'Currency Field currently allows setting non-numeric content via javascript!');
         await expect(inputField).toHaveValue('124.15');
+        await expect(currencyField).toHaveScreenshot('currency-field-invalid-evaluate.png');
 
         //TODO add tests for before input scenarios
+        await currencyField.evaluate(async (c: CurrencyField) => {
+            c.value = '';
+            await c.updateComplete;
+        });
+
+        //Reset the mock count.
+        await beforeinput.mockReset();
+        // Ensure the mock reset worked as expected.
+        await expect(beforeinput).toBeCalledTimes(0);
+
+        const invalidTypedValue = '1234a55';
+        /**
+         * Added delay when typing, initially a timeout was used as the value of the input element would have a flaky value eg: expect the value of 1,234.55 and instead would get 12.34.
+         * delay is the time to wait between keydown and keyup in milliseconds.
+         */
+        await inputField.type(invalidTypedValue, { delay: 100 });
+
+        await expect(inputField).toHaveValue('1,234.55');
+        await expect(currencyField).toHaveScreenshot('currency-field-invalid-typed.png');
+        await expect(beforeinput).toBeCalledTimes(invalidTypedValue.length);
+
+        await currencyField.evaluate(async (c: CurrencyField) => {
+            c.value = '';
+            await c.updateComplete;
+        });
+
+        const numericValue = 88.88;
+        await currencyField.evaluate((c: CurrencyField, numericValue) => (c.value = numericValue), numericValue);
+        await expect(inputField).toHaveValue(numericValue.toString());
+        await expect(currencyField).toHaveScreenshot('currency-field-numeric-evaluate.png');
     });
 });
 
