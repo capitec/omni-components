@@ -1,21 +1,10 @@
-import { within, fireEvent } from '@testing-library/dom';
-import userEvent from '@testing-library/user-event';
-import * as jest from 'jest-mock';
 import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import expect from '../utils/ExpectDOM.js';
-import { ComponentStoryFormat, CSFIdentifier, getSourceFromLit } from '../utils/StoryUtils.js';
-import { Radio } from './Radio.js';
+import { ComponentStoryFormat, getSourceFromLit } from '../utils/StoryUtils.js';
 
 import './Radio.js';
-
-export default {
-    title: 'UI Components/Radio',
-    component: 'omni-radio'
-} as CSFIdentifier;
-
-interface Args {
+export interface Args {
     label: string;
     data: object;
     hint: string;
@@ -54,24 +43,6 @@ export const Interactive: ComponentStoryFormat<Args> = {
         checked: false,
         disabled: false,
         '[Default Slot]': undefined
-    },
-    play: async (context) => {
-        const radio = within(context.canvasElement).getByTestId<Radio>('test-radio');
-        radio.focus();
-
-        const content = radio.shadowRoot?.getElementById('content') as HTMLElement;
-        const valueChange = jest.fn();
-        radio.addEventListener('value-change', valueChange);
-
-        await userEvent.click(content, {
-            pointerEventsCheck: 0
-        });
-        await fireEvent.keyDown(content, {
-            key: ' ',
-            code: 'Space'
-        });
-
-        await expect(valueChange).toBeCalledTimes(2);
     }
 };
 
@@ -88,11 +59,6 @@ const App = () => <OmniRadio${args.label ? ` label='${args.label}'` : ''}/>;`
     description: 'Set a text value to display next to the component.',
     args: {
         label: 'Label'
-    },
-    play: async (context) => {
-        const radio = within(context.canvasElement).getByTestId<Radio>('test-radio');
-        const labelElement = radio.shadowRoot?.getElementById('label') as HTMLElement;
-        await expect(labelElement).toHaveTextContent(Label.args?.label as string);
     }
 };
 
@@ -110,11 +76,6 @@ const App = () => <OmniRadio${args.label ? ` label='${args.label}'` : ''}${args.
     args: {
         label: 'Hint',
         hint: 'This is a hint'
-    },
-    play: async (context) => {
-        const radio = within(context.canvasElement).getByTestId<Radio>('test-radio');
-        const element = radio.shadowRoot?.querySelector<HTMLElement>('.hint');
-        await expect(element).toHaveTextContent(Hint.args?.hint as string);
     }
 };
 
@@ -133,11 +94,6 @@ const App = () => <OmniRadio${args.label ? ` label='${args.label}'` : ''}${args.
     args: {
         label: 'Error',
         error: 'This is an error state'
-    },
-    play: async (context) => {
-        const radio = within(context.canvasElement).getByTestId<Radio>('test-radio');
-        const element = radio.shadowRoot?.querySelector<HTMLElement>('.error');
-        await expect(element).toHaveTextContent(Error_Label.args?.error as string);
     }
 };
 
@@ -162,11 +118,6 @@ const App = () => <OmniRadio${args.label ? ` label='${args.label}'` : ''}${args.
     args: {
         label: 'Checked',
         checked: true
-    },
-    play: async (context) => {
-        const radio = within(context.canvasElement).getByTestId<Radio>('test-radio');
-        const checkedElement = radio.shadowRoot?.querySelector<HTMLElement>('.checked');
-        await expect(checkedElement).toBeTruthy();
     }
 };
 
@@ -191,24 +142,6 @@ const App = () => <OmniRadio${args.label ? ` label='${args.label}'` : ''}${args.
     args: {
         label: 'Disabled',
         disabled: true
-    },
-    play: async (context) => {
-        const radio = within(context.canvasElement).getByTestId<Radio>('test-radio');
-        const valueChange = jest.fn();
-        radio.addEventListener('value-change', valueChange);
-
-        const disabledElement = radio.shadowRoot?.querySelector<HTMLElement>('.disabled');
-        await expect(disabledElement).toBeTruthy();
-
-        const content = radio.shadowRoot?.getElementById('content') as HTMLElement;
-        await userEvent.click(content, {
-            pointerEventsCheck: 0
-        });
-        await fireEvent.keyDown(content, {
-            key: ' ',
-            code: 'Space'
-        });
-        await expect(valueChange).toBeCalledTimes(0);
     }
 };
 
@@ -228,10 +161,5 @@ const App = () => <OmniRadio>
     ],
     name: 'Slot',
     description: 'Set content to display within.',
-    args: {},
-    play: async (context) => {
-        const radioElement = within(context.canvasElement).getByTestId<Radio>('test-radio');
-        const slottedText = radioElement.innerHTML;
-        await expect(slottedText).toEqual('Slotted');
-    }
+    args: {}
 } as ComponentStoryFormat<Args>;

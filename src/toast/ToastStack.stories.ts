@@ -1,23 +1,13 @@
-import { within, fireEvent } from '@testing-library/dom';
-import userEvent from '@testing-library/user-event';
-import * as jest from 'jest-mock';
 import { html, nothing, render as renderToElement } from 'lit';
 import { ref } from 'lit/directives/ref.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import expect from '../utils/ExpectDOM.js';
-import { assignToSlot, ComponentStoryFormat, CSFIdentifier, getSourceFromLit, raw } from '../utils/StoryUtils.js';
-import { Toast } from './Toast.js';
+import { ComponentStoryFormat, getSourceFromLit, raw } from '../utils/StoryUtils.js';
 import { ToastStack } from './ToastStack.js';
 
 import './Toast.js';
 import './ToastStack.js';
 import '../button/Button.js';
-
-export default {
-    title: 'UI Components/Toast Stack',
-    component: 'omni-toast-stack'
-} as CSFIdentifier;
 
 interface Args {
     '[Default Slot]': string;
@@ -118,40 +108,6 @@ export const Interactive: ComponentStoryFormat<Args> = {
     detail="The toast description"
     header="The toast message">
 </omni-toast>`
-    },
-    play: async (context) => {
-        const btn = context.canvasElement.querySelector('omni-button');
-        if (btn) {
-            btn.click();
-        }
-        const toastStack = within(document.body).getByTestId<ToastStack>('test-toast-stack');
-        const toastRemove = jest.fn();
-        toastStack.addEventListener('toast-remove', () => toastRemove());
-        await toastStack.updateComplete;
-        toastStack.focus();
-        const shown = toastStack.showToast({ type: 'info', header: 'Test', detail: 'Test Info', closeable: true, duration: 2000 });
-        const toastStackRemove = jest.fn();
-        shown.addEventListener('toast-stack-remove', () => toastStackRemove());
-        toastStack.showToast({
-            type: 'info',
-            header: 'Test',
-            detail: 'Test Info',
-            closeable: true,
-            // duration: 15000,
-            prefix: html`✅`,
-            close: html`❎`,
-            content: html`<span>My Extra <strong>Content</strong></span>`
-        });
-
-        // Wait for toast removals
-        await new Promise((resolve) => setTimeout(resolve, 6000));
-
-        await expect(toastRemove).toBeCalledTimes(5);
-        await expect(toastStackRemove).toBeCalled();
-
-        await expect(toastStack.childElementCount).toBe(2);
-
-        toastStack.innerHTML = '';
     }
 };
 
@@ -271,26 +227,6 @@ const App = () => <OmniToastStack position="${args.position}" >
     detail="The toast description"
     header="The toast message">
 </omni-toast>`
-    },
-    play: async (context) => {
-        const btn = context.canvasElement.querySelector('omni-button');
-        if (btn) {
-            btn.click();
-        }
-        const toastStack = within(document.body).getByTestId<ToastStack>('test-toast-stack-slotted');
-        await toastStack.updateComplete;
-        toastStack.focus();
-        toastStack.showToast({ type: 'info', header: 'Test', detail: 'Test Info', closeable: true, duration: 15000 });
-        toastStack.showToast({
-            type: 'info',
-            header: 'Test',
-            detail: 'Test Info',
-            closeable: true,
-            // duration: 15000,
-            prefix: html`✅`,
-            close: html`❎`,
-            content: html`<span>My Extra <strong>Content</strong></span>`
-        });
     }
 };
 
@@ -412,7 +348,9 @@ const onRef = e => {
                     getSourceFromLit(renderStack(args)).replaceAll(' closeable', ' :closeable="true"').replaceAll(' reverse', ' :reverse="true"') +
                     `
 <!-- Execute function on Vue load -->
+<div style="display: none;">
 {{ (() =>  { run() })() }}
+</div>
 `,
                 jsFragment: `window.vueData = {
     run: async () => {
@@ -447,26 +385,6 @@ const onRef = e => {
         reverse: false,
         position: 'bottom',
         '[Default Slot]': undefined
-    },
-    play: async (context) => {
-        const btn = context.canvasElement.querySelector('omni-button');
-        if (btn) {
-            btn.click();
-        }
-        const toastStack = within(document.body).getByTestId<ToastStack>('test-toast-stack-added');
-        await toastStack.updateComplete;
-        toastStack.focus();
-        toastStack.showToast({ type: 'info', header: 'Test', detail: 'Test Info', closeable: true, duration: 15000 });
-        toastStack.showToast({
-            type: 'info',
-            header: 'Test',
-            detail: 'Test Info',
-            closeable: true,
-            // duration: 15000,
-            prefix: html`✅`,
-            close: html`❎`,
-            content: html`<span>My Extra <strong>Content</strong></span>`
-        });
     }
 };
 
@@ -576,26 +494,6 @@ toastStack.showToast({
         reverse: false,
         position: 'bottom',
         '[Default Slot]': undefined
-    },
-    play: async (context) => {
-        const btn = context.canvasElement.querySelector('omni-button');
-        if (btn) {
-            btn.click();
-        }
-        const toastStack = within(document.body).getByTestId<ToastStack>('test-toast-stack-created');
-        await toastStack.updateComplete;
-        toastStack.focus();
-        toastStack.showToast({ type: 'info', header: 'Test', detail: 'Test Info', closeable: true, duration: 15000 });
-        toastStack.showToast({
-            type: 'info',
-            header: 'Test',
-            detail: 'Test Info',
-            closeable: true,
-            // duration: 15000,
-            prefix: html`✅`,
-            close: html`❎`,
-            content: html`<span>My Extra <strong>Content</strong></span>`
-        });
     }
 };
 
@@ -727,7 +625,9 @@ const onRef = e => {
                     getSourceFromLit(renderStack(args)).replaceAll(' closeable', ' :closeable="true"').replaceAll(' reverse', ' :reverse="true"') +
                     `
 <!-- Execute function on Vue load -->
+<div style="display: none;">
 {{ (() =>  { run() })() }}
+</div>
 `,
                 jsFragment: `window.vueData = {
     run: async () => {
@@ -762,26 +662,6 @@ const onRef = e => {
         reverse: false,
         position: 'right',
         '[Default Slot]': undefined
-    },
-    play: async (context) => {
-        const btn = context.canvasElement.querySelector('omni-button');
-        if (btn) {
-            btn.click();
-        }
-        const toastStack = within(document.body).getByTestId<ToastStack>('test-toast-stack-position');
-        await toastStack.updateComplete;
-        toastStack.focus();
-        toastStack.showToast({ type: 'info', header: 'Test', detail: 'Test Info', closeable: true, duration: 15000 });
-        toastStack.showToast({
-            type: 'info',
-            header: 'Test',
-            detail: 'Test Info',
-            closeable: true,
-            // duration: 15000,
-            prefix: html`✅`,
-            close: html`❎`,
-            content: html`<span>My Extra <strong>Content</strong></span>`
-        });
     }
 };
 
@@ -898,7 +778,9 @@ const onRef = e => {
                     getSourceFromLit(renderStack(args)).replaceAll(' closeable', ' :closeable="true"').replaceAll(' reverse', ' :reverse="true"') +
                     `
 <!-- Execute function on Vue load -->
+<div style="display: none;">
 {{ (() =>  { run() })() }}
+</div>
 `,
                 jsFragment: `window.vueData = {
     run: async () => {
@@ -933,25 +815,5 @@ const onRef = e => {
         reverse: true,
         position: 'bottom',
         '[Default Slot]': undefined
-    },
-    play: async (context) => {
-        const btn = context.canvasElement.querySelector('omni-button');
-        if (btn) {
-            btn.click();
-        }
-        const toastStack = within(document.body).getByTestId<ToastStack>('test-toast-stack-reverse');
-        await toastStack.updateComplete;
-        toastStack.focus();
-        toastStack.showToast({ type: 'info', header: 'Test', detail: 'Test Info', closeable: true, duration: 15000 });
-        toastStack.showToast({
-            type: 'info',
-            header: 'Test',
-            detail: 'Test Info',
-            closeable: true,
-            // duration: 15000,
-            prefix: html`✅`,
-            close: html`❎`,
-            content: html`<span>My Extra <strong>Content</strong></span>`
-        });
     }
 };

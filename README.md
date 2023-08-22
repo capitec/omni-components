@@ -183,7 +183,31 @@ This example shows how to import and use a few common components. Omni Component
 
 <table style="max-width: 800px;"><thead><tr><th style="width: 100px;">Tag Name</th><th style="width: 600px;">Description</th></tr></thead><tbody><tr><td>
 
-[omni-button](src/button/README.md)
+[omni-loading-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
+
+</td><td>
+
+Loading icon component.
+
+</td></tr><tr><td>
+
+[omni-render-element](/Users/runner/work/omni-components/omni-components/src/render-element/README.md)
+
+</td><td>
+
+Element that defers content rendering to a provided function / promise.
+
+</td></tr><tr><td>
+
+[omni-modal](/Users/runner/work/omni-components/omni-components/src/modal/README.md)
+
+</td><td>
+
+Control to display modal content with optional header and footer content.
+
+</td></tr><tr><td>
+
+[omni-button](/Users/runner/work/omni-components/omni-components/src/button/README.md)
 
 </td><td>
 
@@ -191,159 +215,15 @@ Control that allows an action to be executed.
 
 </td></tr><tr><td>
 
-[omni-calendar](src/calendar/README.md)
+[omni-alert](/Users/runner/work/omni-components/omni-components/src/alert/README.md)
 
 </td><td>
 
-Calendar component to set specific date.
+Component that displays an alert.
 
 </td></tr><tr><td>
 
-[omni-check](src/check/README.md)
-
-</td><td>
-
-Control that allows a selection to be made.
-
-</td></tr><tr><td>
-
-[omni-chip](src/chip/README.md)
-
-</td><td>
-
-Control that can be used for input, setting attributes, or performing actions.
-
-</td></tr><tr><td>
-
-[omni-color-field](src/color-field/README.md)
-
-</td><td>
-
-Color input control.
-
-</td></tr><tr><td>
-
-[omni-currency-field](src/currency-field/README.md)
-
-</td><td>
-
-Control to enter a formatted currency value.
-
-</td></tr><tr><td>
-
-[omni-date-picker](src/date-picker/README.md)
-
-</td><td>
-
-Control to get / set a specific date using a calendar.
-
-</td></tr><tr><td>
-
-[omni-email-field](src/email-field/README.md)
-
-</td><td>
-
-Email input control, used in forms for input validation and to display correct virtual keyboard on mobile.
-
-</td></tr><tr><td>
-
-[omni-hyperlink](src/hyperlink/README.md)
-
-</td><td>
-
-Control to indicate an action to be executed. Typically used for navigational purposes.
-
-</td></tr><tr><td>
-
-[omni-icon](src/icon/README.md)
-
-</td><td>
-
-Component that displays an icon.
-
-</td></tr><tr><td>
-
-[omni-arrow-right-icon](src/icons/README.md)
-
-</td><td>
-
-Arrow right icon component.
-
-</td></tr><tr><td>
-
-[omni-backspace-icon](src/icons/README.md)
-
-</td><td>
-
-Backspace icon component.
-
-</td></tr><tr><td>
-
-[omni-calendar-icon](src/icons/README.md)
-
-</td><td>
-
-A calendar icon component.
-
-</td></tr><tr><td>
-
-[omni-caps-lock-icon](src/icons/README.md)
-
-</td><td>
-
-Caps lock icon component.
-
-</td></tr><tr><td>
-
-[omni-caps-off-icon](src/icons/README.md)
-
-</td><td>
-
-Caps off icon component.
-
-</td></tr><tr><td>
-
-[omni-caps-on-icon](src/icons/README.md)
-
-</td><td>
-
-Caps on icon component.
-
-</td></tr><tr><td>
-
-[omni-check-icon](src/icons/README.md)
-
-</td><td>
-
-Check icon component.
-
-</td></tr><tr><td>
-
-[omni-chevron-down-icon](src/icons/README.md)
-
-</td><td>
-
-Chevron down icon component.
-
-</td></tr><tr><td>
-
-[omni-chevron-left-icon](src/icons/README.md)
-
-</td><td>
-
-Chevron left icon component.
-
-</td></tr><tr><td>
-
-[omni-chevron-right-icon](src/icons/README.md)
-
-</td><td>
-
-Chevron right icon component.
-
-</td></tr><tr><td>
-
-[omni-clear-icon](src/icons/README.md)
+[omni-clear-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
 
 </td><td>
 
@@ -351,11 +231,283 @@ Clear icon component.
 
 </td></tr><tr><td>
 
-[omni-close-icon](src/icons/README.md)
+[omni-search-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
+
+</td><td>
+
+Search icon component.
+
+</td></tr><tr><td>
+
+[omni-search-field](/Users/runner/work/omni-components/omni-components/src/search-field/README.md)
+
+</td><td>
+
+Search input control.
+
+</td></tr><tr><td>
+
+[omni-chevron-down-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
+
+</td><td>
+
+Chevron down icon component.
+
+</td></tr><tr><td>
+
+[omni-more-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
+
+</td><td>
+
+More icon component.
+
+</td></tr><tr><td>
+
+[omni-select](/Users/runner/work/omni-components/omni-components/src/select/README.md)
+
+</td><td>
+
+Control to get / set a value within a list of options.
+
+</td></tr><tr><td>
+
+[omni-icon](/Users/runner/work/omni-components/omni-components/src/icon/README.md)
+
+</td><td>
+
+Component that displays an icon.
+
+</td></tr><tr><td>
+
+[omni-color-field](/Users/runner/work/omni-components/omni-components/src/color-field/README.md)
+
+</td><td>
+
+Color input control.
+
+</td></tr><tr><td>
+
+[omni-text-field](/Users/runner/work/omni-components/omni-components/src/text-field/README.md)
+
+</td><td>
+
+Control to input text.
+
+</td></tr><tr><td>
+
+[omni-label](/Users/runner/work/omni-components/omni-components/src/label/README.md)
+
+</td><td>
+
+Label component that renders styled text.
+
+</td></tr><tr><td>
+
+[omni-switch](/Users/runner/work/omni-components/omni-components/src/switch/README.md)
+
+</td><td>
+
+Control to switch a value on or off.
+
+</td></tr><tr><td>
+
+[omni-chevron-left-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
+
+</td><td>
+
+Chevron left icon component.
+
+</td></tr><tr><td>
+
+[omni-chevron-right-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
+
+</td><td>
+
+Chevron right icon component.
+
+</td></tr><tr><td>
+
+[omni-calendar](/Users/runner/work/omni-components/omni-components/src/calendar/README.md)
+
+</td><td>
+
+Calendar component to set specific date.
+
+</td></tr><tr><td>
+
+[omni-indeterminate-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
+
+</td><td>
+
+Indeterminate icon component.
+
+</td></tr><tr><td>
+
+[omni-check-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
+
+</td><td>
+
+Check icon component.
+
+</td></tr><tr><td>
+
+[omni-check](/Users/runner/work/omni-components/omni-components/src/check/README.md)
+
+</td><td>
+
+Control that allows a selection to be made.
+
+</td></tr><tr><td>
+
+[omni-close-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
 
 </td><td>
 
 Close icon component.
+
+</td></tr><tr><td>
+
+[omni-chip](/Users/runner/work/omni-components/omni-components/src/chip/README.md)
+
+</td><td>
+
+Control that can be used for input, setting attributes, or performing actions.
+
+</td></tr><tr><td>
+
+[omni-arrow-right-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
+
+</td><td>
+
+Arrow right icon component.
+
+</td></tr><tr><td>
+
+[omni-backspace-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
+
+</td><td>
+
+Backspace icon component.
+
+</td></tr><tr><td>
+
+[omni-caps-off-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
+
+</td><td>
+
+Caps off icon component.
+
+</td></tr><tr><td>
+
+[omni-caps-on-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
+
+</td><td>
+
+Caps on icon component.
+
+</td></tr><tr><td>
+
+[omni-caps-lock-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
+
+</td><td>
+
+Caps lock icon component.
+
+</td></tr><tr><td>
+
+[omni-next-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
+
+</td><td>
+
+Next icon component.
+
+</td></tr><tr><td>
+
+[omni-previous-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
+
+</td><td>
+
+Previous icon component.
+
+</td></tr><tr><td>
+
+[omni-send-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
+
+</td><td>
+
+Send icon component.
+
+</td></tr><tr><td>
+
+[omni-keyboard-button](/Users/runner/work/omni-components/omni-components/src/keyboard/README.md)
+
+</td><td>
+
+An internal keyboard button control used in the keyboard component.
+
+</td></tr><tr><td>
+
+[omni-keyboard](/Users/runner/work/omni-components/omni-components/src/keyboard/README.md)
+
+</td><td>
+
+A responsive on-screen keyboard control component.
+
+</td></tr><tr><td>
+
+[omni-currency-field](/Users/runner/work/omni-components/omni-components/src/currency-field/README.md)
+
+</td><td>
+
+Control to enter a formatted currency value.
+
+</td></tr><tr><td>
+
+[omni-calendar-icon](/Users/runner/work/omni-components/omni-components/src/icons/README.md)
+
+</td><td>
+
+A calendar icon component.
+
+</td></tr><tr><td>
+
+[omni-date-picker](/Users/runner/work/omni-components/omni-components/src/date-picker/README.md)
+
+</td><td>
+
+Control to get / set a specific date using a calendar.
+
+</td></tr><tr><td>
+
+[omni-email-field](/Users/runner/work/omni-components/omni-components/src/email-field/README.md)
+
+</td><td>
+
+Email input control, used in forms for input validation and to display correct virtual keyboard on mobile.
+
+</td></tr><tr><td>
+
+[omni-expander](/Users/runner/work/omni-components/omni-components/src/expander/README.md)
+
+</td><td>
+
+Component that groups together content in an expanded box.
+
+</td></tr><tr><td>
+
+[omni-expander-group](/Users/runner/work/omni-components/omni-components/src/expander/README.md)
+
+</td><td>
+
+Layout container that groups expanders.
+
+</td></tr><tr><td>
+
+[omni-hyperlink](/Users/runner/work/omni-components/omni-components/src/hyperlink/README.md)
+
+</td><td>
+
+Control to indicate an action to be executed. Typically used for navigational purposes.
 
 </td></tr><tr><td>
 
@@ -372,22 +524,6 @@ Hidden eye icon component
 </td><td>
 
 Visible eye icon component.
-
-</td></tr><tr><td>
-
-[omni-indeterminate-icon](src/icons/README.md)
-
-</td><td>
-
-Indeterminate icon component.
-
-</td></tr><tr><td>
-
-[omni-loading-icon](src/icons/README.md)
-
-</td><td>
-
-Loading icon component.
 
 </td></tr><tr><td>
 
@@ -415,22 +551,6 @@ Minus icon component.
 
 </td></tr><tr><td>
 
-[omni-more-icon](src/icons/README.md)
-
-</td><td>
-
-More icon component.
-
-</td></tr><tr><td>
-
-[omni-next-icon](src/icons/README.md)
-
-</td><td>
-
-Next icon component.
-
-</td></tr><tr><td>
-
 [omni-plus-icon](src/icons/README.md)
 
 </td><td>
@@ -439,63 +559,7 @@ Plus icon component.
 
 </td></tr><tr><td>
 
-[omni-previous-icon](src/icons/README.md)
-
-</td><td>
-
-Previous icon component.
-
-</td></tr><tr><td>
-
-[omni-search-icon](src/icons/README.md)
-
-</td><td>
-
-Search icon component.
-
-</td></tr><tr><td>
-
-[omni-send-icon](src/icons/README.md)
-
-</td><td>
-
-Send icon component.
-
-</td></tr><tr><td>
-
-[omni-keyboard](src/keyboard/README.md)
-
-</td><td>
-
-A responsive on-screen keyboard control component.
-
-</td></tr><tr><td>
-
-[omni-keyboard-button](src/keyboard/README.md)
-
-</td><td>
-
-An internal keyboard button control used in the keyboard component.
-
-</td></tr><tr><td>
-
-[omni-label](src/label/README.md)
-
-</td><td>
-
-Label component that renders styled text.
-
-</td></tr><tr><td>
-
-[omni-modal](src/modal/README.md)
-
-</td><td>
-
-Control to display modal content with optional header and footer content.
-
-</td></tr><tr><td>
-
-[omni-number-field](src/number-field/README.md)
+[omni-number-field](/Users/runner/work/omni-components/omni-components/src/number-field/README.md)
 
 </td><td>
 
@@ -503,7 +567,7 @@ Input control to enter a single line of numbers.
 
 </td></tr><tr><td>
 
-[omni-password-field](src/password-field/README.md)
+[omni-password-field](/Users/runner/work/omni-components/omni-components/src/password-field/README.md)
 
 </td><td>
 
@@ -511,7 +575,7 @@ Password input control.
 
 </td></tr><tr><td>
 
-[omni-pin-field](src/pin-field/README.md)
+[omni-pin-field](/Users/runner/work/omni-components/omni-components/src/pin-field/README.md)
 
 </td><td>
 
@@ -519,7 +583,7 @@ Input control to enter a masked numeric value.
 
 </td></tr><tr><td>
 
-[omni-radio](src/radio/README.md)
+[omni-radio](/Users/runner/work/omni-components/omni-components/src/radio/README.md)
 
 </td><td>
 
@@ -527,7 +591,7 @@ Control to select a single value from a group of values.
 
 </td></tr><tr><td>
 
-[omni-radio-group](src/radio/README.md)
+[omni-radio-group](/Users/runner/work/omni-components/omni-components/src/radio/README.md)
 
 </td><td>
 
@@ -535,39 +599,7 @@ Control to group radio components for single selection
 
 </td></tr><tr><td>
 
-[omni-render-element](src/render-element/README.md)
-
-</td><td>
-
-Element that defers content rendering to a provided function / promise.
-
-</td></tr><tr><td>
-
-[omni-search-field](src/search-field/README.md)
-
-</td><td>
-
-Search input control.
-
-</td></tr><tr><td>
-
-[omni-select](src/select/README.md)
-
-</td><td>
-
-Control to get / set a value within a list of options.
-
-</td></tr><tr><td>
-
-[omni-switch](src/switch/README.md)
-
-</td><td>
-
-Control to switch a value on or off.
-
-</td></tr><tr><td>
-
-[omni-tab](src/tab/README.md)
+[omni-tab](/Users/runner/work/omni-components/omni-components/src/tab/README.md)
 
 </td><td>
 
@@ -575,15 +607,7 @@ Control that can be used to display slotted content, for use within an Tab Group
 
 </td></tr><tr><td>
 
-[omni-tab-group](src/tab/README.md)
-
-</td><td>
-
-Component that displays content in tabs.
-
-</td></tr><tr><td>
-
-[omni-tab-header](src/tab/README.md)
+[omni-tab-header](/Users/runner/work/omni-components/omni-components/src/tab/README.md)
 
 </td><td>
 
@@ -591,27 +615,27 @@ Control that can be used to display custom slotted content, for use within Tab G
 
 </td></tr><tr><td>
 
-[omni-text-field](src/text-field/README.md)
+[omni-tab-group](/Users/runner/work/omni-components/omni-components/src/tab/README.md)
 
 </td><td>
 
-Control to input text.
+Component that displays content in tabs.
 
 </td></tr><tr><td>
 
-[omni-toast](src/toast/README.md)
-
-</td><td>
-
-Component to visually notify a user of a message.
-
-</td></tr><tr><td>
-
-[omni-toast-stack](src/toast/README.md)
+[omni-toast-stack](/Users/runner/work/omni-components/omni-components/src/toast/README.md)
 
 </td><td>
 
 A toast container that animates in and stacks toast elements.
+
+</td></tr><tr><td>
+
+[omni-toast](/Users/runner/work/omni-components/omni-components/src/toast/README.md)
+
+</td><td>
+
+Component to visually notify a user of a message.
 
 </td></tr></tbody></table>
 
@@ -633,17 +657,17 @@ See the [`CONTRIBUTING.md`](./CONTRIBUTING.md) guide to get involved.
 <table>
 <tr>
     <td align="center">
-        <a href="https://github.com/chromaticWaster">
-            <img src="https://avatars.githubusercontent.com/u/22874454?v=4" width="100;" alt="chromaticWaster"/>
-            <br />
-            <sub><b>chromaticWaster</b></sub>
-        </a>
-    </td>
-    <td align="center">
         <a href="https://github.com/BOTLANNER">
             <img src="https://avatars.githubusercontent.com/u/16349308?v=4" width="100;" alt="BOTLANNER"/>
             <br />
             <sub><b>BOTLANNER</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/chromaticWaster">
+            <img src="https://avatars.githubusercontent.com/u/22874454?v=4" width="100;" alt="chromaticWaster"/>
+            <br />
+            <sub><b>chromaticWaster</b></sub>
         </a>
     </td>
     <td align="center">
@@ -661,17 +685,17 @@ See the [`CONTRIBUTING.md`](./CONTRIBUTING.md) guide to get involved.
         </a>
     </td>
     <td align="center">
-        <a href="https://github.com/Makhubedu">
-            <img src="https://avatars.githubusercontent.com/u/43409770?v=4" width="100;" alt="Makhubedu"/>
-            <br />
-            <sub><b>Makhubedu</b></sub>
-        </a>
-    </td>
-    <td align="center">
         <a href="https://github.com/capitec-oss">
             <img src="https://avatars.githubusercontent.com/u/109588738?v=4" width="100;" alt="capitec-oss"/>
             <br />
             <sub><b>capitec-oss</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/Makhubedu">
+            <img src="https://avatars.githubusercontent.com/u/43409770?v=4" width="100;" alt="Makhubedu"/>
+            <br />
+            <sub><b>Makhubedu</b></sub>
         </a>
     </td></tr>
 </table>

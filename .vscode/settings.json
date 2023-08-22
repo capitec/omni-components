@@ -44,6 +44,8 @@
 		"keyboard": true,
 		"modal": true,
 		"tab": true,
-		"toast": true
+		"toast": true,
+		"alert": true,
+		"expander": true
 	}
 }

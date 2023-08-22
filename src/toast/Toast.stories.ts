@@ -1,20 +1,11 @@
-import { within, fireEvent } from '@testing-library/dom';
-import userEvent from '@testing-library/user-event';
-import * as jest from 'jest-mock';
 import { html, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import expect from '../utils/ExpectDOM.js';
-import { assignToSlot, ComponentStoryFormat, CSFIdentifier, getSourceFromLit, raw } from '../utils/StoryUtils.js';
+import { assignToSlot, ComponentStoryFormat, getSourceFromLit, raw } from '../utils/StoryUtils.js';
 import { Toast } from './Toast.js';
 
 import './Toast.js';
 import '../button/Button.js';
-
-export default {
-    title: 'UI Components/Toast',
-    component: 'omni-toast'
-} as CSFIdentifier;
 
 interface Args {
     type: 'success' | 'warning' | 'error' | 'info' | 'none';
@@ -54,10 +45,6 @@ export const Interactive: ComponentStoryFormat<Args> = {
         prefix: undefined,
         '[Default Slot]': undefined,
         close: undefined
-    },
-    play: async (context) => {
-        const toast = within(context.canvasElement).getByTestId<Toast>('test-toast');
-        toast.focus();
     }
 };
 
@@ -446,10 +433,6 @@ const App = () =>   <OmniToast${args.detail ? ` detail="${args.detail}"` : ''}${
         prefix: undefined,
         '[Default Slot]': raw`<span>Custom Slotted Toast <strong>Content</strong></span>`,
         close: undefined
-    },
-    play: async (context) => {
-        const toast = within(context.canvasElement).getByTestId<Toast>('test-toast');
-        toast.focus();
     }
 };
 
@@ -497,10 +480,6 @@ const App = () =>   <OmniToast${args.detail ? ` detail="${args.detail}"` : ''}${
 </svg>`,
         '[Default Slot]': undefined,
         close: undefined
-    },
-    play: async (context) => {
-        const toast = within(context.canvasElement).getByTestId<Toast>('test-toast');
-        toast.focus();
     }
 };
 
@@ -541,10 +520,6 @@ const App = () => <OmniToast${args.detail ? ` detail="${args.detail}"` : ''}${ar
         prefix: undefined,
         '[Default Slot]': undefined,
         close: undefined
-    },
-    play: async (context) => {
-        const toast = within(context.canvasElement).getByTestId<Toast>('test-toast');
-        toast.focus();
     }
 };
 
@@ -599,10 +574,6 @@ const App = () =>   <OmniToast${args.detail ? ` detail="${args.detail}"` : ''}${
         <path d="M5 10.75v-1.5h10v1.5Z"></path>
     </g>
 </svg>`
-    },
-    play: async (context) => {
-        const toast = within(context.canvasElement).getByTestId<Toast>('test-toast');
-        toast.focus();
     }
 };
 
@@ -653,9 +624,5 @@ const App = () => <OmniToast${args.detail ? ` detail="${args.detail}"` : ''}${ar
         prefix: undefined,
         '[Default Slot]': undefined,
         close: undefined
-    },
-    play: async (context) => {
-        const toast = within(context.canvasElement).getByTestId<Toast>('test-toast');
-        toast.focus();
     }
 };

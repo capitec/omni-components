@@ -44,6 +44,61 @@ export function getProperties(value, componentName) {
     });
 }
 
+function convertToParameterString(parametersList) {
+    let parameters = '';
+
+    if (!parametersList || parametersList.length === 0) {
+        return parameters;
+    }
+
+    parametersList.forEach(p => {
+        if (parameters) {
+            parameters += ',\r\n';
+        }
+        if (!p.type) {
+            console.log(p);
+        }
+
+        parameters += `${p.name} - ${p.type.text}`
+    });
+
+    return parameters;
+}
+
+export function getInstanceFunctions(value, componentName) {
+    const declaration = getComponentDeclaration(value, componentName);
+    return declaration.members?.filter(m => m.kind === 'method' &&
+        m.privacy !== 'private' &&
+        m.privacy !== 'protected' &&
+        m.description &&
+        m.static?.toString() !== 'true' &&
+        !m.name.startsWith('_'))?.map(a => {
+            return {
+                ...a,
+                parameters: convertToParameterString(a.parameters),
+                description: transformFromJsdoc(a.description),
+                returnType: a.return?.type?.text ?? ''
+            };
+        });
+}
+
+export function getStaticFunctions(value, componentName) {
+    const declaration = getComponentDeclaration(value, componentName);
+    return declaration.members?.filter(m => m.kind === 'method' &&
+        m.privacy !== 'private' &&
+        m.privacy !== 'protected' &&
+        m.description &&
+        m.static?.toString() === 'true' &&
+        !m.name.startsWith('_'))?.map(a => {
+            return {
+                ...a,
+                parameters: convertToParameterString(a.parameters),
+                description: transformFromJsdoc(a.description),
+                returnType: a.return?.type?.text ?? ''
+            };
+        });
+}
+
 export function getGlobalAttributes(value, componentName) {
     const declaration = getComponentDeclaration(value, componentName);
     return declaration.globalAttributes?.map(a => {
@@ -110,8 +165,8 @@ export function getCSSProperties(value, componentName) {
 }
 
 export function splitPascalCase(word) {
-	var wordRe = /($[a-z])|[A-Z][^A-Z]+/g;
-	return word.match(wordRe).join(' ');
+    var wordRe = /($[a-z])|[A-Z][^A-Z]+/g;
+    return word.match(wordRe).join(' ');
 }
 
 function distinct(value, index, self) {
