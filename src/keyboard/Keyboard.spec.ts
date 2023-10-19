@@ -106,6 +106,7 @@ test(`Keyboard - Enter Key Hint Variations`, async ({ page }) => {
 
         const firstTextInput = container.locator('omni-text-field').first();
 
+        // Click on the element.
         await firstTextInput.click();
         await expect(keyboardArea).toBeVisible();
 
