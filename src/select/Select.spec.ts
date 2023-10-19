@@ -52,7 +52,7 @@ test(`Select - Visual and Behaviour`, async ({ page, isMobile }) => {
             await expect(container).toHaveScreenshot('select-items-container.png');
         }
 
-        // Get the items container and locate the nested items
+        // Get the items container and locate the nested items.
         const items = selectComponent.locator('.item');
         await expect(items).toHaveCount(10);
 
