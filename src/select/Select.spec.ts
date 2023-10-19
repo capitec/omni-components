@@ -43,6 +43,7 @@ test(`Select - Visual and Behaviour`, async ({ page, isMobile }) => {
 
         await selectComponent.click();
 
+        // Confirm that the component matches a screenshot based on whether the tests are for mobile form factor.
         if (isMobile) {
             const dialog = selectComponent.locator('dialog');
             await expect(dialog).toHaveScreenshot('select-dialog.png');

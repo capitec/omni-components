@@ -75,7 +75,7 @@ test(`Date Picker - Visual and Behaviour`, async ({ page }) => {
         const daysGrid = calendar.locator('.day-grid');
         await expect(daysGrid).toHaveCount(1);
 
-        //Find the day button at the specified position
+        // Find the day button at the specified position.
         const dayButton = calendar.locator('div.day > div.day-label').nth(15);
         await expect(dayButton).toHaveCount(1);
         await dayButton.click({

@@ -22,6 +22,8 @@ test(`Search Field - Visual and Behaviour`, async ({ page }) => {
             t.value = '';
             await t.updateComplete;
         });
+
+        // Confirm that the component matches the provided screenshot.
         await expect(searchField).toHaveScreenshot('search-field.png');
 
         const inputFn = await mockEventListener(searchField, 'input');
