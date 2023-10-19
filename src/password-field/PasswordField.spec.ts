@@ -29,7 +29,7 @@ test(`Password Field - Visual and Behaviour`, async ({ page }) => {
         const showSlotElement = passwordField.locator('slot[name=show]');
         await expect(showSlotElement).toHaveCount(1);
         await showSlotElement.click();
-        
+
         // Confirm that the component matches the provided screenshot should show the unmasked value.
         await expect(passwordField).toHaveScreenshot('password-field-show.png');
 

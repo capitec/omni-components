@@ -21,7 +21,7 @@ test(`Color Field - Visual and Behaviour`, async ({ page }) => {
         const inputField = field.locator('#inputField');
 
         await expect(inputField).toHaveAttribute('type', 'color');
-        
+
         // Confirm that the component matches the screenshot
         await expect(field).toHaveScreenshot('color-field.png');
 
