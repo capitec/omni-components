@@ -311,7 +311,7 @@ export class DatePicker extends OmniFormElement {
                 }
 
                 .left-border {
-                    width: var(--omni-date-picker-control-left-border-width, 1px);
+                    width: var(--omni-date-picker-control-left-border-width, 2px);
                     background-color: var(--omni-date-picker-control-left-border-color,var(--omni-form-border-color));
                 }
 
