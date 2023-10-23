@@ -155,6 +155,8 @@ export class SearchField extends OmniFormElement {
                 class=${classMap(field)}
                 id="inputField"
                 type="search"
+                aria-label="${this.label}"
+                aria-disabled="${this.disabled}"
                 inputmode="${ifDefined(this.noNativeKeyboard ? 'none' : undefined)}"
                 .value=${live(this.value as string)}
                 ?readOnly=${this.disabled}

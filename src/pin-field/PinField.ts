@@ -320,6 +320,8 @@ export class PinField extends OmniFormElement {
         id="inputField"
         inputmode="${this.noNativeKeyboard ? 'none' : 'decimal'}"
         data-omni-keyboard-mode="decimal"
+        aria-label="${this.label}"
+        aria-disabled="${this.disabled}"
         type="${this.type}"
         ?readOnly=${this.disabled}
         tabindex="${this.disabled ? -1 : 0}"

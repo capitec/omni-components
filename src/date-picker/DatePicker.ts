@@ -386,6 +386,8 @@ export class DatePicker extends OmniFormElement {
                 id="inputField"
                 type="text"
                 readonly
+                aria-label="${this.label}"
+                aria-disabled="${this.disabled}"
                 ?disabled=${this.disabled}
                 .value=${live(this.date && this.date.isValid ? this.date.toLocaleString(DateTime.DATE_FULL) : '')}
                 tabindex="${this.disabled ? -1 : 0}" />

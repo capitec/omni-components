@@ -246,6 +246,8 @@ export class PasswordField extends OmniFormElement {
         class=${classMap(field)}
         id="inputField"
         .type="${this.type}"
+        aria-label="${this.label}"
+        aria-disabled="${this.disabled}"
         inputmode="${ifDefined(this.noNativeKeyboard ? 'none' : undefined)}"
         ?readOnly=${this.disabled}
         tabindex="${this.disabled ? -1 : 0}" />

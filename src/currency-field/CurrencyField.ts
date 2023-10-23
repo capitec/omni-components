@@ -592,9 +592,11 @@ export class CurrencyField extends OmniFormElement {
                 class=${classMap(field)}
                 id="inputField"
                 type="text"
+                aria-label="${this.label}"
                 inputmode="${this.noNativeKeyboard ? 'none' : 'decimal'}"
                 data-omni-keyboard-mode="decimal"
                 maxlength="15"
+                aria-disabled="${this.disabled}"
                 ?readOnly=${this.disabled}
                 tabindex="${this.disabled ? -1 : 0}" />
         `;

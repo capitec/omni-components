@@ -117,6 +117,8 @@ export class TextField extends OmniFormElement {
         class=${classMap(field)}
         id="inputField"
         type="text"
+        aria-label="${this.label}"
+        aria-disabled="${this.disabled}"
         inputmode="${ifDefined(this.noNativeKeyboard ? 'none' : undefined)}"
         .value=${live(this.value as string)}
         ?readOnly=${this.disabled}
