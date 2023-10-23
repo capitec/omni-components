@@ -197,9 +197,15 @@ export class Modal extends OmniElement {
         // `HTMLDialogElement` needs to programmatically be opened and closed. This would open on first render unless the `hide` attribute is set.
         if (!this.hide && !this.dialog.open) {
             this.dialog.showModal();
+            this.dialog.addEventListener('cancel', (event) => {
+                event.preventDefault();
+            });
         }
         if (this.hide && this.dialog.open) {
             this.dialog.close();
+            this.dialog.removeEventListener('cancel', () => {
+                /*No function logic required*/
+            });
         }
     }
 
