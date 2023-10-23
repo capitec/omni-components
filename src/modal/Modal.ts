@@ -197,15 +197,9 @@ export class Modal extends OmniElement {
         // `HTMLDialogElement` needs to programmatically be opened and closed. This would open on first render unless the `hide` attribute is set.
         if (!this.hide && !this.dialog.open) {
             this.dialog.showModal();
-            this.dialog.addEventListener('cancel', (event) => {
-                event.preventDefault();
-            });
         }
         if (this.hide && this.dialog.open) {
             this.dialog.close();
-            this.dialog.removeEventListener('cancel', () => {
-                /*No function logic required*/
-            });
         }
     }
 
@@ -351,6 +345,7 @@ export class Modal extends OmniElement {
     override render(): TemplateResult {
         return html`
             <dialog part="dialog" class="modal" role="dialog" aria-modal="true"
+                    @cancel="${(e: Event) => e.preventDefault()}"
                     @click="${(e: Event) => this.notifyClickOutside(e)}" @touch="${(e: Event) => this.notifyClickOutside(e)}">
                 <div class="modal backdrop" part="backdrop">
                     <div class="container" ?no-fullscreen="${this.noFullscreen}" part="container">
