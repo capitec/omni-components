@@ -150,6 +150,8 @@ export class TabGroup extends OmniElement {
                     display: flex;
                     flex-direction: row;
                     align-items: center;
+                    overflow-x: auto;
+                    overflow-y: hidden;
                     width: var(--omni-tab-group-tab-bar-width, 100%);
                     height: var(--omni-tab-group-tab-bar-height, 50px);
                     border-bottom: var(--omni-tab-group-tab-bar-border-bottom, none);
