@@ -117,6 +117,8 @@ Component that displays content in tabs.
 | `--omni-tab-group-tab-bar-background-color` | Tabs tab bar background color.   |
 | `--omni-tab-group-tab-bar-border-bottom`    | Tabs tab bar bottom border.      |
 | `--omni-tab-group-tab-bar-height`           | Tabs tab bar height.             |
+| `--omni-tab-group-tab-bar-overflow-x`       | Tabs tab bar overflow x.         |
+| `--omni-tab-group-tab-bar-overflow-y`       | Tabs tab bar overflow y.         |
 | `--omni-tab-group-tab-bar-width`            | Tabs tab bar width.              |
 | `--omni-theme-accent-active-color`          | Theme accent active color.       |
 | `--omni-theme-accent-color`                 | Theme accent color.              |
