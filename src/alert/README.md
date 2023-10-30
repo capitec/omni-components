@@ -74,6 +74,10 @@ Component that displays an alert.
 | `--omni-alert-action-button-padding-left`        | Alert action button(s) left padding.             |
 | `--omni-alert-action-button-padding-right`       | Alert action button(s) right padding.            |
 | `--omni-alert-action-button-padding-top`         | Alert action button(s) top padding.              |
+| `--omni-alert-action-padding-bottom`             | Alert actions part bottom padding.               |
+| `--omni-alert-action-padding-left`               | Alert actions part left padding.                 |
+| `--omni-alert-action-padding-right`              | Alert actions part right padding.                |
+| `--omni-alert-action-padding-top`                | Alert actions part top padding.                  |
 | `--omni-alert-animation-duration`                | Alert fade in and out animation duration.        |
 | `--omni-alert-border`                            | Alert border.                                    |
 | `--omni-alert-border-radius`                     | Alert border radius.                             |
