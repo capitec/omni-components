@@ -69,7 +69,7 @@ test(`Date Picker - Visual and Behaviour`, async ({ page }) => {
         await monthButton.click({
             force: true
         });
-
+        // Compare screenshot of the calendar element when it displays the days in the month
         await expect(calendar).toHaveScreenshot('date-picker-calendar-days.png');
 
         const daysGrid = calendar.locator('.day-grid');
