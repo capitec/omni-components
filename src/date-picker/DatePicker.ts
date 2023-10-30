@@ -227,7 +227,7 @@ export class DatePicker extends OmniFormElement {
     }
 
     _dateSelected(e: Event) {
-        this.date = DateTime.fromJSDate((<CustomEvent>e).detail.date);
+        this.date = DateTime.fromJSDate((<CustomEvent>e).detail.date).setLocale(this.locale);
 
         this.value = this.date.toISODate() as string;
 
