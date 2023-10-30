@@ -156,12 +156,13 @@ export class ColorField extends OmniFormElement {
         class=${classMap(input)}
         id="inputField"
         type="color"
-        aria-label="${this.label}"
         .value=${live(this.value as string)}
-        aria-disabled="${this.disabled}"
         ?disabled=${this.disabled}
         ?readOnly=${this.disabled}
-        tabindex="${this.disabled ? -1 : 0}" />
+        tabindex="${this.disabled ? -1 : 0}"
+        aria-label="${this.label}"
+        aria-disabled="${this.disabled}"
+        />
     `;
     }
 }

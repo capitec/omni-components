@@ -12,6 +12,7 @@ const slotPositionOptions = ['left', 'top', 'right', 'bottom'] as const;
 interface Args {
     type: (typeof buttonOptions)[number];
     label: string;
+    altText: string;
     slotPosition: (typeof slotPositionOptions)[number];
     disabled: boolean;
     '[Default Slot]': string;
@@ -23,6 +24,7 @@ export const Interactive = {
       data-testid="test-button"
       type="${args.type}"
       label="${ifNotEmpty(args.label)}"
+      alt-text="${args.altText}"
       slot-position="${args.slotPosition}"
       ?disabled=${args.disabled}>
       ${unsafeHTML(args['[Default Slot]'])}
@@ -80,8 +82,8 @@ const App = () => <OmniButton${args.label ? ` label='${args.label}'` : ''}/>;`
 } as ComponentStoryFormat<Args>;
 
 export const Slot = {
-    render: () => html`
-    <omni-button data-testid="test-button">
+    render: (args: Args) => html`
+    <omni-button data-testid="test-button" alt-text="${args.altText}">
       <omni-icon size="default" icon="./assets/images/direction.svg"></omni-icon>
     </omni-button>
   `,
@@ -98,7 +100,9 @@ const App = () => <OmniButton>
     ],
     name: 'Slot',
     description: 'Set html content to display within.',
-    args: {}
+    args: {
+        altText: 'Direction image'
+    }
 } as ComponentStoryFormat<Args>;
 
 export const Disabled = {

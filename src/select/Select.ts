@@ -679,9 +679,9 @@ export class Select extends OmniFormElement {
                 type="text"
                 readonly
                 inputMode="none"
+                aria-label="${this.label}"
                 aria-disabled="${this.disabled}"
                 ?disabled=${this.disabled}
-                aria-label="${this.label}"
                 .value=${live(
                     (typeof this.value !== 'string' && this.displayField
                         ? (((this.value as Record<string, unknown>) ?? {})[this.displayField] as string)

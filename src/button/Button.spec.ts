@@ -117,6 +117,9 @@ test(`Button - Slot Behaviour`, async ({ page }) => {
         );
 
         await expect(foundSlottedOmniIconElement.asElement()).toBeTruthy();
+
+        // Test accessibility by checking what the aria-label is 
+
     });
 });
 
@@ -146,3 +149,4 @@ test(`Button - Disabled Behaviour`, async ({ page }) => {
         await expect(click).toBeCalledTimes(0);
     });
 });
+

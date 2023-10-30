@@ -13,6 +13,8 @@ import '../icons/Clear.icon.js';
  * @slot suffix - Replaces the icon for the suffix slot.
  *
  * @csscat Base Form Variables
+ * 
+ * @fires {Event} change - Dispatched when a component that extends the base class value is cleared (Only applies to components where clearable attribute is true).
  *
  * @cssprop --omni-container-font-family -  Container font family.
  * @cssprop --omni-container-width - Container width.
@@ -137,6 +139,7 @@ export class OmniFormElement extends OmniElement {
         }
 
         this.value = '';
+
         // Dispatch standard DOM event to cater for single clear.
         this.dispatchEvent(
             new Event('change', {

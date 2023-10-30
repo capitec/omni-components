@@ -62,6 +62,12 @@ export class Icon extends OmniElement {
      */
     @property({ type: Boolean, reflect: true }) symmetrical?: boolean;
 
+    /**
+     * Fallback text to display when image is not loaded also used for screen readers and other assistive technologies
+     * @attr
+     */
+    @property({type: Boolean, reflect: true}) alt?: string;
+
     static override get styles() {
         return [
             super.styles,
@@ -187,7 +193,7 @@ export class Icon extends OmniElement {
                 <img 
                     class=${iconClassMap}
                     src="${this.icon}" 
-                    alt="${this.icon}" />
+                    alt="${this.alt}" />
             `;
         }
 

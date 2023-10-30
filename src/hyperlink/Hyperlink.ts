@@ -145,7 +145,13 @@ export class Hyperlink extends OmniElement {
 
     protected override render(): TemplateResult {
         return html`
-            <a class="hyperlink" href="${this.href ? this.href : 'javascript:void(0)'}" .target="${this.target}" tabindex="0">
+            <a 
+                class="hyperlink" 
+                href="${this.href ? this.href : 'javascript:void(0)'}" 
+                .target="${this.target}" 
+                tabindex="0"
+                aria-disabled="${this.disabled}"
+                aria-label="${this.label}">
                 ${this.label}<slot></slot>
             </a>
         `;

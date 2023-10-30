@@ -289,7 +289,12 @@ export class Radio extends OmniElement {
                 container: true,
                 checked: this.checked ?? false,
                 disabled: this.disabled ?? false
-            })}>
+            })}
+            role="radio"
+            aria-label="${this.label}"
+            aria-error="${this.error}"
+            aria-checked="${this.checked}"
+            >
             <div id="content" tabindex="${this.disabled ? '' : 0}" @click="${this._click}" @keydown="${this._keyDown}">
                 ${this.checked ? html`<div class="indicator"></div>` : nothing}
             </div>

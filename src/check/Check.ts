@@ -334,6 +334,8 @@ export class Check extends OmniElement {
     override render(): TemplateResult {
         return html`
             <div
+                role="checkbox"
+                aria-checked="${this.checked}"
                 class=${classMap({
                     container: true,
                     indeterminate: this.indeterminate ?? false,

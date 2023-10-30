@@ -127,11 +127,12 @@ export class EmailField extends OmniFormElement {
         inputmode="${this.noNativeKeyboard ? 'none' : 'email'}"
         data-omni-keyboard-mode="email"
         type="email"
-        aria-disabled="${this.disabled}"
-        aria-label="${this.label}"
         .value=${live(this.value as string)}
         ?readOnly=${this.disabled}
-        tabindex="${this.disabled ? -1 : 0}" />
+        tabindex="${this.disabled ? -1 : 0}" 
+        aria-disabled="${this.disabled}"
+        aria-label="${this.label}"
+        />
     `;
     }
 }

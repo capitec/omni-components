@@ -186,6 +186,7 @@ export class Alert extends OmniElement {
         element.secondaryAction = init.secondaryAction;
         element.enableSecondary = init.enableSecondary;
         element.actionAlign = init.actionAlign;
+        element.ariaRoleDescription = 'alert'
         if (init.id) {
             element.id = init.id;
         }

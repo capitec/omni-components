@@ -187,6 +187,7 @@ export class Chip extends OmniElement {
             disabled: this.disabled ?? false
         })}
         ?disabled=${this.disabled}
+        aria-label="${this.label}"
         aria-disabled=${this.disabled ? 'true' : 'false'}>
         <slot name="chip_icon"></slot>
         <div id="label" class="label">${this.label}</div>

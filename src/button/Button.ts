@@ -154,6 +154,11 @@ export class Button extends OmniElement {
      */
     @property({ type: Boolean, reflect: true }) disabled?: boolean;
 
+    /**
+     * Should be used in cases where a button has no label will map to the aria-label attribute for accessibility purposes.
+     */
+    @property({type: String, reflect: true, attribute: 'alt-text'}) altText?: string;
+
     static override get styles() {
         return [
             super.styles,
@@ -430,8 +435,9 @@ export class Button extends OmniElement {
                     [`${this.type}`]: this.type,
                     disabled: this.disabled ?? false
                 })}
-                ?disabled=${this.disabled}
+                aria-label="${this.altText ? this.altText : this.label}"
                 aria-disabled=${this.disabled ? 'true' : 'false'}
+                ?disabled=${this.disabled}
                 tabindex=${this.disabled ? '-1' : '0'}>
                 <slot></slot>
                 ${this.label ? html`<label id="label" class="label">${this.label}</label>` : nothing}
