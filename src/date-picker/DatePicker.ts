@@ -423,7 +423,7 @@ export class DatePicker extends OmniFormElement {
     protected override renderPicker() {
         if (this._isMobile) {
             return html`
-            <dialog id="picker-dialog" class="picker-dialog">
+            <dialog id="picker-dialog" class="picker-dialog" @cancel="${(e: Event) => e.preventDefault()}">
                 <omni-calendar 
                     id="calendar" 
                     locale=${this.locale} 

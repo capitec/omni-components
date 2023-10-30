@@ -345,6 +345,7 @@ export class Modal extends OmniElement {
     override render(): TemplateResult {
         return html`
             <dialog part="dialog" class="modal" role="dialog" aria-modal="true"
+                    @cancel="${(e: Event) => e.preventDefault()}"
                     @click="${(e: Event) => this.notifyClickOutside(e)}" @touch="${(e: Event) => this.notifyClickOutside(e)}">
                 <div class="modal backdrop" part="backdrop">
                     <div class="container" ?no-fullscreen="${this.noFullscreen}" part="container">
