@@ -59,6 +59,7 @@ test(`Date Picker - Visual and Behaviour`, async ({ page }) => {
             force: true
         });
 
+        // Compare screenshot of month grid.
         await expect(calendar).toHaveScreenshot('date-picker-calendar-months.png');
 
         const monthGrid = calendar.locator('.month-grid');
