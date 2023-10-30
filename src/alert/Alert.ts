@@ -78,6 +78,11 @@ import '../modal/Modal.js';
  * @cssprop --omni-alert-description-padding-left - Alert description left padding.
  * @cssprop --omni-alert-description-padding-right - Alert description right padding.
  *
+ * @cssprop --omni-alert-action-padding-top - Alert actions part top padding.
+ * @cssprop --omni-alert-action-padding-bottom - Alert actions part bottom padding.
+ * @cssprop --omni-alert-action-padding-left - Alert actions part left padding.
+ * @cssprop --omni-alert-action-padding-right - Alert actions part right padding.
+ *
  * @cssprop --omni-alert-action-button-padding-top - Alert action button(s) top padding.
  * @cssprop --omni-alert-action-button-padding-bottom - Alert action button(s) bottom padding.
  * @cssprop --omni-alert-action-button-padding-left - Alert action button(s) left padding.
@@ -477,6 +482,11 @@ export class Alert extends OmniElement {
 				flex-direction: row;
 				justify-content: flex-end;
 				align-items: center;
+
+                padding-top: var(--omni-alert-action-padding-top, 0px);
+				padding-bottom: var(--omni-alert-action-padding-bottom, 0px);
+				padding-left: var(--omni-alert-action-padding-left, 0px);
+				padding-right: var(--omni-alert-action-padding-right, 0px);
 			}
 
             .actions.center {

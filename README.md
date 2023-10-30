@@ -487,6 +487,22 @@ Email input control, used in forms for input validation and to display correct v
 
 </td></tr><tr><td>
 
+[omni-expander](/Users/runner/work/omni-components/omni-components/src/expander/README.md)
+
+</td><td>
+
+Component that groups together content in an expanded box.
+
+</td></tr><tr><td>
+
+[omni-expander-group](/Users/runner/work/omni-components/omni-components/src/expander/README.md)
+
+</td><td>
+
+Layout container that groups expanders.
+
+</td></tr><tr><td>
+
 [omni-hyperlink](/Users/runner/work/omni-components/omni-components/src/hyperlink/README.md)
 
 </td><td>

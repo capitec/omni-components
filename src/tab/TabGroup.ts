@@ -36,6 +36,8 @@ import { TabHeader } from './TabHeader.js';
  * @slot - All omni-tab components that are managed by this component.
  * @slot header - Optional omni-tab-header components associated with each omni-tab component.
  *
+ * @cssprop --omni-tab-group-tab-bar-overflow-x - Tabs tab bar overflow x.
+ * @cssprop --omni-tab-group-tab-bar-overflow-y - Tabs tab bar overflow y.
  * @cssprop --omni-tab-group-tab-bar-width - Tabs tab bar width.
  * @cssprop --omni-tab-group-tab-bar-height - Tabs tab bar height.
  * @cssprop --omni-tab-group-tab-bar-border-bottom - Tabs tab bar bottom border.
@@ -150,6 +152,8 @@ export class TabGroup extends OmniElement {
                     display: flex;
                     flex-direction: row;
                     align-items: center;
+                    overflow-x: var(--omni-tab-group-tab-bar-overflow-x, auto);
+                    overflow-y: var(--omni-tab-group-tab-bar-overflow-y, hidden);
                     width: var(--omni-tab-group-tab-bar-width, 100%);
                     height: var(--omni-tab-group-tab-bar-height, 50px);
                     border-bottom: var(--omni-tab-group-tab-bar-border-bottom, none);

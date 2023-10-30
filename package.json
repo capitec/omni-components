@@ -1,6 +1,6 @@
 {
     "name": "@capitec/omni-components",
-    "version": "0.8.5",
+    "version": "0.8.8",
     "type": "module",
     "description": "Modern UI component library for mobile and web",
     "scripts": {
@@ -73,7 +73,8 @@
         "modal",
         "toast",
         "tab",
-        "alert"
+        "alert",
+        "expander"
     ],
     "exports": {
         "./*": "./dist/*/index.js"

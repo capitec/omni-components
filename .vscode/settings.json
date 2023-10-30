@@ -45,6 +45,7 @@
 		"modal": true,
 		"tab": true,
 		"toast": true,
-		"alert": true
+		"alert": true,
+		"expander": true
 	}
 }
