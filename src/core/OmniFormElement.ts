@@ -464,17 +464,25 @@ export class OmniFormElement extends OmniElement {
 
     protected renderClear(): typeof nothing | TemplateResult {
         return html`
-        <div class="clear-control">
             ${
-                this.clearable && this.value && !this.disabled
+                this.clearable
                     ? html`
-            <div id="clear-click" class="clear-click" @click="${(e: MouseEvent) => this._clearValue(e)}">
-                    <slot name="clear">
-                        <omni-clear-icon class="clear-icon"></omni-clear-icon>
-                    </slot>
-            </div>`
+                <div class="clear-control">
+                    ${
+                        this.clearable && this.value && !this.disabled
+                            ? html`
+                    <div id="clear-click" class="clear-click" @click="${(e: MouseEvent) => this._clearValue(e)}">
+                        <slot name="clear">
+                            <omni-clear-icon class="clear-icon"></omni-clear-icon>
+                        </slot>
+                    </div>                    
+                    `
+                            : nothing
+                    }
+                </div>
+            `
                     : nothing
             }
-        </div>`;
+        `;
     }
 }

@@ -43,6 +43,7 @@ test(`Select - Visual and Behaviour`, async ({ page, isMobile }) => {
 
         await selectComponent.click();
 
+        // Confirm that the component matches a screenshot based on whether the tests are for mobile form factor.
         if (isMobile) {
             const dialog = selectComponent.locator('dialog');
             await expect(dialog).toHaveScreenshot('select-dialog.png');
@@ -51,7 +52,7 @@ test(`Select - Visual and Behaviour`, async ({ page, isMobile }) => {
             await expect(container).toHaveScreenshot('select-items-container.png');
         }
 
-        // Get the items container and locate the nested items
+        // Get the items container and locate the nested items.
         const items = selectComponent.locator('.item');
         await expect(items).toHaveCount(10);
 
@@ -93,6 +94,7 @@ test(`Select - Async Per Item Behaviour`, async ({ page, isMobile }) => {
 
         await expect(selectComponent).toHaveScreenshot('select-open.png');
 
+        // Confirm that the component matches a screenshot based on whether the tests are for mobile form factor.
         if (isMobile) {
             const dialog = selectComponent.locator('dialog');
             await expect(dialog).toHaveScreenshot('select-dialog.png');
@@ -130,6 +132,7 @@ test(`Select - String Array Behaviour`, async ({ page, isMobile }) => {
         await selectComponent.click();
         await expect(selectComponent).toHaveScreenshot('select-open.png');
 
+        // Confirm that the component matches a screenshot based on whether the tests are for mobile form factor.
         if (isMobile) {
             const dialog = selectComponent.locator('dialog');
             await expect(dialog).toHaveScreenshot('select-dialog.png');
@@ -182,6 +185,7 @@ test(`Select - Selection Render Behaviour`, async ({ page, isMobile }) => {
         await selectComponent.click();
         await page.waitForTimeout(100);
 
+        // Confirm that the component matches a screenshot based on whether the tests are for mobile form factor.
         if (isMobile) {
             const dialog = selectComponent.locator('dialog');
             await expect(dialog).toHaveScreenshot('select-dialog.png');
@@ -220,6 +224,7 @@ test(`Select - Empty Message Behaviour`, async ({ page, isMobile }) => {
 
         await selectComponent.click();
 
+        // Confirm that the component matches a screenshot based on whether the tests are for mobile form factor.
         if (isMobile) {
             const dialog = selectComponent.locator('dialog');
             await expect(dialog).toHaveScreenshot('select-dialog.png');
@@ -256,6 +261,7 @@ test(`Select - Disabled Behaviour`, async ({ page, isMobile }) => {
 
         await expect(click).toBeCalledTimes(0);
 
+        // Confirm that the component matches a screenshot based on whether the tests are for mobile form factor.
         if (!isMobile) {
             const itemContainer = selectComponent.locator('#items-container');
             await expect(itemContainer).toHaveCount(0);
@@ -296,6 +302,7 @@ test(`Select - Custom Control Slot Visual`, async ({ page, isMobile }) => {
 
         await expect(control).toHaveScreenshot('custom-control.png');
 
+        // Confirm that the component matches a screenshot based on whether the tests are for mobile form factor.
         if (!isMobile) {
             await expect(selectComponent).toHaveScreenshot('arrow-slot-svg.png');
         } else {
@@ -322,6 +329,7 @@ test(`Select - Searchable Behaviour`, async ({ page, isMobile }) => {
 
         await selectComponent.click();
 
+        // Confirm that the component matches a screenshot based on whether the tests are for mobile form factor.
         if (isMobile) {
             const dialog = selectComponent.locator('dialog');
             await expect(dialog).toHaveScreenshot('select-dialog.png');
@@ -366,6 +374,7 @@ test(`Select - Custom Search Behaviour`, async ({ page, isMobile }) => {
 
         await selectComponent.click();
 
+        // Confirm that the component matches a screenshot based on whether the tests are for mobile form factor.
         if (isMobile) {
             const dialog = selectComponent.locator('dialog');
             await expect(dialog).toHaveScreenshot('select-dialog.png');
@@ -432,6 +441,7 @@ test(`Select - Server Side Filtering Behaviour`, async ({ page, isMobile }) => {
 
         await page.waitForTimeout(30);
 
+        // Confirm that the component matches a screenshot based on whether the tests are for mobile form factor.
         if (isMobile) {
             const dialog = selectComponent.locator('dialog');
             await expect(dialog).toHaveScreenshot('select-dialog.png');
@@ -472,6 +482,7 @@ test(`Select - Custom Search Slot Behaviour`, async ({ page, isMobile }) => {
 
         await selectComponent.click();
 
+        // Confirm that the component matches a screenshot based on whether the tests are for mobile form factor.
         if (isMobile) {
             const dialog = selectComponent.locator('dialog');
             await expect(dialog).toHaveScreenshot('select-dialog.png');

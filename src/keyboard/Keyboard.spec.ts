@@ -106,6 +106,7 @@ test(`Keyboard - Enter Key Hint Variations`, async ({ page }) => {
 
         const firstTextInput = container.locator('omni-text-field').first();
 
+        // Click on the element.
         await firstTextInput.click();
         await expect(keyboardArea).toBeVisible();
 
@@ -176,14 +177,14 @@ test(`Keyboard - Enter Key Hint Variations`, async ({ page }) => {
         await expect(keyboardArea).toHaveScreenshot('keyboard-open-alpha-previous.png');
         await expect(keyboardOnly).toHaveScreenshot('keyboard-only-open-alpha-previous.png');
 
-        // Explicitly focus element as pressing Enter would cause keyboard to focus previous tabIndex
+        // Explicitly focus element as pressing Enter would cause keyboard to focus previous tabIndex.
         const previousNumberInput = container.locator('omni-number-field[enterkeyhint=previous]').first();
         await previousNumberInput.click();
 
         await expect(keyboardArea).toHaveScreenshot('keyboard-open-number-previous.png');
         await expect(keyboardOnly).toHaveScreenshot('keyboard-only-open-number-previous.png');
 
-        // Explicitly focus element as pressing Enter would cause keyboard to focus previous tabIndex
+        // Explicitly focus element as pressing Enter would cause keyboard to focus previous tabIndex.
         const searchInput = container.locator('omni-text-field[enterkeyhint=search]').first();
         await searchInput.click();
 
