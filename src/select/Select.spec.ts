@@ -73,7 +73,7 @@ test(`Select - Async Per Item Behaviour`, async ({ page, isMobile }) => {
         await page.waitForSelector('[data-testid]', {});
 
         const selectComponent = page.locator('.Async_Per_Item').getByTestId('test-select');
-        selectComponent.waitFor({state: 'visible', timeout: 300});
+        selectComponent.waitFor({ state: 'visible', timeout: 300 });
         await expect(selectComponent).toHaveScreenshot('select-initial.png');
 
         const valueChange = await mockEventListener(selectComponent, 'change');
@@ -160,7 +160,7 @@ test(`Select - Selection Render Behaviour`, async ({ page, isMobile }) => {
         const args = await getStoryArgs(page, 'Selection_Renderer');
         const argItems = args.items as Record<string, unknown>[];
         const selectComponent = page.locator('.Selection_Renderer').getByTestId('test-select');
-        selectComponent.waitFor({state: 'visible', timeout: 300});
+        selectComponent.waitFor({ state: 'visible', timeout: 300 });
         await expect(selectComponent).toHaveScreenshot('select-initial.png');
 
         const valueChange = await mockEventListener(selectComponent, 'change');
