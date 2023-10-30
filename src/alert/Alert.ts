@@ -77,7 +77,7 @@ import '../modal/Modal.js';
  * @cssprop --omni-alert-description-padding-bottom - Alert description bottom padding.
  * @cssprop --omni-alert-description-padding-left - Alert description left padding.
  * @cssprop --omni-alert-description-padding-right - Alert description right padding.
- * 
+ *
  * @cssprop --omni-alert-action-padding-top - Alert actions part top padding.
  * @cssprop --omni-alert-action-padding-bottom - Alert actions part bottom padding.
  * @cssprop --omni-alert-action-padding-left - Alert actions part left padding.
