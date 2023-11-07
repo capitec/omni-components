@@ -6,7 +6,7 @@ import { OmniElement } from '../core/OmniElement.js';
 import { RenderFunction, RenderResult } from '../render-element/RenderElement.js';
 import { Toast } from './Toast.js';
 
-import './Toast';
+import './Toast.js';
 import '../render-element/RenderElement.js';
 
 /**

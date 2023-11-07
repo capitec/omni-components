@@ -713,7 +713,7 @@ export class Select extends OmniFormElement {
     protected override renderPicker() {
         if (this._isMobile) {
             return html`
-            <dialog id="items-dialog" class="items-dialog">
+            <dialog id="items-dialog" class="items-dialog" @cancel="${(e: Event) => e.preventDefault()}">
                 ${this._isMobile && this.label ? html`<div class="header">${this.label}</div>` : nothing}
                 ${this._renderSearchField()}
                 <div ${ref(this._itemsMaxHeightChange)} id="items" class="items"> ${until(

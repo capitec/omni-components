@@ -227,7 +227,7 @@ export class DatePicker extends OmniFormElement {
     }
 
     _dateSelected(e: Event) {
-        this.date = DateTime.fromJSDate((<CustomEvent>e).detail.date);
+        this.date = DateTime.fromJSDate((<CustomEvent>e).detail.date).setLocale(this.locale);
 
         this.value = this.date.toISODate() as string;
 
@@ -311,7 +311,7 @@ export class DatePicker extends OmniFormElement {
                 }
 
                 .left-border {
-                    width: var(--omni-date-picker-control-left-border-width, 1px);
+                    width: var(--omni-date-picker-control-left-border-width, 2px);
                     background-color: var(--omni-date-picker-control-left-border-color,var(--omni-form-border-color));
                 }
 
@@ -426,7 +426,7 @@ export class DatePicker extends OmniFormElement {
     protected override renderPicker() {
         if (this._isMobile) {
             return html`
-            <dialog id="picker-dialog" class="picker-dialog">
+            <dialog id="picker-dialog" class="picker-dialog" @cancel="${(e: Event) => e.preventDefault()}">
                 <omni-calendar 
                     id="calendar" 
                     locale=${this.locale} 

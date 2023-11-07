@@ -1,4 +1,4 @@
-import { css, html } from 'lit';
+import { PropertyValueMap, css, html } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { ClassInfo, classMap } from 'lit/directives/class-map.js';
 import { ifDefined, OmniFormElement } from '../core/OmniFormElement.js';
@@ -74,7 +74,6 @@ export class PasswordField extends OmniFormElement {
     private _inputElement?: HTMLInputElement;
     @query('.container')
     private container?: HTMLDivElement;
-    private _value? = '';
 
     override connectedCallback() {
         super.connectedCallback();
@@ -90,26 +89,17 @@ export class PasswordField extends OmniFormElement {
         this._setInputValue();
     }
 
-    constructor() {
-        super();
-        this._value = this.value ?? '';
-        Object.defineProperty(this, 'value', {
-            get: () => {
-                return this._value;
-            },
-            set: (v) => {
-                this._value = v ?? '';
-                this._setInputValue();
-                if (this._value) {
-                    this.container?.classList?.add('float-label');
-                    this.container?.classList?.remove('no-float-label');
-                } else {
-                    this.container?.classList?.remove('float-label');
-                    this.container?.classList?.add('no-float-label');
-                }
-                this.requestUpdate();
+    protected override updated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+        if (_changedProperties.has('value')) {
+            if (this.value) {
+                this.container?.classList?.add('float-label');
+                this.container?.classList?.remove('no-float-label');
+            } else {
+                this.container?.classList?.remove('float-label');
+                this.container?.classList?.add('no-float-label');
             }
-        });
+            this._setInputValue();
+        }
     }
 
     // Set the value of the input component.
