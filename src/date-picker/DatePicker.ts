@@ -424,7 +424,9 @@ export class DatePicker extends OmniFormElement {
         if (this._isMobile) {
             return html`
             <dialog id="picker-dialog" class="picker-dialog" @cancel="${(e: Event) => e.preventDefault()}">
-                ${this._showCalendar? html `
+                ${
+                    this._showCalendar
+                        ? html`
                     <omni-calendar 
                         id="calendar" 
                         locale=${this.locale} 
@@ -433,7 +435,9 @@ export class DatePicker extends OmniFormElement {
                         .maxDate=${this.maxDate} 
                         @change=${(e: Event) => this._dateSelected(e)}>
                     </omni-calendar>
-                `: nothing}
+                `
+                        : nothing
+                }
             </dialog>`;
         }
         if (!this._showCalendar) {
