@@ -27,10 +27,10 @@ html
 
 ## Events
 
-| Event      | Type                              | Description                                |
-|------------|-----------------------------------|--------------------------------------------|
-| `collapse` | `CustomEvent<{ label: string; }>` | Dispatched when the expander is collapsed. |
-| `expand`   | `CustomEvent<{ label: string; }>` | Dispatched when the expander is expanded.  |
+| Event      | Description                                |
+|------------|--------------------------------------------|
+| `collapse` | Dispatched when the expander is collapsed. |
+| `expand`   | Dispatched when the expander is expanded.  |
 
 ## Slots
 
