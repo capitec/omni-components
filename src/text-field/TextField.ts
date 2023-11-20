@@ -54,6 +54,9 @@ export class TextField extends OmniFormElement {
         this.addEventListener('input', this._keyInput.bind(this), {
             capture: true
         });
+        this.addEventListener('keyup', this._blurOnEnter.bind(this), {
+            capture: true
+        });
     }
 
     override focus(options?: FocusOptions | undefined): void {
@@ -61,6 +64,12 @@ export class TextField extends OmniFormElement {
             this._inputElement.focus(options);
         } else {
             super.focus(options);
+        }
+    }
+
+    _blurOnEnter(e: KeyboardEvent) {
+        if (e.code === 'Enter' || e.keyCode === 13) {
+            (e.currentTarget as HTMLElement).blur();
         }
     }
 

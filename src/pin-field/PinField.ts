@@ -1,4 +1,4 @@
-import { css, html } from 'lit';
+import { PropertyValueMap, css, html } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { ClassInfo, classMap } from 'lit/directives/class-map.js';
 import { OmniFormElement } from '../core/OmniFormElement.js';
@@ -83,7 +83,6 @@ export class PinField extends OmniFormElement {
     private showPin?: boolean = false;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private isWebkit?: boolean;
-    private _value? = '';
 
     override connectedCallback() {
         super.connectedCallback();
@@ -110,6 +109,19 @@ export class PinField extends OmniFormElement {
         this._sanitiseValue();
     }
 
+    protected override updated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+        if (_changedProperties.has('value')) {
+            if (this.value) {
+                this.container?.classList?.add('float-label');
+                this.container?.classList?.remove('no-float-label');
+            } else {
+                this.container?.classList?.remove('float-label');
+                this.container?.classList?.add('no-float-label');
+            }
+            this._sanitiseValue();
+        }
+    }
+
     override focus(options?: FocusOptions | undefined): void {
         if (this._inputElement) {
             this._inputElement.focus(options);
@@ -118,37 +130,17 @@ export class PinField extends OmniFormElement {
         }
     }
 
-    constructor() {
-        super();
-        this._value = this.value ?? '';
-        Object.defineProperty(this, 'value', {
-            get: () => {
-                return this._value;
-            },
-            set: (v) => {
-                this._value = v ?? '';
-                this._sanitiseValue();
-                if (this._value) {
-                    this.container?.classList?.add('float-label');
-                    this.container?.classList?.remove('no-float-label');
-                } else {
-                    this.container?.classList?.remove('float-label');
-                    this.container?.classList?.add('no-float-label');
-                }
-                this.requestUpdate();
-            }
-        });
-    }
-
     // Check if the value provided is valid and shorten according to the max length if provided, if there is invalid alpha characters they are removed.
     _sanitiseValue() {
         if (this.value) {
             if (this.maxLength && (this.value as string).length > this.maxLength) {
-                this._value = this.value?.slice(0, this.maxLength) as string;
+                this.value = this.value?.slice(0, this.maxLength) as string;
             }
+        } else {
+            this.value = '';
         }
 
-        this._value = this.value?.toString()?.replace(/[^\d]/gi, '');
+        this.value = this.value?.toString()?.replace(/[^\d]/gi, '');
 
         if (this._inputElement) {
             this._inputElement.value = this.value as string;
