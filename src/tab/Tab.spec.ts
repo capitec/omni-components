@@ -5,17 +5,17 @@ test(`Tab - Basic Behaviour`, async ({ page }) => {
         await page.goto('/components/tab/');
         await page.waitForSelector('[data-testid]', {});
 
-        // For the purposes of the demo the Tabs are slotted in a Tab Group
+        // For the purposes of the demo the Tabs are slotted in a Tab Group.
         const tabGroup = page.locator('.Basic').getByTestId('test-tab-group');
         await expect(tabGroup).toHaveScreenshot('tab-group-initial.png');
         // Get the Tab bar which will contain the tab headers.
         const tabBar = tabGroup.locator('.tab-bar').first();
 
-        // Get all the tab headers
+        // Get all the tab headers.
         const nestedTabHeaders = tabBar.locator('omni-tab-header');
         await expect(nestedTabHeaders).toHaveCount(3);
 
-        // Get all the omni-tabs
+        // Get all the omni-tabs.
         const tabs = tabGroup.locator('omni-tab');
         await expect(tabs).toHaveCount(3);
     });
@@ -26,7 +26,7 @@ test(`Tab - Active Behaviour`, async ({ page }) => {
         await page.goto('/components/tab/');
         await page.waitForSelector('[data-testid]', {});
 
-        // For the purposes of the demo the Tabs are slotted in a Tab Group
+        // For the purposes of the demo the Tabs are slotted in a Tab Group.
         const tabGroup = page.locator('.Active').getByTestId('test-tab-group');
         await expect(tabGroup).toHaveScreenshot('tab-group-initial.png');
         // Get the Tab bar which will contain the tab headers.
@@ -34,11 +34,11 @@ test(`Tab - Active Behaviour`, async ({ page }) => {
 
         // Mock tab-select event.
         const tabSelect = await mockEventListener(tabGroup, 'tab-select');
-        // Get all the tab headers
+        // Get all the tab headers.
         const nestedTabHeaders = tabBar.locator('omni-tab-header');
         await expect(nestedTabHeaders).toHaveCount(3);
 
-        // Get all the omni-tabs
+        // Get all the omni-tabs.
         const tabs = tabGroup.locator('omni-tab');
         await expect(tabs).toHaveCount(3);
 
@@ -66,10 +66,8 @@ test(`Tab - Disabled Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/tab/');
         await page.waitForSelector('[data-testid]', {});
-        // Locate the Disabled Tab example.
         const tabGroup = page.locator('.Disabled').getByTestId('test-tab-group');
         await expect(tabGroup).toHaveScreenshot('tab-group-initial.png');
-
         // Mock tab-select event.
         const tabSelect = await mockEventListener(tabGroup, 'tab-select');
 
@@ -80,10 +78,9 @@ test(`Tab - Disabled Behaviour`, async ({ page }) => {
         const nestedTabHeaders = tabBar.locator('omni-tab-header');
         await expect(nestedTabHeaders).toHaveCount(3);
 
-        // Get default slot.
+        // Get default slot
         const tabs = tabGroup.locator('omni-tab');
         await expect(tabs).toHaveCount(3);
-
         // Click the disabled tab twice.
         await nestedTabHeaders.nth(2).click();
         await nestedTabHeaders.nth(2).click();

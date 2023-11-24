@@ -3,7 +3,7 @@ import { test, expect, mockEventListener, withCoverage } from '../utils/JestPlay
 test(`Tab Group - Visual and Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/tab-group/');
-        // Locate the interactive Tab Group example
+
         const tabGroup = page.locator('.Interactive').getByTestId('test-tab-group');
         await expect(tabGroup).toHaveScreenshot('tab-group-initial.png');
         // Mock tab-select event.
@@ -12,11 +12,11 @@ test(`Tab Group - Visual and Behaviour`, async ({ page }) => {
         const tabBar = tabGroup.locator('.tab-bar');
         await expect(tabBar).toHaveCount(1);
 
-        // Get all the omni-tab-headers
+        // Get all the omni-tab-headers.
         const nestedTabHeaders = tabBar.locator('omni-tab-header');
         await expect(nestedTabHeaders).toHaveCount(3);
 
-        // Get all the omni-tabs
+        // Get all the omni-tabs.
         const tabs = tabGroup.locator('omni-tab');
         await expect(tabs).toHaveCount(3);
 
