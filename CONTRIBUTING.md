@@ -67,12 +67,12 @@ A vulnerability is typically a security-related risk associated with *any part* 
 1. [Fork](https://github.com/capitec/omni-components/fork) the repository and create a new branch from `develop` (Do not directly use `develop` as this will prevent certain workflows from being triggered).
 2. Go to the Actions tab and enable workflow runs for the repository. (This is needed to generate screenshots for tests)
 
-    <img src="./.github/assets/enable-workflows.png" alt="Enabling Workflows" style="max-width: 100%; width: auto;"/>
+    <img src="https://github.com/capitec/omni-components/blob/main/.github/assets/enable-workflows.png?raw=true" alt="Enabling Workflows" style="max-width: 100%; width: auto;"/>
 3. Add a `PROTECTED_TOKEN` secret for workflow runs with a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token) as its value. (Optional)
     - This is to enable re-triggering of workflows when a workflow commits screenshots. If this is not set a new code commit will be required to trigger the next workflow as it uses the default `GITHUB_TOKEN` instead.
     - See [Automatic token authentication](https://docs.github.com/en/actions/security-guides/automatic-token-authentication#using-the-github_token-in-a-workflow) for detail.
     
-    <img src="./.github/assets/protected-token-creation.gif" alt="Protected token creation" style="max-width: 100%; width: auto;"/>
+    <img src="https://github.com/capitec/omni-components/blob/main/.github/assets/protected-token-creation.gif?raw=true" alt="Protected token creation" style="max-width: 100%; width: auto;"/>
 4. Clone the forked repo, checkout your branch, and run `npm ci` inside the repository root.
 5. Install the testing dependencies with `npx playwright install --with-deps`.
 6. Start up the dev server with `npm run serve` (or by launching debugging in VS Code).
@@ -203,7 +203,7 @@ npx playwright test Component.spec.ts
 ```sh
 npm run test-results 
 ```
-<img src="./.github/assets/test-results-report.gif" alt="Test Report" style="max-width: 100%; width: auto;"/>
+<img src="https://github.com/capitec/omni-components/blob/main/.github/assets/test-results-report.gif?raw=true" alt="Test Report" style="max-width: 100%; width: auto;"/>
 
 > 🔶 NOTE: Screenshot testing only asserts during CI workflows, the report will locally only show current screenshots taken, but not perform any comparisons.
 
