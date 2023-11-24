@@ -3,7 +3,7 @@ import { test, expect, mockEventListener, withCoverage } from '../utils/JestPlay
 test(`Tab Group - Visual and Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/tab-group/');
-
+        // Locate the interactive Tab Group example
         const tabGroup = page.locator('.Interactive').getByTestId('test-tab-group');
         await expect(tabGroup).toHaveScreenshot('tab-group-initial.png');
         // Mock tab-select event.

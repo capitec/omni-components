@@ -3,7 +3,7 @@ import { test, expect, mockEventListener, withCoverage } from '../utils/JestPlay
 test(`Tab Header - Advanced Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/tab-header/');
-
+        // Locate the Advanced Tab Header example.
         const tabGroup = page.locator('.Advanced').getByTestId('test-tab-group');
         await expect(tabGroup).toHaveScreenshot('tab-group-initial.png');
 
