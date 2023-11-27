@@ -118,6 +118,7 @@ export class TabHeader extends OmniElement {
             
 
                 :host > .indicator-bar {
+                    flex-shrink: 0;
                     height: var(--omni-tab-header-indicator-bar-height, 4px);
                     border-radius: var(--omni-tab-header-indicator-bar-border-radius, 100px 100px 0 0);
                     width: var(--omni-tab-header-indicator-bar-width, 100%);
