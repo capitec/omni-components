@@ -174,7 +174,7 @@ export class CurrencyField extends OmniFormElement {
 
     // Convert given value to cents.
     _convertToCents(currencyValue: string) {
-        return currencyValue.replace(this.fractionalSeparator, '').replaceAll(this.thousandsSeparator, '');
+        return currencyValue.replace(this.fractionalSeparator, '').replace(new RegExp(this.thousandsSeparator, 'g'), '');
     }
 
     // Format to a full currency value with whole amount and cents.
