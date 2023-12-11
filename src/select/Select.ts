@@ -764,7 +764,7 @@ export class Select extends OmniFormElement {
     // Render the control of the Select when clicked this will open up the items container
     protected override renderControl() {
         const controlIcon: ClassInfo = {
-            arrow: true,
+            arrow: true, // Required for desktop slot rotation.
             icon: true,
             disabled: this.disabled,
             error: this.error as string
