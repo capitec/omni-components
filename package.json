@@ -96,6 +96,7 @@
     "homepage": "https://capitec.github.io/open-source/docs/omni-components/",
     "devDependencies": {
         "@11ty/eleventy": "^2.0.1",
+        "@11ty/eleventy-server-browsersync": "^1.0.2",
         "@appnest/readme": "^1.2.7",
         "@codemirror/lang-css": "^6.0.0",
         "@codemirror/lang-html": "^6.1.3",

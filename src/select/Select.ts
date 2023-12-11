@@ -499,12 +499,14 @@ export class Select extends OmniFormElement {
 
                 /* Only applies styles to transform the control icon if on Desktop */
                 @media screen and (min-width: 767px) {
-                    .control.expanded {
+                    .control.expanded .arrow,
+                    .control.expanded ::slotted([slot='arrow']) {
                         transform: rotate(180deg);
                         transition: all linear 0.15s;
                     }
 
-                    .control.collapsed {
+                    .control.collapsed .arrow,
+                    .control.collapsed ::slotted([slot='arrow']) {
                         transform: none;
                         transition: all linear 0.15s;
                     }
@@ -762,6 +764,7 @@ export class Select extends OmniFormElement {
     // Render the control of the Select when clicked this will open up the items container
     protected override renderControl() {
         const controlIcon: ClassInfo = {
+            arrow: true,
             icon: true,
             disabled: this.disabled,
             error: this.error as string
