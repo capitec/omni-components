@@ -12,8 +12,8 @@
 	},
 	"[typescript]": {
 		"editor.codeActionsOnSave": {
-			"source.fixAll.eslint": true,
-			"source.organizeImports": false
+			"source.fixAll.eslint": "explicit",
+			"source.organizeImports": "never"
 		},
 		"editor.defaultFormatter": "esbenp.prettier-vscode"
 	},
