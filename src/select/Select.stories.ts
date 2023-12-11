@@ -27,6 +27,8 @@ export interface Args extends BaseArgs {
     searchable: boolean;
     loading_indicator: string;
     filterItems: (filterValue: string, items: SelectTypes) => SelectItems;
+    arrow: string;
+    more: string;
 }
 
 const displayItems = [
@@ -85,6 +87,8 @@ export const Interactive: ComponentStoryFormat<Args> = {
             ?searchable="${args.searchable}"
             empty-message="${args.emptyMessage}"
             >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}
+            ${args.arrow ? html`${'\r\n'}${unsafeHTML(assignToSlot('arrow', args.arrow))}` : nothing}
+            ${args.more ? html`${'\r\n'}${unsafeHTML(assignToSlot('more', args.more))}` : nothing}
             ${args.clear ? html`${'\r\n'}${unsafeHTML(assignToSlot('clear', args.clear))}` : nothing}${
         args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}` : nothing
     }
@@ -154,6 +158,8 @@ export const Interactive: ComponentStoryFormat<Args> = {
         prefix: '',
         suffix: '',
         clear: '',
+        arrow: '',
+        more: '',
         items: displayItems as Record<string, unknown>[],
         displayField: 'label',
         idField: 'id',
