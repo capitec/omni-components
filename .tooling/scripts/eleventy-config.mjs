@@ -95,7 +95,9 @@ export default async config => {
         }
     });
 
-    config.setBrowserSyncConfig({
+    config.setServerOptions({
+        module: "@11ty/eleventy-server-browsersync",
+
         logLevel: 'info',
         server: {
             baseDir: process.env.ELEVENTY_BASE_PATH ? '.' : 'docs',
@@ -105,7 +107,8 @@ export default async config => {
             }
         },
         startPath: process.env.ELEVENTY_BASE_PATH ? process.env.ELEVENTY_BASE_PATH : '/'
-    });
+
+    })
 
     return {
         dir: {
