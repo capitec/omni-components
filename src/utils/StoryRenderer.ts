@@ -528,7 +528,7 @@ export class StoryRenderer extends LitElement {
         return nothing;
     }
 
-    protected override createRenderRoot(): Element | ShadowRoot {
+    protected override createRenderRoot(): HTMLElement | DocumentFragment {
         return this;
     }
 
@@ -958,6 +958,9 @@ type CSSVariable = {
 };
 
 declare global {
+	interface HTMLElementTagNameMap {
+        'story-renderer': StoryRenderer;
+    }
     interface Window {
         Prism: any;
     }

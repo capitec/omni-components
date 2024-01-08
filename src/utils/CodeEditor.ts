@@ -367,7 +367,7 @@ export class CodeEditor extends LitElement {
         return code;
     }
 
-    private _clearElements(el: Element | ShadowRoot = undefined as any) {
+    private _clearElements(el: Element | DocumentFragment = undefined as any) {
         if (!el) {
             el = this.renderRoot;
         }
@@ -381,7 +381,7 @@ export class CodeEditor extends LitElement {
         }
     }
 
-    private _clearOtherElements(el: Element | ShadowRoot = undefined as any, onlyChild: Element) {
+    private _clearOtherElements(el: Element | DocumentFragment = undefined as any, onlyChild: Element) {
         if (!el) {
             el = this.renderRoot;
         }
@@ -415,3 +415,9 @@ export type CodeMirrorUpdateEvent = CodeMirrorEditorEvent & {
 export type CodeMirrorSourceUpdateEvent = CodeMirrorUpdateEvent & {
     oldSource: string;
 };
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'code-editor': CodeEditor;
+    }
+}

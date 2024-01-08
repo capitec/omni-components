@@ -26,7 +26,7 @@
 		"currency-field": true,
 		"hyperlink": true,
 		"icon": true,
-		"icons": true,
+        "icons": true,
 		"label": true,
 		"number-field": true,
 		"password-field": true,
