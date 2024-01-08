@@ -1,51 +1,51 @@
 {
-	"editor.detectIndentation": false,
-	"editor.insertSpaces": true,
-	"editor.tabSize": 4,
-	"lit-plugin.rules.no-unknown-slot": "off",
-	"workbench.colorCustomizations": {
-		"activityBar.background": "#0f3b65",
-		"activityBar.foreground": "#FFFFFF",
-		"activityBar.inactiveForeground": "#ffffffbe",
-		"titleBar.activeBackground": "#0f3b65",
-		"titleBar.activeForeground": "#FFFFFF"
-	},
-	"[typescript]": {
-		"editor.codeActionsOnSave": {
-			"source.fixAll.eslint": "explicit",
-			"source.organizeImports": "never"
-		},
-		"editor.defaultFormatter": "esbenp.prettier-vscode"
-	},
-	"files.exclude": {
-		"button": true,
-		"check": true,
-		"chip": true,
-		"color-field": true,
-		"core": true,
-		"currency-field": true,
-		"hyperlink": true,
-		"icon": true,
+    "editor.detectIndentation": false,
+    "editor.insertSpaces": true,
+    "editor.tabSize": 4,
+    "lit-plugin.rules.no-unknown-slot": "off",
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#0f3b65",
+        "activityBar.foreground": "#FFFFFF",
+        "activityBar.inactiveForeground": "#ffffffbe",
+        "titleBar.activeBackground": "#0f3b65",
+        "titleBar.activeForeground": "#FFFFFF"
+    },
+    "[typescript]": {
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": "explicit",
+            "source.organizeImports": "never"
+        },
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "files.exclude": {
+        "button": true,
+        "check": true,
+        "chip": true,
+        "color-field": true,
+        "core": true,
+        "currency-field": true,
+        "hyperlink": true,
+        "icon": true,
         "icons": true,
-		"label": true,
-		"number-field": true,
-		"password-field": true,
-		"radio": true,
-		"render-element": true,
-		"search-field": true,
-		"select": true,
-		"text-field": true,
-		"utils": true,
-		"switch": true,
-		"date-picker": true,
-		"email-field": true,
-		"pin-field": true,
-		"calendar": true,
-		"keyboard": true,
-		"modal": true,
-		"tab": true,
-		"toast": true,
-		"alert": true,
-		"expander": true
-	}
+        "label": true,
+        "number-field": true,
+        "password-field": true,
+        "radio": true,
+        "render-element": true,
+        "search-field": true,
+        "select": true,
+        "text-field": true,
+        "utils": true,
+        "switch": true,
+        "date-picker": true,
+        "email-field": true,
+        "pin-field": true,
+        "calendar": true,
+        "keyboard": true,
+        "modal": true,
+        "tab": true,
+        "toast": true,
+        "alert": true,
+        "expander": true
+    }
 }
