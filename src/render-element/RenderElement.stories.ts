@@ -20,7 +20,7 @@ async function renderAsElement(data: object) {
     await new Promise<void>((r) => setTimeout(() => r(), 3000));
     const span = document.createElement('span');
     span.appendChild(document.createTextNode(JSON.stringify(data)));
-    span.addEventListener('click', (ev: MouseEvent) => alert('Clicked'));
+    span.addEventListener('click', () => alert('Clicked'));
     return span;
 }
 
@@ -137,7 +137,8 @@ const App = () => <OmniRenderElement renderer={renderAsLit} data={{
 export const HTML_Element_Instance: ComponentStoryFormat<Args> = {
     render: (args: Args) => {
         const addValues = async () => {
-            let renderEl: RenderElement = undefined as any;
+            let renderEl: RenderElement | undefined;
+
             while (!renderEl) {
                 await new Promise<void>((r) => setTimeout(() => r(), 200));
                 renderEl = document.getElementById('renderElI') as RenderElement;
@@ -240,7 +241,7 @@ const App = () => <OmniRenderElement renderer={renderAsElement} data={{
 export const HTML_String: ComponentStoryFormat<Args> = {
     render: (args: Args) => {
         const addValues = async () => {
-            let renderEl: RenderElement = undefined as any;
+            let renderEl: RenderElement | undefined;
             while (!renderEl) {
                 renderEl = document.getElementById('renderElS') as RenderElement;
                 if (!renderEl) await new Promise<void>((r) => setTimeout(() => r(), 200));

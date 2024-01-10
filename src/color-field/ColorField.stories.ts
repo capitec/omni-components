@@ -13,7 +13,6 @@ import {
 } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import { assignToSlot, ComponentStoryFormat, getSourceFromLit } from '../utils/StoryUtils.js';
-import { ColorField } from './ColorField.js';
 
 import './ColorField.js';
 
@@ -57,21 +56,21 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
     }
 };
 
-export const Label = LabelStory<ColorField, BaseArgs>('omni-color-field');
+export const Label = LabelStory<BaseArgs>('omni-color-field');
 
-export const Hint = HintStory<ColorField, BaseArgs>('omni-color-field');
+export const Hint = HintStory<BaseArgs>('omni-color-field');
 
-export const Error_Label = ErrorStory<ColorField, BaseArgs>('omni-color-field');
+export const Error_Label = ErrorStory<BaseArgs>('omni-color-field');
 
-export const Value = ValueStory<ColorField, BaseArgs>('omni-color-field', '#f6b73c');
+export const Value = ValueStory<BaseArgs>('omni-color-field', '#f6b73c');
 
-export const Clearable = ClearableStory<ColorField, BaseArgs>('omni-color-field', '#f6b73c');
+export const Clearable = ClearableStory<BaseArgs>('omni-color-field', '#f6b73c');
 
-export const Custom_Clear_Slot = CustomClearableSlot<ColorField, BaseArgs>('omni-color-field', '#f6b73c');
+export const Custom_Clear_Slot = CustomClearableSlot<BaseArgs>('omni-color-field', '#f6b73c');
 
-export const Prefix = PrefixStory<ColorField, BaseArgs>('omni-color-field');
+export const Prefix = PrefixStory<BaseArgs>('omni-color-field');
 
-export const Suffix = SuffixStory<ColorField, BaseArgs>('omni-color-field');
+export const Suffix = SuffixStory<BaseArgs>('omni-color-field');
 
 export const Disabled: ComponentStoryFormat<BaseArgs> = {
     render: (args: BaseArgs) => html`<omni-color-field data-testid="test-field" label="${ifNotEmpty(args.label)}" disabled></omni-color-field>`,

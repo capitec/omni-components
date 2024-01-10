@@ -134,7 +134,7 @@ export class CodeEditor extends LitElement {
         ];
     }
 
-    public async refresh(getCode: () => string | Promise<string> = undefined as any) {
+    public async refresh(getCode: () => string | Promise<string> = undefined as never) {
         if (getCode) {
             this.code = await getCode();
         }
@@ -187,7 +187,7 @@ export class CodeEditor extends LitElement {
       <div style="position: relative">
         <!-- button to copy the editor -->
         <div class="copy-code-wrap" @click="${() => this._copyCode()}">
-          <omni-icon class="copy-icon" icon="@material/content_copy" size="${'custom' as any}"></omni-icon>
+          <omni-icon class="copy-icon" icon="@material/content_copy" size="${'custom'}"></omni-icon>
         </div>
         <!-- CodeMirror Editor parent element -->
         <div class="code-parent"> </div>
@@ -367,7 +367,7 @@ export class CodeEditor extends LitElement {
         return code;
     }
 
-    private _clearElements(el: Element | DocumentFragment = undefined as any) {
+    private _clearElements(el: Element | DocumentFragment = undefined as never) {
         if (!el) {
             el = this.renderRoot;
         }
@@ -381,7 +381,7 @@ export class CodeEditor extends LitElement {
         }
     }
 
-    private _clearOtherElements(el: Element | DocumentFragment = undefined as any, onlyChild: Element) {
+    private _clearOtherElements(el: Element | DocumentFragment = undefined as never, onlyChild: Element) {
         if (!el) {
             el = this.renderRoot;
         }

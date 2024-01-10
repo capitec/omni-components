@@ -14,7 +14,6 @@ import {
 } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import { assignToSlot, ComponentStoryFormat, getSourceFromLit } from '../utils/StoryUtils.js';
-import { CurrencyField } from './CurrencyField.js';
 
 import './CurrencyField.js';
 
@@ -80,20 +79,20 @@ export const Interactive: ComponentStoryFormat<Args> = {
     }
 };
 
-export const Label = LabelStory<CurrencyField, BaseArgs>('omni-currency-field');
+export const Label = LabelStory<BaseArgs>('omni-currency-field');
 
-export const Hint = HintStory<CurrencyField, BaseArgs>('omni-currency-field');
+export const Hint = HintStory<BaseArgs>('omni-currency-field');
 
-export const Error_Label = ErrorStory<CurrencyField, BaseArgs>('omni-currency-field');
+export const Error_Label = ErrorStory<BaseArgs>('omni-currency-field');
 
-export const Value = ValueStory<CurrencyField, BaseArgs>('omni-currency-field', '1200.50');
+export const Value = ValueStory<BaseArgs>('omni-currency-field', '1200.50');
 
-export const Clearable = ClearableStory<CurrencyField, BaseArgs>('omni-currency-field', '1200.50');
+export const Clearable = ClearableStory<BaseArgs>('omni-currency-field', '1200.50');
 
-export const Custom_Clear_Slot = CustomClearableSlot<CurrencyField, BaseArgs>('omni-currency-field', '1200.50');
+export const Custom_Clear_Slot = CustomClearableSlot<BaseArgs>('omni-currency-field', '1200.50');
 
-export const Prefix = PrefixStory<CurrencyField, BaseArgs>('omni-currency-field');
+export const Prefix = PrefixStory<BaseArgs>('omni-currency-field');
 
-export const Suffix = SuffixStory<CurrencyField, BaseArgs>('omni-currency-field');
+export const Suffix = SuffixStory<BaseArgs>('omni-currency-field');
 
-export const Disabled = DisabledStory<CurrencyField, BaseArgs>('omni-currency-field', '1200');
+export const Disabled = DisabledStory<BaseArgs>('omni-currency-field', '1200');

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as matchers from '@testing-library/jest-dom/matchers.js';
 import { default as expectPatched } from 'expect';
 

@@ -14,7 +14,6 @@ import {
 } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import { assignToSlot, ComponentStoryFormat, getSourceFromLit } from '../utils/StoryUtils.js';
-import { NumberField } from './NumberField.js';
 
 import './NumberField.js';
 
@@ -55,12 +54,12 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
     }
 };
 
-export const Label = LabelStory<NumberField, BaseArgs>('omni-number-field');
-export const Hint = HintStory<NumberField, BaseArgs>('omni-number-field');
-export const Error_Label = ErrorStory<NumberField, BaseArgs>('omni-number-field');
-export const Value = ValueStory<NumberField, BaseArgs>('omni-number-field', 123);
-export const Clearable = ClearableStory<NumberField, BaseArgs>('omni-number-field', 123);
-export const Custom_Clear_Slot = CustomClearableSlot<NumberField, BaseArgs>('omni-number-field', 123);
-export const Prefix = PrefixStory<NumberField, BaseArgs>('omni-number-field');
-export const Suffix = SuffixStory<NumberField, BaseArgs>('omni-number-field');
-export const Disabled = DisabledStory<NumberField, BaseArgs>('omni-number-field', 123);
+export const Label = LabelStory<BaseArgs>('omni-number-field');
+export const Hint = HintStory<BaseArgs>('omni-number-field');
+export const Error_Label = ErrorStory<BaseArgs>('omni-number-field');
+export const Value = ValueStory<BaseArgs>('omni-number-field', 123);
+export const Clearable = ClearableStory<BaseArgs>('omni-number-field', 123);
+export const Custom_Clear_Slot = CustomClearableSlot<BaseArgs>('omni-number-field', 123);
+export const Prefix = PrefixStory<BaseArgs>('omni-number-field');
+export const Suffix = SuffixStory<BaseArgs>('omni-number-field');
+export const Disabled = DisabledStory<BaseArgs>('omni-number-field', 123);

@@ -200,7 +200,7 @@ export const Slot = {
     frameworkSources: [
         {
             framework: 'React',
-            load: (args) => `import { OmniCheck } from "@capitec/omni-components-react/check";
+            load: () => `import { OmniCheck } from "@capitec/omni-components-react/check";
 
 const App = () => <OmniCheck>
                     Slotted

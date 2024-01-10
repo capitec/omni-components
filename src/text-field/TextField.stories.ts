@@ -14,7 +14,6 @@ import {
 } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import { assignToSlot, ComponentStoryFormat, getSourceFromLit } from '../utils/StoryUtils.js';
-import { TextField } from './TextField.js';
 
 import './TextField.js';
 
@@ -56,20 +55,20 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
     }
 };
 
-export const Label = LabelStory<TextField, BaseArgs>('omni-text-field');
+export const Label = LabelStory<BaseArgs>('omni-text-field');
 
-export const Hint = HintStory<TextField, BaseArgs>('omni-text-field');
+export const Hint = HintStory<BaseArgs>('omni-text-field');
 
-export const Error_Label = ErrorStory<TextField, BaseArgs>('omni-text-field');
+export const Error_Label = ErrorStory<BaseArgs>('omni-text-field');
 
-export const Value = ValueStory<TextField, BaseArgs>('omni-text-field');
+export const Value = ValueStory<BaseArgs>('omni-text-field');
 
-export const Clearable = ClearableStory<TextField, BaseArgs>('omni-text-field');
+export const Clearable = ClearableStory<BaseArgs>('omni-text-field');
 
-export const Custom_Clear_Slot = CustomClearableSlot<TextField, BaseArgs>('omni-text-field');
+export const Custom_Clear_Slot = CustomClearableSlot<BaseArgs>('omni-text-field');
 
-export const Prefix = PrefixStory<TextField, BaseArgs>('omni-text-field');
+export const Prefix = PrefixStory<BaseArgs>('omni-text-field');
 
-export const Suffix = SuffixStory<TextField, BaseArgs>('omni-text-field');
+export const Suffix = SuffixStory<BaseArgs>('omni-text-field');
 
-export const Disabled = DisabledStory<TextField, BaseArgs>('omni-text-field');
+export const Disabled = DisabledStory<BaseArgs>('omni-text-field');

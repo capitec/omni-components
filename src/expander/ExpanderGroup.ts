@@ -1,6 +1,7 @@
 import { css, html, TemplateResult } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 import { OmniElement } from '../core/OmniElement.js';
+import { Expander } from './Expander.js';
 
 /**
  * Layout container that groups expanders.
@@ -52,8 +53,8 @@ export class ExpanderGroup extends OmniElement {
 
     _expanderExpanded(e: Event) {
         if (this.expandMode === 'single') {
-            const expanders = Array.from(this.children);
-            expanders.forEach((expander: any) => {
+            const expanders = Array.from<Expander>(this.children as unknown as Expander[]);
+            expanders.forEach((expander: Expander) => {
                 if (expander !== e.target) {
                     expander._collapse();
                 }
