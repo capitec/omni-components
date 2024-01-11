@@ -38,13 +38,13 @@ Control to get / set a specific date using a calendar.
 
 ## Methods
 
-| Method          | Type                                          |
-|-----------------|-----------------------------------------------|
-| `focus`         | `(options?: FocusOptions \| undefined): void` |
-| `renderContent` | `(): TemplateResult<1>`                       |
-| `renderControl` | `(): TemplateResult<1>`                       |
-| `renderLabel`   | `(): TemplateResult<1>`                       |
-| `renderPicker`  | `(): TemplateResult<1> \| unique symbol`      |
+| Method          | Type                                             |
+|-----------------|--------------------------------------------------|
+| `focus`         | `(options?: FocusOptions \| undefined): void`    |
+| `renderContent` | `(): UncompiledTemplateResult<1>`                |
+| `renderControl` | `(): UncompiledTemplateResult<1>`                |
+| `renderLabel`   | `(): UncompiledTemplateResult<1>`                |
+| `renderPicker`  | `(): UncompiledTemplateResult<1> \| unique symbol` |
 
 ## Events
 

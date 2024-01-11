@@ -160,9 +160,9 @@ export const Showing_Alerts: ComponentStoryFormat<Args> = {
     description: () => html`
     <div>
         Alerts can be shown programmatically using the static <code class="language-js">Alert.show()</code> function. 
-    <div>
+    </div>
     `,
-    render: (args: Args) => html`
+    render: () => html`
         <omni-button
             data-testid="test-alert-show"
             label="Show Alert"
@@ -226,7 +226,7 @@ const showAlert = () => {
         },
         {
             framework: 'React',
-            load: (args) => `import { OmniButton } from "@capitec/omni-components-react/button";
+            load: () => `import { OmniButton } from "@capitec/omni-components-react/button";
 import { Alert } from '@capitec/omni-components-react/alert';
 
 const showAlert = () => {
@@ -249,9 +249,9 @@ export const Showing_Alerts_Async: ComponentStoryFormat<Args> = {
     description: () => html`
     <div>
         Alerts can be asynchronously shown and awaited programmatically using the static <code class="language-js">Alert.showAsync()</code> function. 
-    <div>
+    </div>
     `,
-    render: (args: Args) => html`
+    render: () => html`
         <omni-button
             data-testid="test-alert-show"
             label="Show Alert"
@@ -346,7 +346,7 @@ If closed from script via the "hide" function on the Alert instance, the reason 
         },
         {
             framework: 'React',
-            load: (args) => `import { OmniButton } from "@capitec/omni-components-react/button";
+            load: () => `import { OmniButton } from "@capitec/omni-components-react/button";
 import { Alert } from '@capitec/omni-components-react/alert';
 
 const showAlert = async () => {   
@@ -375,18 +375,18 @@ const App = () => <>
 export const Status: ComponentStoryFormat<Args> = {
     description: () => html`
     <div>
-        <p>Set the display status of the <code class="language-html">&lt;omni-alert&gt;</code>.<p>
+        <p>Set the display status of the <code class="language-html">&lt;omni-alert&gt;</code>.</p>
         <br/>
         <span>The <code>status</code> attribute supports the following options:
             <ul>
-                <li><code class="language-javascript">'success'</code> - Checkmark icon to indicate success.</li>
+                <li><code class="language-javascript">'success'</code> - Check mark icon to indicate success.</li>
                 <li><code class="language-javascript">'warning'</code> - Yield icon to indicate warning.</li>
                 <li><code class="language-javascript">'error'</code> - Exclamation icon to indicate error.</li>
                 <li><code class="language-javascript">'info'</code> - Information icon to indicate info.</li>
                 <li><code class="language-javascript">'none'</code> - No icon. (Default)</li>
             </ul>
         </span>
-    <div>
+    </div>
     `,
     render: (args: Args) => html`
         <omni-button data-testid="test-alert-btn" @click="${() => {

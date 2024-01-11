@@ -52,9 +52,9 @@ export const Showing_Toasts: ComponentStoryFormat<Args> = {
     description: () => html`
     <div>
         Toasts can be shown programmatically using the static <code class="language-js">Toast.show()</code> function. 
-    <div>
+    </div>
     `,
-    render: (args: Args) => html`
+    render: () => html`
         <omni-button
             data-testid="test-toast-show"
             label="Show Toast"
@@ -125,7 +125,7 @@ const showToast = () => {
         },
         {
             framework: 'React',
-            load: (args) => `import { OmniButton } from "@capitec/omni-components-react/button";
+            load: () => `import { OmniButton } from "@capitec/omni-components-react/button";
 import { Toast } from '@capitec/omni-components-react/toast';
 
 const showToast = () => {
@@ -147,9 +147,9 @@ export const Configure_Toast: ComponentStoryFormat<Args> = {
     description: () => html`
     <div>
        Programmatically shown Toasts can be configured using the static <code class="language-js">Toast.configure()</code> function. 
-    <div>
+    </div>
     `,
-    render: (args: Args) => html`
+    render: () => html`
         <omni-button
             data-testid="test-toast-configure"
             label="Show Toast"
@@ -248,7 +248,7 @@ const showToast = () => {
         },
         {
             framework: 'React',
-            load: (args) => `import { OmniButton } from "@capitec/omni-components-react/button";
+            load: () => `import { OmniButton } from "@capitec/omni-components-react/button";
 import { Toast } from '@capitec/omni-components-react/toast';
 
 Toast.configure({
@@ -279,9 +279,9 @@ export const Replacing_Toasts: ComponentStoryFormat<Args> = {
     description: () => html`
     <div>
         Toasts can be replaced instead of stacked when shown programmatically via the static <code class="language-js">Toast.show()</code> function by using the static <code class="language-js">Toast.configure()</code> function to set <code>stack</code> to <code class="language-js">false</code>. 
-    <div>
+    </div>
     `,
-    render: (args: Args) => html`
+    render: () => html`
         <omni-button
             data-testid="test-toast-show"
             label="Show Toast"
@@ -371,7 +371,7 @@ const showToast = () => {
         },
         {
             framework: 'React',
-            load: (args) => `import { OmniButton } from "@capitec/omni-components-react/button";
+            load: () => `import { OmniButton } from "@capitec/omni-components-react/button";
 import { Toast } from '@capitec/omni-components-react/toast';
 
 Toast.configure({ stack: false });

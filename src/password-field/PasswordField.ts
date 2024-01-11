@@ -89,7 +89,7 @@ export class PasswordField extends OmniFormElement {
         this._setInputValue();
     }
 
-    protected override updated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+    protected override updated(_changedProperties: PropertyValueMap<never> | Map<PropertyKey, unknown>): void {
         if (_changedProperties.has('value')) {
             if (this.value) {
                 this.container?.classList?.add('float-label');

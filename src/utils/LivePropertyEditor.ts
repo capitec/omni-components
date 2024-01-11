@@ -15,8 +15,7 @@ import {
     loadCustomElementsModuleFor,
     loadCustomElements,
     loadCustomElementsCodeMirrorCompletionsRemote,
-    ComponentStoryFormat,
-    loadCssProperties
+    ComponentStoryFormat
 } from './StoryUtils.js';
 
 import '../label/Label.js';
@@ -30,6 +29,7 @@ import './CodeEditor.js';
  */
 @customElement('live-property-editor')
 export class LivePropertyEditor extends OmniElement {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     @property({ type: Object, reflect: false }) data?: ComponentStoryFormat<any>;
     @property({ type: String, reflect: true }) element?: string;
     @property({ type: Boolean, reflect: true }) disabled!: boolean;
@@ -48,7 +48,7 @@ export class LivePropertyEditor extends OmniElement {
 
         this.customElements = await loadCustomElements(this.customElementsPath);
 
-        document.addEventListener('omni-docs-theme-change', (e: Event) => {
+        document.addEventListener('omni-docs-theme-change', () => {
             this.theme = getComputedStyle(document.documentElement).getPropertyValue('--code-editor-theme')?.trim();
             const codeEditors = this.renderRoot.querySelectorAll<CodeEditor>('code-editor');
             if (codeEditors) {
@@ -246,7 +246,7 @@ export class LivePropertyEditor extends OmniElement {
                     )
                         return;
 
-                    let attributeEditor: TemplateResult = undefined as any;
+                    let attributeEditor: TemplateResult = undefined as never;
                     try {
                         if (attribute?.type?.text?.replace('| undefined', '')?.trim() === 'boolean') {
                             attributeEditor = html`
@@ -396,7 +396,7 @@ export class LivePropertyEditor extends OmniElement {
         return codeTheme;
     }
 
-    protected override async updated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): Promise<void> {
+    protected override async updated(_changedProperties: PropertyValueMap<never> | Map<PropertyKey, unknown>): Promise<void> {
         if (_changedProperties.has('disabled') && this.slotCodeEditors) {
             this.resetSlots();
         }
@@ -418,3 +418,9 @@ export class LivePropertyEditor extends OmniElement {
 }
 
 export type PropertyChangeEvent = { property: string; newValue: string | number | boolean; oldValue: string | number | boolean };
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'live-property-editor': LivePropertyEditor;
+    }
+}

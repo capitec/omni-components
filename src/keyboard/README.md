@@ -26,11 +26,11 @@ A responsive on-screen keyboard control component.
 
 | Method               | Type                                             |
 |----------------------|--------------------------------------------------|
-| `renderBackspace`    | `(): TemplateResult<1>`                          |
-| `renderCallToAction` | `(extraClasses?: ClassInfo \| undefined): TemplateResult<1>` |
-| `renderCaps`         | `(): TemplateResult<1> \| unique symbol`         |
-| `renderClear`        | `(mode?: "return" \| "numeric"): TemplateResult<1>` |
-| `renderClose`        | `(): TemplateResult<1>`                          |
+| `renderBackspace`    | `(): UncompiledTemplateResult<1>`                |
+| `renderCallToAction` | `(extraClasses?: ClassInfo \| undefined): UncompiledTemplateResult<1>` |
+| `renderCaps`         | `(): UncompiledTemplateResult<1> \| unique symbol` |
+| `renderClear`        | `(mode?: "return" \| "numeric"): UncompiledTemplateResult<1>` |
+| `renderClose`        | `(): UncompiledTemplateResult<1>`                |
 
 ## Events
 

@@ -1,36 +1,45 @@
 {
     "compilerOptions": {
-      "target": "es2019",
-      "module": "esnext",
-      "lib": ["esnext", "DOM", "DOM.Iterable"], 
-      "declaration": true,
-      "declarationMap": true,
-      "sourceMap": true,
-      "inlineSources": true,
-      "strict": true,
-      "noUnusedLocals": false,
-      "noUnusedParameters": false,
-      "noImplicitReturns": true,
-      "noFallthroughCasesInSwitch": true,
-      "noImplicitAny": true,
-      "noImplicitThis": true,
-      "moduleResolution": "node",
-      "allowSyntheticDefaultImports": true,
-      "experimentalDecorators": true,
-      "forceConsistentCasingInFileNames": true,
-      "noImplicitOverride": true,
-      "strictNullChecks": true,
-      "plugins": [
-        {
-          "name": "ts-lit-plugin",
-          "strict": true
-        }
-      ],
-      "outDir": "dist",
-      "rootDir": "./src",
-      "declarationDir": "."
+        "target": "es2021",
+        "module": "esnext",
+        "lib": [
+            "esnext",
+            "DOM",
+            "DOM.Iterable"
+        ],
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "inlineSources": true,
+        "strict": true,
+        "noUnusedLocals": false,
+        "noUnusedParameters": false,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitAny": true,
+        "noImplicitThis": true,
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
+        "experimentalDecorators": true,
+        "forceConsistentCasingInFileNames": true,
+        "noImplicitOverride": true,
+        "strictNullChecks": true,
+        "plugins": [
+            {
+                "name": "ts-lit-plugin",
+                "strict": true
+            }
+        ],
+        "outDir": "dist",
+        "rootDir": "./src",
+        "declarationDir": "."
     },
-    "include": ["src"],
-    "exclude": ["node_modules", "dist"],
+    "include": [
+        "src"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist"
+    ],
     "references": []
-  }
+}

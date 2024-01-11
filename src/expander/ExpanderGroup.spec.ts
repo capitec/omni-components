@@ -1,4 +1,4 @@
-import { test, expect, mockEventListener, withCoverage } from '../utils/JestPlaywright.js';
+import { test, expect, withCoverage } from '../utils/JestPlaywright.js';
 
 test(`Expander Group - Visual and Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {

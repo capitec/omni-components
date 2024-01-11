@@ -152,7 +152,7 @@ export const Slot = {
     frameworkSources: [
         {
             framework: 'React',
-            load: (args) => `import { OmniRadio } from "@capitec/omni-components-react/radio";
+            load: () => `import { OmniRadio } from "@capitec/omni-components-react/radio";
 
 const App = () => <OmniRadio>
                     Slotted

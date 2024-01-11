@@ -153,7 +153,7 @@ export const Slot = {
     frameworkSources: [
         {
             framework: 'React',
-            load: (args) => `import { OmniSwitch } from "@capitec/omni-components-react/switch";
+            load: () => `import { OmniSwitch } from "@capitec/omni-components-react/switch";
 
 const App = () => <OmniSwitch>
                     Slotted

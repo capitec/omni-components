@@ -122,12 +122,12 @@ export class RadioGroup extends OmniElement {
         super.connectedCallback();
     }
 
-    protected override firstUpdated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+    protected override firstUpdated(_changedProperties: PropertyValueMap<never> | Map<PropertyKey, unknown>): void {
         super.firstUpdated(_changedProperties);
 
         const slot = this.renderRoot.querySelector('slot');
         if (slot) {
-            slot.addEventListener('slotchange', (e) => {
+            slot.addEventListener('slotchange', () => {
                 this._loadRadios();
             });
         }
