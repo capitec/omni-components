@@ -3,6 +3,7 @@ import { LitElement, ReactiveController, ReactiveControllerHost } from 'lit';
 export class StoryController implements ReactiveController {
     host: ReactiveControllerHost;
     storyPath: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     story: any;
 
     constructor(host: ReactiveControllerHost, storyPath: string) {

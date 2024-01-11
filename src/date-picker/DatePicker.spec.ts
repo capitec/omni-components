@@ -8,7 +8,7 @@ import {
     testPrefixBehaviour,
     testSuffixBehaviour
 } from '../core/OmniInputPlaywright.js';
-import { test, expect, getStoryArgs, mockEventListener, withCoverage, type Page } from '../utils/JestPlaywright.js';
+import { test, expect, getStoryArgs, mockEventListener, withCoverage } from '../utils/JestPlaywright.js';
 import type { DatePicker } from './DatePicker.js';
 
 test(`Date Picker - Visual and Behaviour`, async ({ page }) => {

@@ -1,15 +1,10 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable lit/binding-positions */
 /* eslint-disable lit/no-invalid-html */
-import { within } from '@testing-library/dom';
-import userEvent from '@testing-library/user-event';
-import * as jest from 'jest-mock';
 import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ifNotEmpty } from '../utils/Directives.js';
-import expect from '../utils/ExpectDOM';
 import { ComponentStoryFormat, getSourceFromLit, raw } from '../utils/StoryUtils.js';
-import { OmniFormElement } from './OmniFormElement.js';
 
 export interface BaseArgs {
     label: string;
@@ -37,7 +32,7 @@ function asDirectoryName(omniElementTag: string) {
     return omniElementTag.replace('omni-', '');
 }
 
-export const LabelStory = <T extends HTMLElement, U extends BaseArgs>(tagName: string) => {
+export const LabelStory = <U extends BaseArgs>(tagName: string) => {
     const Label: ComponentStoryFormat<U> = {
         render: (args: U) => html`${unsafeHTML(`<${tagName}  data-testid="test-field" label="${ifNotEmpty(args.label)}"></${tagName}>`)}`,
         frameworkSources: [
@@ -57,7 +52,7 @@ const App = () => <${toPascalCase(tagName)}${args.label ? ` label='${args.label}
     return Label;
 };
 
-export const HintStory = <T extends HTMLElement, U extends BaseArgs>(tagName: string) => {
+export const HintStory = <U extends BaseArgs>(tagName: string) => {
     const Hint: ComponentStoryFormat<U> = {
         render: (args: U) =>
             html`${unsafeHTML(`<${tagName}  data-testid="test-field" label="${ifNotEmpty(args.label)}" hint="${args.hint}"></${tagName}>`)}`,
@@ -79,7 +74,7 @@ const App = () => <${toPascalCase(tagName)}${args.label ? ` label='${args.label}
     return Hint;
 };
 
-export const ErrorStory = <T extends HTMLElement, U extends BaseArgs>(tagName: string) => {
+export const ErrorStory = <U extends BaseArgs>(tagName: string) => {
     const Error: ComponentStoryFormat<U> = {
         render: (args: U) =>
             html`${unsafeHTML(`<${tagName} data-testid="test-field" label="${args.label}" error="${ifNotEmpty(args.error)}"></${tagName}>`)}`,
@@ -101,10 +96,7 @@ const App = () => <${toPascalCase(tagName)}${args.label ? ` label='${args.label}
     return Error;
 };
 
-export const ValueStory = <T extends HTMLElement, U extends BaseArgs>(
-    tagName: string,
-    inputValue: string | number | string[] = 'The input value'
-) => {
+export const ValueStory = <U extends BaseArgs>(tagName: string, inputValue: string | number | string[] = 'The input value') => {
     const Value: ComponentStoryFormat<U> = {
         render: (args: U) =>
             html`${unsafeHTML(`<${tagName} data-testid="test-field" label="${ifNotEmpty(args.label)}" value="${args.value}"></${tagName}>`)}`,
@@ -126,7 +118,7 @@ const App = () => <${toPascalCase(tagName)}${args.label ? ` label='${args.label}
     return Value;
 };
 
-export const PrefixStory = <T extends HTMLElement, U extends BaseArgs>(tagName: string) => {
+export const PrefixStory = <U extends BaseArgs>(tagName: string) => {
     const Prefix: ComponentStoryFormat<U> = {
         render: (args: U) =>
             html`${unsafeHTML(`
@@ -155,7 +147,7 @@ const App = () => <${toPascalCase(tagName)}${args.label ? ` label='${args.label}
     return Prefix;
 };
 
-export const SuffixStory = <T extends HTMLElement, U extends BaseArgs>(tagName: string) => {
+export const SuffixStory = <U extends BaseArgs>(tagName: string) => {
     const Suffix: ComponentStoryFormat<U> = {
         render: (args: U) =>
             html`${unsafeHTML(`
@@ -184,10 +176,7 @@ const App = () => <${toPascalCase(tagName)}${args.label ? ` label='${args.label}
     return Suffix;
 };
 
-export const ClearableStory = <T extends HTMLElement, U extends BaseArgs>(
-    tagName: string,
-    inputValue: string | number | string[] = 'The input value'
-) => {
+export const ClearableStory = <U extends BaseArgs>(tagName: string, inputValue: string | number | string[] = 'The input value') => {
     const Clearable: ComponentStoryFormat<U> = {
         render: (args: U) =>
             html`${unsafeHTML(
@@ -219,10 +208,7 @@ const App = () => <${toPascalCase(tagName)}${args.label ? ` label='${args.label}
     return Clearable;
 };
 
-export const CustomClearableSlot = <T extends HTMLElement, U extends BaseArgs>(
-    tagName: string,
-    inputValue: string | number | string[] = 'The input value'
-) => {
+export const CustomClearableSlot = <U extends BaseArgs>(tagName: string, inputValue: string | number | string[] = 'The input value') => {
     const Clearable: ComponentStoryFormat<U> = {
         render: (args: U) =>
             html`${unsafeHTML(
@@ -259,10 +245,7 @@ const App = () => <${toPascalCase(tagName)}${args.label ? ` label='${args.label}
     return Clearable;
 };
 
-export const DisabledStory = <T extends HTMLElement, U extends BaseArgs>(
-    tagName: string,
-    inputValue: string | number | string[] = 'The input value'
-) => {
+export const DisabledStory = <U extends BaseArgs>(tagName: string, inputValue: string | number | string[] = 'The input value') => {
     const Disabled: ComponentStoryFormat<U> = {
         render: (args: U) =>
             html`${unsafeHTML(

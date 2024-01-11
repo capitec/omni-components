@@ -1,4 +1,4 @@
-import { test, expect, mockEventListener, withCoverage } from '../utils/JestPlaywright.js';
+import { test, expect, mockEventListener, withCoverage, getStoryArgs } from '../utils/JestPlaywright.js';
 
 test(`Button - Visual Secondary`, async ({ page }) => {
     await withCoverage(page, async () => {
@@ -95,7 +95,7 @@ test(`Button - Label Behaviour`, async ({ page }) => {
     await withCoverage(page, async () => {
         await page.goto('/components/button/');
 
-        const args = await page.locator('story-renderer[key=Label]').evaluate((storyRenderer) => (storyRenderer as any).story.args);
+        const args = await getStoryArgs(page, 'Label');
         const button = page.locator('.Label').locator('[data-testid=test-button]');
         const labelElement = button.locator('#label');
         await expect(labelElement).toHaveText(args.label);

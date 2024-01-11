@@ -93,7 +93,7 @@ export class RenderElement extends OmniElement {
         }
     }
 
-    private _clearElements(el: Element | ShadowRoot = undefined as any) {
+    private _clearElements(el: Element | DocumentFragment | undefined = undefined) {
         if (!el) {
             el = this.renderRoot;
         }

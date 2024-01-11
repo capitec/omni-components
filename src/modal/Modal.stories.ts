@@ -811,7 +811,7 @@ const modal = Modal.show({
         },
         {
             framework: 'HTML',
-            load: (args) => raw`
+            load: () => raw`
                 <script type="module">                        
                         import { Modal } from '@capitec/omni-components/modal';
 
@@ -831,7 +831,7 @@ const modal = Modal.show({
         },
         {
             framework: 'React',
-            load: (args) => `import { Modal } from "@capitec/omni-components-react/modal";
+            load: () => `import { Modal } from "@capitec/omni-components-react/modal";
 
 const footerContainer = document.createElement('div');
 footerContainer.style.display = 'contents';
