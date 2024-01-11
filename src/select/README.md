@@ -45,13 +45,13 @@ Control to get / set a value within a list of options.
 
 ## Methods
 
-| Method          | Type                                     |
-|-----------------|------------------------------------------|
-| `renderContent` | `(): TemplateResult<1>`                  |
-| `renderControl` | `(): TemplateResult<1>`                  |
-| `renderLabel`   | `(): TemplateResult<1>`                  |
-| `renderLoading` | `(): TemplateResult<1>`                  |
-| `renderPicker`  | `(): TemplateResult<1> \| unique symbol` |
+| Method          | Type                                             |
+|-----------------|--------------------------------------------------|
+| `renderContent` | `(): UncompiledTemplateResult<1>`                |
+| `renderControl` | `(): UncompiledTemplateResult<1>`                |
+| `renderLabel`   | `(): UncompiledTemplateResult<1>`                |
+| `renderLoading` | `(): UncompiledTemplateResult<1>`                |
+| `renderPicker`  | `(): UncompiledTemplateResult<1> \| unique symbol` |
 
 ## Events
 
