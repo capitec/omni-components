@@ -74,7 +74,8 @@
         "toast",
         "tab",
         "alert",
-        "expander"
+        "expander",
+        "mobile-field"
     ],
     "exports": {
         "./*": "./dist/*/index.js"

@@ -46,6 +46,7 @@
 		"tab": true,
 		"toast": true,
 		"alert": true,
-		"expander": true
+		"expander": true,
+		"mobile-field": true
 	}
 }
