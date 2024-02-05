@@ -1,10 +1,10 @@
-import { html, css, nothing, PropertyValueMap } from 'lit';
+import { PropertyValueMap, css, html, nothing } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { ClassInfo, classMap } from 'lit/directives/class-map.js';
 import { live } from 'lit/directives/live.js';
 import { DateTime } from 'luxon';
-import { OmniFormElement } from '../core/OmniFormElement.js';
 import '../calendar/Calendar.js';
+import { OmniFormElement } from '../core/OmniFormElement.js';
 import '../icons/Calendar.icon.js';
 import '../icons/ChevronLeft.icon.js';
 import '../icons/ChevronRight.icon.js';
@@ -425,7 +425,7 @@ export class DatePicker extends OmniFormElement {
     protected override renderPicker() {
         if (this._isMobile) {
             return html`
-            <dialog id="picker-dialog" class="picker-dialog">
+            <dialog id="picker-dialog" class="picker-dialog" @cancel="${(e: Event) => e.preventDefault()}">
                 ${
                     this._showCalendar
                         ? html`
@@ -436,7 +436,8 @@ export class DatePicker extends OmniFormElement {
                         .minDate=${this.minDate}
                         .maxDate=${this.maxDate} 
                         @change=${(e: Event) => this._dateSelected(e)}>
-                    </omni-calendar>`
+                    </omni-calendar>
+                `
                         : nothing
                 }
             </dialog>`;

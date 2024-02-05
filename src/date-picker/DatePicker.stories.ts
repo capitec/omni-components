@@ -13,7 +13,6 @@ import {
 } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import { assignToSlot, ComponentStoryFormat, getSourceFromLit } from '../utils/StoryUtils.js';
-import { DatePicker } from './DatePicker';
 
 import './DatePicker.js';
 export interface Args extends BaseArgs {
@@ -178,19 +177,19 @@ const App = () => <OmniDatePicker${args.label ? ` label='${args.label}'` : ''}${
     } as Args
 };
 
-export const Label = LabelStory<DatePicker, BaseArgs>('omni-date-picker');
+export const Label = LabelStory<BaseArgs>('omni-date-picker');
 
-export const Hint = HintStory<DatePicker, BaseArgs>('omni-date-picker');
+export const Hint = HintStory<BaseArgs>('omni-date-picker');
 
-export const Error_Label = ErrorStory<DatePicker, BaseArgs>('omni-date-picker');
+export const Error_Label = ErrorStory<BaseArgs>('omni-date-picker');
 
-export const Clearable = ClearableStory<DatePicker, BaseArgs>('omni-date-picker', isoDate);
+export const Clearable = ClearableStory<BaseArgs>('omni-date-picker', isoDate);
 
-export const Custom_Clear_Slot = CustomClearableSlot<DatePicker, BaseArgs>('omni-date-picker', isoDate);
+export const Custom_Clear_Slot = CustomClearableSlot<BaseArgs>('omni-date-picker', isoDate);
 
-export const Prefix = PrefixStory<DatePicker, BaseArgs>('omni-date-picker');
+export const Prefix = PrefixStory<BaseArgs>('omni-date-picker');
 
-export const Suffix = SuffixStory<DatePicker, BaseArgs>('omni-date-picker');
+export const Suffix = SuffixStory<BaseArgs>('omni-date-picker');
 
 export const Disabled: ComponentStoryFormat<BaseArgs> = {
     render: (args) =>

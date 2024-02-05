@@ -115,10 +115,10 @@ let slottedStack: ToastStack | undefined = undefined;
 export const Slotted_Toasts: ComponentStoryFormat<Args> = {
     description: () => html`
         <div>
-            <p>Display slotted <code class="language-html">&lt;omni-toast&gt;</code> elements in order.<p>
+            <p>Display slotted <code class="language-html">&lt;omni-toast&gt;</code> elements in order.</p>
             <p>Slotted toasts can be configured to auto-close after specified milliseconds with the <code class="language-js">data-toast-duration</code> attribute, after which they will be removed from the parent element.</p>
             <p>Slotted toasts with the <code class="language-js">closeable</code> attribute will be removed from the parent element when their <code class="language-js">close-click</code> event gets fired (usually via click of the close button).</p>    
-        <div>`,
+        </div>`,
     render: (args: Args) => {
         return html`<omni-button @click="${() => {
             const parent = slottedStack?.parentElement ? slottedStack.parentElement : document.createElement('div');
@@ -234,11 +234,11 @@ let addedStack: ToastStack | undefined = undefined;
 export const Show_From_Script: ComponentStoryFormat<Args> = {
     description: () => html`
         <div>
-            <p>Create new <code class="language-html">&lt;omni-toast&gt;</code> elements from script.<p>
+            <p>Create new <code class="language-html">&lt;omni-toast&gt;</code> elements from script.</p>
             <p>Toasts can be configured to auto-close after specified milliseconds with the <code class="language-js">duration</code> property, after which they will be removed from the parent element.</p>
             <p>Toasts with the <code class="language-js">closeable</code> property will be removed from the parent element when their <code class="language-js">close-click</code> event gets fired (usually via click of the close button).</p>
             <p>All <code class="language-html">&lt;omni-toast&gt;</code> attributes can be configured as well as additional render functions that can bed provided for slotted content on the toasts.</p>    
-        <div>`,
+        </div>`,
     render: (args: Args) => {
         return html`<omni-button @click="${() => {
             if (!addedStack) {
@@ -392,11 +392,11 @@ let createdStack: ToastStack | undefined = undefined;
 export const Create_From_Script: ComponentStoryFormat<Args> = {
     description: () => html`
         <div>
-            <p>Create an <code class="language-html">&lt;omni-toast-stack&gt;</code> instance from script.<p>
+            <p>Create an <code class="language-html">&lt;omni-toast-stack&gt;</code> instance from script.</p>
             <p>An important consideration to keep in mind when using authoring the element via html is that in order for the element to properly overlay all other content, it needs to be a root level element to avoid <code class="language-html">z-index</code> related issues.</p>
             <p>Creating the <code class="language-html">&lt;omni-toast-stack&gt;</code> via script as in this example can help avoid this issue as it by default parents the newly created instance to the document body. The parent can still be specified to be a different element, however the same considerations will then apply.</p>
-        <div>`,
-    render: (args: Args) => {
+        </div>`,
+    render: () => {
         if (!createdStack) {
             createdStack = ToastStack.create({
                 position: 'top',
@@ -444,7 +444,7 @@ toastStack.showToast({
         },
         {
             framework: 'React',
-            load: (args) => `import { ToastStack } from '@capitec/omni-components-react/toast';
+            load: () => `import { ToastStack } from '@capitec/omni-components-react/toast';
 
 const App = () => <div>HTML Content</div>;
 
@@ -501,7 +501,7 @@ let positionStack: ToastStack | undefined = undefined;
 export const Position: ComponentStoryFormat<Args> = {
     description: () => html`
         <div>
-            <p>Position <code class="language-html">&lt;omni-toast&gt;</code> elements in the stack.<p>
+            <p>Position <code class="language-html">&lt;omni-toast&gt;</code> elements in the stack.</p>
             <br/>
             <span>The <code class="language-javascript">'position'</code> attribute supports the following options:
                 <ul>
@@ -515,7 +515,7 @@ export const Position: ComponentStoryFormat<Args> = {
                     <li><code class="language-javascript">'bottom-right'</code></li>
                 </ul>
             </span>
-        <div>`,
+        </div>`,
     render: (args: Args) => {
         return html`<omni-button @click="${() => {
             if (!positionStack) {
@@ -669,9 +669,9 @@ let reverseStack: ToastStack | undefined = undefined;
 export const Reverse: ComponentStoryFormat<Args> = {
     description: () => html`
         <div>
-            <p>Reverse <code class="language-html">&lt;omni-toast&gt;</code> elements in the stack.<p>
+            <p>Reverse <code class="language-html">&lt;omni-toast&gt;</code> elements in the stack.</p>
             <p>By default newest toasts are showed at the bottom of the stack. When reversed, newest toasts are showed on top of the stack.</p>
-        <div>`,
+        </div>`,
     render: (args: Args) => {
         return html`<omni-button @click="${() => {
             if (!reverseStack) {

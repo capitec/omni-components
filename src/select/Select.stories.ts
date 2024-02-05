@@ -13,7 +13,7 @@ import {
 import { RenderFunction } from '../render-element/RenderElement.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import { assignToSlot, ComponentStoryFormat, getSourceFromLit, raw } from '../utils/StoryUtils.js';
-import { Select, SelectItems, SelectTypes } from './Select.js';
+import { SelectItems, SelectTypes } from './Select.js';
 
 import './Select.js';
 
@@ -27,6 +27,8 @@ export interface Args extends BaseArgs {
     searchable: boolean;
     loading_indicator: string;
     filterItems: (filterValue: string, items: SelectTypes) => SelectItems;
+    arrow: string;
+    more: string;
 }
 
 const displayItems = [
@@ -85,6 +87,8 @@ export const Interactive: ComponentStoryFormat<Args> = {
             ?searchable="${args.searchable}"
             empty-message="${args.emptyMessage}"
             >${args.prefix ? html`${'\r\n'}${unsafeHTML(assignToSlot('prefix', args.prefix))}` : nothing}
+            ${args.arrow ? html`${'\r\n'}${unsafeHTML(assignToSlot('arrow', args.arrow))}` : nothing}
+            ${args.more ? html`${'\r\n'}${unsafeHTML(assignToSlot('more', args.more))}` : nothing}
             ${args.clear ? html`${'\r\n'}${unsafeHTML(assignToSlot('clear', args.clear))}` : nothing}${
         args.suffix ? html`${'\r\n'}${unsafeHTML(assignToSlot('suffix', args.suffix))}` : nothing
     }
@@ -154,6 +158,8 @@ export const Interactive: ComponentStoryFormat<Args> = {
         prefix: '',
         suffix: '',
         clear: '',
+        arrow: '',
+        more: '',
         items: displayItems as Record<string, unknown>[],
         displayField: 'label',
         idField: 'id',
@@ -239,7 +245,7 @@ export const Async_Per_Item: ComponentStoryFormat<Args> = {
                                 .replace(' clearable', ' :clearable="true"')
                                 .replace(' searchable', ' :searchable="true"')
                     ),
-                jsFragment: (args) => `window.vueData = {
+                jsFragment: () => `window.vueData = {
     promiseDisplayItems: async () => {
         await new Promise((r) => setTimeout(() => r(), 2000));
         return [
@@ -274,7 +280,7 @@ export const Async_Per_Item: ComponentStoryFormat<Args> = {
             sourceParts: {
                 htmlFragment: (args) =>
                     raw`<omni-select label="${args.label}" display-field="${args.displayField}" .items="\${() => promiseDisplayItems(displayItems)}" .renderItem="\${renderItem}" id-field="${args.idField}"></omni-select>`,
-                jsFragment: (args) => `const displayItems = [
+                jsFragment: () => `const displayItems = [
     { id: '1', label: 'Peter Parker' },
     { id: '2', label: 'James Howlett' },
     { id: '3', label: 'Tony Stark' },
@@ -350,8 +356,8 @@ const App = () => <OmniSelect label="${args.label}" display-field="${args.displa
         items: () => promiseDisplayItems(displayItems),
         displayField: 'label',
         idField: 'id',
-        renderItem: async (item: any) => {
-            await new Promise((resolve, reject) => {
+        renderItem: async (item: Args) => {
+            await new Promise((resolve) => {
                 // Setting 2000 ms time
                 setTimeout(resolve, 2000);
             });
@@ -433,7 +439,7 @@ const renderItem = async (item) => {
                                 .replace(' clearable', ' :clearable="true"')
                                 .replace(' searchable', ' :searchable="true"')
                     ),
-                jsFragment: (args) => `window.vueData = {
+                jsFragment: () => `window.vueData = {
     promiseDisplayItems: async () => {
         await new Promise((r) => setTimeout(() => r(), 2000));
         return [
@@ -558,8 +564,8 @@ const App = () => <OmniSelect label="${args.label}" display-field="${args.displa
         items: () => promiseDisplayItems(displayItems),
         displayField: 'label',
         idField: 'id',
-        renderItem: async (item: any) => {
-            await new Promise((resolve, reject) => {
+        renderItem: async (item: Args) => {
+            await new Promise((resolve) => {
                 // Setting 2000 ms time
                 setTimeout(resolve, 2000);
             });
@@ -679,7 +685,7 @@ async function renderSelection(item) {
             sourceParts: {
                 htmlFragment: (args) =>
                     raw`<omni-select label="${args.label}" .items="stringItems" :render-selection.camel="renderSelection" value="${args.value}"></omni-select>`,
-                jsFragment: (args) => `window.vueData = {
+                jsFragment: () => `window.vueData = {
     stringItems: ['Bruce Wayne', 'Clark Kent', 'Barry Allen', 'Arthur Curry', 'Hal Jordan'],
     renderSelection: async (item) => {
         await new Promise((resolve, reject) => {
@@ -747,13 +753,13 @@ const App = () => <OmniSelect label="${args.label}" value="${args.value}" items=
     args: {
         label: 'Selection Renderer',
         items: stringItems,
-        renderSelection: async (item: any) => {
-            await new Promise((resolve, reject) => {
+        renderSelection: async (item) => {
+            await new Promise((resolve) => {
                 // Setting 2000 ms time
                 setTimeout(resolve, 2000);
             });
             const i = document.createElement('i');
-            i.innerText = item;
+            i.innerText = item as string;
             i.style.color = 'blue';
             return i;
         },
@@ -856,7 +862,7 @@ export const Custom_Control_Slot: ComponentStoryFormat<Args> = {
                                 .replace(' clearable', ' :clearable="true"')
                                 .replace(' searchable', ' :searchable="true"')
                     ),
-                jsFragment: (args) => `window.vueData = {
+                jsFragment: () => `window.vueData = {
     stringItems: ['Bruce Wayne', 'Clark Kent', 'Barry Allen', 'Arthur Curry', 'Hal Jordan']
 };`
             }
@@ -939,7 +945,7 @@ export const Searchable: ComponentStoryFormat<Args> = {
                                 .replace(' clearable', ' :clearable="true"')
                                 .replace(' searchable', ' :searchable="true"')
                     ),
-                jsFragment: (args) => `window.vueData = {
+                jsFragment: () => `window.vueData = {
     displayItems: [
         { id: '1', label: 'Peter Parker' },
         { id: '2', label: 'James Howlett' },
@@ -1055,7 +1061,7 @@ function itemFilter(filter, item){
                                 .replace(' clearable', ' :clearable="true"')
                                 .replace(' searchable', ' :searchable="true"')
                     ),
-                jsFragment: (args) => `function itemFilter(filter, item){
+                jsFragment: () => `function itemFilter(filter, item){
     return item.includes(filter);
 }
 
@@ -1188,7 +1194,7 @@ function itemFilter(filter, item){
                                 .replace(' clearable', ' :clearable="true"')
                                 .replace(' searchable', ' :searchable="true"')
                     ),
-                jsFragment: (args) => `const stringItems = [
+                jsFragment: () => `const stringItems = [
     'Bruce Wayne', 
     'Clark Kent', 
     'Barry Allen', 
@@ -1377,16 +1383,16 @@ const App = () => <OmniSelect label="${args.label}" items={stringItems} searchab
     } as Args
 };
 
-export const Label = LabelStory<Select, BaseArgs>('omni-select');
+export const Label = LabelStory<BaseArgs>('omni-select');
 
-export const Hint = HintStory<Select, BaseArgs>('omni-select');
+export const Hint = HintStory<BaseArgs>('omni-select');
 
-export const Error_Label = ErrorStory<Select, BaseArgs>('omni-select');
+export const Error_Label = ErrorStory<BaseArgs>('omni-select');
 
-export const Clearable = ClearableStory<Select, BaseArgs>('omni-select');
+export const Clearable = ClearableStory<BaseArgs>('omni-select');
 
-export const Custom_Clear_Slot = CustomClearableSlot<Select, BaseArgs>('omni-select');
+export const Custom_Clear_Slot = CustomClearableSlot<BaseArgs>('omni-select');
 
-export const Prefix = PrefixStory<Select, BaseArgs>('omni-select');
+export const Prefix = PrefixStory<BaseArgs>('omni-select');
 
-export const Suffix = SuffixStory<Select, BaseArgs>('omni-select');
+export const Suffix = SuffixStory<BaseArgs>('omni-select');

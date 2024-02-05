@@ -14,7 +14,6 @@ import {
 } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import { assignToSlot, ComponentStoryFormat, getSourceFromLit } from '../utils/StoryUtils.js';
-import { EmailField } from './EmailField.js';
 
 import './EmailField.js';
 
@@ -56,12 +55,12 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
     }
 };
 
-export const Label = LabelStory<EmailField, BaseArgs>('omni-email-field');
-export const Hint = HintStory<EmailField, BaseArgs>('omni-email-field');
-export const Error_Label = ErrorStory<EmailField, BaseArgs>('omni-email-field');
-export const Value = ValueStory<EmailField, BaseArgs>('omni-email-field', 'johndoe@gmail.com');
-export const Clearable = ClearableStory<EmailField, BaseArgs>('omni-email-field', 'johndoe@gmail.com');
-export const Custom_Clear_Slot = CustomClearableSlot<EmailField, BaseArgs>('omni-email-field', 'johndoe@gmail.com');
-export const Prefix = PrefixStory<EmailField, BaseArgs>('omni-email-field');
-export const Suffix = SuffixStory<EmailField, BaseArgs>('omni-email-field');
-export const Disabled = DisabledStory<EmailField, BaseArgs>('omni-email-field', 'johndoe@gmail.com');
+export const Label = LabelStory<BaseArgs>('omni-email-field');
+export const Hint = HintStory<BaseArgs>('omni-email-field');
+export const Error_Label = ErrorStory<BaseArgs>('omni-email-field');
+export const Value = ValueStory<BaseArgs>('omni-email-field', 'johndoe@gmail.com');
+export const Clearable = ClearableStory<BaseArgs>('omni-email-field', 'johndoe@gmail.com');
+export const Custom_Clear_Slot = CustomClearableSlot<BaseArgs>('omni-email-field', 'johndoe@gmail.com');
+export const Prefix = PrefixStory<BaseArgs>('omni-email-field');
+export const Suffix = SuffixStory<BaseArgs>('omni-email-field');
+export const Disabled = DisabledStory<BaseArgs>('omni-email-field', 'johndoe@gmail.com');

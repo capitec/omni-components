@@ -15,7 +15,6 @@ import {
 import { ifNotEmpty } from '../utils/Directives.js';
 import { assignToSlot, ComponentStoryFormat, getSourceFromLit } from '../utils/StoryUtils.js';
 import './SearchField.js';
-import { SearchField } from './SearchField.js';
 
 export const Interactive: ComponentStoryFormat<BaseArgs> = {
     render: (args: BaseArgs) => html`
@@ -54,20 +53,20 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
     }
 };
 
-export const Label = LabelStory<SearchField, BaseArgs>('omni-search-field');
+export const Label = LabelStory<BaseArgs>('omni-search-field');
 
-export const Hint = HintStory<SearchField, BaseArgs>('omni-search-field');
+export const Hint = HintStory<BaseArgs>('omni-search-field');
 
-export const Error_Label = ErrorStory<SearchField, BaseArgs>('omni-search-field');
+export const Error_Label = ErrorStory<BaseArgs>('omni-search-field');
 
-export const Value = ValueStory<SearchField, BaseArgs>('omni-search-field');
+export const Value = ValueStory<BaseArgs>('omni-search-field');
 
-export const Clearable = ClearableStory<SearchField, BaseArgs>('omni-search-field', 'Clear my name');
+export const Clearable = ClearableStory<BaseArgs>('omni-search-field', 'Clear my name');
 
-export const Custom_Clear_Slot = CustomClearableSlot<SearchField, BaseArgs>('omni-search-field', 'Clear my name');
+export const Custom_Clear_Slot = CustomClearableSlot<BaseArgs>('omni-search-field', 'Clear my name');
 
-export const Prefix = PrefixStory<SearchField, BaseArgs>('omni-search-field');
+export const Prefix = PrefixStory<BaseArgs>('omni-search-field');
 
-export const Suffix = SuffixStory<SearchField, BaseArgs>('omni-search-field');
+export const Suffix = SuffixStory<BaseArgs>('omni-search-field');
 
-export const Disabled = DisabledStory<SearchField, BaseArgs>('omni-search-field');
+export const Disabled = DisabledStory<BaseArgs>('omni-search-field');

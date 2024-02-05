@@ -53,7 +53,9 @@ export class StoryRenderer extends LitElement {
 
     private controller?: StoryController;
     private customCss?: HTMLStyleElement;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private story?: ComponentStoryFormat<any> & {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         originalArgs: any;
     };
     private customElements?: Package;
@@ -112,7 +114,7 @@ export class StoryRenderer extends LitElement {
                 };
             });
 
-        document.addEventListener('omni-docs-theme-change', (e: Event) => {
+        document.addEventListener('omni-docs-theme-change', () => {
             this.theme = getComputedStyle(document.documentElement).getPropertyValue('--code-editor-theme')?.trim();
             const codeEditors = this.renderRoot.querySelectorAll<CodeEditor>('code-editor');
             if (codeEditors) {
@@ -121,7 +123,7 @@ export class StoryRenderer extends LitElement {
                 });
             }
         });
-        document.addEventListener('omni-docs-framework-change', async (e: Event) => {
+        document.addEventListener('omni-docs-framework-change', async () => {
             const codeEditors = this.renderRoot.querySelectorAll<CodeEditor>('code-editor');
             if (codeEditors) {
                 codeEditors.forEach((ce) => {
@@ -194,11 +196,11 @@ export class StoryRenderer extends LitElement {
     override disconnectedCallback() {
         if (this.modal) {
             document.body.removeChild(this.modal);
-            this.modal = null as any;
+            this.modal = undefined;
         }
     }
 
-    protected override updated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+    protected override updated(_changedProperties: PropertyValueMap<never> | Map<PropertyKey, unknown>): void {
         super.updated(_changedProperties);
         window.Prism?.highlightAll();
     }
@@ -475,7 +477,7 @@ export class StoryRenderer extends LitElement {
         const css = this.customCss?.sheet;
 
         if (variable.name) {
-            let rootCss: CSSStyleRule = undefined as any;
+            let rootCss: CSSStyleRule = undefined as never;
             if (css?.cssRules.length === 0) {
                 const index = css.insertRule(':root {}');
                 rootCss = css.cssRules.item(index) as CSSStyleRule;
@@ -528,13 +530,13 @@ export class StoryRenderer extends LitElement {
         return nothing;
     }
 
-    protected override createRenderRoot(): Element | ShadowRoot {
+    protected override createRenderRoot(): HTMLElement | DocumentFragment {
         return this;
     }
 
     private _sortCssVariables(a: CSSVariable, b: CSSVariable) {
         const css = this.customCss?.sheet;
-        let rootCss: CSSStyleRule = undefined as any;
+        let rootCss: CSSStyleRule = undefined as never;
         if (css?.cssRules.length === 0) {
             const index = css.insertRule(':root {}');
             rootCss = css.cssRules.item(index) as CSSStyleRule;
@@ -559,7 +561,7 @@ export class StoryRenderer extends LitElement {
     private _cssChanged(changed: CSSVariable) {
         const css = this.customCss?.sheet;
 
-        let rootCss: CSSStyleRule = undefined as any;
+        let rootCss: CSSStyleRule = undefined as never;
         if (css?.cssRules.length === 0) {
             const index = css.insertRule(':root {}');
             rootCss = css.cssRules.item(index) as CSSStyleRule;
@@ -673,11 +675,6 @@ export class StoryRenderer extends LitElement {
 
     private async _generateCodePen(source: FrameworkOption) {
         const version = (document.getElementById('header-version-indicator')?.innerText ?? '').toLowerCase();
-
-        const elementModule = this.customElements!.modules.find((module) => module.exports?.find((e) => e.name === this.tag));
-        const splitPath = elementModule!.path.split('/');
-        const componentDirectory = splitPath[splitPath.length - 2];
-
         const frameworkDefinition =
             this.story!.frameworkSources?.find((fs) => fs.framework === source) ??
             this.story!.frameworkSources?.find(
@@ -958,7 +955,11 @@ type CSSVariable = {
 };
 
 declare global {
+    interface HTMLElementTagNameMap {
+        'story-renderer': StoryRenderer;
+    }
     interface Window {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         Prism: any;
     }
 }

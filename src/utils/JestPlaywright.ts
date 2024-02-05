@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import fs from 'fs';
 // import { platform } from 'os';
@@ -238,7 +239,7 @@ async function mockEventListener(locatorOrHandle: Locator | ElementHandle | null
 
 function createWaitHandle<T = unknown>() {
     let resolveFn: (value: T) => void;
-    let rejectFn: (reason?: any) => void;
+    let rejectFn: (reason?: never) => void;
     const promise = new Promise<T>((resolve, reject) => {
         resolveFn = resolve;
         rejectFn = reject;
@@ -280,7 +281,7 @@ function createWaitHandle<T = unknown>() {
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     export namespace PlaywrightTest {
-        // eslint-disable-next-line @typescript-eslint/no-empty-interface
+        // eslint-disable-next-line @typescript-eslint/no-empty-interface, @typescript-eslint/no-unused-vars
         export interface Matchers<R, T = unknown> extends jest.Matchers {}
     }
 }

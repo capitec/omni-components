@@ -15,7 +15,6 @@ import {
 } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import { assignToSlot, ComponentStoryFormat, getSourceFromLit } from '../utils/StoryUtils.js';
-import { PinField } from './PinField.js';
 
 import './PinField.js';
 import '../icons/Check.icon.js';
@@ -98,20 +97,20 @@ const App = () => <OmniPinField${args.label ? ` label='${args.label}'` : ''}${ar
     }
 };
 
-export const Label = LabelStory<PinField, BaseArgs>('omni-pin-field');
+export const Label = LabelStory<BaseArgs>('omni-pin-field');
 
-export const Hint = HintStory<PinField, BaseArgs>('omni-pin-field');
+export const Hint = HintStory<BaseArgs>('omni-pin-field');
 
-export const Error_Label = ErrorStory<PinField, BaseArgs>('omni-pin-field');
+export const Error_Label = ErrorStory<BaseArgs>('omni-pin-field');
 
-export const Value = ValueStory<PinField, BaseArgs>('omni-pin-field', '1234');
+export const Value = ValueStory<BaseArgs>('omni-pin-field', '1234');
 
-export const Clearable = ClearableStory<PinField, BaseArgs>('omni-pin-field', '1234');
+export const Clearable = ClearableStory<BaseArgs>('omni-pin-field', '1234');
 
-export const Custom_Clear_Slot = CustomClearableSlot<PinField, BaseArgs>('omni-pin-field', '1234');
+export const Custom_Clear_Slot = CustomClearableSlot<BaseArgs>('omni-pin-field', '1234');
 
-export const Prefix = PrefixStory<PinField, BaseArgs>('omni-pin-field');
+export const Prefix = PrefixStory<BaseArgs>('omni-pin-field');
 
-export const Suffix = SuffixStory<PinField, BaseArgs>('omni-pin-field');
+export const Suffix = SuffixStory<BaseArgs>('omni-pin-field');
 
-export const Disabled = DisabledStory<PinField, BaseArgs>('omni-pin-field', '1234');
+export const Disabled = DisabledStory<BaseArgs>('omni-pin-field', '1234');

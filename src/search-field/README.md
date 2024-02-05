@@ -36,8 +36,8 @@ Search input control.
 | Method          | Type                                          |
 |-----------------|-----------------------------------------------|
 | `focus`         | `(options?: FocusOptions \| undefined): void` |
-| `renderContent` | `(): TemplateResult<1>`                       |
-| `renderPrefix`  | `(): TemplateResult<1>`                       |
+| `renderContent` | `(): UncompiledTemplateResult<1>`             |
+| `renderPrefix`  | `(): UncompiledTemplateResult<1>`             |
 
 ## Events
 

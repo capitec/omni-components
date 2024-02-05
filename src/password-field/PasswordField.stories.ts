@@ -14,7 +14,6 @@ import {
 } from '../core/OmniInputStories.js';
 import { ifNotEmpty } from '../utils/Directives.js';
 import { assignToSlot, ComponentStoryFormat, getSourceFromLit } from '../utils/StoryUtils.js';
-import { PasswordField } from './PasswordField.js';
 
 import './PasswordField.js';
 import '../icons/Check.icon.js';
@@ -67,15 +66,15 @@ export const Interactive: ComponentStoryFormat<Args> = {
     }
 };
 
-export const Label = LabelStory<PasswordField, BaseArgs>('omni-password-field');
-export const Hint = HintStory<PasswordField, BaseArgs>('omni-password-field');
-export const Error_Label = ErrorStory<PasswordField, BaseArgs>('omni-password-field');
-export const Value = ValueStory<PasswordField, BaseArgs>('omni-password-field', 'Password123');
-export const Clearable = ClearableStory<PasswordField, BaseArgs>('omni-password-field', 'Password123');
-export const Custom_Clear_Slot = CustomClearableSlot<PasswordField, BaseArgs>('omni-password-field', 'Password123');
-export const Prefix = PrefixStory<PasswordField, BaseArgs>('omni-password-field');
-export const Suffix = SuffixStory<PasswordField, BaseArgs>('omni-password-field');
-export const Disabled = DisabledStory<PasswordField, BaseArgs>('omni-password-field', 'Password123');
+export const Label = LabelStory<BaseArgs>('omni-password-field');
+export const Hint = HintStory<BaseArgs>('omni-password-field');
+export const Error_Label = ErrorStory<BaseArgs>('omni-password-field');
+export const Value = ValueStory<BaseArgs>('omni-password-field', 'Password123');
+export const Clearable = ClearableStory<BaseArgs>('omni-password-field', 'Password123');
+export const Custom_Clear_Slot = CustomClearableSlot<BaseArgs>('omni-password-field', 'Password123');
+export const Prefix = PrefixStory<BaseArgs>('omni-password-field');
+export const Suffix = SuffixStory<BaseArgs>('omni-password-field');
+export const Disabled = DisabledStory<BaseArgs>('omni-password-field', 'Password123');
 
 export const Custom_Icon_Slot: ComponentStoryFormat<Args> = {
     render: (args: Args) => html`

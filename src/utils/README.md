@@ -118,9 +118,9 @@
 
 | Method                               | Type                                             |
 |--------------------------------------|--------------------------------------------------|
-| `createRenderRoot`                   | `(): Element \| ShadowRoot`                      |
+| `createRenderRoot`                   | `(): HTMLElement \| DocumentFragment`            |
 | `handleCustomThemeCSSVariableSearch` | `(e: Event): void`                               |
-| `renderCssVariable`                  | `(variable: CSSVariable): TemplateResult<1> \| unique symbol` |
+| `renderCssVariable`                  | `(variable: CSSVariable): UncompiledTemplateResult<1> \| unique symbol` |
 
 ## Events
 

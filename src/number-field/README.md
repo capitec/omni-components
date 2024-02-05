@@ -36,7 +36,7 @@ Input control to enter a single line of numbers.
 | Method          | Type                                          |
 |-----------------|-----------------------------------------------|
 | `focus`         | `(options?: FocusOptions \| undefined): void` |
-| `renderContent` | `(): TemplateResult<1>`                       |
+| `renderContent` | `(): UncompiledTemplateResult<1>`             |
 
 ## Events
 

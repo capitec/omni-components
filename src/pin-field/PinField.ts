@@ -100,6 +100,7 @@ export class PinField extends OmniFormElement {
 
     // Added for non webkit supporting browsers and to stop the component from having a non-valid value (non-numeric) value bound.
     protected override async firstUpdated(): Promise<void> {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const style: any = window.getComputedStyle(this._inputElement as HTMLInputElement);
         this.isWebkit = style.webkitTextSecurity;
         if (!this.isWebkit) {
@@ -109,7 +110,7 @@ export class PinField extends OmniFormElement {
         this._sanitiseValue();
     }
 
-    protected override updated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+    protected override updated(_changedProperties: PropertyValueMap<never> | Map<PropertyKey, unknown>): void {
         if (_changedProperties.has('value')) {
             if (this.value) {
                 this.container?.classList?.add('float-label');

@@ -7,7 +7,7 @@ import {
     testPrefixBehaviour,
     testSuffixBehaviour
 } from '../core/OmniInputPlaywright.js';
-import { test, expect, getStoryArgs, mockEventListener, withCoverage, type Page } from '../utils/JestPlaywright.js';
+import { test, expect, getStoryArgs, mockEventListener, withCoverage } from '../utils/JestPlaywright.js';
 import type { Select, SelectItems, SelectTypes } from './Select.js';
 
 const displayItems = [
@@ -165,16 +165,13 @@ test(`Select - Selection Render Behaviour`, async ({ page, isMobile }) => {
         const selectComponent = page.locator('.Selection_Renderer').getByTestId('test-select');
         selectComponent.waitFor({ state: 'visible', timeout: 300 });
         await expect(selectComponent).toHaveScreenshot('select-initial.png');
-
-        const valueChange = await mockEventListener(selectComponent, 'change');
-
         await selectComponent.evaluate(async (s: Select) => {
-            s.renderSelection = async (item: any) => {
-                await new Promise((resolve, reject) => {
+            s.renderSelection = async (item) => {
+                await new Promise((resolve) => {
                     setTimeout(resolve, 10);
                 });
                 const i = document.createElement('i');
-                i.innerText = item;
+                i.innerText = item as string;
                 i.style.color = 'blue';
                 return i;
             };

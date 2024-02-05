@@ -161,7 +161,7 @@ export const Attach_By_Attribute: ComponentStoryFormat<Args> = {
     <span>When the <code>attach-mode</code> attribute is set to <code class="language-js">'attribute'</code> on the Keyboard, then the Keyboard will only react to supported inputs with the <code>data-omni-keyboard-attach</code> attribute without a value.</span>
     `,
     frameworkSources: [{ framework: 'HTML', load: () => getSourceFromLit(attachByAttribute), disableCodePen: true }],
-    render: (args: Args) =>
+    render: () =>
         Interactive.args!.attachMode === 'attribute'
             ? attachByAttribute
             : html`
@@ -202,7 +202,7 @@ export const Attach_By_Id: ComponentStoryFormat<Args> = {
     description: () => html`
     <span>When the <code>attach-mode</code> attribute is set to <code class="language-js">'id'</code> on the Keyboard, then it will only react to supported inputs with the <code>data-omni-keyboard-attach</code> attribute set equal to the Keyboard's id.</span>
     `,
-    render: (args: Args) =>
+    render: () =>
         Interactive.args!.attachMode === 'id'
             ? attachById
             : html`
@@ -239,7 +239,7 @@ export const Enter_Key_Hint_Variations: ComponentStoryFormat<Args> = {
     </span>
     `,
     frameworkSources: [{ framework: 'HTML', load: () => getSourceFromLit(attachByAttribute), disableCodePen: true }],
-    render: (args: Args) =>
+    render: () =>
         Interactive.args!.attachMode === 'all'
             ? html`
         <div class="keyboard-showcase">
@@ -304,7 +304,7 @@ export const Masked_Values: ComponentStoryFormat<Args> = {
     </span>
     `,
     frameworkSources: [{ framework: 'HTML', load: () => getSourceFromLit(attachByAttribute), disableCodePen: true }],
-    render: (args: Args) =>
+    render: () =>
         Interactive.args!.attachMode === 'all'
             ? html`
         <div class="keyboard-showcase">
@@ -340,7 +340,7 @@ export const Hide_Display_Value: ComponentStoryFormat<Args> = {
     <span>When the <code>data-omni-keyboard-no-display</code> attribute is set on a supported input, the display preview on the Keyboard header will not be visible.</span>
     `,
     frameworkSources: [{ framework: 'HTML', load: () => getSourceFromLit(attachByAttribute), disableCodePen: true }],
-    render: (args: Args) =>
+    render: () =>
         Interactive.args!.attachMode === 'all'
             ? html`
     <div class="keyboard-showcase">
@@ -375,7 +375,7 @@ export const Hide_Keyboard: ComponentStoryFormat<Args> = {
     
     `,
     frameworkSources: [{ framework: 'HTML', load: () => getSourceFromLit(attachByAttribute), disableCodePen: true }],
-    render: (args: Args) => html`
+    render: () => html`
         <div class="keyboard-showcase">
             <omni-label type="subtitle" label="Hide Keyboard"></omni-label>
             <!-- Hide Keyboard -->
@@ -395,7 +395,7 @@ export const Alternate_Modes: ComponentStoryFormat<Args> = {
         
     `,
     frameworkSources: [{ framework: 'HTML', load: () => getSourceFromLit(attachByAttribute), disableCodePen: true }],
-    render: (args: Args) =>
+    render: () =>
         Interactive.args!.attachMode === 'all'
             ? html`
         <div class="keyboard-showcase">
@@ -668,7 +668,7 @@ export const Vanilla_Inputs: ComponentStoryFormat<Args> = {
     <span>The Keyboard supports vanilla native HTML <code class="language-html">&lt;input&gt;</code> and <code class="language-html">&lt;textarea&gt;</code> elements.</span>
     `,
     frameworkSources: [{ framework: 'HTML', load: () => getSourceFromLit(attachByAttribute), disableCodePen: true }],
-    render: (args: Args) =>
+    render: () =>
         Interactive.args!.attachMode === 'all'
             ? html`
         <div class="keyboard-showcase">
