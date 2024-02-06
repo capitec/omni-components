@@ -82,7 +82,6 @@ export class MobileField extends OmniFormElement {
     override focus(options?: FocusOptions | undefined): void {
         if (this._inputElement) {
             this._inputElement.focus(options);
-            this._inputElement.value.trim();
         } else {
             super.focus(options);
         }
@@ -116,8 +115,14 @@ export class MobileField extends OmniFormElement {
 
     _keyInput() {
         const input = this._inputElement as HTMLInputElement;
+
+        if (input?.value && input?.value.replace(/\D/g, '').length > 10) {
+            // Restrict the input characters to the length of specified in the args.
+            input.value = String(input?.value).slice(0, input?.value.length - 1);
+        }
+
         this.value = input?.value;
-        this._sanitiseMobileValue(this.value);
+        this._sanitiseMobileValue(input?.value);
     }
 
     // Check if the value provided is valid, if there is invalid alpha characters they are removed.
@@ -172,6 +177,10 @@ export class MobileField extends OmniFormElement {
             if (keyValue === '+') {
                 return true;
             }
+        }
+
+        if (input.value.toString().replace(/\D/g, '').length >= 10) {
+            return false;
         }
 
         return false;
