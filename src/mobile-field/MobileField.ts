@@ -48,6 +48,12 @@ export class MobileField extends OmniFormElement {
     @property({ type: Boolean, reflect: true, attribute: 'country-code' }) countryCode?: boolean;
 
     /**
+     * Formatter provided to format the value.
+     * @attr
+     */
+    @property({ type: String, reflect: true }) formatter: string = '^+27[0-9]{9}$';
+
+    /**
      * Disables native on screen keyboards for the component.
      * @attr [no-native-keyboard]
      */
@@ -64,20 +70,30 @@ export class MobileField extends OmniFormElement {
     }
 
     // Added for browsers that allow text values entered into a input when type is set to number.
-    override async attributeChangedCallback(name: string, _old: string | null, value: string | null): Promise<void> {
-        super.attributeChangedCallback(name, _old, value);
-        if (name === 'value') {
-            if (new RegExp('^[0-9]+$').test(value as string) === false) {
-                return;
-            }
+    // Format the bound value.
+    protected override async firstUpdated(): Promise<void> {
+        if (this.value !== null && this.value !== undefined) {
+            await this._sanitiseMobileValue(this.value.toString()).then((res) => {
+                this._inputElement!.value = res;
+            });
         }
     }
 
     override focus(options?: FocusOptions | undefined): void {
         if (this._inputElement) {
             this._inputElement.focus(options);
+            this._inputElement.value.trim();
         } else {
             super.focus(options);
+        }
+    }
+
+    override async attributeChangedCallback(name: string, _old: string | null, value: string | null): Promise<void> {
+        super.attributeChangedCallback(name, _old, value);
+        if (name === 'value') {
+            await this._sanitiseMobileValue(value as string).then((res) => {
+                this._inputElement!.value = res;
+            });
         }
     }
 
@@ -89,72 +105,56 @@ export class MobileField extends OmniFormElement {
             return;
         }
 
-        console.log('event', e);
-        console.log('event key', e.key);
-        console.log('is number', this._isNumber(e.key as string));
-
         if (input && e.key) {
             if (this._isValid(e.key)) {
             } else {
                 e.preventDefault();
                 return;
             }
-
-            // console.log('selectionStart', input.selectionStart);
-            // console.log('selectionEnd',input.selectionEnd);
-            // if(this.countryCode){
-            //     if(input.selectionStart === 0 && input.selectionEnd === 0){
-            //         if(e.shiftKey === true && e.key !== '+'){
-            //             e.preventDefault();
-            //             return;
-            //         }
-            //     } else if (!this._isNumber(e.key as string) && e.key !== 'Backspace') {
-            //         e.preventDefault();
-            //         return;
-            //     }
-            // } else {
-            //     if (!this._isNumber(e.key as string) && e.key !== 'Backspace') {
-            //         e.preventDefault();
-            //         return;
-            //     }
-            // }
-
-            // if (input.selectionStart === 0 && input.selectionEnd === 0) {
-
-            //     if(this.countryCode && ( e.key !== '+' || !this._isNumber(e.key as string))){
-            //          e.preventDefault();
-            //          return;
-            //     }
-            // }
-
-            // if(!this._isNumber(e.key as string)){
-            //     e.preventDefault();
-            //     return;
-            // }
         }
     }
 
     _keyInput() {
         const input = this._inputElement as HTMLInputElement;
         this.value = input?.value;
+        this._sanitiseMobileValue(this.value);
     }
 
     // Check if the value provided is valid, if there is invalid alpha characters they are removed.
-    _sanitiseMobileValue() {
-        this.value = this.value?.toString()?.replace(/^([+]\d{2})?\d{10}$/gi, '');
+    async _sanitiseMobileValue(preFormattedValue: number | string) {
+        const rawMobileNumber = preFormattedValue.toString().replace(/\D/g, '');
+        const mobileLength = rawMobileNumber.length;
 
-        if (this._inputElement) {
-            this._inputElement.value = this.value as string;
+        if (preFormattedValue.toString().includes('+')) {
+            if (mobileLength > 7) {
+                return (
+                    '+' +
+                    rawMobileNumber.slice(0, 2) +
+                    ' ' +
+                    rawMobileNumber.slice(2, 4) +
+                    ' ' +
+                    rawMobileNumber.slice(4, 7) +
+                    ' ' +
+                    rawMobileNumber.slice(7, 11)
+                );
+            }
+            if (mobileLength > 4) {
+                return '+' + rawMobileNumber.slice(0, 2) + ' ' + rawMobileNumber.slice(2, 4) + ' ' + rawMobileNumber.slice(4, 10);
+            }
+            if (mobileLength > 2) {
+                return '+' + rawMobileNumber.slice(0, 2) + ' ' + rawMobileNumber.slice(2, 10);
+            }
+            return preFormattedValue.toString();
         }
-    }
 
-    // Used to check if the value provided in a valid mobile number value.
-    _isMobileNumber(number: string) {
-        return /^([+]\d{2})?\d{10}$/.test(number);
-    }
+        if (mobileLength > 6) {
+            return rawMobileNumber.slice(0, 3) + ' ' + rawMobileNumber.slice(3, 6) + ' ' + rawMobileNumber.slice(6, 10);
+        }
+        if (mobileLength > 3) {
+            return rawMobileNumber.slice(0, 3) + ' ' + rawMobileNumber.slice(3, 10);
+        }
 
-    _isNumber(number: string) {
-        return /\d/.test(number);
+        return rawMobileNumber;
     }
 
     _isValid(keyValue: string) {
