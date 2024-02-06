@@ -116,7 +116,10 @@ export class MobileField extends OmniFormElement {
     _keyInput() {
         const input = this._inputElement as HTMLInputElement;
 
-        if (input?.value && input?.value.replace(/\D/g, '').length > 10) {
+        if (input?.value && input?.value.includes('+') && input?.value.replace(/\D/g, '').length > 11) {
+            // Restrict the input characters to the length of specified in the args.
+            input.value = String(input?.value).slice(0, input?.value.length - 1);
+        } else if (input?.value && input?.value.replace(/\D/g, '').length > 10 && !input?.value.includes('+')) {
             // Restrict the input characters to the length of specified in the args.
             input.value = String(input?.value).slice(0, input?.value.length - 1);
         }
@@ -140,7 +143,7 @@ export class MobileField extends OmniFormElement {
                     ' ' +
                     rawMobileNumber.slice(4, 7) +
                     ' ' +
-                    rawMobileNumber.slice(7, 11)
+                    rawMobileNumber.slice(7, 12)
                 );
             }
             if (mobileLength > 4) {
