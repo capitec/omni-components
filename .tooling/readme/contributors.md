@@ -44,5 +44,13 @@
             <sub><b>Makhubedu</b></sub>
         </a>
     </td></tr>
+<tr>
+    <td align="center">
+        <a href="https://github.com/wscheffer">
+            <img src="https://avatars.githubusercontent.com/u/16539629?v=4" width="100;" alt="wscheffer"/>
+            <br />
+            <sub><b>wscheffer</b></sub>
+        </a>
+    </td></tr>
 </table>
 <!-- readme: contributors -end -->
