@@ -270,7 +270,7 @@ export class OmniFormElement extends OmniElement {
                     right: calc(var(--omni-form-focussed-label-padding-right, 3px) * -1);
                     height: 50%;
                     z-index: -1;
-                    top:50%;
+                    top: 48%;
                     width: calc(100% + var(--omni-form-focussed-label-padding-left, 3px) + var(--omni-form-focussed-label-padding-right, 3px));
                 }
                 
