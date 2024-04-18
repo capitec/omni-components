@@ -215,7 +215,7 @@ export class OmniFormElement extends OmniElement {
                     line-height: 100%;
 
                     /* Used to position the label in the middle of the y-axis*/
-                    top:50%;
+                    top: 50%;
                     transform: translateY(-50%);
 
                     margin-left: var(--omni-form-label-margin-left, 10px);          
@@ -270,7 +270,7 @@ export class OmniFormElement extends OmniElement {
                     right: calc(var(--omni-form-focussed-label-padding-right, 3px) * -1);
                     height: 50%;
                     z-index: -1;
-                    top: 48%;
+                    top: 50%;
                     width: calc(100% + var(--omni-form-focussed-label-padding-left, 3px) + var(--omni-form-focussed-label-padding-right, 3px));
                 }
                 
