@@ -114,19 +114,34 @@ export class DatePicker extends OmniFormElement {
     @state() private _bottomOfViewport: boolean = false;
     @state() private _isMobile: boolean = false;
 
+    private readonly _windowClickBound = this._windowClick.bind(this);
+    private readonly _checkForBottomOfScreenBound = this._checkForBottomOfScreen.bind(this);
+
+    private readonly _checkForMobileBound = this._checkforMobile.bind(this);
+
     override connectedCallback() {
         super.connectedCallback();
         this.addEventListener('click', this._inputClick.bind(this));
-        window.addEventListener('click', this._windowClick.bind(this));
+        window.addEventListener('click', this._windowClickBound);
     }
 
     protected override async firstUpdated(): Promise<void> {
         await this._checkForBottomOfScreen();
         await this._checkforMobile();
-        window.addEventListener('resize', this._checkForBottomOfScreen.bind(this));
-        window.addEventListener('scroll', this._checkForBottomOfScreen.bind(this));
-        window.addEventListener('resize', this._checkforMobile.bind(this));
-        window.addEventListener('scroll', this._checkforMobile.bind(this));
+        window.addEventListener('resize', this._checkForBottomOfScreenBound);
+        window.addEventListener('scroll', this._checkForBottomOfScreenBound);
+        window.addEventListener('resize', this._checkForMobileBound);
+        window.addEventListener('scroll', this._checkForMobileBound);
+    }
+
+    override disconnectedCallback(): void {
+        super.disconnectedCallback();
+
+        window.removeEventListener('click', this._windowClickBound);
+        window.removeEventListener('resize', this._checkForBottomOfScreenBound);
+        window.removeEventListener('scroll', this._checkForBottomOfScreenBound);
+        window.removeEventListener('resize', this._checkForMobileBound);
+        window.removeEventListener('scroll', this._checkForMobileBound);
     }
 
     // Update properties of the Date picker component if user provides a value to the value property or if the locale property is updated.
