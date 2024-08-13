@@ -75,9 +75,11 @@ jobs:
 
       - name: Install Package Dependencies 🔗
         # https://peps.python.org/pep-0632/#migration-advice
+        # https://github.com/actions/runner/issues/2958#issuecomment-2186602747
         run: |
           pip install packaging
           pip install --upgrade setuptools
+          brew install python-setuptools
 
           npm ci --force
           
