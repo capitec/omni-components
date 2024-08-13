@@ -247,17 +247,57 @@ export class Select extends OmniFormElement {
     @state() private _isMobile: boolean = false;
     @state() private _searchValue?: string;
 
+    // Protect getters for inheritance when extending the `<omni-select>` component.
+    protected get bottomOfViewport() {
+        return this._bottomOfViewport;
+    }
+
+    protected get isMobile() {
+        return this._isMobile;
+    }
+
+    protected get searchValue() {
+        return this._searchValue;
+    }
+
+    protected get popUp() {
+        return this._popUp;
+    }
+
+    protected get searchElement() {
+        return this._searchElement;
+    }
+
+    protected get itemsContainer() {
+        return this._itemsContainer;
+    }
+
+    protected get selectElement() {
+        return this._selectElement;
+    }
+
+    private _windowClickBound = this._windowClick.bind(this);
+    private _checkScreenDimensionsBound = this._checkScreenDimensions.bind(this);
+
     override connectedCallback() {
         super.connectedCallback();
         this._checkforMobile();
         this.addEventListener('click', this._inputClick.bind(this));
-        window.addEventListener('click', this._windowClick.bind(this));
+        window.addEventListener('click', this._windowClickBound);
     }
 
     protected override async firstUpdated(): Promise<void> {
         await this._checkScreenDimensions();
-        window.addEventListener('resize', this._checkScreenDimensions.bind(this));
-        window.addEventListener('scroll', this._checkScreenDimensions.bind(this));
+        window.addEventListener('resize', this._checkScreenDimensionsBound);
+        window.addEventListener('scroll', this._checkScreenDimensionsBound);
+    }
+
+    override disconnectedCallback(): void {
+        super.disconnectedCallback();
+
+        window.removeEventListener('click', this._windowClickBound);
+        window.removeEventListener('resize', this._checkScreenDimensionsBound);
+        window.removeEventListener('scroll', this._checkScreenDimensionsBound);
     }
 
     _inputClick(e: Event) {
@@ -697,8 +737,12 @@ export class Select extends OmniFormElement {
                             ${
                                 this.value
                                     ? html` 
-                                        <omni-render-element style="height: inherit; width: inherit;" .data="${this.value}" .renderer="${this.renderSelection}">
-                                            <omni-loading-icon slot="loading_indicator" style="height: 100%; max-width: 24px;"></omni-loading-icon>
+                                        <omni-render-element 
+                                            style="height: inherit; width: inherit;" 
+                                            .data="${this.value}" 
+                                            .renderer="${this.renderSelection}"
+                                        >
+                                            ${this._renderSelectionLoading()}
                                         </omni-render-element>
                                         `
                                     : nothing
@@ -709,33 +753,50 @@ export class Select extends OmniFormElement {
         `;
     }
 
+    _renderSelectionLoading() {
+        const loading = this.querySelector('[slot=loading_indicator]');
+        if (loading) {
+            const copy = loading.cloneNode(true) as HTMLElement;
+            copy.setAttribute('slot', 'loading_indicator');
+            copy.setAttribute('style', 'height: 100%; max-width: 24px;');
+            return copy;
+        }
+        return html`<omni-loading-icon slot="loading_indicator" style="height: 100%; max-width: 24px;"></omni-loading-icon>`;
+    }
+
     // Render the picker (items container) this will be a dialog in mobile form factors
     protected override renderPicker() {
         if (this._isMobile) {
-            return html`
-            <dialog id="items-dialog" class="items-dialog" @cancel="${(e: Event) => e.preventDefault()}">
-                ${this._isMobile && this.label ? html`<div class="header">${this.label}</div>` : nothing}
-                ${this._renderSearchField()}
-                <div ${ref(this._itemsMaxHeightChange)} id="items" class="items"> ${until(
-                this._renderOptions(),
-                html`<div>${this.renderLoading()}</div>`
-            )}</div>
-            </dialog>
-            `;
+            return this._renderMobilePicker();
         }
 
         if (!this._popUp) {
             return nothing;
         }
+        return this._renderDesktopPicker();
+    }
+
+    _renderDesktopPicker() {
         return html`
             <div id="items-container" class="items-container ${this._bottomOfViewport ? `bottom` : ``}">
                 ${this._renderSearchField()}
-                <div ${ref(this._itemsMaxHeightChange)} id="items" class="items"> ${until(
-            this._renderOptions(),
-            html`<div>${this.renderLoading()}</div>`
-        )}</div>
+                <div ${ref(this._itemsMaxHeightChange)} id="items" class="items"> 
+                    ${until(this._renderOptions(), html`<div>${this.renderLoading()}</div>`)}
+                </div>
             </div>
         `;
+    }
+
+    _renderMobilePicker() {
+        return html`
+            <dialog id="items-dialog" class="items-dialog" @cancel="${(e: Event) => e.preventDefault()}">
+                ${this._isMobile && this.label ? html`<div class="header">${this.label}</div>` : nothing}
+                ${this._renderSearchField()}
+                <div ${ref(this._itemsMaxHeightChange)} id="items" class="items"> 
+                    ${until(this._renderOptions(), html`<div>${this.renderLoading()}</div>`)}
+                </div>
+            </dialog>
+            `;
     }
 
     // Render the search field if the searchable property is set and renders a clear button if there is a value in the input
@@ -749,7 +810,7 @@ export class Select extends OmniFormElement {
                         this._searchValue
                             ? html`
                         <slot name="search-clear">
-                            <omni-clear-icon class="search-clear-icon"></omni-clear-icon>
+                            ${this._renderSearchClear()}
                         </slot>
                     `
                             : nothing
@@ -759,6 +820,10 @@ export class Select extends OmniFormElement {
         } else {
             return nothing;
         }
+    }
+
+    _renderSearchClear() {
+        return html`<omni-clear-icon class="search-clear-icon"></omni-clear-icon>`;
     }
 
     // Render the control of the Select when clicked this will open up the items container
@@ -771,12 +836,16 @@ export class Select extends OmniFormElement {
         };
         return html`
         <div id="control" class="control ${this._popUp ? `expanded` : `collapsed`}" @click="${() => this._controlClick()}">
-            ${
-                this._isMobile
-                    ? html`<slot name="more"><omni-more-icon class=${classMap(controlIcon)}></omni-more-icon></slot>`
-                    : html`<slot name="arrow"><omni-chevron-down-icon class=${classMap(controlIcon)}></omni-chevron-down-icon></slot>`
-            }
+            ${this._isMobile ? this._renderMobileControl(controlIcon) : this._renderDesktopControl(controlIcon)}
         </div>`;
+    }
+
+    _renderDesktopControl(controlIcon: ClassInfo): unknown {
+        return html`<slot name="arrow"><omni-chevron-down-icon class=${classMap(controlIcon)}></omni-chevron-down-icon></slot>`;
+    }
+
+    _renderMobileControl(controlIcon: ClassInfo): unknown {
+        return html`<slot name="more"><omni-more-icon class=${classMap(controlIcon)}></omni-more-icon></slot>`;
     }
 
     async _renderOptions() {
@@ -800,10 +869,18 @@ export class Select extends OmniFormElement {
         }
 
         if (itemsLength === 0) {
-            return html`<div class="none">${this.emptyMessage}</div>`;
+            return this._renderEmptyOptions();
         } else {
-            return items.map((i) => this._renderOption(i));
+            return this._renderItems(items);
         }
+    }
+
+    _renderItems(items: SelectTypes) {
+        return items.map((i) => this._renderOption(i));
+    }
+
+    _renderEmptyOptions() {
+        return html`<div class="none">${this.emptyMessage}</div>`;
     }
 
     // Filter the items provided if the searchField has a value filter the items based on the value.
@@ -826,20 +903,42 @@ export class Select extends OmniFormElement {
 
     // Render the each option in the item container
     _renderOption(item: Record<string, unknown> | string) {
-        return html` <div
+        return html` 
+        <div
             class="item ${
                 this.value === (typeof item === 'string' ? item : item[this.displayField as string]) || this.value === item ? `selected` : ``
             }"
             @click="${() => this._onItemClick(item)}">
             ${
                 this.renderItem
-                    ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                      html` <omni-render-element .data="${item as any}" .renderer="${this.renderItem}"></omni-render-element>`
+                    ? html` 
+                        <omni-render-element .data="${item as never}" .renderer="${this.renderItem}">
+                            ${this._renderItemLoading()}
+                        </omni-render-element>
+                    `
                     : typeof item !== 'string' && this.displayField
                     ? item[this.displayField]
                     : item
             }
-        </div>`;
+        </div>
+        ${this._renderOptionSeparator(item)}
+        `;
+    }
+
+    _renderItemLoading() {
+        const loading = this.querySelector('[slot=loading_indicator]');
+        if (loading) {
+            const copy = loading.cloneNode(true) as HTMLElement;
+            copy.setAttribute('slot', 'loading_indicator');
+            copy.setAttribute('style', 'height: 100%; max-width: 24px;');
+            return copy;
+        }
+        return nothing;
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _renderOptionSeparator(_item: Record<string, unknown> | string) {
+        return nothing;
     }
 
     // Render the loading indicator
