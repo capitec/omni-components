@@ -790,13 +790,17 @@ export class Select extends OmniFormElement {
     _renderMobilePicker() {
         return html`
             <dialog id="items-dialog" class="items-dialog" @cancel="${(e: Event) => e.preventDefault()}">
-                ${this._isMobile && this.label ? html`<div class="header">${this.label}</div>` : nothing}
+                ${this._renderMobileHeader()}
                 ${this._renderSearchField()}
                 <div ${ref(this._itemsMaxHeightChange)} id="items" class="items"> 
                     ${until(this._renderOptions(), html`<div>${this.renderLoading()}</div>`)}
                 </div>
             </dialog>
             `;
+    }
+
+    _renderMobileHeader() {
+        return this.label ? html`<div class="header">${this.label}</div>` : nothing;
     }
 
     // Render the search field if the searchable property is set and renders a clear button if there is a value in the input
