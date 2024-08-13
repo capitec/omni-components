@@ -24,7 +24,11 @@ jobs:
           always-auth: true
 
       - name: Install Package Dependencies 🔗
+        # https://peps.python.org/pep-0632/#migration-advice
         run: |
+          pip install packaging
+          pip install --upgrade setuptools
+
           npm ci --force
 
       - name: Run Lint Checks
@@ -44,7 +48,11 @@ jobs:
           always-auth: true
 
       - name: Install Package Dependencies 🔗
+        # https://peps.python.org/pep-0632/#migration-advice
         run: |
+          pip install packaging
+          pip install --upgrade setuptools
+
           npm ci --force
 
       - name: Run Format Checks
@@ -93,7 +101,11 @@ jobs:
           always-auth: true
 
       - name: Install Package Dependencies
+        # https://peps.python.org/pep-0632/#migration-advice
         run: |
+          pip install packaging
+          pip install --upgrade setuptools
+
           npm ci --force
 
       - name: Detect necessary components to test
@@ -253,7 +265,11 @@ jobs:
           always-auth: true
 
       - name: Install Package Dependencies
+        # https://peps.python.org/pep-0632/#migration-advice
         run: |
+          pip install packaging
+          pip install --upgrade setuptools
+
           npm ci --force
           
       - name: Update PW_COMPONENT_FILTER

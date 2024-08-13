@@ -74,7 +74,11 @@ jobs:
           always-auth: true
 
       - name: Install Package Dependencies 🔗
+        # https://peps.python.org/pep-0632/#migration-advice
         run: |
+          pip install packaging
+          pip install --upgrade setuptools
+
           npm ci --force
           
       - name: Bump patch version for alpha ☝
