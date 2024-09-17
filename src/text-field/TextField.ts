@@ -36,6 +36,8 @@ import { ifDefined, OmniFormElement } from '../core/OmniFormElement.js';
  *
  * @cssprop --omni-text-field-disabled-font-color - Text field disabled font color.
  * @cssprop --omni-text-field-font-color - Text field error font color.
+ * 
+ * @cssprop --omni-text-field-autofill-hover-transition - Text field input auto fill hover state transition.
  *
  */
 @customElement('omni-text-field')
@@ -114,7 +116,7 @@ export class TextField extends OmniFormElement {
 
                 input:-webkit-autofill,
                 input:-webkit-autofill:focus {
-                    transition: background-color 0s 600000s, color 0s 600000s !important;
+                    transition: var(--omni-text-field-autofill-hover-transition, background-color 0s 600000s, color 0s 600000s) !important;
                 }
 
             `
