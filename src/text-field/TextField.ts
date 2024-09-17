@@ -111,6 +111,12 @@ export class TextField extends OmniFormElement {
                 .field.error {
                     color: var(--omni-text-field-error-font-color, var(--omni-font-color));
                 }
+
+                input:-webkit-autofill,
+                input:-webkit-autofill:focus {
+                    transition: background-color 0s 600000s, color 0s 600000s !important;
+                }
+
             `
         ];
     }
