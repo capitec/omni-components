@@ -61,6 +61,7 @@ Control to display modal content with optional header and footer content.
 | `--omni-modal-body-font-family`                  | Font family for modal body.                      |
 | `--omni-modal-body-font-size`                    | Font size for modal body.                        |
 | `--omni-modal-body-font-weight`                  | Font weight for modal body.                      |
+| `--omni-modal-body-min-width`                    | Min width for modal body.                        |
 | `--omni-modal-body-overflow`                     | Overflow for modal body.                         |
 | `--omni-modal-body-padding`                      | Padding for modal body.                          |
 | `--omni-modal-container-box-shadow`              | Box shadow for modal content container.          |
