@@ -295,7 +295,6 @@ export class Modal extends OmniElement {
                     background: var(--omni-modal-body-background, var(--omni-background-color));
                     line-height: 24px;
                     overflow: var(--omni-modal-body-overflow, auto);
-                    min-width: var(--omni-modal-body-min-width, auto);
                 }
 
                 .body[no-header] {                    
