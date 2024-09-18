@@ -61,7 +61,6 @@ Control to display modal content with optional header and footer content.
 | `--omni-modal-body-font-family`                  | Font family for modal body.                      |
 | `--omni-modal-body-font-size`                    | Font size for modal body.                        |
 | `--omni-modal-body-font-weight`                  | Font weight for modal body.                      |
-| `--omni-modal-body-min-width`                    | Min width for modal body.                        |
 | `--omni-modal-body-overflow`                     | Overflow for modal body.                         |
 | `--omni-modal-body-padding`                      | Padding for modal body.                          |
 | `--omni-modal-container-box-shadow`              | Box shadow for modal content container.          |
@@ -90,6 +89,7 @@ Control to display modal content with optional header and footer content.
 | `--omni-modal-header-padding-top`                | Top padding for modal header.                    |
 | `--omni-modal-max-height`                        | Max height for modal content container.          |
 | `--omni-modal-max-width`                         | Max width for modal content container.           |
+| `--omni-modal-min-width`                         | Min width for modal content container.           |
 | `--omni-modal-no-footer-body-border-bottom-radius` | Bottom border radius for modal body when there is no footer. |
 | `--omni-modal-no-header-body-border-top-radius`  | Top border radius for modal body when there is no header. |
 | `--omni-theme-accent-active-color`               | Theme accent active color.                       |
