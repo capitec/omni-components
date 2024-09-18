@@ -73,6 +73,7 @@ import '../render-element/RenderElement.js';
  * @cssprop --omni-modal-body-padding - Padding for modal body.
  * @cssprop --omni-modal-body-background - Background for modal body.
  * @cssprop --omni-modal-body-overflow - Overflow for modal body.
+ * @cssprop --omni-modal-body-min-width - Min width for modal body.
  *
  * @cssprop --omni-modal-no-header-body-border-top-radius - Top border radius for modal body when there is no header.
  * @cssprop --omni-modal-no-footer-body-border-bottom-radius - Bottom border radius for modal body when there is no footer.
@@ -293,6 +294,7 @@ export class Modal extends OmniElement {
                     background: var(--omni-modal-body-background, var(--omni-background-color));
                     line-height: 24px;
                     overflow: var(--omni-modal-body-overflow, auto);
+                    min-width: var(--omni-modal-body-min-width, auto);
                 }
 
                 .body[no-header] {                    

@@ -51,6 +51,8 @@ import '../icons/EyeVisible.icon.js';
  *
  * @cssprop --omni-pin-field-disabled-font-color - Pin field disabled font color.
  * @cssprop --omni-pin-field-error-font-color - Pin field error font color.
+ * 
+ * @cssprop --omni-pin-field-autofill-hover-transition - Pin field suggestions input hover color.
  */
 @customElement('omni-pin-field')
 export class PinField extends OmniFormElement {
@@ -280,6 +282,12 @@ export class PinField extends OmniFormElement {
                 
                 input[type='number'] {
                     -moz-appearance: textfield; /* Firefox */
+                }
+
+                /* Grant the ability to set the hover color when cursor hovers over auto selectable options */
+                input:-webkit-autofill,
+                input:-webkit-autofill:focus {
+                    transition: var(--omni-pin-field-autofill-hover-transition) !important;
                 }
 
             `

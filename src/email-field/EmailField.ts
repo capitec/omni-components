@@ -36,6 +36,8 @@ import { OmniFormElement } from '../core/OmniFormElement.js';
  *
  * @cssprop --omni-email-field-disabled-font-color - Email field disabled font color.
  * @cssprop --omni-email-field-error-font-color - Email field error font color.
+ * 
+ * @cssprop --omni-email-field-autofill-hover-transition - Email field suggestions input hover color.
  */
 @customElement('omni-email-field')
 export class EmailField extends OmniFormElement {
@@ -109,7 +111,13 @@ export class EmailField extends OmniFormElement {
 
                 .field.error {
                     color: var(--omni-email-field-error-font-color, var(--omni-font-color));
-                }   
+                }
+                
+                /* Grant the ability to set the hover color when cursor hovers over auto selectable options */
+                input:-webkit-autofill,
+                input:-webkit-autofill:focus {
+                    transition: var(--omni-email-field-autofill-hover-transition) !important;
+                }
             `
         ];
     }
