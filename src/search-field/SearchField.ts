@@ -141,7 +141,7 @@ export class SearchField extends OmniFormElement {
                 /* Grant the ability to set the hover color when cursor hovers over auto selectable options */
                 input:-webkit-autofill,
                 input:-webkit-autofill:focus {
-                    transition: var(--omni-search-field-autofill-hover-transition, background-color 0s 600000s, color 0s 600000s) !important;
+                    transition: var(--omni-search-field-autofill-hover-transition) !important;
                 }
                 
             `

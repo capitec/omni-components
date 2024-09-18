@@ -116,7 +116,7 @@ export class TextField extends OmniFormElement {
 
                 input:-webkit-autofill,
                 input:-webkit-autofill:focus {
-                    transition: var(--omni-text-field-autofill-hover-transition, background-color 0s 600000s, color 0s 600000s) !important;
+                    transition: var(--omni-text-field-autofill-hover-transition) !important;
                 }
 
             `
