@@ -31,6 +31,7 @@ test(`Email Field - Visual and Behaviour`, async ({ page }) => {
 
         const inputField = emailField.locator('#inputField');
 
+        // Update component value.
         const value = 'johndoe@gmail.com';
         await inputField.type(value);
 
