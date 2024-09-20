@@ -17,6 +17,7 @@ test(`Email Field - Visual and Behaviour`, async ({ page }) => {
         await page.goto('/components/email-field/');
         await page.evaluate(() => document.fonts.ready);
 
+        // Locate the email field component.
         const emailField = page.locator('[data-testid]').first();
         emailField.evaluate(async (t: EmailField) => {
             t.value = '';
