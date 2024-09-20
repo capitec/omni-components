@@ -35,7 +35,7 @@ import { ifDefined, OmniFormElement } from '../core/OmniFormElement.js';
  *
  * @cssprop --omni-number-field-disabled-font-color - Number field disabled font color.
  * @cssprop --omni-number-field-error-font-color - Number field error font color.
- * 
+ *
  * @cssprop --omni-number-field-autofill-hover-transition - Number field suggestions input hover color.
  */
 @customElement('omni-number-field')

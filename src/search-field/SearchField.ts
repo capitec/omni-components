@@ -52,7 +52,7 @@ import '../icons/Search.icon.js';
  * @cssprop --omni-search-field-search-icon-margin-left - Search field search icon left margin.
  *
  * @cssprop --omni-search-field-label-left-margin - Search field label left margin.
- * 
+ *
  * @cssprop --omni-search-field-autofill-hover-transition - Search field suggestions input hover color.
  *
  */

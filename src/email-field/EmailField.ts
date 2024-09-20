@@ -36,7 +36,7 @@ import { OmniFormElement } from '../core/OmniFormElement.js';
  *
  * @cssprop --omni-email-field-disabled-font-color - Email field disabled font color.
  * @cssprop --omni-email-field-error-font-color - Email field error font color.
- * 
+ *
  * @cssprop --omni-email-field-autofill-hover-transition - Email field suggestions input hover color.
  */
 @customElement('omni-email-field')
