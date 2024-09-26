@@ -87,6 +87,12 @@ export class SearchField extends OmniFormElement {
         this.value = input?.value;
     }
 
+    _blurOnEnter(e: KeyboardEvent) {
+        if (e.code === 'Enter' || e.keyCode === 13) {
+            (e.currentTarget as HTMLElement).blur();
+        }
+    }
+
     static override get styles() {
         return [
             super.styles,
