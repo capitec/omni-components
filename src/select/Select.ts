@@ -342,7 +342,7 @@ export class Select extends OmniFormElement {
     _togglePopup() {
         if (this._popUp) {
             this._popUp = false;
-            this._searchValue = undefined;
+            this._onSearchFieldClear();
             if (this._isMobile) {
                 const itemsDialog = this.renderRoot.querySelector<HTMLDialogElement>('#items-dialog');
                 if (itemsDialog) {
