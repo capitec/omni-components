@@ -86,7 +86,7 @@ const App = () => <OmniEmailField${args.label ? ` label='${args.label}'` : ''}${
         label: 'Max Length',
         maxLength: 5
     }
-}
+};
 
 export const Label = LabelStory<BaseArgs>('omni-email-field');
 export const Hint = HintStory<BaseArgs>('omni-email-field');
