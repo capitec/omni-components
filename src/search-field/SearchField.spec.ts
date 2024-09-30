@@ -52,6 +52,8 @@ test(`Search Field - Max Length Behaviour`, async ({ page }) => {
             t.maxLength = 4;
             await t.updateComplete;
         });
+
+        // Confirm that the component matches the provided screenshot.
         await expect(searchField).toHaveScreenshot('search-field.png');
 
         const inputFn = await mockEventListener(searchField, 'input');
