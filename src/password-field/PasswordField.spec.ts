@@ -74,6 +74,35 @@ test(`Password Field - Behaviour`, async ({ page }) => {
     });
 });
 
+test(`Password Field - Max Length Behaviour`, async ({ page }) => {
+    await withCoverage(page, async () => {
+        await page.goto('/components/password-field/');
+        await page.evaluate(() => document.fonts.ready);
+
+        const container = page.locator('.Max_Length');
+        const passwordField = container.locator('[data-testid]').first();
+        passwordField.evaluate(async (t: PasswordField) => {
+            t.value = '';
+            t.maxLength = 4;
+            await t.updateComplete;
+        });
+        await expect(passwordField).toHaveScreenshot('password-field.png');
+
+        const inputFn = await mockEventListener(passwordField, 'input');
+
+        const inputField = passwordField.locator('#inputField');
+
+        const typedValue = 'Tests';
+        const value = 'Test';
+        await inputField.type(typedValue);
+
+        await expect(passwordField).toHaveScreenshot('password-field-value.png');
+        await expect(inputField).toHaveValue(value);
+
+        await expect(inputFn).toBeCalledTimes(typedValue.length);
+    });
+});
+
 test('Password Field - Label Behaviour', testLabelBehaviour('omni-password-field'));
 test('Password Field - Hint Behaviour', testHintBehaviour('omni-password-field'));
 test('Password Field - Error Behaviour', testErrorBehaviour('omni-password-field'));

@@ -1,4 +1,5 @@
 import { html, nothing } from 'lit';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import {
     LabelStory,
@@ -16,12 +17,17 @@ import { ifNotEmpty } from '../utils/Directives.js';
 import { assignToSlot, ComponentStoryFormat, getSourceFromLit } from '../utils/StoryUtils.js';
 import './SearchField.js';
 
-export const Interactive: ComponentStoryFormat<BaseArgs> = {
-    render: (args: BaseArgs) => html`
+interface Args extends BaseArgs {
+    maxLength: number;
+}
+
+export const Interactive: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
         <omni-search-field
             data-testid="test-search-field"
             label="${ifNotEmpty(args.label)}"
             value="${args.value}"
+            max-length=${args.maxLength}
             hint="${ifNotEmpty(args.hint)}"
             error="${ifNotEmpty(args.error)}"
             ?disabled="${args.disabled}"
@@ -49,7 +55,35 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
         clearable: false,
         prefix: '',
         suffix: '',
-        clear: ''
+        clear: '',
+        maxLength: undefined
+    }
+};
+
+export const Max_Length: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
+        <omni-search-field
+            data-testid="test-search-field"
+            label="${ifNotEmpty(args.label)}"
+            value="${args.value}"
+            max-length=${ifDefined(args.maxLength)}>
+        </omni-search-field>
+    `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniSearchField } from "@capitec/omni-components-react/search-field";
+
+const App = () => <OmniSearchField${args.label ? ` label='${args.label}'` : ''}${args.value ? ` value='${args.value}'` : ''}${
+                args.maxLength ? ` max-length='${args.maxLength}'` : ''
+            }/>;`
+        }
+    ],
+    name: 'Max Length',
+    description: 'Limit the character input length based on the value provided.',
+    args: {
+        label: 'Max Length',
+        maxLength: 5
     }
 };
 

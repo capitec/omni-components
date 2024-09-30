@@ -1,4 +1,5 @@
 import { html, nothing } from 'lit';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import {
     LabelStory,
@@ -23,6 +24,7 @@ import '../icons/LockClosed.icon.js';
 interface Args extends BaseArgs {
     hide: string;
     show: string;
+    maxLength: number;
 }
 
 export const Interactive: ComponentStoryFormat<Args> = {
@@ -31,6 +33,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
       data-testid="test-password-field"
       label="${ifNotEmpty(args.label)}"
       value="${args.value}"
+      max-length=${args.maxLength}
       hint="${ifNotEmpty(args.hint)}"
       error="${ifNotEmpty(args.error)}"
       ?disabled="${args.disabled}"
@@ -63,6 +66,33 @@ export const Interactive: ComponentStoryFormat<Args> = {
         clear: '',
         hide: '',
         show: ''
+    }
+};
+
+export const Max_Length: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
+        <omni-password-field
+            data-testid="test-password-field"
+            label="${ifNotEmpty(args.label)}"
+            value="${args.value}"
+            max-length=${ifDefined(args.maxLength)}>
+        </omni-password-field>
+    `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniPasswordField } from "@capitec/omni-components-react/password-field";
+
+const App = () => <OmniPasswordField${args.label ? ` label='${args.label}'` : ''}${args.value ? ` value='${args.value}'` : ''}${
+                args.maxLength ? ` max-length='${args.maxLength}'` : ''
+            }/>;`
+        }
+    ],
+    name: 'Max Length',
+    description: 'Limit the character input length based on the value provided.',
+    args: {
+        label: 'Max Length',
+        maxLength: 5
     }
 };
 
