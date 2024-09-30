@@ -82,7 +82,7 @@ const App = () => <OmniTextField${args.label ? ` label='${args.label}'` : ''}${a
         }
     ],
     name: 'Max Length',
-    description: 'Limit the character input length based on the value provided.',
+    description: 'Limit the character input length of the text field based on the value provided',
     args: {
         label: 'Max Length',
         maxLength: 5,

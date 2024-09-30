@@ -81,7 +81,7 @@ const App = () => <OmniEmailField${args.label ? ` label='${args.label}'` : ''}${
         }
     ],
     name: 'Max Length',
-    description: 'Limit the character input length based on the value provided.',
+    description: 'Limit the character input length based on the value provided to the email field.',
     args: {
         label: 'Max Length',
         maxLength: 5

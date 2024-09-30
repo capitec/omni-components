@@ -88,19 +88,11 @@ const App = () => <OmniSearchField${args.label ? ` label='${args.label}'` : ''}$
 };
 
 export const Label = LabelStory<BaseArgs>('omni-search-field');
-
 export const Hint = HintStory<BaseArgs>('omni-search-field');
-
 export const Error_Label = ErrorStory<BaseArgs>('omni-search-field');
-
 export const Value = ValueStory<BaseArgs>('omni-search-field');
-
 export const Clearable = ClearableStory<BaseArgs>('omni-search-field', 'Clear my name');
-
 export const Custom_Clear_Slot = CustomClearableSlot<BaseArgs>('omni-search-field', 'Clear my name');
-
 export const Prefix = PrefixStory<BaseArgs>('omni-search-field');
-
 export const Suffix = SuffixStory<BaseArgs>('omni-search-field');
-
 export const Disabled = DisabledStory<BaseArgs>('omni-search-field');
