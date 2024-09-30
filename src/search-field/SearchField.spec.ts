@@ -49,7 +49,7 @@ test(`Search Field - Max Length Behaviour`, async ({ page }) => {
         const searchField = container.locator('[data-testid]').first();
         searchField.evaluate(async (t: SearchField) => {
             t.value = '';
-            t.maxLength = 5;
+            t.maxLength = 6;
             await t.updateComplete;
         });
 
