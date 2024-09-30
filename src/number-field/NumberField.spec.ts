@@ -60,6 +60,7 @@ test(`Number Field - Max Length Behaviour`, async ({ page }) => {
 
         const inputField = numberField.locator('#inputField');
 
+        // Update the value of the number field.
         const typedValue = '12345';
         const value = '1234';
         await inputField.type(typedValue);

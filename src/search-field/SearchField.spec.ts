@@ -49,7 +49,7 @@ test(`Search Field - Max Length Behaviour`, async ({ page }) => {
         const searchField = container.locator('[data-testid]').first();
         searchField.evaluate(async (t: SearchField) => {
             t.value = '';
-            t.maxLength = 4;
+            t.maxLength = 5;
             await t.updateComplete;
         });
 
@@ -60,8 +60,8 @@ test(`Search Field - Max Length Behaviour`, async ({ page }) => {
 
         const inputField = searchField.locator('#inputField');
 
-        const typedValue = 'Tests';
-        const value = 'Test';
+        const typedValue = 'Search and you shall find';
+        const value = 'Search';
         await inputField.type(typedValue);
 
         await expect(searchField).toHaveScreenshot('search-field-value.png');
