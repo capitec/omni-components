@@ -16,6 +16,7 @@ import { ifDefined, OmniFormElement } from '../core/OmniFormElement.js';
  * <omni-number-field
  *   label="Enter a value"
  *   value=12345
+ *   max-length: 5
  *   hint="Required"
  *   error="Field level error message"
  *   disabled>
@@ -49,6 +50,12 @@ export class NumberField extends OmniFormElement {
      */
     @property({ type: Boolean, reflect: true, attribute: 'no-native-keyboard' }) noNativeKeyboard?: boolean;
 
+    /**
+     * Maximum character input length.
+     * @attr [max-length]
+     */
+    @property({ type: Number, reflect: true, attribute: 'max-length' }) maxLength?: number;
+
     override connectedCallback() {
         super.connectedCallback();
         this.addEventListener('input', this._keyInput.bind(this), {
@@ -57,6 +64,15 @@ export class NumberField extends OmniFormElement {
         this.addEventListener('keydown', this._keyDown.bind(this), {
             capture: true
         });
+    }
+
+    // If a value is bound when the component is first updated slice the value based on the max length if set.
+    protected override async firstUpdated(): Promise<void> {
+        if (this.value !== null && this.value !== undefined) {
+            if (this.maxLength) {
+                this._inputElement!.value = String(this.value).slice(0, this.maxLength);
+            }
+        }
     }
 
     // Added for browsers that allow text values entered into a input when type is set to number.
@@ -87,6 +103,14 @@ export class NumberField extends OmniFormElement {
 
     _keyInput() {
         const input = this._inputElement as HTMLInputElement;
+
+        // If the input has a value and the max length property is set then slice the value according to the max length.
+        if (input?.value && this.maxLength) {
+            if (input.value.length > this.maxLength) {
+                input.value = input.value.slice(0, this.maxLength);
+            }
+        }
+
         this.value = input?.value;
     }
 

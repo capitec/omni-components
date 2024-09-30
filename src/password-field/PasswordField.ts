@@ -70,6 +70,12 @@ export class PasswordField extends OmniFormElement {
      */
     @property({ type: Boolean, reflect: true, attribute: 'no-native-keyboard' }) noNativeKeyboard?: boolean;
 
+    /**
+     * Maximum character input length.
+     * @attr [max-length]
+     */
+    @property({ type: Number, reflect: true, attribute: 'max-length' }) maxLength?: number;
+
     @query('#inputField')
     private _inputElement?: HTMLInputElement;
     @query('.container')
@@ -85,8 +91,13 @@ export class PasswordField extends OmniFormElement {
         });
     }
 
+    // If a value is bound when the component is first updated slice the value based on the max length if set.
     protected override async firstUpdated(): Promise<void> {
-        this._setInputValue();
+        if (this.value !== null && this.value !== undefined) {
+            if (this.maxLength) {
+                this._inputElement!.value = String(this.value).slice(0, this.maxLength);
+            }
+        }
     }
 
     protected override updated(_changedProperties: PropertyValueMap<never> | Map<PropertyKey, unknown>): void {
@@ -105,7 +116,13 @@ export class PasswordField extends OmniFormElement {
     // Set the value of the input component.
     _setInputValue() {
         if (this._inputElement) {
-            this._inputElement.value = this.value as string;
+            // If the input has a value and the max length property is set then slice the value according to the max length.
+            if (this._inputElement?.value && this.maxLength) {
+                if (this._inputElement.value.length > this.maxLength) {
+                    this._inputElement.value = this._inputElement.value.slice(0, this.maxLength);
+                }
+            }
+            this.value = this._inputElement?.value;
         }
     }
 
