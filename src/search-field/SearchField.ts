@@ -72,6 +72,9 @@ export class SearchField extends OmniFormElement {
         this.addEventListener('input', this._keyInput.bind(this), {
             capture: true
         });
+        this.addEventListener('keyup', this._blurOnEnter.bind(this), {
+            capture: true
+        });
     }
 
     override focus(options?: FocusOptions | undefined): void {
