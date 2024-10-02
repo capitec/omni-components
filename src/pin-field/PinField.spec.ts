@@ -104,6 +104,7 @@ test(`Pin Field - Max Length Behaviour`, async ({ page }) => {
 
         const inputField = pinField.locator('#inputField');
 
+        // The value typed in the pin field.
         const typedValue = '12345678910';
         const value = '1234';
         await inputField.type(typedValue);

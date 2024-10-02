@@ -1,4 +1,5 @@
 import { html, nothing } from 'lit';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import {
     LabelStory,
@@ -16,13 +17,17 @@ import { ifNotEmpty } from '../utils/Directives.js';
 import { assignToSlot, ComponentStoryFormat, getSourceFromLit } from '../utils/StoryUtils.js';
 
 import './EmailField.js';
+interface Args extends BaseArgs {
+    maxLength: number;
+}
 
-export const Interactive: ComponentStoryFormat<BaseArgs> = {
-    render: (args: BaseArgs) => html`
+export const Interactive: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
     <omni-email-field
       data-testid="test-email-field"
       label="${ifNotEmpty(args.label)}"
       value="${args.value}"
+      max-length=${ifDefined(args.maxLength)}
       hint="${ifNotEmpty(args.hint)}"
       error="${ifNotEmpty(args.error)}"
       ?disabled="${args.disabled}"
@@ -51,7 +56,35 @@ export const Interactive: ComponentStoryFormat<BaseArgs> = {
         clearable: false,
         prefix: '',
         suffix: '',
-        clear: ''
+        clear: '',
+        maxLength: undefined
+    }
+};
+
+export const Max_Length: ComponentStoryFormat<Args> = {
+    render: (args: Args) => html`
+        <omni-email-field
+            data-testid="test-email-field"
+            label="${ifNotEmpty(args.label)}"
+            value="${args.value}"
+            max-length=${ifDefined(args.maxLength)}>
+        </omni-email-field>
+    `,
+    frameworkSources: [
+        {
+            framework: 'React',
+            load: (args) => `import { OmniEmailField } from "@capitec/omni-components-react/email-field";
+
+const App = () => <OmniEmailField${args.label ? ` label='${args.label}'` : ''}${args.value ? ` value='${args.value}'` : ''}${
+                args.maxLength ? ` max-length='${args.maxLength}'` : ''
+            }/>;`
+        }
+    ],
+    name: 'Max Length',
+    description: 'Limit the character input length based on the value provided to the email field.',
+    args: {
+        label: 'Max Length',
+        maxLength: 5
     }
 };
 
