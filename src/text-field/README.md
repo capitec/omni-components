@@ -9,6 +9,7 @@ Control to input text.
   label="Enter a value"
   value="Hello World"
   hint="Required"
+  max-length: 5
   error="Field level error message"
   disabled>
 </omni-text-field>
@@ -26,6 +27,7 @@ Control to input text.
 | `hint`             | `hint`               |           | `string \| undefined`                            |         | Hint message to assist the user.                 |
 | `label`            | `label`              |           | `string \| undefined`                            |         | Text label.                                      |
 | `lang`             |                      |           | `string`                                         |         |                                                  |
+| `maxLength`        | `max-length`         |           | `number \| undefined`                            |         | Maximum character input length.                  |
 | `noNativeKeyboard` | `no-native-keyboard` |           | `boolean \| undefined`                           |         | Disables native on screen keyboards for the component. |
 | `override`         | `override`           |           |                                                  |         | Used to set the base direction of text for display |
 | `styles`           |                      | readonly  | `CSSResultGroup[]`                               |         |                                                  |

@@ -26,6 +26,7 @@ Password input control.
 | `hint`             | `hint`               |           | `string \| undefined`  |         | Hint message to assist the user.                 |
 | `label`            | `label`              |           | `string \| undefined`  |         | Text label.                                      |
 | `lang`             |                      |           | `string`               |         |                                                  |
+| `maxLength`        | `max-length`         |           | `number \| undefined`  |         | Maximum character input length.                  |
 | `noNativeKeyboard` | `no-native-keyboard` |           | `boolean \| undefined` |         | Disables native on screen keyboards for the component. |
 | `override`         | `override`           |           |                        |         | Override for the value property inherited from the OmniFormElement component with reflect set to false. |
 | `styles`           |                      | readonly  | `CSSResultGroup[]`     |         |                                                  |
