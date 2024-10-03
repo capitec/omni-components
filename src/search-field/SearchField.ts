@@ -53,6 +53,8 @@ import '../icons/Search.icon.js';
  *
  * @cssprop --omni-search-field-label-left-margin - Search field label left margin.
  *
+ * @cssprop --omni-search-field-autofill-hover-transition - Search field suggestions input hover color.
+ *
  */
 @customElement('omni-search-field')
 export class SearchField extends OmniFormElement {
@@ -65,11 +67,29 @@ export class SearchField extends OmniFormElement {
      */
     @property({ type: Boolean, reflect: true, attribute: 'no-native-keyboard' }) noNativeKeyboard?: boolean;
 
+    /**
+     * Maximum character input length.
+     * @attr [max-length]
+     */
+    @property({ type: Number, reflect: true, attribute: 'max-length' }) maxLength?: number;
+
     override connectedCallback() {
         super.connectedCallback();
         this.addEventListener('input', this._keyInput.bind(this), {
             capture: true
         });
+        this.addEventListener('keyup', this._blurOnEnter.bind(this), {
+            capture: true
+        });
+    }
+
+    // If a value is bound when the component is first updated slice the value based on the max length.
+    protected override async firstUpdated(): Promise<void> {
+        if (this.value !== null && this.value !== undefined) {
+            if (this.maxLength) {
+                this._inputElement!.value = String(this.value).slice(0, this.maxLength);
+            }
+        }
     }
 
     override focus(options?: FocusOptions | undefined): void {
@@ -82,7 +102,19 @@ export class SearchField extends OmniFormElement {
 
     _keyInput() {
         const input = this._inputElement;
+        // If the input has a value and the max length property is set then slice the value according to the max length.
+        if (input?.value && this.maxLength) {
+            if (input.value.length > this.maxLength) {
+                input.value = input.value.slice(0, this.maxLength);
+            }
+        }
         this.value = input?.value;
+    }
+
+    _blurOnEnter(e: KeyboardEvent) {
+        if (e.code === 'Enter' || e.keyCode === 13) {
+            (e.currentTarget as HTMLElement).blur();
+        }
     }
 
     static override get styles() {
@@ -134,6 +166,12 @@ export class SearchField extends OmniFormElement {
                 input[type="search"]::-webkit-search-results-button,
                 input[type="search"]::-webkit-search-results-decoration {
                   -webkit-appearance:none;
+                }
+
+                /* Grant the ability to set the hover color when cursor hovers over auto selectable options */
+                input:-webkit-autofill,
+                input:-webkit-autofill:focus {
+                    transition: var(--omni-search-field-autofill-hover-transition) !important;
                 }
                 
             `

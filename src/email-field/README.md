@@ -23,6 +23,7 @@ Email input control, used in forms for input validation and to display correct v
 | `hint`             | `hint`               |           | `string \| undefined`                            |         | Hint message to assist the user.                 |
 | `label`            | `label`              |           | `string \| undefined`                            |         | Text label.                                      |
 | `lang`             |                      |           | `string`                                         |         |                                                  |
+| `maxLength`        | `max-length`         |           | `number \| undefined`                            |         | Maximum character input length.                  |
 | `noNativeKeyboard` | `no-native-keyboard` |           | `boolean \| undefined`                           |         | Disables native on screen keyboards for the component. |
 | `override`         | `override`           |           |                                                  |         | Used to set the base direction of text for display |
 | `styles`           |                      | readonly  | `CSSResultGroup[]`                               |         |                                                  |
@@ -57,6 +58,7 @@ Email input control, used in forms for input validation and to display correct v
 | `--omni-container-font-family`                   | Container font family.                         |
 | `--omni-container-height`                        | Container height.                              |
 | `--omni-container-width`                         | Container width.                               |
+| `--omni-email-field-autofill-hover-transition`   | Email field suggestions input hover color.     |
 | `--omni-email-field-disabled-font-color`         | Email field disabled font color.               |
 | `--omni-email-field-error-font-color`            | Email field error font color.                  |
 | `--omni-email-field-font-color`                  | Email field font color.                        |

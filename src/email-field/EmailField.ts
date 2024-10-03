@@ -17,6 +17,7 @@ import { OmniFormElement } from '../core/OmniFormElement.js';
  * <omni-email-field
  *   label="Enter a value"
  *   value="JohnDoe@mail.com"
+ *   max-length: 5
  *   hint="Required"
  *   error="Field level error message"
  *   disabled>
@@ -36,6 +37,8 @@ import { OmniFormElement } from '../core/OmniFormElement.js';
  *
  * @cssprop --omni-email-field-disabled-font-color - Email field disabled font color.
  * @cssprop --omni-email-field-error-font-color - Email field error font color.
+ *
+ * @cssprop --omni-email-field-autofill-hover-transition - Email field suggestions input hover color.
  */
 @customElement('omni-email-field')
 export class EmailField extends OmniFormElement {
@@ -48,6 +51,12 @@ export class EmailField extends OmniFormElement {
      */
     @property({ type: Boolean, reflect: true, attribute: 'no-native-keyboard' }) noNativeKeyboard?: boolean;
 
+    /**
+     * Maximum character input length.
+     * @attr [max-length]
+     */
+    @property({ type: Number, reflect: true, attribute: 'max-length' }) maxLength?: number;
+
     override connectedCallback() {
         super.connectedCallback();
         this.addEventListener('input', this._keyInput.bind(this), {
@@ -56,6 +65,15 @@ export class EmailField extends OmniFormElement {
         this.addEventListener('keyup', this._blurOnEnter.bind(this), {
             capture: true
         });
+    }
+
+    // If a value is bound when the component is first updated slice the value based on the max length.
+    protected override async firstUpdated(): Promise<void> {
+        if (this.value !== null && this.value !== undefined) {
+            if (this.maxLength) {
+                this._inputElement!.value = String(this.value).slice(0, this.maxLength);
+            }
+        }
     }
 
     override focus(options?: FocusOptions | undefined): void {
@@ -74,6 +92,12 @@ export class EmailField extends OmniFormElement {
 
     _keyInput() {
         const input = this._inputElement as HTMLInputElement;
+        // If the input has a value and the max length property is set then slice the value according to the max length.
+        if (input?.value && this.maxLength) {
+            if (input.value.length > this.maxLength) {
+                input.value = input.value.slice(0, this.maxLength);
+            }
+        }
         this.value = input.value;
     }
 
@@ -109,7 +133,13 @@ export class EmailField extends OmniFormElement {
 
                 .field.error {
                     color: var(--omni-email-field-error-font-color, var(--omni-font-color));
-                }   
+                }
+                
+                /* Grant the ability to set the hover color when cursor hovers over auto selectable options */
+                input:-webkit-autofill,
+                input:-webkit-autofill:focus {
+                    transition: var(--omni-email-field-autofill-hover-transition) !important;
+                }
             `
         ];
     }

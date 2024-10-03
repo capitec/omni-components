@@ -8,6 +8,7 @@ Input control to enter a single line of numbers.
 <omni-number-field
   label="Enter a value"
   value=12345
+  max-length: 5
   hint="Required"
   error="Field level error message"
   disabled>
@@ -26,6 +27,7 @@ Input control to enter a single line of numbers.
 | `hint`             | `hint`               |           | `string \| undefined`                            |         | Hint message to assist the user.                 |
 | `label`            | `label`              |           | `string \| undefined`                            |         | Text label.                                      |
 | `lang`             |                      |           | `string`                                         |         |                                                  |
+| `maxLength`        | `max-length`         |           | `number \| undefined`                            |         | Maximum character input length.                  |
 | `noNativeKeyboard` | `no-native-keyboard` |           | `boolean \| undefined`                           |         | Disables native on screen keyboards for the component. |
 | `override`         | `override`           |           |                                                  |         | Used to set the base direction of text for display |
 | `styles`           |                      | readonly  | `CSSResultGroup[]`                               |         |                                                  |
@@ -117,6 +119,7 @@ Input control to enter a single line of numbers.
 | `--omni-form-layout-border-radius`               | Layout border radius.                          |
 | `--omni-form-layout-height`                      | Layout height.                                 |
 | `--omni-form-layout-width`                       | Layout width.                                  |
+| `--omni-number-field-autofill-hover-transition`  | Number field suggestions input hover color.    |
 | `--omni-number-field-disabled-font-color`        | Number field disabled font color.              |
 | `--omni-number-field-error-font-color`           | Number field error font color.                 |
 | `--omni-number-field-font-color`                 | Number field font color.                       |

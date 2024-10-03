@@ -17,6 +17,7 @@ test(`Email Field - Visual and Behaviour`, async ({ page }) => {
         await page.goto('/components/email-field/');
         await page.evaluate(() => document.fonts.ready);
 
+        // Locate the email field component.
         const emailField = page.locator('[data-testid]').first();
         emailField.evaluate(async (t: EmailField) => {
             t.value = '';
@@ -30,6 +31,7 @@ test(`Email Field - Visual and Behaviour`, async ({ page }) => {
 
         const inputField = emailField.locator('#inputField');
 
+        // Update component value.
         const value = 'johndoe@gmail.com';
         await inputField.type(value);
 
@@ -37,6 +39,37 @@ test(`Email Field - Visual and Behaviour`, async ({ page }) => {
 
         await expect(inputFn).toBeCalledTimes(value.length);
         await expect(emailField).toHaveScreenshot('email-field-value.png');
+    });
+});
+
+test(`Email Field - Max Length Behaviour`, async ({ page }) => {
+    await withCoverage(page, async () => {
+        await page.goto('/components/email-field/');
+        await page.evaluate(() => document.fonts.ready);
+
+        const container = page.locator('.Max_Length');
+        const emailField = container.locator('[data-testid]').first();
+        emailField.evaluate(async (t: EmailField) => {
+            t.value = '';
+            t.maxLength = 4;
+            await t.updateComplete;
+        });
+
+        // Confirm that the component matches the provided screenshot.
+        await expect(emailField).toHaveScreenshot('email-field.png');
+
+        const inputFn = await mockEventListener(emailField, 'input');
+
+        const inputField = emailField.locator('#inputField');
+
+        const typedValue = 'mail@mail.coo';
+        const value = 'mail';
+        await inputField.type(typedValue);
+
+        await expect(emailField).toHaveScreenshot('email-field-value.png');
+        await expect(inputField).toHaveValue(value);
+
+        await expect(inputFn).toBeCalledTimes(typedValue.length);
     });
 });
 

@@ -26,6 +26,7 @@ Search input control.
 | `hint`             | `hint`               |           | `string \| undefined`                            |         | Hint message to assist the user.                 |
 | `label`            | `label`              |           | `string \| undefined`                            |         | Text label.                                      |
 | `lang`             |                      |           | `string`                                         |         |                                                  |
+| `maxLength`        | `max-length`         |           | `number \| undefined`                            |         | Maximum character input length.                  |
 | `noNativeKeyboard` | `no-native-keyboard` |           | `boolean \| undefined`                           |         | Disables native on screen keyboards for the component. |
 | `override`         | `override`           |           |                                                  |         | Used to set the base direction of text for display |
 | `styles`           |                      | readonly  | `CSSResultGroup[]`                               |         |                                                  |
@@ -118,6 +119,7 @@ Search input control.
 | `--omni-form-layout-border-radius`               | Layout border radius.                          |
 | `--omni-form-layout-height`                      | Layout height.                                 |
 | `--omni-form-layout-width`                       | Layout width.                                  |
+| `--omni-search-field-autofill-hover-transition`  | Search field suggestions input hover color.    |
 | `--omni-search-field-clear-icon-color`           | Search field clear icon color.                 |
 | `--omni-search-field-clear-icon-width`           | Search field clear icon width.                 |
 | `--omni-search-field-control-margin-left`        | Search field control left margin.              |
