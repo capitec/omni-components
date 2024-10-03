@@ -17,6 +17,7 @@ test(`Number Field - Visual and Behaviour`, async ({ page }) => {
         await page.goto('/components/number-field/');
         await page.evaluate(() => document.fonts.ready);
 
+        // Locate number field component.
         const numberField = page.locator('[data-testid]').first();
         numberField.evaluate(async (t: NumberField) => {
             t.value = '';

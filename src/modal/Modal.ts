@@ -53,6 +53,7 @@ import '../render-element/RenderElement.js';
  * @cssprop --omni-modal-container-padding - Padding for modal content container.
  * @cssprop --omni-modal-container-box-shadow - Box shadow for modal content container.
  * @cssprop --omni-modal-max-width - Max width for modal content container.
+ * @cssprop --omni-modal-min-width - Min width for modal content container.
  * @cssprop --omni-modal-max-height - Max height for modal content container.
  *
  * @cssprop --omni-modal-header-font-color - Font color for modal header.
@@ -254,6 +255,7 @@ export class Modal extends OmniElement {
                     background: transparent;
                     box-shadow: var(--omni-modal-container-box-shadow);
                     max-width: var(--omni-modal-max-width,100%);
+                    min-width: var(--omni-modal-min-width, auto);
                     max-height: var(--omni-modal-max-height, 100%);
                 }
 

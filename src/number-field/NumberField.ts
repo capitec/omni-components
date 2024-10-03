@@ -36,6 +36,8 @@ import { ifDefined, OmniFormElement } from '../core/OmniFormElement.js';
  *
  * @cssprop --omni-number-field-disabled-font-color - Number field disabled font color.
  * @cssprop --omni-number-field-error-font-color - Number field error font color.
+ *
+ * @cssprop --omni-number-field-autofill-hover-transition - Number field suggestions input hover color.
  */
 @customElement('omni-number-field')
 export class NumberField extends OmniFormElement {
@@ -156,6 +158,12 @@ export class NumberField extends OmniFormElement {
 
                 input[type='number'] {
                 -moz-appearance: textfield; /* Firefox */
+                }
+
+                /* Grant the ability to set the hover color when cursor hovers over auto selectable options */
+                input:-webkit-autofill,
+                input:-webkit-autofill:focus {
+                    transition: var(--omni-number-field-autofill-hover-transition) !important;
                 }
             `
         ];

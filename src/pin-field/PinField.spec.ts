@@ -17,6 +17,7 @@ test(`Pin Field - Visual and Behaviour`, async ({ page }) => {
         await page.goto('/components/pin-field/');
         await page.evaluate(() => document.fonts.ready);
 
+        // Locate the pin field component
         const pinField = page.locator('[data-testid]').first();
         pinField.evaluate(async (t: PinField) => {
             t.value = '';
