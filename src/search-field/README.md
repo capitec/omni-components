@@ -119,6 +119,7 @@ Search input control.
 | `--omni-form-layout-border-radius`               | Layout border radius.                          |
 | `--omni-form-layout-height`                      | Layout height.                                 |
 | `--omni-form-layout-width`                       | Layout width.                                  |
+| `--omni-search-field-autofill-hover-transition`  | Search field suggestions input hover color.    |
 | `--omni-search-field-clear-icon-color`           | Search field clear icon color.                 |
 | `--omni-search-field-clear-icon-width`           | Search field clear icon width.                 |
 | `--omni-search-field-control-margin-left`        | Search field control left margin.              |

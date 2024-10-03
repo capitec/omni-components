@@ -119,6 +119,7 @@ Input control to enter a single line of numbers.
 | `--omni-form-layout-border-radius`               | Layout border radius.                          |
 | `--omni-form-layout-height`                      | Layout height.                                 |
 | `--omni-form-layout-width`                       | Layout width.                                  |
+| `--omni-number-field-autofill-hover-transition`  | Number field suggestions input hover color.    |
 | `--omni-number-field-disabled-font-color`        | Number field disabled font color.              |
 | `--omni-number-field-error-font-color`           | Number field error font color.                 |
 | `--omni-number-field-font-color`                 | Number field font color.                       |

@@ -122,6 +122,7 @@ Input control to enter a masked numeric value.
 | `--omni-form-layout-border-radius`               | Layout border radius.                          |
 | `--omni-form-layout-height`                      | Layout height.                                 |
 | `--omni-form-layout-width`                       | Layout width.                                  |
+| `--omni-pin-field-autofill-hover-transition`     | Pin field suggestions input hover color.       |
 | `--omni-pin-field-control-padding-bottom`        | Pin field control padding bottom.              |
 | `--omni-pin-field-control-padding-left`          | Pin field control padding left.                |
 | `--omni-pin-field-control-padding-right`         | Pin field control padding right.               |
