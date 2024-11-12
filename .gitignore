@@ -43,3 +43,5 @@ themes-list.json
 /test-results/
 /playwright-report/
 /playwright/.cache/
+
+debug.log
