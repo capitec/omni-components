@@ -27,7 +27,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
       data-testid="test-email-field"
       label="${ifNotEmpty(args.label)}"
       value="${args.value}"
-      max-length=${args.maxLength}
+      max-length=${ifDefined(args.maxLength)}
       hint="${ifNotEmpty(args.hint)}"
       error="${ifNotEmpty(args.error)}"
       ?disabled="${args.disabled}"
@@ -81,12 +81,12 @@ const App = () => <OmniEmailField${args.label ? ` label='${args.label}'` : ''}${
         }
     ],
     name: 'Max Length',
-    description: 'Limit the character input length based on the value provided.',
+    description: 'Limit the character input length based on the value provided to the email field.',
     args: {
         label: 'Max Length',
         maxLength: 5
     }
-}
+};
 
 export const Label = LabelStory<BaseArgs>('omni-email-field');
 export const Hint = HintStory<BaseArgs>('omni-email-field');

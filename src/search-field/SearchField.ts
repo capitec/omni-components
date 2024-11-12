@@ -52,7 +52,7 @@ import '../icons/Search.icon.js';
  * @cssprop --omni-search-field-search-icon-margin-left - Search field search icon left margin.
  *
  * @cssprop --omni-search-field-label-left-margin - Search field label left margin.
- * 
+ *
  * @cssprop --omni-search-field-autofill-hover-transition - Search field suggestions input hover color.
  *
  */
@@ -76,6 +76,9 @@ export class SearchField extends OmniFormElement {
     override connectedCallback() {
         super.connectedCallback();
         this.addEventListener('input', this._keyInput.bind(this), {
+            capture: true
+        });
+        this.addEventListener('keyup', this._blurOnEnter.bind(this), {
             capture: true
         });
     }
@@ -106,6 +109,12 @@ export class SearchField extends OmniFormElement {
             }
         }
         this.value = input?.value;
+    }
+
+    _blurOnEnter(e: KeyboardEvent) {
+        if (e.code === 'Enter' || e.keyCode === 13) {
+            (e.currentTarget as HTMLElement).blur();
+        }
     }
 
     static override get styles() {

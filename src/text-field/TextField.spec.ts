@@ -19,6 +19,7 @@ test(`Text Field - Visual and Behaviour`, async ({ page }) => {
 
         await page.waitForSelector('[data-testid]', {});
 
+        // Locate text field component.
         const textField = page.locator('[data-testid]').first();
         textField.evaluate(async (t: TextField) => {
             t.value = '';
@@ -53,6 +54,8 @@ test(`Text Field - Max Length Behaviour`, async ({ page }) => {
             t.maxLength = 4;
             await t.updateComplete;
         });
+
+        // Confirm that the component matches the provided screenshot.
         await expect(textField).toHaveScreenshot('text-field.png');
 
         const inputFn = await mockEventListener(textField, 'input');

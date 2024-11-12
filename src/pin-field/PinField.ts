@@ -51,7 +51,7 @@ import '../icons/EyeVisible.icon.js';
  *
  * @cssprop --omni-pin-field-disabled-font-color - Pin field disabled font color.
  * @cssprop --omni-pin-field-error-font-color - Pin field error font color.
- * 
+ *
  * @cssprop --omni-pin-field-autofill-hover-transition - Pin field suggestions input hover color.
  */
 @customElement('omni-pin-field')

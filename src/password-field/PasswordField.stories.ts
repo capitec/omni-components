@@ -33,7 +33,7 @@ export const Interactive: ComponentStoryFormat<Args> = {
       data-testid="test-password-field"
       label="${ifNotEmpty(args.label)}"
       value="${args.value}"
-      max-length=${args.maxLength}
+      max-length=${ifDefined(args.maxLength)}
       hint="${ifNotEmpty(args.hint)}"
       error="${ifNotEmpty(args.error)}"
       ?disabled="${args.disabled}"
@@ -126,7 +126,7 @@ const App = () => <OmniPasswordField${args.label ? ` label='${args.label}'` : ''
         }
     ],
     name: 'Custom Icon Slot',
-    description: 'Set html content to display as the visibility indicators of the field.',
+    description: 'Set html content to display as the visibility indicators of the password field.',
     args: {
         label: 'Custom Icon Slot'
     }

@@ -113,16 +113,13 @@ export class PasswordField extends OmniFormElement {
         }
     }
 
-    // Set the value of the input component.
     _setInputValue() {
         if (this._inputElement) {
-            // If the input has a value and the max length property is set then slice the value according to the max length.
-            if (this._inputElement?.value && this.maxLength) {
-                if (this._inputElement.value.length > this.maxLength) {
-                    this._inputElement.value = this._inputElement.value.slice(0, this.maxLength);
-                }
+            if (this.maxLength) {
+                this._inputElement.value = this.value?.slice(0, this.maxLength) as string;
+            } else {
+                this._inputElement.value = this.value as string;
             }
-            this.value = this._inputElement?.value;
         }
     }
 
