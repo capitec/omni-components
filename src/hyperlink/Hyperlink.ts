@@ -88,6 +88,11 @@ export class Hyperlink extends OmniElement {
         this.addEventListener('click', this._click.bind(this));
     }
 
+    override disconnectedCallback() {
+        this.removeEventListener('click', this._click.bind(this));
+        super.disconnectedCallback();
+    }
+
     _click(e: MouseEvent) {
         if (this.disabled) {
             return e.stopImmediatePropagation();

@@ -126,6 +126,11 @@ export class Check extends OmniElement {
         this.addEventListener('click', this._click);
     }
 
+    override disconnectedCallback(): void {
+        this.removeEventListener('click', this._click);
+        super.disconnectedCallback();
+    }
+
     override focus() {
         this.shadowRoot?.getElementById('content')?.focus();
     }

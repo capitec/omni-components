@@ -135,13 +135,12 @@ export class DatePicker extends OmniFormElement {
     }
 
     override disconnectedCallback(): void {
-        super.disconnectedCallback();
-
         window.removeEventListener('click', this._windowClickBound);
         window.removeEventListener('resize', this._checkForBottomOfScreenBound);
         window.removeEventListener('scroll', this._checkForBottomOfScreenBound);
         window.removeEventListener('resize', this._checkForMobileBound);
         window.removeEventListener('scroll', this._checkForMobileBound);
+        super.disconnectedCallback();
     }
 
     // Update properties of the Date picker component if user provides a value to the value property or if the locale property is updated.

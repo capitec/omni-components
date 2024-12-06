@@ -119,6 +119,19 @@ export class CurrencyField extends OmniFormElement {
         });
     }
 
+    override disconnectedCallback(): void {
+        this.removeEventListener('click', this._onClickInput.bind(this), true);
+        this.removeEventListener('focus', this._onFocusInput.bind(this), true);
+        this.removeEventListener('blur', this._onBlur.bind(this), true);
+        // Used instead of keydown to catch inputs for mobile devices.
+        this.removeEventListener('beforeinput', this._beforeInput.bind(this), true);
+        // Used to catch and format paste actions.
+        this.removeEventListener('paste', this._onPaste.bind(this), true);
+        // Used to make the component blur when enter key is pressed on a mobile keyboard
+        this.removeEventListener('keyup', this._blurOnEnter.bind(this), true);
+        super.disconnectedCallback();
+    }
+
     // Format the bound value.
     protected override async firstUpdated(): Promise<void> {
         if (this.value !== null && this.value !== undefined) {

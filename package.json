@@ -1,6 +1,6 @@
 {
     "name": "@capitec/omni-components",
-    "version": "0.9.14",
+    "version": "0.9.15",
     "type": "module",
     "description": "Modern UI component library for mobile and web",
     "scripts": {
@@ -78,7 +78,12 @@
         "mobile-field"
     ],
     "exports": {
-        "./*": "./dist/*/index.js"
+        "./*": {
+            "import": {
+                "types": "./*/index.d.ts",
+                "default": "./dist/*/index.js"
+            }
+        }
     },
     "repository": {
         "type": "git",
