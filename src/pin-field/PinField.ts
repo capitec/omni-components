@@ -86,16 +86,32 @@ export class PinField extends OmniFormElement {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private isWebkit?: boolean;
 
+    _boundBeforeInputEventListener: (e: InputEvent) => void;
+    _boundOnInputEventListener: EventListener;
+    _boundOnKeyUpEventListener: (e: KeyboardEvent) => void;
+
+    /**
+     * Initialises the component.
+     *
+     * @hideconstructor
+     */
+    constructor() {
+        super();
+        this._boundBeforeInputEventListener = this._beforeInput.bind(this);
+        this._boundOnInputEventListener = this._onInput.bind(this);
+        this._boundOnKeyUpEventListener = this._blurOnEnter.bind(this);
+    }
+
     override connectedCallback() {
         super.connectedCallback();
         // Used instead of keydown to catch inputs for mobile devices.
-        this.addEventListener('beforeinput', this._beforeInput.bind(this), {
+        this.addEventListener('beforeinput', this._boundBeforeInputEventListener, {
             capture: true
         });
-        this.addEventListener('input', this._onInput.bind(this), {
+        this.addEventListener('input', this._boundOnInputEventListener, {
             capture: true
         });
-        this.addEventListener('keyup', this._blurOnEnter.bind(this), {
+        this.addEventListener('keyup', this._boundOnKeyUpEventListener, {
             capture: true
         });
     }

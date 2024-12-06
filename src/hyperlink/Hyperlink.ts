@@ -83,13 +83,25 @@ export class Hyperlink extends OmniElement {
      */
     @property({ type: String, reflect: true }) size?: string;
 
+    _boundClickEventListener: (e: MouseEvent) => void;
+
+    /**
+     * Initialises the component.
+     *
+     * @hideconstructor
+     */
+    constructor() {
+        super();
+        this._boundClickEventListener = this._click.bind(this);
+    }
+
     override connectedCallback() {
         super.connectedCallback();
-        this.addEventListener('click', this._click.bind(this));
+        this.addEventListener('click', this._boundClickEventListener);
     }
 
     override disconnectedCallback() {
-        this.removeEventListener('click', this._click.bind(this));
+        this.removeEventListener('click', this._boundClickEventListener);
         super.disconnectedCallback();
     }
 

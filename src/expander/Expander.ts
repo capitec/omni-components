@@ -98,16 +98,28 @@ export class Expander extends OmniElement {
      */
     @property({ type: String, reflect: true, attribute: 'button-alignment' }) buttonAlignment: 'left' | 'right' = 'right';
 
+    _boundAnimationEndEventListener: EventListener;
+
+    /**
+     * Initialises the component.
+     *
+     * @hideconstructor
+     */
+    constructor() {
+        super();
+        this._boundAnimationEndEventListener = this._animationCompleted.bind(this);
+    }
+
     override connectedCallback(): void {
         super.connectedCallback();
-        this.addEventListener('animationend', this._animationCompleted.bind(this), {
+        this.addEventListener('animationend', this._boundAnimationEndEventListener, {
             capture: true
         });
     }
 
     override disconnectedCallback() {
         // Stop listening for child label change events.
-        this.removeEventListener(`animationend`, this._animationCompleted.bind(this), true);
+        this.removeEventListener(`animationend`, this._boundAnimationEndEventListener, true);
 
         // Ensure the component is cleaned up correctly.
         super.disconnectedCallback();

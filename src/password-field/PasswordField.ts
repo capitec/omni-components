@@ -81,19 +81,33 @@ export class PasswordField extends OmniFormElement {
     @query('.container')
     private container?: HTMLDivElement;
 
+    _boundInputEventListener: EventListener;
+    _boundFocusEventListener: EventListener;
+
+    /**
+     * Initialises the component.
+     *
+     * @hideconstructor
+     */
+    constructor() {
+        super();
+        this._boundInputEventListener = this._keyInput.bind(this);
+        this._boundFocusEventListener = this._focusInput.bind(this);
+    }
+
     override connectedCallback() {
         super.connectedCallback();
-        this.addEventListener('input', this._keyInput.bind(this), {
+        this.addEventListener('input', this._boundInputEventListener, {
             capture: true
         });
-        this.addEventListener('focus', this._focusInput.bind(this), {
+        this.addEventListener('focus', this._boundFocusEventListener, {
             capture: true
         });
     }
 
     override disconnectedCallback() {
-        this.removeEventListener('input', this._keyInput.bind(this), true);
-        this.removeEventListener('focus', this._focusInput.bind(this), true);
+        this.removeEventListener('input', this._boundInputEventListener, true);
+        this.removeEventListener('focus', this._boundFocusEventListener, true);
         super.disconnectedCallback();
     }
 
