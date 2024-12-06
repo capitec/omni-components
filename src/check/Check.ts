@@ -127,8 +127,8 @@ export class Check extends OmniElement {
     }
 
     override disconnectedCallback(): void {
-        super.disconnectedCallback();
         this.removeEventListener('click', this._click);
+        super.disconnectedCallback();
     }
 
     override focus() {

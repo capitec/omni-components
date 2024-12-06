@@ -293,11 +293,10 @@ export class Select extends OmniFormElement {
     }
 
     override disconnectedCallback(): void {
-        super.disconnectedCallback();
-
         window.removeEventListener('click', this._windowClickBound);
         window.removeEventListener('resize', this._checkScreenDimensionsBound);
         window.removeEventListener('scroll', this._checkScreenDimensionsBound);
+        super.disconnectedCallback();
     }
 
     _inputClick(e: Event) {

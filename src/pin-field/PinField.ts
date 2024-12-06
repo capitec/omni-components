@@ -101,11 +101,11 @@ export class PinField extends OmniFormElement {
     }
 
     override disconnectedCallback() {
-        super.disconnectedCallback();
         // Used instead of keydown to catch inputs for mobile devices.
         this.removeEventListener('beforeinput', this._beforeInput.bind(this), true);
         this.removeEventListener('input', this._onInput.bind(this), true);
         this.removeEventListener('keyup', this._blurOnEnter.bind(this), true);
+        super.disconnectedCallback();
     }
 
     // Added for non webkit supporting browsers and to stop the component from having a non-valid value (non-numeric) value bound.

@@ -92,9 +92,9 @@ export class PasswordField extends OmniFormElement {
     }
 
     override disconnectedCallback() {
-        super.disconnectedCallback();
         this.removeEventListener('input', this._keyInput.bind(this), true);
         this.removeEventListener('focus', this._focusInput.bind(this), true);
+        super.disconnectedCallback();
     }
 
     // If a value is bound when the component is first updated slice the value based on the max length if set.

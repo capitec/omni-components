@@ -56,8 +56,8 @@ export class ColorField extends OmniFormElement {
     }
 
     override disconnectedCallback() {
-        super.disconnectedCallback();
         this.removeEventListener('input', this._keyInput.bind(this), true);
+        super.disconnectedCallback();
     }
 
     _keyInput() {

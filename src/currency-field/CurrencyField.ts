@@ -120,7 +120,6 @@ export class CurrencyField extends OmniFormElement {
     }
 
     override disconnectedCallback(): void {
-        super.disconnectedCallback();
         this.removeEventListener('click', this._onClickInput.bind(this), true);
         this.removeEventListener('focus', this._onFocusInput.bind(this), true);
         this.removeEventListener('blur', this._onBlur.bind(this), true);
@@ -130,6 +129,7 @@ export class CurrencyField extends OmniFormElement {
         this.removeEventListener('paste', this._onPaste.bind(this), true);
         // Used to make the component blur when enter key is pressed on a mobile keyboard
         this.removeEventListener('keyup', this._blurOnEnter.bind(this), true);
+        super.disconnectedCallback();
     }
 
     // Format the bound value.
