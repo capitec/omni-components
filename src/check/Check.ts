@@ -120,14 +120,26 @@ export class Check extends OmniElement {
      */
     @property({ type: Boolean, reflect: true }) indeterminate?: boolean;
 
+    _boundClickEventListener: (e: MouseEvent) => void;
+
+    /**
+     * Initialises the component.
+     *
+     * @hideconstructor
+     */
+    constructor() {
+        super();
+        this._boundClickEventListener = this._click;
+    }
+
     override connectedCallback(): void {
         super.connectedCallback();
         this.tabIndex = this.disabled ? -1 : 0;
-        this.addEventListener('click', this._click);
+        this.addEventListener('click', this._boundClickEventListener);
     }
 
     override disconnectedCallback(): void {
-        this.removeEventListener('click', this._click);
+        this.removeEventListener('click', this._boundClickEventListener);
         super.disconnectedCallback();
     }
 

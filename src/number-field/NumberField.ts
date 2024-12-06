@@ -56,19 +56,33 @@ export class NumberField extends OmniFormElement {
      */
     @property({ type: Number, reflect: true, attribute: 'max-length' }) maxLength?: number;
 
+    _boundInputEventListener: EventListener;
+    _boundKeyDownEventListener: (e: KeyboardEvent) => void;
+
+    /**
+     * Initialises the component.
+     *
+     * @hideconstructor
+     */
+    constructor() {
+        super();
+        this._boundInputEventListener = this._keyInput.bind(this);
+        this._boundKeyDownEventListener = this._keyDown.bind(this);
+    }
+
     override connectedCallback() {
         super.connectedCallback();
-        this.addEventListener('input', this._keyInput.bind(this), {
+        this.addEventListener('input', this._boundInputEventListener, {
             capture: true
         });
-        this.addEventListener('keydown', this._keyDown.bind(this), {
+        this.addEventListener('keydown', this._boundKeyDownEventListener, {
             capture: true
         });
     }
 
     override disconnectedCallback() {
-        this.removeEventListener('input', this._keyInput.bind(this), true);
-        this.removeEventListener('keydown', this._keyDown.bind(this), true);
+        this.removeEventListener('input', this._boundInputEventListener, true);
+        this.removeEventListener('keydown', this._boundKeyDownEventListener, true);
         super.disconnectedCallback();
     }
 

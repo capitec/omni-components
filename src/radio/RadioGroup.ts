@@ -61,6 +61,7 @@ export class RadioGroup extends OmniElement {
 
     private _selected: number = NaN;
     private radios: CheckableElement[] = [];
+    private _boundClickEventListener: (e: MouseEvent) => void;
 
     /**
      * Selected index of radio elements
@@ -114,16 +115,26 @@ export class RadioGroup extends OmniElement {
         newSelected.setAttribute('checked', 'true');
     }
 
+    /**
+     * Initialises the component.
+     *
+     * @hideconstructor
+     */
+    constructor() {
+        super();
+        this._boundClickEventListener = this._handleClick.bind(this);
+    }
+
     override connectedCallback(): void {
         this.setAttribute('role', 'radioGroup');
 
-        this.addEventListener('click', this._handleClick.bind(this));
+        this.addEventListener('click', this._boundClickEventListener);
 
         super.connectedCallback();
     }
 
     override disconnectedCallback(): void {
-        this.addEventListener('click', this._handleClick.bind(this));
+        this.addEventListener('click', this._boundClickEventListener);
         super.disconnectedCallback();
     }
 
