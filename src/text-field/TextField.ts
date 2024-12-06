@@ -68,6 +68,12 @@ export class TextField extends OmniFormElement {
         });
     }
 
+    override disconnectedCallback() {
+        super.disconnectedCallback();
+        this.removeEventListener('input', this._keyInput.bind(this), true);
+        this.removeEventListener('keyup', this._blurOnEnter.bind(this), true);
+    }
+
     // If a value is bound when the component is first updated slice the value based on the max length.
     protected override async firstUpdated(): Promise<void> {
         if (this.value !== null && this.value !== undefined) {

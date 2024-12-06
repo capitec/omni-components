@@ -122,6 +122,11 @@ export class RadioGroup extends OmniElement {
         super.connectedCallback();
     }
 
+    override disconnectedCallback(): void {
+        super.disconnectedCallback();
+        this.addEventListener('click', this._handleClick.bind(this));
+    }
+
     protected override firstUpdated(_changedProperties: PropertyValueMap<never> | Map<PropertyKey, unknown>): void {
         super.firstUpdated(_changedProperties);
 

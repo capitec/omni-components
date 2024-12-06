@@ -49,6 +49,7 @@ export class ExpanderGroup extends OmniElement {
     override disconnectedCallback() {
         // Ensure the component is cleaned up correctly.
         super.disconnectedCallback();
+        this.removeEventListener('expand', this._expanderExpanded.bind(this), true);
     }
 
     _expanderExpanded(e: Event) {

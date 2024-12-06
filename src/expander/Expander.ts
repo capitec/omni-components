@@ -107,7 +107,7 @@ export class Expander extends OmniElement {
 
     override disconnectedCallback() {
         // Stop listening for child label change events.
-        this.removeEventListener(`animationend`, this._animationCompleted.bind(this));
+        this.removeEventListener(`animationend`, this._animationCompleted.bind(this), true);
 
         // Ensure the component is cleaned up correctly.
         super.disconnectedCallback();
