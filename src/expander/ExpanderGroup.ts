@@ -38,19 +38,7 @@ export class ExpanderGroup extends OmniElement {
      * @attr [expand-mode]
      */
     @property({ type: String, reflect: true, attribute: 'expand-mode' }) expandMode?: 'multiple' | 'single' = 'single';
-
-    _boundExpandEventListener: EventListener;
-
-    /**
-     * Initialises the component.
-     *
-     * @hideconstructor
-     */
-    constructor() {
-        super();
-        this._boundExpandEventListener = this._expanderExpanded.bind(this);
-    }
-
+    
     override connectedCallback(): void {
         super.connectedCallback();
         this.addEventListener('expand', this._expanderExpanded.bind(this), {

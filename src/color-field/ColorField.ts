@@ -48,28 +48,11 @@ export class ColorField extends OmniFormElement {
     @query('#inputField')
     private _inputElement?: HTMLInputElement;
 
-    _boundInputEventListener: EventListener;
-
-    /**
-     * Initialises the component.
-     *
-     * @hideconstructor
-     */
-    constructor() {
-        super();
-        this._boundInputEventListener = this._keyInput.bind(this);
-    }
-
     override connectedCallback() {
         super.connectedCallback();
-        this.addEventListener('input', this._boundInputEventListener, {
+        this.addEventListener('input', this._keyInput.bind(this), {
             capture: true
         });
-    }
-
-    override disconnectedCallback() {
-        this.removeEventListener('input', this._boundInputEventListener, true);
-        super.disconnectedCallback();
     }
 
     _keyInput() {
