@@ -94,64 +94,29 @@ export class CurrencyField extends OmniFormElement {
      */
     @property({ type: String, reflect: true }) formatter: string = '\\B(?=(\\d{3})+(?!\\d))';
 
-    _boundClickEventListener: EventListener;
-    _boundFocusEventListener: EventListener;
-    _boundBlurEventListener: EventListener;
-    _boundBeforeInputEventListener: (e: InputEvent) => void;
-    _boundPasteEventListener: (e: ClipboardEvent) => void;
-    _boundKeyUpEventListener: (e: KeyboardEvent) => void;
-
-    /**
-     * Initialises the component.
-     *
-     * @hideconstructor
-     */
-    constructor() {
-        super();
-        this._boundClickEventListener = this._onClickInput.bind(this);
-        this._boundFocusEventListener = this._onFocusInput.bind(this);
-        this._boundBlurEventListener = this._onBlur.bind(this);
-        this._boundBeforeInputEventListener = this._beforeInput.bind(this);
-        this._boundPasteEventListener = this._onPaste.bind(this);
-        this._boundKeyUpEventListener = this._blurOnEnter.bind(this);
-    }
-
     override connectedCallback(): void {
         super.connectedCallback();
-        this.addEventListener('click', this._boundClickEventListener, {
+        this.addEventListener('click', this._onClickInput.bind(this), {
             capture: true
         });
-        this.addEventListener('focus', this._boundFocusEventListener, {
+        this.addEventListener('focus', this._onFocusInput.bind(this), {
             capture: true
         });
-        this.addEventListener('blur', this._boundBlurEventListener, {
+        this.addEventListener('blur', this._onBlur.bind(this), {
             capture: true
         });
         // Used instead of keydown to catch inputs for mobile devices.
-        this.addEventListener('beforeinput', this._boundBeforeInputEventListener, {
+        this.addEventListener('beforeinput', this._beforeInput.bind(this), {
             capture: true
         });
         // Used to catch and format paste actions.
-        this.addEventListener('paste', this._boundPasteEventListener, {
+        this.addEventListener('paste', this._onPaste.bind(this), {
             capture: true
         });
         // Used to make the component blur when enter key is pressed on a mobile keyboard
-        this.addEventListener('keyup', this._boundKeyUpEventListener, {
+        this.addEventListener('keyup', this._blurOnEnter.bind(this), {
             capture: true
         });
-    }
-
-    override disconnectedCallback(): void {
-        this.removeEventListener('click', this._boundClickEventListener, true);
-        this.removeEventListener('focus', this._boundFocusEventListener, true);
-        this.removeEventListener('blur', this._boundBlurEventListener, true);
-        // Used instead of keydown to catch inputs for mobile devices.
-        this.removeEventListener('beforeinput', this._boundBeforeInputEventListener, true);
-        // Used to catch and format paste actions.
-        this.removeEventListener('paste', this._boundPasteEventListener, true);
-        // Used to make the component blur when enter key is pressed on a mobile keyboard
-        this.removeEventListener('keyup', this._boundKeyUpEventListener, true);
-        super.disconnectedCallback();
     }
 
     // Format the bound value.

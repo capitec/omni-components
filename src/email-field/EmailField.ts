@@ -57,34 +57,14 @@ export class EmailField extends OmniFormElement {
      */
     @property({ type: Number, reflect: true, attribute: 'max-length' }) maxLength?: number;
 
-    _boundInputEventListener: EventListener;
-    _boundKeyUpEventListener: (e: KeyboardEvent) => void;
-
-    /**
-     * Initialises the component.
-     *
-     * @hideconstructor
-     */
-    constructor() {
-        super();
-        this._boundInputEventListener = this._keyInput.bind(this);
-        this._boundKeyUpEventListener = this._blurOnEnter.bind(this);
-    }
-
     override connectedCallback() {
         super.connectedCallback();
-        this.addEventListener('input', this._boundInputEventListener, {
+        this.addEventListener('input', this._keyInput.bind(this), {
             capture: true
         });
-        this.addEventListener('keyup', this._boundKeyUpEventListener, {
+        this.addEventListener('keyup', this._blurOnEnter.bind(this), {
             capture: true
         });
-    }
-
-    override disconnectedCallback() {
-        this.removeEventListener('input', this._boundInputEventListener, true);
-        this.removeEventListener('keyup', this._boundKeyUpEventListener, true);
-        super.disconnectedCallback();
     }
 
     // If a value is bound when the component is first updated slice the value based on the max length.

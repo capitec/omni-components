@@ -81,34 +81,14 @@ export class PasswordField extends OmniFormElement {
     @query('.container')
     private container?: HTMLDivElement;
 
-    _boundInputEventListener: EventListener;
-    _boundFocusEventListener: EventListener;
-
-    /**
-     * Initialises the component.
-     *
-     * @hideconstructor
-     */
-    constructor() {
-        super();
-        this._boundInputEventListener = this._keyInput.bind(this);
-        this._boundFocusEventListener = this._focusInput.bind(this);
-    }
-
     override connectedCallback() {
         super.connectedCallback();
-        this.addEventListener('input', this._boundInputEventListener, {
+        this.addEventListener('input', this._keyInput.bind(this), {
             capture: true
         });
-        this.addEventListener('focus', this._boundFocusEventListener, {
+        this.addEventListener('focus', this._focusInput.bind(this), {
             capture: true
         });
-    }
-
-    override disconnectedCallback() {
-        this.removeEventListener('input', this._boundInputEventListener, true);
-        this.removeEventListener('focus', this._boundFocusEventListener, true);
-        super.disconnectedCallback();
     }
 
     // If a value is bound when the component is first updated slice the value based on the max length if set.

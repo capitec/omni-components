@@ -86,42 +86,18 @@ export class PinField extends OmniFormElement {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private isWebkit?: boolean;
 
-    _boundBeforeInputEventListener: (e: InputEvent) => void;
-    _boundOnInputEventListener: EventListener;
-    _boundOnKeyUpEventListener: (e: KeyboardEvent) => void;
-
-    /**
-     * Initialises the component.
-     *
-     * @hideconstructor
-     */
-    constructor() {
-        super();
-        this._boundBeforeInputEventListener = this._beforeInput.bind(this);
-        this._boundOnInputEventListener = this._onInput.bind(this);
-        this._boundOnKeyUpEventListener = this._blurOnEnter.bind(this);
-    }
-
     override connectedCallback() {
         super.connectedCallback();
         // Used instead of keydown to catch inputs for mobile devices.
-        this.addEventListener('beforeinput', this._boundBeforeInputEventListener, {
+        this.addEventListener('beforeinput', this._beforeInput.bind(this), {
             capture: true
         });
-        this.addEventListener('input', this._boundOnInputEventListener, {
+        this.addEventListener('input', this._onInput.bind(this), {
             capture: true
         });
-        this.addEventListener('keyup', this._boundOnKeyUpEventListener, {
+        this.addEventListener('keyup', this._blurOnEnter.bind(this), {
             capture: true
         });
-    }
-
-    override disconnectedCallback() {
-        // Used instead of keydown to catch inputs for mobile devices.
-        this.removeEventListener('beforeinput', this._beforeInput.bind(this), true);
-        this.removeEventListener('input', this._onInput.bind(this), true);
-        this.removeEventListener('keyup', this._blurOnEnter.bind(this), true);
-        super.disconnectedCallback();
     }
 
     // Added for non webkit supporting browsers and to stop the component from having a non-valid value (non-numeric) value bound.
